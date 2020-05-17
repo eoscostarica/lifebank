@@ -1,0 +1,9 @@
+k8s/
+Dockerfile
+makefile
+node_modules/
+.gitignore
+.editorconfig
+.git/
+**/*.png
+**/*.dot
