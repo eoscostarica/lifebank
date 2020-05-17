@@ -1,54 +1,93 @@
+<p align="center">
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<a href="http://standardjs.com">
+<img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="StandardJS">
+</a>
+<a href="https://git.io/col">
+<img src="https://img.shields.io/badge/%E2%9C%93-collaborative_etiquette-brightgreen.svg" alt="Collaborative Etiquette">
+</a>
+<a href="https://twitter.com/intent/follow?screen_name=eoscostarica">
+<img src="https://img.shields.io/twitter/follow/eoscostarica.svg?style=social&logo=twitter" alt="follow on Twitter">
+</a>
+<a href="#">
+<img src="https://img.shields.io/dub/l/vibe-d.svg" alt="MIT">
+</a>
+</p>
 # lifebank
 EOSIO Hackathon project
 
-## These are the community smart contract actions :
 
 
-### Create a  community (blood bank)
-A community represents one or more  **blood banks** in a given region.
 
-**A community has :** 
-   - token symbol name   
-   - country
-   
-A community must have at least one clinic, upon creating a community you must then register a clinic.
+## Test Environment
 
-### Clinics Verify Blood Donation (mint and transfer tokens)
+We are testing this application on the [Jungle TestNet](https://jungletestnet.io).  
+This UI is currently available at https://lifebank.io  
+We are running webapp and backend services on our own servers on premises in Costa Rica.
+
+
+## Smart Contracts
+There are three smart contracts deployed by lifebank.
+
+### Informed Consent Contract [`consent2life`](https://github.com/eoscostarica/lifebank/tree/master/contracts/consent2life)
+- Each user must accept terms of service
+- Users must also have a way of revoking their consent.
+- Ricardian Clauses must be included
+
+The  Smart Contract is code deployed under the account [consent2life](https://jungle.bloks.io/account/consent2life).  
+
+### Community Contract `lifebankcode`
+A community represents one or more  **blood banks** in a given region. A community must have at least one clinic, upon creating a community you must then register a clinic. Each community has its own token symbol name.
+
+The  Smart Contract is code deployed under the account [lifebankcode](https://jungle.bloks.io/account/lifebankcode).  
+
+
+### Community Contract `lifebankcoin`
+
+Clinics Verify Blood Donation (mint and transfer tokens)
 Clinic Account must verify that action of donating blood was completed , once a donor donates blood he/she will receive a token 
 
 > `donor` account type receives token from `clinic` account type and may ONLY transfer token to `sponsor` account types.
 
+
+### Create a new currency 
+When a community is create a new  EOSIO Token is configured. 
+- max supply 
+- expiration 
+
 #### Token Flow: 
 Clinic -> User -> Sponsor -> Savings  
 
-**A clinic has :** 
-   - clinic name
-   - clinic description
-   - clinic location
-   - clinic phone number
-   - clinic schedule
-   - immunity test?
-   - blood urgency level
+
 
 The community is composed of the **clinic** the **donors** , and the small business that **sponsor** the community.
 
 Clinics can invite new clinics in the same region to join the community.
 
+The  Smart Contract is code deployed under the account [lifebankcoin](https://jungle.bloks.io/account/lifebankcoin).
+## These are the following token contract actions:
+
+### Mint new compatible tokens
+- Tokens will only be issued by clinics
+- Tokens can only be issued for the same user once every 3 months.
+
+Note*  What happens after 3 months? Do tokens automatically fall out of supply or do they just become non-transferrable?
 
 ## Sign Up
 
 Users sign up on the register page. 
 
-The register page creates a blockchain account and should help handle key management, all users need to remember is a an account name and 4 digit PIN
- 
+The register page creates a blockchain account and should help handle key management, all users need to remember is a an account name and a password
+
 ### Register as a donor  (individual person)
 
 donors must have:
- - name
- - accountname
- - Informed Consent
+- name
+- accountname
+- Informed Consent
 
- 
 Clinic will manage all personal data and no personal data is stored on blockchain.
 
 
@@ -62,32 +101,13 @@ Clinic will manage all personal data and no personal data is stored on blockchai
 - schedule
 
 
-#### Informed Consent Smart Contact
-
-- Each user must accept terms of service
-- Users must also have a way of revoking their consent.
-- Ricardian Clauses must be included
-
-## These are the following token contract actions:
-
-### Create a new currency 
-When a community is create a new  EOSIO Token is configured. 
-- max supply 
-- expiration 
-
-### Mint new compatible tokens
- - Tokens will only be issued by clinics
- - Tokens can only be issued for the same user once every 3 months.
-
-Note*  What happens after 3 months? Do tokens automatically fall out of supply or do they just become non-transferrable?
-
-#### Blood Demand Level
+## Blood Demand Level
 
 Each clinic will update their status to one of the below demand levels.  This indicates the amount of tokens they are willing to mint at a particular location and time. 
 
- - **Green** 1 token is issued to each doner 
- - **Yellow** 2 tokens issued to each doner
- - **Red**  3 tokens issued to each doner
+- **Green** 1 token is issued to each doner 
+- **Yellow** 2 tokens issued to each doner
+- **Red**  3 tokens issued to each doner
 
 ### Max yearly supply of tokens per clinic to avoid abuse of blood demand level.
 
@@ -116,14 +136,94 @@ https://zpl.io/a8o9A7X
 ### Sponsor User Flow
 https://zpl.io/a8o9kq6
 
-#### Pages 
- - landing page
- - register 
- - dashboard 
- - profile 
+## App Services
+
+- **frontend:** http://localhost:3000  
+A React JS Web Client based on create-react-app that starts up at the available port (default is 3000).
+
+- **[hasura](https://hasura.io)** http://localhost:8085  
+Autogenerated GraphQL API based on the PostgresDB Schema.
+Run `make hasura` to start the management console.
+
+- **wallet:**
+A KEOSD service is running to store all private keys securely and sign transactions.
+
+- **hapi:**
+A back end service for account management, wallet service integration and synchronizing blockchain tables with postgreSQL.
+
+- **nginx:**
+Nginx is a web server which is also used as a reverse proxy to route external traffic to the appropriate services.
+
+- **EOSIO Node:** https://jungle.eosio.cr
 
 
-#### Modals
- - reciept 
- - informed consent
- - 
+_Note: This project is based on our [EOS DApp Boilerplate](https://github.com/eoscostarica/webapp-boilerplate)._
+
+## Contributing
+
+We use a Kanban-style board. That's were we prioritize the work. [Go to Project Board](https://github.com/eoscostarica/lifebank/projects/1).
+
+Contributing Guidelines https://developers.eoscostarica.io/docs/open-source-guidelines.
+
+Please report bugs big and small by [opening an issue](https://github.com/eoscostarica/lifebank/issues)
+
+## About EOS Costa Rica
+
+<p align="center">
+<a href="https://eoscostarica.io">
+<img src="https://github.com/eoscostarica/eos-rate/raw/master/docs/eoscostarica-logo-black.png" width="300">
+</a>
+</p>
+<br/>
+
+EOS Costa Rica is an independently-owned, self-funded, bare-metal Genesis block producer that provides stable and secure infrastructure for EOSIO blockchains. We support open source software for our community while offering enterprise solutions and custom smart contract development for our clients.
+
+[eoscostarica.io](https://eoscostarica.io)
+
+## License
+
+MIT © [EOS Costa Rica](https://eoscostarica.io)
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+<tr>
+
+<td align="center"><a href="https://github.com/murillojorge"><img src="https://avatars1.githubusercontent.com/u/1179619?v=4" width="100px;" alt="Jorge Murillo"/><br /><sub><b>Jorge Murillo</b></sub></a><br /><a href="#ideas-murillojorge" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=murillojorge" title="Documentation">📖</a> <a href="#design-murillojorge" title="Design">🎨</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=murillojorge" title="Code">💻</a> <a href="#review-murillojorge" title="Reviewed Pull Requests">👀</a></td>
+
+<td align="center"><a href="https://github.com/adriexnet"><img src="https://avatars3.githubusercontent.com/u/5375168?s=400&u=542a27a00b761d98851991c6a6d5f78d7b35a2b2&v=4" width="100px;" alt="Adriel Diaz"/><br /><sub><b>Adriel Díaz</b></sub></a><br /><a href="#ideas-adriexnet" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=adriexnet" title="Code">💻</a> <a href="#review-adriexnet" title="Reviewed Pull Requests">👀</a></td>
+
+<td align="center"><a href="https://github.com/xavier506"><img src="https://avatars0.githubusercontent.com/u/5632966?v=4" width="100px;" alt="Xavier Fernandez"/><br /><sub><b>Xavier Fernandez</b></sub></a><br /><a href="#ideas-xavier506" title="Ideas, Planning, & Feedback">🤔</a> <a href="#blog-xavier506" title="Blogposts">📝</a> <a href="#talk-xavier506" title="Talks">📢</a> <a href="#infra-xavier506" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+
+<td align="center"><a href="http://www.eoscostarica.io"><img src="https://avatars2.githubusercontent.com/u/40245170?v=4" width="100px;" alt="Edgar Fernandez"/><br /><sub><b>Edgar Fernandez</b></sub></a><br /><a href="#ideas-edgar-eoscostarica" title="Ideas, Planning, & Feedback">🤔</a> <a href="#blog-edgar-eoscostarica" title="Blogposts">📝</a> <a href="#talk-edgar-eoscostarica" title="Talks">📢</a></td>
+
+<td align="center"><a href="https://github.com/kecoco16"><img src="https://avatars3.githubusercontent.com/u/25941813?s=460&u=ae8447221de610919483cbc67c286d3f120477ec&v=4" width="100px;" alt=""/><br /><sub><b>kecoco16</b></sub></a><br /><a href="https://github.com/eoscostarica/eoscr-theme/commits?author=kecoco16" title="Code">💻</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=kecoco16" title="Documentation">📖</a> <a href="#projectManagement-kecoco16" title="Project Management">📆</a> <a href="#maintenance-kecoco16" title="Maintenance">🚧</a></td>
+
+</tr>
+<tr>
+<td align="center"><a href="https://github.com/rubenabix"><img src="https://avatars2.githubusercontent.com/u/13205620?v=4" width="100px;" alt="Rubén Abarca Navarro"/><br /><sub><b>Rubén Abarca Navarro</b></sub></a><br /><a href="#ideas-rubenabix" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=rubenabix" title="Code">💻</a> <a href="#review-rubenabix" title="Reviewed Pull Requests">👀</a></td>
+
+<td align="center"><a href="https://github.com/roafroaf"><img src="https://avatars1.githubusercontent.com/u/40480825?v=4" width="100px;" alt="roafroaf"/><br /><sub><b>roafroaf</b></sub></a><br /><a href="#ideas-roafroaf" title="Ideas, Planning, & Feedback">🤔</a> <a href="#design-roafroaf" title="Design">🎨</a></td>
+
+<td align="center"><a href="https://github.com/ldrojas">
+<img src="https://avatars0.githubusercontent.com/u/29232417?s=460&v=4" width="100px;" alt="Luis Diego Rojas"/><br /><sub><b>Luis Diego Rojas</b></sub></a><br /><a href="https://github.com/eoscostarica/lifebank/commits?author=ldrojas" title="Ideas, Planning, & Feedback">🤔</a></td>
+
+<td align="center"><a href="https://github.com/tetogomez">
+<img src="https://avatars3.githubusercontent.com/u/10634375?s=460&v=4" width="100px;" alt="Teto Gomez"/><br /><sub><b>Teto Gomez</b></sub></a><br /><a href="https://github.com/eoscostarica/lifebank/commits?author=tetogomez" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=tetogomez" title="Code">💻</a> <a href="#review-tetogomez" title="Reviewed Pull Requests">👀</a></td>
+
+<td align="center"><a href="https://github.com/JustinCast"><img src="https://avatars1.githubusercontent.com/u/17890146?v=4" width="100px;" alt=""/><br /><sub><b>JustinCast</b></sub></a><br /><a href="https://github.com/eoscostarica/eoscr-theme/commits?author=JustinCast" title="Code">💻</a> <a href="https://github.com/eoscostarica/eoscr-theme/commits?author=JustinCast" title="Documentation">📖</a> <a href="#projectManagement-JustinCast" title="Project Management">📆</a> <a href="#maintenance-JustinCast" title="Maintenance">🚧</a></td>
+</tr>
+</table>
+
+<!-- markdownlint-enable -->
+
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
