@@ -1,0 +1,75 @@
+version: "3.6"
+services:
+  wallet:
+    container_name: "${STAGE}-${APP_NAME}-wallet"
+    build: ./wallet
+    ports:
+      - "8888:8888"
+    volumes:
+      - ${WALLET_DATA}:/opt/application/data
+  postgres:
+    container_name: "${STAGE}-${APP_NAME}-postgres"
+    image: postgres:11.5-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - ${POSTGRES_DATA}:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+  hapi:
+    container_name: "${STAGE}-${APP_NAME}-hapi"
+    build: ./hapi
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./hapi:/usr/app
+    environment:
+      SERVER_PORT: "${SERVER_PORT}"
+      SERVER_ADDRESS: "${SERVER_ADDRESS}"
+      HASURA_URL: "${HASURA_URL}"
+      HASURA_ADMIN_SECRET: "${HASURA_ADMIN_SECRET}"
+    restart: on-failure
+  hasura:
+    container_name: "${STAGE}-${APP_NAME}-hasura"
+    image: hasura/graphql-engine:v1.2.1.cli-migrations-v2
+    ports:
+      - "8085:8080"
+    volumes:
+      - ./hasura/migrations:/hasura-migrations
+      - ./hasura/metadata:/hasura-metadata
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: "${DATABASE_URL}"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "${HASURA_GRAPHQL_ENABLE_CONSOLE}"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: "${HASURA_GRAPHQL_ENABLED_LOG_TYPES}"
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "${HASURA_GRAPHQL_UNAUTHORIZED_ROLE}"
+    depends_on:
+      - postgres
+    restart: on-failure
+  webapp:
+    container_name: "${STAGE}-${APP_NAME}-webapp"
+    build: ./webapp
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./webapp/build:/usr/share/nginx/html
+    environment:
+      REACT_APP_EOS_API_HOST: "${REACT_APP_EOS_API_HOST}"
+      REACT_APP_EOS_API_PORT: "${REACT_APP_EOS_API_PORT}"
+      REACT_APP_EOS_API_PROTOCOL: "${REACT_APP_EOS_API_PROTOCOL}"
+      REACT_APP_EOS_CHAIN_ID: "${REACT_APP_EOS_CHAIN_ID}"
+    depends_on:
+      - hasura
+    restart: on-failure
+  nginx:
+    container_name: "${STAGE}-${APP_NAME}-nginx"
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ${NGNIX_CERTIFICATE}:/opt/application/certificate.pem
+      - ${NGNIX_CERTIFICATE_KEY}:/opt/application/private_key.pem
+    ports:
+      - 80:80
+      - 443:443
