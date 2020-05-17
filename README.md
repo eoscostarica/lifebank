@@ -1,6 +1,7 @@
 <p align="center">
   
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+
 <a href="http://standardjs.com">
 <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="StandardJS">
 </a>
@@ -15,13 +16,10 @@
 </a>
 </p>
 
-# Lifebank.io  README
+# Lifebank.io
+### EOSIO VIRTUAL HACKATHON [Coding for Change - May 2020](https://hackathon.eos.io/events/coding-for-change/)
 
-# lifebank
-EOSIO Hackathon Code for Change 
-May 2020
-
-## I**nspiration**
+## **Inspiration**
 
 Blood banks should act just as their name reflects.  When we are healthy, we should be able to save for the future by making deposits. When we inevitably get sick, we should be able to withdrawal on those savings to pay for expenses related to our condition.   
 
@@ -31,21 +29,21 @@ Our team member understood why he needed to donate blood and how important it wa
 
 Fast forward to 2020, COVID-19 spreads to a global pandemic and national emergencies are declared in countless countries around the world.  Social distancing and quarantines cause blood shortages globally as donations plummet while demand for blood and plasma increases. Blood banks enter a short term shortage all over the world with no lifeline in sight. 
 
-[insert links to news around shortages of blood around the world] 
+`[insert links to news around shortages of blood around the world]`
 
 Donations centers across the globe need a way to encourage blood donations based on local demand during a time of crisis. As the demand for blood increases during the crisis,  the eligible donor population were told to stay home, isolate and avoid medical facilities causing a deepened shortage. 
 
-[insert links of stories around avoiding hospitals, clinics, etc]
+`[insert links of stories around avoiding hospitals, clinics, etc]`
 
-Another consequence of the pandemic was the economic devastation of a lockdown.  Small businesses that rely on the local community for a majority of their business have to think of ways to incentivize customers to buy online or in person as soon as restrictions are lifted.  Small business also need a lifeline. 
+Another consequence of the pandemic was the economic devastation of a lock-down.  Small businesses that rely on the local community for a majority of their business have to think of ways to incentivize customers to buy online or in person as soon as restrictions are lifted.  Small business also need a lifeline. 
 
-[insert links of stories around small business and the impact in local communities]
+`[insert links of stories around small business and the impact in local communities]`
 
-During the current COVID-19 health crisis and others in the future,  how can we:
+**During the current COVID-19 health crisis and others in the future,  how can we:**
 
-- Provide value and recognition to blood donors that are eligible to donate when healthy?
-- Mitigate the blood shortage that exists in perpetuity and that are exasperated during a crisis?
-- Support local businesses and have them encourage blood donation in their community?
+- **Provide value and recognition to blood donors that are eligible to donate when healthy?**
+- **Mitigate the blood shortage that exists in perpetuity and that are exasperated during a crisis?**
+- **Support local businesses and have them encourage blood donation in their community?**
 
 To align the relevant incentives and accomplish the above, we created **Lifebank.io**   
 
@@ -53,7 +51,8 @@ To align the relevant incentives and accomplish the above, we created **Lifebank
 
 Lifebank helps local communities create a virtuous circle of value exchange between three parties — a **eligible donor user (EDU), a community donation center (CDC) and a participating local business (PLB).** 
 
-INSERT MIRO DIAGRAM
+![lifebank Value Circle](./docs/lifebank-value-circle.jpg)
+
 
 **Legend:**
 
@@ -68,7 +67,7 @@ INSERT MIRO DIAGRAM
 
 ### Eligible Donor User (EDU) Flow
 
-INSERT EDU Flow
+[![lifebank Value Circle](./docs/donor-user-flow.png)](./docs/donor-user-flow.png)
 
 **1) Find a Community Donation Center and Register**
 
@@ -90,7 +89,7 @@ An eligible donor user (EDU) can redeem their community donation token receipt (
 
 ### Community Donation Center (CDC) User Flow
 
-INSERT CDC USER FLOW
+[![lifebank Value Circle](./docs/clinic-user-flow.png)](./docs/clinic-user-flow.png)
 
 1) **Register as a community donation center (CDC) and create a ticker**
 
@@ -106,7 +105,7 @@ Once a eligible donor user (EDU) completes a qualified blood donation (QBD), the
 
 ### Participating Local Business (PLB) User Flow
 
-INSERT PLB USER FLOW
+[![lifebank Value Circle](./docs/sponsor-user-flow.png)](./docs/sponsor-user-flow.png)
 
 **1) Register as a Participating Local Business (PLB)**
 
@@ -126,145 +125,26 @@ Lifebank uses the following technology to create a virtuous circle of value exch
 
 ## **App Services**
 
-- **frontend:** [http://localhost:3000](http://localhost:3000/)A React JS Web Client based on create-react-app that starts up at the available port (default is 3000).
-- **[hasura](https://hasura.io/)** [http://localhost:8085](http://localhost:8085/)Autogenerated GraphQL API based on the PostgresDB Schema. Run `make hasura` to start the management console.
-- **wallet:** A KEOSD service is running to store all private keys securely and sign transactions.
-- **hapi:** A back end service for account management, wallet service integration and synchronizing blockchain tables with postgreSQL.
+We use **Docker** for all app services
+
+- **smart contracts:**  **C++** **ricardian contracts**
+- **frontend:** A **React JS** Web Client based that leverages **Material UI**.
+- **hasura** An autogenerated **GraphQL** API based on the **PostgresDB**.
+- **hapi:** A **NodeJS** back end service for account management, wallet service integration and synchronizing blockchain tables with postgreSQL.
+- **wallet:** A **keosd** service is running to store all private keys securely and sign transactions.
 - **nginx:** Nginx is a web server which is also used as a reverse proxy to route external traffic to the appropriate services.
-- **EOSIO Node:** [https://jungle.eosio.cr](https://jungle.eosio.cr/)
+ **EOSIO Node:** [https://jungle.eosio.cr](https://jungle.eosio.cr/)
 
 *Note: This project is based on our [EOS DApp Boilerplate](https://github.com/eoscostarica/webapp-boilerplate).*
 
-- Github
-- hapi
-- hasura
-- docker
-- EOSIO
-- C++
-- MaterialUI
-- Zeplin
-- Miro
-- React JS
-- NodeJS
-- EOSJS
-- EOSIO UAL
-- GraphQL
-PostgresDB
-- ...
+## Test Environment
 
-## **These are the community donation center smart contract actions :**
+We are testing this application on the [Jungle TestNet](https://jungletestnet.io).  
+This UI is currently available at https://lifebank.io  
+We are running webapp and backend services on our own servers on premises in Costa Rica.
 
-### **Create a community**
 
-A community represents one or more **community donation centers** **(CDC)** in a given region.
-
-**A community has :**
-
-- token symbol name
-- country
-
-A community must have at least one community donation center (CDC), upon creating a community you must then register a CDC.
-
-A community is composed of the community **donation centers**, the potential and eligible **donors**, and the participating local business that **sponsors** the community.
-
-Only registered donation centers can invite new donation centers in the same region to join the same community.
-
-**CDCs Verify Qualified Blood Donations (mint and transfer tokens)**
-
-A community donation center (CDC) account must verify that a qualified blood donation (QBD) was completed. Once a eligible donor user donates blood, they will receive a community donation token receipt (cDTR)
-
-> donor account type receives token from donation center account type and may ONLY transfer token to sponsor account types.
-
-## **Sign Up**
-
-Users sign up on the register page.
-
-The register page creates a blockchain account and should help handle key management, all the users need to remember is a an account name and 4 digit PIN
-
-### **Register as a Community Donation Center (CDC)**
-
-A CDC must have :
-
-- name
-- description
-- location
-- phone number
-- schedule
-- blood demand level
-- signed terms of participation
-- eligibility requirements to donate at that location? (General Eligibility Quiz)
-- immunity test?
-- blood inventory?
-
-### **Register as a Eligible Donor User (EDU)**
-
-Donors must have:
-
-- name (email?)
-- accountname
-- Signed terms of use as informed consent
-
-CDC will manage all personal data and no personal data is stored with Lifebank or the blockchain.
-
-### **Register as a Participating Local Business (PLB)**
-
-A Business must have:
-
-- business name
-- description of value proposition
-- business website
-- location
-- schedule
-- covid impact?
-
-### **Informed Consent Smart Contracts**
-
-- Each donor must accept terms of use
-- Each donation center must accept terms of participation
-- Each local business must accept terms of participation
-- All users must also have a way of revoking their consent.
-- Ricardian Clauses must be included for each terms of service consent.
-
-## **These are the following token contract actions:**
-
-### **Create a new currency**
-
-When a new community is created a new EOSIO Token is configured with the following:
-
-- max supply
-- expiration
-
-### **Mint new donation tokens receipts (DTR)**
-
-- A DTR will only be issued by a community donation center (CDC)
-- A DTR can only be transferred to the same user once every 3 months
-- After expiry, a DTR becomes non-transferrable and cannot be redeemed.
-
-### **Blood Demand Level**
-
-Each CDC may update their status to one of the below demand levels. This indicates the amount of DTRs they are willing to mint at a particular location and time.
-
-- **Green** 1 DTR is issued to each donor for a qualified blood donation
-- **Yellow** 2 DTR issued to each donor for a qualified blood donation
-- **Red** 3 DTR issued to each donor for a qualified blood donation
-
-### Set a m**ax yearly supply of DTRs per community to avoid abuse of blood demand level.**
-
-A community may agree to set a limit cap on the supply of active community DTRs a community can have outstanding at any given time to avoid abuse of blood demand levels.  This can be done at the creation of the community or updated periodically by the community donation centers? 
-
-(should be a constant somewhere in the code)
-
-### **Transfer DTR between users.**
-
-- A community donation centers (CDC) can only transfer to an eligible donor user (EDU)
-- An eligible donor user (EBU) can only transfer to a participating local business (PLB)
-- A participating local business (PLB) can retain a DTR as `savings` , savings may be useful in a future version of the app.
-
-### **Token Flow:**
-
-Donation Center (CDC) -> Donors (EDU) -> Sponsors (PLB) -> Savings
-
-## **UX**
+## **User Experience - UX**
 
 ### **Users**
 
@@ -273,33 +153,12 @@ Donation Center (CDC) -> Donors (EDU) -> Sponsors (PLB) -> Savings
 - Community Donation Center (CDC)
 - Participating Local Business (PLB)
 
-### **Donation Center User Flow**
+#### [Donation Center User Flow](https://zpl.io/amAMKdQ)
 
-[https://zpl.io/amAMKdQ](https://zpl.io/amAMKdQ)
+#### [Donor User Flow](https://zpl.io/a8o9A7X)
 
-### **Donor User Flow**
+#### [Sponsor User Flow](https://zpl.io/a8o9kq6)
 
-[https://zpl.io/a8o9A7X](https://zpl.io/a8o9A7X)
-
-### Sponsor **User Flow**
-
-[https://zpl.io/a8o9kq6](https://zpl.io/a8o9kq6)
-
-### **Pages**
-
-- landing page
-- register
-- dashboard
-- profile
-- map of CDCs
-- map of PLBs
-
-### **Model Ricardian Contracts**
-
-- Receipt
-- CDC terms of participation
-- EDU terms of use and informed consent
-- PLB terms of participation
 
 ## **Challenges we ran into**
 
@@ -331,37 +190,6 @@ Lifebank takes a on a life of its own!
 - Set a pricing algorithm like Bancor to provide a fair market price where PLBs can sell their DTRs in savings to local charities (Red Cross Fund, philanthropists, private donors, etc)
 
 
-## Test Environment
-
-We are testing this application on the [Jungle TestNet](https://jungletestnet.io).  
-This UI is currently available at https://lifebank.io  
-We are running webapp and backend services on our own servers on premises in Costa Rica.
-
-## Smart Contracts
-There are three smart contracts deployed by lifebank.
-
-### Informed Consent Contract [`consent2life`](https://github.com/eoscostarica/lifebank/tree/master/contracts/consent2life)
-- Each user must accept terms of service
-- Users must also have a way of revoking their consent.
-- Ricardian Clauses must be included
-
-The  Smart Contract is code deployed under the account [consent2life](https://jungle.bloks.io/account/consent2life).  
-
-### Community Contract `lifebankcode`
-A community represents one or more  **blood banks** in a given region. A community must have at least one clinic, upon creating a community you must then register a clinic. Each community has its own token symbol name.
-
-The  Smart Contract is code deployed under the account [lifebankcode](https://jungle.bloks.io/account/lifebankcode).  
-
-
-### Community Contract `lifebankcoin`
-
-Clinics Verify Blood Donation (mint and transfer tokens)
-Clinic Account must verify that action of donating blood was completed , once a donor donates blood he/she will receive a token 
-
-> `donor` account type receives token from `clinic` account type and may ONLY transfer token to `sponsor` account types.
-
-The  Smart Contract is code deployed under the account [lifebankcoin](https://jungle.bloks.io/account/lifebankcoin).
-
 ## Contributing
 
 We use a Kanban-style board. That's were we prioritize the work. [Go to Project Board](https://github.com/eoscostarica/lifebank/projects/1).
@@ -374,7 +202,7 @@ Please report bugs big and small by [opening an issue](https://github.com/eoscos
 
 <p align="center">
 <a href="https://eoscostarica.io">
-<img src="https://github.com/eoscostarica/eos-rate/raw/master/docs/eoscostarica-logo-black.png" width="300">
+<img src="./docs/eoscostarica-logo-black.png" width="300">
 </a>
 </p>
 <br/>
