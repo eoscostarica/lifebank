@@ -1,0 +1,98 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [],
+    "structs": [
+        {
+            "name": "clear",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "consent",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "contract",
+                    "type": "name"
+                },
+                {
+                    "name": "hash",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "informed_consent",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "record",
+                    "type": "uint128"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "contract",
+                    "type": "name"
+                },
+                {
+                    "name": "hash",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "revoke",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "contract",
+                    "type": "name"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "clear",
+            "type": "clear",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "consent",
+            "type": "consent",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "revoke",
+            "type": "revoke",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "userconsents",
+            "type": "informed_consent",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": []
+}
