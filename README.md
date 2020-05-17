@@ -1,6 +1,6 @@
 <p align="center">
   
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <a href="http://standardjs.com">
 <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="StandardJS">
 </a>
