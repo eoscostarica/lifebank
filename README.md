@@ -4,7 +4,7 @@ EOSIO Hackathon project
 ## These are the community smart contract actions :
 
 
-### Create a  community   (blood bank)
+### Create a  community (blood bank)
 A community represents one or more  **blood banks** in a given region.
 
 **A community has :** 
@@ -16,7 +16,7 @@ A community must have at least one clinic, upon creating a community you must th
 ### Clinics Verify Blood Donation (mint and transfer tokens)
 Clinic Account must verify that action of donating blood was completed , once a donor donates blood he/she will receive a token 
 
-> `donor` account type receives token from `clinic` account type and may  ONLY transfer token to `sponsor` account types.
+> `donor` account type receives token from `clinic` account type and may ONLY transfer token to `sponsor` account types.
 
 #### Token Flow: 
 Clinic -> User -> Sponsor -> Savings  
@@ -32,13 +32,14 @@ Clinic -> User -> Sponsor -> Savings
 
 The community is composed of the **clinic** the **donors** , and the small business that **sponsor** the community.
 
-_Note: maybe clinics can then add new clinics within the same community?_
+Clinics can invite new clinics in the same region to join the community.
+
 
 ## Sign Up
 
 Users sign up on the register page. 
 
-The register page creates a blockchain account and should help handle  key management, all users need to remember is a an account name and 4 digit PIN
+The register page creates a blockchain account and should help handle key management, all users need to remember is a an account name and 4 digit PIN
  
 ### Register as a donor  (individual person)
 
@@ -75,16 +76,20 @@ When a community is create a new  EOSIO Token is configured.
 - expiration 
 
 ### Mint new compatible tokens
- - Tokes must only be issued by clinics
+ - Tokens will only be issued by clinics
  - Tokens can only be issued for the same user once every 3 months.
 
+Note*  What happens after 3 months? Do tokens automatically fall out of supply or do they just become non-transferrable?
+
 #### Blood Demand Level
+
+Each clinic will update their status to one of the below demand levels.  This indicates the amount of tokens they are willing to mint at a particular location and time. 
 
  - **Green** 1 token is issued to each doner 
  - **Yellow** 2 tokens issued to each doner
  - **Red**  3 tokens issued to each doner
 
-### Max yearly supply of tokens per clinic to avoid abuse of bloood demand level.
+### Max yearly supply of tokens per clinic to avoid abuse of blood demand level.
 
 (should be a constant somewhere in the code)
 
