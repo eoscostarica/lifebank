@@ -4,6 +4,8 @@ ACTION consent2life::consent(name user, name contract, checksum256 hash)
 {
   require_auth(user);
 
+  eosio::check(eosio::is_account(contract), "Account does not exist");
+
   // Init the _records table
   informed_consent_table _records(get_self(), get_self().value);
   // calculate unique record

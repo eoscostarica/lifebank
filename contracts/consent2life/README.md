@@ -19,5 +19,5 @@ Informed consent table must have :
 
 ```
 cd contracts/consent2life
-eosio-cpp -abigen ./src/consent2life.cpp -o consente2life.wasm -I ./include/ -R ./ricardian
+eosio-cpp -abigen ./src/consent2life.cpp -o consent2life.wasm -I ./include/ -R ./ricardian
 ```
