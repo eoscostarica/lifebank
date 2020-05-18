@@ -11,11 +11,13 @@ CONTRACT lifebankcode : public contract {
     ACTION clear();
 
   private:
+
+    void check_consent(name account);
+
     TABLE doner {
-      uint64_t id;
       name     account;
       string   fullname;
-      auto primary_key() const { return id; }
+      auto primary_key() const { return account.value; }
     };
     typedef multi_index<name("doners"), doner> doner_table;
 };

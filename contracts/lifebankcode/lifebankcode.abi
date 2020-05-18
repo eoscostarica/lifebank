@@ -27,10 +27,6 @@
             "base": "",
             "fields": [
                 {
-                    "name": "id",
-                    "type": "uint64"
-                },
-                {
                     "name": "account",
                     "type": "name"
                 },
