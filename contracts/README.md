@@ -1,8 +1,3 @@
-
-- [Smart Contracts](#smart-contracts)
-
-
-
 # Smart Contracts
 
 There are three smart contracts deployed by lifebank.  
