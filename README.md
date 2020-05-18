@@ -1,6 +1,3 @@
-# Lifebank.io
-### EOSIO VIRTUAL HACKATHON [Coding for Change - May 2020](https://hackathon.eos.io/events/coding-for-change/)
-
 <p align="center">
 <a href="http://standardjs.com">
 <img src="https://img.shields.io/badge/all_contributors-10-g.svg?style=flat-square" alt="StandardJS">
@@ -18,6 +15,9 @@
 <img src="https://img.shields.io/twitter/follow/eoscostarica.svg?style=social&logo=twitter" alt="follow on Twitter">
 </a>
 </p>
+
+# Lifebank.io
+### EOSIO VIRTUAL HACKATHON [Coding for Change - May 2020](https://hackathon.eos.io/events/coding-for-change/)
 
 ## Inspiration
 
@@ -51,19 +51,20 @@ To align the relevant incentives and accomplish the above, we created **Lifebank
 
 Lifebank helps local communities create a virtuous circle of value exchange between three parties — a **eligible donor user (EDU), a community donation center (CDC) and a participating local business (PLB).** 
 
-![lifebank Value Circle](./docs/lifebank-value-circle.jpg)
-
+<center>
+	<img src="./docs/lifebank-value-circle.jpg" width="500">
+</center>
 
 **Legend:**
 
-- PDU -  potential donor user
-- QBD -  qualified blood donation
-- CDC - community donation center
-- DTR - donation token receipt
-- cDTR - community donation token receipt
-- EDU - eligible donor user
-- PLB - participating local business
-- Value - perceived value that PLBs communicate to PDUs
+- **PDU** -  potential donor user
+- **QBD** -  qualified blood donation
+- **CDC** - community donation center
+- **DTR** - donation token receipt
+- **cDTR** - community donation token receipt
+- **EDU** - eligible donor user
+- **PLB** - participating local business
+- **Value** - perceived value that PLBs communicate to PDUs
 
 ### Eligible Donor User (EDU) Flow
 
