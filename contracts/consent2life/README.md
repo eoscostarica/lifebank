@@ -1,12 +1,14 @@
 # consent2life
 
-Medical cal procedures are inherently risky users must be informed and consent to the service
+## Informed Consent Contract [consent2life](https://github.com/eoscostarica/lifebank/tree/master/contracts/consent2life)
+- Each donor must accept terms of use
+- Each donation center must accept terms of participation
+- Each local business must accept terms of participation
+- All users must also have a way of revoking their consent.
+- Ricardian Clauses included for each terms of service consent.
 
-Users must also have a way of revoking their consent.
 
-Each user must accept terms of service in order to use `lifebankcode` and `lifebankcoin` smart contracts
-
-once a users account is created and PIN is generated the user must sign a transaction declaring informed consent to use the app.
+The  Smart Contract is code deployed under the account [consent2life](https://jungle.bloks.io/account/consent2life). 
 
 Informed consent table must have :
 
@@ -21,3 +23,5 @@ Informed consent table must have :
 cd contracts/consent2life
 eosio-cpp -abigen ./src/consent2life.cpp -o consent2life.wasm -I ./include/ -R ./ricardian
 ```
+
+ 
