@@ -85,7 +85,7 @@ Lifebank helps local communities create a virtuous circle of value exchange betw
 
 [![lifebank Value Circle](./docs/donor-user-flow.png)](./docs/donor-user-flow.png)
 
-**[Donor User Flow on Zeplin](https://zpl.io/a8o9A7X)**
+**[See Donor User Flow on Zeplin](https://zpl.io/a8o9A7X)**
 
 - Potential Donor User (PDU)
 - Eligible Donor User (EDU)
@@ -111,8 +111,8 @@ An eligible donor user (EDU) can redeem their community donation token receipt (
 
 ### Community Donation Center (CDC) User Flow
 
-[![lifebank Value Circle](./docs/clinic-user-flow.png)](./docs/clinic-user-flow.png)
-**[Donation Center User Flow on Zeplin](https://zpl.io/amAMKdQ)**
+[![clinic user flow](./docs/clinic-user-flow.png)](./docs/clinic-user-flow.png)
+**[See Donation Center User Flow on Zeplin](https://zpl.io/amAMKdQ)**
 
 - Community Donation Center (CDC)
 
@@ -130,7 +130,7 @@ Once a eligible donor user (EDU) completes a qualified blood donation (QBD), the
 
 ### Participating Local Business (PLB) User Flow
 
-[![lifebank Value Circle](./docs/sponsor-user-flow.png)](./docs/sponsor-user-flow.png)
+[![See Participating Local Business (PLB) User Flow](./docs/sponsor-user-flow.png)](./docs/sponsor-user-flow.png)
 
 **[Sponsor User Flow on Zeplin](https://zpl.io/a8o9kq6)**
 - Participating Local Business (PLB)
