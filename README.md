@@ -187,7 +187,7 @@ We are running webapp and backend services on our own servers on premises in Cos
 - Preventing abuse as well as extortion of users for donations
 - Preventing over issuance from community donation centers due to abuse or corruption
 - Whether to allow a secondary market on the donation receipt tokens
-- ...
+- Preventing spam account creation (some ideas: invite links/ ram quota / clinic only signup )
 
 ### Accomplishments that we've proud of
 
