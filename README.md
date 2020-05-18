@@ -1,25 +1,25 @@
-<p align="center">
-  
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+# Lifebank.io
+### EOSIO VIRTUAL HACKATHON [Coding for Change - May 2020](https://hackathon.eos.io/events/coding-for-change/)
 
+<p align="center">
+<a href="http://standardjs.com">
+<img src="https://img.shields.io/badge/all_contributors-10-g.svg?style=flat-square" alt="StandardJS">
+</a>
 <a href="http://standardjs.com">
 <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="StandardJS">
 </a>
 <a href="https://git.io/col">
 <img src="https://img.shields.io/badge/%E2%9C%93-collaborative_etiquette-brightgreen.svg" alt="Collaborative Etiquette">
 </a>
-<a href="https://twitter.com/intent/follow?screen_name=eoscostarica">
-<img src="https://img.shields.io/twitter/follow/eoscostarica.svg?style=social&logo=twitter" alt="follow on Twitter">
-</a>
 <a href="#">
 <img src="https://img.shields.io/dub/l/vibe-d.svg" alt="MIT">
 </a>
+<a href="https://twitter.com/intent/follow?screen_name=eoscostarica">
+<img src="https://img.shields.io/twitter/follow/eoscostarica.svg?style=social&logo=twitter" alt="follow on Twitter">
+</a>
 </p>
 
-# Lifebank.io
-### EOSIO VIRTUAL HACKATHON [Coding for Change - May 2020](https://hackathon.eos.io/events/coding-for-change/)
-
-## **Inspiration**
+## Inspiration
 
 Blood banks should act just as their name reflects.  When we are healthy, we should be able to save for the future by making deposits. When we inevitably get sick, we should be able to withdrawal on those savings to pay for expenses related to our condition.   
 
@@ -47,7 +47,7 @@ Another consequence of the pandemic was the economic devastation of a lock-down.
 
 To align the relevant incentives and accomplish the above, we created **Lifebank.io**   
 
-## **What is Lifebank?**
+## What is Lifebank?
 
 Lifebank helps local communities create a virtuous circle of value exchange between three parties — a **eligible donor user (EDU), a community donation center (CDC) and a participating local business (PLB).** 
 
@@ -91,7 +91,7 @@ An eligible donor user (EDU) can redeem their community donation token receipt (
 
 [![lifebank Value Circle](./docs/clinic-user-flow.png)](./docs/clinic-user-flow.png)
 
-1) **Register as a community donation center (CDC) and create a ticker**
+**1) Register as a community donation center (CDC) and create a ticker**
 
 A community donation center (CDC) , defined in the terms of participation as a center that is regulated and licensed to receive blood donations , can register as a CDC using the Lifebank application. The CDC user will be directed from the landing page to register as a CDC using their credentials. The CDC user will then need to review and sign the terms of participation in order to create an account and testify that they meet the criteria. Once an account is created, the CDC user may display all the information relevant to receiving donations like location, opening hours, eligibility criteria, etc on their Lifebank profile. The center may also provide current inventory information by blood type and indicate the current demand level. The CDC must indicate the amount of DTRs they are currently willing to issue per donation. The CDC may also name a 3-letter ticker by which their cDTR will be referred to in their community.  For example, a local CDC in Athens, Georgia may choose to call their cDTR "ATH" as long as the ticker combination is available.  
 
@@ -99,7 +99,7 @@ A community donation center (CDC) , defined in the terms of participation as a c
 
 Once a potential donor user (PDU) visits a community donation center (CDC),  they must first pass the qualifying requirements set by each CDC.  This is usually done by a simple questionnaire about the person and medical history.  No information related to the PDU will be provided to Lifebank.  The CDC representative only needs to indicate from the Lifebank dashboard if the person's account is qualified or not qualified to donate.  If the PDU is qualified to donate, they can proceed with a qualified blood donation (QBD) as defined in the terms of participation signed by the CDC.  The PBU will now be eligible to receive a cDTC and be referred to as an eligible donor user (EDU).  
 
-3) **Issuing a Community Donation Token Receipt (cDTR) and transferring to a Eligible Donor User (EDU)**
+**3) Issuing a Community Donation Token Receipt (cDTR) and transferring to a Eligible Donor User (EDU)**
 
 Once a eligible donor user (EDU) completes a qualified blood donation (QBD), the community donation center (CDC) will acknowledge the event by issuing a community donation token receipt (cDTR). The EDU will present a QR code representing their Lifeline account and the CDC will transfer the cDTR by scanning the QR code.  If the cDTR has an expiry date,  the transfer from the CDC to the EDU will mark the beginning of the term.  
 
@@ -115,15 +115,15 @@ A local business can register to become a participating local business (PLB) on 
 
 Once a PLB has a completed the registration process, they will be able to access the Lifebank dashboard. The dashboard will show the balance of DTRs received over time, their current value proposition offer and a toggle to redeem cDTRs.  If a EDU wishes to redeem a cDTR, the PBL would access the redeem option on the dashboard. 
 
-3**) Accepting a community donation token receipt (cDTR)**
+**3) Accepting a community donation token receipt (cDTR)**
 
 A registered participating local business (PLB) can accept community donation token receipts (cDTR) from any eligible donor user (EDU) that wishes to buy goods or services as defined in the terms of participation.  When a EDU makes a qualifying purchase as displayed on the PBLs Lifebank profile, the EDU can redeem a cDTR in exchange for the value proposition as specified by the PLB.   To redeem a cDTR,  the PBL user must show their business account QR code as displayed on the application to the EDU wishing the make a purchase.  The EDU will scan the QR code and transfer the cDTR from their account to the PBL.  Once received in the PBL account, the cDTR is considered redeemed and is referred to as simply a Donation Token Receipt (DTR) which is non-transferable. If the cDTR has an expiry date,  the transfer from the EDU to the PLB will mark the end of the term.  The end of the term must come before the expiry date.  
 
-## **How we built it?**
+## How we built it?
 
 Lifebank uses the following technology to create a virtuous circle of value exchange between the three parties — a **eligible donor user (EDU), a community donation center (CDC) and a participating local business (PLB).** 
 
-## **App Services**
+## App Services
 
 We use **Docker** for all app services
 
@@ -144,9 +144,9 @@ This UI is currently available at https://lifebank.io
 We are running webapp and backend services on our own servers on premises in Costa Rica.
 
 
-## **User Experience - UX**
+## User Experience - UX
 
-### **Users**
+### Users
 
 - Potential Donor User (PDU)
 - Eligible Donor User (EDU)
@@ -160,7 +160,7 @@ We are running webapp and backend services on our own servers on premises in Cos
 #### [Sponsor User Flow](https://zpl.io/a8o9kq6)
 
 
-## **Challenges we ran into**
+## Challenges we ran into
 
 - Defining the scope of the project to make sure it was not to broad
 - How to setup a ACL that helps the user sign up experience while handling key management
@@ -169,15 +169,15 @@ We are running webapp and backend services on our own servers on premises in Cos
 - Whether to allow a secondary market on the donation receipt tokens
 - ...
 
-## **Accomplishments that we've proud of**
+## Accomplishments that we've proud of
 
 - ...
 
-## **What we learned**
+## What we learned
 
 - ...
 
-## **What's next for Lifebank.io**
+## What's next for Lifebank.io
 
 Lifebank takes a on a life of its own!
 
