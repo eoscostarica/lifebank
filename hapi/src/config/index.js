@@ -1,6 +1,6 @@
 module.exports = {
-  serverConfig: require('./server'),
-  i18nConfig: require('./i18n'),
-  hasuraConfig: require('./hasura'),
-  eosConfig: require('./eos')
+  serverConfig: require('./server.config'),
+  i18nConfig: require('./i18n.config'),
+  hasuraConfig: require('./hasura.config'),
+  eosConfig: require('./eos.config')
 }

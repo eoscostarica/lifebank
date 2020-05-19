@@ -7,12 +7,11 @@ import routes from './routes'
 const App = ({ ual }) => (
   <BrowserRouter>
     <Switch>
-      {routes.map(({ path, component: Component }) => (
-        <Route key={`path-${path}`} path={path}>
+      {routes.map(({ path, component: Component, ...args }) => (
+        <Route key={`path-${path}`} path={path} {...args}>
           <Component ual={ual} />
         </Route>
       ))}
-      <Redirect exact from="/" to="/dashboard" />
       <Redirect to="/not-found" />
     </Switch>
   </BrowserRouter>

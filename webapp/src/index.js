@@ -3,13 +3,14 @@ import { render } from 'react-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { UALProvider, withUAL } from 'ual-reactjs-renderer'
+import { ApolloProvider } from '@apollo/react-hooks'
 
 import { ualConfig } from './config'
+import { client } from './graphql'
 import App from './App'
 import theme from './theme'
-import * as serviceWorker from './serviceWorker'
-
 import './i18n'
+import * as serviceWorker from './serviceWorker'
 
 const AppWithUAL = withUAL(App)
 
@@ -19,10 +20,12 @@ render(
     authenticators={ualConfig.authenticators}
     appName={ualConfig.appName}
   >
-    <CssBaseline />
-    <ThemeProvider theme={theme}>
-      <AppWithUAL />
-    </ThemeProvider>
+    <ApolloProvider client={client}>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <AppWithUAL />
+      </ThemeProvider>
+    </ApolloProvider>
   </UALProvider>,
   document.getElementById('root')
 )

@@ -22,6 +22,7 @@
     "@hapi/inert": "^6.0.1",
     "@hapi/joi": "^17.1.0",
     "eosjs": "^20.0.3",
+    "eosjs-api": "^7.0.4",
     "graphql-request": "^1.8.2",
     "hapi-pino": "^6.5.0",
     "http-status-codes": "^1.4.0",
