@@ -1,0 +1,1 @@
+export * from './donor.gql'

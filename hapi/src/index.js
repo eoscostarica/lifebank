@@ -1,9 +1,8 @@
 const Hapi = require('@hapi/hapi')
 const Boom = require('@hapi/boom')
 const Path = require('path')
-const { GraphQLClient } = require('graphql-request')
 
-const { serverConfig, i18nConfig, hasuraConfig } = require('./config')
+const { serverConfig, i18nConfig } = require('./config')
 const routes = require('./routes')
 
 const init = async () => {
@@ -28,12 +27,7 @@ const init = async () => {
   })
 
   server.bind({
-    i18n: i18nConfig,
-    hasuraClient: new GraphQLClient(hasuraConfig.url, {
-      headers: {
-        'x-hasura-admin-secret': hasuraConfig.adminSecret
-      }
-    })
+    i18n: i18nConfig
   })
 
   server.route(routes)

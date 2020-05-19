@@ -30,12 +30,16 @@ services:
       SERVER_ADDRESS: "${SERVER_ADDRESS}"
       HASURA_URL: "${HASURA_URL}"
       HASURA_ADMIN_SECRET: "${HASURA_ADMIN_SECRET}"
-    restart: on-failure
+      EOS_API_URL: "${EOS_API_URL}"
+      EOS_API_CHAIN_ID: "${EOS_API_CHAIN_ID}"
+      EOS_BASE_ACCOUNT: "${EOS_BASE_ACCOUNT}"
+      EOS_BASE_ACCOUNT_PASSWORD: ${EOS_BASE_ACCOUNT_PASSWORD}
+      EOS_WALLET_URL: "${EOS_WALLET_URL}"
   hasura:
     container_name: "${STAGE}-${APP_NAME}-hasura"
     image: hasura/graphql-engine:v1.2.1.cli-migrations-v2
     ports:
-      - "8085:8080"
+      - "8080:8080"
     volumes:
       - ./hasura/migrations:/hasura-migrations
       - ./hasura/metadata:/hasura-metadata
@@ -47,7 +51,6 @@ services:
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "${HASURA_GRAPHQL_UNAUTHORIZED_ROLE}"
     depends_on:
       - postgres
-    restart: on-failure
   webapp:
     container_name: "${STAGE}-${APP_NAME}-webapp"
     build: ./webapp
@@ -60,9 +63,9 @@ services:
       REACT_APP_EOS_API_PORT: "${REACT_APP_EOS_API_PORT}"
       REACT_APP_EOS_API_PROTOCOL: "${REACT_APP_EOS_API_PROTOCOL}"
       REACT_APP_EOS_CHAIN_ID: "${REACT_APP_EOS_CHAIN_ID}"
+      REACT_APP_HASURA_URL: "${REACT_APP_HASURA_URL}"
     depends_on:
       - hasura
-    restart: on-failure
   nginx:
     container_name: "${STAGE}-${APP_NAME}-nginx"
     image: nginx:latest

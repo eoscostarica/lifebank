@@ -1,6 +1,13 @@
-actions: []
+actions:
+- name: donor_signup
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/donors
+  permissions:
+  - role: guest
 custom_types:
   enums: []
   input_objects: []
-  objects: []
+  objects:
+  - name: donor_signup_output
   scalars: []
