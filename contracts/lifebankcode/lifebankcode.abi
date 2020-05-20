@@ -12,8 +12,32 @@
                     "type": "name"
                 },
                 {
-                    "name": "fullname",
+                    "name": "clinic_name",
                     "type": "string"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "address",
+                    "type": "string"
+                },
+                {
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "name": "phone_number",
+                    "type": "string"
+                },
+                {
+                    "name": "has_immunity_test",
+                    "type": "bool"
+                },
+                {
+                    "name": "blood_urgency_level",
+                    "type": "uint8"
                 }
             ]
         },
@@ -65,6 +89,54 @@
             ]
         },
         {
+            "name": "community",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                },
+                {
+                    "name": "creator",
+                    "type": "name"
+                },
+                {
+                    "name": "logo",
+                    "type": "string"
+                },
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "createcmm",
+            "base": "",
+            "fields": [
+                {
+                    "name": "creator",
+                    "type": "name"
+                },
+                {
+                    "name": "cmm_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "logo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
             "name": "doner",
             "base": "",
             "fields": [
@@ -73,12 +145,44 @@
                     "type": "name"
                 },
                 {
-                    "name": "fullname",
-                    "type": "string"
-                },
-                {
                     "name": "tx",
                     "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "link",
+            "base": "",
+            "fields": [
+                {
+                    "name": "cmm_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "inviter",
+                    "type": "name"
+                },
+                {
+                    "name": "new_user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "network",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "community",
+                    "type": "symbol"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
                 }
             ]
         },
@@ -117,6 +221,16 @@
             "name": "clear",
             "type": "clear",
             "ricardian_contract": ""
+        },
+        {
+            "name": "createcmm",
+            "type": "createcmm",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "link",
+            "type": "link",
+            "ricardian_contract": ""
         }
     ],
     "tables": [
@@ -128,8 +242,22 @@
             "key_types": []
         },
         {
+            "name": "community",
+            "type": "community",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "doners",
             "type": "doner",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "network",
+            "type": "network",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

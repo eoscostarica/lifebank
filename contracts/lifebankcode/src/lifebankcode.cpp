@@ -12,7 +12,19 @@ checksum256 lifebankcode::get_tx()
 void lifebankcode::check_consent(name account)
 {
   bool consent = has_consent(account, get_self());
-  eosio::check(consent, "Do not have consent for lifebankcode");
+  eosio::check(consent, "Account does not have consent for lifebankcode");
+}
+
+ACTION lifebankcode::createcmm(eosio::name creator, eosio::asset cmm_asset, string description, string logo)
+{
+  require_auth(creator);
+
+  const eosio::symbol new_symbol = cmm_asset.symbol;
+}
+
+ACTION lifebankcode::link(eosio::asset cmm_asset, eosio::name inviter, eosio::name new_user)
+{
+  eosio::check(is_account(new_user), "New user account does not exists");
 }
 
 ACTION lifebankcode::adddoner(name account, string fullname)
@@ -20,26 +32,26 @@ ACTION lifebankcode::adddoner(name account, string fullname)
   require_auth(account);
   check_consent(account);
   doner_table _doners(get_self(), get_self().value);
-  eosio::check(fullname.size() <= 64, "name has more than 64 bytes");
+  eosio::check(fullname.size() <= 64, "Name has more than 64 bytes");
   auto doner_itr = _doners.find(account.value);
   if (doner_itr == _doners.end())
   {
     _doners.emplace(get_self(), [&](auto &row) {
       row.account = account;
-      row.fullname = fullname;
       row.tx = get_tx();
     });
   }
   else
   {
     _doners.modify(doner_itr, get_self(), [&](auto &row) {
-      row.fullname = fullname;
       row.tx = get_tx();
     });
   }
 }
 
-ACTION lifebankcode::addclinic(name account, string fullname)
+ACTION lifebankcode::addclinic(name account, string clinic_name,
+                               string description, string address, string location, string phone_number,
+                               bool has_immunity_test, uint8_t blood_urgency_level)
 {
   require_auth(account);
 }
@@ -63,4 +75,4 @@ ACTION lifebankcode::clear()
   }
 }
 
-EOSIO_DISPATCH(lifebankcode, (adddoner)(clear))
+EOSIO_DISPATCH(lifebankcode, (createcmm)(link)(adddoner)(addclinic)(addsponsor)(clear))
