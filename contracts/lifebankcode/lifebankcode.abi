@@ -4,7 +4,35 @@
     "types": [],
     "structs": [
         {
+            "name": "addclinic",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "fullname",
+                    "type": "string"
+                }
+            ]
+        },
+        {
             "name": "adddoner",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "fullname",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "addsponsor",
             "base": "",
             "fields": [
                 {
@@ -23,6 +51,20 @@
             "fields": []
         },
         {
+            "name": "clinic",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "tx",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
             "name": "doner",
             "base": "",
             "fields": [
@@ -33,14 +75,42 @@
                 {
                     "name": "fullname",
                     "type": "string"
+                },
+                {
+                    "name": "tx",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "sponsor",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "tx",
+                    "type": "checksum256"
                 }
             ]
         }
     ],
     "actions": [
         {
+            "name": "addclinic",
+            "type": "addclinic",
+            "ricardian_contract": ""
+        },
+        {
             "name": "adddoner",
             "type": "adddoner",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "addsponsor",
+            "type": "addsponsor",
             "ricardian_contract": ""
         },
         {
@@ -51,8 +121,22 @@
     ],
     "tables": [
         {
+            "name": "clinics",
+            "type": "clinic",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "doners",
             "type": "doner",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "sponsors",
+            "type": "sponsor",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
