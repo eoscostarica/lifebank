@@ -13,11 +13,12 @@ public:
   ACTION createcmm(eosio::name creator, eosio::asset cmm_asset, string description, string logo);
   ACTION link(eosio::asset cmm_asset, eosio::name inviter, eosio::name new_user);
 
-  ACTION adddoner(eosio::name account, string fullname);
+  ACTION adddoner(eosio::name account, string doner_name);
   ACTION addclinic(eosio::name account, string clinic_name,
                    string description, string address, string location, string phone_number,
-                   bool has_immunity_test, uint8_t blood_urgency_level);
-  ACTION addsponsor(eosio::name account, string fullname);
+                   bool has_immunity_test, uint8_t blood_urgency_level, string schedule);
+  ACTION addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
+                    string website, string telephone, string bussines_type, string schedule);
   ACTION clear();
 
 private:

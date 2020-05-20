@@ -38,6 +38,10 @@
                 {
                     "name": "blood_urgency_level",
                     "type": "uint8"
+                },
+                {
+                    "name": "schedule",
+                    "type": "string"
                 }
             ]
         },
@@ -50,7 +54,7 @@
                     "type": "name"
                 },
                 {
-                    "name": "fullname",
+                    "name": "doner_name",
                     "type": "string"
                 }
             ]
@@ -64,7 +68,31 @@
                     "type": "name"
                 },
                 {
-                    "name": "fullname",
+                    "name": "sponsor_name",
+                    "type": "string"
+                },
+                {
+                    "name": "covid_impact",
+                    "type": "string"
+                },
+                {
+                    "name": "benefit_description",
+                    "type": "string"
+                },
+                {
+                    "name": "website",
+                    "type": "string"
+                },
+                {
+                    "name": "telephone",
+                    "type": "string"
+                },
+                {
+                    "name": "bussines_type",
+                    "type": "string"
+                },
+                {
+                    "name": "schedule",
                     "type": "string"
                 }
             ]
