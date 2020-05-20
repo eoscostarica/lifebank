@@ -1,7 +1,7 @@
-const donorApi = require('./donor.api')
+const accountApi = require('./account.api')
 const vaultApi = require('./vault.api')
 
 module.exports = {
-  donorApi,
+  accountApi,
   vaultApi
 }

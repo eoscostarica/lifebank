@@ -1,3 +1,3 @@
-const donorSignupRoute = require('./donor-signup/donor-signup.route')
+const createAccountRoute = require('./create-account/create-account.route')
 
-module.exports = [donorSignupRoute]
+module.exports = [createAccountRoute]

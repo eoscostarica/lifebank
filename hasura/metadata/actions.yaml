@@ -1,8 +1,8 @@
 actions:
-- name: donor_signup
+- name: create_account
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/donors
+    handler: http://hapi:9090/api/accounts
   permissions:
   - role: guest
 custom_types:
@@ -10,4 +10,5 @@ custom_types:
   input_objects: []
   objects:
   - name: donor_signup_output
+  - name: create_account_output
   scalars: []
