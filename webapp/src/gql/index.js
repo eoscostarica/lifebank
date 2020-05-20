@@ -1,1 +1,1 @@
-export * from './donor.gql'
+export * from './account.gql'

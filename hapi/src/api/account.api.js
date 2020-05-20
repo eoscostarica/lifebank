@@ -1,8 +1,8 @@
 const { eosUtils } = require('../utils')
 const vaultApi = require('./vault.api')
 
-const signup = async ({ secret }) => {
-  const account = await eosUtils.generateRandomAccountName('donor')
+const create = async ({ type, secret }) => {
+  const account = await eosUtils.generateRandomAccountName(type)
   const { password, transactionId } = await eosUtils.createAccount(account)
   await vaultApi.newVaut({
     secret,
@@ -18,5 +18,5 @@ const signup = async ({ secret }) => {
 }
 
 module.exports = {
-  signup
+  create
 }

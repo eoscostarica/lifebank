@@ -1,8 +1,8 @@
 type Mutation {
-  donor_signup (
-    fullname: String!
+  create_account (
+    type: String!
     secret: String!
-  ): donor_signup_output
+  ): create_account_output
 }
 
 
@@ -12,5 +12,11 @@ type donor_signup_output {
   account : String!
   token : String!
   transaction_id : String!
+}
+
+type create_account_output {
+  account : String!
+  transaction_id : String!
+  token : String!
 }
 
