@@ -66,7 +66,7 @@ const createAccount = async accountName => {
     }
   ]
 
-  const { transaction_id: transactionId } = await api.transact(
+  const transaction = await api.transact(
     {
       actions: [
         {
@@ -133,14 +133,49 @@ const createAccount = async accountName => {
 
   return {
     password,
-    transactionId
+    transaction
   }
 }
 
 const getAccount = account => eosApi.getAccount(account)
 
+const getCodeHash = account => eosApi.getCodeHash(account)
+
+const getAbi = account => eosApi.getAbi(account)
+
+const transact = async (actions, account, password) => {
+  try {
+    await wallet.unlock(account, password)
+  } catch (error) {}
+
+  const keys = await wallet.listKeys(account, password)
+  const api = new Api({
+    rpc,
+    textDecoder,
+    textEncoder,
+    chainId: eosConfig.chainId,
+    signatureProvider: new JsSignatureProvider(keys)
+  })
+  const transaction = await api.transact(
+    {
+      actions
+    },
+    {
+      blocksBehind: 3,
+      expireSeconds: 30
+    }
+  )
+
+  await wallet.lock(account)
+
+  return transaction
+}
+
 module.exports = {
   generateRandomAccountName,
   createAccount,
-  getAccount
+  getAccount,
+  transact,
+  getCodeHash,
+  getAbi
 }

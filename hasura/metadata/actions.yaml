@@ -5,10 +5,25 @@ actions:
     handler: http://hapi:9090/api/accounts
   permissions:
   - role: guest
+- name: donor_signup
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/donors
+    forward_client_headers: true
+  permissions:
+  - role: donor
+- name: get_abi
+  definition:
+    kind: ""
+    handler: http://hapi:9090/api/contracts/get-abi
+  permissions:
+  - role: donor
+  - role: guest
 custom_types:
   enums: []
   input_objects: []
   objects:
   - name: donor_signup_output
   - name: create_account_output
+  - name: get_abi_output
   scalars: []

@@ -35,6 +35,8 @@ services:
       EOS_BASE_ACCOUNT: "${EOS_BASE_ACCOUNT}"
       EOS_BASE_ACCOUNT_PASSWORD: ${EOS_BASE_ACCOUNT_PASSWORD}
       EOS_WALLET_URL: "${EOS_WALLET_URL}"
+      JWT_SECRECT: "${JWT_SECRECT}"
+      JWT_ISS: "${JWT_ISS}"
   hasura:
     container_name: "${STAGE}-${APP_NAME}-hasura"
     image: hasura/graphql-engine:v1.2.1.cli-migrations-v2
@@ -49,6 +51,7 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: "${HASURA_GRAPHQL_ENABLED_LOG_TYPES}"
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "${HASURA_GRAPHQL_UNAUTHORIZED_ROLE}"
+      HASURA_GRAPHQL_JWT_SECRET: "${HASURA_GRAPHQL_JWT_SECRET}"
     depends_on:
       - postgres
   webapp:

@@ -6,17 +6,33 @@ type Mutation {
 }
 
 
+type Mutation {
+  donor_signup (
+    fullname: String!
+  ): donor_signup_output
+}
+
+
+type Query {
+  get_abi (
+    contract: String!
+  ): get_abi_output
+}
+
+
 
 
 type donor_signup_output {
-  account : String!
-  token : String!
-  transaction_id : String!
+  success : Boolean!
 }
 
 type create_account_output {
   account : String!
   transaction_id : String!
   token : String!
+}
+
+type get_abi_output {
+  abi : jsonb!
 }
 

@@ -6,6 +6,7 @@ module.exports = {
   path: '/api/accounts',
   handler: createAccountHandler,
   options: {
-    validate: createAccountValidation
+    validate: createAccountValidation,
+    auth: false
   }
 }
