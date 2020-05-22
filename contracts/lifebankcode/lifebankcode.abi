@@ -4,7 +4,7 @@
     "types": [],
     "structs": [
         {
-            "name": "addclinic",
+            "name": "adddoner",
             "base": "",
             "fields": [
                 {
@@ -12,7 +12,21 @@
                     "type": "name"
                 },
                 {
-                    "name": "clinic_name",
+                    "name": "doner_name",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "addlifebank",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "lifebank_name",
                     "type": "string"
                 },
                 {
@@ -41,20 +55,6 @@
                 },
                 {
                     "name": "schedule",
-                    "type": "string"
-                }
-            ]
-        },
-        {
-            "name": "adddoner",
-            "base": "",
-            "fields": [
-                {
-                    "name": "account",
-                    "type": "name"
-                },
-                {
-                    "name": "doner_name",
                     "type": "string"
                 }
             ]
@@ -103,20 +103,6 @@
             "fields": []
         },
         {
-            "name": "clinic",
-            "base": "",
-            "fields": [
-                {
-                    "name": "account",
-                    "type": "name"
-                },
-                {
-                    "name": "tx",
-                    "type": "checksum256"
-                }
-            ]
-        },
-        {
             "name": "community",
             "base": "",
             "fields": [
@@ -129,15 +115,15 @@
                     "type": "name"
                 },
                 {
-                    "name": "logo",
-                    "type": "string"
-                },
-                {
-                    "name": "name",
+                    "name": "community_name",
                     "type": "string"
                 },
                 {
                     "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "logo",
                     "type": "string"
                 }
             ]
@@ -151,7 +137,11 @@
                     "type": "name"
                 },
                 {
-                    "name": "cmm_asset",
+                    "name": "community_name",
+                    "type": "string"
+                },
+                {
+                    "name": "community_asset",
                     "type": "asset"
                 },
                 {
@@ -179,11 +169,25 @@
             ]
         },
         {
+            "name": "lifebank",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "tx",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
             "name": "link",
             "base": "",
             "fields": [
                 {
-                    "name": "cmm_asset",
+                    "name": "community_asset",
                     "type": "asset"
                 },
                 {
@@ -231,13 +235,13 @@
     ],
     "actions": [
         {
-            "name": "addclinic",
-            "type": "addclinic",
+            "name": "adddoner",
+            "type": "adddoner",
             "ricardian_contract": ""
         },
         {
-            "name": "adddoner",
-            "type": "adddoner",
+            "name": "addlifebank",
+            "type": "addlifebank",
             "ricardian_contract": ""
         },
         {
@@ -263,13 +267,6 @@
     ],
     "tables": [
         {
-            "name": "clinics",
-            "type": "clinic",
-            "index_type": "i64",
-            "key_names": [],
-            "key_types": []
-        },
-        {
             "name": "community",
             "type": "community",
             "index_type": "i64",
@@ -279,6 +276,13 @@
         {
             "name": "doners",
             "type": "doner",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "lifebanks",
+            "type": "lifebank",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
