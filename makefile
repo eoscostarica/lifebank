@@ -32,6 +32,7 @@ run-hasura:
 		curl http://localhost:9090; \
 		do echo "$(BLUE)$(STAGE)-$(APP_NAME)-hasura |$(RESET) waiting for hapi service"; \
 		sleep 5; done;
+	@docker-compose stop hasura
 	@docker-compose up -d --build hasura
 	@until \
 		curl http://localhost:8080/v1/version; \

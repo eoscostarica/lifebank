@@ -3,6 +3,7 @@ const Boom = require('@hapi/boom')
 const Path = require('path')
 
 const { serverConfig, i18nConfig } = require('./config')
+const { jwtUtils } = require('./utils')
 const routes = require('./routes')
 
 const init = async () => {
@@ -43,8 +44,14 @@ const init = async () => {
     {
       plugin: require('@hapi/inert'),
       options: {}
+    },
+    {
+      plugin: require('hapi-auth-jwt2'),
+      options: {}
     }
   ])
+
+  jwtUtils.auth(server)
 
   await server.start()
 

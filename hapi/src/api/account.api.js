@@ -1,19 +1,26 @@
-const { eosUtils } = require('../utils')
+const { eosUtils, jwtUtils } = require('../utils')
+
 const vaultApi = require('./vault.api')
+const historyApi = require('./history.api')
 
 const create = async ({ type, secret }) => {
   const account = await eosUtils.generateRandomAccountName(type)
-  const { password, transactionId } = await eosUtils.createAccount(account)
-  await vaultApi.newVaut({
-    secret,
+  const { password, transaction } = await eosUtils.createAccount(account)
+  const token = jwtUtils.create({ account, type })
+
+  await vaultApi.insert({
+    type,
     account,
+    secret,
     password
   })
 
+  await historyApi.insert(transaction)
+
   return {
     account,
-    transaction_id: transactionId,
-    token: '' // @todo: generate token
+    token,
+    transaction_id: transaction.transaction_id,
   }
 }
 

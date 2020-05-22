@@ -7,6 +7,7 @@ import { ApolloProvider } from '@apollo/react-hooks'
 
 import { ualConfig } from './config'
 import { client } from './graphql'
+import { UserProvider } from './context/user.context'
 import App from './App'
 import theme from './theme'
 import './i18n'
@@ -21,10 +22,12 @@ render(
     appName={ualConfig.appName}
   >
     <ApolloProvider client={client}>
-      <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <AppWithUAL />
-      </ThemeProvider>
+      <UserProvider>
+        <CssBaseline />
+        <ThemeProvider theme={theme}>
+          <AppWithUAL />
+        </ThemeProvider>
+      </UserProvider>
     </ApolloProvider>
   </UALProvider>,
   document.getElementById('root')

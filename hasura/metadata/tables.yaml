@@ -1,3 +1,6 @@
 - table:
     schema: public
+    name: history
+- table:
+    schema: public
     name: vault
