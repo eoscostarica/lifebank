@@ -3,6 +3,8 @@ import NotFound from './NotFound'
 import LandingPage from './LandingPage'
 import Signup from './Signup'
 import Login from './Login'
+import Donation from './Donation'
+import Profile from './Profile'
 
 export default [
   {
@@ -30,5 +32,15 @@ export default [
     path: '/',
     component: LandingPage,
     exact: true
+  },
+  {
+    name: 'donation',
+    path: '/donations',
+    component: Donation
+  },
+  {
+    name: 'profile',
+    path: '/profile',
+    component: Profile
   }
 ]

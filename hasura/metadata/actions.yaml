@@ -25,12 +25,18 @@ actions:
     handler: http://hapi:9090/api/login
   permissions:
   - role: guest
+- name: sponsor_signup
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/sponsors
 custom_types:
   enums: []
-  input_objects: []
+  input_objects:
+  - name: sponsor_signup_input
   objects:
   - name: donor_signup_output
   - name: create_account_output
   - name: get_abi_output
   - name: login_output
+  - name: sponsor_signup_output
   scalars: []

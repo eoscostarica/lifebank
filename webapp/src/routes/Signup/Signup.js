@@ -1,33 +1,63 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/styles'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
 import { useHistory } from 'react-router-dom'
 
 import {
   CREATE_ACCOUNT_MUTATION,
   DONOR_SIGNUP_MUTATION,
+  SPONSOR_SIGNUP_MUTATION,
   GET_ABI_QUERY
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
 import SignupAccountTypeSelector from './SignupAccountTypeSelector'
 import SignupDonor from './SignupDonor'
+import SignupSponsor from './SignupSponsor'
 import SignupAccount from './SignupAccount'
 import SignupConsent from './SignupConsent'
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2)
+  register: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '90vh',
+    alignItems: 'center',
+    padding: theme.spacing(2, 1),
+    '& h1': {
+      marginBottom: theme.spacing(4),
+      fontSize: 48
+    },
+    '& h4': {
+      marginBottom: theme.spacing(4),
+      color: theme.palette.secondary.main
+    }
+  },
+  goBack: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    marginBottom: theme.spacing(10),
+    '& button': {
+      padding: 0,
+      display: 'flex',
+      alignItems: 'end',
+      height: 25
+    }
+  },
+  registerBack: {
+    color: `${theme.palette.primary.main} !important`
   },
   stepperContent: {
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3)
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column'
   }
 }))
 
@@ -55,8 +85,13 @@ const Signup = () => {
   const { data: { get_abi: { abi } = {} } = {} } = useQuery(GET_ABI_QUERY, {
     variables: { contract: 'consent2life' }
   })
-
-  const steps = ['Type', 'Signup', 'Consent']
+  const [
+    sponsorSignup,
+    {
+      loading: sponsorSignupLoading,
+      data: { sponsor_signup: sponsorSignupResult } = {}
+    }
+  ] = useMutation(SPONSOR_SIGNUP_MUTATION)
 
   const handleAccountTypeChange = (type) => {
     setAccountType(type)
@@ -65,6 +100,10 @@ const Signup = () => {
 
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
+  }
+
+  const handleGoBack = () => {
+    activeStep && setActiveStep(activeStep - 1)
   }
 
   const handleCreateAccount = () => {
@@ -77,11 +116,26 @@ const Signup = () => {
   }
 
   const handleSingup = () => {
-    donorSignup({
-      variables: {
-        fullname: user.fullname || 'works'
-      }
-    })
+    console.log('handleSingup: ', accountType)
+    switch (accountType) {
+      case 'donor':
+        donorSignup({
+          variables: {
+            fullname: user.fullname || 'works'
+          }
+        })
+        break
+      case 'sponsor':
+        sponsorSignup({
+          variables: {
+            sponsor: {}
+          }
+        })
+        break
+
+      default:
+        break
+    }
   }
 
   useEffect(() => {
@@ -103,44 +157,59 @@ const Signup = () => {
   }, [donorSignupResult])
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={12} sm={8} md={6}>
-        <Paper className={classes.paper}>
-          <Typography variant="h1">Singup</Typography>
-          <Stepper activeStep={activeStep}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <div className={classes.stepperContent}>
-            {activeStep === 0 && (
+    <Grid container>
+      <Grid item xs={12} sm={8} md={6} className={classes.register}>
+        <Box className={classes.goBack}>
+          <IconButton aria-label="go-back" onClick={handleGoBack}>
+            <ArrowBackIcon color="primary" />
+            <Typography variant="h4" className={classes.registerBack}>
+              Register
+            </Typography>
+          </IconButton>
+        </Box>
+        <Typography variant="h1">{`Step ${activeStep + 1}`}</Typography>
+        <Box className={classes.stepperContent}>
+          {activeStep === 0 && (
+            <>
+              <Typography variant="h4">How do you want to help?</Typography>
               <SignupAccountTypeSelector onSubmit={handleAccountTypeChange} />
-            )}
-            {activeStep === 1 && accountType === 'donor' && (
+            </>
+          )}
+          {activeStep === 1 && accountType === 'donor' && (
+            <>
+              <Typography variant="h4">Create a new account.</Typography>
               <SignupDonor
                 onSubmit={handleCreateAccount}
                 loading={createAccountLoading}
                 setField={handleSetField}
                 user={user}
               />
-            )}
-            {activeStep === 1 && accountType === 'sponsor' && <h1>sponsor</h1>}
-            {activeStep === 1 && accountType === 'clinic' && <h1>clinic</h1>}
-            {activeStep === 2 && (
-              <>
-                <SignupAccount data={createAccountResult} />
-                <SignupConsent
-                  onSubmit={handleSingup}
-                  loading={donorSignupLoading}
-                  abi={abi}
-                  action="consent"
-                />
-              </>
-            )}
-          </div>
-        </Paper>
+            </>
+          )}
+          {activeStep === 1 && accountType === 'sponsor' && (
+            <SignupSponsor
+              onSubmit={handleCreateAccount}
+              loading={createAccountLoading}
+              setField={handleSetField}
+              user={user}
+            />
+          )}
+          {activeStep === 1 && accountType === 'clinic' && <h1>clinic</h1>}
+          {activeStep === 2 && (
+            <>
+              <Typography variant="h4">
+                Read our Terms and Conditions
+              </Typography>
+              <SignupAccount data={createAccountResult} />
+              <SignupConsent
+                onSubmit={handleSingup}
+                loading={donorSignupLoading || sponsorSignupLoading}
+                abi={abi}
+                action="consent"
+              />
+            </>
+          )}
+        </Box>
       </Grid>
     </Grid>
   )
