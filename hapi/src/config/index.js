@@ -1,6 +1,7 @@
 module.exports = {
-  serverConfig: require('./server.config'),
-  i18nConfig: require('./i18n.config'),
+  eosConfig: require('./eos.config'),
   hasuraConfig: require('./hasura.config'),
-  eosConfig: require('./eos.config')
+  i18nConfig: require('./i18n.config'),
+  serverConfig: require('./server.config'),
+  jwtConfig: require('./jwt.config'),
 }

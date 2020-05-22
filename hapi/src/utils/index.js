@@ -1,5 +1,8 @@
 module.exports = {
+  concent2lifeUtils: require('./concent2life'),
+  eosUtils: require('./eos'),
   hasuraUtils: require('./hasura'),
+  jwtUtils: require('./jwt'),
   walletUtils: require('./wallet'),
-  eosUtils: require('./eos')
+  lifebankcodeUtils: require('./lifebankcode')
 }

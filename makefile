@@ -1,7 +1,11 @@
 include utils/meta.mk utils/help.mk
 
 run: ##@local Run the project locally
-run: run-env run-postgres run-wallet run-hapi run-hasura run-webapp
+run: 
+	make run-env 
+	make run-postgres
+	make run-wallet
+	make -j 3 run-hapi run-hasura run-webapp
 
 run-env:
 	@[ -f .env ] && source .env || echo "$(YELLOW)WARNING:$(RESET) .env file not found"
@@ -28,6 +32,7 @@ run-hasura:
 		curl http://localhost:9090; \
 		do echo "$(BLUE)$(STAGE)-$(APP_NAME)-hasura |$(RESET) waiting for hapi service"; \
 		sleep 5; done;
+	@docker-compose stop hasura
 	@docker-compose up -d --build hasura
 	@until \
 		curl http://localhost:8080/v1/version; \

@@ -10,13 +10,13 @@ CONTRACT lifebankcode : public contract
 public:
   using contract::contract;
 
-  ACTION createcmm(eosio::name creator, eosio::asset cmm_asset, string description, string logo);
-  ACTION link(eosio::asset cmm_asset, eosio::name inviter, eosio::name new_user);
+  ACTION createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo);
+  ACTION link(eosio::asset community_asset, eosio::name inviter, eosio::name new_user);
 
   ACTION adddoner(eosio::name account, string doner_name);
-  ACTION addclinic(eosio::name account, string clinic_name,
-                   string description, string address, string location, string phone_number,
-                   bool has_immunity_test, uint8_t blood_urgency_level, string schedule);
+  ACTION addlifebank(eosio::name account, string lifebank_name,
+                     string description, string address, string location, string phone_number,
+                     bool has_immunity_test, uint8_t blood_urgency_level, string schedule);
   ACTION addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
                     string website, string telephone, string bussines_type, string schedule);
   ACTION clear();
@@ -30,15 +30,17 @@ private:
     eosio::symbol symbol;
 
     eosio::name creator;
-    string logo;
-    string name;
+    string community_name;
     string description;
+    string logo;
 
     uint64_t primary_key() const { return symbol.raw(); };
 
     EOSLIB_SERIALIZE(community,
-                     (symbol)(creator)(logo)(name)(description));
+                     (symbol)(creator)(community_name)(description)(logo));
   };
+
+  typedef eosio::multi_index<eosio::name{"community"}, community> communities_table;
 
   TABLE network
   {
@@ -48,11 +50,17 @@ private:
     eosio::name user;
 
     uint64_t primary_key() const { return id; }
-    uint64_t users_by_cmm() const { return community.raw(); }
+    uint64_t users_by_community() const { return community.raw(); }
 
     EOSLIB_SERIALIZE(network,
                      (id)(community)(user));
   };
+
+  typedef eosio::multi_index<eosio::name("network"),
+                             network,
+                             eosio::indexed_by<eosio::name{"usersbycmm"},
+                                               eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
+      networks_table;
 
   TABLE doner
   {
@@ -63,18 +71,18 @@ private:
     EOSLIB_SERIALIZE(doner,
                      (account)(tx));
   };
-  typedef multi_index<name("doners"), doner> doner_table;
+  typedef multi_index<name("doners"), doner> doners_table;
 
-  TABLE clinic
+  TABLE lifebank
   {
     eosio::name account;
 
     checksum256 tx;
     auto primary_key() const { return account.value; }
-    EOSLIB_SERIALIZE(clinic,
+    EOSLIB_SERIALIZE(lifebank,
                      (account)(tx));
   };
-  typedef multi_index<name("clinics"), clinic> clinic_table;
+  typedef multi_index<name("lifebanks"), lifebank> lifebanks_table;
 
   TABLE sponsor
   {
@@ -85,7 +93,7 @@ private:
     EOSLIB_SERIALIZE(sponsor,
                      (account)(tx));
   };
-  typedef multi_index<name("sponsors"), sponsor> sponsor_table;
+  typedef multi_index<name("sponsors"), sponsor> sponsors_table;
 };
 
 constexpr eosio::name consent_account{"consent2life"_n};
@@ -105,14 +113,14 @@ struct informed_consent
   checksum256 get_hash() const { return hash; }
 };
 
-typedef multi_index<name("userconsents"), informed_consent,
-                    indexed_by<name("singlerecord"), const_mem_fun<informed_consent, uint128_t, &informed_consent::get_record>>,
-                    indexed_by<name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash>>>
-    informed_consent_table;
+typedef eosio::multi_index<eosio::name("userconsents"), informed_consent,
+                           indexed_by<eosio::name("singlerecord"), const_mem_fun<informed_consent, uint128_t, &informed_consent::get_record>>,
+                           indexed_by<eosio::name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash>>>
+    informed_consents_table;
 
 bool has_consent(eosio::name account, eosio::name contract)
 {
-  informed_consent_table _records(consent_account, consent_account.value);
+  informed_consents_table _records(consent_account, consent_account.value);
   auto single_record = (static_cast<uint128_t>(account.value) << 64) | contract.value;
   auto single_record_index = _records.get_index<name("singlerecord")>();
   auto existing_record = single_record_index.find(single_record);

@@ -1,4 +1,4 @@
-CREATE TABLE "public"."vault"("id" serial NOT NULL, "account" varchar NOT NULL, "secret" varchar NOT NULL, "password" varchar NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), "updated_at" timestamptz NOT NULL DEFAULT now(), PRIMARY KEY ("id") );
+CREATE TABLE "public"."vault"("id" serial NOT NULL, "type" varchar NOT NULL, "account" varchar NOT NULL, "secret" varchar NOT NULL, "password" varchar NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), "updated_at" timestamptz NOT NULL DEFAULT now(), PRIMARY KEY ("id") );
 CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"()
 RETURNS TRIGGER AS $$
 DECLARE
