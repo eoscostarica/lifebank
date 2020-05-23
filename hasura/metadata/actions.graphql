@@ -20,6 +20,14 @@ type Query {
 }
 
 
+type Mutation {
+  login (
+    account: String!
+    secret: String!
+  ): login_output
+}
+
+
 
 
 type donor_signup_output {
@@ -34,5 +42,9 @@ type create_account_output {
 
 type get_abi_output {
   abi : jsonb!
+}
+
+type login_output {
+  token : String!
 }
 

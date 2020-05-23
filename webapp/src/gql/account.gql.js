@@ -9,3 +9,11 @@ export const CREATE_ACCOUNT_MUTATION = gql`
     }
   }
 `
+
+export const LOGIN_MUTATION = gql`
+  mutation($account: String!, $secret: String!) {
+    login(account: $account, secret: $secret) {
+      token
+    }
+  }
+`

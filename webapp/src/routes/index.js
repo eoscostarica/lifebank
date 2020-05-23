@@ -2,6 +2,7 @@ import Dashboard from './Dashboard'
 import NotFound from './NotFound'
 import LandingPage from './LandingPage'
 import Signup from './Signup'
+import Login from './Login'
 
 export default [
   {
@@ -13,6 +14,11 @@ export default [
     name: 'notFound',
     path: '/not-found',
     component: NotFound
+  },
+  {
+    name: 'login',
+    path: '/login',
+    component: Login
   },
   {
     name: 'signup',

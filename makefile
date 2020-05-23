@@ -1,5 +1,7 @@
 include utils/meta.mk utils/help.mk
 
+SHELL := /bin/bash
+
 run: ##@local Run the project locally
 run: 
 	make run-env 
