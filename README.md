@@ -34,7 +34,7 @@
   - [Contributors](#contributors)
 
 
-**Inspiration**
+## Inspiration
 
 Blood banks should act just as their name reflects.  When we are healthy, we should be able to save for the future by making deposits. When we inevitably get sick, we should be able to withdrawal on those savings to pay for expenses related to our condition.   
 
