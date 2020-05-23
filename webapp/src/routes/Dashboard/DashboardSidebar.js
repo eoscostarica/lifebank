@@ -6,7 +6,6 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import Button from '@material-ui/core/Button'
 import PeopleIcon from '@material-ui/icons/People'
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import FingerprintIcon from '@material-ui/icons/Fingerprint'
 import InputIcon from '@material-ui/icons/Input'
 
@@ -51,13 +50,8 @@ const useStyles = makeStyles((theme) => ({
 
 const PAGES = [
   {
-    title: 'products',
-    href: '/dashboard/products',
-    icon: <ShoppingBasketIcon />
-  },
-  {
-    title: 'users',
-    href: '/dashboard/users',
+    title: 'Profile',
+    href: '/dashboard/profile',
     icon: <PeopleIcon />
   }
 ]

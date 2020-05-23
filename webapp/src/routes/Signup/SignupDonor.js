@@ -31,7 +31,7 @@ const DonorSignup = ({ onSubmit, setField, user, loading }) => {
         />
         <TextField
           id="secret"
-          label="secret"
+          label="Secret"
           type="password"
           className={classes.textField}
           onChange={(event) => setField('secret', event.target.value)}

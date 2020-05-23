@@ -25,11 +25,7 @@ const userReducer = (state, action) => {
     case 'logout': {
       localStorage.removeItem('token')
 
-      return {
-        ...(state || {}),
-        account: 'guest',
-        role: undefined
-      }
+      return null
     }
     default: {
       throw new Error(`Unsupported action type: ${action.type}`)
@@ -46,11 +42,13 @@ export const useUser = () => {
 
   const [user, dispatch] = context
   const login = (token) => dispatch({ type: 'login', payload: { token } })
+  const logout = () => dispatch({ type: 'logout' })
 
   return [
     user,
     {
-      login
+      login,
+      logout
     }
   ]
 }

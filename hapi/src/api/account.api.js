@@ -24,6 +24,24 @@ const create = async ({ type, secret }) => {
   }
 }
 
+const login = async ({ account, secret }) => {
+  const vault = await vaultApi.getOne({
+    account: { _eq: account },
+    secret: { _eq: secret }
+  })
+
+  if (!vault) {
+    throw new Error('Invalid account or secret')
+  }
+
+  const token = jwtUtils.create({ account, type: vault.type })
+
+  return {
+    token
+  }
+}
+
 module.exports = {
-  create
+  create,
+  login
 }
