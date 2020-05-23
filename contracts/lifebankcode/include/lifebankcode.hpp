@@ -13,7 +13,7 @@ public:
   ACTION createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo);
   ACTION link(eosio::asset community_asset, eosio::name inviter, eosio::name new_user);
 
-  ACTION adddoner(eosio::name account, string doner_name);
+  ACTION adddoner(eosio::name account, string doner_name, eosio::asset community_asset);
   ACTION addlifebank(eosio::name account, string lifebank_name,
                      string description, string address, string location, string phone_number,
                      bool has_immunity_test, uint8_t blood_urgency_level, string schedule);

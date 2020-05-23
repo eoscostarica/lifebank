@@ -71,17 +71,17 @@
         {
             "name": "clear",
             "type": "clear",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Clear table\nsummary: The intent of the `{{ clear }}` action is to delete all table records and is used for development purposes on test-nets and must not be published to mainnet.\nicon:"
+            "ricardian_contract": ""
         },
         {
             "name": "consent",
             "type": "consent",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Consent to Contract\nsummary: The intent of the `{{ consent }}` action is to inform a contract of an accounts consent to its terms of service specified in a sha256 hash of the contract. Users can also update their consent by agreeing to a new hash value.\nicon:"
+            "ricardian_contract": ""
         },
         {
             "name": "revoke",
             "type": "revoke",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Revoke Consent\nsummary: The intent of the `{{ revoke }}` action is to revoke a previous informed consent to a contract by deleting the record.\nicon:"
+            "ricardian_contract": ""
         }
     ],
     "tables": [
@@ -93,27 +93,6 @@
             "key_types": []
         }
     ],
-    "ricardian_clauses": [
-        {
-            "id": "Data Storage",
-            "body": "---\nspec-version: 0.1.0\ntitle: General Data Storage\nsummary: This smart contract will store data added by the user. The user consents to the storage of this data by signing the transaction.\nicon:"
-        },
-        {
-            "id": "Data Usage",
-            "body": "---\nspec-version: 0.1.0\ntitle: General Data Use\nsummary: This smart contract will store user data. The smart contract will not use the stored data for any purpose outside store and delete.\nicon:"
-        },
-        {
-            "id": "Data Ownership",
-            "body": "---\nspec-version: 0.1.0\ntitle: Data Ownership\nsummary: The user of this smart contract verifies that the data is owned by the smart contract, and that the smart contract can use the data in accordance to the terms defined in the Ricardian Contract.\nicon:"
-        },
-        {
-            "id": "Data Distribution",
-            "body": "---\nspec-version: 0.1.0\ntitle: Data Distribution\nsummary: The smart contract promises to not actively share or distribute the address data. The user of the smart contract understands that data stored in a multi index table is not private data and can be accessed by any user of the blockchain.\nicon:"
-        },
-        {
-            "id": "Data Future",
-            "body": "---\nspec-version: 0.1.0\ntitle: Data Future\nsummary: The smart contract promises to only use the data in accordance of the terms defined in the Ricardian Contract, now and at all future dates.\nicon:"
-        }
-    ],
+    "ricardian_clauses": [],
     "variants": []
 }

@@ -53,20 +53,25 @@ ACTION lifebankcode::link(eosio::asset community_asset, eosio::name inviter, eos
   {
     require_auth(get_self());
   }
-  eosio::symbol community_symbol = community_asset.symbol;
-  communities_table community(get_self(), get_self().value);
-  const auto &cmm = community.get(community_symbol.raw(), "can't find any community with given asset");
+  // eosio::symbol community_symbol = community_asset.symbol;
+  // communities_table community(get_self(), get_self().value);
+  // const auto &cmm = community.get(community_symbol.raw(), "can't find any community with given asset");
 
-  auto id = gen_uuid(community_symbol.raw(), new_user.value);
-  networks_table network(get_self(), get_self().value);
-  auto existing_netlink = network.find(id);
-  if (existing_netlink != network.end())
-  {
-    return;
-  }
+  // auto id = gen_uuid(community_symbol.raw(), new_user.value);
+  // networks_table network(get_self(), get_self().value);
+  // auto existing_netlink = network.find(id);
+  // if (existing_netlink != network.end())
+  // {
+  //   return;
+  // }
+  // network.emplace(get_self(), [&](auto &raw) {
+  //   raw.id = id;
+  //   raw.community = community_symbol;
+  //   raw.user = new_user;
+  // });
 }
 
-ACTION lifebankcode::adddoner(name account, string doner_name)
+ACTION lifebankcode::adddoner(name account, string doner_name, eosio::asset community_asset)
 {
   require_auth(account);
   check_consent(account);
@@ -79,6 +84,11 @@ ACTION lifebankcode::adddoner(name account, string doner_name)
       row.account = account;
       row.tx = get_tx();
     });
+    SEND_INLINE_ACTION(*this,                            // Account
+                       link,                             // Action
+                       {account, eosio::name{"active"}}, // Permission
+                       {community_asset, get_self(), account});
+    require_recipient(account);
   }
   else
   {

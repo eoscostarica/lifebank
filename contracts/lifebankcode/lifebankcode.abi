@@ -14,6 +14,10 @@
                 {
                     "name": "doner_name",
                     "type": "string"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
                 }
             ]
         },
