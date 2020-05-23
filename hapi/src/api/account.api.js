@@ -20,7 +20,7 @@ const create = async ({ type, secret }) => {
   return {
     account,
     token,
-    transaction_id: transaction.transaction_id,
+    transaction_id: transaction.transaction_id
   }
 }
 

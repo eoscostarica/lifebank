@@ -10,7 +10,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SignupAccount = ({ data }) => {
+const SignupAccount = ({
+  data: { transaction_id: transactionId, account } = {}
+}) => {
   const classes = useStyles()
 
   return (
@@ -20,12 +22,12 @@ const SignupAccount = ({ data }) => {
       </Typography>
       <Typography variant="body1">
         <Link
-          href={`https://jungle.bloks.io/account/${data?.account}`}
+          href={`https://jungle.bloks.io/account/${account}`}
           target="_blank"
           rel="noopener"
           color="secondary"
         >
-          {data?.account}
+          {account}
         </Link>
       </Typography>
       <Typography variant="h4" className={classes.marginTop}>
@@ -33,12 +35,12 @@ const SignupAccount = ({ data }) => {
       </Typography>
       <Typography variant="body1">
         <Link
-          href={`https://jungle.bloks.io/transaction/${data?.transaction_id}`}
+          href={`https://jungle.bloks.io/transaction/${transactionId}`}
           target="_blank"
           rel="noopener"
           color="secondary"
         >
-          {data?.transaction_id}
+          {transactionId}
         </Link>
       </Typography>
     </>
