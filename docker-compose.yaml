@@ -59,8 +59,6 @@ services:
     build: ./webapp
     ports:
       - "3000:3000"
-    volumes:
-      - ./webapp/build:/usr/share/nginx/html
     environment:
       REACT_APP_EOS_API_HOST: "${REACT_APP_EOS_API_HOST}"
       REACT_APP_EOS_API_PORT: "${REACT_APP_EOS_API_PORT}"
@@ -74,8 +72,7 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ${NGNIX_CERTIFICATE}:/opt/application/certificate.pem
-      - ${NGNIX_CERTIFICATE_KEY}:/opt/application/private_key.pem
+      - ${NGNIX_CERTIFICATES}:/opt/application/nginx/certificates
     ports:
       - 80:80
       - 443:443

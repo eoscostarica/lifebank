@@ -25,7 +25,7 @@ run-hapi:
 
 run-hasura:
 	@until \
-		docker-compose exec postgres pg_isready; \
+		docker-compose exec -T postgres pg_isready; \
 		do echo "$(BLUE)$(STAGE)-$(APP_NAME)-hasura |$(RESET) waiting for postgres service"; \
 		sleep 5; done;
 	@until \

@@ -24,7 +24,7 @@ const SignupConsent = ({ onSubmit, loading, abi, action }) => {
   return (
     <>
       <div className={classes.wrapper}>
-        <RicardianContract abi={abi} action={action}></RicardianContract>
+        <RicardianContract abi={abi} action={action} />
       </div>
       <div className={classes.btnWrapper}>
         <Button variant="contained" color="primary" onClick={onSubmit}>
