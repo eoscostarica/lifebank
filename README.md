@@ -34,13 +34,13 @@
   - [Contributors](#contributors)
 
 
-## Inspiration
+**Inspiration**
 
 Blood banks should act just as their name reflects.  When we are healthy, we should be able to save for the future by making deposits. When we inevitably get sick, we should be able to withdrawal on those savings to pay for expenses related to our condition.   
 
-When our team member's father was diagnosed with cancer, he had to undergo treatment and consequently receive a blood transfusion. He needed blood to survive.  As he recovered, he only asked his family one simple request. Help him pay his new lease on life. Pay back the blood he received on loan. He asked that the family donate blood. 
+When our team member's father was diagnosed with cancer, he had to undergo treatment and consequently receive a blood transfusion. He needed blood to survive.  As he recovered, he only asked his family one simple request: to help him pay his new lease on life and payback the blood he received on loan. So, he asked his family to donate blood proactively. 
 
-Our team member understood why he needed to donate blood and how important it was to his father's life.  What he didn't understand is why he waited this long to do so.  He thought he should have been donating blood all those years prior when he was healthy and eligible, knowing that one day in the future a relative or himself would need it.  He should have been making deposits in the blood bank so that he could withdraw those savings now when he needed it. Now he needed to pay back a loan on life in the same way his father received it, by a blood donation. 
+Then, our teammate understood why he needed to donate blood and how important it was to his father's life.  What he didn't understand is why he waited this long to do so.  He thought he should have been donating blood all those years prior when he was healthy and eligible, knowing that one day in the future a relative or himself would need it.  He should have been making deposits in the blood bank so that he could withdraw those savings now when he needed it. Now he needed to pay back a loan on life in the same way his father received it, by a blood donation. 
 
 Fast forward to 2020, COVID-19 spreads to a global pandemic and national emergencies are declared in countless countries around the world.  Social distancing and quarantines cause blood shortages globally as donations plummet while demand for blood and plasma increases. Blood banks enter a short term shortage all over the world with no lifeline in sight. 
 
@@ -60,7 +60,7 @@ Fast forward to 2020, COVID-19 spreads to a global pandemic and national emergen
 
 [Los bancos de sangre tienen hasta 50% menos de la cifra óptima para la autosuficiencia](https://www.telam.com.ar/notas/202005/464193-bancos-de-sangre-donacion-faltante.html)
 
-Donations centers across the globe need a way to encourage blood donations based on local demand during a time of crisis. As the demand for blood increases during the crisis,  the eligible donor population were told to stay home, isolate and avoid medical facilities causing a deepened shortage. 
+Donations centers across the globe need a way to encourage blood donations based on local demand during a time of crisis. As the demand for blood increases during the crisis,  the eligible donor population was told to stay home, isolate, and avoid medical facilities causing a deepened shortage. 
 
 [Blood banks drying up](https://www.dhakatribune.com/bangladesh/dhaka/2020/05/18/blood-banks-drying-up)
 
@@ -74,7 +74,7 @@ Donations centers across the globe need a way to encourage blood donations based
 
 [How plasma from recovered coronavirus patients could help others survive the disease](https://thehill.com/changing-america/well-being/prevention-cures/493690-how-plasma-from-recovered-coronavirus-patients)
 
-Another consequence of the pandemic was the economic devastation of a lockdown.  Small businesses that rely on the local community for a majority of their business have to think of ways to incentivize customers to buy online or in person as soon as restrictions are lifted.  Small business also need a lifeline. 
+Another consequence of the pandemic was the economic devastation of a lockdown.  Small businesses that rely on the local community for a majority of their business have to think of ways to incentivize customers to buy online or in-person as soon as restrictions are lifted.  Small businesses also need a lifeline. 
 
 [Impact of Coronavirus on Small Businesses - Where Is It Worst?](https://smallbiztrends.com/2020/04/impact-of-coronavirus-on-small-businesses.html)
 
@@ -88,100 +88,101 @@ Another consequence of the pandemic was the economic devastation of a lockdown. 
 
 During the current COVID-19 health crisis and others in the future,  we aim to build a tool that: 
 
-- Provides value and recognition to blood donors that are eligible to donate when healthy
-- Mitigates the blood shortage that exists in perpetuity and that are exasperated during a crisis
-- Supports local businesses and have them encourage blood donation in their community
+- Provides value and recognition to blood donors that are eligible to donate when healthy.
+- Mitigates the blood shortage that exists in perpetuity and that are exasperated during a crisis.
+- Supports local businesses and have them encourage blood donation in their community.
 
-To align the relevant incentives and accomplish the above, we created **Lifebank.io**
+To align the relevant incentives and accomplish the above, we created **Lifebank.** 
 
-## What is Lifebank?
+## **What is Lifebank?**
 
-Lifebank helps local communities create a virtuous circle of value exchange between three parties — a **eligible donor user (EDU), a community donation center (CDC) and a participating local business (PLB).** 
+Lifebank helps local communities create a virtuous circle of value exchange between three parties — an **eligible donor, a donation center and a sponsor.** 
+
+**The Lifebank Value Circle**
+
 
 <p align="center">
 	<img src="./docs/lifebank-value-circle.jpg" width="500">
 </p>
 
-**Legend:**
+**Glossary:**
 
-- **PDU** -  potential donor user
-- **QBD** -  qualified blood donation
-- **CDC** - community donation center
-- **DTR** - donation token receipt
-- **cDTR** - community donation token receipt
-- **EDU** - eligible donor user
-- **PLB** - participating local business
-- **Value** - perceived value that PLBs communicate to PDUs
+- Potential Life Donor -  anyone who could possibly donate blood to a local donation center
+- Qualified Blood Donation -  A blood donation to a participating donation center
+- Lifebank - Any community donation center that accepts blood donations
+- Life Token - A donation token receipt given to a eligible donor after a qualified blood donation
+- Eligible Life Donor - a registered blood donor deemed eligible to donate by a participating donation center
+- Sponsor - A participating local business or community organization that agreed to return some predetermined value to a life donor in exchange for a life token
+- Value - economic or community value that sponsors communicate to life donors in order to incentivize the redemption of Life Tokens
 
-### Eligible Donor User (EDU) Flow
+
+### Eligible Life Donor Flow
 
 [![lifebank Value Circle](./docs/donor-user-flow.png)](./docs/donor-user-flow.png)
 
 **[See Donor User Flow on Zeplin](https://zpl.io/a8o9A7X)**
 
-- Potential Donor User (PDU)
-- Eligible Donor User (EDU)
+- Potential Life Donor
+- Eligible Life Donor
 
 
-**1) Find a Community Donation Center and Register**
+**1) Find a Lifebank and Register**
 
-Using Lifebank.io, a potential donor user (PDU) can find a community donation center (CDC) in their area based on their location.  The user will be able to see on a map where the centers are located and also if they have a high demand for a certain blood type.  Once the user sees that there is a demand for their type of blood in close proximity, they can review the terms of use, sign the contract to register for an account and visit the donation center location. 
+Using Lifebank.io, a potential life donor can find a community donation center in their area based on their location.  The user will be able to see on a map where the centers are located and also if they have a high demand for a certain blood type.  Once the user sees that there is a demand for their type of blood in close proximity, they can review the terms of use, sign the contract to register for an account, and visit the donation center location. 
 
-**2) Donate and receive a Donation Receipt Token (DRT)**
+**2) Donate and Receive a Life Token**
 
-Once the potential donor user (PDU) visits the community donation center (CDC), they will need to complete the eligibility criteria for the specific donation. This will be handled as usual in person at the donation center before a blood donation. The donation center will also be able to post pre-requisites on their profile page so the potential donor can decide if they meet the criteria before visiting.  
+Once the potential life donor visits the community donation center, they will need to complete the eligibility criteria for the specific donation. This will be handled as usual in person at the donation center before a blood donation. The donation center will also be able to post pre-requisites on their profile page so the potential donor can decide if they meet the criteria before visiting.  
 
-If the potential donor is deemed eligible by the donation center, they can proceed with the blood donation and are referred to as eligible donor user (EDU). Once completed, the donation center can certify the completion by minting a donation token receipt (DTR) that is valid in their specific community (cDTR). The donor will receive the donation receipt from the donation center to the QR code displayed through the application.  Once a donation receipt is received in a donor's account,  the donation receipt becomes redeemable at a participating business.  
+If the potential donor is deemed eligible by the donation center, they can proceed with the blood donation and are referred to as eligible life donor. Once completed, the donation center can certify the completion by minting a **life token** valid in their specific community. The donor will receive the life token from the donation center to the QR code displayed through the application.  Once a life token is received in a donor's account,  the life token becomes redeemable with a sponsor.  
 
-**Note:**  A limit cap may be placed on the amount of donation token receipts each community can have outstanding per time period to prevent abuse. As donation receipts are redeemed or expire, the donation center can continue to issue new donation token receipts. Every registered member of that community may need to approve a cap increase.
+**Note:**  A limit cap may be placed on the amount of life tokens each community can have outstanding per time period to prevent abuse. As life tokens are redeemed or expire, the donation center can continue to issue new life tokens. Every registered member of that community may need to approve a cap increase.
+
+**3) Redeeming a life token with a sponsor**
+
+An eligible life donor can redeem their life token with a sponsor.  The user can log into the Lifebank app to find the sponsor's general information, opening hours, and what they offer in exchange for a life token.   Once they decide on a sponsor where they would like to redeem the life token, they can go to the physical location or visit their website if the business is an e-commerce enabled business.  At checkout,  the eligible donor will be prompted to transfer the life token to the sponsor to redeem the offer.  Once the transfer is complete, the sponsor provides the offer to the donor, and the life token transfers to the sponsor's account.  Once a donation token receipt is received into a sponsor account, the life token is no longer transferable or redeemable.  
+
+**Note:**  A life token may expire after a specific time frame established by the issuing life bank to incentivize its use during the time of the crisis.  After a life token expires,  it can no longer be transferred and therefore is no longer redeemable with a sponsor.  The life token becomes non-transferable in the donor account to recognize the donation, albeit without the redeemable value in the community. 
 
 
-**3) Redeeming a community donation receipt at a participating local business (PLB)**
 
-An eligible donor user (EDU) can redeem their community donation token receipt (cDTR) at a participating local business (PLB).  The user can log into the Lifebank app to find the business's general information, opening hours and what they offer in exchange for a donation receipt.   Once they decide on a business where they would like to redeem the donation receipt, they can go to the physical location or visit their website if the business is an e-commerce enabled business.  At checkout,  the eligible donor will be prompted to transfer the donation token receipt to the business account to redeem the offer.  Once the transfer is complete, the business applies the offer to the order and the donation token receipt transfers to the business account.  Once a donation token receipt is received into a business account, the donation token receipt is no longer transferable or redeemable.  
-
-**Note:**  A donation token receipt may expire after a certain time frame established by the issuing community donation center (CDC) to incentivize its use during the time of the crisis.  After a donation token receipt expires,  it can no longer be transferred and therefore is no longer redeemable at a business.  The donation token receipt becomes non-transferable in the donor account to recognize the donation albeit without the redeemable value in the local community. 
-
-
-### Community Donation Center (CDC) User Flow
+### Lifebank User Flow
 
 [![clinic user flow](./docs/clinic-user-flow.png)](./docs/clinic-user-flow.png)
 **[See Donation Center User Flow on Zeplin](https://zpl.io/amAMKdQ)**
 
-- Community Donation Center (CDC)
 
-**1) Register as a community donation center (CDC) and create a ticker**
+1) **Register as a Lifebank and create a ticker**
 
-A community donation center (CDC) , defined in the terms of participation as a center that is regulated and licensed to receive blood donations , can register as a donation center using the Lifebank application. The donation center user will be directed from the landing page to register as a donation center using their credentials. The donation center user will then need to review and sign the terms of participation in order to create an account and testify that they meet the criteria. Once an account is created, the donation center user may display all the information relevant to receiving donations like location, opening hours, eligibility criteria, etc on their Lifebank profile. The center may also provide current inventory information by blood type and indicate the current demand level. The donation center must indicate the amount of donation token receipts they are currently willing to issue per donation. The donation center may also name a 3-letter ticker by which their donation token receipt will be referred to in their community.  For example, a local donation center in Athens, Georgia may choose to call their donation token receipt as "ATH" as long as the ticker combination is available.  
+A donation center, defined in the terms of participation as a center that is regulated and licensed to receive blood donations, can register as a Lifebank using the Lifebank application. The donation center user will be directed from the landing page to register as a Lifebank using their credentials. The donation center user will then need to review and sign the terms of participation in order to create an account and testify that they meet the criteria. Once an account is created, the donation center user may display all the information relevant to receiving donations like location, opening hours, eligibility criteria, etc on their Lifebank profile. The center may also provide current inventory information by blood type and indicate the current demand level. The donation center must indicate the amount of donation token receipts they are currently willing to issue per donation. The donation center may also name a 3-letter ticker by which their donation token receipt will be referred to in their community.  For example, a local donation center in Athens, Georgia may choose to call their Life token as "ATH" as long as the ticker combination is available.  
 
-**2) Verifying a Eligible Donor User (EDU) and receiving a qualified blood donation (QBD)** 
+**2) Verifying a Eligible Life Donor and receiving a qualified blood donation**
 
-Once a potential donor user (PDU) visits a community donation center (CDC),  they must first pass the qualifying requirements set by each donation center.  This is usually done by a simple questionnaire about the person and medical history.  No information related to the donor will be provided to Lifebank.  The donation center representative only needs to indicate from the Lifebank dashboard if the person's account is qualified or not qualified to donate.  If the potential donor is qualified to donate, they can proceed with a qualified blood donation (QBD) as defined in the terms of participation signed by the donation center.  The potential donor user will now be eligible to receive a donation token receipt and be referred to as an eligible donor user (EDU).  
+Once a potential life donor visits a Lifebank,  they must first pass the qualifying requirements set by each donation center.  This is usually done by a simple questionnaire about the person and medical history.  No information related to the donor will be provided to the Lifebank app.  The donation center representative only needs to indicate from the Lifebank dashboard if the person's account is qualified or not qualified to donate.  If the potential life donor is qualified to donate, they can proceed with a qualified blood donation (QBD) as defined in the terms of participation signed by the donation center.  The potential donor user will now be eligible to receive a life token and be referred to as an eligible life donor.  
 
+3) **Issuing a Life Token and transferring to a Eligible Life Donor**
 
-**3) Issuing a Community Donation Token Receipt (cDTR) and transferring to a Eligible Donor User (EDU)**
+Once a eligible life donor completes a qualified blood donation, the Lifebank will acknowledge the event by issuing a Life Token. The eligible life donor will present a QR code representing their Lifebank account and the donation center will transfer the Life Token by scanning the QR code.  If the Life token has an expiry date,  the transfer from the Lifebank to the eligible life donor will mark the beginning of the term.  
 
-Once a eligible donor user (EDU) completes a qualified blood donation (QBD), the community donation center (CDC) will acknowledge the event by issuing a community donation token receipt (cDTR). The eligible donor will present a QR code representing their Lifeline account and the donation center will transfer the donation token receipt by scanning the QR code.  If the donation token receipt has an expiry date,  the transfer from the donation center to the eligible user will mark the beginning of the term.  
-
-
-### Participating Local Business (PLB) User Flow
+### Sponsor User Flow
 
 [![See Participating Local Business (PLB) User Flow](./docs/sponsor-user-flow.png)](./docs/sponsor-user-flow.png)
 
 **[Sponsor User Flow on Zeplin](https://zpl.io/a8o9kq6)**
-- Participating Local Business (PLB)
 
-**1) Register as a Participating Local Business (PLB)**
 
-A local business can register to become a participating local business (PLB) on the Lifebank application.  The user will be prompted from a landing page to review and accept the terms of participation.  Once accepted, the user will be able to create a profile to enter general information, location, hours of operation, products, services and offer a value proposition in exchange for a community donation token receipt (cDTR). 
+**1) Register as a Sponsor**
+
+A local business or organization can register to become a sponsor on the Lifebank application.  The user will be prompted from a landing page to review and accept the terms of participation.  Once accepted, the user will be able to create a profile to enter general information, location, hours of operation, products, services and offer a value proposition in exchange for a life token.  
 
 **2) Accessing the dashboard**
 
-Once a participating business has completed the registration process, they will be able to access the Lifebank dashboard. The dashboard will show the balance of donation token receipts received over time, their current value proposition offer and a toggle to redeem donation token receipts.  If a eligible donor user wishes to redeem a donation token receipt, the business would access the redeem option on the dashboard. 
+Once a participating business has completed the registration process, they will be able to access the Lifebank dashboard. The dashboard will show the balance of life token received over time, their current value proposition offer and a toggle to redeem life tokens.  If a eligible life donor  wishes to redeem a life token, the sponsor would access the redeem option on the dashboard. 
 
-**3) Accepting a community donation token receipt (cDTR)**
+**3) Accepting a Life Token**
 
-A registered participating local business (PLB) can accept community donation token receipts (cDTR) from any eligible donor user (EDU) that wishes to buy goods or services as defined in the terms of participation.  When a eligible donor makes a qualifying purchase as displayed on the participating business Lifebank profile, the eligible donor can redeem a donation token receipt in exchange for the value proposition as specified by the participating business.   To redeem a donation token receipt,  the business user must show their business account QR code as displayed on the application to the eligible donor wishing the make a purchase.  The donor will scan the QR code and transfer the donation token receipt from their account to the business account.  Once received in the business account, the community donation token receipt is considered redeemed and is referred to as simply a Donation Token Receipt (DTR) which is non-transferable. If the donation token receipt has an expiry date,  the transfer from the eligible donor to the participating business will mark the end of the term.  The end of the term must come before the expiry date.  
+A registered sponsor can accept life tokens from any eligible life donor that wishes to buy goods or services as defined in the terms of participation.  When a eligible life donor makes a qualifying purchase as displayed on the sponsor's Lifebank profile, the eligible donor can redeem a life token in exchange for the value proposition as specified by the sponsor.   To redeem a life token,  the sponsor must show their sponsor account QR code as displayed on the application to the eligible life donor wishing the make a purchase.  The donor will scan the QR code and transfer the life token from their account to the sponsor account.  Once received in the sponsor account, the community donation token receipt is considered redeemed and is non-transferable. If the life token has an expiry date,  the transfer from the eligible donor to the participating business will mark the end of the term.  The end of the term must come before the expiry date.  
+
 
 ## Sign Up
 
@@ -191,7 +192,7 @@ The register page creates a blockchain account and should help handle key manage
 
 ## How we built it?
 
-Lifebank uses the following technology to create a virtuous circle of value exchange between the three parties — a **eligible donor user (EDU), a community donation center (CDC) and a participating local business (PLB).** 
+Lifebank uses the following technology to create a virtuous circle of value exchange between the three parties — a **donor user , a donation center and a sponsor.** 
 
 ### App Services
 
@@ -240,10 +241,10 @@ Lifebank takes a on a life of its own!
 ### For future releases:
 
 - Set expiry options to a given token
-- Allow PLBs to sell DTRs to local charities at an approved price.
-- Track financial donations and issue certain DTRs for those donations.
-- The tracked donation funds would represent the financial demand for DTRs while the outstanding DTRs in the community would represent the supply.
-- Set a pricing algorithm like Bancor to provide a fair market price where PLBs can sell their DTRs in savings to local charities (Red Cross Fund, philanthropists, private donors, etc)
+- Allow sponsors to sell life tokens to local charities at an set price.
+- Track financial donations and issue certain life tokens for those donations.
+- The tracked donation funds would represent the financial demand for life tokens while the outstanding life tokens in the community would represent the supply.
+- Set a pricing algorithm like Bancor to provide a fair market price where sponsors can sell their life tokens in savings to local charities (Red Cross Fund, philanthropists, private donors, etc)
 
 
 ## Contributing
