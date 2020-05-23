@@ -71,16 +71,16 @@ ACTION lifebankcode::link(eosio::asset community_asset, eosio::name inviter, eos
   });
 }
 
-ACTION lifebankcode::adddoner(name account, string doner_name, eosio::asset community_asset)
+ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset community_asset)
 {
   require_auth(account);
   check_consent(account);
-  doners_table _doners(get_self(), get_self().value);
-  eosio::check(doner_name.size() <= 64, "Name has more than 64 bytes");
-  auto doner_itr = _doners.find(account.value);
-  if (doner_itr == _doners.end())
+  donors_table _donors(get_self(), get_self().value);
+  eosio::check(donor_name.size() <= 64, "Name has more than 64 bytes");
+  auto donor_itr = _donors.find(account.value);
+  if (donor_itr == _donors.end())
   {
-    _doners.emplace(get_self(), [&](auto &row) {
+    _donors.emplace(get_self(), [&](auto &row) {
       row.account = account;
       row.tx = get_tx();
     });
@@ -92,7 +92,7 @@ ACTION lifebankcode::adddoner(name account, string doner_name, eosio::asset comm
   }
   else
   {
-    _doners.modify(doner_itr, get_self(), [&](auto &row) {
+    _donors.modify(donor_itr, get_self(), [&](auto &row) {
       row.tx = get_tx();
     });
   }
@@ -116,13 +116,13 @@ ACTION lifebankcode::clear()
   // DEV only
   require_auth(get_self());
 
-  doners_table _doners(get_self(), get_self().value);
+  donors_table _donors(get_self(), get_self().value);
 
-  auto doners_itr = _doners.begin();
-  while (doners_itr != _doners.end())
+  auto donors_itr = _donors.begin();
+  while (donors_itr != _donors.end())
   {
-    doners_itr = _doners.erase(doners_itr);
+    donors_itr = _donors.erase(donors_itr);
   }
 }
 
-EOSIO_DISPATCH(lifebankcode, (createcmm)(link)(adddoner)(addlifebank)(addsponsor)(clear))
+EOSIO_DISPATCH(lifebankcode, (createcmm)(link)(adddonor)(addlifebank)(addsponsor)(clear))

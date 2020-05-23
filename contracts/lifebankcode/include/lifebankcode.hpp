@@ -13,7 +13,7 @@ public:
   ACTION createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo);
   ACTION link(eosio::asset community_asset, eosio::name inviter, eosio::name new_user);
 
-  ACTION adddoner(eosio::name account, string doner_name, eosio::asset community_asset);
+  ACTION adddonor(eosio::name account, string donor_name, eosio::asset community_asset);
   ACTION addlifebank(eosio::name account, string lifebank_name,
                      string description, string address, string location, string phone_number,
                      bool has_immunity_test, uint8_t blood_urgency_level, string schedule);
@@ -62,16 +62,16 @@ private:
                                                eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
       networks_table;
 
-  TABLE doner
+  TABLE donor
   {
     eosio::name account;
 
     checksum256 tx;
     auto primary_key() const { return account.value; }
-    EOSLIB_SERIALIZE(doner,
+    EOSLIB_SERIALIZE(donor,
                      (account)(tx));
   };
-  typedef multi_index<name("doners"), doner> doners_table;
+  typedef multi_index<name("donors"), donor> donors_table;
 
   TABLE lifebank
   {
