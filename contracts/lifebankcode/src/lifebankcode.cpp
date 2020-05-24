@@ -38,21 +38,14 @@ ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio
   SEND_INLINE_ACTION(*this,                            // Account
                      link,                             // Action
                      {creator, eosio::name{"active"}}, // Permission
-                     {community_asset, creator, creator});
+                     {community_asset, creator});
   require_recipient(creator);
 }
 
-ACTION lifebankcode::link(eosio::asset community_asset, eosio::name inviter, eosio::name new_user)
+ACTION lifebankcode::link(eosio::asset community_asset, eosio::name new_user)
 {
   eosio::check(is_account(new_user), "New user account does not exists");
-  if (has_auth(inviter))
-  {
-    require_auth(inviter);
-  }
-  else
-  {
-    require_auth(get_self());
-  }
+  require_auth(new_user);
   eosio::symbol community_symbol = community_asset.symbol;
   communities_table community(get_self(), get_self().value);
   const auto &cmm = community.get(community_symbol.raw(), "can't find any community with given asset");
@@ -87,7 +80,7 @@ ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset comm
     SEND_INLINE_ACTION(*this,                            // Account
                        link,                             // Action
                        {account, eosio::name{"active"}}, // Permission
-                       {community_asset, get_self(), account});
+                       {community_asset, account});
     require_recipient(account);
   }
   else
@@ -100,15 +93,58 @@ ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset comm
 
 ACTION lifebankcode::addlifebank(eosio::name account, string lifebank_name,
                                  string description, string address, string location, string phone_number,
-                                 bool has_immunity_test, uint8_t blood_urgency_level, string schedule)
+                                 bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset)
 {
   require_auth(account);
+  check_consent(account);
+  lifebanks_table _lifebanks(get_self(), get_self().value);
+  eosio::check(lifebank_name.size() <= 64, "Name has more than 64 bytes");
+  auto lifebank_itr = _lifebanks.find(account.value);
+  if (lifebank_itr == _lifebanks.end())
+  {
+    _lifebanks.emplace(get_self(), [&](auto &row) {
+      row.account = account;
+      row.tx = get_tx();
+    });
+    SEND_INLINE_ACTION(*this,                            // Account
+                       link,                             // Action
+                       {account, eosio::name{"active"}}, // Permission
+                       {community_asset, account});
+    require_recipient(account);
+  }
+  else
+  {
+    _lifebanks.modify(lifebank_itr, get_self(), [&](auto &row) {
+      row.tx = get_tx();
+    });
+  }
 }
-
 ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
-                                string website, string telephone, string bussines_type, string schedule)
+                                string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset)
 {
   require_auth(account);
+  check_consent(account);
+  sponsors_table _sponsors(get_self(), get_self().value);
+  eosio::check(sponsor_name.size() <= 64, "Name has more than 64 bytes");
+  auto sponsor_itr = _sponsors.find(account.value);
+  if (sponsor_itr == _sponsors.end())
+  {
+    _sponsors.emplace(get_self(), [&](auto &row) {
+      row.account = account;
+      row.tx = get_tx();
+    });
+    SEND_INLINE_ACTION(*this,                            // Account
+                       link,                             // Action
+                       {account, eosio::name{"active"}}, // Permission
+                       {community_asset, account});
+    require_recipient(account);
+  }
+  else
+  {
+    _sponsors.modify(sponsor_itr, get_self(), [&](auto &row) {
+      row.tx = get_tx();
+    });
+  }
 }
 
 ACTION lifebankcode::clear()

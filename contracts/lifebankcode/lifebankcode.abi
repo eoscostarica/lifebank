@@ -4,7 +4,7 @@
     "types": [],
     "structs": [
         {
-            "name": "adddoner",
+            "name": "adddonor",
             "base": "",
             "fields": [
                 {
@@ -12,7 +12,7 @@
                     "type": "name"
                 },
                 {
-                    "name": "doner_name",
+                    "name": "donor_name",
                     "type": "string"
                 },
                 {
@@ -60,6 +60,10 @@
                 {
                     "name": "schedule",
                     "type": "string"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
                 }
             ]
         },
@@ -98,6 +102,14 @@
                 {
                     "name": "schedule",
                     "type": "string"
+                },
+                {
+                    "name": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
                 }
             ]
         },
@@ -159,7 +171,7 @@
             ]
         },
         {
-            "name": "doner",
+            "name": "donor",
             "base": "",
             "fields": [
                 {
@@ -193,10 +205,6 @@
                 {
                     "name": "community_asset",
                     "type": "asset"
-                },
-                {
-                    "name": "inviter",
-                    "type": "name"
                 },
                 {
                     "name": "new_user",
@@ -239,8 +247,8 @@
     ],
     "actions": [
         {
-            "name": "adddoner",
-            "type": "adddoner",
+            "name": "adddonor",
+            "type": "adddonor",
             "ricardian_contract": ""
         },
         {
@@ -278,8 +286,8 @@
             "key_types": []
         },
         {
-            "name": "doners",
-            "type": "doner",
+            "name": "donors",
+            "type": "donor",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
