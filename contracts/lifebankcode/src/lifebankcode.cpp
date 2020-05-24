@@ -18,7 +18,7 @@ void lifebankcode::check_consent(name account)
 
 ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo)
 {
-  require_auth(creator);
+  require_auth(get_self());
 
   eosio::check(community_name.size() <= 256, "name has more than 256 bytes");
   eosio::check(description.size() <= 256, "description has more than 256 bytes");
