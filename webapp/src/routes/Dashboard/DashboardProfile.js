@@ -53,9 +53,9 @@ const Products = () => {
               </Typography>
               <Typography variant="h4">Fullname</Typography>
               <Typography variant="body1">{profile.fullname}</Typography>
-              <Typography variant="h4">Concent status</Typography>
+              <Typography variant="h4">Consent status</Typography>
               <Typography variant="body1">
-                {profile.concent ? 'Granted' : 'Revoked'}
+                {profile.consent ? 'Granted' : 'Revoked'}
               </Typography>
             </>
           )}

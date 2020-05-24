@@ -51,7 +51,7 @@ const revoke = async (contract, account, password) => {
   )
 }
 
-const getConcent = async () => {
+const getConsent = async () => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
@@ -65,5 +65,5 @@ const getConcent = async () => {
 module.exports = {
   consent,
   revoke,
-  getConcent
+  getConsent
 }

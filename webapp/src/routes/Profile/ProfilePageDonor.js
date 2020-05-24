@@ -65,9 +65,9 @@ const ProfilePageDonor = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Concent status</Typography>
+        <Typography variant="subtitle1">Consent status</Typography>
         <Typography variant="body1">
-          {profile.concent ? 'Granted' : 'Revoked'}
+          {profile.consent ? 'Granted' : 'Revoked'}
         </Typography>
       </Box>
       <Divider className={classes.divider} />

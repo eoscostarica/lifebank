@@ -1,5 +1,5 @@
 module.exports = {
-  concent2lifeUtils: require('./concent2life'),
+  consent2lifeUtils: require('./consent2life'),
   eosUtils: require('./eos'),
   hasuraUtils: require('./hasura'),
   jwtUtils: require('./jwt'),

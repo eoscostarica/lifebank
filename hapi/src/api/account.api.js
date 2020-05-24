@@ -1,7 +1,7 @@
 const {
   eosUtils,
   jwtUtils,
-  concent2lifeUtils,
+  consent2lifeUtils,
   lifebankcodeUtils,
   lifebankcoinUtils
 } = require('../utils')
@@ -65,14 +65,14 @@ const getDonorData = async account => {
     comunities.push(comunity.community_name)
   }
 
-  const concents = await concent2lifeUtils.getConcent(account)
-  const concent = concents.find(item => item.user === account)
+  const consents = await consent2lifeUtils.getConsent(account)
+  const consent = consents.find(item => item.user === account)
   const balance = await lifebankcoinUtils.getbalance(account)
 
   return {
     comunities,
     balance,
-    concent: !!concent,
+    consent: !!consent,
     fullname: data.doner_name
   }
 }
