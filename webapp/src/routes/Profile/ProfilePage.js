@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLazyQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import Divider from '@material-ui/core/Divider'
-import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
+import { PROFILE_QUERY } from '../../gql'
+import { useUser } from '../../context/user.context'
+
+import ProfilePageGuest from './ProfilePageGuest'
+import ProfilePageDonor from './ProfilePageDonor'
+import ProfilePageSponsor from './ProfilePageSponsor'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -38,51 +45,33 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfilePage = () => {
   const classes = useStyles()
+  const [currentUser] = useUser()
+  const [
+    loadProfile,
+    { called, loading, data: { profile: { profile } = {} } = {} }
+  ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
+
+  useEffect(() => {
+    if (!currentUser || called) {
+      return
+    }
+
+    loadProfile()
+  }, [currentUser])
 
   return (
     <Box className={classes.wrapper}>
       <Typography variant="h1" className={classes.title}>
         My Profile
       </Typography>
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Name</Typography>
-        <Typography variant="body1">John Doe</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Account</Typography>
-        <Typography variant="body1">12letteruser</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Role</Typography>
-        <Typography variant="body1">Donor</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Status</Typography>
-        <Typography variant="body1">Active</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box height={30} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Tokens</Typography>
-        <Typography variant="body1">0</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Redeemed</Typography>
-        <Typography variant="body1">0</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Expired</Typography>
-        <Typography variant="body1">0</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Button variant="contained" color="primary" className={classes.editBtn}>
-        Edit
-      </Button>
+      {loading && <CircularProgress />}
+      {!loading && currentUser && profile?.role === 'donor' && (
+        <ProfilePageDonor profile={profile} />
+      )}
+      {!loading && currentUser && profile?.role === 'sponsor' && (
+        <ProfilePageSponsor profile={profile} />
+      )}
+      {!currentUser && <ProfilePageGuest />}
     </Box>
   )
 }

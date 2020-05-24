@@ -72,7 +72,7 @@ const Login = () => {
 
   useEffect(() => {
     if (currentUser) {
-      history.replace('/dashboard')
+      history.replace('/profile')
     }
   }, [currentUser])
 

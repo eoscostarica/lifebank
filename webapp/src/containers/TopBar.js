@@ -8,6 +8,7 @@ import FingerprintIcon from '@material-ui/icons/Fingerprint'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+import { Link } from 'react-router-dom'
 
 import LanguageSelector from '../components/LanguageSelector'
 
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     color: 'white',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    height: 24
   },
   box: {
     display: 'flex',
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Topbar = ({ user, onLogout, onLogin }) => {
+const Topbar = ({ user, onLogout }) => {
   const classes = useStyles()
   const { t } = useTranslation('translations')
 
@@ -41,10 +43,12 @@ const Topbar = ({ user, onLogout, onLogin }) => {
       {user && (
         <Box>
           <IconButton color="inherit">
-            <AccountCircleIcon />
-            <Typography className={classes.sessionText} variant="subtitle1">
-              {user.accountName}
-            </Typography>
+            <Link to="/profile" className={classes.link}>
+              <AccountCircleIcon />
+              <Typography className={classes.sessionText} variant="subtitle1">
+                {user.account}
+              </Typography>
+            </Link>
           </IconButton>
           <IconButton color="inherit" onClick={onLogout}>
             <LogoutIcon />
@@ -52,11 +56,13 @@ const Topbar = ({ user, onLogout, onLogin }) => {
         </Box>
       )}
       {!user && (
-        <IconButton color="inherit" onClick={onLogin}>
-          <FingerprintIcon />
-          <Typography className={classes.sessionText} variant="subtitle1">
-            {t('login')}
-          </Typography>
+        <IconButton color="inherit">
+          <Link to="/login" className={classes.link}>
+            <FingerprintIcon />
+            <Typography className={classes.sessionText} variant="subtitle1">
+              {t('login')}
+            </Typography>
+          </Link>
         </IconButton>
       )}
     </Box>
@@ -65,8 +71,7 @@ const Topbar = ({ user, onLogout, onLogin }) => {
 
 Topbar.propTypes = {
   user: PropTypes.object,
-  onLogout: PropTypes.func,
-  onLogin: PropTypes.func
+  onLogout: PropTypes.func
 }
 
 export default Topbar

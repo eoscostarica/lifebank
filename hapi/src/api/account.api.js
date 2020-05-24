@@ -35,7 +35,7 @@ const getProfile = async account => {
     account: { _eq: account }
   })
 
-  let data
+  let data = {}
 
   switch (vault.type) {
     case 'donor':

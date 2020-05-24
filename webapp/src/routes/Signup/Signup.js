@@ -160,7 +160,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (donorSignupResult || sponsorSignupResult) {
-      history.replace('/dashboard')
+      history.replace('/profile')
     }
   }, [donorSignupResult, sponsorSignupResult])
 
