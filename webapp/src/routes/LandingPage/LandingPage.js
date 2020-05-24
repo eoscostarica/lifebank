@@ -35,6 +35,14 @@ const LandingPage = () => {
           >
             Sign up
           </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            component={CustomRouterLink}
+            to="/login"
+          >
+            Login
+          </Button>
         </Paper>
       </Grid>
     </Grid>
