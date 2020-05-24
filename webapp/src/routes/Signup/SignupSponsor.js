@@ -10,14 +10,14 @@ import Typography from '@material-ui/core/Typography'
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%',
-    padding: theme.spacing(0,2)
+    padding: theme.spacing(0, 2)
   },
   textFieldWrapper: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   textField: {
     marginTop: theme.spacing(2)
@@ -37,7 +37,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
   const classes = useStyles()
 
   return (
-    <form autoComplete="off"  className={classes.form}>
+    <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <TextField
           id="sponsorName"
@@ -89,7 +89,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
           onChange={(event) => setField('telephone', event.target.value)}
         />
         <TextField
-          id="type"
+          id="bussinesType"
           label="type"
           variant="outlined"
           placeholder="Type"
@@ -98,7 +98,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
             shrink: true
           }}
           className={classes.textField}
-          onChange={(event) => setField('type', event.target.value)}
+          onChange={(event) => setField('bussinesType', event.target.value)}
         />
         <TextField
           id="schedule"
@@ -113,7 +113,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
           onChange={(event) => setField('schedule', event.target.value)}
         />
         <TextField
-          id="impact"
+          id="covidImpact"
           label="Covid Impact"
           variant="outlined"
           placeholder=""
@@ -124,10 +124,10 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
           multiline
           fullWidth
           rows={3}
-          onChange={(event) => setField('impact', event.target.value)}
+          onChange={(event) => setField('covidImpact', event.target.value)}
         />
         <TextField
-          id="descriptionBenefit"
+          id="benefitDescription"
           label="Description of benefit"
           variant="outlined"
           placeholder=""
@@ -139,7 +139,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
           fullWidth
           rows={3}
           onChange={(event) =>
-            setField('descriptionBenefit', event.target.value)
+            setField('benefitDescription', event.target.value)
           }
         />
         <Box height={200} className={classes.mapBox}>
@@ -150,7 +150,17 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
       </Box>
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={!user.secret || loading}
+          disabled={
+            !user.sponsorName ||
+            !user.covidImpact ||
+            !user.benefitDescription ||
+            !user.website ||
+            !user.telephone ||
+            !user.bussinesType ||
+            !user.schedule ||
+            !user.secret ||
+            loading
+          }
           variant="contained"
           color="primary"
           onClick={onSubmit}

@@ -27,15 +27,18 @@ type Mutation {
   ): login_output
 }
 
+
+type Query {
+  profile : profile_output
+}
+
+
 type Mutation {
   sponsor_signup (
     sponsor: sponsor_signup_input!
   ): sponsor_signup_output
 }
 
-type Query {
-  profile : profile_output
-}
 
 
 
@@ -67,10 +70,10 @@ type login_output {
   token : String!
 }
 
-
 type sponsor_signup_output {
   success : Boolean!
 }
+
 type profile_output {
   profile : jsonb!
 }

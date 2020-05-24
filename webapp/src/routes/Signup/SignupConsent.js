@@ -41,7 +41,7 @@ const SignupConsent = ({ onSubmit, loading, abi, action }) => {
 SignupConsent.propTypes = {
   onSubmit: PropTypes.func,
   loading: PropTypes.bool,
-  abi: PropTypes.func,
+  abi: PropTypes.object,
   action: PropTypes.string
 }
 

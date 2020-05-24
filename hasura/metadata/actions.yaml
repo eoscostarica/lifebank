@@ -19,16 +19,13 @@ actions:
   permissions:
   - role: donor
   - role: guest
+  - role: sponsor
 - name: login
   definition:
     kind: synchronous
     handler: http://hapi:9090/api/login
   permissions:
   - role: guest
-- name: sponsor_signup
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/sponsors
 - name: profile
   definition:
     kind: ""
@@ -36,6 +33,14 @@ actions:
     forward_client_headers: true
   permissions:
   - role: donor
+  - role: sponsor
+- name: sponsor_signup
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/sponsors
+    forward_client_headers: true
+  permissions:
+  - role: sponsor
 custom_types:
   enums: []
   input_objects:
