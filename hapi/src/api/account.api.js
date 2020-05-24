@@ -1,4 +1,10 @@
-const { eosUtils, jwtUtils } = require('../utils')
+const {
+  eosUtils,
+  jwtUtils,
+  concent2lifeUtils,
+  lifebankcodeUtils,
+  lifebankcoinUtils
+} = require('../utils')
 
 const vaultApi = require('./vault.api')
 const historyApi = require('./history.api')
@@ -24,6 +30,66 @@ const create = async ({ type, secret }) => {
   }
 }
 
+const getProfile = async account => {
+  const vault = await vaultApi.getOne({
+    account: { _eq: account }
+  })
+
+  let data
+
+  switch (vault.type) {
+    case 'donor':
+      data = await getDonorData(account)
+      break
+    default:
+      break
+  }
+
+  return {
+    account,
+    role: vault.type,
+    ...data
+  }
+}
+
+const getDonorData = async account => {
+  const { tx } = await lifebankcodeUtils.getDonor(account)
+  const data = await getTransactionData(tx)
+  const networks = await lifebankcodeUtils.getUserNetworks(account)
+  const comunities = []
+
+  for (let index = 0; index < networks.length; index++) {
+    const comunity = await lifebankcodeUtils.getComunity(
+      networks[index].community
+    )
+    comunities.push(comunity.community_name)
+  }
+
+  const concents = await concent2lifeUtils.getConcent(account)
+  const concent = concents.find(item => item.user === account)
+  const balance = await lifebankcoinUtils.getbalance(account)
+
+  return {
+    comunities,
+    balance,
+    concent: !!concent,
+    fullname: data.doner_name
+  }
+}
+
+const getTransactionData = async tx => {
+  const {
+    processed: { action_traces: actionTraces = [] } = {}
+  } = await historyApi.getOne({
+    transaction_id: { _eq: tx }
+  })
+
+  return actionTraces.reduce(
+    (result, item) => ({ ...result, ...item.act.data }),
+    {}
+  )
+}
+
 const login = async ({ account, secret }) => {
   const vault = await vaultApi.getOne({
     account: { _eq: account },
@@ -43,5 +109,6 @@ const login = async ({ account, secret }) => {
 
 module.exports = {
   create,
+  getProfile,
   login
 }

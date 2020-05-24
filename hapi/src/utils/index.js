@@ -4,5 +4,6 @@ module.exports = {
   hasuraUtils: require('./hasura'),
   jwtUtils: require('./jwt'),
   walletUtils: require('./wallet'),
-  lifebankcodeUtils: require('./lifebankcode')
+  lifebankcodeUtils: require('./lifebankcode'),
+  lifebankcoinUtils: require('./lifebankcoin')
 }

@@ -17,29 +17,6 @@ const eosApi = EosApi({
   fetchConfiguration: {}
 })
 
-const generateRandomAccountName = async (prefix = '') => {
-  const length = 12
-
-  if (prefix.length === 12) return prefix
-
-  const characters = 'abcdefghijklmnopqrstuvwxyz12345'
-  let accountName = prefix
-
-  while (accountName.length < length) {
-    accountName = `${accountName}${characters.charAt(
-      Math.floor(Math.random() * characters.length)
-    )}`
-  }
-
-  try {
-    const account = await getAccount(accountName)
-
-    return account ? generateRandomAccountName(prefix) : accountName
-  } catch (error) {
-    return accountName
-  }
-}
-
 const createAccount = async accountName => {
   const password = await wallet.create(accountName)
   const key = await wallet.createKey(accountName)
@@ -137,11 +114,39 @@ const createAccount = async accountName => {
   }
 }
 
+const generateRandomAccountName = async (prefix = '') => {
+  const length = 12
+
+  if (prefix.length === 12) return prefix
+
+  const characters = 'abcdefghijklmnopqrstuvwxyz12345'
+  let accountName = prefix
+
+  while (accountName.length < length) {
+    accountName = `${accountName}${characters.charAt(
+      Math.floor(Math.random() * characters.length)
+    )}`
+  }
+
+  try {
+    const account = await getAccount(accountName)
+
+    return account ? generateRandomAccountName(prefix) : accountName
+  } catch (error) {
+    return accountName
+  }
+}
+
+const getAbi = account => eosApi.getAbi(account)
+
 const getAccount = account => eosApi.getAccount(account)
 
 const getCodeHash = account => eosApi.getCodeHash(account)
 
-const getAbi = account => eosApi.getAbi(account)
+const getCurrencyBalance = (code, account, symbol) =>
+  eosApi.getCurrencyBalance(code, account, symbol)
+
+const getTableRows = options => eosApi.getTableRows({ json: true, ...options })
 
 const transact = async (actions, account, password) => {
   try {
@@ -172,10 +177,12 @@ const transact = async (actions, account, password) => {
 }
 
 module.exports = {
-  generateRandomAccountName,
   createAccount,
+  generateRandomAccountName,
   getAccount,
-  transact,
+  getAbi,
   getCodeHash,
-  getAbi
+  getCurrencyBalance,
+  getTableRows,
+  transact
 }

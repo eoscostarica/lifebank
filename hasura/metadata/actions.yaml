@@ -29,6 +29,13 @@ actions:
   definition:
     kind: synchronous
     handler: http://hapi:9090/api/sponsors
+- name: profile
+  definition:
+    kind: ""
+    handler: http://hapi:9090/api/profile
+    forward_client_headers: true
+  permissions:
+  - role: donor
 custom_types:
   enums: []
   input_objects:
@@ -39,4 +46,5 @@ custom_types:
   - name: get_abi_output
   - name: login_output
   - name: sponsor_signup_output
+  - name: profile_output
   scalars: []
