@@ -27,8 +27,22 @@ type Mutation {
   ): login_output
 }
 
+type Mutation {
+  sponsor_signup (
+    sponsor: sponsor_signup_input!
+  ): sponsor_signup_output
+}
 
 
+input sponsor_signup_input {
+  sponsorName : String!
+  covidImpact : String!
+  benefitDescription : String!
+  website : String!
+  telephone : String!
+  bussinesType : String!
+  schedule : String!
+}
 
 type donor_signup_output {
   success : Boolean!
@@ -46,5 +60,9 @@ type get_abi_output {
 
 type login_output {
   token : String!
+}
+
+type sponsor_signup_output {
+  success : Boolean!
 }
 

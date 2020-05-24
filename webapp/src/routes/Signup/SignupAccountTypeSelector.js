@@ -2,14 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import AddBoxIcon from '@material-ui/icons/AddBox'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'column'
   },
   btn: {
-    margin: 5
+    margin: theme.spacing(1.5,1)
   }
 }))
 
@@ -17,38 +21,41 @@ const SignupAccountTypeSelector = ({ onSubmit }) => {
   const classes = useStyles()
 
   return (
-    <div className={classes.wrapper}>
+    <Box className={classes.wrapper}>
       <Button
         className={classes.btn}
         variant="contained"
         color="primary"
+        startIcon={<FavoriteIcon />}
         onClick={() => {
           onSubmit('donor')
         }}
       >
-        Donor
+        As a Donor
       </Button>
       <Button
         className={classes.btn}
         variant="contained"
         color="primary"
+        startIcon={<ShoppingCartIcon />}
         onClick={() => {
           onSubmit('sponsor')
         }}
       >
-        Sponsor
+        As a Sponsor
       </Button>
       <Button
         className={classes.btn}
         variant="contained"
         color="primary"
+        startIcon={<AddBoxIcon />}
         onClick={() => {
           onSubmit('clinic')
         }}
       >
-        Clinic
+        As a Bank
       </Button>
-    </div>
+    </Box>
   )
 }
 

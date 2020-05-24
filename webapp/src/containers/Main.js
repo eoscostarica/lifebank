@@ -10,10 +10,11 @@ import Toolbar from '@material-ui/core/Toolbar'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import SvgIcon from '@material-ui/core/SvgIcon'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(11),
+    padding: theme.spacing(7, 0, 0, 0),
     display: 'flex'
   },
   appBar: {
@@ -40,10 +41,31 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerContent: {
     backgroundColor: theme.palette.white,
-    height: '100%',
-    padding: theme.spacing(2)
-  }
+    height: '100%'
+  },
+  lifeBankIcon: {
+    fontFamily: '"Arial Black", Gadget, sans-serif',
+    fontSize: 35.2,
+    letterSpacing: '0.47px'
+  },
+  svgRoot: { width: 'auto' }
 }))
+
+const LifeBankIcon = () => {
+  const classes = useStyles()
+
+  return (
+    <SvgIcon viewBox="0 0 180 45" classes={{ root: classes.svgRoot }}>
+      <path
+        d="M62 4.248 c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z"
+        fill="#b71c1c"
+      />
+      <text x="0" y="42" className={classes.lifeBankIcon} fill="#fff">
+        LifeBank
+      </text>
+    </SvgIcon>
+  )
+}
 
 const Main = ({ children, sidebarContent, topbarContent }) => {
   const classes = useStyles()
@@ -72,11 +94,7 @@ const Main = ({ children, sidebarContent, topbarContent }) => {
             <MenuIcon />
           </IconButton>
           <RouterLink to="/">
-            <img
-              className={classes.logo}
-              alt="Logo"
-              src="https://eoscostarica.io/wp-content/uploads/2019/07/EOSCRlogo-main-darkOverWhite-1.png"
-            />
+            <LifeBankIcon />
           </RouterLink>
           {topbarContent}
         </Toolbar>

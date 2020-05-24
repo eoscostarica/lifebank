@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
@@ -14,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2)
   },
   btnWrapper: {
-    display: 'flex'
+    display: 'flex',
+    justifyContent: 'center'
   }
 }))
 
@@ -23,15 +25,15 @@ const SignupConsent = ({ onSubmit, loading, abi, action }) => {
 
   return (
     <>
-      <div className={classes.wrapper}>
+      <Box className={classes.wrapper}>
         <RicardianContract abi={abi} action={action} />
-      </div>
-      <div className={classes.btnWrapper}>
+      </Box>
+      <Box className={classes.btnWrapper}>
         <Button variant="contained" color="primary" onClick={onSubmit}>
-          Agree
+          I Accept
         </Button>
         {loading && <CircularProgress />}
-      </div>
+      </Box>
     </>
   )
 }
