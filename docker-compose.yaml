@@ -56,15 +56,16 @@ services:
       - postgres
   webapp:
     container_name: "${STAGE}-${APP_NAME}-webapp"
-    build: ./webapp
+    build:
+      context: ./webapp
+      args:
+        REACT_APP_EOS_API_HOST: "${REACT_APP_EOS_API_HOST}"
+        REACT_APP_EOS_API_PORT: "${REACT_APP_EOS_API_PORT}"
+        REACT_APP_EOS_API_PROTOCOL: "${REACT_APP_EOS_API_PROTOCOL}"
+        REACT_APP_EOS_CHAIN_ID: "${REACT_APP_EOS_CHAIN_ID}"
+        REACT_APP_HASURA_URL: "${REACT_APP_HASURA_URL}"
     ports:
       - "3000:3000"
-    environment:
-      REACT_APP_EOS_API_HOST: "${REACT_APP_EOS_API_HOST}"
-      REACT_APP_EOS_API_PORT: "${REACT_APP_EOS_API_PORT}"
-      REACT_APP_EOS_API_PROTOCOL: "${REACT_APP_EOS_API_PROTOCOL}"
-      REACT_APP_EOS_CHAIN_ID: "${REACT_APP_EOS_CHAIN_ID}"
-      REACT_APP_HASURA_URL: "${REACT_APP_HASURA_URL}"
     depends_on:
       - hasura
   nginx:
