@@ -57,13 +57,14 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginBottom: theme.spacing(2)
   }
 }))
 
 const Signup = () => {
   const [activeStep, setActiveStep] = useState(0)
-  const [accountType, setAccountType] = useState()
+  const [accountType, setAccountType] = useState('sponsor')
   const [user, setUser] = useState({})
   const classes = useStyles()
   const history = useHistory()
@@ -116,7 +117,6 @@ const Signup = () => {
   }
 
   const handleSingup = () => {
-    console.log('handleSingup: ', accountType)
     switch (accountType) {
       case 'donor':
         donorSignup({
@@ -128,7 +128,15 @@ const Signup = () => {
       case 'sponsor':
         sponsorSignup({
           variables: {
-            sponsor: {}
+            sponsor: {
+              benefitDescription: user.benefitDescription,
+              bussinesType: user.bussinesType,
+              covidImpact: user.covidImpact,
+              schedule: user.schedule,
+              sponsorName: user.sponsorName,
+              telephone: user.telephone,
+              website: user.website
+            }
           }
         })
         break
@@ -151,10 +159,10 @@ const Signup = () => {
   }, [createAccountResult])
 
   useEffect(() => {
-    if (donorSignupResult) {
-      history.replace('/dashboard')
+    if (donorSignupResult || sponsorSignupResult) {
+      history.replace('/profile')
     }
-  }, [donorSignupResult])
+  }, [donorSignupResult, sponsorSignupResult])
 
   return (
     <Grid container>

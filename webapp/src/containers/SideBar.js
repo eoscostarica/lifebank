@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
@@ -8,6 +9,8 @@ import InfoIcon from '@material-ui/icons/Info'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
+import FingerprintIcon from '@material-ui/icons/Fingerprint'
+import ContactMailIcon from '@material-ui/icons/ContactMail'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -48,35 +51,59 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SideBar = () => {
+const SideBar = ({ user, onLogout }) => {
   const classes = useStyles()
 
   return (
     <Box className={classes.wrapper}>
-      <Box className={classes.optionLink}>
-        <FavoriteIcon className={classes.iconDonor} />
-        <Link to="/donations">
-          <Typography variant="body1" className={classes.labelOption}>
-            My Donations
-          </Typography>
-        </Link>
-      </Box>
-      <Box className={classes.optionLink}>
-        <AccountCircleIcon className={classes.iconOption} />
-        <Link to="/profile">
-          <Typography variant="body1" className={classes.labelOption}>
-            My Profile
-          </Typography>
-        </Link>
-      </Box>
-      <Box className={classes.optionLink}>
-        <LogoutIcon className={classes.iconOption} />
-        <Link to="/">
-          <Typography variant="body1" className={classes.labelOption}>
-            Logout
-          </Typography>
-        </Link>
-      </Box>
+      {user && (
+        <>
+          <Box className={classes.optionLink}>
+            <FavoriteIcon className={classes.iconDonor} />
+            <Link to="/donations">
+              <Typography variant="body1" className={classes.labelOption}>
+                My Donations
+              </Typography>
+            </Link>
+          </Box>
+          <Box className={classes.optionLink}>
+            <AccountCircleIcon className={classes.iconOption} />
+            <Link to="/profile">
+              <Typography variant="body1" className={classes.labelOption}>
+                My Profile
+              </Typography>
+            </Link>
+          </Box>
+          <Box className={classes.optionLink}>
+            <LogoutIcon className={classes.iconOption} />
+            <Link to="/">
+              <Typography variant="body1" className={classes.labelOption}>
+                Logout
+              </Typography>
+            </Link>
+          </Box>
+        </>
+      )}
+      {!user && (
+        <>
+          <Box className={classes.optionLink}>
+            <FingerprintIcon />
+            <Link to="/login">
+              <Typography variant="body1" className={classes.labelOption}>
+                Login
+              </Typography>
+            </Link>
+          </Box>
+          <Box className={classes.optionLink}>
+            <ContactMailIcon className={classes.iconOption} />
+            <Link to="/signup">
+              <Typography variant="body1" className={classes.labelOption}>
+                Register
+              </Typography>
+            </Link>
+          </Box>
+        </>
+      )}
       <Divider />
       <Typography variant="body1" className={classes.infoLabel}>
         INFORMATION
@@ -107,6 +134,11 @@ const SideBar = () => {
       </Box>
     </Box>
   )
+}
+
+SideBar.propTypes = {
+  user: PropTypes.object,
+  onLogout: PropTypes.func
 }
 
 export default SideBar

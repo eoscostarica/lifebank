@@ -17,3 +17,11 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `
+
+export const PROFILE_QUERY = gql`
+  query {
+    profile {
+      profile
+    }
+  }
+`
