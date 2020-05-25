@@ -1,5 +1,41 @@
 #include <lifebankcoin.hpp>
 
+bool lifebankcoin::is_valid_transaction(const name &from,
+                                        const name &to)
+{
+   lifebanks_table _lifebanks(lifebankcode_account, lifebankcode_account.value);
+   auto lifebank_itr_from = _lifebanks.find(from.value);
+   auto lifebank_itr_to = _lifebanks.find(to.value);
+   // lifebank --> lifebank
+   if (lifebank_itr_from != _lifebanks.end() && lifebank_itr_to != _lifebanks.end())
+   {
+      return true;
+   }
+   donors_table _donors(lifebankcode_account, lifebankcode_account.value);
+   auto donor_itr_to = _donors.find(to.value);
+   // lifebank --> doner
+   if (lifebank_itr_from != _lifebanks.end() && donor_itr_to != _donors.end())
+   {
+      return true;
+   }
+   auto donor_itr_from = _donors.find(from.value);
+   sponsors_table _sponsors(lifebankcode_account, lifebankcode_account.value);
+   auto sponsor_itr_to = _sponsors.find(to.value);
+   // donor --> sponsor
+   if (donor_itr_from != _donors.end() && sponsor_itr_to != _sponsors.end())
+   {
+      return true;
+   }
+   auto sponsor_itr_from = _sponsors.find(from.value);
+   lifebank_itr_to = _lifebanks.find(to.value);
+   // sponsor --> lifebank
+   if (sponsor_itr_from != _sponsors.end() && lifebank_itr_to != _lifebanks.end())
+   {
+      return true;
+   }
+   return false;
+}
+
 void lifebankcoin::sub_balance(const name &owner, const asset &value)
 {
    accounts from_acnts(get_self(), owner.value);
@@ -85,25 +121,7 @@ ACTION lifebankcoin::transfer(const name &from,
    check(from != to, "cannot transfer to self");
    require_auth(from);
 
-   // lifebank to donor
-   lifebanks_table _lifebanks(lifebankcode_account, lifebankcode_account.value);
-   auto lifebank_itr = _lifebanks.find(from.value);
-
-   if (lifebank_itr == _lifebanks.end())
-   {
-      donors_table _donors(lifebankcode_account, lifebankcode_account.value);
-      auto donor_itr = _donors.find(from.value);
-      check(donor_itr != _donors.end(), "origin account must be a lifebank or a donor");
-      sponsors_table _sponsors(lifebankcode_account, lifebankcode_account.value);
-      auto sponsor_itr = _sponsors.find(to.value);
-      check(sponsor_itr != _sponsors.end(), "detination account must be a sponsor");
-   }
-   else
-   {
-      donors_table _donors(lifebankcode_account, lifebankcode_account.value);
-      auto donor_itr = _donors.find(to.value);
-      check(donor_itr != _donors.end(), "detination account must be a donor");
-   }
+   check(is_valid_transaction(from, to), "invalid transaction");
 
    check(is_account(to), "to account does not exist");
    auto sym = quantity.symbol.code();
