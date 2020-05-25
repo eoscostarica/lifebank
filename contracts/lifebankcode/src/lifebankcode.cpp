@@ -18,7 +18,9 @@ void lifebankcode::check_consent(name account)
 
 ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo)
 {
+  // Only the contract  can create communities at the moment
   require_auth(get_self());
+  eosio::check(is_account(creator), "New user account does not exists");
 
   eosio::check(community_name.size() <= 256, "name has more than 256 bytes");
   eosio::check(description.size() <= 256, "description has more than 256 bytes");
@@ -35,11 +37,6 @@ ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio
     raw.community_name = community_name;
     raw.description = description;
   });
-  SEND_INLINE_ACTION(*this,                            // Account
-                     link,                             // Action
-                     {creator, eosio::name{"active"}}, // Permission
-                     {community_asset, creator});
-  require_recipient(creator);
 }
 
 ACTION lifebankcode::link(eosio::asset community_asset, eosio::name new_user)
