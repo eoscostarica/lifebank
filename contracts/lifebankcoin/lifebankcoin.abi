@@ -14,20 +14,6 @@
             ]
         },
         {
-            "name": "close",
-            "base": "",
-            "fields": [
-                {
-                    "name": "owner",
-                    "type": "name"
-                },
-                {
-                    "name": "symbol",
-                    "type": "symbol"
-                }
-            ]
-        },
-        {
             "name": "create",
             "base": "",
             "fields": [
@@ -78,38 +64,6 @@
             ]
         },
         {
-            "name": "open",
-            "base": "",
-            "fields": [
-                {
-                    "name": "owner",
-                    "type": "name"
-                },
-                {
-                    "name": "symbol",
-                    "type": "symbol"
-                },
-                {
-                    "name": "ram_payer",
-                    "type": "name"
-                }
-            ]
-        },
-        {
-            "name": "retire",
-            "base": "",
-            "fields": [
-                {
-                    "name": "quantity",
-                    "type": "asset"
-                },
-                {
-                    "name": "memo",
-                    "type": "string"
-                }
-            ]
-        },
-        {
             "name": "transfer",
             "base": "",
             "fields": [
@@ -134,11 +88,6 @@
     ],
     "actions": [
         {
-            "name": "close",
-            "type": "close",
-            "ricardian_contract": ""
-        },
-        {
             "name": "create",
             "type": "create",
             "ricardian_contract": ""
@@ -146,16 +95,6 @@
         {
             "name": "issue",
             "type": "issue",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "open",
-            "type": "open",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "retire",
-            "type": "retire",
             "ricardian_contract": ""
         },
         {
