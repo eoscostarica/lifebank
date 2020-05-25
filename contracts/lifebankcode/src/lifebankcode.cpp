@@ -156,6 +156,38 @@ ACTION lifebankcode::clear()
   {
     donors_itr = _donors.erase(donors_itr);
   }
+
+  sponsors_table _sponsors(get_self(), get_self().value);
+
+  auto sponsors_itr = _sponsors.begin();
+  while (sponsors_itr != _sponsors.end())
+  {
+    sponsors_itr = _sponsors.erase(sponsors_itr);
+  }
+
+  community_table _community(get_self(), get_self().value);
+
+  auto community_itr = _community.begin();
+  while (community_itr != _community.end())
+  {
+    community_itr = _community.erase(donors_itr);
+  }
+
+  network_table _network(get_self(), get_self().value);
+
+  auto network_itr = _network.begin();
+  while (network_itr != _network.end())
+  {
+    network_itr = _network.erase(donors_itr);
+  }
+
+  lifebank_table _lifebank(get_self(), get_self().value);
+
+  auto lifebank_itr = _lifebank.begin();
+  while (lifebank_itr != _lifebank.end())
+  {
+    lifebank_itr = _lifebank.erase(donors_itr);
+  }
 }
 
 EOSIO_DISPATCH(lifebankcode, (createcmm)(link)(adddonor)(addlifebank)(addsponsor)(clear))
