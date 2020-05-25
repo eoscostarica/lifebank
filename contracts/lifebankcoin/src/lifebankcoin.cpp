@@ -84,6 +84,27 @@ ACTION lifebankcoin::transfer(const name &from,
 {
    check(from != to, "cannot transfer to self");
    require_auth(from);
+
+   // lifebank to donor
+   lifebanks_table _lifebanks(lifebankcode_account, lifebankcode_account.value);
+   auto lifebank_itr = _lifebanks.find(from.value);
+
+   if (lifebank_itr == _lifebanks.end())
+   {
+      donors_table _donors(lifebankcode_account, lifebankcode_account.value);
+      auto donor_itr = _donors.find(from.value);
+      check(donor_itr != _donors.end(), "origin account must be a lifebank or a donor");
+      sponsors_table _sponsors(lifebankcode_account, lifebankcode_account.value);
+      auto sponsor_itr = _sponsors.find(to.value);
+      check(sponsor_itr != _sponsors.end(), "detination account must be a sponsor");
+   }
+   else
+   {
+      donors_table _donors(lifebankcode_account, lifebankcode_account.value);
+      auto donor_itr = _donors.find(to.value);
+      check(donor_itr != _donors.end(), "detination account must be a donor");
+   }
+
    check(is_account(to), "to account does not exist");
    auto sym = quantity.symbol.code();
    stats statstable(get_self(), sym.raw());
