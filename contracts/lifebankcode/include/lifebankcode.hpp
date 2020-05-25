@@ -10,15 +10,23 @@ CONTRACT lifebankcode : public contract
 public:
   using contract::contract;
 
+  /// @abi action
   ACTION createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo);
-  ACTION link(eosio::asset community_asset, eosio::name inviter, eosio::name new_user);
 
-  ACTION adddoner(eosio::name account, string doner_name);
+  /// @abi action
+  ACTION link(eosio::asset community_asset, eosio::name new_user);
+
+  /// @abi action
+  ACTION adddonor(eosio::name account, string donor_name, eosio::asset community_asset);
+
+  /// @abi action
   ACTION addlifebank(eosio::name account, string lifebank_name,
                      string description, string address, string location, string phone_number,
-                     bool has_immunity_test, uint8_t blood_urgency_level, string schedule);
+                     bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset);
+
+  /// @abi action
   ACTION addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
-                    string website, string telephone, string bussines_type, string schedule);
+                    string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset);
   ACTION clear();
 
 private:
@@ -62,16 +70,16 @@ private:
                                                eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
       networks_table;
 
-  TABLE doner
+  TABLE donor
   {
     eosio::name account;
 
     checksum256 tx;
     auto primary_key() const { return account.value; }
-    EOSLIB_SERIALIZE(doner,
+    EOSLIB_SERIALIZE(donor,
                      (account)(tx));
   };
-  typedef multi_index<name("doners"), doner> doners_table;
+  typedef multi_index<name("donors"), donor> donors_table;
 
   TABLE lifebank
   {
