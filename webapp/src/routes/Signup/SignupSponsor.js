@@ -46,8 +46,6 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
     [setField]
   )
 
-  console.log({ user })
-
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
