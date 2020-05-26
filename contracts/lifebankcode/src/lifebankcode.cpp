@@ -37,12 +37,16 @@ ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio
     raw.community_name = community_name;
     raw.description = description;
   });
+  SEND_INLINE_ACTION(*this,                               // Account
+                     link,                                // Action
+                     {get_self(), eosio::name{"active"}}, // Permission
+                     {community_asset, creator});
 }
 
 ACTION lifebankcode::link(eosio::asset community_asset, eosio::name new_user)
 {
   eosio::check(is_account(new_user), "New user account does not exists");
-  require_auth(new_user);
+  // require_auth(new_user);
   eosio::symbol community_symbol = community_asset.symbol;
   communities_table community(get_self(), get_self().value);
   const auto &cmm = community.get(community_symbol.raw(), "can't find any community with given asset");
@@ -78,7 +82,6 @@ ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset comm
                        link,                             // Action
                        {account, eosio::name{"active"}}, // Permission
                        {community_asset, account});
-    require_recipient(account);
   }
   else
   {
@@ -107,7 +110,6 @@ ACTION lifebankcode::addlifebank(eosio::name account, string lifebank_name,
                        link,                             // Action
                        {account, eosio::name{"active"}}, // Permission
                        {community_asset, account});
-    require_recipient(account);
   }
   else
   {
@@ -134,7 +136,6 @@ ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string
                        link,                             // Action
                        {account, eosio::name{"active"}}, // Permission
                        {community_asset, account});
-    require_recipient(account);
   }
   else
   {
