@@ -1,5 +1,7 @@
 
 <p align="center">
+	<img src="./visual-design/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg" width="600">
+<br/>
 <a href="http://standardjs.com">
 <img src="https://img.shields.io/badge/all_contributors-10-g.svg?style=flat-square" alt="StandardJS">
 </a>
@@ -16,6 +18,8 @@
 <img src="https://img.shields.io/twitter/follow/eoscostarica.svg?style=social&logo=twitter" alt="follow on Twitter">
 </a>
 </p>
+
+
 
 # Lifebank.io
 **EOSIO VIRTUAL HACKATHON [Coding for Change - May 2020](https://hackathon.eos.io/events/coding-for-change/)**
@@ -44,47 +48,47 @@ Then, our teammate understood why he needed to donate blood and how important it
 
 Fast forward to 2020, COVID-19 spreads to a global pandemic and national emergencies are declared in countless countries around the world.  Social distancing and quarantines cause blood shortages globally as donations plummet while demand for blood and plasma increases. Blood banks enter a short term shortage all over the world with no lifeline in sight. 
 
-['On the precipice': COVID-19 has Canadian Blood Services worried about shortage](https://www.theglobeandmail.com/canada/article-on-the-precipice-covid-19-has-canadian-blood-services-worried-about/)
+- ['On the precipice': COVID-19 has Canadian Blood Services worried about shortage](https://www.theglobeandmail.com/canada/article-on-the-precipice-covid-19-has-canadian-blood-services-worried-about/)
 
-[It's more important than ever to donate blood](https://qz.com/1857865/why-hospitals-fear-a-critical-blood-shortage-as-the-us-reopens/)
+- [It's more important than ever to donate blood](https://qz.com/1857865/why-hospitals-fear-a-critical-blood-shortage-as-the-us-reopens/)
 
-[How COVID-19 led to a blood shortage, and why that's troubling](https://whyy.org/articles/how-covid-19-led-to-a-blood-shortage-and-why-thats-troubling/)
+- [How COVID-19 led to a blood shortage, and why that's troubling](https://whyy.org/articles/how-covid-19-led-to-a-blood-shortage-and-why-thats-troubling/)
 
-[COVID-19 battle takes toll on New York City blood supply: Mayor](https://abcnews.go.com/US/covid-19-battle-takes-toll-york-city-blood/story?id=70731542)
+- [COVID-19 battle takes toll on New York City blood supply: Mayor](https://abcnews.go.com/US/covid-19-battle-takes-toll-york-city-blood/story?id=70731542)
 
-[NYC wants YOU to donate blood: Mayor de Blasio](https://www.nydailynews.com/coronavirus/ny-coronavirus-blood-donations-bill-de-blasio-20200517-dgo5m6jfmbbdzexolaqcapfxpi-story.html)
+- [NYC wants YOU to donate blood: Mayor de Blasio](https://www.nydailynews.com/coronavirus/ny-coronavirus-blood-donations-bill-de-blasio-20200517-dgo5m6jfmbbdzexolaqcapfxpi-story.html)
 
-[Por coronavirus, donación de sangre disminuyó 60%: IMSS](https://www.infobae.com/america/mexico/2020/05/17/por-coronavirus-donacion-de-sangre-disminuyo-60-imss/)
+- [Por coronavirus, donación de sangre disminuyó 60%: IMSS](https://www.infobae.com/america/mexico/2020/05/17/por-coronavirus-donacion-de-sangre-disminuyo-60-imss/)
 
-[Banco de Sangre apela al espíritu solidario de la población para mantener reservas](https://www.elmundo.cr/costa-rica/banco-de-sangre-apela-al-espiritu-solidario-de-la-poblacion-para-mantener-reservas/)
+- [Banco de Sangre apela al espíritu solidario de la población para mantener reservas](https://www.elmundo.cr/costa-rica/banco-de-sangre-apela-al-espiritu-solidario-de-la-poblacion-para-mantener-reservas/)
 
-[Los bancos de sangre tienen hasta 50% menos de la cifra óptima para la autosuficiencia](https://www.telam.com.ar/notas/202005/464193-bancos-de-sangre-donacion-faltante.html)
+- [Los bancos de sangre tienen hasta 50% menos de la cifra óptima para la autosuficiencia](https://www.telam.com.ar/notas/202005/464193-bancos-de-sangre-donacion-faltante.html)
 
 Donations centers across the globe need a way to encourage blood donations based on local demand during a time of crisis. As the demand for blood increases during the crisis,  the eligible donor population was told to stay home, isolate, and avoid medical facilities causing a deepened shortage. 
 
-[Blood banks drying up](https://www.dhakatribune.com/bangladesh/dhaka/2020/05/18/blood-banks-drying-up)
+- [Blood banks drying up](https://www.dhakatribune.com/bangladesh/dhaka/2020/05/18/blood-banks-drying-up)
 
-[Market For Blood Plasma From COVID-19 Survivors Heats Up](https://www.npr.org/sections/health-shots/2020/05/11/852354920/market-for-blood-plasma-from-covid-19-survivors-heats-up)
+- [Market For Blood Plasma From COVID-19 Survivors Heats Up](https://www.npr.org/sections/health-shots/2020/05/11/852354920/market-for-blood-plasma-from-covid-19-survivors-heats-up)
 
-[Local notes: Blood donors urgently needed](https://www.arkansasonline.com/news/2020/may/17/local-notes-blood-donors-urgently-neede/)
+- [Local notes: Blood donors urgently needed](https://www.arkansasonline.com/news/2020/may/17/local-notes-blood-donors-urgently-neede/)
 
-[Blood shortage common in Ramadan, but COVID-19 makes matters worse: PMI](https://www.thejakartapost.com/news/2020/05/14/blood-shortage-common-in-ramadan-but-covid-19-makes-matters-worse-pmi.html)
+- [Blood shortage common in Ramadan, but COVID-19 makes matters worse: PMI](https://www.thejakartapost.com/news/2020/05/14/blood-shortage-common-in-ramadan-but-covid-19-makes-matters-worse-pmi.html)
 
-[American Red Cross urging students to donate blood - Loquitur](https://www.theloquitur.com/american-red-cross-urging-students-to-donate-blood/)
+- [American Red Cross urging students to donate blood - Loquitur](https://www.theloquitur.com/american-red-cross-urging-students-to-donate-blood/)
 
-[How plasma from recovered coronavirus patients could help others survive the disease](https://thehill.com/changing-america/well-being/prevention-cures/493690-how-plasma-from-recovered-coronavirus-patients)
+- [How plasma from recovered coronavirus patients could help others survive the disease](https://thehill.com/changing-america/well-being/prevention-cures/493690-how-plasma-from-recovered-coronavirus-patients)
 
 Another consequence of the pandemic was the economic devastation of a lockdown.  Small businesses that rely on the local community for a majority of their business have to think of ways to incentivize customers to buy online or in-person as soon as restrictions are lifted.  Small businesses also need a lifeline. 
 
-[Impact of Coronavirus on Small Businesses - Where Is It Worst?](https://smallbiztrends.com/2020/04/impact-of-coronavirus-on-small-businesses.html)
+- [Impact of Coronavirus on Small Businesses - Where Is It Worst?](https://smallbiztrends.com/2020/04/impact-of-coronavirus-on-small-businesses.html)
 
-[Stanislaus County businesses among those struggling to pay rent during coronavirus](https://www.modbee.com/news/local/article242714171.html)
+- [Stanislaus County businesses among those struggling to pay rent during coronavirus](https://www.modbee.com/news/local/article242714171.html)
 
-[Will Small Tour Operators Survive The Economic Impact Of COVID-19?](https://www.forbes.com/sites/irenelevine/2020/04/28/will-small-tour-operators-survive-the-economic-impact-of-covid-19/)
+- [Will Small Tour Operators Survive The Economic Impact Of COVID-19?](https://www.forbes.com/sites/irenelevine/2020/04/28/will-small-tour-operators-survive-the-economic-impact-of-covid-19/)
 
-[COVID-19 impact ripples through local economy](http://www.fortmyersbeachtalk.com/page/content.detail/id/637336/COVID-19-impact-ripples-through-local-economy.html?nav=5064)
+- [COVID-19 impact ripples through local economy](http://www.fortmyersbeachtalk.com/page/content.detail/id/637336/COVID-19-impact-ripples-through-local-economy.html?nav=5064)
 
-[How COVID-19 is affecting small businesses in D.C. - D.C. Policy Center](https://www.dcpolicycenter.org/publications/small-businesses-coronavirus/)
+- [How COVID-19 is affecting small businesses in D.C. - D.C. Policy Center](https://www.dcpolicycenter.org/publications/small-businesses-coronavirus/)
 
 During the current COVID-19 health crisis and others in the future,  we aim to build a tool that: 
 
