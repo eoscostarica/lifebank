@@ -37,10 +37,10 @@ ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio
     raw.community_name = community_name;
     raw.description = description;
   });
-  SEND_INLINE_ACTION(*this,                               // Account
-                     link,                                // Action
-                     {get_self(), eosio::name{"active"}}, // Permission
-                     {community_asset, creator});
+  // SEND_INLINE_ACTION(*this,                               // Account
+  //                    link,                                // Action
+  //                    {get_self(), eosio::name{"active"}}, // Permission
+  //                    {community_asset, creator});
 }
 
 ACTION lifebankcode::link(eosio::asset community_asset, eosio::name new_user)
@@ -78,10 +78,10 @@ ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset comm
       row.account = account;
       row.tx = get_tx();
     });
-    SEND_INLINE_ACTION(*this,                            // Account
-                       link,                             // Action
-                       {account, eosio::name{"active"}}, // Permission
-                       {community_asset, account});
+    // SEND_INLINE_ACTION(*this,                            // Account
+    //                    link,                             // Action
+    //                    {account, eosio::name{"active"}}, // Permission
+    //                    {community_asset, account});
   }
   else
   {
@@ -106,10 +106,10 @@ ACTION lifebankcode::addlifebank(eosio::name account, string lifebank_name,
       row.account = account;
       row.tx = get_tx();
     });
-    SEND_INLINE_ACTION(*this,                            // Account
-                       link,                             // Action
-                       {account, eosio::name{"active"}}, // Permission
-                       {community_asset, account});
+    // SEND_INLINE_ACTION(*this,                            // Account
+    //                    link,                             // Action
+    //                    {account, eosio::name{"active"}}, // Permission
+    //                    {community_asset, account});
   }
   else
   {
@@ -132,10 +132,10 @@ ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string
       row.account = account;
       row.tx = get_tx();
     });
-    SEND_INLINE_ACTION(*this,                            // Account
-                       link,                             // Action
-                       {account, eosio::name{"active"}}, // Permission
-                       {community_asset, account});
+    // SEND_INLINE_ACTION(*this,                            // Account
+    //                    link,                             // Action
+    //                    {account, eosio::name{"active"}}, // Permission
+    //                    {community_asset, account});
   }
   else
   {
