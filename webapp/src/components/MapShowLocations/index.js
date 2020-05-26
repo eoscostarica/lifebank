@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import Box from '@material-ui/core/Box'
-import { makeStyles } from '@material-ui/styles'
 
 import { mapboxConfig } from '../../config'
 import fetchFakeData from './fetchFakeData'
@@ -13,28 +12,7 @@ import MapPopup from '../MapPopup'
 const initialGeoLocation = { lng: -84.1132, lat: 9.9363 }
 const initialZoom = 12.5
 
-const useStyles = makeStyles((theme) => ({
-  mapContainer: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0
-  },
-  sidebarStyle: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    margin: theme.spacing(2),
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-    zIndex: 1,
-    padding: theme.spacing(2)
-  }
-}))
-
 function MapShowLocations() {
-  const classes = useStyles()
   const mapContainerRef = useRef(null)
 
   useEffect(() => {
@@ -93,8 +71,7 @@ function MapShowLocations() {
     return () => map.remove()
   }, [])
 
-  // TODO: change styles: currently is a full screen map.
-  return <Box ref={mapContainerRef} className={classes.mapContainer} />
+  return <Box ref={mapContainerRef} width="100%" height="100%" />
 }
 
 export default MapShowLocations

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer, useCallback } from 'react'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
@@ -65,7 +65,10 @@ const useStyles = makeStyles((theme) => ({
 const Signup = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [accountType, setAccountType] = useState('sponsor')
-  const [user, setUser] = useState({})
+  const [user, setUser] = useReducer(
+    (user, newUser) => ({ ...user, ...newUser }),
+    {}
+  )
   const classes = useStyles()
   const history = useHistory()
   const [currentUser, { login }] = useUser()
@@ -99,9 +102,9 @@ const Signup = () => {
     setActiveStep(activeStep + 1)
   }
 
-  const handleSetField = (field, value) => {
-    setUser({ ...user, [field]: value })
-  }
+  const handleSetField = useCallback((field, value) => {
+    setUser({ [field]: value })
+  }, [])
 
   const handleGoBack = () => {
     activeStep && setActiveStep(activeStep - 1)
@@ -136,6 +139,8 @@ const Signup = () => {
               sponsorName: user.sponsorName,
               telephone: user.telephone,
               website: user.website
+              // TODO: save sponsor info and location in Hasura.
+              // location: user.location
             }
           }
         })

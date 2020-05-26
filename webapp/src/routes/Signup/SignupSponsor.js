@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
+
+import MapSelectLocation from '../../components/MapSelectLocation'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -27,14 +29,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center'
-  },
-  mapBox: {
-    marginTop: theme.spacing(2)
   }
 }))
 
 const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
   const classes = useStyles()
+
+  const handleOnLocationChange = useCallback(
+    (location) => setField('location', location),
+    [setField]
+  )
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -142,10 +146,11 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
             setField('benefitDescription', event.target.value)
           }
         />
-        <Box height={200} className={classes.mapBox}>
-          <Typography variant="subtitle2" gutterBottom>
-            Choose your location
-          </Typography>
+        <Typography variant="subtitle2" gutterBottom>
+          Choose your location
+        </Typography>
+        <Box width="100%" height={400} mb={1}>
+          <MapSelectLocation onLocationChange={handleOnLocationChange} />
         </Box>
       </Box>
       <Box className={classes.btnWrapper}>
@@ -159,6 +164,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
             !user.bussinesType ||
             !user.schedule ||
             !user.secret ||
+            !user.location ||
             loading
           }
           variant="contained"
