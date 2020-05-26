@@ -2,7 +2,6 @@ import Dashboard from './Dashboard'
 import NotFound from './NotFound'
 import LandingPage from './LandingPage'
 import Signup from './Signup'
-import Login from './Login'
 import Donation from './Donation'
 import Profile from './Profile'
 
@@ -16,11 +15,6 @@ export default [
     name: 'notFound',
     path: '/not-found',
     component: NotFound
-  },
-  {
-    name: 'login',
-    path: '/login',
-    component: Login
   },
   {
     name: 'signup',

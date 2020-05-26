@@ -9,8 +9,9 @@ import InfoIcon from '@material-ui/icons/Info'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
-import FingerprintIcon from '@material-ui/icons/Fingerprint'
 import ContactMailIcon from '@material-ui/icons/ContactMail'
+
+import LoginModal from '../components/LoginModal'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -86,14 +87,10 @@ const SideBar = ({ user, onLogout }) => {
       )}
       {!user && (
         <>
-          <Box className={classes.optionLink}>
-            <FingerprintIcon />
-            <Link to="/login">
-              <Typography variant="body1" className={classes.labelOption}>
-                Login
-              </Typography>
-            </Link>
-          </Box>
+          <LoginModal
+            overrideBoxClass={classes.optionLink}
+            overrideLabelClass={classes.labelOption}
+          />
           <Box className={classes.optionLink}>
             <ContactMailIcon className={classes.iconOption} />
             <Link to="/signup">

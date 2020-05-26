@@ -3,14 +3,13 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
-import { useTranslation } from 'react-i18next'
-import FingerprintIcon from '@material-ui/icons/Fingerprint'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
 
 import LanguageSelector from '../components/LanguageSelector'
+import LoginModal from '../components/LoginModal'
 
 const useStyles = makeStyles((theme) => ({
   sessionText: {
@@ -35,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Topbar = ({ user, onLogout }) => {
   const classes = useStyles()
-  const { t } = useTranslation('translations')
 
   return (
     <Box className={classes.box}>
@@ -55,16 +53,7 @@ const Topbar = ({ user, onLogout }) => {
           </IconButton>
         </Box>
       )}
-      {!user && (
-        <IconButton color="inherit">
-          <Link to="/login" className={classes.link}>
-            <FingerprintIcon />
-            <Typography className={classes.sessionText} variant="subtitle1">
-              {t('login')}
-            </Typography>
-          </Link>
-        </IconButton>
-      )}
+      {!user && <LoginModal overrideLabelClass={classes.sessionText} />}
     </Box>
   )
 }
