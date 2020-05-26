@@ -8,6 +8,7 @@ const {
 
 const vaultApi = require('./vault.api')
 const historyApi = require('./history.api')
+const LIFEBANCKCODE_CONTRACT = 'lifebankcode' // @todo: use ENV
 
 const create = async ({ type, secret }) => {
   const account = await eosUtils.generateRandomAccountName(type)
@@ -53,7 +54,7 @@ const getProfile = async account => {
 }
 
 const getDonorData = async account => {
-  const { tx } = await lifebankcodeUtils.getDonor(account)
+  const { tx } = (await lifebankcodeUtils.getDonor(account)) || {}
   const data = await getTransactionData(tx)
   const networks = await lifebankcodeUtils.getUserNetworks(account)
   const comunities = []
@@ -73,7 +74,7 @@ const getDonorData = async account => {
     comunities,
     balance,
     consent: !!consent,
-    fullname: data.doner_name
+    fullname: data.donor_name
   }
 }
 
@@ -88,6 +89,17 @@ const getTransactionData = async tx => {
     (result, item) => ({ ...result, ...item.act.data }),
     {}
   )
+}
+
+const grantConsent = async account => {
+  const password = await vaultApi.getPassword(account)
+  const consentTransaction = await consent2lifeUtils.consent(
+    LIFEBANCKCODE_CONTRACT,
+    account,
+    password
+  )
+
+  await historyApi.insert(consentTransaction)
 }
 
 const login = async ({ account, secret }) => {
@@ -107,8 +119,21 @@ const login = async ({ account, secret }) => {
   }
 }
 
+const revokeConsent = async account => {
+  const password = await vaultApi.getPassword(account)
+  const consentTransaction = await consent2lifeUtils.revoke(
+    LIFEBANCKCODE_CONTRACT,
+    account,
+    password
+  )
+
+  await historyApi.insert(consentTransaction)
+}
+
 module.exports = {
   create,
   getProfile,
-  login
+  login,
+  grantConsent,
+  revokeConsent
 }

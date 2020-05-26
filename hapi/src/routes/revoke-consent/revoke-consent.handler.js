@@ -5,13 +5,12 @@ const { accountApi } = require('../../api')
 
 module.exports = async ({ auth: { credentials } }) => {
   try {
-    const profile = await accountApi.getProfile(credentials.sub)
+    await accountApi.revokeConsent(credentials.sub)
 
     return {
-      profile
+      success: true
     }
   } catch (error) {
-    console.error(error)
     return Boom.boomify(error, { statusCode: BAD_REQUEST })
   }
 }

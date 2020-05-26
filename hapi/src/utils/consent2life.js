@@ -51,12 +51,12 @@ const revoke = async (contract, account, password) => {
   )
 }
 
-const getConsent = async () => {
+const getConsent = async account => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
     table: 'userconsents',
-    table_key: 'user'
+    limit: 9999
   })
 
   return rows

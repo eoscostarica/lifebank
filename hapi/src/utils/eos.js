@@ -161,6 +161,7 @@ const transact = async (actions, account, password) => {
     chainId: eosConfig.chainId,
     signatureProvider: new JsSignatureProvider(keys)
   })
+
   const transaction = await api.transact(
     {
       actions

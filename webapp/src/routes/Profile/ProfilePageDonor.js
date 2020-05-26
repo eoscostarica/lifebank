@@ -7,6 +7,10 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import QRCode from 'qrcode.react'
 import Link from '@material-ui/core/Link'
+import Switch from '@material-ui/core/Switch'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -25,10 +29,16 @@ const useStyles = makeStyles((theme) => ({
   },
   editBtn: {
     marginTop: theme.spacing(2)
+  },
+  formGroup: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: theme.spacing(2) * -1
   }
 }))
 
-const ProfilePageDonor = ({ profile }) => {
+const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
   const classes = useStyles()
 
   return (
@@ -60,22 +70,35 @@ const ProfilePageDonor = ({ profile }) => {
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Comunities</Typography>
         <Typography variant="body1">
-          {profile.comunities.join(', ') || 'N/A'}
+          {(profile.comunities || []).join(', ') || 'N/A'}
         </Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Consent status</Typography>
-        <Typography variant="body1">
-          {profile.consent ? 'Granted' : 'Revoked'}
-        </Typography>
+        <FormGroup row className={classes.formGroup}>
+          {!loading && (
+            <FormControlLabel
+              control={
+                <Switch
+                  name="checkedB"
+                  color="primary"
+                  checked={profile.consent || false}
+                  onChange={onConsentChange}
+                />
+              }
+              label={profile.consent ? 'Granted' : 'Revoked'}
+            />
+          )}
+          {loading && <CircularProgress size={16} />}
+        </FormGroup>
       </Box>
       <Divider className={classes.divider} />
       <Box height={30} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Tokens</Typography>
         <Typography variant="body1">
-          {profile.balance.join(', ') || '0 LIFE'}
+          {(profile.balance || []).join(', ')}
         </Typography>
       </Box>
       <Divider className={classes.divider} />
@@ -89,7 +112,7 @@ const ProfilePageDonor = ({ profile }) => {
         <Typography variant="body1">0</Typography>
       </Box>
       <Divider className={classes.divider} />
-      <QRCode value={profile.account} size={200} />
+      <QRCode value={profile.account || 'n/a'} size={200} />
       <Button variant="contained" color="primary" className={classes.editBtn}>
         Edit
       </Button>
@@ -98,7 +121,9 @@ const ProfilePageDonor = ({ profile }) => {
 }
 
 ProfilePageDonor.propTypes = {
-  profile: PropTypes.object
+  profile: PropTypes.object,
+  onConsentChange: PropTypes.func,
+  loading: PropTypes.bool
 }
 
 export default ProfilePageDonor
