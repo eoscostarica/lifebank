@@ -1,6 +1,7 @@
 const eosUtil = require('./eos')
 
 const CONTRACT_NAME = 'lifebankcode' // @todo: use ENV
+const COMMUNITY_ASSET = '0 LIFE' // @todo: use ENV
 
 const adddonor = (account, password, { fullname }) => {
   return eosUtil.transact(
@@ -13,10 +14,11 @@ const adddonor = (account, password, { fullname }) => {
           }
         ],
         account: CONTRACT_NAME,
-        name: 'adddoner',
+        name: 'adddonor',
         data: {
           account,
-          doner_name: fullname
+          donor_name: fullname,
+          community_asset: COMMUNITY_ASSET
         }
       }
     ],
@@ -58,7 +60,7 @@ const getDonor = async account => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
-    table: 'doners',
+    table: 'donors',
     table_key: 'account',
     limit: 1,
     lower_bound: account,

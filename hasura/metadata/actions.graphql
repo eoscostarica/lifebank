@@ -21,6 +21,11 @@ type Query {
 
 
 type Mutation {
+  grant_consent : grant_consent_output
+}
+
+
+type Mutation {
   login (
     account: String!
     secret: String!
@@ -30,6 +35,11 @@ type Mutation {
 
 type Query {
   profile : profile_output
+}
+
+
+type Mutation {
+  revoke_consent : revoke_consent_output
 }
 
 
@@ -76,5 +86,13 @@ type sponsor_signup_output {
 
 type profile_output {
   profile : jsonb!
+}
+
+type grant_consent_output {
+  success : Boolean!
+}
+
+type revoke_consent_output {
+  success : Boolean!
 }
 

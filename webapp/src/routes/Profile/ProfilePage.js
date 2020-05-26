@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
-import { useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import { PROFILE_QUERY } from '../../gql'
+import {
+  PROFILE_QUERY,
+  GRANT_CONSENT_MUTATION,
+  REVOKE_CONSENT_MUTATION
+} from '../../gql'
 import { useUser } from '../../context/user.context'
 
 import ProfilePageGuest from './ProfilePageGuest'
@@ -50,6 +54,24 @@ const ProfilePage = () => {
     loadProfile,
     { called, loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
+  const [
+    revokeConsent,
+    {
+      loading: revokeConsentLoading,
+      data: { revoke_consent: revokeConsentResult } = {}
+    }
+  ] = useMutation(REVOKE_CONSENT_MUTATION)
+  const [
+    grantConsent,
+    {
+      loading: grantConsentLoading,
+      data: { grant_consent: grantConsentResult } = {}
+    }
+  ] = useMutation(GRANT_CONSENT_MUTATION)
+
+  const handleConsentChange = () => {
+    profile?.consent ? revokeConsent() : grantConsent()
+  }
 
   useEffect(() => {
     if (!currentUser || called) {
@@ -59,6 +81,12 @@ const ProfilePage = () => {
     loadProfile()
   }, [currentUser])
 
+  useEffect(() => {
+    if (grantConsentResult || revokeConsentResult) {
+      loadProfile()
+    }
+  }, [grantConsentResult, revokeConsentResult])
+
   return (
     <Box className={classes.wrapper}>
       <Typography variant="h1" className={classes.title}>
@@ -66,7 +94,11 @@ const ProfilePage = () => {
       </Typography>
       {loading && <CircularProgress />}
       {!loading && currentUser && profile?.role === 'donor' && (
-        <ProfilePageDonor profile={profile} />
+        <ProfilePageDonor
+          profile={profile}
+          onConsentChange={handleConsentChange}
+          loading={grantConsentLoading || revokeConsentLoading}
+        />
       )}
       {!loading && currentUser && profile?.role === 'sponsor' && (
         <ProfilePageSponsor profile={profile} />

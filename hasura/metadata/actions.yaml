@@ -20,6 +20,14 @@ actions:
   - role: donor
   - role: guest
   - role: sponsor
+- name: grant_consent
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/grant-consent
+    forward_client_headers: true
+  permissions:
+  - role: donor
+  - role: sponsor
 - name: login
   definition:
     kind: synchronous
@@ -30,6 +38,14 @@ actions:
   definition:
     kind: ""
     handler: http://hapi:9090/api/profile
+    forward_client_headers: true
+  permissions:
+  - role: donor
+  - role: sponsor
+- name: revoke_consent
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/revoke-consent
     forward_client_headers: true
   permissions:
   - role: donor
@@ -52,4 +68,6 @@ custom_types:
   - name: login_output
   - name: sponsor_signup_output
   - name: profile_output
+  - name: grant_consent_output
+  - name: revoke_consent_output
   scalars: []
