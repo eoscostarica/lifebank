@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   btn: {
-    margin: theme.spacing(1.5,1)
+    margin: theme.spacing(1.5, 1)
   }
 }))
 
@@ -50,7 +50,7 @@ const SignupAccountTypeSelector = ({ onSubmit }) => {
         color="primary"
         startIcon={<AddBoxIcon />}
         onClick={() => {
-          onSubmit('clinic')
+          onSubmit('lifebank')
         }}
       >
         As a Bank

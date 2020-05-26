@@ -1,4 +1,5 @@
 export * from './account.gql'
 export * from './contract.gql'
 export * from './donor.gql'
+export * from './lifebank.qgl'
 export * from './sponsor.gql'

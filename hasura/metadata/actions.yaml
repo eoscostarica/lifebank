@@ -28,6 +28,13 @@ actions:
   permissions:
   - role: donor
   - role: sponsor
+- name: lifebank_signup
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/lifebanks
+    forward_client_headers: true
+  permissions:
+  - role: lifebank
 - name: login
   definition:
     kind: synchronous
@@ -70,4 +77,5 @@ custom_types:
   - name: profile_output
   - name: grant_consent_output
   - name: revoke_consent_output
+  - name: lifebank_signup_output
   scalars: []

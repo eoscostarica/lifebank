@@ -12,6 +12,7 @@ import {
   CREATE_ACCOUNT_MUTATION,
   DONOR_SIGNUP_MUTATION,
   SPONSOR_SIGNUP_MUTATION,
+  LIFEBANK_SIGNUP_MUTATION,
   GET_ABI_QUERY
 } from '../../gql'
 import { useUser } from '../../context/user.context'
@@ -19,6 +20,7 @@ import { useUser } from '../../context/user.context'
 import SignupAccountTypeSelector from './SignupAccountTypeSelector'
 import SignupDonor from './SignupDonor'
 import SignupSponsor from './SignupSponsor'
+import SignupLifeBank from './SignupLifeBank'
 import SignupAccount from './SignupAccount'
 import SignupConsent from './SignupConsent'
 
@@ -96,6 +98,13 @@ const Signup = () => {
       data: { sponsor_signup: sponsorSignupResult } = {}
     }
   ] = useMutation(SPONSOR_SIGNUP_MUTATION)
+  const [
+    lifebankSignup,
+    {
+      loading: lifebankSignupLoading,
+      data: { lifebank_signup: lifebankSignupResult } = {}
+    }
+  ] = useMutation(LIFEBANK_SIGNUP_MUTATION)
 
   const handleAccountTypeChange = (type) => {
     setAccountType(type)
@@ -145,6 +154,19 @@ const Signup = () => {
           }
         })
         break
+      case 'lifebank':
+        lifebankSignup({
+          variables: {
+            name: user.name,
+            description: user.description,
+            address: user.address,
+            location: 'N/A',
+            phoneNumber: user.phoneNumber,
+            hasImmunityTest: user.hasImmunityTest,
+            bloodUrgencyLevel: user.bloodUrgencyLevel,
+            schedule: user.schedule
+          }
+        })
 
       default:
         break
@@ -164,10 +186,10 @@ const Signup = () => {
   }, [createAccountResult])
 
   useEffect(() => {
-    if (donorSignupResult || sponsorSignupResult) {
+    if (donorSignupResult || sponsorSignupResult || lifebankSignupResult) {
       history.replace('/profile')
     }
-  }, [donorSignupResult, sponsorSignupResult])
+  }, [donorSignupResult, sponsorSignupResult, lifebankSignupResult])
 
   return (
     <Grid container>
@@ -207,6 +229,14 @@ const Signup = () => {
               user={user}
             />
           )}
+          {activeStep === 1 && accountType === 'lifebank' && (
+            <SignupLifeBank
+              onSubmit={handleCreateAccount}
+              loading={createAccountLoading}
+              setField={handleSetField}
+              user={user}
+            />
+          )}
           {activeStep === 1 && accountType === 'clinic' && <h1>clinic</h1>}
           {activeStep === 2 && (
             <>
@@ -216,7 +246,11 @@ const Signup = () => {
               <SignupAccount data={createAccountResult} />
               <SignupConsent
                 onSubmit={handleSingup}
-                loading={donorSignupLoading || sponsorSignupLoading}
+                loading={
+                  donorSignupLoading ||
+                  sponsorSignupLoading ||
+                  lifebankSignupLoading
+                }
                 abi={abi}
                 action="consent"
               />
