@@ -83,14 +83,10 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
     loginMutation,
     { loading, error, data: { login: loginResult } = {} }
   ] = useMutation(LOGIN_MUTATION)
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
+    setOpen(!open)
   }
 
   const handleSetField = (field, value) => {
@@ -143,7 +139,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
         aria-describedby="transition-modal-description"
         className={classes.modal}
         open={open}
-        onClose={handleClose}
+        onClose={handleOpen}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -157,7 +153,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                 aria-label="close"
                 color="inherit"
                 size="small"
-                onClick={handleClose}
+                onClick={handleOpen}
               >
                 <CloseIcon fontSize="inherit" />
               </IconButton>

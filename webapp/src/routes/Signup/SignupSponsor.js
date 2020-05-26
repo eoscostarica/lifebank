@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
+import Schedule from '../../components/Schedule'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -39,6 +40,13 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
     (location) => setField('location', location),
     [setField]
   )
+
+  const handleOnAddSchedule = useCallback(
+    (data) => setField('schedule', JSON.stringify(data)),
+    [setField]
+  )
+
+  console.log({ user })
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -104,18 +112,10 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
           className={classes.textField}
           onChange={(event) => setField('bussinesType', event.target.value)}
         />
-        <TextField
-          id="schedule"
-          label="Schedule"
-          variant="outlined"
-          placeholder="Schedule"
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('schedule', event.target.value)}
-        />
+        <Box width="100%" className={classes.textField}>
+          <Schedule handleOnAddSchedule={handleOnAddSchedule} />
+        </Box>
+
         <TextField
           id="covidImpact"
           label="Covid Impact"
