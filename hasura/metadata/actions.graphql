@@ -26,6 +26,20 @@ type Mutation {
 
 
 type Mutation {
+  lifebank_signup (
+    name: String!
+    description: String!
+    address: String!
+    location: String!
+    phone_number: String!
+    has_immunity_test: Boolean!
+    blood_urgency_level: Int
+    schedule: String!
+  ): lifebank_signup_output
+}
+
+
+type Mutation {
   login (
     account: String!
     secret: String!
@@ -93,6 +107,10 @@ type grant_consent_output {
 }
 
 type revoke_consent_output {
+  success : Boolean!
+}
+
+type lifebank_signup_output {
   success : Boolean!
 }
 

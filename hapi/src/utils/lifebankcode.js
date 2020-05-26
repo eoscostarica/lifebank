@@ -3,7 +3,7 @@ const eosUtil = require('./eos')
 const CONTRACT_NAME = 'lifebankcode' // @todo: use ENV
 const COMMUNITY_ASSET = '0 LIFE' // @todo: use ENV
 
-const adddonor = (account, password, { fullname }) => {
+const addDonor = (account, password, { fullname }) => {
   return eosUtil.transact(
     [
       {
@@ -27,6 +27,31 @@ const adddonor = (account, password, { fullname }) => {
   )
 }
 
+const addLifebank = (account, password, { name, ...payload }) => {
+  return eosUtil.transact(
+    [
+      {
+        authorization: [
+          {
+            actor: account,
+            permission: 'active'
+          }
+        ],
+        account: CONTRACT_NAME,
+        name: 'addlifebank',
+        data: {
+          account,
+          lifebank_name: name,
+          community_asset: COMMUNITY_ASSET,
+          ...payload
+        }
+      }
+    ],
+    account,
+    password
+  )
+}
+
 const addSponsor = (account, password, payload) => {
   return eosUtil.transact(
     [
@@ -37,7 +62,7 @@ const addSponsor = (account, password, payload) => {
             permission: 'active'
           }
         ],
-        account: 'lifebankcode', // @todo: use ENV
+        account: CONTRACT_NAME,
         name: 'addsponsor',
         data: {
           account,
@@ -98,7 +123,8 @@ const getUserNetworks = async user => {
 }
 
 module.exports = {
-  adddonor,
+  addDonor,
+  addLifebank,
   addSponsor,
   getDonor,
   getComunity,
