@@ -18,6 +18,8 @@ const signup = async (account, { sponsor }) => {
     sponsor
   )
   await historyApi.insert(addSponsorTransaction)
+
+  // TODO: save sponsor info and location in Hasura.
 }
 
 module.exports = {

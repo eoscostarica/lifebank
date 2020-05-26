@@ -1,10 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import Box from '@material-ui/core/Box'
-import { makeStyles } from '@material-ui/styles'
 
 import { mapboxConfig } from '../../config'
 import MapMarker from '../MapMarker'
@@ -12,39 +11,9 @@ import MapMarker from '../MapMarker'
 const initialGeoLocation = { lng: -84.1132, lat: 9.9363 }
 const initialZoom = 12.5
 
-const useStyles = makeStyles((theme) => ({
-  mapContainer: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0
-  },
-  sidebarStyle: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    margin: theme.spacing(2),
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-    zIndex: 1,
-    padding: theme.spacing(2)
-  }
-}))
-
 function MapSelectLocation({ onLocationChange = () => {} }) {
-  const classes = useStyles()
-  const [currentLocation, setCurrentLocation] = useState(null)
   const mapContainerRef = useRef(null)
   const currentMarker = useRef(null)
-
-  useEffect(() => {
-    if (!currentLocation) {
-      return
-    }
-
-    onLocationChange(currentLocation)
-  }, [onLocationChange, currentLocation])
 
   useEffect(() => {
     mapboxgl.accessToken = mapboxConfig.accessToken
@@ -86,14 +55,13 @@ function MapSelectLocation({ onLocationChange = () => {} }) {
       market.setLngLat([lng, lat]).addTo(map)
       currentMarker.current = market
 
-      setCurrentLocation({ lng, lat })
+      onLocationChange({ lng, lat })
     })
 
     return () => map.remove()
-  }, [])
+  }, [onLocationChange])
 
-  // TODO: change styles: currently is a full screen map.
-  return <Box ref={mapContainerRef} className={classes.mapContainer} />
+  return <Box ref={mapContainerRef} width="100%" height="100%" />
 }
 
 MapSelectLocation.propTypes = {

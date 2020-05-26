@@ -1,8 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Route, Redirect, Switch } from 'react-router-dom'
+import { Route, Redirect, Switch, useHistory } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
-import { useHistory } from 'react-router-dom'
 
 import { MainContainer } from '../../containers'
 import { useUser } from '../../context/user.context'
@@ -42,14 +40,6 @@ const Dashboard = () => {
       </Grid>
     </MainContainer>
   )
-}
-
-Dashboard.propTypes = {
-  ual: PropTypes.object
-}
-
-Dashboard.defaultProps = {
-  ual: {}
 }
 
 export default Dashboard

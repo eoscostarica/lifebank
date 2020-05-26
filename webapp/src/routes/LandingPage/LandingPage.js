@@ -4,9 +4,9 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
 
 import CustomRouterLink from '../../components/CustomRouterLink'
+import MapShowLocations from '../../components/MapShowLocations'
 
 const useStyles = makeStyles((theme) => ({
   homeHeader: {
@@ -116,17 +116,9 @@ const LandingPage = () => {
         <Typography variant="h5">
           Find your closest LifeBank or Sponsor
         </Typography>
-
-        <TextField
-          fullWidth
-          label="Location"
-          type="search"
-          variant="outlined"
-          defaultValue="San José, Costa Rica"
-        />
-        
-        <Box width='100%' height={200}/> {/** Here Replace Box for map component */}
-
+        <Box width="100%" height={400} py={2}>
+          <MapShowLocations />
+        </Box>
         <Typography variant="h5">Am I Elegible?</Typography>
         <Typography variant="body1">
           Lifebank helps local communities create a virtuous circle of value
