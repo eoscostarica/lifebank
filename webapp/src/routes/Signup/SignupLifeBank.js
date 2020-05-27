@@ -97,6 +97,20 @@ const SignupLifeBank = ({
       </div>
       <div className={classes.formGroup}>
         <TextField
+          id="email"
+          label="Email"
+          variant="outlined"
+          placeholder="Your Sponsor Name"
+          fullWidth
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setField('email', event.target.value)}
+        />
+      </div>
+      <div className={classes.formGroup}>
+        <TextField
           id="name"
           label="Name"
           placeholder="Name"
