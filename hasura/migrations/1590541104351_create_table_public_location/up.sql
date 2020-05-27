@@ -1,0 +1,1 @@
+CREATE TABLE "public"."location"("id" serial NOT NULL, "name" text NOT NULL, "latitude" float8 NOT NULL, "longitude" float8 NOT NULL, "type" text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("type") REFERENCES "public"."location_type"("value") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));

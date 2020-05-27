@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
 const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
   const classes = useStyles()
 
-  const handleOnLocationChange = useCallback(
-    (location) => setField('location', location),
+  const handleOnGeolocationChange = useCallback(
+    (geolocation) => setField('geolocation', geolocation),
     [setField]
   )
 
@@ -147,9 +147,13 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
         <Typography variant="subtitle2" gutterBottom>
           Choose your location
         </Typography>
-        <Box width="100%" height={400} mb={1}>
-          <MapSelectLocation onLocationChange={handleOnLocationChange} />
-        </Box>
+
+        <MapSelectLocation
+          onGeolocationChange={handleOnGeolocationChange}
+          width="100%"
+          height={400}
+          mb={1}
+        />
       </Box>
       <Box className={classes.btnWrapper}>
         <Button
@@ -162,7 +166,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
             !user.bussinesType ||
             !user.schedule ||
             !user.secret ||
-            !user.location ||
+            !user.geolocation ||
             loading
           }
           variant="contained"

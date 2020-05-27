@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import Box from '@material-ui/core/Box'
@@ -12,7 +13,7 @@ import MapPopup from '../MapPopup'
 const initialGeoLocation = { lng: -84.1132, lat: 9.9363 }
 const initialZoom = 12.5
 
-function MapShowLocations() {
+function MapShowLocations({ ...props }) {
   const mapContainerRef = useRef(null)
 
   useEffect(() => {
@@ -71,7 +72,11 @@ function MapShowLocations() {
     return () => map.remove()
   }, [])
 
-  return <Box ref={mapContainerRef} width="100%" height="100%" />
+  return <Box ref={mapContainerRef} {...props} />
+}
+
+MapShowLocations.propTypes = {
+  props: PropTypes.object
 }
 
 export default MapShowLocations

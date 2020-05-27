@@ -68,6 +68,7 @@ custom_types:
   enums: []
   input_objects:
   - name: sponsor_signup_input
+  - name: geolocation_input
   objects:
   - name: donor_signup_output
   - name: create_account_output

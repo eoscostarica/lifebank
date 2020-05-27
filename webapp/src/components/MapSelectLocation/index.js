@@ -11,7 +11,7 @@ import MapMarker from '../MapMarker'
 const initialGeoLocation = { lng: -84.1132, lat: 9.9363 }
 const initialZoom = 12.5
 
-function MapSelectLocation({ onLocationChange = () => {} }) {
+function MapSelectLocation({ onGeolocationChange = () => {}, ...props }) {
   const mapContainerRef = useRef(null)
   const currentMarker = useRef(null)
 
@@ -55,17 +55,18 @@ function MapSelectLocation({ onLocationChange = () => {} }) {
       market.setLngLat([lng, lat]).addTo(map)
       currentMarker.current = market
 
-      onLocationChange({ lng, lat })
+      onGeolocationChange({ longitude: lng, latitude: lat })
     })
 
     return () => map.remove()
-  }, [onLocationChange])
+  }, [onGeolocationChange])
 
-  return <Box ref={mapContainerRef} width="100%" height="100%" />
+  return <Box ref={mapContainerRef} {...props} />
 }
 
 MapSelectLocation.propTypes = {
-  onLocationChange: PropTypes.func
+  onGeolocationChange: PropTypes.func,
+  props: PropTypes.object
 }
 
 export default MapSelectLocation

@@ -10,7 +10,11 @@ module.exports = {
         website: Joi.string().required(),
         telephone: Joi.string().required(),
         bussinesType: Joi.string().required(),
-        schedule: Joi.string().required()
+        schedule: Joi.string().required(),
+        geolocation: Joi.object({
+          latitude: Joi.number().required(),
+          longitude: Joi.number().required()
+        })
       })
     })
   }).options({ stripUnknown: true })

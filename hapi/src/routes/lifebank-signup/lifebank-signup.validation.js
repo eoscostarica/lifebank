@@ -10,7 +10,11 @@ module.exports = {
       phone_number: Joi.string().required(),
       has_immunity_test: Joi.boolean().required(),
       blood_urgency_level: Joi.number().required(),
-      schedule: Joi.string().required()
+      schedule: Joi.string().required(),
+      geolocation: Joi.object({
+        latitude: Joi.number().required(),
+        longitude: Joi.number().required()
+      })
     })
   }).options({ stripUnknown: true })
 }

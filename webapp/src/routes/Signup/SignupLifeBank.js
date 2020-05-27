@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
@@ -9,6 +9,8 @@ import Slider from '@material-ui/core/Slider'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
+
+import MapSelectLocation from '../../components/MapSelectLocation'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -57,6 +59,11 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
         return 'N/A'
     }
   }
+
+  const handleOnGeolocationChange = useCallback(
+    (geolocation) => setField('geolocation', geolocation),
+    [setField]
+  )
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -179,6 +186,13 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
         Choose your location
       </Typography>
 
+      <MapSelectLocation
+        onGeolocationChange={handleOnGeolocationChange}
+        width="100%"
+        height={400}
+        mb={1}
+      />
+
       <div className={classes.btnWrapper}>
         <Button
           disabled={
@@ -189,6 +203,7 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
             !user.phoneNumber ||
             !user.bloodUrgencyLevel ||
             !user.schedule ||
+            !user.geolocation ||
             loading
           }
           variant="contained"

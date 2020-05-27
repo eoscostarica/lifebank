@@ -35,6 +35,7 @@ type Mutation {
     has_immunity_test: Boolean!
     blood_urgency_level: Int
     schedule: String!
+    geolocation: geolocation_input!
   ): lifebank_signup_output
 }
 
@@ -74,6 +75,12 @@ input sponsor_signup_input {
   telephone : String!
   bussinesType : String!
   schedule : String!
+  geolocation : geolocation_input!
+}
+
+input geolocation_input {
+  latitude : Float!
+  longitude : Float!
 }
 
 type donor_signup_output {

@@ -147,9 +147,8 @@ const Signup = () => {
               schedule: user.schedule,
               sponsorName: user.sponsorName,
               telephone: user.telephone,
-              website: user.website
-              // TODO: save sponsor info and location in Hasura.
-              // location: user.location
+              website: user.website,
+              geolocation: user.geolocation
             }
           }
         })
@@ -164,7 +163,8 @@ const Signup = () => {
             phoneNumber: user.phoneNumber,
             hasImmunityTest: user.hasImmunityTest,
             bloodUrgencyLevel: user.bloodUrgencyLevel,
-            schedule: user.schedule
+            schedule: user.schedule,
+            geolocation: user.geolocation
           }
         })
 

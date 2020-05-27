@@ -10,6 +10,7 @@ export const LIFEBANK_SIGNUP_MUTATION = gql`
     $hasImmunityTest: Boolean!
     $bloodUrgencyLevel: Int
     $schedule: String!
+    $geolocation: geolocation_input!
   ) {
     lifebank_signup(
       name: $name
@@ -20,6 +21,7 @@ export const LIFEBANK_SIGNUP_MUTATION = gql`
       has_immunity_test: $hasImmunityTest
       blood_urgency_level: $bloodUrgencyLevel
       schedule: $schedule
+      geolocation: $geolocation
     ) {
       success
     }

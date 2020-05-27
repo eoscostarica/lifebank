@@ -3,6 +3,12 @@ const { lifebankcodeUtils } = require('../utils')
 const accountApi = require('./account.api')
 const historyApi = require('./history.api')
 const vaultApi = require('./vault.api')
+const locationApi = require('./location.api')
+const {
+  constants: {
+    ENUM_DATA: { LOCATION_TYPES }
+  }
+} = require('../config')
 
 const signup = async (account, { sponsor }) => {
   await accountApi.grantConsent(account)
@@ -16,7 +22,12 @@ const signup = async (account, { sponsor }) => {
 
   await historyApi.insert(addSponsorTransaction)
 
-  // TODO: save sponsor info and location in Hasura.
+  await locationApi.insert({
+    name: sponsor.sponsorName,
+    latitude: sponsor.geolocation.latitude,
+    longitude: sponsor.geolocation.longitude,
+    type: LOCATION_TYPES.SPONSOR
+  })
 }
 
 module.exports = {
