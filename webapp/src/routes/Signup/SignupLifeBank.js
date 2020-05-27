@@ -78,6 +78,11 @@ const SignupLifeBank = ({
     }
   }
 
+  const handleOnAddSchedule = useCallback(
+    (data) => setField('schedule', JSON.stringify(data)),
+    [setField]
+  )
+
   return (
     <form autoComplete="off" className={classes.form}>
       <div className={classes.formGroup}>{children}</div>

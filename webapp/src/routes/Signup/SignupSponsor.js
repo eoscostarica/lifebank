@@ -183,7 +183,7 @@ const SponsorSignup = ({
             !user.bussines_type ||
             !user.schedule ||
             !user.secret ||
-            !user.location ||
+            // !user.location ||
             !isUsernameValid ||
             loading
           }

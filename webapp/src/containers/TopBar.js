@@ -21,9 +21,11 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   link: {
+    display: 'flex',
     color: 'white',
     textDecoration: 'none',
-    height: 24
+    height: 24,
+    alignItems: 'center'
   },
   box: {
     display: 'flex',
