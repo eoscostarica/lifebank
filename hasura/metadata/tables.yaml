@@ -3,6 +3,9 @@
     name: history
 - table:
     schema: public
+    name: location
+- table:
+    schema: public
     name: user
 - table:
     schema: public
