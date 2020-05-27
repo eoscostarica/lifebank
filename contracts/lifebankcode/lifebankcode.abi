@@ -64,6 +64,10 @@
                 {
                     "name": "community_asset",
                     "type": "asset"
+                },
+                {
+                    "name": "email",
+                    "type": "string"
                 }
             ]
         },
@@ -110,6 +114,10 @@
                 {
                     "name": "community_asset",
                     "type": "asset"
+                },
+                {
+                    "name": "location",
+                    "type": "string"
                 }
             ]
         },
@@ -167,6 +175,10 @@
                 {
                     "name": "logo",
                     "type": "string"
+                },
+                {
+                    "name": "maximum_supply",
+                    "type": "asset"
                 }
             ]
         },

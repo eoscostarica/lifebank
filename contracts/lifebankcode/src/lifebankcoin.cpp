@@ -140,8 +140,3 @@ ACTION lifebankcoin::transfer(const name &from,
    sub_balance(from, quantity);
    add_balance(to, quantity, payer);
 }
-
-ACTION consent2life::clear()
-{
-   require_auth(get_self());
-}

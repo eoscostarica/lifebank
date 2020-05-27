@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "eosjs-account-name": "^1.1.1"
+  }
+}

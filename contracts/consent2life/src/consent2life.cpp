@@ -1,5 +1,10 @@
 #include <consent2life.hpp>
 
+checksum256 consent2life::string_to_hash(const string &input)
+{
+  return sha256(input.c_str(), input.size());
+}
+
 ACTION consent2life::consent(name user, name contract, checksum256 hash)
 {
   require_auth(user);
@@ -9,7 +14,7 @@ ACTION consent2life::consent(name user, name contract, checksum256 hash)
   // Init the _records table
   informed_consent_table _records(get_self(), get_self().value);
   // calculate unique record
-  auto single_record = (static_cast<uint128_t>(user.value) << 64) | contract.value;
+  auto single_record = string_to_hash(user.to_string() + contract.to_string());
   // Find the record user _records table
   auto single_record_index = _records.get_index<name("singlerecord")>();
   auto existing_record = single_record_index.find(single_record);
@@ -41,7 +46,7 @@ ACTION consent2life::revoke(name user, name contract)
   informed_consent_table _records(get_self(), get_self().value);
 
   // calculate unique record
-  auto single_record = (static_cast<uint128_t>(user.value) << 64) | contract.value;
+  auto single_record = string_to_hash(user.to_string() + contract.to_string());
 
   // Find and delete existing record in _records table
   auto itr = _records.begin();
