@@ -88,7 +88,7 @@ const ProfilePage = () => {
     }
   }, [grantConsentResult, revokeConsentResult])
 
-  console.log({ currentUser, profile });
+  console.log({ currentUser, profile })
 
   return (
     <Box className={classes.wrapper}>
