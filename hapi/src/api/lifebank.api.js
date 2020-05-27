@@ -24,8 +24,10 @@ const signup = async (account, data) => {
 
   await locationApi.insert({
     name: data.name,
-    latitude: data.geolocation.latitude,
-    longitude: data.geolocation.longitude,
+    geolocation: {
+      type: 'Point',
+      coordinates: [data.geolocation.longitude, data.geolocation.latitude]
+    },
     type: LOCATION_TYPES.LIFE_BANK
   })
 }

@@ -24,8 +24,10 @@ const signup = async (account, { sponsor }) => {
 
   await locationApi.insert({
     name: sponsor.sponsorName,
-    latitude: sponsor.geolocation.latitude,
-    longitude: sponsor.geolocation.longitude,
+    geolocation: {
+      type: 'Point',
+      coordinates: [sponsor.geolocation.longitude, sponsor.geolocation.latitude]
+    },
     type: LOCATION_TYPES.SPONSOR
   })
 }

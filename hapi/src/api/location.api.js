@@ -5,8 +5,7 @@ const INSERT = `
     insert_location_one(object: $location) {
       id
       name
-      latitude
-      longitude
+      geolocation
       type
     }
   }
