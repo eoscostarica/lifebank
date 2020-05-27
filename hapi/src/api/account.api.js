@@ -6,22 +6,26 @@ const {
   lifebankcoinUtils
 } = require('../utils')
 
-const vaultApi = require('./vault.api')
 const historyApi = require('./history.api')
+const userApi = require('./user.api')
+const vaultApi = require('./vault.api')
 const LIFEBANCKCODE_CONTRACT = 'lifebankcode' // @todo: use ENV
 
-const create = async ({ type, secret }) => {
-  const account = await eosUtils.generateRandomAccountName(type)
+const create = async ({ role, username, secret }) => {
+  const account = `${role.substring(0, 3)}${username}`.substring(0, 12)
   const { password, transaction } = await eosUtils.createAccount(account)
-  const token = jwtUtils.create({ account, type })
+  const token = jwtUtils.create({ role, username, account })
 
-  await vaultApi.insert({
-    type,
+  await userApi.insert({
+    role,
+    username,
     account,
-    secret,
+    secret
+  })
+  await vaultApi.insert({
+    account,
     password
   })
-
   await historyApi.insert(transaction)
 
   return {
@@ -32,15 +36,21 @@ const create = async ({ type, secret }) => {
 }
 
 const getProfile = async account => {
-  const vault = await vaultApi.getOne({
+  const user = await userApi.getOne({
     account: { _eq: account }
   })
 
   let data = {}
 
-  switch (vault.type) {
+  switch (user.role) {
     case 'donor':
       data = await getDonorData(account)
+      break
+    case 'lifebank':
+      data = await getLifebankData(account)
+      break
+    case 'sponsor':
+      data = await getSponsorData(account)
       break
     default:
       break
@@ -48,14 +58,14 @@ const getProfile = async account => {
 
   return {
     account,
-    role: vault.type,
+    role: user.role,
     ...data
   }
 }
 
 const getDonorData = async account => {
   const { tx } = (await lifebankcodeUtils.getDonor(account)) || {}
-  const data = await getTransactionData(tx)
+  const { donor_name: name } = await getTransactionData(tx)
   const networks = await lifebankcodeUtils.getUserNetworks(account)
   const comunities = []
 
@@ -66,15 +76,60 @@ const getDonorData = async account => {
     comunities.push(comunity.community_name)
   }
 
-  const consents = await consent2lifeUtils.getConsent(account)
-  const consent = consents.find(item => item.user === account)
+  const consent = await consent2lifeUtils.getConsent(
+    LIFEBANCKCODE_CONTRACT,
+    account
+  )
   const balance = await lifebankcoinUtils.getbalance(account)
 
   return {
+    name,
     comunities,
     balance,
-    consent: !!consent,
-    fullname: data.donor_name
+    consent: !!consent
+  }
+}
+
+const getLifebankData = async account => {
+  const { tx } = (await lifebankcodeUtils.getLifebank(account)) || {}
+  const { lifebank_name: name, ...profile } = await getTransactionData(tx)
+  const consent = await consent2lifeUtils.getConsent(
+    LIFEBANCKCODE_CONTRACT,
+    account
+  )
+
+  return {
+    ...profile,
+    name,
+    consent: !!consent
+  }
+}
+
+const getSponsorData = async account => {
+  const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
+  const { sponsor_name: name, ...profile } = await getTransactionData(tx)
+  const networks = await lifebankcodeUtils.getUserNetworks(account)
+  const comunities = []
+
+  for (let index = 0; index < networks.length; index++) {
+    const comunity = await lifebankcodeUtils.getComunity(
+      networks[index].community
+    )
+    comunities.push(comunity.community_name)
+  }
+
+  const consent = await consent2lifeUtils.getConsent(
+    LIFEBANCKCODE_CONTRACT,
+    account
+  )
+  const balance = await lifebankcoinUtils.getbalance(account)
+
+  return {
+    ...profile,
+    comunities,
+    balance,
+    name,
+    consent: !!consent
   }
 }
 
@@ -103,16 +158,28 @@ const grantConsent = async account => {
 }
 
 const login = async ({ account, secret }) => {
-  const vault = await vaultApi.getOne({
-    account: { _eq: account },
-    secret: { _eq: secret }
+  const user = await userApi.getOne({
+    _and: [
+      {
+        _or: [
+          { account: { _eq: account } },
+          { username: { _eq: account } },
+          { email: { _eq: account } }
+        ]
+      },
+      { secret: { _eq: secret } }
+    ]
   })
 
-  if (!vault) {
+  if (!user) {
     throw new Error('Invalid account or secret')
   }
 
-  const token = jwtUtils.create({ account, type: vault.type })
+  const token = jwtUtils.create({
+    account: user.account,
+    role: user.role,
+    username: user.username
+  })
 
   return {
     token

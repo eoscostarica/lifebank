@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SignupAccountTypeSelector = ({ onSubmit }) => {
+const SignupRoleSelector = ({ onSubmit }) => {
   const classes = useStyles()
 
   return (
@@ -59,10 +59,10 @@ const SignupAccountTypeSelector = ({ onSubmit }) => {
   )
 }
 
-SignupAccountTypeSelector.propTypes = {
+SignupRoleSelector.propTypes = {
   onSubmit: PropTypes.func
 }
 
-SignupAccountTypeSelector.defaultProps = {}
+SignupRoleSelector.defaultProps = {}
 
-export default SignupAccountTypeSelector
+export default SignupRoleSelector

@@ -1,3 +1,5 @@
+const crypto = require('crypto')
+
 const eosUtil = require('./eos')
 
 const CONTRACT_NAME = 'consent2life' // @todo: use ENV
@@ -51,15 +53,23 @@ const revoke = async (contract, account, password) => {
   )
 }
 
-const getConsent = async account => {
+const getConsent = async (contract, account) => {
+  const record = crypto
+    .createHash('sha256')
+    .update(`${account}${contract}`)
+    .digest('hex')
+
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
     table: 'userconsents',
-    limit: 9999
+    index_position: 2,
+    key_type: 'sha256',
+    lower_bound: record,
+    upper_bound: record
   })
 
-  return rows
+  return rows.length > 0 ? rows[0] : null
 }
 
 module.exports = {

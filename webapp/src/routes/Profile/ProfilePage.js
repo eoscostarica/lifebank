@@ -12,8 +12,9 @@ import {
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
-import ProfilePageGuest from './ProfilePageGuest'
 import ProfilePageDonor from './ProfilePageDonor'
+import ProfilePageGuest from './ProfilePageGuest'
+import ProfilePageLifebank from './ProfilePageLifebank'
 import ProfilePageSponsor from './ProfilePageSponsor'
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +53,7 @@ const ProfilePage = () => {
   const [currentUser] = useUser()
   const [
     loadProfile,
-    { called, loading, data: { profile: { profile } = {} } = {} }
+    { loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
   const [
     revokeConsent,
@@ -74,7 +75,7 @@ const ProfilePage = () => {
   }
 
   useEffect(() => {
-    if (!currentUser || called) {
+    if (!currentUser) {
       return
     }
 
@@ -102,6 +103,9 @@ const ProfilePage = () => {
       )}
       {!loading && currentUser && profile?.role === 'sponsor' && (
         <ProfilePageSponsor profile={profile} />
+      )}
+      {!loading && currentUser && profile?.role === 'lifebank' && (
+        <ProfilePageLifebank profile={profile} />
       )}
       {!currentUser && <ProfilePageGuest />}
     </Box>

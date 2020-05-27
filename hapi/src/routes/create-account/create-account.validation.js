@@ -3,7 +3,8 @@ const Joi = require('@hapi/joi')
 module.exports = {
   payload: Joi.object({
     input: Joi.object({
-      type: Joi.string().required(),
+      role: Joi.string().required(),
+      username: Joi.string().required(),
       secret: Joi.string().required()
     })
   }).options({ stripUnknown: true })

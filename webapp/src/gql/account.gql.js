@@ -1,11 +1,27 @@
 import gql from 'graphql-tag'
 
 export const CREATE_ACCOUNT_MUTATION = gql`
-  mutation($type: String!, $secret: String!) {
-    create_account(type: $type, secret: $secret) {
+  mutation($role: String!, $username: String!, $secret: String!) {
+    create_account(role: $role, username: $username, secret: $secret) {
       account
       token
       transaction_id
+    }
+  }
+`
+
+export const SIGNUP_MUTATION = gql`
+  mutation($profile: jsonb!) {
+    signup(profile: $profile) {
+      success
+    }
+  }
+`
+
+export const CHECK_USERNAME_MUTATION = gql`
+  mutation($username: String!) {
+    check_username(username: $username) {
+      is_valid
     }
   }
 `

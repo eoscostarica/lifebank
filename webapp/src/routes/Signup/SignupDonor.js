@@ -9,14 +9,14 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%',
-    padding: theme.spacing(0,2)
+    padding: theme.spacing(0, 2)
   },
   textFieldWrapper: {
     height: 190,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   textField: {},
   btnWrapper: {
@@ -27,24 +27,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const DonorSignup = ({ onSubmit, setField, user, loading }) => {
+const DonorSignup = ({
+  onSubmit,
+  setField,
+  user,
+  loading,
+  isUsernameValid,
+  children
+}) => {
   const classes = useStyles()
 
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        <TextField
-          id="fullname"
-          label="Name"
-          fullWidth
-          variant="outlined"
-          placeholder="Your Full Name"
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('fullname', event.target.value)}
-        />
+        {children}
         <TextField
           id="secret"
           label="Secret"
@@ -55,13 +51,30 @@ const DonorSignup = ({ onSubmit, setField, user, loading }) => {
           InputLabelProps={{
             shrink: true
           }}
-          className={classes.textField}
           onChange={(event) => setField('secret', event.target.value)}
+        />
+        <TextField
+          id="fullname"
+          label="Name"
+          fullWidth
+          variant="outlined"
+          placeholder="Your Full Name"
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setField('name', event.target.value)}
         />
       </Box>
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={!user.fullname || !user.secret || loading}
+          disabled={
+            !user.username ||
+            !user.secret ||
+            !user.name ||
+            !isUsernameValid ||
+            loading
+          }
           variant="contained"
           color="primary"
           onClick={onSubmit}
@@ -78,7 +91,9 @@ DonorSignup.propTypes = {
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
   user: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  isUsernameValid: PropTypes.bool,
+  children: PropTypes.node
 }
 
 DonorSignup.defaultProps = {}

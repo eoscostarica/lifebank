@@ -1,17 +1,16 @@
 actions:
+- name: check_username
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/check-username
+  permissions:
+  - role: guest
 - name: create_account
   definition:
     kind: synchronous
     handler: http://hapi:9090/api/accounts
   permissions:
   - role: guest
-- name: donor_signup
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/donors
-    forward_client_headers: true
-  permissions:
-  - role: donor
 - name: get_abi
   definition:
     kind: ""
@@ -27,14 +26,8 @@ actions:
     forward_client_headers: true
   permissions:
   - role: donor
-  - role: sponsor
-- name: lifebank_signup
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/lifebanks
-    forward_client_headers: true
-  permissions:
   - role: lifebank
+  - role: sponsor
 - name: login
   definition:
     kind: synchronous
@@ -48,6 +41,7 @@ actions:
     forward_client_headers: true
   permissions:
   - role: donor
+  - role: lifebank
   - role: sponsor
 - name: revoke_consent
   definition:
@@ -56,26 +50,27 @@ actions:
     forward_client_headers: true
   permissions:
   - role: donor
+  - role: lifebank
   - role: sponsor
-- name: sponsor_signup
+- name: signup
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/sponsors
+    handler: http://hapi:9090/api/signup
     forward_client_headers: true
   permissions:
+  - role: donor
+  - role: lifebank
   - role: sponsor
 custom_types:
   enums: []
-  input_objects:
-  - name: sponsor_signup_input
+  input_objects: []
   objects:
-  - name: donor_signup_output
   - name: create_account_output
   - name: get_abi_output
   - name: login_output
-  - name: sponsor_signup_output
   - name: profile_output
-  - name: grant_consent_output
+  - name: signup_output
+  - name: check_username_output
   - name: revoke_consent_output
-  - name: lifebank_signup_output
+  - name: grant_consent_output
   scalars: []

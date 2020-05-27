@@ -45,7 +45,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
     <>
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Name</Typography>
-        <Typography variant="body1">{profile.fullname}</Typography>
+        <Typography variant="body1">{profile.name}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
