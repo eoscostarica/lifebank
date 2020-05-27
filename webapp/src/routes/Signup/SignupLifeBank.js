@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
@@ -9,6 +9,10 @@ import Slider from '@material-ui/core/Slider'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
+import Box from '@material-ui/core/Box'
+
+import MapSelectLocation from '../../components/MapSelectLocation'
+import Schedule from '../../components/Schedule'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -29,8 +33,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
+const SignupLifeBank = ({
+  onSubmit,
+  setField,
+  user,
+  loading,
+  isUsernameValid,
+  children
+}) => {
   const classes = useStyles()
+  const handleOnLocationChange = useCallback(
+    (location) => setField('location', JSON.stringify(location)),
+    [setField]
+  )
+  const handleOnAddSchedule = useCallback(
+    (data) => setField('schedule', JSON.stringify(data)),
+    [setField]
+  )
+
   const marks = [
     {
       value: 1,
@@ -60,18 +80,33 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
+      <div className={classes.formGroup}>{children}</div>
       <div className={classes.formGroup}>
         <TextField
           id="secret"
           label="Secret"
           type="password"
-          variant="outlined"
-          placeholder="Secret"
           fullWidth
+          placeholder="Your Secret"
+          variant="outlined"
           InputLabelProps={{
             shrink: true
           }}
           onChange={(event) => setField('secret', event.target.value)}
+        />
+      </div>
+      <div className={classes.formGroup}>
+        <TextField
+          id="email"
+          label="Email"
+          variant="outlined"
+          placeholder="Your Sponsor Name"
+          fullWidth
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setField('email', event.target.value)}
         />
       </div>
       <div className={classes.formGroup}>
@@ -127,7 +162,7 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
             shrink: true
           }}
           className={classes.textField}
-          onChange={(event) => setField('phoneNumber', event.target.value)}
+          onChange={(event) => setField('phone_number', event.target.value)}
         />
       </div>
       <FormGroup className={classes.formGroup}>
@@ -137,23 +172,21 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
               id="hasImmunityTest"
               name="hasImmunityTest"
               color="primary"
-              checked={user.hasImmunityTest || false}
+              checked={user.has_immunity_test || false}
               onChange={(event) =>
-                setField('hasImmunityTest', !user.hasImmunityTest)
+                setField('has_immunity_test', !user.has_immunity_test)
               }
             />
           }
           label="Has immunity test?"
         />
-        {loading && <CircularProgress size={16} />}
       </FormGroup>
       <div className={classes.formGroup}>
         <Typography gutterBottom>Blood urgency level</Typography>
         <Slider
-          defaultValue={2}
           valueLabelDisplay="auto"
           valueLabelFormat={valueLabelFormat}
-          onChange={(event, value) => setField('bloodUrgencyLevel', value)}
+          onChange={(event, value) => setField('blood_urgency_level', value)}
           marks={marks}
           step={null}
           min={0}
@@ -161,24 +194,16 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
         />
       </div>
       <div className={classes.formGroup}>
-        <TextField
-          id="schedule"
-          label="Schedule"
-          placeholder="Schedule"
-          variant="outlined"
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('schedule', event.target.value)}
-        />
+        <Schedule handleOnAddSchedule={handleOnAddSchedule} />
       </div>
-
-      <Typography variant="subtitle2" gutterBottom>
-        Choose your location
-      </Typography>
-
+      <div className={classes.formGroup}>
+        <Typography variant="subtitle2" gutterBottom>
+          Choose your location
+        </Typography>
+        <Box width="100%" height={400} mb={1}>
+          <MapSelectLocation onLocationChange={handleOnLocationChange} />
+        </Box>
+      </div>
       <div className={classes.btnWrapper}>
         <Button
           disabled={
@@ -186,9 +211,11 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
             !user.name ||
             !user.description ||
             !user.address ||
-            !user.phoneNumber ||
-            !user.bloodUrgencyLevel ||
+            !user.phone_number ||
+            !user.blood_urgency_level ||
             !user.schedule ||
+            !user.location ||
+            !isUsernameValid ||
             loading
           }
           variant="contained"
@@ -207,7 +234,9 @@ SignupLifeBank.propTypes = {
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
   user: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  isUsernameValid: PropTypes.bool,
+  children: PropTypes.node
 }
 
 SignupLifeBank.defaultProps = {}

@@ -33,11 +33,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
+const SponsorSignup = ({
+  onSubmit,
+  setField,
+  user,
+  loading,
+  isUsernameValid,
+  children
+}) => {
   const classes = useStyles()
 
   const handleOnLocationChange = useCallback(
-    (location) => setField('location', location),
+    (location) => setField('location', JSON.stringify(location)),
     [setField]
   )
 
@@ -49,8 +56,34 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
+        {children}
         <TextField
-          id="sponsorName"
+          id="secret"
+          label="Secret"
+          type="password"
+          fullWidth
+          placeholder="Your Secret"
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setField('secret', event.target.value)}
+        />
+        <TextField
+          id="email"
+          label="Email"
+          variant="outlined"
+          placeholder="Your Sponsor Name"
+          fullWidth
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setField('email', event.target.value)}
+        />
+        <TextField
+          id="name"
           label="Name"
           variant="outlined"
           placeholder="Your Sponsor Name"
@@ -59,20 +92,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
             shrink: true
           }}
           className={classes.textField}
-          onChange={(event) => setField('sponsorName', event.target.value)}
-        />
-        <TextField
-          id="secret"
-          label="secret"
-          type="password"
-          variant="outlined"
-          placeholder="Secret"
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('secret', event.target.value)}
+          onChange={(event) => setField('name', event.target.value)}
         />
         <TextField
           id="website"
@@ -100,7 +120,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
         />
         <TextField
           id="bussinesType"
-          label="type"
+          label="Type"
           variant="outlined"
           placeholder="Type"
           fullWidth
@@ -108,8 +128,9 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
             shrink: true
           }}
           className={classes.textField}
-          onChange={(event) => setField('bussinesType', event.target.value)}
+          onChange={(event) => setField('bussines_type', event.target.value)}
         />
+
         <Box width="100%" className={classes.textField}>
           <Schedule handleOnAddSchedule={handleOnAddSchedule} />
         </Box>
@@ -126,7 +147,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
           multiline
           fullWidth
           rows={3}
-          onChange={(event) => setField('covidImpact', event.target.value)}
+          onChange={(event) => setField('covid_impact', event.target.value)}
         />
         <TextField
           id="benefitDescription"
@@ -141,7 +162,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
           fullWidth
           rows={3}
           onChange={(event) =>
-            setField('benefitDescription', event.target.value)
+            setField('benefit_description', event.target.value)
           }
         />
         <Typography variant="subtitle2" gutterBottom>
@@ -154,15 +175,16 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
       <Box className={classes.btnWrapper}>
         <Button
           disabled={
-            !user.sponsorName ||
-            !user.covidImpact ||
-            !user.benefitDescription ||
+            !user.name ||
+            !user.covid_impact ||
+            !user.benefit_description ||
             !user.website ||
             !user.telephone ||
-            !user.bussinesType ||
+            !user.bussines_type ||
             !user.schedule ||
             !user.secret ||
             !user.location ||
+            !isUsernameValid ||
             loading
           }
           variant="contained"
@@ -181,7 +203,9 @@ SponsorSignup.propTypes = {
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
   user: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  isUsernameValid: PropTypes.bool,
+  children: PropTypes.node
 }
 
 SponsorSignup.defaultProps = {}

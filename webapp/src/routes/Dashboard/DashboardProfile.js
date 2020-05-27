@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useLazyQuery } from '@apollo/react-hooks'
+import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Grid from '@material-ui/core/Grid'
@@ -8,23 +7,12 @@ import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import QRCode from 'qrcode.react'
 
-import { PROFILE_QUERY } from '../../gql'
 import { useUser } from '../../context/user.context'
 
 const Products = () => {
   const [currentUser] = useUser()
-  const [
-    loadProfile,
-    { called, loading, data: { profile: { profile } = {} } = {} }
-  ] = useLazyQuery(PROFILE_QUERY)
-
-  useEffect(() => {
-    if (!currentUser || called) {
-      return
-    }
-
-    loadProfile()
-  }, [currentUser])
+  const profile = {}
+  const loading = false
 
   return (
     <Grid item xs={12}>

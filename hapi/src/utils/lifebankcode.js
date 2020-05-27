@@ -3,7 +3,7 @@ const eosUtil = require('./eos')
 const CONTRACT_NAME = 'lifebankcode' // @todo: use ENV
 const COMMUNITY_ASSET = '0 LIFE' // @todo: use ENV
 
-const addDonor = (account, password, { fullname }) => {
+const addDonor = (account, password, { name }) => {
   return eosUtil.transact(
     [
       {
@@ -17,7 +17,7 @@ const addDonor = (account, password, { fullname }) => {
         name: 'adddonor',
         data: {
           account,
-          donor_name: fullname,
+          donor_name: name,
           community_asset: COMMUNITY_ASSET
         }
       }
@@ -27,7 +27,11 @@ const addDonor = (account, password, { fullname }) => {
   )
 }
 
-const addLifebank = (account, password, { name, ...payload }) => {
+const addLifebank = (
+  account,
+  password,
+  { name, has_immunity_test, ...profile }
+) => {
   return eosUtil.transact(
     [
       {
@@ -42,8 +46,9 @@ const addLifebank = (account, password, { name, ...payload }) => {
         data: {
           account,
           lifebank_name: name,
+          has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
-          ...payload
+          ...profile
         }
       }
     ],
@@ -52,7 +57,7 @@ const addLifebank = (account, password, { name, ...payload }) => {
   )
 }
 
-const addSponsor = (account, password, payload) => {
+const addSponsor = (account, password, { name, ...profile }) => {
   return eosUtil.transact(
     [
       {
@@ -66,13 +71,9 @@ const addSponsor = (account, password, payload) => {
         name: 'addsponsor',
         data: {
           account,
-          sponsor_name: payload.sponsorName,
-          covid_impact: payload.covidImpact,
-          benefit_description: payload.benefitDescription,
-          website: payload.website,
-          telephone: payload.telephone,
-          bussines_type: payload.bussinesType,
-          schedule: payload.schedule
+          sponsor_name: name,
+          ...profile,
+          community_asset: COMMUNITY_ASSET
         }
       }
     ],
@@ -86,6 +87,20 @@ const getDonor = async account => {
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
     table: 'donors',
+    table_key: 'account',
+    limit: 1,
+    lower_bound: account,
+    upper_bound: account
+  })
+
+  return rows.length > 0 ? rows[0] : null
+}
+
+const getLifebank = async account => {
+  const { rows = [] } = await eosUtil.getTableRows({
+    scope: CONTRACT_NAME,
+    code: CONTRACT_NAME,
+    table: 'lifebanks',
     table_key: 'account',
     limit: 1,
     lower_bound: account,
@@ -109,6 +124,20 @@ const getComunity = async symbol => {
   return rows.length > 0 ? rows[0] : null
 }
 
+const getSponsor = async account => {
+  const { rows = [] } = await eosUtil.getTableRows({
+    scope: CONTRACT_NAME,
+    code: CONTRACT_NAME,
+    table: 'sponsors',
+    table_key: 'account',
+    limit: 1,
+    lower_bound: account,
+    upper_bound: account
+  })
+
+  return rows.length > 0 ? rows[0] : null
+}
+
 const getUserNetworks = async user => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
@@ -127,6 +156,8 @@ module.exports = {
   addLifebank,
   addSponsor,
   getDonor,
+  getLifebank,
+  getSponsor,
   getComunity,
   getUserNetworks
 }

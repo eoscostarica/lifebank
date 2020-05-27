@@ -1,15 +1,16 @@
 type Mutation {
-  create_account (
-    type: String!
-    secret: String!
-  ): create_account_output
+  check_username (
+    username: String!
+  ): check_username_output
 }
 
 
 type Mutation {
-  donor_signup (
-    fullname: String!
-  ): donor_signup_output
+  create_account (
+    role: String!
+    username: String!
+    secret: String!
+  ): create_account_output
 }
 
 
@@ -22,20 +23,6 @@ type Query {
 
 type Mutation {
   grant_consent : grant_consent_output
-}
-
-
-type Mutation {
-  lifebank_signup (
-    name: String!
-    description: String!
-    address: String!
-    location: String!
-    phone_number: String!
-    has_immunity_test: Boolean!
-    blood_urgency_level: Int
-    schedule: String!
-  ): lifebank_signup_output
 }
 
 
@@ -58,27 +45,13 @@ type Mutation {
 
 
 type Mutation {
-  sponsor_signup (
-    sponsor: sponsor_signup_input!
-  ): sponsor_signup_output
+  signup (
+    profile: jsonb!
+  ): signup_output
 }
 
 
 
-
-input sponsor_signup_input {
-  sponsorName : String!
-  covidImpact : String!
-  benefitDescription : String!
-  website : String!
-  telephone : String!
-  bussinesType : String!
-  schedule : String!
-}
-
-type donor_signup_output {
-  success : Boolean!
-}
 
 type create_account_output {
   account : String!
@@ -94,23 +67,23 @@ type login_output {
   token : String!
 }
 
-type sponsor_signup_output {
-  success : Boolean!
-}
-
 type profile_output {
   profile : jsonb!
 }
 
-type grant_consent_output {
+type signup_output {
   success : Boolean!
+}
+
+type check_username_output {
+  is_valid : Boolean!
 }
 
 type revoke_consent_output {
   success : Boolean!
 }
 
-type lifebank_signup_output {
+type grant_consent_output {
   success : Boolean!
 }
 

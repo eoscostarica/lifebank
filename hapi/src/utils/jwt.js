@@ -2,15 +2,15 @@ const nJwt = require('njwt')
 
 const { jwtConfig } = require('../config')
 
-const create = ({ account, type, ...args }) => {
+const create = ({ account, role, ...args }) => {
   const jwt = nJwt.create(
     {
       ...args,
       iss: jwtConfig.iss,
       sub: account,
       'https://hasura.io/jwt/claims': {
-        'x-hasura-allowed-roles': [type],
-        'x-hasura-default-role': type
+        'x-hasura-allowed-roles': [role],
+        'x-hasura-default-role': role
       }
     },
     jwtConfig.secret,

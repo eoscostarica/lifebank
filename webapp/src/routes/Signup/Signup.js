@@ -9,15 +9,15 @@ import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 
 import {
+  CHECK_USERNAME_MUTATION,
   CREATE_ACCOUNT_MUTATION,
-  DONOR_SIGNUP_MUTATION,
-  SPONSOR_SIGNUP_MUTATION,
-  LIFEBANK_SIGNUP_MUTATION,
-  GET_ABI_QUERY
+  GET_ABI_QUERY,
+  SIGNUP_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
-import SignupAccountTypeSelector from './SignupAccountTypeSelector'
+import SignupRoleSelector from './SignupRoleSelector'
+import SignupUsername from './SignupUsername'
 import SignupDonor from './SignupDonor'
 import SignupSponsor from './SignupSponsor'
 import SignupLifeBank from './SignupLifeBank'
@@ -65,15 +65,23 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Signup = () => {
-  const [activeStep, setActiveStep] = useState(0)
-  const [accountType, setAccountType] = useState('sponsor')
+  const classes = useStyles()
+  const history = useHistory()
   const [user, setUser] = useReducer(
     (user, newUser) => ({ ...user, ...newUser }),
     {}
   )
-  const classes = useStyles()
-  const history = useHistory()
+  const [activeStep, setActiveStep] = useState(0)
+  const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
+  const [
+    checkUsername,
+    {
+      called: checkUsernameCalled,
+      loading: checkUsernameLoading,
+      data: { check_username: { is_valid: isUsernameValid } = {} } = {}
+    }
+  ] = useMutation(CHECK_USERNAME_MUTATION)
   const [
     createAccount,
     {
@@ -82,32 +90,15 @@ const Signup = () => {
     }
   ] = useMutation(CREATE_ACCOUNT_MUTATION)
   const [
-    donorSignup,
-    {
-      loading: donorSignupLoading,
-      data: { donor_signup: donorSignupResult } = {}
-    }
-  ] = useMutation(DONOR_SIGNUP_MUTATION)
+    signup,
+    { loading: signupLoading, data: { signup: signupResult } = {} }
+  ] = useMutation(SIGNUP_MUTATION)
   const { data: { get_abi: { abi } = {} } = {} } = useQuery(GET_ABI_QUERY, {
     variables: { contract: 'consent2life' }
   })
-  const [
-    sponsorSignup,
-    {
-      loading: sponsorSignupLoading,
-      data: { sponsor_signup: sponsorSignupResult } = {}
-    }
-  ] = useMutation(SPONSOR_SIGNUP_MUTATION)
-  const [
-    lifebankSignup,
-    {
-      loading: lifebankSignupLoading,
-      data: { lifebank_signup: lifebankSignupResult } = {}
-    }
-  ] = useMutation(LIFEBANK_SIGNUP_MUTATION)
 
-  const handleAccountTypeChange = (type) => {
-    setAccountType(type)
+  const handleRoleChange = (role) => {
+    setRole(role)
     setActiveStep(activeStep + 1)
   }
 
@@ -117,67 +108,43 @@ const Signup = () => {
 
   const handleGoBack = () => {
     activeStep && setActiveStep(activeStep - 1)
+    checkUsername({
+      variables: {
+        username: 'clear'
+      }
+    })
   }
 
   const handleCreateAccount = () => {
+    const { username, secret } = user
     createAccount({
       variables: {
-        type: accountType,
-        secret: user.secret
+        role,
+        username,
+        secret
       }
     })
   }
 
   const handleSingup = () => {
-    switch (accountType) {
-      case 'donor':
-        donorSignup({
-          variables: {
-            fullname: user.fullname || 'works'
-          }
-        })
-        break
-      case 'sponsor':
-        sponsorSignup({
-          variables: {
-            sponsor: {
-              benefitDescription: user.benefitDescription,
-              bussinesType: user.bussinesType,
-              covidImpact: user.covidImpact,
-              schedule: user.schedule,
-              sponsorName: user.sponsorName,
-              telephone: user.telephone,
-              website: user.website
-              // TODO: save sponsor info and location in Hasura.
-              // location: user.location
-            }
-          }
-        })
-        break
-      case 'lifebank':
-        lifebankSignup({
-          variables: {
-            name: user.name,
-            description: user.description,
-            address: user.address,
-            location: 'N/A',
-            phoneNumber: user.phoneNumber,
-            hasImmunityTest: user.hasImmunityTest,
-            bloodUrgencyLevel: user.bloodUrgencyLevel,
-            schedule: user.schedule
-          }
-        })
+    const { username, secret, ...profile } = user
 
-      default:
-        break
-    }
+    signup({
+      variables: {
+        profile
+      }
+    })
   }
 
   useEffect(() => {
-    if (currentUser) {
-      setActiveStep(2)
+    if (user?.username?.length === 9 || isUsernameValid) {
+      checkUsername({
+        variables: {
+          username: user.username
+        }
+      })
     }
-  }, [currentUser])
+  }, [user?.username])
 
   useEffect(() => {
     if (createAccountResult) {
@@ -186,10 +153,16 @@ const Signup = () => {
   }, [createAccountResult])
 
   useEffect(() => {
-    if (donorSignupResult || sponsorSignupResult || lifebankSignupResult) {
+    if (currentUser) {
+      setActiveStep(2)
+    }
+  }, [currentUser])
+
+  useEffect(() => {
+    if (signupResult) {
       history.replace('/profile')
     }
-  }, [donorSignupResult, sponsorSignupResult, lifebankSignupResult])
+  }, [signupResult])
 
   return (
     <Grid container>
@@ -207,37 +180,60 @@ const Signup = () => {
           {activeStep === 0 && (
             <>
               <Typography variant="h4">How do you want to help?</Typography>
-              <SignupAccountTypeSelector onSubmit={handleAccountTypeChange} />
+              <SignupRoleSelector onSubmit={handleRoleChange} />
             </>
           )}
-          {activeStep === 1 && accountType === 'donor' && (
-            <>
-              <Typography variant="h4">Create a new account.</Typography>
-              <SignupDonor
-                onSubmit={handleCreateAccount}
-                loading={createAccountLoading}
+          {activeStep === 1 && (
+            <Typography variant="h4">Create a new account.</Typography>
+          )}
+          {activeStep === 1 && role === 'donor' && (
+            <SignupDonor
+              onSubmit={handleCreateAccount}
+              loading={createAccountLoading}
+              setField={handleSetField}
+              user={user}
+              isUsernameValid={isUsernameValid}
+            >
+              <SignupUsername
+                isValid={isUsernameValid}
+                loading={checkUsernameLoading}
+                called={checkUsernameCalled}
                 setField={handleSetField}
-                user={user}
               />
-            </>
+            </SignupDonor>
           )}
-          {activeStep === 1 && accountType === 'sponsor' && (
+          {activeStep === 1 && role === 'sponsor' && (
             <SignupSponsor
               onSubmit={handleCreateAccount}
               loading={createAccountLoading}
               setField={handleSetField}
               user={user}
-            />
+              isUsernameValid={isUsernameValid}
+            >
+              <SignupUsername
+                isValid={isUsernameValid}
+                loading={checkUsernameLoading}
+                called={checkUsernameCalled}
+                setField={handleSetField}
+              />
+            </SignupSponsor>
           )}
-          {activeStep === 1 && accountType === 'lifebank' && (
+          {activeStep === 1 && role === 'lifebank' && (
             <SignupLifeBank
               onSubmit={handleCreateAccount}
               loading={createAccountLoading}
               setField={handleSetField}
               user={user}
-            />
+              isUsernameValid={isUsernameValid}
+            >
+              <SignupUsername
+                isValid={isUsernameValid}
+                loading={checkUsernameLoading}
+                called={checkUsernameCalled}
+                setField={handleSetField}
+              />
+            </SignupLifeBank>
           )}
-          {activeStep === 1 && accountType === 'clinic' && <h1>clinic</h1>}
           {activeStep === 2 && (
             <>
               <Typography variant="h4">
@@ -246,11 +242,7 @@ const Signup = () => {
               <SignupAccount data={createAccountResult} />
               <SignupConsent
                 onSubmit={handleSingup}
-                loading={
-                  donorSignupLoading ||
-                  sponsorSignupLoading ||
-                  lifebankSignupLoading
-                }
+                loading={signupLoading}
                 abi={abi}
                 action="consent"
               />

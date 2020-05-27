@@ -9,6 +9,7 @@ module.exports = async ({ payload: { input } }) => {
 
     return response
   } catch (error) {
+    console.error(error)
     return Boom.boomify(error, { statusCode: BAD_REQUEST })
   }
 }

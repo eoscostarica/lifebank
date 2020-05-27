@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import QRCode from 'qrcode.react'
 import Link from '@material-ui/core/Link'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ProfilePageSponsor = ({ profile }) => {
+const ProfilePageLifebank = ({ profile }) => {
   const classes = useStyles()
 
   return (
@@ -50,7 +49,6 @@ const ProfilePageSponsor = ({ profile }) => {
         </Typography>
       </Box>
       <Divider className={classes.divider} />
-      <QRCode value={profile.account} size={200} />
       <Button variant="contained" color="primary" className={classes.editBtn}>
         Edit
       </Button>
@@ -58,8 +56,8 @@ const ProfilePageSponsor = ({ profile }) => {
   )
 }
 
-ProfilePageSponsor.propTypes = {
+ProfilePageLifebank.propTypes = {
   profile: PropTypes.object
 }
 
-export default ProfilePageSponsor
+export default ProfilePageLifebank
