@@ -1,6 +1,4 @@
 #include <lifebankcode.hpp>
-#include <eosio/crypto.hpp>
-#include <utils.hpp>
 
 checksum256 lifebankcode::get_tx()
 {
@@ -16,9 +14,9 @@ void lifebankcode::check_consent(name account)
   eosio::check(consent, "Account does not have consent for lifebankcode");
 }
 
-ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo)
+ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo, const asset &maximum_supply)
 {
-  // Only the contract  can create communities at the moment
+  // Only the contract can create communities at the moment
   require_auth(get_self());
   eosio::check(is_account(creator), "New user account does not exists");
 
@@ -37,16 +35,14 @@ ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio
     raw.community_name = community_name;
     raw.description = description;
   });
-  // SEND_INLINE_ACTION(*this,                               // Account
-  //                    link,                                // Action
-  //                    {get_self(), eosio::name{"active"}}, // Permission
-  //                    {community_asset, creator});
+  create_token(get_self(), maximum_supply);
 }
 
 ACTION lifebankcode::link(eosio::asset community_asset, eosio::name new_user)
 {
+  // Only the contract can create create links
+  require_auth(get_self());
   eosio::check(is_account(new_user), "New user account does not exists");
-  // require_auth(new_user);
   eosio::symbol community_symbol = community_asset.symbol;
   communities_table community(get_self(), get_self().value);
   const auto &cmm = community.get(community_symbol.raw(), "can't find any community with given asset");
@@ -63,6 +59,7 @@ ACTION lifebankcode::link(eosio::asset community_asset, eosio::name new_user)
     raw.community = community_symbol;
     raw.user = new_user;
   });
+  require_recipient(new_user);
 }
 
 ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset community_asset)
@@ -78,10 +75,12 @@ ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset comm
       row.account = account;
       row.tx = get_tx();
     });
-    // SEND_INLINE_ACTION(*this,                            // Account
-    //                    link,                             // Action
-    //                    {account, eosio::name{"active"}}, // Permission
-    //                    {community_asset, account});
+    action(
+        permission_level{get_self(), "active"_n},
+        get_self(),
+        "link"_n,
+        std::make_tuple(community_asset, account))
+        .send();
   }
   else
   {
@@ -93,7 +92,7 @@ ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset comm
 
 ACTION lifebankcode::addlifebank(eosio::name account, string lifebank_name,
                                  string description, string address, string location, string phone_number,
-                                 bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset)
+                                 bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset, string email)
 {
   require_auth(account);
   check_consent(account);
@@ -119,7 +118,7 @@ ACTION lifebankcode::addlifebank(eosio::name account, string lifebank_name,
   }
 }
 ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
-                                string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset)
+                                string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset, string location)
 {
   require_auth(account);
   check_consent(account);

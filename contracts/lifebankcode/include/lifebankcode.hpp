@@ -3,6 +3,9 @@
 #include <eosio/asset.hpp>
 #include <eosio/crypto.hpp>
 
+#include <utils.hpp>
+#include <lifebankcoin.hpp>
+
 using namespace std;
 using namespace eosio;
 
@@ -12,7 +15,7 @@ public:
   using contract::contract;
 
   /// @abi action
-  ACTION createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo);
+  ACTION createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo, const asset &maximum_supply);
 
   /// @abi action
   ACTION link(eosio::asset community_asset, eosio::name new_user);
@@ -23,14 +26,20 @@ public:
   /// @abi action
   ACTION addlifebank(eosio::name account, string lifebank_name,
                      string description, string address, string location, string phone_number,
-                     bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset);
+                     bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset, string email);
 
   /// @abi action
   ACTION addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
-                    string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset);
+                    string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset, string location);
   ACTION clear();
 
 private:
+  void create_token(const name &issuer,
+                    const asset &maximum_supply)
+  {
+    lifebankcoin::create_action create_new_token("lifebankcoin"_n, {get_self(), "active"_n});
+    create_new_token.send(issuer, maximum_supply);
+  }
   void check_consent(eosio::name account);
   checksum256 get_tx();
 
