@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - stable
+  - '10'
+cache:
+  yarn: true
+deploy:
+  provider: npm
+  email: manh.vv.htth@gmail.com
+  api_key:
+    secure: FaLNssDeyTNbi3CwJu84WpXD/Y6y2G6IlFLx37Me4DEvGj2NEp/QogjjCvAy4uSZUOLR/arl0ZQ82POq8hjvjuyE/mw838/kvYDL5ilkqpgl+r8UEFUFoD3SekLkn2um1uwaM2GnqavDf3DAQyhLFBc70B+puXpGp5P+xoMTbxog3zbQUeFXzT+mYDneVqm2Y6wb5xmN2L6p9cJjFg0JD+AYMMR4XBxS+pfSp1rYUOpiwim4slTsgxi7moRTMCs0ar++/18uLBlCrvJHsTKENRek4IXa2KZHoIRwS9LdeOFATb9JKISjPqilPw5pmR6YASsvvSTGqlINjrLN8aeQFVSi7AV6w4LejaMsGcq8LO8LPhsrcpEOsgR1TL4iMuh802IM+MnrmstHHXaC5jKImG9YgwSpO8wm7YPloTZyn0iQcaFZcEIq2wbE7V1p33p9y9FyFW17eGu3Qs7dj9GrnA/7eBwV5npd134LKT5uZkQPJeXVnDGIigiiEsTcfy8MOM6tusHSXltrE+4xdUrDH7K2OCSQD7Qv0htwi/vbLIde0hFibbf9ZBd+v8jZxRTYtqqW/FSlKz01O+75JmLuvNL/QOEv/4C7sTNslmXFMABdeAZ89RM0AlsTN29GuT0m2irq4fA307KmXQPzA2YclRlHdfNijh/dhy2Uz1GyKOs=
+  on:
+    tags: true
+    repo: manh-vv/eosjs-name
+    branch: master
