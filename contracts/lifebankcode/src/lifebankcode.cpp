@@ -105,10 +105,12 @@ ACTION lifebankcode::addlifebank(eosio::name account, string lifebank_name,
       row.account = account;
       row.tx = get_tx();
     });
-    // SEND_INLINE_ACTION(*this,                            // Account
-    //                    link,                             // Action
-    //                    {account, eosio::name{"active"}}, // Permission
-    //                    {community_asset, account});
+    action(
+        permission_level{get_self(), "active"_n},
+        get_self(),
+        "link"_n,
+        std::make_tuple(community_asset, account))
+        .send();
   }
   else
   {
@@ -131,10 +133,12 @@ ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string
       row.account = account;
       row.tx = get_tx();
     });
-    // SEND_INLINE_ACTION(*this,                            // Account
-    //                    link,                             // Action
-    //                    {account, eosio::name{"active"}}, // Permission
-    //                    {community_asset, account});
+    action(
+        permission_level{get_self(), "active"_n},
+        get_self(),
+        "link"_n,
+        std::make_tuple(community_asset, account))
+        .send();
   }
   else
   {
@@ -189,5 +193,3 @@ ACTION lifebankcode::clear()
     lifebank_itr = _lifebank.erase(lifebank_itr);
   }
 }
-
-EOSIO_DISPATCH(lifebankcode, (createcmm)(link)(adddonor)(addlifebank)(addsponsor)(clear))

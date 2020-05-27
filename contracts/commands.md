@@ -12,6 +12,13 @@ eosio-cpp -abigen ./src/lifebankcode.cpp -o lifebankcode.wasm -I ./include/ -R .
 
 ### Deploy local
 
+#### lifebankcoin
+
+```
+cleos wallet create -n lifebankcoin --to-console
+cleos wallet import -n lifebankcoin --private-key ZZZ
+```
+
 #### consent2life
 
 ```
