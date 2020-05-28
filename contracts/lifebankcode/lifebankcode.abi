@@ -261,32 +261,32 @@
         {
             "name": "adddonor",
             "type": "adddonor",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Add Donor\nsummary: The intent of the `{{ adddonor }}` action is to register a new donor in a community.\nicon: https://lifebank.io/icons/multisig.png"
         },
         {
             "name": "addlifebank",
             "type": "addlifebank",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Add LifeBank Donation Center\nsummary: The intent of the `{{ addlifebank }}` action is to register a new donation center in a community.\nicon: https://lifebank.io/icons/multisig.png"
         },
         {
             "name": "addsponsor",
             "type": "addsponsor",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Add Sponsor\nsummary: The intent of the `{{ addsponsor }}` action is to register a new sponsor in a community.\nicon: https://lifebank.io/icons/multisig.png"
         },
         {
             "name": "clear",
             "type": "clear",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Clear table\nsummary: The intent of the `{{ clear }}` action is to delete all table records and is used for development purposes on test-nets and must not be published to mainnet.\nicon: https://lifebank.io/icons/admin.png"
         },
         {
             "name": "createcmm",
             "type": "createcmm",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Create new community\nsummary: The intent of the `{{ createcmm }}` action is to create a new community on LifeBank. It requires you to send: `cmm_asset`, `creator`, `logo`, `name`, `description` and `lifebank location`. A LifeBank community is closely tied to a LifeBank Token. A community allows a group of people with common goals and objectives to connect and allow the creation of incentives to reach those objectives.\nicon: https://lifebank.io/icons/multisig.png"
         },
         {
             "name": "link",
             "type": "link",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle:  Invites a new account to a given community \nsummary: The intent of the `{{ revoke }}` action is to revoke a previous informed consent to a contract by deleting the record.\nicon: https://lifebank.io/icons/multisig.png"
         }
     ],
     "tables": [
@@ -326,6 +326,27 @@
             "key_types": []
         }
     ],
-    "ricardian_clauses": [],
+    "ricardian_clauses": [
+        {
+            "id": "Data Storage",
+            "body": "---\nspec-version: 0.1.0\ntitle: General Data Storage\nsummary: This smart contract will store data added by the user. The user consents to the storage of this data by signing the transaction.\nicon: https://lifebank.io/icons/account.png"
+        },
+        {
+            "id": "Data Usage",
+            "body": "---\nspec-version: 0.1.0\ntitle: General Data Use\nsummary: This smart contract will store user data. The smart contract will not use the stored data for any purpose outside store and delete.\nicon: https://lifebank.io/icons/account.png"
+        },
+        {
+            "id": "Data Ownership",
+            "body": "---\nspec-version: 0.1.0\ntitle: Data Ownership\nsummary: The user of this smart contract verifies that the data is owned by the smart contract, and that the smart contract can use the data in accordance to the terms defined in the Ricardian Contract.\nicon: https://lifebank.io/icons/account.png"
+        },
+        {
+            "id": "Data Distribution",
+            "body": "---\nspec-version: 0.1.0\ntitle: Data Distribution\nsummary: The smart contract promises to not actively share or distribute the address data. The user of the smart contract understands that data stored in a multi index table is not private data and can be accessed by any user of the blockchain.\nicon: https://lifebank.io/icons/account.png"
+        },
+        {
+            "id": "Data Future",
+            "body": "---\nspec-version: 0.1.0\ntitle: Data Future\nsummary: The smart contract promises to only use the data in accordance of the terms defined in the Ricardian Contract, now and at all future dates.\nicon:  https://lifebank.io/icons/account.png"
+        }
+    ],
     "variants": []
 }
