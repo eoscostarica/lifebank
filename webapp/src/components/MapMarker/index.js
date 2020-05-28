@@ -4,24 +4,25 @@ import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/styles'
 
 import { constants } from '../../config'
+import sponsorSvg from './locator-sponsor-01.svg'
+import lifeBankSvg from './locator-donators-01.svg'
 
 const {
   LOCATION_TYPES: { SPONSOR, LIFE_BANK }
 } = constants
 
 const useStyles = makeStyles((theme) => ({
-  // TODO: Request svg icon for each type(SPONSOR | LIFE_BANK | DEFAULT).
   marker: {
     backgroundImage: ({ type }) => {
       switch (type) {
         case SPONSOR:
-          return `url('./sponsor.svg')`
+          return `url(${sponsorSvg})`
 
         case LIFE_BANK:
-          return `url('./bloodBank.svg')`
+          return `url(${lifeBankSvg})`
 
         default:
-          return `url('./default.svg')`
+          return `url(${lifeBankSvg})`
       }
     },
     backgroundSize: 'cover',
@@ -29,32 +30,13 @@ const useStyles = makeStyles((theme) => ({
     height: 25,
     borderRadius: '50%',
     cursor: 'pointer'
-  },
-  // TODO: Remove tempMarker classname after replace it for marker.
-  tempMarker: {
-    width: 25,
-    height: 25,
-    border: 'solid',
-    backgroundColor: ({ type }) => {
-      switch (type) {
-        case SPONSOR:
-          return 'red'
-
-        case LIFE_BANK:
-          return 'blue'
-
-        default:
-          return 'yellow'
-      }
-    }
   }
 }))
 
 function MapMarker({ type }) {
   const classes = useStyles({ type })
 
-  // TODO: Use marker className instead of tempMarker to show svg icons based on the type(SPONSOR | LIFE_BANK | DEFAULT)
-  return <Box className={classes.tempMarker} />
+  return <Box className={classes.marker} />
 }
 
 MapMarker.propTypes = {

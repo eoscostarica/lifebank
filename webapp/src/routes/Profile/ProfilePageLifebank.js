@@ -130,9 +130,14 @@ const ProfilePageLifebank = ({ profile }) => {
         <Typography variant="subtitle1">Location</Typography>
         <Typography variant="body1" />
       </Box>
-      <Box width="100%" height={400} py={2}>
-        <MapShowLocations location={JSON.parse(profile.location)} />
-      </Box>
+
+      <MapShowLocations
+        location={JSON.parse(profile.location)}
+        width="100%"
+        height={400}
+        py={2}
+      />
+
       <Divider className={classes.divider} />
       <Button variant="contained" color="primary" className={classes.editBtn}>
         Edit

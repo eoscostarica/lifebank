@@ -4,16 +4,32 @@ import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import Box from '@material-ui/core/Box'
+import { useQuery } from '@apollo/react-hooks'
 
 import { mapboxConfig } from '../../config'
-import fetchFakeData from './fetchFakeData'
 import MapMarker from '../MapMarker'
 import MapPopup from '../MapPopup'
+import { GET_NEARBY_LOCATIONS_QUERY } from '../../gql'
 
 const initialZoom = 12.5
+const distance = 5000
 
-function MapShowLocations({ location }) {
+function MapShowLocations({ location, ...props }) {
   const mapContainerRef = useRef(null)
+  // useLazyQuery execution function should return a promise
+  // https://github.com/apollographql/react-apollo/issues/3499
+  // temporary fix here
+  // https://github.com/apollographql/react-apollo/issues/3499#issuecomment-586039082
+  const { refetch: getNearbyLocations } = useQuery(GET_NEARBY_LOCATIONS_QUERY, {
+    variables: {
+      distance,
+      point: {
+        type: 'Point',
+        coordinates: [location.longitude, location.latitude]
+      }
+    },
+    skip: true
+  })
 
   useEffect(() => {
     mapboxgl.accessToken = mapboxConfig.accessToken
@@ -21,7 +37,7 @@ function MapShowLocations({ location }) {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [location.lng, location.lat],
+      center: [location.longitude, location.latitude],
       zoom: initialZoom
     })
 
@@ -44,42 +60,52 @@ function MapShowLocations({ location }) {
     map.on('moveend', async () => {
       const { lng, lat } = map.getCenter()
 
-      // TODO: Change fake request to a real Hasura query.
-      // see: https://hasura.io/blog/building-a-realtime-geolocation-app-with-hasura-graphql-and-postgis/
-      const data = await fetchFakeData({
-        longitude: lng,
-        latitude: lat,
-        bound: 1000
+      const { data } = await getNearbyLocations({
+        distance,
+        point: {
+          type: 'Point',
+          coordinates: [lng, lat]
+        }
       })
 
-      data.locations.forEach((location) => {
-        const { id, name, type, longitude, latitude } = location
+      data &&
+        data.locations &&
+        data.locations.forEach((location) => {
+          const {
+            id,
+            name,
+            type,
+            geolocation: { coordinates }
+          } = location
 
-        const markerNode = document.createElement('div')
-        ReactDOM.render(<MapMarker type={type} />, markerNode)
+          const markerNode = document.createElement('div')
+          ReactDOM.render(<MapMarker type={type} />, markerNode)
 
-        const popupNode = document.createElement('div')
-        ReactDOM.render(<MapPopup id={id} name={name} />, popupNode)
+          const popupNode = document.createElement('div')
+          ReactDOM.render(<MapPopup id={id} name={name} />, popupNode)
 
-        new mapboxgl.Marker(markerNode)
-          .setLngLat([longitude, latitude])
-          .setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
-          .addTo(map)
-      })
+          new mapboxgl.Marker(markerNode)
+            .setLngLat(coordinates)
+            .setPopup(
+              new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode)
+            )
+            .addTo(map)
+        })
     })
 
     return () => map.remove()
-  }, [])
+  }, [getNearbyLocations, location.longitude, location.latitude])
 
-  return <Box ref={mapContainerRef} width="100%" height="100%" />
+  return <Box ref={mapContainerRef} {...props} />
 }
 
 MapShowLocations.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
+  props: PropTypes.object
 }
 
 MapShowLocations.defaultProps = {
-  location: { lng: -84.1132, lat: 9.9363 }
+  location: { longitude: -84.1132, latitude: 9.9363 }
 }
 
 export default MapShowLocations

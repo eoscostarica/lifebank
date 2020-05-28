@@ -5,13 +5,20 @@ import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import Box from '@material-ui/core/Box'
 
-import { mapboxConfig } from '../../config'
+import { mapboxConfig, constants } from '../../config'
 import MapMarker from '../MapMarker'
 
 const initialGeoLocation = { lng: -84.1132, lat: 9.9363 }
 const initialZoom = 12.5
+const {
+  LOCATION_TYPES: { SPONSOR, LIFE_BANK }
+} = constants
 
-function MapSelectLocation({ onLocationChange = () => {} }) {
+function MapSelectLocation({
+  onGeolocationChange = () => {},
+  markerType,
+  ...props
+}) {
   const mapContainerRef = useRef(null)
   const currentMarker = useRef(null)
 
@@ -49,23 +56,25 @@ function MapSelectLocation({ onLocationChange = () => {} }) {
       }
 
       const markerNode = document.createElement('div')
-      ReactDOM.render(<MapMarker />, markerNode)
+      ReactDOM.render(<MapMarker type={markerType} />, markerNode)
 
       const market = new mapboxgl.Marker(markerNode)
       market.setLngLat([lng, lat]).addTo(map)
       currentMarker.current = market
 
-      onLocationChange({ lng, lat })
+      onGeolocationChange({ longitude: lng, latitude: lat })
     })
 
     return () => map.remove()
-  }, [onLocationChange])
+  }, [onGeolocationChange, markerType])
 
-  return <Box ref={mapContainerRef} width="100%" height="100%" />
+  return <Box ref={mapContainerRef} {...props} />
 }
 
 MapSelectLocation.propTypes = {
-  onLocationChange: PropTypes.func
+  onGeolocationChange: PropTypes.func,
+  markerType: PropTypes.oneOf([SPONSOR, LIFE_BANK]),
+  props: PropTypes.object
 }
 
 export default MapSelectLocation

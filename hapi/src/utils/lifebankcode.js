@@ -30,7 +30,7 @@ const addDonor = (account, password, { name }) => {
 const addLifebank = (
   account,
   password,
-  { name, has_immunity_test, ...profile }
+  { name, has_immunity_test, geolocation, ...profile }
 ) => {
   return eosUtil.transact(
     [
@@ -48,6 +48,7 @@ const addLifebank = (
           lifebank_name: name,
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
+          location: JSON.stringify(geolocation),
           ...profile
         }
       }
@@ -57,7 +58,7 @@ const addLifebank = (
   )
 }
 
-const addSponsor = (account, password, { name, ...profile }) => {
+const addSponsor = (account, password, { name, geolocation, ...profile }) => {
   return eosUtil.transact(
     [
       {
@@ -72,6 +73,7 @@ const addSponsor = (account, password, { name, ...profile }) => {
         data: {
           account,
           sponsor_name: name,
+          location: JSON.stringify(geolocation),
           ...profile,
           community_asset: COMMUNITY_ASSET
         }
