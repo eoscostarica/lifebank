@@ -16,7 +16,16 @@
         {
             "name": "clear",
             "base": "",
-            "fields": []
+            "fields": [
+                {
+                    "name": "current_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "owner",
+                    "type": "name"
+                }
+            ]
         },
         {
             "name": "create",
