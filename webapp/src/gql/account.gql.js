@@ -57,3 +57,11 @@ export const REVOKE_CONSENT_MUTATION = gql`
     }
   }
 `
+
+export const CREDENTIALS_RECOVERY = gql`
+  mutation($email: String!) {
+    credentials_recovery(email: $email) {
+      success
+    }
+  }
+`

@@ -14,6 +14,13 @@ type Mutation {
 }
 
 
+type Mutation {
+  credentials_recovery (
+    email: String!
+  ): credentials_recovery_output
+}
+
+
 type Query {
   get_abi (
     contract: String!
@@ -84,6 +91,10 @@ type revoke_consent_output {
 }
 
 type grant_consent_output {
+  success : Boolean!
+}
+
+type credentials_recovery_output {
   success : Boolean!
 }
 

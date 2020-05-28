@@ -5,5 +5,6 @@ module.exports = {
   jwtUtils: require('./jwt'),
   walletUtils: require('./wallet'),
   lifebankcodeUtils: require('./lifebankcode'),
-  lifebankcoinUtils: require('./lifebankcoin')
+  lifebankcoinUtils: require('./lifebankcoin'),
+  mailUtils: require('./mail')
 }

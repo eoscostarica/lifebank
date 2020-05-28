@@ -11,6 +11,12 @@ actions:
     handler: http://hapi:9090/api/accounts
   permissions:
   - role: guest
+- name: credentials_recovery
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/credentials-recovery
+  permissions:
+  - role: guest
 - name: get_abi
   definition:
     kind: ""
@@ -73,4 +79,5 @@ custom_types:
   - name: check_username_output
   - name: revoke_consent_output
   - name: grant_consent_output
+  - name: credentials_recovery_output
   scalars: []
