@@ -9,6 +9,11 @@ import Typography from '@material-ui/core/Typography'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
+import { constants } from '../../config'
+
+const {
+  LOCATION_TYPES: { SPONSOR }
+} = constants
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -150,6 +155,7 @@ const SponsorSignup = ({ onSubmit, setField, user, loading }) => {
 
         <MapSelectLocation
           onGeolocationChange={handleOnGeolocationChange}
+          markerType={SPONSOR}
           width="100%"
           height={400}
           mb={1}

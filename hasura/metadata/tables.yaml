@@ -1,5 +1,11 @@
 - table:
     schema: public
+    name: geography_columns
+- table:
+    schema: public
+    name: geometry_columns
+- table:
+    schema: public
     name: history
 - table:
     schema: public
@@ -8,6 +14,39 @@
   - name: location_type
     using:
       foreign_key_constraint_on: type
+  select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - id
+      - name
+      - type
+      - geolocation
+      filter: {}
+  - role: guest
+    permission:
+      columns:
+      - id
+      - name
+      - type
+      - geolocation
+      filter: {}
+  - role: lifebank
+    permission:
+      columns:
+      - geolocation
+      - id
+      - name
+      - type
+      filter: {}
+  - role: sponsor
+    permission:
+      columns:
+      - geolocation
+      - id
+      - name
+      - type
+      filter: {}
 - table:
     schema: public
     name: location_type
@@ -20,6 +59,15 @@
         table:
           schema: public
           name: location
+- table:
+    schema: public
+    name: raster_columns
+- table:
+    schema: public
+    name: raster_overviews
+- table:
+    schema: public
+    name: spatial_ref_sys
 - table:
     schema: public
     name: vault

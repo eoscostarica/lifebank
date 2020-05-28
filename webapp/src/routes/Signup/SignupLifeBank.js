@@ -11,6 +11,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
+import { constants } from '../../config'
+
+const {
+  LOCATION_TYPES: { LIFE_BANK }
+} = constants
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -188,6 +193,7 @@ const SignupLifeBank = ({ onSubmit, setField, user, loading }) => {
 
       <MapSelectLocation
         onGeolocationChange={handleOnGeolocationChange}
+        markerType={LIFE_BANK}
         width="100%"
         height={400}
         mb={1}
