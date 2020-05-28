@@ -141,7 +141,23 @@ ACTION lifebankcoin::transfer(const name &from,
    add_balance(to, quantity, payer);
 }
 
-ACTION consent2life::clear()
+ACTION lifebankcoin::clear()
 {
    require_auth(get_self());
+     accounts accounts_table(get_self(), get_self().value);
+
+     auto accounts_itr = accounts_table.begin();
+     while (accounts_itr != accounts_table.end())
+     {
+       accounts_itr = accounts_table.erase(accounts_itr);
+     }
+
+     stats stats_table(get_self(), get_self().value);
+
+     auto stats_itr = stats_table.begin();
+     while (stats_itr != stats_table.end())
+     {
+       stats_itr = stats_table.erase(stats_itr);
+     }
+
 }
