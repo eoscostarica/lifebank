@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
@@ -9,10 +10,9 @@ import fetchFakeData from './fetchFakeData'
 import MapMarker from '../MapMarker'
 import MapPopup from '../MapPopup'
 
-const initialGeoLocation = { lng: -84.1132, lat: 9.9363 }
 const initialZoom = 12.5
 
-function MapShowLocations() {
+function MapShowLocations({ location }) {
   const mapContainerRef = useRef(null)
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function MapShowLocations() {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [initialGeoLocation.lng, initialGeoLocation.lat],
+      center: [location.lng, location.lat],
       zoom: initialZoom
     })
 
@@ -72,6 +72,14 @@ function MapShowLocations() {
   }, [])
 
   return <Box ref={mapContainerRef} width="100%" height="100%" />
+}
+
+MapShowLocations.propTypes = {
+  location: PropTypes.object
+}
+
+MapShowLocations.defaultProps = {
+  location: { lng: -84.1132, lat: 9.9363 }
 }
 
 export default MapShowLocations

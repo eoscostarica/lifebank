@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
@@ -6,9 +6,11 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
+import { captchaConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -29,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    margin: theme.spacing(2, 0)
   }
 }))
 
@@ -42,6 +45,7 @@ const SponsorSignup = ({
   children
 }) => {
   const classes = useStyles()
+  const [recaptchaValue, serRecaptchaValue] = useState('')
 
   const handleOnLocationChange = useCallback(
     (location) => setField('location', JSON.stringify(location)),
@@ -74,7 +78,7 @@ const SponsorSignup = ({
           id="email"
           label="Email"
           variant="outlined"
-          placeholder="Your Sponsor Name"
+          placeholder="Your email"
           fullWidth
           InputLabelProps={{
             shrink: true
@@ -171,6 +175,10 @@ const SponsorSignup = ({
         <Box width="100%" height={400} mb={1}>
           <MapSelectLocation onLocationChange={handleOnLocationChange} />
         </Box>
+        <ReCAPTCHA
+          sitekey={captchaConfig.sitekey}
+          onChange={(value) => serRecaptchaValue(value)}
+        />
       </Box>
       <Box className={classes.btnWrapper}>
         <Button
@@ -184,6 +192,7 @@ const SponsorSignup = ({
             !user.schedule ||
             !user.secret ||
             !user.location ||
+            !recaptchaValue ||
             !isUsernameValid ||
             loading
           }

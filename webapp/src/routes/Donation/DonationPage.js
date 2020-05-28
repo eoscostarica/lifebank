@@ -72,7 +72,7 @@ const DonationPage = () => {
   return (
     <Box className={classes.wrapper}>
       <Typography variant="h1" className={classes.title}>
-        My Donations
+        Your Donations
       </Typography>
       <EmptyHeartSVG />
       <Typography variant="body1" className={classes.infoLabel}>

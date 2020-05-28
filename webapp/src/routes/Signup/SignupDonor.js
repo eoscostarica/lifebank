@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import ReCAPTCHA from 'react-google-recaptcha'
+
+import { captchaConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -12,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2)
   },
   textFieldWrapper: {
-    height: 190,
+    height: 320,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
@@ -36,6 +39,7 @@ const DonorSignup = ({
   children
 }) => {
   const classes = useStyles()
+  const [recaptchaValue, serRecaptchaValue] = useState('')
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -65,6 +69,10 @@ const DonorSignup = ({
           className={classes.textField}
           onChange={(event) => setField('name', event.target.value)}
         />
+        <ReCAPTCHA
+          sitekey={captchaConfig.sitekey}
+          onChange={(value) => serRecaptchaValue(value)}
+        />
       </Box>
       <Box className={classes.btnWrapper}>
         <Button
@@ -73,6 +81,7 @@ const DonorSignup = ({
             !user.secret ||
             !user.name ||
             !isUsernameValid ||
+            !recaptchaValue ||
             loading
           }
           variant="contained"

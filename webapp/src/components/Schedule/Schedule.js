@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
@@ -75,8 +75,48 @@ const useStyles = makeStyles((theme) => ({
     '& button': {
       width: '50%'
     }
+  },
+  resultList: {
+    width: 350,
+    '& li': {
+      padding: 0,
+      display: 'flex',
+      justifyContent: 'center',
+      '& p': {
+        whiteSpace: 'nowrap',
+        letterSpacing: '0.5px'
+      }
+    }
+  },
+  scheduleListResult: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  boxDivider: {
+    width: '100%',
+    padding: theme.spacing(0, 1)
   }
 }))
+
+const getWeekDaysSorted = (data) => {
+  const sorter = {
+    sunday: 0,
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6
+  }
+
+  return data.sort((a, b) => {
+    const day1 = a.day.toLowerCase()
+    const day2 = b.day.toLowerCase()
+    return sorter[day1] - sorter[day2]
+  })
+}
 
 const getHours = () => {
   const times = []
@@ -93,16 +133,17 @@ const getHours = () => {
 }
 
 const convertHour = (time) => {
-  var hour = time % 12
+  const hour = time % 12
 
   return (hour || '12') + ':00' + AMPM[Math.floor(time / 12)]
 }
 
-const Schedule = ({ handleOnAddSchedule }) => {
+const Schedule = ({ handleOnAddSchedule, data, showSchedule }) => {
   const classes = useStyles()
   const [open, setOpen] = useState('06:00')
   const [close, setClose] = useState('16:00')
   const [day, setDay] = useState('Sunday')
+  const [scheduleList, setscheduleList] = useState([])
   const [schedule, setSchedule] = useState([])
   const [openModal, setOpenModal] = useState(false)
   const days = [
@@ -148,11 +189,45 @@ const Schedule = ({ handleOnAddSchedule }) => {
     setOpenModal(false)
   }
 
+  useEffect(() => {
+    showSchedule && setscheduleList(getWeekDaysSorted(data))
+  }, [data])
+
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleOpen} fullWidth>
-        Add Schedule
-      </Button>
+      {!showSchedule && (
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleOpen}
+          fullWidth
+        >
+          Add Schedule
+        </Button>
+      )}
+      {showSchedule &&
+        scheduleList.map((scheduleItem) => (
+          <Box key={scheduleItem.day} className={classes.resultList}>
+            <List>
+              <ListItem>
+                <Box className={classes.boxDivider}>
+                  <Divider />
+                </Box>
+                <Box className={classes.scheduleListResult}>
+                  <Typography variant="h6">{scheduleItem.day}</Typography>
+                  <Typography variant="body1">
+                    {`${convertHour(
+                      scheduleItem.open.split(':')[0]
+                    )} - ${convertHour(scheduleItem.close.split(':')[0])}`}
+                  </Typography>
+                </Box>
+                <Box className={classes.boxDivider}>
+                  <Divider />
+                </Box>
+              </ListItem>
+            </List>
+          </Box>
+        ))}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -262,7 +337,7 @@ const Schedule = ({ handleOnAddSchedule }) => {
                         <IconButton
                           onClick={() => handleDeleteSchedulePerDay(item.day)}
                         >
-                          <DeleteIcon />
+                          <DeleteIcon color="secondary" />
                         </IconButton>
                       </ListItem>
                       <Divider />
@@ -290,11 +365,15 @@ const Schedule = ({ handleOnAddSchedule }) => {
 }
 
 Schedule.propTypes = {
-  handleOnAddSchedule: PropTypes.func
+  handleOnAddSchedule: PropTypes.func,
+  data: PropTypes.array,
+  showSchedule: PropTypes.bool
 }
 
 Schedule.defaultProps = {
-  handleOnAddSchedule: () => {}
+  handleOnAddSchedule: () => {},
+  data: null,
+  showSchedule: false
 }
 
 export default Schedule
