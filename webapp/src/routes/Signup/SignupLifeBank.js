@@ -10,11 +10,14 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import ReCAPTCHA from 'react-google-recaptcha'
-import Box from '@material-ui/core/Box'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
-import { captchaConfig } from '../../config'
+import { captchaConfig, constants } from '../../config'
+
+const {
+  LOCATION_TYPES: { LIFE_BANK }
+} = constants
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -44,8 +47,8 @@ const SignupLifeBank = ({
   children
 }) => {
   const classes = useStyles()
-  const handleOnLocationChange = useCallback(
-    (location) => setField('location', JSON.stringify(location)),
+  const handleOnGeolocationChange = useCallback(
+    (geolocation) => setField('geolocation', geolocation),
     [setField]
   )
   const handleOnAddSchedule = useCallback(
@@ -203,9 +206,13 @@ const SignupLifeBank = ({
         <Typography variant="subtitle2" gutterBottom>
           Choose your location
         </Typography>
-        <Box width="100%" height={400} mb={1}>
-          <MapSelectLocation onLocationChange={handleOnLocationChange} />
-        </Box>
+        <MapSelectLocation
+          onGeolocationChange={handleOnGeolocationChange}
+          markerType={LIFE_BANK}
+          width="100%"
+          height={400}
+          mb={1}
+        />
       </div>
       <div className={classes.formGroup}>
         <ReCAPTCHA
@@ -225,6 +232,7 @@ const SignupLifeBank = ({
             !user.schedule ||
             !user.location ||
             !isUsernameValid ||
+            !user.geolocation ||
             !recaptchaValue ||
             loading
           }

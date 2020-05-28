@@ -4,5 +4,6 @@ module.exports = {
   i18nConfig: require('./i18n.config'),
   serverConfig: require('./server.config'),
   jwtConfig: require('./jwt.config'),
-  mailConfig: require('./mail.config.js')
+  mailConfig: require('./mail.config.js'),
+  constants: require('./constants')
 }

@@ -5,6 +5,7 @@ const lifebankApi = require('./lifebank.api')
 const sponsorApi = require('./sponsor.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
+const locationApi = require('./location.api')
 
 module.exports = {
   accountApi,
@@ -13,5 +14,6 @@ module.exports = {
   lifebankApi,
   sponsorApi,
   userApi,
-  vaultApi
+  vaultApi,
+  locationApi
 }

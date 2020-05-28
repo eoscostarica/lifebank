@@ -116,9 +116,9 @@ const LandingPage = () => {
         <Typography variant="h5">
           Find your closest LifeBank or Sponsor
         </Typography>
-        <Box width="100%" height={400} py={2}>
-          <MapShowLocations />
-        </Box>
+
+        <MapShowLocations width="100%" height={400} my={2} />
+
         <Typography variant="h5">Am I Elegible?</Typography>
         <Typography variant="body1">
           Lifebank helps local communities create a virtuous circle of value

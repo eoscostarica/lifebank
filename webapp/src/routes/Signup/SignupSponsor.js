@@ -10,7 +10,11 @@ import ReCAPTCHA from 'react-google-recaptcha'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
-import { captchaConfig } from '../../config'
+import { captchaConfig, constants } from '../../config'
+
+const {
+  LOCATION_TYPES: { SPONSOR }
+} = constants
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -47,8 +51,8 @@ const SponsorSignup = ({
   const classes = useStyles()
   const [recaptchaValue, serRecaptchaValue] = useState('')
 
-  const handleOnLocationChange = useCallback(
-    (location) => setField('location', JSON.stringify(location)),
+  const handleOnGeolocationChange = useCallback(
+    (geolocation) => setField('geolocation', geolocation),
     [setField]
   )
 
@@ -172,9 +176,15 @@ const SponsorSignup = ({
         <Typography variant="subtitle2" gutterBottom>
           Choose your location
         </Typography>
-        <Box width="100%" height={400} mb={1}>
-          <MapSelectLocation onLocationChange={handleOnLocationChange} />
-        </Box>
+
+        <MapSelectLocation
+          onGeolocationChange={handleOnGeolocationChange}
+          markerType={SPONSOR}
+          width="100%"
+          height={400}
+          mb={1}
+        />
+
         <ReCAPTCHA
           sitekey={captchaConfig.sitekey}
           onChange={(value) => serRecaptchaValue(value)}
@@ -191,7 +201,7 @@ const SponsorSignup = ({
             !user.bussines_type ||
             !user.schedule ||
             !user.secret ||
-            !user.location ||
+            !user.geolocation ||
             !recaptchaValue ||
             !isUsernameValid ||
             loading

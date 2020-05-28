@@ -154,9 +154,13 @@ const ProfilePageSponsor = ({ profile }) => {
         fullWidth
         rows={3}
       />
-      <Box width="100%" height={400} py={2}>
-        <MapShowLocations location={JSON.parse(profile.location)} />
-      </Box>
+
+      <MapShowLocations
+        location={JSON.parse(profile.location)}
+        width="100%"
+        height={400}
+        py={2}
+      />
 
       <QRCode value={profile.account} size={200} />
       <Button variant="contained" color="primary" className={classes.editBtn}>

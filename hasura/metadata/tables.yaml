@@ -1,6 +1,77 @@
 - table:
     schema: public
+    name: geography_columns
+- table:
+    schema: public
+    name: geometry_columns
+- table:
+    schema: public
     name: history
+- table:
+    schema: public
+    name: location
+  object_relationships:
+  - name: location_type
+    using:
+      foreign_key_constraint_on: type
+  select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - id
+      - name
+      - type
+      - geolocation
+      - info
+      filter: {}
+  - role: guest
+    permission:
+      columns:
+      - geolocation
+      - id
+      - info
+      - name
+      - type
+      filter: {}
+  - role: lifebank
+    permission:
+      columns:
+      - geolocation
+      - id
+      - info
+      - name
+      - type
+      filter: {}
+  - role: sponsor
+    permission:
+      columns:
+      - geolocation
+      - id
+      - info
+      - name
+      - type
+      filter: {}
+- table:
+    schema: public
+    name: location_type
+  is_enum: true
+  array_relationships:
+  - name: locations
+    using:
+      foreign_key_constraint_on:
+        column: type
+        table:
+          schema: public
+          name: location
+- table:
+    schema: public
+    name: raster_columns
+- table:
+    schema: public
+    name: raster_overviews
+- table:
+    schema: public
+    name: spatial_ref_sys
 - table:
     schema: public
     name: user

@@ -1,0 +1,1 @@
+CREATE TABLE "public"."location"("id" serial NOT NULL, "name" text NOT NULL, "type" text NOT NULL, "geolocation" geometry NOT NULL, "info" jsonb, PRIMARY KEY ("id") , FOREIGN KEY ("type") REFERENCES "public"."location_type"("value") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));

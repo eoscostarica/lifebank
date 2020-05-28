@@ -4,6 +4,12 @@ const accountApi = require('./account.api')
 const historyApi = require('./history.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
+const locationApi = require('./location.api')
+const {
+  constants: {
+    ENUM_DATA: { LOCATION_TYPES }
+  }
+} = require('../config')
 
 const signup = async (account, profile) => {
   await accountApi.grantConsent(account)
@@ -17,6 +23,16 @@ const signup = async (account, profile) => {
 
   await historyApi.insert(addSponsorTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
+
+  await locationApi.insert({
+    name: profile.name,
+    geolocation: {
+      type: 'Point',
+      coordinates: [profile.geolocation.longitude, profile.geolocation.latitude]
+    },
+    type: LOCATION_TYPES.LIFE_BANK,
+    info: JSON.stringify(profile)
+  })
 }
 
 module.exports = {
