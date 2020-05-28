@@ -1,6 +1,6 @@
 
 <p align="center">
-	<img src="./visual-design/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg" width="600">
+	<img src="./docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg" width="600">
 <br/>
 <a href="http://standardjs.com">
 <img src="https://img.shields.io/badge/all_contributors-10-g.svg?style=flat-square" alt="StandardJS">
@@ -286,29 +286,29 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <table>
 <tr>
 
-<td align="center"><a href="https://github.com/murillojorge"><img src="https://avatars1.githubusercontent.com/u/1179619?v=4" width="100px;" alt="Jorge Murillo"/><br /><sub><b>Jorge Murillo</b></sub></a><br /><a href="#ideas-murillojorge" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=murillojorge" title="Documentation">📖</a> <a href="#design-murillojorge" title="Design">🎨</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=murillojorge" title="Code">💻</a> <a href="#review-murillojorge" title="Reviewed Pull Requests">👀</a></td>
+<td align="center"><a href="https://github.com/murillojorge"><img src="https://avatars1.githubusercontent.com/u/1179619?v=4" width="100px;" alt="Jorge Murillo"/><br /><sub><b>Jorge Murillo</b></sub></a><br /><a href="#ideas-murillojorge" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=murillojorge" title="Documentation">📖</a> <a href="#design-murillojorge" title="Design">🎨</a>  <a href="#review-murillojorge" title="Reviewed Pull Requests">👀</a></td>
 
-<td align="center"><a href="https://github.com/adriexnet"><img src="https://avatars3.githubusercontent.com/u/5375168?s=400&u=542a27a00b761d98851991c6a6d5f78d7b35a2b2&v=4" width="100px;" alt="Adriel Diaz"/><br /><sub><b>Adriel Díaz</b></sub></a><br /><a href="#ideas-adriexnet" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=adriexnet" title="Code">💻</a> <a href="#review-adriexnet" title="Reviewed Pull Requests">👀</a></td>
+<td align="center"><a href="https://github.com/adriexnet"><img src="https://avatars3.githubusercontent.com/u/5375168?s=400&u=542a27a00b761d98851991c6a6d5f78d7b35a2b2&v=4" width="100px;" alt="Adriel Diaz"/><br /><sub><b>Adriel Díaz</b></sub></a><br /> <a href="https://github.com/eoscostarica/lifebank/commits?author=adriexnet" title="Code">💻</a> <a href="#review-adriexnet" title="Reviewed Pull Requests">👀</a></td>
 
-<td align="center"><a href="https://github.com/xavier506"><img src="https://avatars0.githubusercontent.com/u/5632966?v=4" width="100px;" alt="Xavier Fernandez"/><br /><sub><b>Xavier Fernandez</b></sub></a><br /><a href="#ideas-xavier506" title="Ideas, Planning, & Feedback">🤔</a> <a href="#blog-xavier506" title="Blogposts">📝</a> <a href="#talk-xavier506" title="Talks">📢</a> <a href="#infra-xavier506" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+<td align="center"><a href="https://github.com/xavier506"><img src="https://avatars0.githubusercontent.com/u/5632966?v=4" width="100px;" alt="Xavier Fernandez"/><br /><sub><b>Xavier Fernandez</b></sub></a><br /><a href="#ideas-xavier506" title="Ideas, Planning, & Feedback">🤔</a><a href="https://github.com/eoscostarica/lifebank/commits?author=xavier506" title="Code">💻</a><a href="#projectManagement-xavier506" title="Project Management">📆</a> <a href="#infra-xavier506" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
 
-<td align="center"><a href="http://www.eoscostarica.io"><img src="https://avatars2.githubusercontent.com/u/40245170?v=4" width="100px;" alt="Edgar Fernandez"/><br /><sub><b>Edgar Fernandez</b></sub></a><br /><a href="#ideas-edgar-eoscostarica" title="Ideas, Planning, & Feedback">🤔</a> <a href="#blog-edgar-eoscostarica" title="Blogposts">📝</a> <a href="#talk-edgar-eoscostarica" title="Talks">📢</a></td>
+<td align="center"><a href="http://www.eoscostarica.io"><img src="https://avatars2.githubusercontent.com/u/40245170?v=4" width="100px;" alt="Edgar Fernandez"/><br /><sub><b>Edgar Fernandez</b></sub></a><br /><a href="#ideas-edgar-eoscostarica" title="Ideas, Planning, & Feedback">🤔</a> <a href="#blog-edgar-eoscostarica" title="Blogposts">📝</a><a href="https://github.com/eoscostarica/lifebank/commits?author=edgar-eoscostarica" title="Documentation">📖</a> <a href="#talk-edgar-eoscostarica" title="Talks">📢</a></td>
 
-<td align="center"><a href="https://github.com/kecoco16"><img src="https://avatars3.githubusercontent.com/u/25941813?s=460&u=ae8447221de610919483cbc67c286d3f120477ec&v=4" width="100px;" alt=""/><br /><sub><b>kecoco16</b></sub></a><br /><a href="https://github.com/eoscostarica/eoscr-theme/commits?author=kecoco16" title="Code">💻</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=kecoco16" title="Documentation">📖</a> <a href="#projectManagement-kecoco16" title="Project Management">📆</a> <a href="#maintenance-kecoco16" title="Maintenance">🚧</a></td>
+<td align="center"><a href="https://github.com/kecoco16"><img src="https://avatars3.githubusercontent.com/u/25941813?s=460&u=ae8447221de610919483cbc67c286d3f120477ec&v=4" width="100px;" alt=""/><br /><sub><b>kecoco16</b></sub></a><br /><a href="#ideas-kecoco16" title="Ideas, Planning, & Feedback">🤔</a><a href="https://github.com/eoscostarica/eoscr-theme/commits?author=kecoco16" title="Code">💻</a><a href="#review-kecoco16" title="Reviewed Pull Requests">👀</a></td>
 
 </tr>
 <tr>
 <td align="center"><a href="https://github.com/rubenabix"><img src="https://avatars2.githubusercontent.com/u/13205620?v=4" width="100px;" alt="Rubén Abarca Navarro"/><br /><sub><b>Rubén Abarca Navarro</b></sub></a><br /><a href="#ideas-rubenabix" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=rubenabix" title="Code">💻</a> <a href="#review-rubenabix" title="Reviewed Pull Requests">👀</a></td>
 
-<td align="center"><a href="https://github.com/roafroaf"><img src="https://avatars1.githubusercontent.com/u/40480825?v=4" width="100px;" alt="roafroaf"/><br /><sub><b>roafroaf</b></sub></a><br /><a href="#ideas-roafroaf" title="Ideas, Planning, & Feedback">🤔</a> <a href="#design-roafroaf" title="Design">🎨</a></td>
+<td align="center"><a href="https://github.com/roafroaf"><img src="https://avatars1.githubusercontent.com/u/40480825?v=4" width="100px;" alt="roafroaf"/><br /><sub><b>Rodolfo Perëz</b></sub></a><br /><a href="#ideas-roafroaf" title="Ideas, Planning, & Feedback">🤔</a> <a href="#design-roafroaf" title="Design">🎨</a></td>
 
 <td align="center"><a href="https://github.com/ldrojas">
-<img src="https://avatars0.githubusercontent.com/u/29232417?s=460&v=4" width="100px;" alt="Luis Diego Rojas"/><br /><sub><b>Luis Diego Rojas</b></sub></a><br /><a href="https://github.com/eoscostarica/lifebank/commits?author=ldrojas" title="Ideas, Planning, & Feedback">🤔</a></td>
+<img src="https://avatars0.githubusercontent.com/u/29232417?s=460&v=4" width="100px;" alt="Luis Diego Rojas"/><br /><sub><b>Luis Diego Rojas</b></sub></a><br /><a href="https://github.com/eoscostarica/lifebank/commits?author=ldrojas" title="Ideas, Planning, & Feedback">🤔</a><a href="#blog-ldrojas" title="Blogposts">📝</a></td>
 
 <td align="center"><a href="https://github.com/tetogomez">
 <img src="https://avatars3.githubusercontent.com/u/10634375?s=460&v=4" width="100px;" alt="Teto Gomez"/><br /><sub><b>Teto Gomez</b></sub></a><br /><a href="https://github.com/eoscostarica/lifebank/commits?author=tetogomez" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/eoscostarica/lifebank/commits?author=tetogomez" title="Code">💻</a> <a href="#review-tetogomez" title="Reviewed Pull Requests">👀</a></td>
 
-<td align="center"><a href="https://github.com/JustinCast"><img src="https://avatars1.githubusercontent.com/u/17890146?v=4" width="100px;" alt=""/><br /><sub><b>JustinCast</b></sub></a><br /><a href="https://github.com/eoscostarica/eoscr-theme/commits?author=JustinCast" title="Code">💻</a> <a href="https://github.com/eoscostarica/eoscr-theme/commits?author=JustinCast" title="Documentation">📖</a> <a href="#projectManagement-JustinCast" title="Project Management">📆</a> <a href="#maintenance-JustinCast" title="Maintenance">🚧</a></td>
+<td align="center"><a href="https://github.com/Kriskoin"><img src="https://avatars1.githubusercontent.com/u/3965944?v=4" width="100px;" alt=""/><br /><sub><b>KrisKoin</b></sub></a><br /><a href="https://github.com/eoscostarica/lifebank/commits?author=Kriskoin" title="Code">💻</a> <a href="#review-Kriskoin" title="Reviewed Pull Requests">👀</a></td>
 </tr>
 </table>
 
