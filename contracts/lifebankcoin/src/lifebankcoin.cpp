@@ -141,23 +141,25 @@ ACTION lifebankcoin::transfer(const name &from,
    add_balance(to, quantity, payer);
 }
 
-ACTION lifebankcoin::clear()
+ACTION lifebankcoin::clear(const asset &current_asset, const name owner)
 {
    require_auth(get_self());
-     accounts accounts_table(get_self(), get_self().value);
-
-     auto accounts_itr = accounts_table.begin();
-     while (accounts_itr != accounts_table.end())
-     {
-       accounts_itr = accounts_table.erase(accounts_itr);
-     }
-
-     stats stats_table(get_self(), get_self().value);
-
-     auto stats_itr = stats_table.begin();
-     while (stats_itr != stats_table.end())
-     {
-       stats_itr = stats_table.erase(stats_itr);
-     }
-
+   auto sym = current_asset.symbol;
+   check(sym.is_valid(), "invalid symbol name");
+   stats statstable(get_self(), sym.code().raw());
+   auto existing = statstable.find(sym.code().raw());
+   // check(existing != statstable.end(), "token with symbol does not exist");
+   auto stats_itr = statstable.begin();
+   while (stats_itr != statstable.end())
+   {
+      stats_itr = statstable.erase(stats_itr);
+   }
+   accounts acnts(get_self(), owner.value);
+   auto sym_acnts = acnts.find(sym.code().raw());
+   // check(sym_acnts != acnts.end(), "token with symbol does not exist");
+   auto acnts_itr = acnts.begin();
+   while (acnts_itr != acnts.end())
+   {
+      acnts_itr = acnts.erase(acnts_itr);
+   }
 }

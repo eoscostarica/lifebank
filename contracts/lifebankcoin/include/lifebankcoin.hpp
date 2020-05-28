@@ -12,7 +12,7 @@ CONTRACT lifebankcoin : public contract
 public:
    using contract::contract;
 
-   ACTION clear();
+   ACTION clear(const asset &current_asset, const name owner);
 
    /**
           * Allows `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created.
