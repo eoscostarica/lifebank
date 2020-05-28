@@ -2,11 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import QRCode from 'qrcode.react'
 import Link from '@material-ui/core/Link'
+
+import Schedule from '../../components/Schedule'
+import MapShowLocations from '../../components/MapShowLocations'
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -24,7 +28,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   editBtn: {
-    marginTop: theme.spacing(2)
+    margin: theme.spacing(2, 0)
+  },
+  secondaryText: {
+    color: `${theme.palette.secondary.main} !important`
   }
 }))
 
@@ -33,9 +40,6 @@ const ProfilePageSponsor = ({ profile }) => {
 
   return (
     <>
-      <div className={classes.divider}>
-        <pre>{JSON.stringify(profile, null, 2)}</pre>
-      </div>
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
@@ -50,6 +54,110 @@ const ProfilePageSponsor = ({ profile }) => {
         </Typography>
       </Box>
       <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Organization</Typography>
+        <Typography variant="body1">{profile.name}</Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Email</Typography>
+        <Typography variant="body1">{profile.email}</Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Role</Typography>
+        <Typography variant="body1">{profile.role}</Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Status</Typography>
+        <Typography variant="body1">Active</Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Telephone</Typography>
+        <Typography variant="body1">{profile.telephone}</Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Website</Typography>
+        <Typography variant="body1">
+          <Link
+            href={profile.account}
+            target="_blank"
+            rel="noopener"
+            color="secondary"
+          >
+            {profile.website}
+          </Link>
+        </Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Type</Typography>
+        <Typography variant="body1">{profile.bussines_type}</Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Consent</Typography>
+        <Typography variant="body1">{`${profile.consent}`}</Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Balance</Typography>
+        <Typography variant="body1" className={classes.secondaryText}>
+          {profile.balance[0]}
+        </Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Community Asset</Typography>
+        <Typography variant="body1" className={classes.secondaryText}>
+          {profile.community_asset}
+        </Typography>
+      </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Schedule</Typography>
+        <Typography variant="body1" />
+      </Box>
+      <Schedule data={JSON.parse(profile.schedule)} showSchedule />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Covid Impact</Typography>
+        <Typography variant="body1" />
+      </Box>
+      <TextField
+        id="covidImpact"
+        variant="outlined"
+        disabled
+        defaultValue={profile.covid_impact}
+        InputLabelProps={{
+          shrink: true
+        }}
+        multiline
+        fullWidth
+        rows={3}
+      />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Benefit Description</Typography>
+        <Typography variant="body1" />
+      </Box>
+      <TextField
+        id="benefitDescription"
+        variant="outlined"
+        disabled
+        defaultValue={profile.benefit_description}
+        InputLabelProps={{
+          shrink: true
+        }}
+        multiline
+        fullWidth
+        rows={3}
+      />
+      <Box width="100%" height={400} py={2}>
+        <MapShowLocations location={JSON.parse(profile.location)} />
+      </Box>
+
       <QRCode value={profile.account} size={200} />
       <Button variant="contained" color="primary" className={classes.editBtn}>
         Edit

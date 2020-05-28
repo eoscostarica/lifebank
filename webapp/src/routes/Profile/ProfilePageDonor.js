@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: theme.spacing(2) * -1
+  },
+  secondaryText: {
+    color: `${theme.palette.secondary.main} !important`
   }
 }))
 
@@ -97,7 +100,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       <Box height={30} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Tokens</Typography>
-        <Typography variant="body1">
+        <Typography variant="body1" className={classes.secondaryText}>
           {(profile.balance || []).join(', ')}
         </Typography>
       </Box>

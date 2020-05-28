@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
@@ -9,10 +9,12 @@ import Slider from '@material-ui/core/Slider'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
+import ReCAPTCHA from 'react-google-recaptcha'
 import Box from '@material-ui/core/Box'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
+import { captchaConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -50,6 +52,7 @@ const SignupLifeBank = ({
     (data) => setField('schedule', JSON.stringify(data)),
     [setField]
   )
+  const [recaptchaValue, serRecaptchaValue] = useState('')
 
   const marks = [
     {
@@ -78,11 +81,6 @@ const SignupLifeBank = ({
     }
   }
 
-  const handleOnAddSchedule = useCallback(
-    (data) => setField('schedule', JSON.stringify(data)),
-    [setField]
-  )
-
   return (
     <form autoComplete="off" className={classes.form}>
       <div className={classes.formGroup}>{children}</div>
@@ -105,7 +103,7 @@ const SignupLifeBank = ({
           id="email"
           label="Email"
           variant="outlined"
-          placeholder="Your Sponsor Name"
+          placeholder="Your Email"
           fullWidth
           InputLabelProps={{
             shrink: true
@@ -209,6 +207,12 @@ const SignupLifeBank = ({
           <MapSelectLocation onLocationChange={handleOnLocationChange} />
         </Box>
       </div>
+      <div className={classes.formGroup}>
+        <ReCAPTCHA
+          sitekey={captchaConfig.sitekey}
+          onChange={(value) => serRecaptchaValue(value)}
+        />
+      </div>
       <div className={classes.btnWrapper}>
         <Button
           disabled={
@@ -221,6 +225,7 @@ const SignupLifeBank = ({
             !user.schedule ||
             !user.location ||
             !isUsernameValid ||
+            !recaptchaValue ||
             loading
           }
           variant="contained"

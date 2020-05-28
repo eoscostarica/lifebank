@@ -88,8 +88,6 @@ const ProfilePage = () => {
     }
   }, [grantConsentResult, revokeConsentResult])
 
-  console.log({ currentUser, profile })
-
   return (
     <Box className={classes.wrapper}>
       <Typography variant="h1" className={classes.title}>
