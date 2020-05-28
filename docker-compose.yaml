@@ -37,6 +37,10 @@ services:
       EOS_WALLET_URL: "${EOS_WALLET_URL}"
       JWT_SECRECT: "${JWT_SECRECT}"
       JWT_ISS: "${JWT_ISS}"
+      MAIL_HOST: "${MAIL_HOST}"
+      MAIL_PORT: "${MAIL_PORT}"
+      MAIL_USER: "${MAIL_USER}"
+      MAIL_PASSWORD: "${MAIL_PASSWORD}"
   hasura:
     container_name: "${STAGE}-${APP_NAME}-hasura"
     image: hasura/graphql-engine:v1.2.1.cli-migrations-v2

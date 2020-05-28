@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import ContactMailIcon from '@material-ui/icons/ContactMail'
 
 import LoginModal from '../components/LoginModal'
+import CredentialsRecovery from '../components/CredentialsRecovery'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -75,19 +76,21 @@ const SideBar = ({ user, onLogout }) => {
               </Typography>
             </Link>
           </Box>
-          <Box className={classes.optionLink}>
+          <Box className={classes.optionLink} onClick={onLogout}>
             <LogoutIcon className={classes.iconOption} />
-            <Link to="/">
-              <Typography variant="body1" className={classes.labelOption}>
-                Logout
-              </Typography>
-            </Link>
+            <Typography variant="body1" className={classes.labelOption}>
+              Logout
+            </Typography>
           </Box>
         </>
       )}
       {!user && (
         <>
           <LoginModal
+            overrideBoxClass={classes.optionLink}
+            overrideLabelClass={classes.labelOption}
+          />
+          <CredentialsRecovery
             overrideBoxClass={classes.optionLink}
             overrideLabelClass={classes.labelOption}
           />

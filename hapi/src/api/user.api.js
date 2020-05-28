@@ -6,6 +6,7 @@ const GET_ONE = `
       id
       role
       username
+      secret
       account
       email
     }
