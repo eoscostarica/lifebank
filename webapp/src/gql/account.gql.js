@@ -65,3 +65,23 @@ export const CREDENTIALS_RECOVERY = gql`
     }
   }
 `
+
+export const TRANSFER_MUTATION = gql`
+  mutation transfer($to: String!, $memo: String!, $quantity: Int) {
+    transfer(to: $to, memo: $memo, quantity: $quantity) {
+      transaction_id
+    }
+  }
+`
+
+export const NOTIFICATION_SUBSCRIPTION = gql`
+  subscription {
+    notification(order_by: { created_at: desc }, limit: 1) {
+      id
+      title
+      description
+      type
+      payload
+    }
+  }
+`

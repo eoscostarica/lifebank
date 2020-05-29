@@ -58,6 +58,15 @@ type Mutation {
 }
 
 
+type Mutation {
+  transfer (
+    to: String!
+    memo: String!
+    quantity: Int
+  ): transfer_output
+}
+
+
 
 
 type create_account_output {
@@ -96,5 +105,9 @@ type grant_consent_output {
 
 type credentials_recovery_output {
   success : Boolean!
+}
+
+type transfer_output {
+  transaction_id : String!
 }
 

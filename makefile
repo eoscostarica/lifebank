@@ -19,7 +19,7 @@ run-wallet:
 	@docker-compose up -d --build wallet
 
 run-hapi:
-	@[ ! -d hapi/node_modules ] && cd hapi && yarn || echo ""
+	@cd hapi && yarn
 	@docker-compose up -d --build hapi
 	@if [ $(STAGE) = "dev" ]; then\
 		docker-compose logs -f hapi;\
@@ -51,8 +51,7 @@ run-webapp:
 		do echo "$(BLUE)$(STAGE)-$(APP_NAME)-webapp |$(RESET) waiting for hasura service"; \
 		sleep 5; done;
 	@if [ $(STAGE) = "dev" ]; then\
-		cd webapp;\
-		[ ! -d node_modules ] && yarn || echo "";\
+		cd webapp && yarn;\
 		FORCE_COLOR=true yarn start | cat;\
 	else\
 		docker-compose up -d --build webapp;\
