@@ -14,11 +14,11 @@ void lifebankcode::check_consent(name account)
   eosio::check(consent, "Account does not have consent for lifebankcode");
 }
 
-ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio::asset community_asset, string description, string logo, const asset &maximum_supply)
+ACTION lifebankcode::createcmm(string community_name, eosio::asset community_asset, string description, string logo, const asset &maximum_supply)
 {
   // Only the contract can create communities at the moment
   require_auth(get_self());
-  eosio::check(is_account(creator), "New user account does not exists");
+  // eosio::check(is_account(creator), "New user account does not exists");
 
   eosio::check(community_name.size() <= 256, "name has more than 256 bytes");
   eosio::check(description.size() <= 256, "description has more than 256 bytes");
@@ -30,7 +30,7 @@ ACTION lifebankcode::createcmm(eosio::name creator, string community_name, eosio
   eosio::check(existing_cmm == community.end(), "symbol already exists");
   community.emplace(get_self(), [&](auto &raw) {
     raw.symbol = new_symbol;
-    raw.creator = creator;
+    raw.creator = get_self();
     raw.logo = logo;
     raw.community_name = community_name;
     raw.description = description;
@@ -94,15 +94,20 @@ ACTION lifebankcode::addlifebank(eosio::name account, string lifebank_name,
                                  string description, string address, string location, string phone_number,
                                  bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset, string email)
 {
-  require_auth(account);
+  require_auth(get_self());
+  eosio::check(is_account(account), "New user account does not exists");
   check_consent(account);
   lifebanks_table _lifebanks(get_self(), get_self().value);
   eosio::check(lifebank_name.size() <= 64, "Name has more than 64 bytes");
+  eosio::check(blood_urgency_level > 0, "blood urgency level must be positive");
+  eosio::check(blood_urgency_level < 4, "blood urgency level is out of range");
   auto lifebank_itr = _lifebanks.find(account.value);
   if (lifebank_itr == _lifebanks.end())
   {
     _lifebanks.emplace(get_self(), [&](auto &row) {
       row.account = account;
+      row.community = community_asset.symbol;
+      row.blood_urgency_level = blood_urgency_level;
       row.tx = get_tx();
     });
     action(
@@ -115,10 +120,32 @@ ACTION lifebankcode::addlifebank(eosio::name account, string lifebank_name,
   else
   {
     _lifebanks.modify(lifebank_itr, get_self(), [&](auto &row) {
+      row.blood_urgency_level = blood_urgency_level;
       row.tx = get_tx();
     });
   }
 }
+
+ACTION lifebankcode::uplifebank(eosio::name account, string lifebank_name,
+                                string description, string address, string location, string phone_number,
+                                bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset, string email)
+{
+  require_auth(account);
+  check_consent(account);
+  lifebanks_table _lifebanks(get_self(), get_self().value);
+  eosio::check(lifebank_name.size() <= 64, "Name has more than 64 bytes");
+  eosio::check(blood_urgency_level < 0, "blood urgency level must be positive");
+  eosio::check(4 > blood_urgency_level, "blood urgency level is out of range");
+  auto lifebank_itr = _lifebanks.find(account.value);
+  if (lifebank_itr != _lifebanks.end())
+  {
+    _lifebanks.modify(lifebank_itr, get_self(), [&](auto &row) {
+      row.blood_urgency_level = blood_urgency_level;
+      row.tx = get_tx();
+    });
+  }
+}
+
 ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
                                 string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset, string location)
 {

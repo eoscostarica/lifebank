@@ -157,10 +157,6 @@
             "base": "",
             "fields": [
                 {
-                    "name": "creator",
-                    "type": "name"
-                },
-                {
                     "name": "community_name",
                     "type": "string"
                 },
@@ -203,6 +199,14 @@
                 {
                     "name": "account",
                     "type": "name"
+                },
+                {
+                    "name": "community",
+                    "type": "symbol"
+                },
+                {
+                    "name": "blood_urgency_level",
+                    "type": "uint8"
                 },
                 {
                     "name": "tx",
@@ -255,6 +259,56 @@
                     "type": "checksum256"
                 }
             ]
+        },
+        {
+            "name": "uplifebank",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "lifebank_name",
+                    "type": "string"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "address",
+                    "type": "string"
+                },
+                {
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "name": "phone_number",
+                    "type": "string"
+                },
+                {
+                    "name": "has_immunity_test",
+                    "type": "bool"
+                },
+                {
+                    "name": "blood_urgency_level",
+                    "type": "uint8"
+                },
+                {
+                    "name": "schedule",
+                    "type": "string"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "email",
+                    "type": "string"
+                }
+            ]
         }
     ],
     "actions": [
@@ -286,7 +340,12 @@
         {
             "name": "link",
             "type": "link",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle:  Invites a new account to a given community \nsummary: The intent of the `{{ revoke }}` action is to revoke a previous informed consent to a contract by deleting the record.\nicon: https://lifebank.io/icons/multisig.png"
+            "ricardian_contract": ""
+        },
+        {
+            "name": "uplifebank",
+            "type": "uplifebank",
+            "ricardian_contract": ""
         }
     ],
     "tables": [
