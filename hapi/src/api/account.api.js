@@ -7,6 +7,7 @@ const {
 } = require('../utils')
 
 const historyApi = require('./history.api')
+const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const LIFEBANCKCODE_CONTRACT = 'lifebankcode' // @todo: use ENV
@@ -134,11 +135,10 @@ const getSponsorData = async account => {
 }
 
 const getTransactionData = async tx => {
-  const {
-    processed: { action_traces: actionTraces = [] } = {}
-  } = await historyApi.getOne({
-    transaction_id: { _eq: tx }
-  })
+  const { processed: { action_traces: actionTraces = [] } = {} } =
+    (await historyApi.getOne({
+      transaction_id: { _eq: tx || '' }
+    })) || {}
 
   return actionTraces.reduce(
     (result, item) => ({ ...result, ...item.act.data }),
@@ -197,10 +197,41 @@ const revokeConsent = async account => {
   await historyApi.insert(consentTransaction)
 }
 
+const transfer = async (from, details) => {
+  const currentBalance = await lifebankcoinUtils.getbalance(details.to)
+  // @todo enable after sync with Xavier and Ruben
+  // const password = await vaultApi.getPassword(from)
+  // const transferTransaction = await lifebankcoinUtils.transfer(
+  //   from,
+  //   password,
+  //   details
+  // )
+  // const newBalance = await lifebankcoinUtils.getbalance(details.to)
+  // await historyApi.insert(transferTransaction)
+  await notificationApi.insert({
+    account: details.to,
+    title: 'New tokens',
+    description: `From ${from} ${details.memo}`,
+    type: 'new_tokens',
+    payload: {
+      currentBalance,
+      newBalance: [`${details.quantity} LIFE`],
+      tokens: details.quantity
+    }
+  })
+
+  // return transferTransaction
+  return {
+    transaction_id:
+      'a8928efdd6cf7f65237efd4157deb568fff7e95fbfa105cf1e5beed18085c23f'
+  }
+}
+
 module.exports = {
   create,
   getProfile,
   login,
   grantConsent,
-  revokeConsent
+  revokeConsent,
+  transfer
 }

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
-import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
@@ -17,10 +15,10 @@ import CloseIcon from '@material-ui/icons/Close'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import FingerprintIcon from '@material-ui/icons/Fingerprint'
+import SendIcon from '@material-ui/icons/Send'
+import Link from '@material-ui/core/Link'
 
-import { LOGIN_MUTATION } from '../../gql'
-import { useUser } from '../../context/user.context'
+import { TRANSFER_MUTATION } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -42,9 +40,10 @@ const useStyles = makeStyles((theme) => ({
   textFieldWrapper: {
     padding: theme.spacing(2, 0),
     display: 'flex',
-    flexDirection: 'column',
-    height: 200,
-    justifyContent: 'space-evenly'
+    flexDirection: 'column'
+  },
+  textField: {
+    marginBottom: theme.spacing(2)
   },
   closeIcon: {
     display: 'flex',
@@ -72,53 +71,54 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
-  const { t } = useTranslation('translations')
-  const [user, setUser] = useState({})
-  const [errorMessage, setErrorMessage] = useState(null)
+const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
   const classes = useStyles()
-  const history = useHistory()
-  const [currentUser, { login }] = useUser()
-  const [
-    loginMutation,
-    { loading, error, data: { login: loginResult } = {} }
-  ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
+  const [payload, setPayload] = useState({ quantity: 1 })
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [success, setSuccess] = useState(false)
   const [open, setOpen] = useState(false)
+
+  const [
+    transfer,
+    { loading, error, data: { transfer: transferResult } = {} }
+  ] = useMutation(TRANSFER_MUTATION)
 
   const handleOpen = () => {
     setOpen(!open)
   }
 
   const handleSetField = (field, value) => {
-    setUser({ ...user, [field]: value })
+    setPayload({ ...payload, [field]: value })
   }
 
-  const handleLogin = () => {
+  const handleSubmit = () => {
     setErrorMessage(null)
-    loginMutation({
+    transfer({
       variables: {
-        ...user
+        ...payload
       }
     })
   }
 
   useEffect(() => {
-    if (error) {
-      setErrorMessage(error.message.replace('GraphQL error: ', ''))
+    if (!error) {
+      return
     }
+
+    setErrorMessage(error.message.replace('GraphQL error: ', ''))
   }, [error])
 
   useEffect(() => {
-    if (loginResult) {
-      login(loginResult.token)
+    if (!transferResult) {
+      return
     }
-  }, [loginResult])
 
-  useEffect(() => {
-    if (currentUser) {
-      history.replace('/profile')
-    }
-  }, [currentUser])
+    setPayload({ quantity: 1 })
+    setSuccess(true)
+  }, [transferResult])
+
+  // @todo hide quantity for lifebank
+  // @todo change text according to user role
 
   return (
     <>
@@ -126,12 +126,12 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
         className={clsx(classes.loginBtn, overrideBoxClass)}
         onClick={handleOpen}
       >
-        <FingerprintIcon />
+        <SendIcon />
         <Typography
           variant="body1"
           className={clsx(classes.labelOption, overrideLabelClass)}
         >
-          {t('login')}
+          Transfer
         </Typography>
       </Box>
       <Modal
@@ -159,7 +159,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
               </IconButton>
             </Box>
             <Box className={classes.bodyWrapper}>
-              <Typography variant="h3">Sign In</Typography>
+              <Typography variant="h3">Token transfer</Typography>
               {errorMessage && (
                 <Alert
                   className={classes.alert}
@@ -178,40 +178,87 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                   {errorMessage}
                 </Alert>
               )}
+              {success && (
+                <Alert
+                  className={classes.alert}
+                  severity="success"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => setSuccess(false)}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                >
+                  Done
+                  <Link
+                    href={`https://jungle.bloks.io/account/${transferResult.transaction_id}`}
+                    target="_blank"
+                    rel="noopener"
+                    color="secondary"
+                  >
+                    {transferResult.transaction_id}
+                  </Link>
+                </Alert>
+              )}
               <form autoComplete="off">
                 <Box className={classes.textFieldWrapper}>
                   <TextField
-                    id="account"
+                    id="to"
                     label="Account"
                     variant="outlined"
                     InputLabelProps={{
                       shrink: true
                     }}
+                    value={payload.to || ''}
                     onChange={(event) =>
-                      handleSetField('account', event.target.value)
+                      handleSetField('to', event.target.value)
                     }
+                    className={classes.textField}
                   />
                   <TextField
-                    id="secret"
-                    label="Secret"
-                    type="password"
+                    id="memo"
+                    label="Memo"
                     variant="outlined"
                     InputLabelProps={{
                       shrink: true
                     }}
+                    value={payload.memo || ''}
                     onChange={(event) =>
-                      handleSetField('secret', event.target.value)
+                      handleSetField('memo', event.target.value)
                     }
+                    className={classes.textField}
+                  />
+                  <TextField
+                    id="quantity"
+                    label="Quantity"
+                    variant="outlined"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    value={payload.quantity || ''}
+                    onChange={(event) =>
+                      handleSetField('quantity', parseInt(event.target.value))
+                    }
+                    className={classes.textField}
                   />
                 </Box>
                 <Box className={classes.btnWrapper}>
                   <Button
-                    disabled={!user.account || !user.secret || loading}
+                    disabled={
+                      !payload.to ||
+                      !payload.quantity ||
+                      !payload.memo ||
+                      loading
+                    }
                     variant="contained"
                     color="primary"
-                    onClick={handleLogin}
+                    onClick={handleSubmit}
                   >
-                    Login
+                    Send
                   </Button>
                   {loading && <CircularProgress />}
                 </Box>
@@ -224,9 +271,9 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
   )
 }
 
-LoginModal.propTypes = {
+TokenTransfer.propTypes = {
   overrideBoxClass: PropTypes.any,
   overrideLabelClass: PropTypes.any
 }
 
-export default LoginModal
+export default TokenTransfer

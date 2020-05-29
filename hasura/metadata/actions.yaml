@@ -67,6 +67,15 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
+- name: transfer
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/transfer
+    forward_client_headers: true
+  permissions:
+  - role: donor
+  - role: lifebank
+  - role: sponsor
 custom_types:
   enums: []
   input_objects: []
@@ -80,4 +89,5 @@ custom_types:
   - name: revoke_consent_output
   - name: grant_consent_output
   - name: credentials_recovery_output
+  - name: transfer_output
   scalars: []

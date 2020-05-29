@@ -13,6 +13,7 @@ import ContactMailIcon from '@material-ui/icons/ContactMail'
 
 import LoginModal from '../components/LoginModal'
 import CredentialsRecovery from '../components/CredentialsRecovery'
+import TokenTransfer from '../components/TokenTransfer'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -82,6 +83,10 @@ const SideBar = ({ user, onLogout }) => {
               Logout
             </Typography>
           </Box>
+          <TokenTransfer
+            overrideBoxClass={classes.optionLink}
+            overrideLabelClass={classes.labelOption}
+          ></TokenTransfer>
         </>
       )}
       {!user && (

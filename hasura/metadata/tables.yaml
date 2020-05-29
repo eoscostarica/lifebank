@@ -65,6 +65,52 @@
           name: location
 - table:
     schema: public
+    name: notification
+  select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - id
+      - payload
+      - created_at
+      - updated_at
+      - account
+      - description
+      - title
+      - type
+      filter:
+        account:
+          _eq: X-Hasura-User-Id
+  - role: lifebank
+    permission:
+      columns:
+      - id
+      - payload
+      - created_at
+      - updated_at
+      - account
+      - description
+      - title
+      - type
+      filter:
+        account:
+          _eq: X-Hasura-User-Id
+  - role: sponsor
+    permission:
+      columns:
+      - id
+      - payload
+      - created_at
+      - updated_at
+      - account
+      - description
+      - title
+      - type
+      filter:
+        account:
+          _eq: X-Hasura-User-Id
+- table:
+    schema: public
     name: raster_columns
 - table:
     schema: public

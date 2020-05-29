@@ -7,6 +7,7 @@ const loginRoute = require('./login/login.route')
 const profileRoute = require('./profile/profile.route')
 const revokeConsentRoute = require('./revoke-consent/revoke-consent.route')
 const signupRoute = require('./signup/signup.route')
+const transferRoute = require('./transfer/transfer.route')
 
 module.exports = [
   checkUsernameRoute,
@@ -17,5 +18,6 @@ module.exports = [
   loginRoute,
   profileRoute,
   revokeConsentRoute,
-  signupRoute
+  signupRoute,
+  transferRoute
 ]

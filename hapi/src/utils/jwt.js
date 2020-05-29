@@ -10,7 +10,8 @@ const create = ({ account, role, ...args }) => {
       sub: account,
       'https://hasura.io/jwt/claims': {
         'x-hasura-allowed-roles': [role],
-        'x-hasura-default-role': role
+        'x-hasura-default-role': role,
+        'X-Hasura-User-Id': account
       }
     },
     jwtConfig.secret,
