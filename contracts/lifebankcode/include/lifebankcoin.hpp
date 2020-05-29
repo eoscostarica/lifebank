@@ -12,6 +12,8 @@ CONTRACT lifebankcoin : public contract
 public:
    using contract::contract;
 
+   ACTION clear(const asset &current_asset, const name owner);
+
    /**
           * Allows `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created.
           *
@@ -32,7 +34,7 @@ public:
           * @param quntity - the amount of tokens to be issued,
           * @memo - the memo string that accompanies the token issue transaction.
           */
-   ACTION issue(const name &to, const asset &quantity, const string &memo);
+   ACTION issuetrans(const name &lifebank, const name &to, const string &memo);
 
    /**
           * Allows `from` account to transfer to `to` account the `quantity` tokens.
@@ -63,7 +65,7 @@ public:
    }
 
    using create_action = eosio::action_wrapper<"create"_n, &lifebankcoin::create>;
-   using issue_action = eosio::action_wrapper<"issue"_n, &lifebankcoin::issue>;
+   using issue_action = eosio::action_wrapper<"issuetrans"_n, &lifebankcoin::issuetrans>;
    using transfer_action = eosio::action_wrapper<"transfer"_n, &lifebankcoin::transfer>;
 
 private:
@@ -123,11 +125,12 @@ typedef multi_index<name("donors"), donor> donors_table;
 struct lifebank
 {
    eosio::name account;
-
+   eosio::symbol community;
+   uint8_t blood_urgency_level;
    checksum256 tx;
    auto primary_key() const { return account.value; }
    EOSLIB_SERIALIZE(lifebank,
-                    (account)(tx));
+                    (account)(community)(blood_urgency_level)(tx));
 };
 typedef multi_index<name("lifebanks"), lifebank> lifebanks_table;
 
@@ -143,3 +146,23 @@ struct sponsor
 typedef multi_index<name("sponsors"), sponsor> sponsors_table;
 
 constexpr eosio::name lifebankcode_account{"lifebankcode"_n};
+
+struct network
+{
+   uint64_t id;
+
+   eosio::symbol community;
+   eosio::name user;
+
+   uint64_t primary_key() const { return id; }
+   uint64_t users_by_community() const { return community.raw(); }
+
+   EOSLIB_SERIALIZE(network,
+                    (id)(community)(user));
+};
+
+typedef eosio::multi_index<eosio::name("network"),
+                           network,
+                           eosio::indexed_by<eosio::name{"usersbycmm"},
+                                             eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
+    networks_table;

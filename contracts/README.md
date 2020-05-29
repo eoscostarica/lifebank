@@ -10,3 +10,11 @@ There are three smart contracts deployed by lifebank.
 
 Only `lifebankcode` can create a new community.
 Use action `createcmm`
+
+ACTION lifebankcode::createcmm(
+eosio::name creator,
+string community_name,
+eosio::asset community_asset,
+string description,
+string logo,
+const asset &maximum_supply)

@@ -60,16 +60,16 @@
             ]
         },
         {
-            "name": "issue",
+            "name": "issuetrans",
             "base": "",
             "fields": [
                 {
-                    "name": "to",
+                    "name": "lifebank",
                     "type": "name"
                 },
                 {
-                    "name": "quantity",
-                    "type": "asset"
+                    "name": "to",
+                    "type": "name"
                 },
                 {
                     "name": "memo",
@@ -112,9 +112,9 @@
             "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Consent to Contract\nsummary: The intent of the `{{ create }}` action is to allow the `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created..\nicon: https://lifebank.io/icons/token.png"
         },
         {
-            "name": "issue",
-            "type": "issue",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Revoke Consent\nsummary: The intent of the `{{ issue }}` action issues to `to` account a `quantity` of tokens.\nicon: https://lifebank.io/icons/token.png"
+            "name": "issuetrans",
+            "type": "issuetrans",
+            "ricardian_contract": ""
         },
         {
             "name": "transfer",

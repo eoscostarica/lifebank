@@ -86,19 +86,37 @@ ACTION lifebankcoin::create(const name &issuer,
    });
 }
 
-ACTION lifebankcoin::issue(const name &to, const asset &quantity, const string &memo)
+ACTION lifebankcoin::issuetrans(const name &lifebank, const name &donor, const string &memo)
 {
-   auto sym = quantity.symbol;
-   check(sym.is_valid(), "invalid symbol name");
+   require_auth(lifebank);
+
+   lifebanks_table _lifebanks(lifebankcode_account, lifebankcode_account.value);
+   auto lifebank_itr = _lifebanks.find(lifebank.value);
+   check(lifebank_itr != _lifebanks.end(), "please a provide a valid lifebank name");
+
+   const auto &lifebank_data = *lifebank_itr;
+   const auto blood_urgency_level = lifebank_data.blood_urgency_level;
+   const auto lifebank_symbol = lifebank_data.community;
+
+   communities_table community(lifebankcode_account, lifebankcode_account.value);
+   auto existing_cmm = community.find(lifebank_symbol.raw());
+   eosio::check(existing_cmm != community.end(), "community does not exists");
+
    check(memo.size() <= 256, "memo has more than 256 bytes");
 
-   stats statstable(get_self(), sym.code().raw());
-   auto existing = statstable.find(sym.code().raw());
-   check(existing != statstable.end(), "token with symbol does not exist, create token before issue");
-   const auto &st = *existing;
-   check(to == st.issuer, "tokens can only be issued to issuer account");
+   stats statstable(get_self(), lifebank_symbol.raw());
+   auto existing = statstable.find(lifebank_symbol.raw());
+   check(existing != statstable.end(), "token with symbol does not exist, create token before issuing");
 
-   require_auth(st.issuer);
+   auto id = gen_uuid(lifebank_symbol.raw(), donor.value);
+   networks_table network(get_self(), get_self().value);
+   auto existing_netlink = network.find(id);
+   check(existing_netlink != network.end(), "donor must to belong to community");
+
+   const auto &st = *existing;
+   // check(to == st.issuer, "tokens can only be issued to issuer account");
+   auto quantity = eosio::asset(blood_urgency_level, lifebank_symbol);
+
    check(quantity.is_valid(), "invalid quantity");
    check(quantity.amount > 0, "must issue positive quantity");
 
@@ -109,7 +127,13 @@ ACTION lifebankcoin::issue(const name &to, const asset &quantity, const string &
       s.supply += quantity;
    });
 
-   add_balance(st.issuer, quantity, st.issuer);
+   add_balance(lifebank, quantity, lifebank);
+   action(
+       permission_level{lifebank, "active"_n},
+       get_self(),
+       "transfer"_n,
+       std::make_tuple(lifebank, donor, quantity, memo))
+       .send();
 }
 
 ACTION lifebankcoin::transfer(const name &from,
