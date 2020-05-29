@@ -4,6 +4,7 @@ import LandingPage from './LandingPage'
 import Signup from './Signup'
 import Donation from './Donation'
 import Profile from './Profile'
+import EditProfile from './EditProfile'
 
 export default [
   {
@@ -36,5 +37,10 @@ export default [
     name: 'profile',
     path: '/profile',
     component: Profile
+  },
+  {
+    name: 'editProfile',
+    path: '/edit-profile',
+    component: EditProfile
   }
 ]

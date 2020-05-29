@@ -16,7 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
   btnWrapper: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 }))
 

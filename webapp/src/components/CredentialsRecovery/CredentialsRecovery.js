@@ -66,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
   bodyWrapper: {
     height: '90%',
     padding: theme.spacing(0, 2)
+  },
+  iconOption: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    fontSize: 20
   }
 }))
 
@@ -116,7 +120,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         className={clsx(classes.loginBtn, overrideBoxClass)}
         onClick={handleOpen}
       >
-        <LockIcon />
+        <LockIcon className={classes.iconOption} />
         <Typography
           variant="body1"
           className={clsx(classes.labelOption, overrideLabelClass)}

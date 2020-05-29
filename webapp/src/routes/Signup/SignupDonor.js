@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
-  textField: {},
   btnWrapper: {
     display: 'flex',
     justifyContent: 'center',
@@ -66,7 +65,6 @@ const DonorSignup = ({
           InputLabelProps={{
             shrink: true
           }}
-          className={classes.textField}
           onChange={(event) => setField('name', event.target.value)}
         />
         <ReCAPTCHA

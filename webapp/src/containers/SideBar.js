@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   labelOption: {
     color: `${theme.palette.primary.main} !important`,
     marginLeft: theme.spacing(3),
-    fontSize: 14
+    fontSize: 14,
+    textTransform: 'capitalize'
   },
   iconOption: {
     color: 'rgba(0, 0, 0, 0.54)',
@@ -65,7 +66,7 @@ const SideBar = ({ user, onLogout }) => {
             <FavoriteIcon className={classes.iconDonor} />
             <Link to="/donations">
               <Typography variant="body1" className={classes.labelOption}>
-                My Donations
+                Your Donations
               </Typography>
             </Link>
           </Box>
@@ -73,7 +74,7 @@ const SideBar = ({ user, onLogout }) => {
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">
               <Typography variant="body1" className={classes.labelOption}>
-                My Profile
+                {`${user.role} Profile`}
               </Typography>
             </Link>
           </Box>

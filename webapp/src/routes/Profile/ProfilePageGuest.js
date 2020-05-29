@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2),
     alignItems: 'center',
     '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+      textTransform: 'capitalize'
     }
   },
   divider: {
