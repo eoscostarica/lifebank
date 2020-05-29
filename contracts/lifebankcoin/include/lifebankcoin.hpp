@@ -36,7 +36,7 @@ public:
           * @param quntity - the amount of tokens to be issued,
           * @memo - the memo string that accompanies the token issue transaction.
           */
-   ACTION issuetrans(const name &lifebank, const name &to, const string &memo);
+   ACTION issue(const name &lifebank, const name &to, const string &memo);
 
    /**
           * Allows `from` account to transfer to `to` account the `quantity` tokens.
@@ -51,6 +51,11 @@ public:
                    const name &to,
                    const asset &quantity,
                    const string &memo);
+
+   ACTION transferlife(const name &from,
+                       const name &to,
+                       const asset &quantity,
+                       const string &memo);
 
    static asset get_supply(const name &token_contract_account, const symbol_code &sym_code)
    {
@@ -67,7 +72,7 @@ public:
    }
 
    using create_action = eosio::action_wrapper<"create"_n, &lifebankcoin::create>;
-   using issue_action = eosio::action_wrapper<"issuetrans"_n, &lifebankcoin::issuetrans>;
+   using issue_action = eosio::action_wrapper<"issue"_n, &lifebankcoin::issue>;
    using transfer_action = eosio::action_wrapper<"transfer"_n, &lifebankcoin::transfer>;
 
 private:

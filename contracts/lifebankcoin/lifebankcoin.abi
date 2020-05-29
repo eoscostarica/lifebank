@@ -60,7 +60,7 @@
             ]
         },
         {
-            "name": "issuetrans",
+            "name": "issue",
             "base": "",
             "fields": [
                 {
@@ -98,6 +98,28 @@
                     "type": "string"
                 }
             ]
+        },
+        {
+            "name": "transferlife",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
         }
     ],
     "actions": [
@@ -112,14 +134,19 @@
             "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Consent to Contract\nsummary: The intent of the `{{ create }}` action is to allow the `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created..\nicon: https://lifebank.io/icons/token.png"
         },
         {
-            "name": "issuetrans",
-            "type": "issuetrans",
+            "name": "issue",
+            "type": "issue",
             "ricardian_contract": ""
         },
         {
             "name": "transfer",
             "type": "transfer",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Revoke Consent\nsummary: The intent of the `{{ tranfer }}` action is to allow `from` account to transfer to `to` account the `quantity` tokens. One account is debited and the other is credited with quantity tokens.\nicon: https://lifebank.io/icons/transfer.png"
+            "ricardian_contract": ""
+        },
+        {
+            "name": "transferlife",
+            "type": "transferlife",
+            "ricardian_contract": ""
         }
     ],
     "tables": [

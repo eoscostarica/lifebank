@@ -86,7 +86,7 @@ ACTION lifebankcoin::create(const name &issuer,
    });
 }
 
-ACTION lifebankcoin::issuetrans(const name &lifebank, const name &donor, const string &memo)
+ACTION lifebankcoin::issue(const name &lifebank, const name &donor, const string &memo)
 {
    require_auth(lifebank);
 
@@ -104,12 +104,12 @@ ACTION lifebankcoin::issuetrans(const name &lifebank, const name &donor, const s
 
    check(memo.size() <= 256, "memo has more than 256 bytes");
 
-   stats statstable(get_self(), lifebank_symbol.raw());
-   auto existing = statstable.find(lifebank_symbol.raw());
+   stats statstable(get_self(), lifebank_symbol.code().raw());
+   auto existing = statstable.find(lifebank_symbol.code().raw());
    check(existing != statstable.end(), "token with symbol does not exist, create token before issuing");
 
    auto id = gen_uuid(lifebank_symbol.raw(), donor.value);
-   networks_table network(get_self(), get_self().value);
+   networks_table network(lifebankcode_account, lifebankcode_account.value);
    auto existing_netlink = network.find(id);
    check(existing_netlink != network.end(), "donor must to belong to community");
 
@@ -129,9 +129,9 @@ ACTION lifebankcoin::issuetrans(const name &lifebank, const name &donor, const s
 
    add_balance(lifebank, quantity, lifebank);
    action(
-       permission_level{lifebank, "active"_n},
+       permission_level{get_self(), "active"_n},
        get_self(),
-       "transfer"_n,
+       "transferlife"_n,
        std::make_tuple(lifebank, donor, quantity, memo))
        .send();
 }
@@ -143,6 +143,35 @@ ACTION lifebankcoin::transfer(const name &from,
 {
    check(from != to, "cannot transfer to self");
    require_auth(from);
+
+   check(is_valid_transaction(from, to), "invalid transaction");
+
+   check(is_account(to), "to account does not exist");
+   auto sym = quantity.symbol.code();
+   stats statstable(get_self(), sym.raw());
+   const auto &st = statstable.get(sym.raw());
+
+   require_recipient(from);
+   require_recipient(to);
+
+   check(quantity.is_valid(), "invalid quantity");
+   check(quantity.amount > 0, "must transfer positive quantity");
+   check(quantity.symbol == st.supply.symbol, "symbol precision mismatch");
+   check(memo.size() <= 256, "memo has more than 256 bytes");
+
+   auto payer = has_auth(to) ? to : from;
+
+   sub_balance(from, quantity);
+   add_balance(to, quantity, payer);
+}
+
+ACTION lifebankcoin::transferlife(const name &from,
+                                  const name &to,
+                                  const asset &quantity,
+                                  const string &memo)
+{
+   check(from != to, "cannot transfer to self");
+   require_auth(get_self());
 
    check(is_valid_transaction(from, to), "invalid transaction");
 
