@@ -7,13 +7,18 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 import ReCAPTCHA from 'react-google-recaptcha'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
 import { captchaConfig, constants } from '../../config'
 
 const {
-  LOCATION_TYPES: { SPONSOR }
+  LOCATION_TYPES: { SPONSOR },
+  SPONSOR_TYPES
 } = constants
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   textField: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    width: '100%'
   },
   btnWrapper: {
     display: 'flex',
@@ -126,23 +132,25 @@ const SponsorSignup = ({
           className={classes.textField}
           onChange={(event) => setField('telephone', event.target.value)}
         />
-        <TextField
-          id="bussinesType"
-          label="Type"
-          variant="outlined"
-          placeholder="Type"
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('bussines_type', event.target.value)}
-        />
-
-        <Box width="100%" className={classes.textField}>
+        <FormControl variant="outlined" className={classes.textField}>
+          <InputLabel id="bussines-type-label">Type</InputLabel>
+          <Select
+            labelId="bussines-type-label"
+            id="bussines-type"
+            value={user.bussines_type || ''}
+            onChange={(event) => setField('bussines_type', event.target.value)}
+            label="Type"
+          >
+            {SPONSOR_TYPES.map((option) => (
+              <MenuItem key={`bussines-type-option-${option}`} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Box className={classes.textField}>
           <Schedule handleOnAddSchedule={handleOnAddSchedule} />
         </Box>
-
         <TextField
           id="covidImpact"
           label="Covid Impact"
@@ -176,7 +184,6 @@ const SponsorSignup = ({
         <Typography variant="subtitle2" gutterBottom>
           Choose your location
         </Typography>
-
         <MapSelectLocation
           onGeolocationChange={handleOnGeolocationChange}
           markerType={SPONSOR}
@@ -184,7 +191,6 @@ const SponsorSignup = ({
           height={400}
           mb={1}
         />
-
         <ReCAPTCHA
           sitekey={captchaConfig.sitekey}
           onChange={(value) => serRecaptchaValue(value)}
