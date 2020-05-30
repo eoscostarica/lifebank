@@ -214,6 +214,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                     <QrReader
                       delay={100}
                       onError={() => {}}
+                      facingMode="rear"
                       style={{
                         height: 220,
                         width: '100%',
