@@ -17,6 +17,9 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import SendIcon from '@material-ui/icons/Send'
 import Link from '@material-ui/core/Link'
+import QrReader from 'react-qr-scanner'
+import CropFreeIcon from '@material-ui/icons/CropFree'
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 import { TRANSFER_MUTATION } from '../../gql'
 
@@ -77,6 +80,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
   const [open, setOpen] = useState(false)
+  const [loadingQr, setLoadingQr] = useState(false)
 
   const [
     transfer,
@@ -206,6 +210,21 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
               )}
               <form autoComplete="off">
                 <Box className={classes.textFieldWrapper}>
+                  {loadingQr && (
+                    <QrReader
+                      delay={100}
+                      onError={() => {}}
+                      style={{
+                        height: 220,
+                        width: '100%',
+                        backgroundColor: 'grey',
+                        marginBottom: 24
+                      }}
+                      onScan={(value) =>
+                        handleSetField('to', value ? value : payload.to)
+                      }
+                    />
+                  )}
                   <TextField
                     id="to"
                     label="Account"
@@ -218,6 +237,15 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                       handleSetField('to', event.target.value)
                     }
                     className={classes.textField}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <CropFreeIcon
+                            onClick={() => setLoadingQr(!loadingQr)}
+                          />
+                        </InputAdornment>
+                      )
+                    }}
                   />
                   <TextField
                     id="memo"

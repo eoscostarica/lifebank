@@ -86,7 +86,7 @@ const SideBar = ({ user, onLogout }) => {
           <TokenTransfer
             overrideBoxClass={classes.optionLink}
             overrideLabelClass={classes.labelOption}
-          ></TokenTransfer>
+          />
         </>
       )}
       {!user && (
