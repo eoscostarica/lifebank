@@ -222,7 +222,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                         marginBottom: 24
                       }}
                       onScan={(value) =>
-                        handleSetField('to', value ? value : payload.to)
+                        handleSetField('to', value || payload.to)
                       }
                     />
                   )}
