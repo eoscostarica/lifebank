@@ -82,8 +82,13 @@ const getDonorData = async account => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
+  const { email } = await userApi.getOne({
+    account: { _eq: account }
+  })
+  console.log('email', email)
 
   return {
+    email,
     name,
     comunities,
     balance,

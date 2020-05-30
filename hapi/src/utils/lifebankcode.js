@@ -58,6 +58,37 @@ const addLifebank = (
   )
 }
 
+const upLifebank = (
+  account,
+  password,
+  { name, has_immunity_test, geolocation, ...profile }
+) => {
+  return eosUtil.transact(
+    [
+      {
+        authorization: [
+          {
+            actor: account,
+            permission: 'active'
+          }
+        ],
+        account: CONTRACT_NAME,
+        name: 'uplifebank',
+        data: {
+          account,
+          lifebank_name: name,
+          has_immunity_test: has_immunity_test || false,
+          community_asset: COMMUNITY_ASSET,
+          location: JSON.stringify(geolocation),
+          ...profile
+        }
+      }
+    ],
+    account,
+    password
+  )
+}
+
 const addSponsor = (account, password, { name, geolocation, ...profile }) => {
   return eosUtil.transact(
     [
@@ -161,5 +192,6 @@ module.exports = {
   getLifebank,
   getSponsor,
   getComunity,
-  getUserNetworks
+  getUserNetworks,
+  upLifebank
 }
