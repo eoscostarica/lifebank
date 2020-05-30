@@ -85,7 +85,6 @@ const getDonorData = async account => {
   const { email } = await userApi.getOne({
     account: { _eq: account }
   })
-  console.log('email', email)
 
   return {
     email,
@@ -204,15 +203,26 @@ const revokeConsent = async account => {
 
 const transfer = async (from, details) => {
   const currentBalance = await lifebankcoinUtils.getbalance(details.to)
-  // @todo enable after sync with Xavier and Ruben
-  // const password = await vaultApi.getPassword(from)
-  // const transferTransaction = await lifebankcoinUtils.transfer(
-  //   from,
-  //   password,
-  //   details
-  // )
-  // const newBalance = await lifebankcoinUtils.getbalance(details.to)
-  // await historyApi.insert(transferTransaction)
+  const password = await vaultApi.getPassword(from)
+  const user = await userApi.getOne({
+    account: { _eq: from }
+  })
+
+  let transaction
+
+  switch (user.role) {
+    case 'donor' || 'sponsor':
+      transaction = await lifebankcoinUtils.transfer(from, password, details)
+      break
+    case 'lifebank':
+      transaction = await lifebankcoinUtils.issue(from, password, details)
+      break
+    default:
+      break
+  }
+
+  const newBalance = await lifebankcoinUtils.getbalance(details.to)
+  await historyApi.insert(transaction)
   await notificationApi.insert({
     account: details.to,
     title: 'New tokens',
@@ -220,16 +230,11 @@ const transfer = async (from, details) => {
     type: 'new_tokens',
     payload: {
       currentBalance,
-      newBalance: [`${details.quantity} LIFE`],
-      tokens: details.quantity
+      newBalance
     }
   })
 
-  // return transferTransaction
-  return {
-    transaction_id:
-      'a8928efdd6cf7f65237efd4157deb568fff7e95fbfa105cf1e5beed18085c23f'
-  }
+  return transaction
 }
 
 module.exports = {

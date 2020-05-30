@@ -5,10 +5,10 @@ const { accountApi } = require('../../api')
 
 module.exports = async ({ auth: { credentials }, payload: { input } }) => {
   try {
-    const { transaction_id } = await accountApi.transfer(credentials.sub, input)
+    const transaction = await accountApi.transfer(credentials.sub, input)
 
     return {
-      transaction_id
+      transaction_id: transaction.transaction_id
     }
   } catch (error) {
     console.error(error)

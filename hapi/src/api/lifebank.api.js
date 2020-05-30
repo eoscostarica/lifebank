@@ -15,7 +15,7 @@ const editProfile = async (account, profile) => {
   await accountApi.grantConsent(account)
 
   const password = await vaultApi.getPassword(account)
-  const addSponsorTransaction = await lifebankcodeUtils.addLifebank(
+  const addSponsorTransaction = await lifebankcodeUtils.upLifebank(
     account,
     password,
     profile
