@@ -21,6 +21,13 @@ type Mutation {
 }
 
 
+type Mutation {
+  edit_profile (
+    profile: jsonb!
+  ): edit_profile_output
+}
+
+
 type Query {
   get_abi (
     contract: String!
@@ -110,4 +117,10 @@ type credentials_recovery_output {
 type transfer_output {
   transaction_id : String!
 }
+
+
+type edit_profile_output {
+  success : Boolean!
+}
+
 

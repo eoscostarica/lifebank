@@ -17,6 +17,15 @@ actions:
     handler: http://hapi:9090/api/credentials-recovery
   permissions:
   - role: guest
+- name: edit_profile
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/edit-profile
+    forward_client_headers: true
+  permissions:
+  - role: donor
+  - role: lifebank
+  - role: sponsor
 - name: get_abi
   definition:
     kind: ""
@@ -90,4 +99,5 @@ custom_types:
   - name: grant_consent_output
   - name: credentials_recovery_output
   - name: transfer_output
+  - name: edit_profile_output
   scalars: []

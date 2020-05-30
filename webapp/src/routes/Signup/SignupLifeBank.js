@@ -230,7 +230,6 @@ const SignupLifeBank = ({
             !user.phone_number ||
             !user.blood_urgency_level ||
             !user.schedule ||
-            !user.location ||
             !isUsernameValid ||
             !user.geolocation ||
             !recaptchaValue ||
