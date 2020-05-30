@@ -1,0 +1,21 @@
+{
+  "name": "lifebank-test",
+  "version": "1.0.0",
+  "description": "Unit test for lifebank",
+  "main": "mocha",
+  "author": "eoscostarica",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "mocha --timeout 180000 test_lifebank.js"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "eosjs": "^20.0.3",
+    "lodash": "^4.17.15",
+    "lodash.get": "^4.4.2",
+    "lodash.isequal": "^4.5.0",
+    "mocha": "^7.0.1",
+    "node-fetch": "^2.6.0"
+  }
+}
