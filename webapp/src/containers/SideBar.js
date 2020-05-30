@@ -116,7 +116,7 @@ const SideBar = ({ user, onLogout }) => {
       </Typography>
       <Box className={classes.optionLink}>
         <InfoIcon className={classes.iconOption} />
-        <Link to="/">
+        <Link to="/about">
           <Typography variant="body1" className={classes.labelOption}>
             About LifeBank
           </Typography>
@@ -124,7 +124,7 @@ const SideBar = ({ user, onLogout }) => {
       </Box>
       <Box className={classes.optionLink}>
         <InfoIcon className={classes.iconOption} />
-        <Link to="/">
+        <Link to="/terms-of-use">
           <Typography variant="body1" className={classes.labelOption}>
             Terms of Use
           </Typography>
@@ -132,7 +132,7 @@ const SideBar = ({ user, onLogout }) => {
       </Box>
       <Box className={classes.optionLink}>
         <InfoIcon className={classes.iconOption} />
-        <Link to="/">
+        <Link to="/help">
           <Typography variant="body1" className={classes.labelOption}>
             Help
           </Typography>
