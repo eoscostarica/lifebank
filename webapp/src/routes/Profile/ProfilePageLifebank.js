@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link as LinkRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2),
     alignItems: 'center',
     '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+      textTransform: 'capitalize'
     }
   },
   divider: {
@@ -109,7 +111,11 @@ const ProfilePageLifebank = ({ profile }) => {
         <Typography variant="subtitle1">Schedule</Typography>
         <Typography variant="body1" />
       </Box>
-      <Schedule data={JSON.parse(profile.schedule)} showSchedule />
+      <Schedule
+        data={JSON.parse(profile.schedule)}
+        showSchedule
+        showButton={false}
+      />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Benefit Description</Typography>
         <Typography variant="body1" />
@@ -139,9 +145,11 @@ const ProfilePageLifebank = ({ profile }) => {
       />
 
       <Divider className={classes.divider} />
-      <Button variant="contained" color="primary" className={classes.editBtn}>
-        Edit
-      </Button>
+      <LinkRouter to="/edit-profile" className={classes.editBtn}>
+        <Button variant="contained" color="primary">
+          Edit
+        </Button>
+      </LinkRouter>
     </>
   )
 }

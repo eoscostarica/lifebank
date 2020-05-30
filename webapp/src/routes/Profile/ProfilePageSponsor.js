@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
+import { Link as LinkRouter } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -21,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2),
     alignItems: 'center',
     '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+      textTransform: 'capitalize'
     }
   },
   divider: {
@@ -32,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
   secondaryText: {
     color: `${theme.palette.secondary.main} !important`
+  },
+  noCapitalize: {
+    textTransform: 'none !important'
   }
 }))
 
@@ -61,7 +66,9 @@ const ProfilePageSponsor = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Email</Typography>
-        <Typography variant="body1">{profile.email}</Typography>
+        <Typography variant="body1" className={classes.noCapitalize}>
+          {profile.email}
+        </Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
@@ -81,7 +88,7 @@ const ProfilePageSponsor = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Website</Typography>
-        <Typography variant="body1">
+        <Typography variant="body1" className={classes.noCapitalize}>
           <Link
             href={profile.account}
             target="_blank"
@@ -121,7 +128,11 @@ const ProfilePageSponsor = ({ profile }) => {
         <Typography variant="subtitle1">Schedule</Typography>
         <Typography variant="body1" />
       </Box>
-      <Schedule data={JSON.parse(profile.schedule)} showSchedule />
+      <Schedule
+        data={JSON.parse(profile.schedule)}
+        showSchedule
+        showButton={false}
+      />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Covid Impact</Typography>
         <Typography variant="body1" />
@@ -163,9 +174,11 @@ const ProfilePageSponsor = ({ profile }) => {
       />
 
       <QRCode value={profile.account} size={200} />
-      <Button variant="contained" color="primary" className={classes.editBtn}>
-        Edit
-      </Button>
+      <LinkRouter to="/edit-profile" className={classes.editBtn}>
+        <Button variant="contained" color="primary">
+          Edit
+        </Button>
+      </LinkRouter>
     </>
   )
 }

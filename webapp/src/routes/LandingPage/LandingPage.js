@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   boxLeft: {
-    width: '50%',
+    width: '60%',
     paddingTop: theme.spacing(2),
     '& h1': {
       color: theme.palette.white,
@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   boxRight: {
-    width: '50%',
+    width: '40%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-end',
-    padding: theme.spacing(3, 1, 0, 0),
+    padding: theme.spacing(7, 1, 0, 0),
     '& p': {
       color: theme.palette.white,
       textAlign: 'end',
@@ -48,15 +48,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
-    '& h5': {
-      marginBottom: theme.spacing(2)
-    },
     '& p': {
       color: theme.palette.primary.mediumEmphasizedBlackText,
       fontSize: 16,
       lineHeight: 1.75,
       letterSpacing: '0.5px',
-      marginBottom: theme.spacing(1)
+      margin: theme.spacing(1, 0)
     }
   },
   loginTypeDonor: {
@@ -86,7 +83,7 @@ const LandingPage = () => {
     <Grid container justify="center">
       <Box className={classes.homeHeader}>
         <Box className={classes.boxLeft}>
-          <Typography variant="h1">Join the Effort</Typography>
+          <Typography variant="h1">Start Saving Lives</Typography>
           <Box className={classes.loginTypeDonor}>
             <Typography variant="h5">As a Donor</Typography>
           </Box>
@@ -94,13 +91,12 @@ const LandingPage = () => {
             <Typography variant="h5">As a Sponsor</Typography>
           </Box>
           <Box className={classes.loginTypeLifeBank}>
-            <Typography variant="h5">As a Life Bank</Typography>
+            <Typography variant="h5">As a Lifebank</Typography>
           </Box>
         </Box>
         <Box className={classes.boxRight}>
           <Typography variant="body1">
-            Catchy text to explain what this app is about and also a call to
-            action so they go ahead and register!
+            Give blood banks a lifeline. Register to donate life.
           </Typography>
           <Button
             variant="contained"
@@ -114,17 +110,17 @@ const LandingPage = () => {
       </Box>
       <Grid item xs={12} sm={8} md={6} className={classes.bodyHome}>
         <Typography variant="h5">
-          Find your closest LifeBank or Sponsor
+          Find a Lifebank or sponsor near you.
         </Typography>
 
         <MapShowLocations width="100%" height={400} my={2} />
 
-        <Typography variant="h5">Am I Elegible?</Typography>
+        <Typography variant="h5">How Lifebank works</Typography>
         <Typography variant="body1">
-          Lifebank helps local communities create a virtuous circle of value
-          exchange between three parties — a eligible donor user (EDU), a
-          community donation center (CDC) and a participating local business
-          (PLB).
+          Lifebank is a powerful application that uses blockchain technology to
+          save lives. After completing a donation at any registered Lifebank, a
+          life donor will earn a Life Token that can be redeemed at a local
+          sponsor.
         </Typography>
 
         <Button variant="outlined" color="primary">

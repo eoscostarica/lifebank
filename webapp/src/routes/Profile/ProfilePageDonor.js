@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import { Link as LinkRouter } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -21,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2),
     alignItems: 'center',
     '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+      textTransform: 'capitalize'
     }
   },
   divider: {
@@ -116,9 +118,14 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       </Box>
       <Divider className={classes.divider} />
       <QRCode value={profile.account || 'n/a'} size={200} />
-      <Button variant="contained" color="primary" className={classes.editBtn}>
-        Edit
-      </Button>
+      <LinkRouter to="/edit-profile" className={classes.editBtn}>
+        <Button
+          variant="contained"
+          color="primary"
+        >
+          Edit
+        </Button>
+      </LinkRouter>
     </>
   )
 }
