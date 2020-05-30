@@ -134,8 +134,8 @@ ACTION lifebankcode::uplifebank(eosio::name account, string lifebank_name,
   check_consent(account);
   lifebanks_table _lifebanks(get_self(), get_self().value);
   eosio::check(lifebank_name.size() <= 64, "Name has more than 64 bytes");
-  eosio::check(blood_urgency_level < 0, "blood urgency level must be positive");
-  eosio::check(4 > blood_urgency_level, "blood urgency level is out of range");
+  eosio::check(blood_urgency_level > 0, "blood urgency level must be positive");
+  eosio::check(blood_urgency_level < 4, "blood urgency level is out of range");
   auto lifebank_itr = _lifebanks.find(account.value);
   if (lifebank_itr != _lifebanks.end())
   {

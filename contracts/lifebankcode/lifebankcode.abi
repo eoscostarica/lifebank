@@ -340,7 +340,7 @@
         {
             "name": "link",
             "type": "link",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle:  Invites a new account to a given community \nsummary: The intent of the `{{ revoke }}` action is to revoke a previous informed consent to a contract by deleting the record.\nicon: https://lifebank.io/icons/multisig.png"
         },
         {
             "name": "uplifebank",
