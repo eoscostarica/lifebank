@@ -42,7 +42,32 @@ const transfer = async (account, password, { to, quantity, memo }) => {
   )
 }
 
+const issue = async (account, password, { to, memo }) => {
+  return eosUtil.transact(
+    [
+      {
+        authorization: [
+          {
+            actor: account,
+            permission: 'active'
+          }
+        ],
+        account: CONTRACT_NAME,
+        name: 'issue',
+        data: {
+          to,
+          memo,
+          lifebank: account
+        }
+      }
+    ],
+    account,
+    password
+  )
+}
+
 module.exports = {
   getbalance,
-  transfer
+  transfer,
+  issue
 }
