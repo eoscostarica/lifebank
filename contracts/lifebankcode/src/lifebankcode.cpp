@@ -174,6 +174,36 @@ ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string
   }
 }
 
+ACTION lifebankcode::unsubscribe(name user, eosio::asset community_asset)
+{
+  require_auth(user);
+  check_consent(user);
+
+  eosio::symbol community_symbol = community_asset.symbol;
+  auto id = gen_uuid(community_symbol.raw(), user.value);
+  networks_table network(get_self(), get_self().value);
+  auto existing_netlink = network.find(id);
+  if (existing_netlink == network.end())
+  {
+    return;
+  }
+  network.erase(existing_netlink);
+  donors_table _donors(get_self(), get_self().value);
+  auto itr_donors = _donors.find(user.value);
+  if (itr_donors != _donors.end())
+  {
+    _donors.erase(itr_donors);
+    return;
+  }
+  sponsors_table _sponsors(get_self(), get_self().value);
+  auto itr_sponsors = _sponsors.find(user.value);
+  if (itr_sponsors != _sponsors.end())
+  {
+    _sponsors.erase(itr_sponsors);
+    return;
+  }
+}
+
 ACTION lifebankcode::clear()
 {
   // DEV only

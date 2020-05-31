@@ -13,6 +13,8 @@ CONTRACT lifebankcode : public contract
 public:
   using contract::contract;
 
+  ACTION unsubscribe(name user, eosio::asset community_asset);
+
   ACTION createcmm(string community_name, eosio::asset community_asset, string description, string logo, const asset &maximum_supply);
 
   ACTION link(eosio::asset community_asset, eosio::name new_user);
