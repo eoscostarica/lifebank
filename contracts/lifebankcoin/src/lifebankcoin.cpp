@@ -43,7 +43,7 @@ void lifebankcoin::sub_balance(const name &owner, const asset &value)
    const auto &from = from_acnts.get(value.symbol.code().raw(), "no balance object found");
    check(from.balance.amount >= value.amount, "overdrawn balance");
 
-   from_acnts.modify(from, owner, [&](auto &a) {
+   from_acnts.modify(from, get_self(), [&](auto &a) {
       a.balance -= value;
    });
 }
@@ -61,7 +61,7 @@ void lifebankcoin::add_balance(const name &owner, const asset &value, const name
    }
    else
    {
-      to_acnts.modify(to, same_payer, [&](auto &a) {
+      to_acnts.modify(to, get_self(), [&](auto &a) {
          a.balance += value;
       });
    }
@@ -124,7 +124,7 @@ ACTION lifebankcoin::issue(const name &lifebank, const name &donor, const string
    check(quantity.symbol == st.supply.symbol, "symbol precision mismatch");
    check(quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
 
-   statstable.modify(st, same_payer, [&](auto &s) {
+   statstable.modify(st, get_self(), [&](auto &s) {
       s.supply += quantity;
    });
 
