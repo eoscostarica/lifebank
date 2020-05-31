@@ -12,10 +12,6 @@
                     "type": "name"
                 },
                 {
-                    "name": "donor_name",
-                    "type": "string"
-                },
-                {
                     "name": "community_asset",
                     "type": "asset"
                 }

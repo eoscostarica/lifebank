@@ -3,7 +3,6 @@
 #include <eosio/asset.hpp>
 #include <eosio/crypto.hpp>
 
-#include <utils.hpp>
 #include <lifebankcoin.hpp>
 
 using namespace std;
@@ -18,7 +17,7 @@ public:
 
   ACTION link(eosio::asset community_asset, eosio::name new_user);
 
-  ACTION adddonor(eosio::name account, string donor_name, eosio::asset community_asset);
+  ACTION adddonor(eosio::name account, eosio::asset community_asset);
 
   ACTION addlifebank(eosio::name account, string lifebank_name,
                      string description, string address, string location, string phone_number,

@@ -62,12 +62,11 @@ ACTION lifebankcode::link(eosio::asset community_asset, eosio::name new_user)
   require_recipient(new_user);
 }
 
-ACTION lifebankcode::adddonor(name account, string donor_name, eosio::asset community_asset)
+ACTION lifebankcode::adddonor(name account, eosio::asset community_asset)
 {
   require_auth(account);
   check_consent(account);
   donors_table _donors(get_self(), get_self().value);
-  eosio::check(donor_name.size() <= 64, "Name has more than 64 bytes");
   auto donor_itr = _donors.find(account.value);
   if (donor_itr == _donors.end())
   {
