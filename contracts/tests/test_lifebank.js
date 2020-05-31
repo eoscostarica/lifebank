@@ -1,11 +1,28 @@
+/*
+ * @file
+ * @author  (C) 2020 by eoscostarica [ https://eoscostarica.io ]
+ * @version 1.1.0
+ *
+ * @section LICENSE
+
+ * @section DESCRIPTION
+ *  Unit test for the project LifeBank. EOSIO Virtual Hackathon Project - Coding for Change
+ *
+ * A simple standard for digital assets (ie. Fungible and Non-Fungible Tokens - NFTs) for EOSIO blockchains
+ *    WebSite:        https://eoscostarica.io
+ *    GitHub:         https://github.com/eoscostarica
+ *
+ */
+
+
 const { Api, JsonRpc, RpcError } = require('eosjs');
 const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig');      // development only
 const fetch = require('node-fetch');                                    // node only; not needed in browsers
 const { TextEncoder, TextDecoder } = require('util');                   // node only; native TextEncoder/Decoder
-const lifebank_priv_key='5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3';
-const lifebank_pub_key='EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV';
-const MIN_VAL = 0;
-const MAX_VAL = 4;
+const lifebank_priv_key='5KQ...FD3'; // the priv key for EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+
+const BLOOD_MIN_VAL = 0; //min value for blood_urgency_level
+const BLOOD_MAX_VAL = 4; // max value for blood_urgency_level
 
 const signatureProvider = new JsSignatureProvider([lifebank_priv_key]);
 const rpc = new JsonRpc('http://localhost:8888', { fetch });
@@ -122,7 +139,7 @@ describe ('Lifebank unit test', function(){
 
     it('contract: lifebankcoin testing clear ',async () => {
         try {
-            //cleos push action lifebankcoin clear '{"current_asset":"1 BLOOD","owner":"lifebankcode" }' -p lifebankcoin@active
+            
             const result = await api.transact({
                 actions: [{
                   account: 'lifebankcoin',
@@ -221,9 +238,223 @@ describe ('Lifebank unit test', function(){
             assert.equal(errorMessage, 'symbol already exists')
           }
     });
-//:addlifebank(eosio::name , string ,
-// string , string , string , string ,
-// bool , uint8_t , string schedule, eosio::asset , string )
+
+    it('contract: lifebankcode testing addlifebank with invalid account',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'addlifebank',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'lifebankcXXX',
+                    lifebank_name: 'Lifebank name1',
+                    description: 'Bank of description',
+                    address: 'https://eoscostarica.io/',
+                    location:'https://eoscostarica.io/',
+                    phone_number:'+(506)1111111',
+                    has_immunity_test: true,
+                    blood_urgency_level: 1,
+                    schedule: 'schedule',
+                    community_asset:'1 BLOOD',
+                    email:'hello@email.com'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            //console.log('\nCaught exception: ' + err); 
+            let errorMessage =  get(err, 'json.error.details[0].message')
+            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            assert.equal(errorMessage, 'New user account does not exists')
+          }
+    });
+
+    it('contract: lifebankcode testing addlifebank without consent',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'addlifebank',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'lifebankcode',
+                    lifebank_name: 'Lifebank name1',
+                    description: 'Bank of description',
+                    address: 'https://eoscostarica.io/',
+                    location:'https://eoscostarica.io/',
+                    phone_number:'+(506)1111111',
+                    has_immunity_test: true,
+                    blood_urgency_level: 1,
+                    schedule: 'schedule',
+                    community_asset:'1 BLOOD',
+                    email:'hello@email.com'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            //console.log('\nCaught exception: ' + err); 
+            let errorMessage =  get(err, 'json.error.details[0].message')
+            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            assert.equal(errorMessage, 'Account does not have consent for lifebankcode')
+          }
+    });
+
+    it('Creating consent for lifebankcode account',async () => {
+        try {
+            const result = await api.transact({
+                actions: [{
+                  account: 'consent2life',
+                  name: 'consent',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    user: 'lifebankcode',
+                    contract: 'lifebankcode',
+                    //http://emn178.github.io/online-tools/sha256.html for hash value
+                    hash: '24fc611af2dd7fb765d939562fe5568c563e80c811a2b35f4e20777c9badc278'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err);
+          if (err instanceof RpcError)
+            console.log(JSON.stringify(err.json, null, 2));
+          }
+    });
+
+    it('contract: lifebankcode testing addlifebank blood levels',async () => {
+        
+        try {
+            for(i = BLOOD_MIN_VAL+1; i <BLOOD_MAX_VAL ; i++){
+              const result = await api.transact({
+                  actions: [{
+                    account: 'lifebankcode',
+                    name: 'addlifebank',
+                    authorization: [{
+                      actor: 'lifebankcode',
+                      permission: 'active',
+                    }],
+                    data: {
+                      account: 'lifebankcode',
+                      lifebank_name: 'Lifebank name'+i,
+                      description: 'Bank of description',
+                      address: 'https://eoscostarica.io/',
+                      location:'https://eoscostarica.io/',
+                      phone_number:'+(506)1111111',
+                      has_immunity_test: true,
+                      blood_urgency_level: i,
+                      schedule: 'schedule',
+                      community_asset:'1 BLOOD',
+                      email:'hello@email.com'
+                    },
+                  }]
+                }, {
+                  blocksBehind: 3,
+                  expireSeconds: 30,
+                });
+                 
+            }
+          } catch (err) {
+            console.log('\nCaught exception: ' + err); 
+          }
+    });
+
+    it('contract: lifebankcode testing addlifebank negative blood levels',async () => {
+        try {
+              blood_level = Math.floor(-((Math.random() * BLOOD_MAX_VAL)+1));  
+              const result = await api.transact({
+                  actions: [{
+                    account: 'lifebankcode',
+                    name: 'addlifebank',
+                    authorization: [{
+                      actor: 'lifebankcode',
+                      permission: 'active',
+                    }],
+                    data: {
+                      account: 'lifebankcode',
+                      lifebank_name: 'Lifebank name'+i,
+                      description: 'Bank of description',
+                      address: 'https://eoscostarica.io/',
+                      location:'https://eoscostarica.io/',
+                      phone_number:'+(506)1111111',
+                      has_immunity_test: true,
+                      blood_urgency_level: blood_level ,
+                      schedule: 'schedule',
+                      community_asset:'1 BLOOD',
+                      email:'hello@email.com'
+                    },
+                  }]
+                }, {
+                  blocksBehind: 3,
+                  expireSeconds: 30,
+                });
+
+          } catch (err) { 
+            
+            assert.equal(err, 'Error: Number is out of range')
+          }
+    });
+
+    it('contract: lifebankcode testing addlifebank invalid blood levels',async () => {
+        
+        try {
+              blood_level = Math.floor(((Math.random() * BLOOD_MAX_VAL)+1)) + BLOOD_MAX_VAL;  
+              const result = await api.transact({
+                  actions: [{
+                    account: 'lifebankcode',
+                    name: 'addlifebank',
+                    authorization: [{
+                      actor: 'lifebankcode',
+                      permission: 'active',
+                    }],
+                    data: {
+                      account: 'lifebankcode',
+                      lifebank_name: 'Lifebank name'+i,
+                      description: 'Bank of description',
+                      address: 'https://eoscostarica.io/',
+                      location:'https://eoscostarica.io/',
+                      phone_number:'+(506)1111111',
+                      has_immunity_test: true,
+                      blood_urgency_level: blood_level ,
+                      schedule: 'schedule',
+                      community_asset:'1 BLOOD',
+                      email:'hello@email.com'
+                    },
+                  }]
+                }, {
+                  blocksBehind: 3,
+                  expireSeconds: 30,
+                });
+
+          } catch (err) { 
+            let errorMessage =  get(err, 'json.error.details[0].message')
+            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            assert.equal(errorMessage, 'blood urgency level is out of range')
+          }
+    });
+    
 
     it('contract: lifebankcode testing addlifebank ',async () => {
         try {
@@ -256,120 +487,25 @@ describe ('Lifebank unit test', function(){
               });
           } catch (err) {
             console.log('\nCaught exception: ' + err); 
-            //let errorMessage =  get(err, 'json.error.details[0].message')
-            //errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
-            //assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
-            //assert.equal(errorMessage, 'symbol already exists')
           }
     });
 
-    /*
-    it('Register accounts as block producers',async () => {
 
-    for(index =0 ; index < bp_accts_25.length; index++ ){  
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'regproducer',
-                authorization: [{
-                  actor: bp_accts_25[index],
-                  permission: 'active',
-                }],
-                data: {
-                  producer: bp_accts_25[index],
-                  producer_key : rateproducer_pub_key,
-                  url:'https://eoscostarica.io',
-                  location:'0',
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-          console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-    }
-    });
-    
-    it('Remove votes/proxies from '+voter_acc+' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: voter_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: voter_acc,
-                  proxy: '',
-                  producers: []
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-
-    });
-
-    it('Remove votes/proxies from '+proxy_acc+' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: proxy_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: proxy_acc,
-                  proxy: '',
-                  producers: []
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-
-    });
- 
-   
-    it('Rating using '+ voter_acc +' account with no voters ',async () => {
+    it('contract: lifebankcode testing adddonor wrong community asset',async () => {
         try {
+            
             const result = await api.transact({
                 actions: [{
-                  account: contract_acct,
-                  name: 'rate',
+                  account: 'lifebankcode',
+                  name: 'adddonor',
                   authorization: [{
-                    actor: voter_acc,
+                    actor: 'lifebankcode',
                     permission: 'active',
                   }],
                   data: {
-                    user: voter_acc,
-                    bp: bp_accts_25[0],
-                    transparency:8,
-                    infrastructure:8,
-                    trustiness:7,
-                    development:6,
-                    community:9,
+                    account: 'lifebankcode',
+                    donor_name: 'Donor Name',
+                    community_asset: '2 NOTHING'
                   },
                 }]
               }, {
@@ -380,143 +516,51 @@ describe ('Lifebank unit test', function(){
             let errorMessage =  get(err, 'json.error.details[0].message')
             errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
             assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
-            assert.equal(errorMessage, 'account does not have enough voters')
+            assert.equal(errorMessage, "can't find any community with given asset")
           }
     });
-
-    it('Register account ' +proxy_acc+ ' as proxy ',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'regproxy',
-                authorization: [{
-                  actor: proxy_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  proxy: proxy_acc,
-                  isproxy: true,
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
+/*
+      it('Revoke consent for lifebankcode account',async () => {
+        try {
+            const result = await api.transact({
+                actions: [{
+                  account: 'consent2life',
+                  name: 'consent',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    user: 'lifebankcode',
+                    contract: 'lifebankcode'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
             console.log('\nCaught exception: ' + err);
-              if (err instanceof RpcError)
-                console.log(JSON.stringify(err.json, null, 2));
-
-        } 
-    });
-
-    it('Set up ' + proxy_acc + ' as proxy for '+voter_acc+' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: voter_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: voter_acc,
-                  proxy: proxy_acc,
-                  producers: []
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
           if (err instanceof RpcError)
             console.log(JSON.stringify(err.json, null, 2));
-        }
-    });
-
-
-
-    it('Rating using '+voter_acc+' and '+proxy_acc+' as proxy without voters',async () => {
-        try {
-            const result = await api.transact({
-                actions: [{
-                  account: contract_acct,
-                  name: 'rate',
-                  authorization: [{
-                    actor: voter_acc,
-                    permission: 'active',
-                  }],
-                  data: {
-                    user: voter_acc,
-                    bp: bp_accts_25[0],
-                    transparency:8,
-                    infrastructure:8,
-                    trustiness:7,
-                    development:6,
-                    community:9,
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-            let errorMessage =  get(err, 'json.error.details[0].message')
-            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
-            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
-            assert.equal(errorMessage, 'delegated proxy does not have enough voters')
           }
     });
 
-    it('Set up 10 voters for ' + proxy_acc + ' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: proxy_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: proxy_acc,
-                  proxy: '',
-                  producers: bp_accts_10,
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-    });
-
-    it('Rating using '+voter_acc+' and '+proxy_acc+' as proxy with 10 voters',async () => {
+    it('Creating consent for lifebankcode account',async () => {
         try {
             const result = await api.transact({
                 actions: [{
-                  account: contract_acct,
-                  name: 'rate',
+                  account: 'consent2life',
+                  name: 'consent',
                   authorization: [{
-                    actor: voter_acc,
+                    actor: 'lifebankcode',
                     permission: 'active',
                   }],
                   data: {
-                    user: voter_acc,
-                    bp: bp_accts_25[0],
-                    transparency:8,
-                    infrastructure:8,
-                    trustiness:7,
-                    development:6,
-                    community:9,
+                    user: 'lifebankcode',
+                    contract: 'lifebankcode',
+                    //http://emn178.github.io/online-tools/sha256.html for hash value
+                    hash: '24fc611af2dd7fb765d939562fe5568c563e80c811a2b35f4e20777c9badc278'
                   },
                 }]
               }, {
@@ -524,358 +568,115 @@ describe ('Lifebank unit test', function(){
                 expireSeconds: 30,
               });
           } catch (err) {
-            let errorMessage =  get(err, 'json.error.details[0].message')
-            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
-            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
-            assert.equal(errorMessage, 'delegated proxy does not have enough voters')
+            console.log('\nCaught exception: ' + err);
+          if (err instanceof RpcError)
+            console.log(JSON.stringify(err.json, null, 2));
           }
-    });
-
-    it('Set up 21 voters for ' + proxy_acc + ' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: proxy_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: proxy_acc,
-                  proxy: '',
-                  producers: bp_accts_21,
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-    });
-
-    it('Rating using '+voter_acc+' and '+proxy_acc+' as proxy with 21 voters',async () => {
-        try {
-            const result = await api.transact({
-                actions: [{
-                  account: contract_acct,
-                  name: 'rate',
-                  authorization: [{
-                    actor: voter_acc,
-                    permission: 'active',
-                  }],
-                  data: {
-                    user: voter_acc,
-                    bp: bp_accts_25[0],
-                    transparency:8,
-                    infrastructure:8,
-                    trustiness:7,
-                    development:6,
-                    community:9,
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-             console.log('\nCaught exception: ' + err);
-             if (err instanceof RpcError)
-             console.log(JSON.stringify(err.json, null, 2));
-          }
-    });
-
-    it('Set up 25 voters for ' + proxy_acc + ' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: proxy_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: proxy_acc,
-                  proxy: '',
-                  producers: bp_accts_25,
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-    });
-
-    it('Rating using '+voter_acc+' and '+proxy_acc+'as proxy with 25 voters',async () => {
-        try {
-            const result = await api.transact({
-                actions: [{
-                  account: contract_acct,
-                  name: 'rate',
-                  authorization: [{
-                    actor: voter_acc,
-                    permission: 'active',
-                  }],
-                  data: {
-                    user: voter_acc,
-                    bp: bp_accts_25[0],
-                    transparency:8,
-                    infrastructure:8,
-                    trustiness:7,
-                    development:6,
-                    community:9,
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-             console.log('\nCaught exception: ' + err);
-             if (err instanceof RpcError)
-              console.log(JSON.stringify(err.json, null, 2));
-          } 
-
-    });
-
-    it('Set up 10 voters for ' + voter_acc + ' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: voter_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: voter_acc,
-                  proxy: '',
-                  producers: bp_accts_10,
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-    });
-
-    it('Rating using '+voter_acc+' account with 10 voters',async () => {
-        try {
-            const result = await api.transact({
-                actions: [{
-                  account: contract_acct,
-                  name: 'rate',
-                  authorization: [{
-                    actor: voter_acc,
-                    permission: 'active',
-                  }],
-                  data: {
-                    user: voter_acc,
-                    bp: bp_accts_25[0],
-                    transparency:8,
-                    infrastructure:8,
-                    trustiness:7,
-                    development:6,
-                    community:9,
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-            let errorMessage =  get(err, 'json.error.details[0].message')
-            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
-            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
-            assert.equal(errorMessage, 'account does not have enough voters')
-          }
-    });
-
-    it('Set up 21 voters for ' + voter_acc + ' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: voter_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: voter_acc,
-                  proxy: '',
-                  producers: bp_accts_21,
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-    });
-
-    it('Rating using '+voter_acc+' account with 21 voters',async () => {
-        try {
-            const result = await api.transact({
-                actions: [{
-                  account: contract_acct,
-                  name: 'rate',
-                  authorization: [{
-                    actor: voter_acc,
-                    permission: 'active',
-                  }],
-                  data: {
-                    user: voter_acc,
-                    bp: bp_accts_25[0],
-                    transparency:8,
-                    infrastructure:8,
-                    trustiness:7,
-                    development:6,
-                    community:9,
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-             console.log('\nCaught exception: ' + err);
-             if (err instanceof RpcError)
-             console.log(JSON.stringify(err.json, null, 2));
-          }
-    });
-
-    it('Set up 25 voters for ' + voter_acc + ' account',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'voteproducer',
-                authorization: [{
-                  actor: voter_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  voter: voter_acc,
-                  proxy: '',
-                  producers: bp_accts_25,
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-    });
-
-    it('Rating using '+voter_acc+' account with 25 voters',async () => {
-        try {
-            const result = await api.transact({
-                actions: [{
-                  account: contract_acct,
-                  name: 'rate',
-                  authorization: [{
-                    actor: voter_acc,
-                    permission: 'active',
-                  }],
-                  data: {
-                    user: voter_acc,
-                    bp: bp_accts_25[0],
-                    transparency:8,
-                    infrastructure:8,
-                    trustiness:7,
-                    development:6,
-                    community:9,
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-             console.log('\nCaught exception: ' + err);
-             if (err instanceof RpcError)
-             console.log(JSON.stringify(err.json, null, 2));
-          }
-    });
-
-    it('Unregister account '+proxy_acc+' as proxy',async () => {
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'regproxy',
-                authorization: [{
-                  actor: proxy_acc,
-                  permission: 'active',
-                }],
-                data: {
-                  proxy: proxy_acc,
-                  isproxy: false
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-
-        }
-
-    });
-
-
-    it('Unregister producers accounts',async () => {
-
-    for(index =0 ; index < bp_accts_25.length; index++ ){  
-      try {
-          const result = await api.transact({
-              actions: [{
-                account: 'eosio',
-                name: 'unregprod',
-                authorization: [{
-                  actor: bp_accts_25[index],
-                  permission: 'active',
-                }],
-                data: {
-                  producer: bp_accts_25[index],
-                },
-              }]
-            }, {
-              blocksBehind: 3,
-              expireSeconds: 30,
-            });
-        } catch (err) {
-         console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-        }
-    }
     });
 */
+    it('contract: lifebankcode testing adddonor ',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'adddonor',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'lifebankcode',
+                    donor_name: 'Donor Name',
+                    community_asset: '1 BLOOD'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            let errorMessage =  get(err, 'json.error.details[0].message')
+            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            assert.equal(errorMessage, "can't find any community with given asset")
+          }
+    });
+
+    it('contract: lifebankcode testing addsponsor wrong asset ',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'addsponsor',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'lifebankcode',
+                    sponsor_name: 'Sponsor Name',
+                    covid_impact: 'high',
+                    benefit_description:'plasma producer',
+                    website:'https://eoscostarica.io/',
+                    telephone:'+(506)111111',
+                    bussines_type:'it',
+                    schedule:'schedule',
+                    email:'hello@email.com',
+                    community_asset:'1 NOASSET',
+                    location: 'Costa Rica'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            let errorMessage =  get(err, 'json.error.details[0].message')
+            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            assert.equal(errorMessage, "can't find any community with given asset")
+          }
+    });          
+
+
+    it('contract: lifebankcode testing addsponsor ',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'addsponsor',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'lifebankcode',
+                    sponsor_name: 'Sponsor Name',
+                    covid_impact: 'high',
+                    benefit_description:'plasma producer',
+                    website:'https://eoscostarica.io/',
+                    telephone:'+(506)111111',
+                    bussines_type:'it',
+                    schedule:'schedule',
+                    email:'hello@email.com',
+                    community_asset:'1 BLOOD',
+                    location: 'Costa Rica'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err);
+            
+          }
+    });   
+
+                               
+
  
 });
