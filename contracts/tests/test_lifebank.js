@@ -2,41 +2,16 @@ const { Api, JsonRpc, RpcError } = require('eosjs');
 const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig');      // development only
 const fetch = require('node-fetch');                                    // node only; not needed in browsers
 const { TextEncoder, TextDecoder } = require('util');                   // node only; native TextEncoder/Decoder
-
-const contract_acct="rateproducer";
-const proxy_acc='eoscrprox111';
-const voter_acc='eoscrvoter11';
-
-const rateproducer_priv_key='5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3';
-const rateproducer_pub_key='EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV';
+const lifebank_priv_key='5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3';
+const lifebank_pub_key='EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV';
 const MIN_VAL = 0;
-const MAX_VAL = 10;
+const MAX_VAL = 4;
 
-const signatureProvider = new JsSignatureProvider([rateproducer_priv_key]);
+const signatureProvider = new JsSignatureProvider([lifebank_priv_key]);
 const rpc = new JsonRpc('http://localhost:8888', { fetch });
 const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
 const get = require('lodash.get')
 var chai = require('chai'),assert = chai.assert;
-
-
-var bp_accts_25 = [
-                "eoscrprodo11","eoscrprodo12","eoscrprodo13","eoscrprodo14","eoscrprodo15",
-                "eoscrprodo21","eoscrprodo22","eoscrprodo23","eoscrprodo24","eoscrprodo25",
-                "eoscrprodo31","eoscrprodo32","eoscrprodo33","eoscrprodo34","eoscrprodo35",
-                "eoscrprodo41","eoscrprodo42","eoscrprodo43","eoscrprodo44","eoscrprodo45",
-                "eoscrprodo51","eoscrprodo52","eoscrprodo53","eoscrprodo54","eoscrprodo55"
-                 ];
-var bp_accts_21 = [
-                "eoscrprodo11","eoscrprodo12","eoscrprodo13","eoscrprodo14","eoscrprodo15",
-                "eoscrprodo21","eoscrprodo22","eoscrprodo23","eoscrprodo24","eoscrprodo25",
-                "eoscrprodo31","eoscrprodo32","eoscrprodo33","eoscrprodo34","eoscrprodo35",
-                "eoscrprodo41","eoscrprodo42","eoscrprodo43","eoscrprodo44","eoscrprodo45",
-                "eoscrprodo51"
-                 ];
-var bp_accts_10 = [
-                "eoscrprodo11","eoscrprodo12","eoscrprodo13","eoscrprodo14","eoscrprodo15",
-                "eoscrprodo21","eoscrprodo22","eoscrprodo23","eoscrprodo24","eoscrprodo25"
-                 ];
 
 describe ('Lifebank unit test', function(){
    
@@ -113,7 +88,6 @@ describe ('Lifebank unit test', function(){
                 expireSeconds: 30,
               });
           } catch (err) {
-            //console.log('\nCaught exception: ' + err);
             assert.equal(err, 'Error: Odd number of hex digits')
           }
     });
@@ -143,6 +117,149 @@ describe ('Lifebank unit test', function(){
             errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
             assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
             assert.equal(errorMessage, 'Account does not exist')
+          }
+    });
+
+    it('contract: lifebankcoin testing clear ',async () => {
+        try {
+            //cleos push action lifebankcoin clear '{"current_asset":"1 BLOOD","owner":"lifebankcode" }' -p lifebankcoin@active
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcoin',
+                  name: 'clear',
+                  authorization: [{
+                    actor: 'lifebankcoin',
+                    permission: 'active',
+                  }],
+                  data: {
+                    current_asset: '1 BLOOD',
+                    owner: 'lifebankcode'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+
+            const resultClean = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'clear',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err);
+          }
+    });
+
+   
+     it('contract: lifebankcode testing createcmm ',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'createcmm',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    community_name: 'Blood Bank1',
+                    community_asset: '1 BLOOD',
+                    description: 'Bank of blood',
+                    logo: 'a logo url',
+                    maximum_supply:'1000000 BLOOD'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err);           
+          }
+    });
+
+    it('contract: lifebankcode testing createcmm dup symbol ',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'createcmm',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    community_name: 'Blood Bank2',
+                    community_asset: '1 BLOOD',
+                    description: 'Bank of blood',
+                    logo: 'a logo url',
+                    maximum_supply:'1000000 BLOOD'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            let errorMessage =  get(err, 'json.error.details[0].message')
+            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            assert.equal(errorMessage, 'symbol already exists')
+          }
+    });
+//:addlifebank(eosio::name , string ,
+// string , string , string , string ,
+// bool , uint8_t , string schedule, eosio::asset , string )
+
+    it('contract: lifebankcode testing addlifebank ',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'addlifebank',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'lifebankcode',
+                    lifebank_name: 'Lifebank name1',
+                    description: 'Bank of description',
+                    address: 'https://eoscostarica.io/',
+                    location:'https://eoscostarica.io/',
+                    phone_number:'+(506)1111111',
+                    has_immunity_test: true,
+                    blood_urgency_level: 1,
+                    schedule: 'schedule',
+                    community_asset:'1 BLOOD',
+                    email:'hello@email.com'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err); 
+            //let errorMessage =  get(err, 'json.error.details[0].message')
+            //errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            //assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            //assert.equal(errorMessage, 'symbol already exists')
           }
     });
 
