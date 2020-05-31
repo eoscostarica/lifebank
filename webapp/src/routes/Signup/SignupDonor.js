@@ -56,17 +56,6 @@ const DonorSignup = ({
           }}
           onChange={(event) => setField('secret', event.target.value)}
         />
-        <TextField
-          id="fullname"
-          label="Name"
-          fullWidth
-          variant="outlined"
-          placeholder="Your Full Name"
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => setField('name', event.target.value)}
-        />
         <ReCAPTCHA
           sitekey={captchaConfig.sitekey}
           onChange={(value) => serRecaptchaValue(value)}
@@ -77,7 +66,6 @@ const DonorSignup = ({
           disabled={
             !user.username ||
             !user.secret ||
-            !user.name ||
             !isUsernameValid ||
             !recaptchaValue ||
             loading

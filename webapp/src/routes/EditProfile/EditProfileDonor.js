@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 const EditProfileDonor = ({ profile, onSubmit, loading }) => {
   const classes = useStyles()
   const [user, setUser] = useState({
-    name: profile.name,
     email: profile.email || ''
   })
 
@@ -55,18 +54,6 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        <TextField
-          id="fullname"
-          label="Name"
-          fullWidth
-          variant="outlined"
-          placeholder="Your Full Name"
-          defaultValue={user.name}
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => handleSetField('name', event.target.value)}
-        />
         <TextField
           id="email"
           label="Email"

@@ -48,10 +48,6 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
 
   return (
     <>
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Name</Typography>
-        <Typography variant="body1">{profile.name}</Typography>
-      </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Account</Typography>
@@ -119,10 +115,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       <Divider className={classes.divider} />
       <QRCode value={profile.account || 'n/a'} size={200} />
       <LinkRouter to="/edit-profile" className={classes.editBtn}>
-        <Button
-          variant="contained"
-          color="primary"
-        >
+        <Button variant="contained" color="primary">
           Edit
         </Button>
       </LinkRouter>
