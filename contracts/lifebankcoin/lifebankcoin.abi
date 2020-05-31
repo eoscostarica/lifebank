@@ -136,12 +136,12 @@
         {
             "name": "issue",
             "type": "issue",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Revoke Consent\nsummary: The intent of the `{{ issue }}` action issues to `to` account a `quantity` of tokens.\nicon: https://lifebank.io/icons/token.png"
         },
         {
             "name": "transfer",
             "type": "transfer",
-            "ricardian_contract": ""
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Revoke Consent\nsummary: The intent of the `{{ tranfer }}` action is to allow `from` account to transfer to `to` account the `quantity` tokens. One account is debited and the other is credited with quantity tokens.\nicon: https://lifebank.io/icons/transfer.png"
         },
         {
             "name": "transferlife",
