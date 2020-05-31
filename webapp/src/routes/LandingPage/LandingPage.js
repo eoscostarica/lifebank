@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/styles'
+import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 
 import CustomRouterLink from '../../components/CustomRouterLink'
@@ -73,6 +74,10 @@ const useStyles = makeStyles((theme) => ({
     width: '90%',
     marginBottom: theme.spacing(1),
     paddingLeft: theme.spacing(2)
+  },
+  linkBtn: {
+    textDecoration: 'none',
+    width: '100%'
   }
 }))
 
@@ -122,17 +127,14 @@ const LandingPage = () => {
           life donor will earn a Life Token that can be redeemed at a local
           sponsor.
         </Typography>
-
-        <Button variant="outlined" color="primary">
-          Read more
-        </Button>
+        <Link to="/about" className={classes.linkBtn}>
+          <Button variant="outlined" color="primary" fullWidth>
+            Read more
+          </Button>
+        </Link>
       </Grid>
     </Grid>
   )
 }
-
-LandingPage.propTypes = {}
-
-LandingPage.defaultProps = {}
 
 export default LandingPage
