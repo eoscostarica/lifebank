@@ -4,21 +4,21 @@ bool lifebankcode::is_donor(name account)
 {
   donors_table _donors(get_self(), get_self().value);
   auto itr_donors = _donors.find(account.value);
-  return itr_donors != _donors.end();
+  return itr_donors == _donors.end();
 }
 
 bool lifebankcode::is_sponsor(name account)
 {
   sponsors_table _sponsors(get_self(), get_self().value);
   auto sponsor_itr = _sponsors.find(account.value);
-  return sponsor_itr != _sponsors.end();
+  return sponsor_itr == _sponsors.end();
 }
 
 bool lifebankcode::is_lifebank(name account)
 {
   lifebanks_table _lifebanks(get_self(), get_self().value);
   auto lifebank_itr = _lifebanks.find(account.value);
-  return lifebank_itr != _lifebanks.end();
+  return lifebank_itr == _lifebanks.end();
 }
 
 checksum256 lifebankcode::get_tx()
