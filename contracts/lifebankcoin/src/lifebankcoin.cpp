@@ -48,13 +48,14 @@ void lifebankcoin::sub_balance(const name &owner, const asset &value)
    });
 }
 
+// add_balance(lifebank, quantity, lifebank);
 void lifebankcoin::add_balance(const name &owner, const asset &value, const name &ram_payer)
 {
    accounts to_acnts(get_self(), owner.value);
    auto to = to_acnts.find(value.symbol.code().raw());
    if (to == to_acnts.end())
    {
-      to_acnts.emplace(ram_payer, [&](auto &a) {
+      to_acnts.emplace(get_self(), [&](auto &a) {
          a.balance = value;
       });
    }
