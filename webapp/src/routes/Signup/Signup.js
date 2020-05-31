@@ -99,7 +99,6 @@ const Signup = () => {
       variables: { name: 'consent2life' }
     }
   )
-  console.log(contract)
 
   const handleRoleChange = (role) => {
     setRole(role)

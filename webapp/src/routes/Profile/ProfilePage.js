@@ -104,14 +104,14 @@ const ProfilePage = () => {
       return
     }
 
-    // @todo update profile balance
-
     setSnackbarState({
       open: true,
       title: notification[0].title,
       description: notification[0].description
     })
-  }, [notification, profile])
+
+    loadProfile()
+  }, [notification, profile, loadProfile])
 
   return (
     <Box className={classes.wrapper}>

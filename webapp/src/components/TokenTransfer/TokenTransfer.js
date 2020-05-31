@@ -21,6 +21,7 @@ import QrReader from 'react-qr-scanner'
 import CropFreeIcon from '@material-ui/icons/CropFree'
 import InputAdornment from '@material-ui/core/InputAdornment'
 
+import { useUser } from '../../context/user.context'
 import { TRANSFER_MUTATION } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
   const classes = useStyles()
+  const [currentUser] = useUser()
   const [payload, setPayload] = useState({ quantity: 1 })
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
@@ -121,7 +123,6 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
     setSuccess(true)
   }, [transferResult])
 
-  // @todo hide quantity for lifebank
   // @todo change text according to user role
 
   return (
@@ -182,7 +183,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                   {errorMessage}
                 </Alert>
               )}
-              {success && (
+              {success && transferResult && (
                 <Alert
                   className={classes.alert}
                   severity="success"
@@ -199,7 +200,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                 >
                   Done
                   <Link
-                    href={`https://jungle.bloks.io/account/${transferResult.transaction_id}`}
+                    href={`https://jungle.bloks.io/transaction/${transferResult.transaction_id}`}
                     target="_blank"
                     rel="noopener"
                     color="secondary"
@@ -261,19 +262,21 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                     }
                     className={classes.textField}
                   />
-                  <TextField
-                    id="quantity"
-                    label="Quantity"
-                    variant="outlined"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    value={payload.quantity || ''}
-                    onChange={(event) =>
-                      handleSetField('quantity', parseInt(event.target.value))
-                    }
-                    className={classes.textField}
-                  />
+                  {currentUser.role !== 'lifebank' && (
+                    <TextField
+                      id="quantity"
+                      label="Quantity"
+                      variant="outlined"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      value={payload.quantity || ''}
+                      onChange={(event) =>
+                        handleSetField('quantity', parseInt(event.target.value))
+                      }
+                      className={classes.textField}
+                    />
+                  )}
                 </Box>
                 <Box className={classes.btnWrapper}>
                   <Button

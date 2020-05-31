@@ -230,7 +230,8 @@ const transfer = async (from, details) => {
     type: 'new_tokens',
     payload: {
       currentBalance,
-      newBalance
+      newBalance,
+      transaction: transaction.transaction_id
     }
   })
 
