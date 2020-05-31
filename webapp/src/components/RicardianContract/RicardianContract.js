@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 
-const RicardianContract = ({ abi, action }) => {
+const RicardianContract = ({ name, hash, abi, action }) => {
   const [source, setSource] = useState('')
-  const addIcon = (text = '') => {
-    const chunks = `${text}`.split('icon:')
-    const icon = chunks[1] ? `\n ![icon](${chunks[1]})` : ''
+  const formatRicardianClause = (text = '') => {
+    const [_version, content1] = text.split('\ntitle: ')
+    const version = _version.replace(/---\n/g, '')
 
-    return `${chunks[0]} ${icon}`
+    const [_title, content2] = content1.split('\nsummary: ')
+    const title = `# ${_title}`
+
+    const [summary, _icon] = `${content2}`.split('\nicon: ')
+    const icon = _icon ? `![icon](${_icon})` : ''
+
+    return `${title}\n\n${version}:\n\n${summary}\n\n${icon}`
   }
 
   useEffect(() => {
@@ -28,26 +34,29 @@ const RicardianContract = ({ abi, action }) => {
       return
     }
 
-    actions = actions.map(({ name, ricardian_contract: ricardianContract }) => {
-      return addIcon(`# ${name} \n ${ricardianContract}`)
-    })
+    actions = actions.map(({ ricardian_contract: ricardianContract }) =>
+      formatRicardianClause(ricardianContract)
+    )
 
-    const clauses = abi.ricardian_clauses.map(({ id, body }) => {
-      return addIcon(`# ${id} \n ${body}`)
-    })
+    const clauses = abi.ricardian_clauses.map(({ body }) =>
+      formatRicardianClause(body)
+    )
+
+    const mainTitle = '# Ricardian contract'
+    const nameSection = `**Name:** [${name}](https://jungle.bloks.io/account/${name}?loadContract=true&tab=Actions)`
+    const hashSection = `**Hash:** [${hash}](https://jungle.bloks.io/account/${name}?loadContract=true&tab=ABI)`
 
     setSource(
-      [...actions, ...clauses]
-        .join('\n')
-        .replace(/title:/g, '## ')
-        .replace(/summary: /g, '')
+      [mainTitle, nameSection, hashSection, ...actions, ...clauses].join('\n\n')
     )
-  }, [abi, action])
+  }, [name, hash, abi, action])
 
   return <ReactMarkdown source={source} />
 }
 
 RicardianContract.propTypes = {
+  name: PropTypes.string,
+  hash: PropTypes.string,
   abi: PropTypes.object,
   action: PropTypes.string
 }

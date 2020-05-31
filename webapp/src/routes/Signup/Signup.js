@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom'
 import {
   CHECK_USERNAME_MUTATION,
   CREATE_ACCOUNT_MUTATION,
-  GET_ABI_QUERY,
+  GET_CONTRACT_QUERY,
   SIGNUP_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
@@ -93,9 +93,13 @@ const Signup = () => {
     signup,
     { loading: signupLoading, data: { signup: signupResult } = {} }
   ] = useMutation(SIGNUP_MUTATION)
-  const { data: { get_abi: { abi } = {} } = {} } = useQuery(GET_ABI_QUERY, {
-    variables: { contract: 'consent2life' }
-  })
+  const { data: { get_contract: contract = {} } = {} } = useQuery(
+    GET_CONTRACT_QUERY,
+    {
+      variables: { name: 'consent2life' }
+    }
+  )
+  console.log(contract)
 
   const handleRoleChange = (role) => {
     setRole(role)
@@ -243,7 +247,7 @@ const Signup = () => {
               <SignupConsent
                 onSubmit={handleSingup}
                 loading={signupLoading}
-                abi={abi}
+                contract={contract}
                 action="consent"
               />
             </>

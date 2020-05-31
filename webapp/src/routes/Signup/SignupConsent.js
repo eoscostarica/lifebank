@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     '& h1, & h2': {
       textTransform: 'capitalize',
       margin: 0
+    },
+    '& p a': {
+      wordBreak: 'break-all'
     }
   },
   btnWrapper: {
@@ -36,13 +39,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SignupConsent = ({ onSubmit, loading, abi, action }) => {
+const SignupConsent = ({ onSubmit, loading, contract, action }) => {
   const classes = useStyles()
 
   return (
     <>
       <Box className={classes.wrapper}>
-        <RicardianContract abi={abi} action={action} />
+        <RicardianContract
+          name={contract.name}
+          hash={contract.hash}
+          abi={contract.abi}
+          action={action}
+        />
       </Box>
       <Box className={classes.btnWrapper}>
         <Button variant="contained" color="primary" onClick={onSubmit}>
@@ -57,7 +65,7 @@ const SignupConsent = ({ onSubmit, loading, abi, action }) => {
 SignupConsent.propTypes = {
   onSubmit: PropTypes.func,
   loading: PropTypes.bool,
-  abi: PropTypes.object,
+  contract: PropTypes.object,
   action: PropTypes.string
 }
 

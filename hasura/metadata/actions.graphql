@@ -29,9 +29,9 @@ type Mutation {
 
 
 type Query {
-  get_abi (
-    contract: String!
-  ): get_abi_output
+  get_contract (
+    name: String!
+  ): get_contract_output
 }
 
 
@@ -118,9 +118,13 @@ type transfer_output {
   transaction_id : String!
 }
 
-
 type edit_profile_output {
   success : Boolean!
 }
 
+type get_contract_output {
+  name : String!
+  hash : String!
+  abi : jsonb!
+}
 

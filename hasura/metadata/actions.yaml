@@ -26,13 +26,14 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
-- name: get_abi
+- name: get_contract
   definition:
     kind: ""
-    handler: http://hapi:9090/api/contracts/get-abi
+    handler: http://hapi:9090/api/get-contract
   permissions:
   - role: donor
   - role: guest
+  - role: lifebank
   - role: sponsor
 - name: grant_consent
   definition:
@@ -100,4 +101,5 @@ custom_types:
   - name: credentials_recovery_output
   - name: transfer_output
   - name: edit_profile_output
+  - name: get_contract_output
   scalars: []
