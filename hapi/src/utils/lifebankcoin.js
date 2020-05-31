@@ -7,7 +7,7 @@ const getbalance = async account => {
   const result = await eosUtil.getCurrencyBalance(
     CONTRACT_NAME,
     account,
-    `0 ${TOKEN_NAKE}`
+    TOKEN_NAKE
   )
 
   if (result.length < 1) {

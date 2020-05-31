@@ -181,6 +181,10 @@ const getUserNetworks = async user => {
     upper_bound: user
   })
 
+  if (rows.length < 1) {
+    return [{ community: COMMUNITY_ASSET.replace(' ', ',') }]
+  }
+
   return rows
 }
 
