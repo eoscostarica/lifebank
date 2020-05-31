@@ -40,6 +40,9 @@ private:
     create_new_token.send(issuer, maximum_supply);
   }
   void check_consent(eosio::name account);
+  bool is_donor(name account);
+  bool is_sponsor(name account);
+  bool is_lifebank(name account);
   checksum256 get_tx();
 
   TABLE community
@@ -146,9 +149,5 @@ bool has_consent(eosio::name account, eosio::name contract)
   auto single_record = string_to_hash(account.to_string() + contract.to_string());
   auto single_record_index = _records.get_index<name("singlerecord")>();
   auto existing_record = single_record_index.find(single_record);
-  if (existing_record == single_record_index.end())
-  {
-    return false;
-  }
-  return true;
+  return existing_record != single_record_index.end();
 }
