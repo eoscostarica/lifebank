@@ -31,7 +31,7 @@ const editProfile = async (account, profile) => {
       coordinates: [profile.geolocation.longitude, profile.geolocation.latitude]
     },
     type: LOCATION_TYPES.LIFE_BANK,
-    info: JSON.stringify(profile)
+    info: profile
   })
 }
 
@@ -56,7 +56,7 @@ const signup = async (account, profile) => {
       coordinates: [profile.geolocation.longitude, profile.geolocation.latitude]
     },
     type: LOCATION_TYPES.LIFE_BANK,
-    info: JSON.stringify(profile)
+    info: profile
   })
 }
 

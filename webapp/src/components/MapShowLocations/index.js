@@ -73,16 +73,20 @@ function MapShowLocations({ location, ...props }) {
         data.locations.forEach((location) => {
           const {
             id,
-            name,
+            account,
             type,
-            geolocation: { coordinates }
+            geolocation: { coordinates },
+            info
           } = location
 
           const markerNode = document.createElement('div')
           ReactDOM.render(<MapMarker type={type} />, markerNode)
 
           const popupNode = document.createElement('div')
-          ReactDOM.render(<MapPopup id={id} name={name} />, popupNode)
+          ReactDOM.render(
+            <MapPopup id={id} info={info} account={account} />,
+            popupNode
+          )
 
           new mapboxgl.Marker(markerNode)
             .setLngLat(coordinates)

@@ -18,15 +18,17 @@
   - role: donor
     permission:
       columns:
+      - account
+      - geolocation
       - id
+      - info
       - name
       - type
-      - geolocation
-      - info
       filter: {}
   - role: guest
     permission:
       columns:
+      - account
       - geolocation
       - id
       - info
@@ -36,6 +38,7 @@
   - role: lifebank
     permission:
       columns:
+      - account
       - geolocation
       - id
       - info
@@ -45,6 +48,7 @@
   - role: sponsor
     permission:
       columns:
+      - account
       - geolocation
       - id
       - info

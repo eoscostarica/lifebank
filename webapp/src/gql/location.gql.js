@@ -9,8 +9,10 @@ export const GET_NEARBY_LOCATIONS_QUERY = gql`
     ) {
       id
       geolocation
+      account
       name
       type
+      info
     }
   }
 `
