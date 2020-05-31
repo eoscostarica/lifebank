@@ -69,9 +69,9 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Comunities</Typography>
+        <Typography variant="subtitle1">Communities</Typography>
         <Typography variant="body1">
-          {(profile.comunities || []).join(', ') || 'N/A'}
+          {(profile.communities || []).join(', ') || 'N/A'}
         </Typography>
       </Box>
       <Divider className={classes.divider} />
