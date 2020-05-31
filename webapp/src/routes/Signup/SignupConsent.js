@@ -12,7 +12,21 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 400,
     overflow: 'scroll',
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    '& img': {
+      width: 80
+    },
+    '& p': {
+      color: theme.palette.primary.mediumEmphasizedBlackText,
+      fontSize: 16,
+      lineHeight: 1.75,
+      letterSpacing: '0.5px',
+      margin: theme.spacing(1, 0, 2, 0)
+    },
+    '& h1, & h2': {
+      textTransform: 'capitalize',
+      margin: 0
+    }
   },
   btnWrapper: {
     display: 'flex',
