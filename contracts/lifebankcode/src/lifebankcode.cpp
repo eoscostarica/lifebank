@@ -1,5 +1,26 @@
 #include <lifebankcode.hpp>
 
+bool lifebankcode::is_donor(name account)
+{
+  donors_table _donors(get_self(), get_self().value);
+  auto itr_donors = _donors.find(account.value);
+  return itr_donors != _donors.end();
+}
+
+bool lifebankcode::is_sponsor(name account)
+{
+  sponsors_table _sponsors(get_self(), get_self().value);
+  auto sponsor_itr = _sponsors.find(account.value);
+  return sponsor_itr != _sponsors.end();
+}
+
+bool lifebankcode::is_lifebank(name account)
+{
+  lifebanks_table _lifebanks(get_self(), get_self().value);
+  auto lifebank_itr = _lifebanks.find(account.value);
+  return lifebank_itr != _lifebanks.end();
+}
+
 checksum256 lifebankcode::get_tx()
 {
   auto s = eosio::read_transaction(nullptr, 0);
@@ -66,6 +87,10 @@ ACTION lifebankcode::adddonor(name account, eosio::asset community_asset)
 {
   require_auth(account);
   check_consent(account);
+
+  eosio::check(is_sponsor(account), "Account already belogs to sponsor");
+  eosio::check(is_lifebank(account), "Account already belogs to lifebank");
+
   donors_table _donors(get_self(), get_self().value);
   auto donor_itr = _donors.find(account.value);
   if (donor_itr == _donors.end())
@@ -150,6 +175,10 @@ ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string
 {
   require_auth(account);
   check_consent(account);
+
+  eosio::check(is_donor(account), "Account already belogs to donor");
+  eosio::check(is_lifebank(account), "Account already belogs to lifebank");
+
   sponsors_table _sponsors(get_self(), get_self().value);
   eosio::check(sponsor_name.size() <= 64, "Name has more than 64 bytes");
   auto sponsor_itr = _sponsors.find(account.value);
@@ -171,6 +200,34 @@ ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string
     _sponsors.modify(sponsor_itr, get_self(), [&](auto &row) {
       row.tx = get_tx();
     });
+  }
+}
+
+ACTION lifebankcode::unsubscribe(name user, eosio::asset community_asset)
+{
+  require_auth(user);
+  check_consent(user);
+
+  eosio::symbol community_symbol = community_asset.symbol;
+  auto id = gen_uuid(community_symbol.raw(), user.value);
+  networks_table network(get_self(), get_self().value);
+  auto existing_netlink = network.find(id);
+  if (existing_netlink == network.end())
+  {
+    return;
+  }
+  network.erase(existing_netlink);
+  donors_table _donors(get_self(), get_self().value);
+  auto itr_donors = _donors.find(user.value);
+  if (itr_donors != _donors.end())
+  {
+    _donors.erase(itr_donors);
+  }
+  sponsors_table _sponsors(get_self(), get_self().value);
+  auto itr_sponsors = _sponsors.find(user.value);
+  if (itr_sponsors != _sponsors.end())
+  {
+    _sponsors.erase(itr_sponsors);
   }
 }
 
