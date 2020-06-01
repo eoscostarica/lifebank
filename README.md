@@ -103,9 +103,11 @@ To align the relevant incentives and accomplish the above, we created **Lifebank
 
 Lifebank helps local communities create a virtuous circle of value exchange between three parties — an **eligible donor, a donation center and a sponsor.** 
 
+[![lifebank](./docs/donor-user-flow.png)](./docs/lifebankflow.png)
+
 ### Watch the Video
 
-[![LifeBank - EOSIO Virtual Hackathon Project](http://img.youtube.com/vi/lwFhVbifhoM/0.jpg)](https://youtu.be/tgbZWs5vE5s "LifeBank - EOSIO Virtual Hackathon Project")
+[![LifeBank - EOSIO Virtual Hackathon Project](http://img.youtube.com/vi/tgbZWs5vE5s/0.jpg)](http://www.youtube.com/watch?v=tgbZWs5vE5s "LifeBank - EOSIO Virtual Hackathon Project")
 
 **Glossary:**
 

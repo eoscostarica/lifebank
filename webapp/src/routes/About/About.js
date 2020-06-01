@@ -37,7 +37,7 @@ const About = () => {
   return (
     <Box className={classes.contentInfo}>
       <VideoSection
-        src="https://www.youtube.com/embed/lwFhVbifhoM"
+        src="https://www.youtube.com/embed/tgbZWs5vE5s"
         className={classes.video}
       />
       <Typography variant="h4">About Lifebank:</Typography>
