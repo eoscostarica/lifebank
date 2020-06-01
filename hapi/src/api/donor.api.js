@@ -5,7 +5,7 @@ const historyApi = require('./history.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 
-const editProfile = async (account, { email, ...profile }) => {
+const editProfile = async (account, { email, name, ...profile }) => {
   const password = await vaultApi.getPassword(account)
   const adddonorTransaction = await lifebankcodeUtils.addDonor(
     account,
@@ -15,6 +15,10 @@ const editProfile = async (account, { email, ...profile }) => {
 
   if (email) {
     await userApi.setEmail({ account: { _eq: account } }, email)
+  }
+
+  if (name) {
+    await userApi.setName({ account: { _eq: account } }, name)
   }
 
   await historyApi.insert(adddonorTransaction)

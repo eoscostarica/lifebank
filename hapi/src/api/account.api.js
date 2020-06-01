@@ -65,8 +65,6 @@ const getProfile = async account => {
 }
 
 const getDonorData = async account => {
-  const { tx } = (await lifebankcodeUtils.getDonor(account)) || {}
-  const { donor_name: name } = await getTransactionData(tx)
   const networks = await lifebankcodeUtils.getUserNetworks(account)
   const communities = []
 
@@ -82,7 +80,7 @@ const getDonorData = async account => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
-  const { email } = await userApi.getOne({
+  const { email, name } = await userApi.getOne({
     account: { _eq: account }
   })
 
