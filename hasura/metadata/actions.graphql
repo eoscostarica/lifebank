@@ -104,11 +104,11 @@ type check_username_output {
 }
 
 type revoke_consent_output {
-  success : Boolean!
+  transaction_id : String!
 }
 
 type grant_consent_output {
-  success : Boolean!
+  transaction_id : String!
 }
 
 type credentials_recovery_output {

@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import { Alert, AlertTitle } from '@material-ui/lab'
+import Link from '@material-ui/core/Link'
 
 import {
   PROFILE_QUERY,
@@ -48,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
   },
   editBtn: {
     marginTop: theme.spacing(4)
+  },
+  transactionLink: {
+    wordBreak: 'break-all'
   }
 }))
 
@@ -55,6 +59,7 @@ const ProfilePage = () => {
   const classes = useStyles()
   const [snackbarState, setSnackbarState] = useState({})
   const [lastNotification, setLastNotification] = useState()
+  const [lastConsentChange, setLastConsentChange] = useState()
   const [currentUser] = useUser()
   const [
     loadProfile,
@@ -79,6 +84,7 @@ const ProfilePage = () => {
   )
 
   const handleConsentChange = () => {
+    setLastConsentChange(profile?.consent ? 'revoke' : 'grant')
     profile?.consent ? revokeConsent() : grantConsent()
   }
 
@@ -91,10 +97,46 @@ const ProfilePage = () => {
   }, [currentUser, loadProfile])
 
   useEffect(() => {
-    if (grantConsentResult || revokeConsentResult) {
-      loadProfile()
+    if (
+      !lastConsentChange ||
+      (lastConsentChange === 'grant' && !grantConsentResult) ||
+      (lastConsentChange === 'revoke' && !revokeConsentResult)
+    ) {
+      return
     }
-  }, [grantConsentResult, revokeConsentResult, loadProfile])
+
+    setSnackbarState({
+      open: true,
+      title: `Success ${lastConsentChange} consent`,
+      description: (
+        <>
+          Transaction{' '}
+          <Link
+            href={`https://jungle.bloks.io/transaction/${
+              lastConsentChange === 'grant'
+                ? grantConsentResult.transaction_id
+                : revokeConsentResult.transaction_id
+            }`}
+            target="_blank"
+            rel="noopener"
+            color="secondary"
+            className={classes.transactionLink}
+          >
+            {lastConsentChange === 'grant'
+              ? grantConsentResult.transaction_id
+              : revokeConsentResult.transaction_id}
+          </Link>
+        </>
+      )
+    })
+    loadProfile()
+  }, [
+    grantConsentResult,
+    revokeConsentResult,
+    lastConsentChange,
+    loadProfile,
+    classes
+  ])
 
   useEffect(() => {
     if (

@@ -5,10 +5,10 @@ const { accountApi } = require('../../api')
 
 module.exports = async ({ auth: { credentials } }) => {
   try {
-    await accountApi.grantConsent(credentials.sub)
+    const { transaction_id } = await accountApi.grantConsent(credentials.sub)
 
     return {
-      success: true
+      transaction_id
     }
   } catch (error) {
     return Boom.boomify(error, { statusCode: BAD_REQUEST })

@@ -45,7 +45,7 @@ export const PROFILE_QUERY = gql`
 export const GRANT_CONSENT_MUTATION = gql`
   mutation {
     grant_consent {
-      success
+      transaction_id
     }
   }
 `
@@ -53,7 +53,7 @@ export const GRANT_CONSENT_MUTATION = gql`
 export const REVOKE_CONSENT_MUTATION = gql`
   mutation {
     revoke_consent {
-      success
+      transaction_id
     }
   }
 `
