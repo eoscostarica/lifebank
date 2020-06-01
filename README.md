@@ -103,7 +103,7 @@ To align the relevant incentives and accomplish the above, we created **Lifebank
 
 Lifebank helps local communities create a virtuous circle of value exchange between three parties — an **eligible donor, a donation center and a sponsor.** 
 
-[![lifebank](./docs/donor-user-flow.png)](./docs/lifebankflow.png)
+[![lifebank](./docs/lifebankflow.png)](./docs/lifebankflow.png)
 
 ### Watch the Video
 
