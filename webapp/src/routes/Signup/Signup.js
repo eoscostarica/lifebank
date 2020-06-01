@@ -156,10 +156,13 @@ const Signup = () => {
   }, [createAccountResult])
 
   useEffect(() => {
-    if (currentUser) {
-      setActiveStep(2)
+    if (currentUser && !createAccountResult) {
+      history.replace('/profile')
+      return
     }
-  }, [currentUser])
+
+    setActiveStep(2)
+  }, [currentUser, createAccountResult])
 
   useEffect(() => {
     if (signupResult) {
