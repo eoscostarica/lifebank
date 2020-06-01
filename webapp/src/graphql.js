@@ -30,7 +30,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const wsLink = new WebSocketLink({
-  uri: graphqlConfig.url.replace(/^https?/, 'ws'),
+  uri: graphqlConfig.url.replace(/^http?/, 'ws').replace(/^https?/, 'wss'),
   options: {
     lazy: true,
     reconnect: true,

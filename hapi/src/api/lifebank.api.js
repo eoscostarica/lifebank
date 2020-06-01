@@ -10,6 +10,7 @@ const {
     ENUM_DATA: { LOCATION_TYPES }
   }
 } = require('../config')
+const LIFE_BANK_CODE = 'lifebankcode'
 
 const editProfile = async (account, profile) => {
   await accountApi.grantConsent(account)
@@ -38,9 +39,9 @@ const editProfile = async (account, profile) => {
 const signup = async (account, profile) => {
   await accountApi.grantConsent(account)
 
-  const password = await vaultApi.getPassword(account)
+  const password = await vaultApi.getPassword(LIFE_BANK_CODE)
   const addSponsorTransaction = await lifebankcodeUtils.addLifebank(
-    account,
+    LIFE_BANK_CODE,
     password,
     profile
   )
