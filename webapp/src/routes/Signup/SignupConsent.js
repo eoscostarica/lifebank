@@ -92,7 +92,12 @@ const SignupConsent = ({ onSubmit, loading }) => {
         )}
       </div>
       <Box className={classes.btnWrapper}>
-        <Button variant="contained" color="primary" onClick={onSubmit}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onSubmit}
+          disabled={loading}
+        >
           I Accept
         </Button>
         {loading && <CircularProgress />}
