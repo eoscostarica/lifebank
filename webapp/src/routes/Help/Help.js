@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.onSecondaryMediumEmphasizedText
     },
     '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+      marginTop: 0
     }
   }
 }))

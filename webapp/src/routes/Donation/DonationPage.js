@@ -119,7 +119,9 @@ const DonationPage = () => {
       </Typography>
       <EmptyHeartSVG balance={parseInt(tokens)} />
       <Typography variant="body1" className={classes.infoLabel}>
-        You have not donated yet.
+        {parseInt(tokens)
+          ? 'Find a Sponsor and Redeem your LifeTokens!'
+          : 'You have not donated yet.'}
       </Typography>
       <Box className={classes.wrapper}>
         <MapModal useButton />
