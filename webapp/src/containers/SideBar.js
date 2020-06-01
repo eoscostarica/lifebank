@@ -62,14 +62,16 @@ const SideBar = ({ user, onLogout }) => {
     <Box className={classes.wrapper}>
       {user && (
         <>
-          <Box className={classes.optionLink}>
-            <FavoriteIcon className={classes.iconDonor} />
-            <Link to="/donations">
-              <Typography variant="body1" className={classes.labelOption}>
-                Your Donations
-              </Typography>
-            </Link>
-          </Box>
+          {user.role === 'donor' && (
+            <Box className={classes.optionLink}>
+              <FavoriteIcon className={classes.iconDonor} />
+              <Link to="/donations">
+                <Typography variant="body1" className={classes.labelOption}>
+                  Your Donations
+                </Typography>
+              </Link>
+            </Box>
+          )}
           <Box className={classes.optionLink}>
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">

@@ -129,7 +129,7 @@ const ProfilePageSponsor = ({ profile }) => {
         <Typography variant="body1" />
       </Box>
       <Schedule
-        data={JSON.parse(profile.schedule)}
+        data={profile ? JSON.parse(profile.schedule || '[]') : []}
         showSchedule
         showButton={false}
       />
@@ -167,7 +167,7 @@ const ProfilePageSponsor = ({ profile }) => {
       />
 
       <MapShowLocations
-        location={JSON.parse(profile.location)}
+        location={profile ? JSON.parse(profile.location || '{}') : {}}
         width="100%"
         height={400}
         py={2}
