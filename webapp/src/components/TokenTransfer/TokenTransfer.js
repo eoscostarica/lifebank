@@ -170,237 +170,240 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
     setSuccess(true)
   }, [transferResult])
 
-  // @todo change text according to user role
-
   return (
     <>
-      <Box
-        className={clsx(classes.loginBtn, overrideBoxClass)}
-        onClick={handleOpen}
-      >
-        {useButton ? (
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<ShoppingCartIcon />}
+      {!currentUser && <span>Login or signup</span>}
+      {currentUser && (
+        <>
+          <Box
+            className={clsx(classes.loginBtn, overrideBoxClass)}
+            onClick={handleOpen}
           >
-            Redeem Token
-          </Button>
-        ) : (
-          <>
-            <SendIcon className={classes.iconOption} />
-            <Typography
-              variant="body1"
-              className={clsx(classes.labelOption, overrideLabelClass)}
-            >
-              Transfer
-            </Typography>
-          </>
-        )}
-      </Box>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleOpen}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Fade in={open}>
-          <Paper className={classes.paper}>
-            <Box className={classes.closeIcon}>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={handleOpen}
+            {useButton ? (
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<ShoppingCartIcon />}
               >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            </Box>
-            <Box className={classes.bodyWrapper}>
-              <Typography variant="h1">{`${
-                currentUser.role === 'donor' ? 'Redeem' : 'Send'
-              } Life Token`}</Typography>
-              {errorMessage && (
-                <Alert
-                  className={classes.alert}
-                  severity="error"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setErrorMessage(null)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
+                Redeem Token
+              </Button>
+            ) : (
+              <>
+                <SendIcon className={classes.iconOption} />
+                <Typography
+                  variant="body1"
+                  className={clsx(classes.labelOption, overrideLabelClass)}
                 >
-                  {errorMessage}
-                </Alert>
-              )}
-              {success && transferResult && (
-                <Alert
-                  className={classes.alert}
-                  severity="success"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setSuccess(false)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  Done{' '}
-                  <Link
-                    href={`https://jungle.bloks.io/transaction/${transferResult.transaction_id}`}
-                    target="_blank"
-                    rel="noopener"
-                    color="secondary"
-                  >
-                    {transferResult.transaction_id}
-                  </Link>
-                </Alert>
-              )}
-              <form autoComplete="off">
-                <Box className={classes.textFieldWrapper}>
-                  {loadingQr && (
-                    <QrReader
-                      delay={100}
-                      onError={() => {}}
-                      facingMode="rear"
-                      style={{
-                        height: 220,
-                        width: '100%',
-                        backgroundColor: 'grey',
-                        marginBottom: 24
-                      }}
-                      onScan={(value) =>
-                        handleSetField('to', value || payload.to)
-                      }
-                    />
-                  )}
-                  {currentUser.role !== 'lifebank' && (
-                    <>
-                      <Typography variant="h4">{`Tokens to ${
-                        currentUser.role === 'donor' ? 'Redeem' : 'Send'
-                      }:`}</Typography>
-                      <Box className={classes.AddInput}>
-                        <IconButton
-                          aria-label="close"
-                          color="inherit"
-                          size="small"
-                          onClick={() =>
-                            handleSetField('quantity', payload.quantity + 1)
-                          }
-                        >
-                          <AddCircleIcon fontSize="inherit" />
-                        </IconButton>
-                        <TextField
-                          id="quantity"
-                          variant="outlined"
-                          type="number"
-                          readOnly
-                          InputLabelProps={{
-                            shrink: true
-                          }}
-                          value={payload.quantity || 0}
-                          onChange={(event) =>
-                            handleSetField(
-                              'quantity',
-                              parseInt(event.target.value)
-                            )
-                          }
-                        />
-                        <IconButton
-                          aria-label="close"
-                          color="inherit"
-                          size="small"
-                          onClick={() =>
-                            handleSetField('quantity', payload.quantity - 1)
-                          }
-                        >
-                          <RemoveCircleIcon fontSize="inherit" />
-                        </IconButton>
-                      </Box>
-                    </>
-                  )}
-                  <Typography variant="h4">Send to:</Typography>
-
-                  <TextField
-                    id="to"
-                    label="Account"
-                    variant="outlined"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    value={payload.to || ''}
-                    onChange={(event) =>
-                      handleSetField('to', event.target.value)
-                    }
-                    className={classes.textField}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <CameraAltIcon
-                            onClick={() => setLoadingQr(!loadingQr)}
-                          />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                  <TextField
-                    id="memo"
-                    label="Memo"
-                    variant="outlined"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    value={payload.memo || ''}
-                    onChange={(event) =>
-                      handleSetField('memo', event.target.value)
-                    }
-                    className={classes.textField}
-                  />
-                </Box>
-                <Box className={classes.btnWrapper}>
-                  <Button
-                    disabled={
-                      !payload.to ||
-                      !payload.quantity ||
-                      !payload.memo ||
-                      loading
-                    }
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit}
-                  >
-                    {currentUser.role === 'donor' ? 'Redeem' : 'Send'}
-                  </Button>
-                  {loading && <CircularProgress />}
-                </Box>
-                <Box className={classes.cancelBtn}>
-                  <Button
-                    variant="outlined"
-                    color="primary"
+                  Transfer
+                </Typography>
+              </>
+            )}
+          </Box>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={handleOpen}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500
+            }}
+          >
+            <Fade in={open}>
+              <Paper className={classes.paper}>
+                <Box className={classes.closeIcon}>
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
                     onClick={handleOpen}
                   >
-                    Cancel
-                  </Button>
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
                 </Box>
-              </form>
-            </Box>
-          </Paper>
-        </Fade>
-      </Modal>
+                <Box className={classes.bodyWrapper}>
+                  <Typography variant="h1">{`${
+                    currentUser.role === 'donor' ? 'Redeem' : 'Send'
+                  } Life Token`}</Typography>
+                  {errorMessage && (
+                    <Alert
+                      className={classes.alert}
+                      severity="error"
+                      action={
+                        <IconButton
+                          aria-label="close"
+                          color="inherit"
+                          size="small"
+                          onClick={() => setErrorMessage(null)}
+                        >
+                          <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                      }
+                    >
+                      {errorMessage}
+                    </Alert>
+                  )}
+                  {success && transferResult && (
+                    <Alert
+                      className={classes.alert}
+                      severity="success"
+                      action={
+                        <IconButton
+                          aria-label="close"
+                          color="inherit"
+                          size="small"
+                          onClick={() => setSuccess(false)}
+                        >
+                          <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                      }
+                    >
+                      Done{' '}
+                      <Link
+                        href={`https://jungle.bloks.io/transaction/${transferResult.transaction_id}`}
+                        target="_blank"
+                        rel="noopener"
+                        color="secondary"
+                      >
+                        {transferResult.transaction_id}
+                      </Link>
+                    </Alert>
+                  )}
+                  <form autoComplete="off">
+                    <Box className={classes.textFieldWrapper}>
+                      {loadingQr && (
+                        <QrReader
+                          delay={100}
+                          onError={() => {}}
+                          facingMode="rear"
+                          style={{
+                            height: 220,
+                            width: '100%',
+                            backgroundColor: 'grey',
+                            marginBottom: 24
+                          }}
+                          onScan={(value) =>
+                            handleSetField('to', value || payload.to)
+                          }
+                        />
+                      )}
+                      {currentUser.role !== 'lifebank' && (
+                        <>
+                          <Typography variant="h4">{`Tokens to ${
+                            currentUser.role === 'donor' ? 'Redeem' : 'Send'
+                          }:`}</Typography>
+                          <Box className={classes.AddInput}>
+                            <IconButton
+                              aria-label="close"
+                              color="inherit"
+                              size="small"
+                              onClick={() =>
+                                handleSetField('quantity', payload.quantity + 1)
+                              }
+                            >
+                              <AddCircleIcon fontSize="inherit" />
+                            </IconButton>
+                            <TextField
+                              id="quantity"
+                              variant="outlined"
+                              type="number"
+                              readOnly
+                              InputLabelProps={{
+                                shrink: true
+                              }}
+                              value={payload.quantity || 0}
+                              onChange={(event) =>
+                                handleSetField(
+                                  'quantity',
+                                  parseInt(event.target.value)
+                                )
+                              }
+                            />
+                            <IconButton
+                              aria-label="close"
+                              color="inherit"
+                              size="small"
+                              onClick={() =>
+                                handleSetField('quantity', payload.quantity - 1)
+                              }
+                            >
+                              <RemoveCircleIcon fontSize="inherit" />
+                            </IconButton>
+                          </Box>
+                        </>
+                      )}
+                      <Typography variant="h4">Send to:</Typography>
+
+                      <TextField
+                        id="to"
+                        label="Account"
+                        variant="outlined"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        value={payload.to || ''}
+                        onChange={(event) =>
+                          handleSetField('to', event.target.value)
+                        }
+                        className={classes.textField}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <CameraAltIcon
+                                onClick={() => setLoadingQr(!loadingQr)}
+                              />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                      <TextField
+                        id="memo"
+                        label="Memo"
+                        variant="outlined"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        value={payload.memo || ''}
+                        onChange={(event) =>
+                          handleSetField('memo', event.target.value)
+                        }
+                        className={classes.textField}
+                      />
+                    </Box>
+                    <Box className={classes.btnWrapper}>
+                      <Button
+                        disabled={
+                          !payload.to ||
+                          !payload.quantity ||
+                          !payload.memo ||
+                          loading
+                        }
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                      >
+                        {currentUser.role === 'donor' ? 'Redeem' : 'Send'}
+                      </Button>
+                      {loading && <CircularProgress />}
+                    </Box>
+                    <Box className={classes.cancelBtn}>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={handleOpen}
+                      >
+                        Cancel
+                      </Button>
+                    </Box>
+                  </form>
+                </Box>
+              </Paper>
+            </Fade>
+          </Modal>
+        </>
+      )}
     </>
   )
 }
