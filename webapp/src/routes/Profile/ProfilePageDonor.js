@@ -62,6 +62,10 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
           </Link>
         </Typography>
       </Box>
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Email</Typography>
+        <Typography variant="body1">{profile.email || 'N/A'}</Typography>
+      </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Role</Typography>
