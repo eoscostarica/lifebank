@@ -19,8 +19,8 @@ export const SIGNUP_MUTATION = gql`
 `
 
 export const CHECK_USERNAME_MUTATION = gql`
-  mutation($username: String!) {
-    check_username(username: $username) {
+  mutation($role: String!, $username: String!) {
+    check_username(role: $role, username: $username) {
       is_valid
     }
   }

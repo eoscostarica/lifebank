@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
+import { GET_CONTRACTS_QUERY } from '../../gql'
 import RicardianContract from '../../components/RicardianContract'
 
 const useStyles = makeStyles((theme) => ({
@@ -23,9 +27,10 @@ const useStyles = makeStyles((theme) => ({
       letterSpacing: '0.5px',
       margin: theme.spacing(1, 0, 2, 0)
     },
-    '& h1, & h2': {
+    '& div h1, & div h2': {
       textTransform: 'capitalize',
-      margin: 0
+      margin: 0,
+      fontSize: '2em'
     },
     '& p a': {
       wordBreak: 'break-all'
@@ -39,19 +44,53 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SignupConsent = ({ onSubmit, loading, contract, action }) => {
+const SignupConsent = ({ onSubmit, loading }) => {
   const classes = useStyles()
+  const [tab, setTab] = useState(0)
+  const { data: { lifebankcoin, lifebankcode, consent2life } = {} } = useQuery(
+    GET_CONTRACTS_QUERY
+  )
 
   return (
     <>
-      <Box className={classes.wrapper}>
-        <RicardianContract
-          name={contract.name}
-          hash={contract.hash}
-          abi={contract.abi}
-          action={action}
-        />
-      </Box>
+      <Tabs
+        value={tab}
+        onChange={(event, newValue) => setTab(newValue)}
+        aria-label="simple tabs example"
+      >
+        <Tab label="lifebankcoin" />
+        <Tab label="lifebankcode" />
+        <Tab label="consent2life" />
+      </Tabs>
+      <div className={classes.wrapper}>
+        {tab === 0 && lifebankcoin && (
+          <Box>
+            <RicardianContract
+              name={lifebankcoin.name}
+              hash={lifebankcoin.hash}
+              abi={lifebankcoin.abi}
+            />
+          </Box>
+        )}
+        {tab === 1 && lifebankcode && (
+          <Box>
+            <RicardianContract
+              name={lifebankcode.name}
+              hash={lifebankcode.hash}
+              abi={lifebankcode.abi}
+            />
+          </Box>
+        )}
+        {tab === 2 && consent2life && (
+          <Box>
+            <RicardianContract
+              name={consent2life.name}
+              hash={consent2life.hash}
+              abi={consent2life.abi}
+            />
+          </Box>
+        )}
+      </div>
       <Box className={classes.btnWrapper}>
         <Button variant="contained" color="primary" onClick={onSubmit}>
           I Accept
@@ -64,9 +103,7 @@ const SignupConsent = ({ onSubmit, loading, contract, action }) => {
 
 SignupConsent.propTypes = {
   onSubmit: PropTypes.func,
-  loading: PropTypes.bool,
-  contract: PropTypes.object,
-  action: PropTypes.string
+  loading: PropTypes.bool
 }
 
 SignupConsent.defaultProps = {}

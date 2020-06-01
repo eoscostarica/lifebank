@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, useCallback } from 'react'
-import { useMutation, useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -11,7 +11,6 @@ import { useHistory } from 'react-router-dom'
 import {
   CHECK_USERNAME_MUTATION,
   CREATE_ACCOUNT_MUTATION,
-  GET_CONTRACT_QUERY,
   SIGNUP_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
@@ -96,12 +95,6 @@ const Signup = () => {
     signup,
     { loading: signupLoading, data: { signup: signupResult } = {} }
   ] = useMutation(SIGNUP_MUTATION)
-  const { data: { get_contract: contract = {} } = {} } = useQuery(
-    GET_CONTRACT_QUERY,
-    {
-      variables: { name: 'consent2life' }
-    }
-  )
 
   const handleRoleChange = (role) => {
     setRole(role)
@@ -114,11 +107,6 @@ const Signup = () => {
 
   const handleGoBack = () => {
     activeStep && setActiveStep(activeStep - 1)
-    checkUsername({
-      variables: {
-        username: 'clear'
-      }
-    })
   }
 
   const handleCreateAccount = () => {
@@ -146,6 +134,7 @@ const Signup = () => {
     if (user?.username?.length === 9 || isUsernameValid) {
       checkUsername({
         variables: {
+          role,
           username: user.username
         }
       })
@@ -218,7 +207,7 @@ const Signup = () => {
               <SignupUsername
                 isValid={isUsernameValid}
                 loading={checkUsernameLoading}
-                called={checkUsernameCalled}
+                user={user}
                 setField={handleSetField}
               />
             </SignupDonor>
@@ -261,12 +250,7 @@ const Signup = () => {
                 Read our Terms and Conditions
               </Typography>
               <SignupAccount data={createAccountResult} />
-              <SignupConsent
-                onSubmit={handleSingup}
-                loading={signupLoading}
-                contract={contract}
-                action="consent"
-              />
+              <SignupConsent onSubmit={handleSingup} loading={signupLoading} />
             </>
           )}
         </Box>

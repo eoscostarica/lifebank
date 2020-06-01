@@ -1,5 +1,6 @@
 type Mutation {
   check_username (
+    role: String!
     username: String!
   ): check_username_output
 }
