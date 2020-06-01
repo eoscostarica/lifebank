@@ -1,17 +1,16 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
-import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 
-import LifeBankIcon from '../../components/LifebankIcon'
+import VideoSection from '../../components/VideoSection'
 
 const useStyles = makeStyles((theme) => ({
   contentInfo: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    padding: theme.spacing(3, 1),
+    padding: theme.spacing(2, 1),
     '& svg': {
       fontSize: 50,
       marginBottom: theme.spacing(3)
@@ -23,9 +22,12 @@ const useStyles = makeStyles((theme) => ({
       letterSpacing: '0.5px',
       marginBottom: theme.spacing(2)
     },
-    '& hr': {
+    '& h4': {
       marginBottom: theme.spacing(2)
     }
+  },
+  video: {
+    marginBottom: theme.spacing(2)
   }
 }))
 
@@ -34,9 +36,11 @@ const About = () => {
 
   return (
     <Box className={classes.contentInfo}>
-      <LifeBankIcon color="#000" />
+      <VideoSection
+        src="https://www.youtube.com/embed/lwFhVbifhoM"
+        className={classes.video}
+      />
       <Typography variant="h4">About Lifebank:</Typography>
-      <Divider />
       <Typography variant="body1">
         Lifebank is an EOSIO-based dapp that helps local communities create a
         virtuous circle of value exchange between three parties — eligible life
@@ -51,7 +55,6 @@ const About = () => {
       </Typography>
 
       <Typography variant="h4">The Story Behind Lifebank:</Typography>
-      <Divider />
       <Typography variant="body1">
         We identified two main problems: a blood donation shortage and a local
         economic slowdown. Amid the COVID-19 outbreak, blood banks urgently need
@@ -67,7 +70,6 @@ const About = () => {
       </Typography>
 
       <Typography variant="h4">About Life Tokens:</Typography>
-      <Divider />
       <Typography variant="body1">
         A donor can earn life tokens after completing a blood donation at a
         Lifebank participating donation center. Donation centers can issue a
