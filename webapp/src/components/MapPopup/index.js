@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/styles'
-import Link from '@material-ui/core/Link'
 
 const URGENCY = {
   1: 'Low',
@@ -10,13 +9,16 @@ const URGENCY = {
   3: 'High'
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   popup: {},
   ul: {
     margin: 0
   },
   title: {
     fontWeight: 'bold'
+  },
+  link: {
+    textDecoration: 'none'
   }
 }))
 
@@ -25,27 +27,27 @@ function MapPopup({ id, info, account }) {
   const classes = useStyles()
 
   return (
-    <Box key={id} className={classes.popup}>
+    <Box key={id}>
       <div className={classes.title}>{info.name}</div>
       <div>
         Account:{' '}
-        <Link
+        <a
           href={`https://jungle.bloks.io/account/${account}`}
           target="_blank"
-          rel="noopener"
-          color="secondary"
+          rel="noopener noreferrer"
+          className={classes.link}
         >
           {account}
-        </Link>
+        </a>
       </div>
       <div>
         Phone:{' '}
-        <Link
+        <a
           href={`tel:${info.telephone || info.phone_number}`}
-          color="secondary"
+          className={classes.link}
         >
           {info.telephone || info.phone_number}
-        </Link>
+        </a>
       </div>
       {info.bussines_type && <div>Business type: {info.bussines_type}</div>}
       {info.benefit_description && (
@@ -58,14 +60,14 @@ function MapPopup({ id, info, account }) {
       {info.website && (
         <div>
           Website:{' '}
-          <Link
+          <a
             href={info.website}
             target="_blank"
-            rel="noopener"
-            color="secondary"
+            rel="noopener noreferrer"
+            className={classes.link}
           >
             {info.website}
-          </Link>
+          </a>
         </div>
       )}
       <div>
