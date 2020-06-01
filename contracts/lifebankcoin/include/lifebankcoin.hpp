@@ -65,12 +65,28 @@ public:
                    const name &to,
                    const asset &quantity,
                    const string &memo);
-
+   /**
+   *  TODO:
+   *
+   * @param from - the account to transfer from,
+   * @param to - the account to be transferred to,
+   * @param quantity - the quantity of tokens to be transferred,
+   * @param memo - the memo string to accompany the transaction.
+   */   
    ACTION transferlife(const name &from,
                        const name &to,
                        const asset &quantity,
                        const string &memo);
 
+
+   /**
+   *  TODO:
+   *
+   * @param token_contract_account - TODO:,
+   * @param sym_code - Symbol of the token,
+   * 
+   * @return TODO:.
+   */   
    static asset get_supply(const name &token_contract_account, const symbol_code &sym_code)
    {
       stats statstable(token_contract_account, sym_code.raw());
@@ -78,6 +94,15 @@ public:
       return st.supply;
    }
 
+   /**
+   *  Returns the balance for an account
+   *
+   * @param token_contract_account - TODO:,
+   * @param owner - The contract's owner
+   * @param sym_code - Symbol of the token,
+   * 
+   * @return the contract's balance
+   */  
    static asset get_balance(const name &token_contract_account, const name &owner, const symbol_code &sym_code)
    {
       accounts accountstable(token_contract_account, owner.value);
@@ -92,13 +117,19 @@ public:
 private:
    bool is_valid_transaction(const name &from,
                              const name &to);
+   /*
+      Table for store tha data related with account's balance
+   */
    struct [[eosio::table]] account
    {
       asset balance;
 
       uint64_t primary_key() const { return balance.symbol.code().raw(); }
    };
-
+   
+   /*
+      Table for store tha data related with currencies' stats
+   */
    struct [[eosio::table]] currency_stats
    {
       asset supply;
@@ -115,6 +146,10 @@ private:
    void add_balance(const name &owner, const asset &value, const name &ram_payer);
 };
 
+
+/*
+   Struct for store tha data related with community for inline calls
+*/
 struct community
 {
    eosio::symbol symbol;
@@ -132,6 +167,10 @@ struct community
 
 typedef eosio::multi_index<eosio::name{"community"}, community> communities_table;
 
+
+/*
+   Struct for store tha data related with donors for inline calls
+*/
 struct donor
 {
    eosio::name account;
@@ -143,6 +182,10 @@ struct donor
 };
 typedef multi_index<name("donors"), donor> donors_table;
 
+
+/*
+   Struct for store tha data related with lifebank for inline calls
+*/
 struct lifebank
 {
    eosio::name account;
@@ -155,6 +198,9 @@ struct lifebank
 };
 typedef multi_index<name("lifebanks"), lifebank> lifebanks_table;
 
+/*
+   Struct for store tha data related with sponsors for inline calls
+*/
 struct sponsor
 {
    eosio::name account;
@@ -168,6 +214,9 @@ typedef multi_index<name("sponsors"), sponsor> sponsors_table;
 
 constexpr eosio::name lifebankcode_account{"lifebankcode"_n};
 
+/*
+   Struct for store tha data related with network for inline calls
+*/
 struct network
 {
    uint64_t id;
