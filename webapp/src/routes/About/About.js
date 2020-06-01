@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    padding: theme.spacing(3, 1),
+    padding: theme.spacing(2, 1),
     '& svg': {
       fontSize: 50,
       marginBottom: theme.spacing(3)
@@ -37,7 +37,7 @@ const About = () => {
   return (
     <Box className={classes.contentInfo}>
       <VideoSection
-        src="https://www.youtube.com/embed/saZnZqJsMhk"
+        src="https://www.youtube.com/embed/lwFhVbifhoM"
         className={classes.video}
       />
       <Typography variant="h4">About Lifebank:</Typography>
