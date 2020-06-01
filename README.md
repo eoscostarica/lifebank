@@ -105,7 +105,7 @@ Lifebank helps local communities create a virtuous circle of value exchange betw
 
 ### Watch the Video
 
-[![LifeBank - EOSIO Virtual Hackathon Project](http://img.youtube.com/vi/lwFhVbifhoM/0.jpg)](https://youtu.be/uXeJ26F8SXI "LifeBank - EOSIO Virtual Hackathon Project")
+[![LifeBank - EOSIO Virtual Hackathon Project](http://img.youtube.com/vi/lwFhVbifhoM/0.jpg)](https://youtu.be/tgbZWs5vE5s "LifeBank - EOSIO Virtual Hackathon Project")
 
 **Glossary:**
 
