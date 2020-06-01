@@ -112,9 +112,16 @@ const ProfilePageSponsor = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Balance</Typography>
-        <Typography variant="body1" className={classes.secondaryText}>
-          {profile.balance[0]}
-        </Typography>
+        <Link
+          href={`https://jungle.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
+          target="_blank"
+          rel="noopener"
+          color="secondary"
+        >
+          <Typography variant="body1" className={classes.secondaryText}>
+            {profile.balance[0]}
+          </Typography>
+        </Link>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>

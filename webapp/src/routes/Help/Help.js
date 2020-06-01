@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
-    padding: theme.spacing(3, 1)
+    padding: theme.spacing(3, 1),
+    '& p': {
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+      marginTop: theme.spacing(2)
+    }
   },
   boxLinks: {
     display: 'flex',
@@ -38,6 +42,10 @@ const Help = () => {
   return (
     <Box className={classes.contentInfo}>
       <Typography variant="h4">Help</Typography>
+      <Typography variant="body1">
+        Thank you for using Lifebank. Lifebank is still in progress. If you are
+        experiencing any issues, please contact us using the following links:
+      </Typography>
       <Box className={classes.boxLinks}>
         <GitHubIcon />
         <Link
