@@ -12,6 +12,13 @@ title: Add LifeBank Donation Center
 summary: The intent of the `{{ addlifebank }}` action is to register a new donation center in a community.
 icon: https://lifebank.io/icons/multisig.png
 
+<h1 class="contract">uplifebank</h1>
+---
+spec-version: 0.1.0
+title: Update LifeBank Donation Center
+summary: The intent of the `{{ uplifebank }}` action is to update an existing donation center in a community.
+icon: https://lifebank.io/icons/multisig.png
+
 <h1 class="contract">adddonor</h1>
 ---
 spec-version: 0.1.0
@@ -33,9 +40,18 @@ title:  Invites a new account to a given community
 summary: The intent of the `{{ revoke }}` action is to revoke a previous informed consent to a contract by deleting the record.
 icon: https://lifebank.io/icons/multisig.png
 
+<h1 class="contract">unsubscribe</h1>
+---
+spec-version: 0.1.0
+title: Unsubscribe
+summary: The intent of the `{{ unsubscribe }}` action is to delete all table records that belong to a specific account in order for a user to have a way to opt-out.
+icon: https://lifebank.io/icons/admin.png
+
 <h1 class="contract">clear</h1>
 ---
 spec-version: 0.1.0
 title: Clear table
 summary: The intent of the `{{ clear }}` action is to delete all table records and is used for development purposes on test-nets and must not be published to mainnet.
 icon: https://lifebank.io/icons/admin.png
+
+
