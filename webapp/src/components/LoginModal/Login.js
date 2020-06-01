@@ -18,9 +18,43 @@ import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import FingerprintIcon from '@material-ui/icons/Fingerprint'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 
 import { LOGIN_MUTATION } from '../../gql'
 import { useUser } from '../../context/user.context'
+
+const rows = [
+  {
+    account: 'lifebankcare',
+    secrect: 'plasma2020',
+    role: 'LIFE_BANK'
+  },
+  {
+    account: 'spotavernjan',
+    secrect: 'plasma2020',
+    role: 'SPONSOR'
+  },
+  {
+    account: 'spohudsonmkt',
+    secrect: 'plasma2020',
+    role: 'SPONSOR'
+  },
+  {
+    account: 'spowashonjan',
+    secrect: 'plasma2020',
+    role: 'SPONSOR'
+  },
+  {
+    account: 'donadri12345',
+    secrect: 'plasma2020',
+    role: 'DONOR'
+  }
+]
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -55,7 +89,8 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   btnWrapper: {
-    display: 'flex'
+    display: 'flex',
+    marginBottom: theme.spacing(3)
   },
   loginBtn: {
     display: 'flex',
@@ -68,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyWrapper: {
     height: '90%',
+    overflow: 'scroll',
     padding: theme.spacing(0, 2)
   }
 }))
@@ -216,6 +252,29 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                   {loading && <CircularProgress />}
                 </Box>
               </form>
+              <Typography variant="h3">Demo Credentials</Typography>
+              <TableContainer component={Paper}>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Account</TableCell>
+                      <TableCell>Secrect</TableCell>
+                      <TableCell>Role</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map((row, i) => (
+                      <TableRow key={`row-${i}`}>
+                        <TableCell component="th" scope="row">
+                          {row.account}
+                        </TableCell>
+                        <TableCell>{row.secrect}</TableCell>
+                        <TableCell>{row.role}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Box>
           </Paper>
         </Fade>
