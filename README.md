@@ -102,6 +102,8 @@ To align the relevant incentives and accomplish the above, we created **Lifebank
 
 Lifebank helps local communities create a virtuous circle of value exchange between three parties — an **eligible donor, a donation center and a sponsor.** 
 
+### Watch the Video
+
 [![LifeBank - EOSIO Virtual Hackathon Project](http://img.youtube.com/vi/lwFhVbifhoM/0.jpg)](http://www.youtube.com/watch?v=lwFhVbifhoM "LifeBank - EOSIO Virtual Hackathon Project")
 
 **Glossary:**
@@ -192,7 +194,7 @@ The register page creates a blockchain account and should help handle key manage
 
 ## How we built it?
 
-Lifebank uses the following technology to create a virtuous circle of value exchange between the three parties — a **donor user , a donation center and a sponsor.** 
+Lifebank uses the following technology to create a virtuous circle of value exchange between the three parties — a **donor user, a donation center and a sponsor.** 
 
 ### How to run Lifebank locally
 
@@ -238,11 +240,13 @@ We are running webapp and backend services on our own servers on premises in Cos
 
 ### Accomplishments that we've proud of
 
-- ...
+- Team dynamics and extra effort
+- Use of top-notch technologies
+
 
 ### What we learned
 
-- ...
+- Learned more about creating a custom token contract with unique governance rules.
 
 ## What's next for Lifebank.io
 
@@ -251,6 +255,7 @@ Lifebank takes a on a life of its own!
 ### For future releases:
 
 - Set expiry options to a given token
+- Introduce LifeBanl demand for blood types
 - Allow sponsors to sell life tokens to local charities at an set price.
 - Track financial donations and issue certain life tokens for those donations.
 - The tracked donation funds would represent the financial demand for life tokens while the outstanding life tokens in the community would represent the supply.
