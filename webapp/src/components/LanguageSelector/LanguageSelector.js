@@ -45,10 +45,6 @@ const LanguageSelector = ({ alt }) => {
     {
       value: 'en',
       label: 'English'
-    },
-    {
-      value: 'es',
-      label: 'Español'
     }
   ]
 

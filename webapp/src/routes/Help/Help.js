@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     '& a': {
       '&:hover': {
         textDecoration: 'none'
+      },
+      '& p': {
+        marginTop: 0
       }
     },
     '& svg': {
