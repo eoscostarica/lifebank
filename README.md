@@ -255,7 +255,7 @@ Lifebank takes a on a life of its own!
 ### For future releases:
 
 - Set expiry options to a given token
-- Introduce LifeBanl demand for blood types
+- Introduce LifeBank demand for blood types
 - Allow sponsors to sell life tokens to local charities at an set price.
 - Track financial donations and issue certain life tokens for those donations.
 - The tracked donation funds would represent the financial demand for life tokens while the outstanding life tokens in the community would represent the supply.
