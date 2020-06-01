@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyWrapper: {
     height: '90%',
+    overflow: 'scroll',
     padding: theme.spacing(0, 2),
     '& h1': {
       fontSize: 48,
@@ -279,14 +280,16 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                           onError={() => {}}
                           facingMode="rear"
                           style={{
-                            height: 220,
+                            height: 300,
                             width: '100%',
                             backgroundColor: 'grey',
                             marginBottom: 24
                           }}
-                          onScan={(value) =>
+                          onScan={(value) => {
+                            if (!value) return
                             handleSetField('to', value || payload.to)
-                          }
+                            setLoadingQr(!loadingQr)
+                          }}
                         />
                       )}
                       {currentUser.role !== 'lifebank' && (
