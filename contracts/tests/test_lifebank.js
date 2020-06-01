@@ -19,7 +19,7 @@ const { Api, JsonRpc, RpcError } = require('eosjs');
 const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig');      // development only
 const fetch = require('node-fetch');                                    // node only; not needed in browsers
 const { TextEncoder, TextDecoder } = require('util');                   // node only; native TextEncoder/Decoder
-const lifebank_priv_key='5KQ...FD3'; // the priv key for EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+const lifebank_priv_key='5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'; // the priv key for EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
 
 const BLOOD_MIN_VAL = 0; //min value for blood_urgency_level
 const BLOOD_MAX_VAL = 4; // max value for blood_urgency_level
@@ -31,33 +31,6 @@ const get = require('lodash.get')
 var chai = require('chai'),assert = chai.assert;
 
 describe ('Lifebank unit test', function(){
-   
-    it('contract: consent2life testing consent good parameters',async () => {
-        try {
-            const result = await api.transact({
-                actions: [{
-                  account: 'consent2life',
-                  name: 'consent',
-                  authorization: [{
-                    actor: 'consent2life',
-                    permission: 'active',
-                  }],
-                  data: {
-                    user: 'consent2life',
-                    contract: 'consent2life',
-                    hash: 'c27474851c08b81e0c02e2383f52d62f58860be5ad60cb6d6606393e8f9b6607'
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-            console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-          }
-    });
 
     it('contract: consent2life testing consent wrong auth',async () => {
         try {
@@ -179,8 +152,7 @@ describe ('Lifebank unit test', function(){
           }
     });
 
-   
-     it('contract: lifebankcode testing createcmm ',async () => {
+    it('contract: lifebankcode testing createcmm ',async () => {
         try {
             
             const result = await api.transact({
@@ -289,7 +261,7 @@ describe ('Lifebank unit test', function(){
                     permission: 'active',
                   }],
                   data: {
-                    account: 'lifebankcode',
+                    account: 'lifebank1111',
                     lifebank_name: 'Lifebank name1',
                     description: 'Bank of description',
                     address: 'https://eoscostarica.io/',
@@ -307,7 +279,6 @@ describe ('Lifebank unit test', function(){
                 expireSeconds: 30,
               });
           } catch (err) {
-            //console.log('\nCaught exception: ' + err); 
             let errorMessage =  get(err, 'json.error.details[0].message')
             errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
             assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
@@ -315,21 +286,146 @@ describe ('Lifebank unit test', function(){
           }
     });
 
-    it('Creating consent for lifebankcode account',async () => {
+    it('Creating consent for lifebank1111 account',async () => {
         try {
             const result = await api.transact({
                 actions: [{
                   account: 'consent2life',
                   name: 'consent',
                   authorization: [{
+                    actor: 'lifebank1111',
+                    permission: 'active',
+                  }],
+                  data: {
+                    user: 'lifebank1111',
+                    contract: 'lifebankcode',
+                    //http://emn178.github.io/online-tools/sha256.html for hash value 'lifebank1111lifebankcode' as input
+                    hash: '2ccad427228bae530d3afba0150a3f105b7fe9d9d095e15d8380d597badbe48a'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err);
+          if (err instanceof RpcError)
+            console.log(JSON.stringify(err.json, null, 2));
+          }
+    });
+
+    it('contract: lifebankcode testing addlifebank with consent',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'addlifebank',
+                  authorization: [{
                     actor: 'lifebankcode',
                     permission: 'active',
                   }],
                   data: {
-                    user: 'lifebankcode',
+                    account: 'lifebank1111',
+                    lifebank_name: 'Lifebank name1',
+                    description: 'Bank of description',
+                    address: 'https://eoscostarica.io/',
+                    location:'https://eoscostarica.io/',
+                    phone_number:'+(506)1111111',
+                    has_immunity_test: true,
+                    blood_urgency_level: 1,
+                    schedule: 'schedule',
+                    community_asset:'1 BLOOD',
+                    email:'hello@email.com'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err); 
+          }
+    });
+
+    it('Revoke consent for lifebank1111 account',async () => {
+        try {
+            const result = await api.transact({
+                actions: [{
+                  account: 'consent2life',
+                  name: 'revoke',
+                  authorization: [{
+                    actor: 'lifebank1111',
+                    permission: 'active',
+                  }],
+                  data: {
+                    user: 'lifebank1111',
+                    contract: 'lifebankcode'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err);
+          if (err instanceof RpcError)
+            console.log(JSON.stringify(err.json, null, 2));
+          }
+    });
+    
+     it('contract: lifebankcode testing addlifebank with revoked consent',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'addlifebank',
+                  authorization: [{
+                    actor: 'lifebankcode',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'lifebank1111',
+                    lifebank_name: 'Lifebank name1',
+                    description: 'Bank of description',
+                    address: 'https://eoscostarica.io/',
+                    location:'https://eoscostarica.io/',
+                    phone_number:'+(506)1111111',
+                    has_immunity_test: true,
+                    blood_urgency_level: 1,
+                    schedule: 'schedule',
+                    community_asset:'1 BLOOD',
+                    email:'hello@email.com'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            let errorMessage =  get(err, 'json.error.details[0].message')
+            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            assert.equal(errorMessage, 'Account does not have consent for lifebankcode')
+          }
+    });
+
+    it('Returning consent for lifebank1111 account',async () => {
+        try {
+            const result = await api.transact({
+                actions: [{
+                  account: 'consent2life',
+                  name: 'consent',
+                  authorization: [{
+                    actor: 'lifebank1111',
+                    permission: 'active',
+                  }],
+                  data: {
+                    user: 'lifebank1111',
                     contract: 'lifebankcode',
-                    //http://emn178.github.io/online-tools/sha256.html for hash value
-                    hash: '24fc611af2dd7fb765d939562fe5568c563e80c811a2b35f4e20777c9badc278'
+                    //http://emn178.github.io/online-tools/sha256.html for hash value 'lifebank1111lifebankcode' as input
+                    hash: '2ccad427228bae530d3afba0150a3f105b7fe9d9d095e15d8380d597badbe48a'
                   },
                 }]
               }, {
@@ -356,7 +452,7 @@ describe ('Lifebank unit test', function(){
                       permission: 'active',
                     }],
                     data: {
-                      account: 'lifebankcode',
+                      account: 'lifebank1111',
                       lifebank_name: 'Lifebank name'+i,
                       description: 'Bank of description',
                       address: 'https://eoscostarica.io/',
@@ -392,7 +488,7 @@ describe ('Lifebank unit test', function(){
                       permission: 'active',
                     }],
                     data: {
-                      account: 'lifebankcode',
+                      account: 'lifebank1111',
                       lifebank_name: 'Lifebank name'+i,
                       description: 'Bank of description',
                       address: 'https://eoscostarica.io/',
@@ -429,7 +525,7 @@ describe ('Lifebank unit test', function(){
                       permission: 'active',
                     }],
                     data: {
-                      account: 'lifebankcode',
+                      account: 'lifebank1111',
                       lifebank_name: 'Lifebank name'+i,
                       description: 'Bank of description',
                       address: 'https://eoscostarica.io/',
@@ -454,31 +550,100 @@ describe ('Lifebank unit test', function(){
             assert.equal(errorMessage, 'blood urgency level is out of range')
           }
     });
-    
 
-    it('contract: lifebankcode testing addlifebank ',async () => {
+
+    it('contract: lifebankcode testing addsponsor  without consent',async () => {
         try {
             
             const result = await api.transact({
                 actions: [{
                   account: 'lifebankcode',
-                  name: 'addlifebank',
+                  name: 'addsponsor',
                   authorization: [{
-                    actor: 'lifebankcode',
+                    actor: 'sponsor11111',
                     permission: 'active',
                   }],
                   data: {
-                    account: 'lifebankcode',
-                    lifebank_name: 'Lifebank name1',
-                    description: 'Bank of description',
-                    address: 'https://eoscostarica.io/',
-                    location:'https://eoscostarica.io/',
-                    phone_number:'+(506)1111111',
-                    has_immunity_test: true,
-                    blood_urgency_level: 1,
-                    schedule: 'schedule',
+                    account: 'sponsor11111',
+                    sponsor_name: 'Sponsor Name',
+                    covid_impact: 'high',
+                    benefit_description:'plasma producer',
+                    website:'https://eoscostarica.io/',
+                    telephone:'+(506)111111',
+                    bussines_type:'it',
+                    schedule:'schedule',
+                    email:'hello@email.com',
                     community_asset:'1 BLOOD',
-                    email:'hello@email.com'
+                    location: 'Costa Rica'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            //console.log('\nCaught exception: ' + err);
+            let errorMessage =  get(err, 'json.error.details[0].message')
+            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
+            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
+            assert.equal(errorMessage, 'Account does not have consent for lifebankcode')
+            
+          }
+    }); 
+
+    it('Creating consent for sponsor11111 account',async () => {
+        try {
+            const result = await api.transact({
+                actions: [{
+                  account: 'consent2life',
+                  name: 'consent',
+                  authorization: [{
+                    actor: 'sponsor11111',
+                    permission: 'active',
+                  }],
+                  data: {
+                    user: 'sponsor11111',
+                    contract: 'lifebankcode',
+                    //http://emn178.github.io/online-tools/sha256.html for hash value 'sponsor11111lifebankcode' as input
+                    hash: 'ac11dce9db1ceaabccd45986e53af537ce46ff258788148aa228708829178609'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception: ' + err);
+          if (err instanceof RpcError)
+            console.log(JSON.stringify(err.json, null, 2));
+          }
+    });  
+
+
+
+    it('contract: lifebankcode testing addsponsor  with consent',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'addsponsor',
+                  authorization: [{
+                    actor: 'sponsor11111',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'sponsor11111',
+                    sponsor_name: 'Sponsor Name',
+                    covid_impact: 'high',
+                    benefit_description:'plasma producer',
+                    website:'https://eoscostarica.io/',
+                    telephone:'+(506)111111',
+                    bussines_type:'it',
+                    schedule:'schedule',
+                    email:'hello@email.com',
+                    community_asset:'1 BLOOD',
+                    location: 'Costa Rica'
                   },
                 }]
               }, {
@@ -488,10 +653,9 @@ describe ('Lifebank unit test', function(){
           } catch (err) {
             console.log('\nCaught exception: ' + err); 
           }
-    });
+      }); 
 
-
-    it('contract: lifebankcode testing adddonor wrong community asset',async () => {
+      it('contract: lifebankcode testing adddonor without consent',async () => {
         try {
             
             const result = await api.transact({
@@ -499,13 +663,12 @@ describe ('Lifebank unit test', function(){
                   account: 'lifebankcode',
                   name: 'adddonor',
                   authorization: [{
-                    actor: 'lifebankcode',
+                    actor: 'donor1111111',
                     permission: 'active',
                   }],
                   data: {
-                    account: 'lifebankcode',
-                    donor_name: 'Donor Name',
-                    community_asset: '2 NOTHING'
+                    account: 'donor1111111',
+                    community_asset: '1 BLOOD'
                   },
                 }]
               }, {
@@ -513,26 +676,30 @@ describe ('Lifebank unit test', function(){
                 expireSeconds: 30,
               });
           } catch (err) {
+            //console.log('\nCaught exception: ' + err); 
             let errorMessage =  get(err, 'json.error.details[0].message')
             errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
             assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
-            assert.equal(errorMessage, "can't find any community with given asset")
+            assert.equal(errorMessage, 'Account does not have consent for lifebankcode')
           }
     });
-/*
-      it('Revoke consent for lifebankcode account',async () => {
+
+
+      it('Creating consent for donor1111111 account',async () => {
         try {
             const result = await api.transact({
                 actions: [{
                   account: 'consent2life',
                   name: 'consent',
                   authorization: [{
-                    actor: 'lifebankcode',
+                    actor: 'donor1111111',
                     permission: 'active',
                   }],
                   data: {
-                    user: 'lifebankcode',
-                    contract: 'lifebankcode'
+                    user: 'donor1111111',
+                    contract: 'lifebankcode',
+                    //http://emn178.github.io/online-tools/sha256.html for hash value 'donor1111111lifebankcode' as input
+                    hash: '9f289531b73796244f9c0abaa9da20d40ba967c8cdd0cab3f830a8767863dce3'
                   },
                 }]
               }, {
@@ -546,35 +713,7 @@ describe ('Lifebank unit test', function(){
           }
     });
 
-    it('Creating consent for lifebankcode account',async () => {
-        try {
-            const result = await api.transact({
-                actions: [{
-                  account: 'consent2life',
-                  name: 'consent',
-                  authorization: [{
-                    actor: 'lifebankcode',
-                    permission: 'active',
-                  }],
-                  data: {
-                    user: 'lifebankcode',
-                    contract: 'lifebankcode',
-                    //http://emn178.github.io/online-tools/sha256.html for hash value
-                    hash: '24fc611af2dd7fb765d939562fe5568c563e80c811a2b35f4e20777c9badc278'
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-            console.log('\nCaught exception: ' + err);
-          if (err instanceof RpcError)
-            console.log(JSON.stringify(err.json, null, 2));
-          }
-    });
-*/
-    it('contract: lifebankcode testing adddonor ',async () => {
+      it('contract: lifebankcode testing adddonor with consent ',async () => {
         try {
             
             const result = await api.transact({
@@ -582,12 +721,36 @@ describe ('Lifebank unit test', function(){
                   account: 'lifebankcode',
                   name: 'adddonor',
                   authorization: [{
-                    actor: 'lifebankcode',
+                    actor: 'donor1111111',
                     permission: 'active',
                   }],
                   data: {
-                    account: 'lifebankcode',
-                    donor_name: 'Donor Name',
+                    account: 'donor1111111',
+                    community_asset: '1 BLOOD'
+                  },
+                }]
+              }, {
+                blocksBehind: 3,
+                expireSeconds: 30,
+              });
+          } catch (err) {
+            console.log('\nCaught exception TTTTT: ' + err); 
+          }
+    });
+
+     it('contract: lifebankcode testing adddonor with sponsor account',async () => {
+        try {
+            
+            const result = await api.transact({
+                actions: [{
+                  account: 'lifebankcode',
+                  name: 'adddonor',
+                  authorization: [{
+                    actor: 'sponsor11111',
+                    permission: 'active',
+                  }],
+                  data: {
+                    account: 'sponsor11111',
                     community_asset: '1 BLOOD'
                   },
                 }]
@@ -599,84 +762,9 @@ describe ('Lifebank unit test', function(){
             let errorMessage =  get(err, 'json.error.details[0].message')
             errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
             assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
-            assert.equal(errorMessage, "can't find any community with given asset")
+            assert.equal(errorMessage, 'Account already belogs to sponsor')
           }
     });
-
-    it('contract: lifebankcode testing addsponsor wrong asset ',async () => {
-        try {
-            
-            const result = await api.transact({
-                actions: [{
-                  account: 'lifebankcode',
-                  name: 'addsponsor',
-                  authorization: [{
-                    actor: 'lifebankcode',
-                    permission: 'active',
-                  }],
-                  data: {
-                    account: 'lifebankcode',
-                    sponsor_name: 'Sponsor Name',
-                    covid_impact: 'high',
-                    benefit_description:'plasma producer',
-                    website:'https://eoscostarica.io/',
-                    telephone:'+(506)111111',
-                    bussines_type:'it',
-                    schedule:'schedule',
-                    email:'hello@email.com',
-                    community_asset:'1 NOASSET',
-                    location: 'Costa Rica'
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-            let errorMessage =  get(err, 'json.error.details[0].message')
-            errorMessage && (errorMessage = errorMessage.replace('assertion failure with message:', '').trim())
-            assert.equal('eosio_assert_message_exception', get(err, 'json.error.name') || '')
-            assert.equal(errorMessage, "can't find any community with given asset")
-          }
-    });          
-
-
-    it('contract: lifebankcode testing addsponsor ',async () => {
-        try {
-            
-            const result = await api.transact({
-                actions: [{
-                  account: 'lifebankcode',
-                  name: 'addsponsor',
-                  authorization: [{
-                    actor: 'lifebankcode',
-                    permission: 'active',
-                  }],
-                  data: {
-                    account: 'lifebankcode',
-                    sponsor_name: 'Sponsor Name',
-                    covid_impact: 'high',
-                    benefit_description:'plasma producer',
-                    website:'https://eoscostarica.io/',
-                    telephone:'+(506)111111',
-                    bussines_type:'it',
-                    schedule:'schedule',
-                    email:'hello@email.com',
-                    community_asset:'1 BLOOD',
-                    location: 'Costa Rica'
-                  },
-                }]
-              }, {
-                blocksBehind: 3,
-                expireSeconds: 30,
-              });
-          } catch (err) {
-            console.log('\nCaught exception: ' + err);
-            
-          }
-    });   
-
-                               
-
+                    
  
 });
