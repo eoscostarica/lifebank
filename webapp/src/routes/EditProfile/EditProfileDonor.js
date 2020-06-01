@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -13,17 +14,21 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2)
   },
   textFieldWrapper: {
-    height: 190,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
+  textField: {
+    marginBottom: theme.spacing(2)
+  },
   btnWrapper: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(3)
   },
   boxBtn: {
     width: '100%',
@@ -44,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 const EditProfileDonor = ({ profile, onSubmit, loading }) => {
   const classes = useStyles()
   const [user, setUser] = useState({
-    name: profile.name,
     email: profile.email || ''
   })
 
@@ -56,18 +60,6 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <TextField
-          id="fullname"
-          label="Name"
-          fullWidth
-          variant="outlined"
-          placeholder="Your Full Name"
-          defaultValue={user.name}
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => handleSetField('name', event.target.value)}
-        />
-        <TextField
           id="email"
           label="Email"
           fullWidth
@@ -78,6 +70,7 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
             shrink: true
           }}
           onChange={(event) => handleSetField('email', event.target.value)}
+          className={classes.textField}
         />
       </Box>
       <Box className={classes.btnWrapper}>
@@ -101,6 +94,11 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
         </Box>
         {loading && <CircularProgress />}
       </Box>
+      <Typography variant="body1">
+        We don't request or store any personal information on the blockchain.
+        You may optionally add a full name and email address once you have
+        completed registration.
+      </Typography>
     </form>
   )
 }

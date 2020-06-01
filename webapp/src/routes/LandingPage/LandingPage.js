@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/styles'
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 
+import { useUser } from '../../context/user.context'
 import CustomRouterLink from '../../components/CustomRouterLink'
 import MapShowLocations from '../../components/MapShowLocations'
 
@@ -83,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LandingPage = () => {
   const classes = useStyles()
+  const [currentUser] = useUser()
 
   return (
     <Grid container justify="center">
@@ -107,9 +109,9 @@ const LandingPage = () => {
             variant="contained"
             color="primary"
             component={CustomRouterLink}
-            to="/signup"
+            to={`/${currentUser ? 'profile' : 'signup'}`}
           >
-            Register
+            {currentUser ? 'Profile' : 'Register'}
           </Button>
         </Box>
       </Box>

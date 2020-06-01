@@ -68,13 +68,13 @@ const getDonorData = async account => {
   const { tx } = (await lifebankcodeUtils.getDonor(account)) || {}
   const { donor_name: name } = await getTransactionData(tx)
   const networks = await lifebankcodeUtils.getUserNetworks(account)
-  const comunities = []
+  const communities = []
 
   for (let index = 0; index < networks.length; index++) {
     const comunity = await lifebankcodeUtils.getComunity(
       networks[index].community
     )
-    comunities.push(comunity.community_name)
+    communities.push(comunity.community_name)
   }
 
   const consent = await consent2lifeUtils.getConsent(
@@ -89,7 +89,7 @@ const getDonorData = async account => {
   return {
     email,
     name,
-    comunities,
+    communities,
     balance,
     consent: !!consent
   }
@@ -114,13 +114,13 @@ const getSponsorData = async account => {
   const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
   const { sponsor_name: name, ...profile } = await getTransactionData(tx)
   const networks = await lifebankcodeUtils.getUserNetworks(account)
-  const comunities = []
+  const communities = []
 
   for (let index = 0; index < networks.length; index++) {
     const comunity = await lifebankcodeUtils.getComunity(
       networks[index].community
     )
-    comunities.push(comunity.community_name)
+    communities.push(comunity.community_name)
   }
 
   const consent = await consent2lifeUtils.getConsent(
@@ -131,7 +131,7 @@ const getSponsorData = async account => {
 
   return {
     ...profile,
-    comunities,
+    communities,
     balance,
     name,
     consent: !!consent

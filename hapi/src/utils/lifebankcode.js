@@ -3,7 +3,7 @@ const eosUtil = require('./eos')
 const CONTRACT_NAME = 'lifebankcode' // @todo: use ENV
 const COMMUNITY_ASSET = '0 LIFE' // @todo: use ENV
 
-const addDonor = (account, password, { name }) => {
+const addDonor = (account, password) => {
   return eosUtil.transact(
     [
       {
@@ -17,7 +17,6 @@ const addDonor = (account, password, { name }) => {
         name: 'adddonor',
         data: {
           account,
-          donor_name: name,
           community_asset: COMMUNITY_ASSET
         }
       }

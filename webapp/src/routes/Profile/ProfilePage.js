@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const ProfilePage = () => {
   const classes = useStyles()
   const [snackbarState, setSnackbarState] = useState({})
+  const [lastNotification, setLastNotification] = useState()
   const [currentUser] = useUser()
   const [
     loadProfile,
@@ -97,21 +98,34 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (
+      !profile ||
       !notification?.length ||
-      !profile?.balance ||
+      notification[0]?.id === lastNotification?.id
+    ) {
+      return
+    }
+
+    if (
       notification[0]?.payload.newBalance.join() === profile?.balance.join()
     ) {
       return
     }
 
+    setLastNotification(notification[0])
+    loadProfile()
+  }, [notification, profile, lastNotification, loadProfile])
+
+  useEffect(() => {
+    if (!lastNotification) {
+      return
+    }
+
     setSnackbarState({
       open: true,
-      title: notification[0].title,
-      description: notification[0].description
+      title: lastNotification.title,
+      description: lastNotification.description
     })
-
-    loadProfile()
-  }, [notification, profile, loadProfile])
+  }, [lastNotification])
 
   return (
     <Box className={classes.wrapper}>

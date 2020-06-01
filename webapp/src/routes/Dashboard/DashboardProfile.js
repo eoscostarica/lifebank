@@ -37,7 +37,7 @@ const Products = () => {
               <Typography variant="body1">{profile.role}</Typography>
               <Typography variant="h4">Community</Typography>
               <Typography variant="body1">
-                {profile.comunities.join(', ') || 'N/A'}
+                {profile.communities.join(', ') || 'N/A'}
               </Typography>
               <Typography variant="h4">Fullname</Typography>
               <Typography variant="body1">{profile.fullname}</Typography>

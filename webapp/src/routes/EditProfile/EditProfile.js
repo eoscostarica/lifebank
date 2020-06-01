@@ -96,13 +96,16 @@ const EditProfilePage = () => {
     profile?.consent ? revokeConsent() : grantConsent()
   }
 
-  const handleUpdateUser = useCallback((userEdited) => {
-    editProfile({
-      variables: {
-        profile: userEdited
-      }
-    })
-  }, [])
+  const handleUpdateUser = useCallback(
+    (userEdited) => {
+      editProfile({
+        variables: {
+          profile: userEdited
+        }
+      })
+    },
+    [editProfile]
+  )
 
   useEffect(() => {
     if (!currentUser) {
@@ -110,13 +113,13 @@ const EditProfilePage = () => {
     }
 
     loadProfile()
-  }, [currentUser])
+  }, [currentUser, loadProfile])
 
   useEffect(() => {
     if (grantConsentResult || revokeConsentResult) {
       loadProfile()
     }
-  }, [grantConsentResult, revokeConsentResult])
+  }, [grantConsentResult, revokeConsentResult, loadProfile])
 
   useEffect(() => {
     if (!editProfileResult) return
@@ -129,7 +132,7 @@ const EditProfilePage = () => {
     } else if (!success) {
       setShowAlert({ error: true, success: false })
     }
-  }, [editProfileResult])
+  }, [editProfileResult, loadProfile])
 
   return (
     <Box className={classes.wrapper}>
