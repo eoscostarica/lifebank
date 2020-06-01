@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     marginBottom: theme.spacing(2)
+  },
+  text: {
+    padding: theme.spacing(0, 2)
   }
 }))
 
@@ -195,7 +198,14 @@ const Signup = () => {
             </>
           )}
           {activeStep === 1 && (
-            <Typography variant="h4">Create a new account.</Typography>
+            <>
+              <Typography variant="h4">Create a new account.</Typography>
+              <Typography variant="body1" className={classes.text}>
+                To sign up all you need is to pick a 9 letter username and a
+                password, a unique blockchain account name will be generated
+                you.
+              </Typography>
+            </>
           )}
           {activeStep === 1 && role === 'donor' && (
             <SignupDonor

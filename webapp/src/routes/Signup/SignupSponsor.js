@@ -29,7 +29,8 @@ const {
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%',
-    padding: theme.spacing(0, 2)
+    padding: theme.spacing(0, 2),
+    marginTop: theme.spacing(3)
   },
   textFieldWrapper: {
     height: '100%',

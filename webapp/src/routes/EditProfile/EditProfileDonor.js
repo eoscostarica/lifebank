@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -13,17 +14,21 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2)
   },
   textFieldWrapper: {
-    height: 190,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
+  textField: {
+    marginBottom: theme.spacing(2)
+  },
   btnWrapper: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(3)
   },
   boxBtn: {
     width: '100%',
@@ -65,6 +70,7 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
             shrink: true
           }}
           onChange={(event) => handleSetField('email', event.target.value)}
+          className={classes.textField}
         />
       </Box>
       <Box className={classes.btnWrapper}>
@@ -88,6 +94,11 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
         </Box>
         {loading && <CircularProgress />}
       </Box>
+      <Typography variant="body1">
+        We don't request or store any personal information on the blockchain.
+        You may optionally add a full name and email address once you have
+        completed registration.
+      </Typography>
     </form>
   )
 }
