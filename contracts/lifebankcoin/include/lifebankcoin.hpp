@@ -44,9 +44,9 @@ public:
    ACTION create(const name &issuer,
                  const asset &maximum_supply);
    /**
-   *  This action issues to `to` account a `quantity` of tokens.
-   *
-   * @param to - the account to issue tokens to, it must be the same as the issuer,
+   *  This action issues to `to` account a `quantity` of tokens and make a in-line action to transfer
+   * @param lifebank - lifebank account to issue tokens to,
+   * @param to - donor account to transfer tokens to, it must be the same as the issuer,
    * @param quntity - the amount of tokens to be issued,
    * @memo - the memo string that accompanies the token issue transaction.
    */
@@ -66,18 +66,19 @@ public:
                    const asset &quantity,
                    const string &memo);
    /**
-   *  TODO:
+   *  Contract only
+   *  For in-line action
+   *  Allow transfer tokens to donor account
    *
    * @param from - the account to transfer from,
    * @param to - the account to be transferred to,
    * @param quantity - the quantity of tokens to be transferred,
    * @param memo - the memo string to accompany the transaction.
-   */   
+   */
    ACTION transferlife(const name &from,
                        const name &to,
                        const asset &quantity,
                        const string &memo);
-
 
    /**
    *  TODO:
@@ -85,8 +86,8 @@ public:
    * @param token_contract_account - TODO:,
    * @param sym_code - Symbol of the token,
    * 
-   * @return TODO:.
-   */   
+   * @return current supply
+   */
    static asset get_supply(const name &token_contract_account, const symbol_code &sym_code)
    {
       stats statstable(token_contract_account, sym_code.raw());
@@ -102,7 +103,7 @@ public:
    * @param sym_code - Symbol of the token,
    * 
    * @return the contract's balance
-   */  
+   */
    static asset get_balance(const name &token_contract_account, const name &owner, const symbol_code &sym_code)
    {
       accounts accountstable(token_contract_account, owner.value);
@@ -126,7 +127,7 @@ private:
 
       uint64_t primary_key() const { return balance.symbol.code().raw(); }
    };
-   
+
    /*
       Table for store tha data related with currencies' stats
    */
@@ -145,7 +146,6 @@ private:
    void sub_balance(const name &owner, const asset &value);
    void add_balance(const name &owner, const asset &value, const name &ram_payer);
 };
-
 
 /*
    Struct for store tha data related with community for inline calls
@@ -167,7 +167,6 @@ struct community
 
 typedef eosio::multi_index<eosio::name{"community"}, community> communities_table;
 
-
 /*
    Struct for store tha data related with donors for inline calls
 */
@@ -181,7 +180,6 @@ struct donor
                     (account)(tx));
 };
 typedef multi_index<name("donors"), donor> donors_table;
-
 
 /*
    Struct for store tha data related with lifebank for inline calls
