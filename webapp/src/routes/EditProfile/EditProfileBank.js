@@ -55,7 +55,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     '& .MuiTextField-root': {
       width: 65,
-      margin: '0px !important'
+      margin: '0px !important',
+      '& input': {
+        textAlign: 'center'
+      }
     },
     '& h4': {
       letterSpacing: '0.25px',
@@ -65,6 +68,19 @@ const useStyles = makeStyles((theme) => ({
   text: {
     color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
     margin: theme.spacing(2, 0)
+  },
+  markLabel: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    '& h4': {
+      fontSize: 18
+    }
+  },
+  slider: {
+    padding: theme.spacing(0, 2)
+  },
+  midLabel: {
+    marginLeft: theme.spacing(3)
   }
 }))
 
@@ -83,16 +99,13 @@ const EditProfileBank = ({ profile, onSubmit, loading }) => {
   })
   const marks = [
     {
-      value: 1,
-      label: 'Low'
+      value: 1
     },
     {
-      value: 2,
-      label: 'Medium'
+      value: 2
     },
     {
-      value: 3,
-      label: 'High'
+      value: 3
     }
   ]
   const valueLabelFormat = (value) => {
@@ -146,18 +159,28 @@ const EditProfileBank = ({ profile, onSubmit, loading }) => {
         </Typography>
 
         <Box className={classes.bloodDemand}>
-          <Slider
-            valueLabelDisplay="auto"
-            defaultValue={user.blood_urgency_level}
-            valueLabelFormat={valueLabelFormat}
-            onChange={(event, value) =>
-              handleSetField('blood_urgency_level', value)
-            }
-            marks={marks}
-            step={null}
-            min={1}
-            max={3}
-          />
+          <Box className={classes.markLabel}>
+            <Typography variant="h4">Low</Typography>
+            <Typography variant="h4" className={classes.midLabel}>
+              Medium
+            </Typography>
+            <Typography variant="h4">Urgent</Typography>
+          </Box>
+          <Box className={classes.slider}>
+            <Slider
+              valueLabelDisplay="off"
+              color="secondary"
+              defaultValue={user.blood_urgency_level}
+              valueLabelFormat={valueLabelFormat}
+              onChange={(event, value) =>
+                handleSetField('blood_urgency_level', value)
+              }
+              marks={marks}
+              step={null}
+              min={1}
+              max={3}
+            />
+          </Box>
         </Box>
 
         <Box className={classes.levelReward}>
@@ -165,15 +188,12 @@ const EditProfileBank = ({ profile, onSubmit, loading }) => {
           <TextField
             id="lowLevelReward"
             type="number"
-            fullWidth
+            disabled
             variant="outlined"
             defaultValue={1}
             InputLabelProps={{
               shrink: true
             }}
-            onChange={(event) =>
-              handleSetField('low_leve_reward', event.target.value)
-            }
           />
         </Box>
         <Box className={classes.levelReward}>
@@ -181,15 +201,12 @@ const EditProfileBank = ({ profile, onSubmit, loading }) => {
           <TextField
             id="mediumLevelReward"
             type="number"
-            fullWidth
+            disabled
             variant="outlined"
             defaultValue={2}
             InputLabelProps={{
               shrink: true
             }}
-            onChange={(event) =>
-              handleSetField('mid_leve_reward', event.target.value)
-            }
           />
         </Box>
         <Box className={classes.levelReward}>
@@ -197,15 +214,12 @@ const EditProfileBank = ({ profile, onSubmit, loading }) => {
           <TextField
             id="urgentLevelReward"
             type="number"
-            fullWidth
+            disabled
             variant="outlined"
             defaultValue={3}
             InputLabelProps={{
               shrink: true
             }}
-            onChange={(event) =>
-              handleSetField('urgent_leve_reward', event.target.value)
-            }
           />
         </Box>
       </Box>
