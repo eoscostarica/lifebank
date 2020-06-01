@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import { useLazyQuery } from '@apollo/react-hooks'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import SvgIcon from '@material-ui/core/SvgIcon'
-import Button from '@material-ui/core/Button'
-import SearchIcon from '@material-ui/icons/Search'
-import FavoriteIcon from '@material-ui/icons/Favorite'
+
+import TokenTransfer from '../../components/TokenTransfer'
+import MapModal from '../../components/MapModal'
+import ClaimReward from '../../components/ClaimReward'
+import { useUser } from '../../context/user.context'
+
+import { PROFILE_QUERY } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -13,13 +18,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100%',
     paddingTop: theme.spacing(6),
-    alignItems: 'center'
+    alignItems: 'center',
+    '& button': {
+      marginBottom: theme.spacing(2)
+    }
   },
-  svgRoot: {
-    width: 'auto',
-    fontSize: 172,
-    margin: theme.spacing(3)
-  },
+  svgRoot: { width: 'auto', fontSize: 275 },
   infoLabel: {
     fontSize: 16,
     lineHeight: 1.5,
@@ -30,70 +34,98 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 48
   },
-  labelBtn: {
-    color: theme.palette.white
+  heart: {
+    width: 'auto',
+    fontSize: 275,
+    animation: '$heartbeat 1.4s linear infinite'
   },
-  claimBtn: {
-    backgroundColor: theme.palette.secondary.main,
-    marginTop: theme.spacing(2)
+  '@keyframes heartbeat': {
+    '0%': { transform: 'scale(1)' },
+    '2%': { transform: 'scale(1)' },
+    '4%': { transform: 'scale(1.08)' },
+    '8%': { transform: 'scale(1.1)' },
+    '20%': { transform: 'scale(0.96)' },
+    '24%': { transform: 'scale(1.1)' },
+    '32%': { transform: 'scale(1.08)' },
+    '40%': { transform: 'scale(1)' }
   }
 }))
 
-const EmptyHeartSVG = () => {
+const EmptyHeartSVG = ({ balance }) => {
   const classes = useStyles()
 
   return (
-    <SvgIcon viewBox="0 0 206 206" classes={{ root: classes.svgRoot }}>
-      <defs>
-        <path
-          id="prefix__a"
-          d="M124.625.248C109.69.248 95.355 7.2 86 18.188 76.644 7.2 62.31.247 47.375.247 20.938.248.167 21.02.167 47.456c0 32.445 29.183 58.882 73.387 99.052L86 157.752l12.446-11.33c44.204-40.084 73.387-66.52 73.387-98.966 0-26.436-20.771-47.208-47.208-47.208zm-37.767 133.47l-.858.86-.858-.86C44.285 96.726 17.333 72.263 17.333 47.457c0-17.166 12.875-30.041 30.042-30.041 13.218 0 26.093 8.497 30.642 20.256h16.051c4.464-11.759 17.339-20.256 30.557-20.256 17.167 0 30.042 12.875 30.042 30.041 0 24.806-26.952 49.269-67.809 86.263z"
-        />
-      </defs>
-      <g fill="none" fillRule="evenodd" transform="translate(17 24)">
-        <mask id="prefix__b" fill="#fff">
-          <use href="#prefix__a" />
-        </mask>
-        <g mask="url(#prefix__b)">
-          <path
-            fill="#B71C1C"
-            d="M0 0H206V206H0z"
-            transform="translate(-17 -24)"
-          />
-        </g>
-      </g>
-    </SvgIcon>
+    <svg viewBox="0 0 800 700" className={classes.heart}>
+      <path
+        fill="#B71C1C"
+        d="M514.672,106.17c-45.701,0-88.395,22.526-114.661,59.024c-26.284-36.505-68.981-59.024-114.683-59.024C207.405,106.17,144,169.564,144,247.5c0,94.381,57.64,144.885,124.387,203.358c38.983,34.149,83.17,72.856,119.654,125.332l12.267,17.641l11.854-17.924c35.312-53.388,78.523-91.695,120.305-128.734C596.006,390.855,656,337.654,656,247.5C656,169.564,592.604,106.17,514.672,106.17z M513.143,425.371c-36.93,32.729-78.27,69.373-113.402,117.391c-35.717-46.873-76.089-82.242-112.148-113.834c-63.944-56.01-114.447-100.26-114.447-181.428c0-61.868,50.325-112.186,112.184-112.186c43.196,0,83.034,25.395,101.491,64.697l13.191,28.105l13.19-28.112c18.443-39.303,58.273-64.69,101.472-64.69c61.866,0,112.185,50.317,112.185,112.186C626.856,324.548,576.673,369.047,513.143,425.371z"
+      />
+      {balance && (
+        <>
+          <g transform="translate(150, 200)">
+            <path
+              fill="#B71C1C"
+              d="M 10,30 A 25,22 0,0,1 250,10 A 25,20 0,0,1 480,10 Q 550,80 240,360 Q 10,150 10,30 z"
+            />
+          </g>
+          <text
+            x="50%"
+            y="50%"
+            dominantBaseline="middle"
+            textAnchor="middle"
+            fontSize="200"
+            fontFamily="Roboto"
+            textRendering="geometricPrecision"
+            lengthAdjust="spacingAndGlyphs"
+            fill="#fff"
+          >
+            {balance}
+          </text>
+        </>
+      )}
+    </svg>
   )
 }
 
 const DonationPage = () => {
   const classes = useStyles()
+  const [currentUser] = useUser()
+  const [
+    loadProfile,
+    { data: { profile: { profile } = {} } = {} }
+  ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
+  const tokens = profile?.balance.length
+    ? profile.balance.join(',').split(' ')[0]
+    : 0
+
+  useEffect(() => {
+    if (!currentUser) {
+      return
+    }
+
+    loadProfile()
+  }, [currentUser, loadProfile])
 
   return (
     <Box className={classes.wrapper}>
       <Typography variant="h1" className={classes.title}>
         Your Donations
       </Typography>
-      <EmptyHeartSVG />
+      <EmptyHeartSVG balance={parseInt(tokens)} />
       <Typography variant="body1" className={classes.infoLabel}>
         You have not donated yet.
       </Typography>
-
       <Box className={classes.wrapper}>
-        <Button variant="contained" color="primary" startIcon={<SearchIcon />}>
-          Find Location
-        </Button>
-        <Button
-          className={classes.claimBtn}
-          classes={{ label: classes.labelBtn }}
-          variant="contained"
-          startIcon={<FavoriteIcon />}
-        >
-          Claim Reward
-        </Button>
+        <MapModal useButton />
+        <ClaimReward useButton profile={profile} />
+        <TokenTransfer useButton />
       </Box>
     </Box>
   )
+}
+
+EmptyHeartSVG.propTypes = {
+  balance: PropTypes.any
 }
 
 export default DonationPage

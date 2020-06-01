@@ -18,8 +18,11 @@ import Fade from '@material-ui/core/Fade'
 import SendIcon from '@material-ui/icons/Send'
 import Link from '@material-ui/core/Link'
 import QrReader from 'react-qr-scanner'
-import CropFreeIcon from '@material-ui/icons/CropFree'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import CameraAltIcon from '@material-ui/icons/CameraAlt'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 
 import { useUser } from '../../context/user.context'
 import { TRANSFER_MUTATION } from '../../gql'
@@ -58,7 +61,13 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   btnWrapper: {
-    display: 'flex'
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '& button': {
+      width: '80%'
+    }
   },
   loginBtn: {
     display: 'flex',
@@ -71,11 +80,49 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyWrapper: {
     height: '90%',
-    padding: theme.spacing(0, 2)
+    padding: theme.spacing(0, 2),
+    '& h1': {
+      fontSize: 48,
+      textAlign: 'center',
+      fontWeight: 'normal',
+      lineHeight: '45px',
+      marginBottom: theme.spacing(5)
+    },
+    '& h4': {
+      fontSize: 34,
+      letterSpacing: '0.25',
+      color: theme.palette.secondary.main,
+      fontWeight: 'normal',
+      textAlign: 'center',
+      margin: theme.spacing(2, 0)
+    }
+  },
+  iconOption: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    fontSize: 20
+  },
+  AddInput: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: theme.spacing(3),
+    '& svg': {
+      fontSize: 48
+    },
+    '& .MuiTextField-root': {
+      width: 100,
+      '& input': {
+        textAlign: 'center'
+      }
+    }
+  },
+  cancelBtn: {
+    display: 'flex',
+    margin: theme.spacing(2, 0),
+    justifyContent: 'center'
   }
 }))
 
-const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
+const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
   const classes = useStyles()
   const [currentUser] = useUser()
   const [payload, setPayload] = useState({ quantity: 1 })
@@ -131,13 +178,25 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
         className={clsx(classes.loginBtn, overrideBoxClass)}
         onClick={handleOpen}
       >
-        <SendIcon />
-        <Typography
-          variant="body1"
-          className={clsx(classes.labelOption, overrideLabelClass)}
-        >
-          Transfer
-        </Typography>
+        {useButton ? (
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<ShoppingCartIcon />}
+          >
+            Redeem Token
+          </Button>
+        ) : (
+          <>
+            <SendIcon className={classes.iconOption} />
+            <Typography
+              variant="body1"
+              className={clsx(classes.labelOption, overrideLabelClass)}
+            >
+              Transfer
+            </Typography>
+          </>
+        )}
       </Box>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -164,7 +223,9 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
               </IconButton>
             </Box>
             <Box className={classes.bodyWrapper}>
-              <Typography variant="h3">Token transfer</Typography>
+              <Typography variant="h1">{`${
+                currentUser.role === 'donor' ? 'Redeem' : 'Send'
+              } Life Token`}</Typography>
               {errorMessage && (
                 <Alert
                   className={classes.alert}
@@ -227,6 +288,53 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                       }
                     />
                   )}
+                  {currentUser.role !== 'lifebank' && (
+                    <>
+                      <Typography variant="h4">{`Tokens to ${
+                        currentUser.role === 'donor' ? 'Redeem' : 'Send'
+                      }:`}</Typography>
+                      <Box className={classes.AddInput}>
+                        <IconButton
+                          aria-label="close"
+                          color="inherit"
+                          size="small"
+                          onClick={() =>
+                            handleSetField('quantity', payload.quantity + 1)
+                          }
+                        >
+                          <AddCircleIcon fontSize="inherit" />
+                        </IconButton>
+                        <TextField
+                          id="quantity"
+                          variant="outlined"
+                          type="number"
+                          readOnly
+                          InputLabelProps={{
+                            shrink: true
+                          }}
+                          value={payload.quantity || 0}
+                          onChange={(event) =>
+                            handleSetField(
+                              'quantity',
+                              parseInt(event.target.value)
+                            )
+                          }
+                        />
+                        <IconButton
+                          aria-label="close"
+                          color="inherit"
+                          size="small"
+                          onClick={() =>
+                            handleSetField('quantity', payload.quantity - 1)
+                          }
+                        >
+                          <RemoveCircleIcon fontSize="inherit" />
+                        </IconButton>
+                      </Box>
+                    </>
+                  )}
+                  <Typography variant="h4">Send to:</Typography>
+
                   <TextField
                     id="to"
                     label="Account"
@@ -242,7 +350,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
-                          <CropFreeIcon
+                          <CameraAltIcon
                             onClick={() => setLoadingQr(!loadingQr)}
                           />
                         </InputAdornment>
@@ -262,21 +370,6 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                     }
                     className={classes.textField}
                   />
-                  {currentUser.role !== 'lifebank' && (
-                    <TextField
-                      id="quantity"
-                      label="Quantity"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      value={payload.quantity || ''}
-                      onChange={(event) =>
-                        handleSetField('quantity', parseInt(event.target.value))
-                      }
-                      className={classes.textField}
-                    />
-                  )}
                 </Box>
                 <Box className={classes.btnWrapper}>
                   <Button
@@ -290,9 +383,18 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
                     color="primary"
                     onClick={handleSubmit}
                   >
-                    Send
+                    {currentUser.role === 'donor' ? 'Redeem' : 'Send'}
                   </Button>
                   {loading && <CircularProgress />}
+                </Box>
+                <Box className={classes.cancelBtn}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleOpen}
+                  >
+                    Cancel
+                  </Button>
                 </Box>
               </form>
             </Box>
@@ -305,7 +407,12 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass }) => {
 
 TokenTransfer.propTypes = {
   overrideBoxClass: PropTypes.any,
-  overrideLabelClass: PropTypes.any
+  overrideLabelClass: PropTypes.any,
+  useButton: PropTypes.bool
+}
+
+TokenTransfer.defaultProps = {
+  useButton: false
 }
 
 export default TokenTransfer
