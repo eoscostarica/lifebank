@@ -139,7 +139,15 @@ const generateRandomAccountName = async (prefix = '') => {
 
 const getAbi = account => eosApi.getAbi(account)
 
-const getAccount = account => eosApi.getAccount(account)
+const getAccount = async account => {
+  try {
+    const accountInfo = await eosApi.getAccount(account)
+
+    return accountInfo
+  } catch (error) {
+    return null
+  }
+}
 
 const getCodeHash = account => eosApi.getCodeHash(account)
 

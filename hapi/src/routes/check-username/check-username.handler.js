@@ -1,6 +1,7 @@
 const Boom = require('@hapi/boom')
 const { BAD_REQUEST } = require('http-status-codes')
 
+const { eosUtils } = require('../../utils')
 const { userApi } = require('../../api')
 
 module.exports = async ({ payload: { input } }) => {
@@ -21,10 +22,21 @@ module.exports = async ({ payload: { input } }) => {
       }
     }
 
+    const account = await eosUtils.getAccount(
+      `${input.role.substring(0, 3)}${input.username}`.substring(0, 12)
+    )
+
+    if (account) {
+      return {
+        is_valid: false
+      }
+    }
+
     return {
       is_valid: true
     }
   } catch (error) {
+    console.error(error)
     return Boom.boomify(error, { statusCode: BAD_REQUEST })
   }
 }

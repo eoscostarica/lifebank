@@ -9,6 +9,7 @@ const GET_ONE = `
       secret
       account
       email
+      name
     }
   }
 `
@@ -33,6 +34,14 @@ const SET_EMAIL = `
   }
 `
 
+const SET_NAME = `
+  mutation ($where: user_bool_exp!, $name: String) {
+    update_user(where: $where, _set: { name: $name }) {
+      affected_rows
+    }
+  }
+`
+
 const getOne = async (where = {}) => {
   const { user } = await hasuraUtils.request(GET_ONE, { where })
 
@@ -51,8 +60,13 @@ const setEmail = (where, email) => {
   return hasuraUtils.request(SET_EMAIL, { where, email })
 }
 
+const setName = (where, name) => {
+  return hasuraUtils.request(SET_NAME, { where, name })
+}
+
 module.exports = {
   getOne,
   insert,
-  setEmail
+  setEmail,
+  setName
 }
