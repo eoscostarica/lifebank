@@ -223,7 +223,7 @@ const Signup = () => {
               <SignupUsername
                 isValid={isUsernameValid}
                 loading={checkUsernameLoading}
-                called={checkUsernameCalled}
+                user={user}
                 setField={handleSetField}
               />
             </SignupSponsor>
@@ -239,7 +239,7 @@ const Signup = () => {
               <SignupUsername
                 isValid={isUsernameValid}
                 loading={checkUsernameLoading}
-                called={checkUsernameCalled}
+                user={user}
                 setField={handleSetField}
               />
             </SignupLifeBank>
