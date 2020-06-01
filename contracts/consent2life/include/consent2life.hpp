@@ -1,3 +1,17 @@
+/*
+ * @file
+ * @author  (C) 2020 by eoscostarica [ https://eoscostarica.io ]
+ * @version 1.1.0
+ *
+
+ * @section DESCRIPTION
+ *  Header file for the declaration of all functions related with the consent2life contract
+ *
+ * Smart contract consent2life for  EOSIO blockchains
+ *    WebSite:        https://eoscostarica.io
+ *    GitHub:         https://github.com/eoscostarica
+ *
+ */
 #include <eosio/eosio.hpp>
 #include <eosio/crypto.hpp>
 
@@ -8,13 +22,43 @@ CONTRACT consent2life : public contract
 {
 public:
   using contract::contract;
-
+  /**
+   *
+   *  This action stores a consent within the table userconsents
+   *
+   * @param user - the user account name,
+   * @param contract - the name of the contract,
+   * @param hash - the hash(user+name)
+   *
+   * @pre the hash is calculated with the concatenation of usercontrac as impot
+   * 
+   * @memo  a tool to calculate the hash http://emn178.github.io/online-tools/sha256.html
+   */
   ACTION consent(name user, name contract, checksum256 hash);
+
+  /**
+   *
+   *  This action remove a consent from the table userconsents
+   *
+   * @param user - the user account name,
+   * @param contract - the name of the contract,
+   *
+   */
   ACTION revoke(name user, name contract);
+
+  /**
+   *
+   *  Clear the content of the table userconsents
+   *
+   */
   ACTION clear();
 
 private:
   static checksum256 string_to_hash(const string &input);
+
+  /*
+  * Stores the data related with users' consent
+  */
   TABLE informed_consent
   {
     uint64_t id;
