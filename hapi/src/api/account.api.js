@@ -157,6 +157,8 @@ const grantConsent = async account => {
   )
 
   await historyApi.insert(consentTransaction)
+
+  return consentTransaction
 }
 
 const login = async ({ account, secret }) => {
@@ -197,6 +199,8 @@ const revokeConsent = async account => {
   )
 
   await historyApi.insert(consentTransaction)
+
+  return consentTransaction
 }
 
 const transfer = async (from, details) => {
