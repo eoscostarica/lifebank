@@ -1,3 +1,17 @@
+/*
+ * @file
+ * @author  (C) 2020 by eoscostarica [ https://eoscostarica.io ]
+ * @version 1.1.0
+ *
+
+ * @section DESCRIPTION
+ *  Header file for the declaration of all functions related with the lifebankcoin contract
+ *
+ * Smart contract lifebankcoin for  EOSIO blockchains
+ *    WebSite:        https://eoscostarica.io
+ *    GitHub:         https://github.com/eoscostarica
+ *
+ */
 #pragma once
 
 #include <eosio/asset.hpp>
@@ -17,36 +31,36 @@ public:
    ACTION clear(const asset &current_asset, const name owner);
 
    /**
-          * Allows `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created.
-          *
-          * @param issuer - the account that creates the token,
-          * @param maximum_supply - the maximum supply set for the token created.
-          *
-          * @pre Token symbol has to be valid,
-          * @pre Token symbol must not be already created,
-          * @pre maximum_supply has to be smaller than the maximum supply allowed by the system: 1^62 - 1.
-          * @pre Maximum supply must be positive;
-          */
+   * Allows `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created.
+   *
+   * @param issuer - the account that creates the token,
+   * @param maximum_supply - the maximum supply set for the token created.
+   *
+   * @pre Token symbol has to be valid,
+   * @pre Token symbol must not be already created,
+   * @pre maximum_supply has to be smaller than the maximum supply allowed by the system: 1^62 - 1.
+   * @pre Maximum supply must be positive;
+   */
    ACTION create(const name &issuer,
                  const asset &maximum_supply);
    /**
-          *  This action issues to `to` account a `quantity` of tokens.
-          *
-          * @param to - the account to issue tokens to, it must be the same as the issuer,
-          * @param quntity - the amount of tokens to be issued,
-          * @memo - the memo string that accompanies the token issue transaction.
-          */
+   *  This action issues to `to` account a `quantity` of tokens.
+   *
+   * @param to - the account to issue tokens to, it must be the same as the issuer,
+   * @param quntity - the amount of tokens to be issued,
+   * @memo - the memo string that accompanies the token issue transaction.
+   */
    ACTION issue(const name &lifebank, const name &to, const string &memo);
 
    /**
-          * Allows `from` account to transfer to `to` account the `quantity` tokens.
-          * One account is debited and the other is credited with quantity tokens.
-          *
-          * @param from - the account to transfer from,
-          * @param to - the account to be transferred to,
-          * @param quantity - the quantity of tokens to be transferred,
-          * @param memo - the memo string to accompany the transaction.
-          */
+   * Allows `from` account to transfer to `to` account the `quantity` tokens.
+   * One account is debited and the other is credited with quantity tokens.
+   *
+   * @param from - the account to transfer from,
+   * @param to - the account to be transferred to,
+   * @param quantity - the quantity of tokens to be transferred,
+   * @param memo - the memo string to accompany the transaction.
+   */
    ACTION transfer(const name &from,
                    const name &to,
                    const asset &quantity,
