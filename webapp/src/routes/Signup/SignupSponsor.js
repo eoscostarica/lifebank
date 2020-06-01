@@ -11,6 +11,11 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import MenuItem from '@material-ui/core/MenuItem'
+import InfoIcon from '@material-ui/icons/Info'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
@@ -43,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     margin: theme.spacing(2, 0)
+  },
+  tooltip: {
+    maxWidth: 200,
+    whiteSpace: 'normal'
   }
 }))
 
@@ -56,6 +65,19 @@ const SponsorSignup = ({
 }) => {
   const classes = useStyles()
   const [recaptchaValue, serRecaptchaValue] = useState('')
+  const [openTooltip, setOpenTooltip] = useState(null)
+
+  const handleTooltipClose = (name) => {
+    if (name !== openTooltip) {
+      return
+    }
+
+    setOpenTooltip(null)
+  }
+
+  const handleTooltipOpen = (name) => {
+    setOpenTooltip(name)
+  }
 
   const handleOnGeolocationChange = useCallback(
     (geolocation) => setField('geolocation', geolocation),
@@ -153,7 +175,7 @@ const SponsorSignup = ({
         </Box>
         <TextField
           id="covidImpact"
-          label="Covid Impact"
+          label="Crisis Impact"
           variant="outlined"
           placeholder=""
           InputLabelProps={{
@@ -164,10 +186,42 @@ const SponsorSignup = ({
           fullWidth
           rows={3}
           onChange={(event) => setField('covid_impact', event.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <ClickAwayListener
+                  onClickAway={() => handleTooltipClose('covid_impact')}
+                >
+                  <div>
+                    <Tooltip
+                      PopperProps={{
+                        disablePortal: true
+                      }}
+                      placement="left"
+                      classes={{ tooltip: classes.tooltip }}
+                      onClose={handleTooltipClose}
+                      open={openTooltip === 'covid_impact'}
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                      title="Describe how your business has been affected by the pandemic and how donors can help you."
+                      arrow
+                    >
+                      <IconButton
+                        onClick={() => handleTooltipOpen('covid_impact')}
+                      >
+                        <InfoIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                </ClickAwayListener>
+              </InputAdornment>
+            )
+          }}
         />
         <TextField
           id="benefitDescription"
-          label="Description of benefit"
+          label="Value offer for Token"
           variant="outlined"
           placeholder=""
           InputLabelProps={{
@@ -180,6 +234,38 @@ const SponsorSignup = ({
           onChange={(event) =>
             setField('benefit_description', event.target.value)
           }
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <ClickAwayListener
+                  onClickAway={() => handleTooltipClose('benefit_description')}
+                >
+                  <div>
+                    <Tooltip
+                      PopperProps={{
+                        disablePortal: true
+                      }}
+                      placement="left"
+                      classes={{ tooltip: classes.tooltip }}
+                      onClose={handleTooltipClose}
+                      open={openTooltip === 'benefit_description'}
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                      title="List and describe the promotions and benefits you will be offering in exchange for LIFE tokens."
+                      arrow
+                    >
+                      <IconButton
+                        onClick={() => handleTooltipOpen('benefit_description')}
+                      >
+                        <InfoIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                </ClickAwayListener>
+              </InputAdornment>
+            )
+          }}
         />
         <Typography variant="subtitle2" gutterBottom>
           Choose your location
