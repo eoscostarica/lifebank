@@ -25,9 +25,9 @@
 **EOSIO VIRTUAL HACKATHON [Coding for Change - May 2020](https://hackathon.eos.io/events/coding-for-change/)**
 
 **Table of Contents**  
-
   - [Inspiration](#inspiration)
   - [What is Lifebank?](#what-is-lifebank)
+  - [User Experience](#user-experience)
   - [Sign Up](#sign-up)
   - [How we built it?](#how-we-built-it)
   - [Hackathon Experience](#hackathon-experience)
@@ -102,12 +102,7 @@ To align the relevant incentives and accomplish the above, we created **Lifebank
 
 Lifebank helps local communities create a virtuous circle of value exchange between three parties — an **eligible donor, a donation center and a sponsor.** 
 
-**The Lifebank Value Circle**
-
-
-<p align="center">
-	<img src="./docs/lifebank-value-circle.jpg" width="500">
-</p>
+[![LifeBank - EOSIO Virtual Hackathon Project](http://img.youtube.com/vi/lwFhVbifhoM/0.jpg)](http://www.youtube.com/watch?v=lwFhVbifhoM "LifeBank - EOSIO Virtual Hackathon Project")
 
 **Glossary:**
 
@@ -120,19 +115,16 @@ Lifebank helps local communities create a virtuous circle of value exchange betw
 - Value - economic or community value that sponsors communicate to life donors in order to incentivize the redemption of Life Tokens
 
 
-### Eligible Life Donor Flow
+## User Experience
+
+### Donor User Flow
 
 [![lifebank Value Circle](./docs/donor-user-flow.png)](./docs/donor-user-flow.png)
-
-**[See Donor User Flow on Zeplin](https://zpl.io/a8o9A7X)**
-
-- Potential Life Donor
-- Eligible Life Donor
-
+**[See UX Design Assets on Zeplin](https://zpl.io/a8o9A7X)**
 
 **1) Find a Lifebank and Register**
 
-Using Lifebank.io, a potential life donor can find a community donation center in their area based on their location.  The user will be able to see on a map where the centers are located and also if they have a high demand for a certain blood type.  Once the user sees that there is a demand for their type of blood in close proximity, they can review the terms of use, sign the contract to register for an account, and visit the donation center location. 
+Using Lifebank.io, a potential life donor can find a community donation center in their area based on their location.  The user will be able to see on a map where the centers are located and also if they have a high demand for blood.  Once the user sees that there is a demand for their type of blood in close proximity, they can review the ricardian contracts, sign the contract to register for an account, and visit the donation center location. 
 
 **2) Donate and Receive a Life Token**
 
@@ -140,14 +132,18 @@ Once the potential life donor visits the community donation center, they will ne
 
 If the potential donor is deemed eligible by the donation center, they can proceed with the blood donation and are referred to as eligible life donor. Once completed, the donation center can certify the completion by minting a **life token** valid in their specific community. The donor will receive the life token from the donation center to the QR code displayed through the application.  Once a life token is received in a donor's account,  the life token becomes redeemable with a sponsor.  
 
-**Note:**  A limit cap may be placed on the amount of life tokens each community can have outstanding per time period to prevent abuse. As life tokens are redeemed or expire, the donation center can continue to issue new life tokens. Every registered member of that community may need to approve a cap increase.
+
+| Blood Urgency Level | Tokens Issued |
+|---|---|
+| 1 - Low | 1 |
+| 2 - Medium | 2 |
+| 3 - High | 3 |
+
+**Note:**  A limit of 10,000 LIFE tokes has been placed on the amount of life tokens for each community. 
 
 **3) Redeeming a life token with a sponsor**
 
-An eligible life donor can redeem their life token with a sponsor.  The user can log into the Lifebank app to find the sponsor's general information, opening hours, and what they offer in exchange for a life token.   Once they decide on a sponsor where they would like to redeem the life token, they can go to the physical location or visit their website if the business is an e-commerce enabled business.  At checkout,  the eligible donor will be prompted to transfer the life token to the sponsor to redeem the offer.  Once the transfer is complete, the sponsor provides the offer to the donor, and the life token transfers to the sponsor's account.  Once a donation token receipt is received into a sponsor account, the life token is no longer transferable or redeemable.  
-
-**Note:**  A life token may expire after a specific time frame established by the issuing life bank to incentivize its use during the time of the crisis.  After a life token expires,  it can no longer be transferred and therefore is no longer redeemable with a sponsor.  The life token becomes non-transferable in the donor account to recognize the donation, albeit without the redeemable value in the community. 
-
+An eligible life donor can redeem their life token with a sponsor.  The user can log into the Lifebank app to find the sponsor's general information, opening hours, and what they offer in exchange for a life token.   Once they decide on a sponsor where they would like to redeem the life token, they can go to the physical location or visit their website if the business is an e-commerce enabled business.  At checkout,  the eligible donor will be prompted to transfer the life token to the sponsor to redeem the offer.  Once the transfer is complete, the sponsor provides the offer to the donor, and the life token transfers to the sponsor's account.  Once a donation token receipt is received into a sponsor account, the life token is only transferable to other lifebank accounts.  
 
 
 ### Lifebank User Flow
@@ -156,13 +152,13 @@ An eligible life donor can redeem their life token with a sponsor.  The user can
 **[See Donation Center User Flow on Zeplin](https://zpl.io/amAMKdQ)**
 
 
-1) **Register as a Lifebank and create a ticker**
+1) **Register as a Lifebank**
 
-A donation center, defined in the terms of participation as a center that is regulated and licensed to receive blood donations, can register as a Lifebank using the Lifebank application. The donation center user will be directed from the landing page to register as a Lifebank using their credentials. The donation center user will then need to review and sign the terms of participation in order to create an account and testify that they meet the criteria. Once an account is created, the donation center user may display all the information relevant to receiving donations like location, opening hours, eligibility criteria, etc on their Lifebank profile. The center may also provide current inventory information by blood type and indicate the current demand level. The donation center must indicate the amount of donation token receipts they are currently willing to issue per donation. The donation center may also name a 3-letter ticker by which their donation token receipt will be referred to in their community.  For example, a local donation center in Athens, Georgia may choose to call their Life token as "ATH" as long as the ticker combination is available.  
+A donation center, defined in the terms of participation as a center that is regulated and licensed to receive blood donations, can register as a Lifebank using the Lifebank application. The donation center user will be directed from the landing page to register as a Lifebank using their credentials. The donation center user will then need to review and sign the terms of participation in order to create an account and testify that they meet the criteria. Once an account is created, the donation center user may display all the information relevant to receiving donations like location, opening hours, eligibility criteria, etc on their Lifebank profile.  The donation center must indicate the amount of donation token receipts they are currently willing to issue per donation. 
 
 **2) Verifying a Eligible Life Donor and receiving a qualified blood donation**
 
-Once a potential life donor visits a Lifebank,  they must first pass the qualifying requirements set by each donation center.  This is usually done by a simple questionnaire about the person and medical history.  No information related to the donor will be provided to the Lifebank app.  The donation center representative only needs to indicate from the Lifebank dashboard if the person's account is qualified or not qualified to donate.  If the potential life donor is qualified to donate, they can proceed with a qualified blood donation (QBD) as defined in the terms of participation signed by the donation center.  The potential donor user will now be eligible to receive a life token and be referred to as an eligible life donor.  
+Once a potential life donor visits a Lifebank,  they must first pass the qualifying requirements set by each donation center.  This is usually done by a simple questionnaire about the person and medical history.  No information related to the donor will be provided to the Lifebank app.  If the potential life donor is qualified to donate, they can proceed with a qualified blood donation (QBD) as defined in the terms of participation signed by the donation center.  The potential donor user will now be eligible to receive a life token and be referred to as an eligible life donor.  
 
 3) **Issuing a Life Token and transferring to a Eligible Life Donor**
 
@@ -198,15 +194,25 @@ The register page creates a blockchain account and should help handle key manage
 
 Lifebank uses the following technology to create a virtuous circle of value exchange between the three parties — a **donor user , a donation center and a sponsor.** 
 
+### How to run Lifebank locally
+
+```bash
+git clone git@github.com:eoscostarica/lifebank.git
+cd lifebank
+cp .env.example .env
+make install
+make run
+```
+
 ### App Services
 
 We use **Docker** for all app services
 
-- **Smart Contracts:** EOSIO smart contracts are built from  **C++** code and **Ricardian Contracts**
-- **frontend:** A **React JS** Web Client based that leverages **Material UI**.
-- **hasura** An autogenerated **GraphQL** API based on the **PostgresDB**.
-- **hapi:** A **NodeJS** back end service for account management, wallet service integration and synchronizing blockchain tables with postgreSQL.
-- **wallet:** A **keosd** service is running to store all private keys securely and sign transactions.
+- **[Smart Contracts](./contracts):** EOSIO smart contracts are built from  **C++** code and **Ricardian Contracts**
+- **[frontend](./frontend)::** A **React JS** Web Client based that leverages **Material UI**.
+- **[hasura](./hasura):** An autogenerated **GraphQL** API based on the **PostgresDB**.
+- **[hapi](./hapi)::** A **NodeJS** back end service for account management, wallet service integration and synchronizing blockchain tables with postgreSQL.
+- **[wallet](./wallet)::** A **keosd** service is running to store all private keys securely and sign transactions.
 - **nginx:** Nginx is a web server which is also used as a reverse proxy to route external traffic to the appropriate services.
  **EOSIO Node:** [https://jungle.eosio.cr](https://jungle.eosio.cr/)
 
