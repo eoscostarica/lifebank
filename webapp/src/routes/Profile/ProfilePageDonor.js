@@ -102,9 +102,16 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       <Box height={30} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Tokens</Typography>
-        <Typography variant="body1" className={classes.secondaryText}>
-          {(profile.balance || []).join(', ')}
-        </Typography>
+        <Link
+          href={`https://jungle.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
+          target="_blank"
+          rel="noopener"
+          color="secondary"
+        >
+          <Typography variant="body1" className={classes.secondaryText}>
+            {(profile.balance || []).join(', ')}
+          </Typography>
+        </Link>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
