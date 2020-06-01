@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles'
 import { useLazyQuery } from '@apollo/react-hooks'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import { useHistory } from 'react-router-dom'
 
 import TokenTransfer from '../../components/TokenTransfer'
 import MapModal from '../../components/MapModal'
@@ -90,21 +91,26 @@ const EmptyHeartSVG = ({ balance }) => {
 const DonationPage = () => {
   const classes = useStyles()
   const [currentUser] = useUser()
+  const history = useHistory()
   const [
     loadProfile,
-    { data: { profile: { profile } = {} } = {} }
+    { data: { profile: { profile } = {} } = {}, client }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
+
   const tokens = profile?.balance.length
     ? profile.balance.join(',').split(' ')[0]
     : 0
 
   useEffect(() => {
     if (!currentUser) {
+      client && client.resetStore()
+      history.replace('/')
+
       return
     }
 
     loadProfile()
-  }, [currentUser, loadProfile])
+  }, [currentUser, history, client, loadProfile])
 
   return (
     <Box className={classes.wrapper}>

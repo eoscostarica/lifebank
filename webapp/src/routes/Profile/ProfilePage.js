@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import Link from '@material-ui/core/Link'
+import { useHistory } from 'react-router-dom'
 
 import {
   PROFILE_QUERY,
@@ -57,13 +58,14 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfilePage = () => {
   const classes = useStyles()
+  const history = useHistory()
   const [snackbarState, setSnackbarState] = useState({})
   const [lastNotification, setLastNotification] = useState()
   const [lastConsentChange, setLastConsentChange] = useState()
   const [currentUser] = useUser()
   const [
     loadProfile,
-    { loading, data: { profile: { profile } = {} } = {} }
+    { client, loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
   const [
     revokeConsent,
@@ -90,11 +92,14 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!currentUser) {
+      client && client.resetStore()
+      history.replace('/')
+
       return
     }
 
     loadProfile()
-  }, [currentUser, loadProfile])
+  }, [currentUser, history, client, loadProfile])
 
   useEffect(() => {
     if (
