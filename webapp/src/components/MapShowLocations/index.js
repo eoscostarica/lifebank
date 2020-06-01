@@ -111,7 +111,7 @@ MapShowLocations.propTypes = {
 }
 
 MapShowLocations.defaultProps = {
-  location: { longitude: -84.1132, latitude: 9.9363 }
+  location: { longitude: -74.0030977, latitude: 40.7378021 }
 }
 
 export default MapShowLocations
