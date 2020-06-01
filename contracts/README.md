@@ -6,6 +6,10 @@ There are three smart contracts deployed by lifebank.
 - [Community Contract `lifebankcode`](#community-contract-lifebankcode)
 - [Community Token Contract `lifebankcoin`](#community-token-contract-lifebankcoin)
 
+## Unit Tests 
+
+Unit tests for contract actions can be found here : [Life Bank Smart Contract Unit Tests](./tests)
+
 ### Important
 
 Only `lifebankcode` can create a new community.
