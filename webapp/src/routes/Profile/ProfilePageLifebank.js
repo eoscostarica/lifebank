@@ -76,7 +76,7 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Telephono</Typography>
+        <Typography variant="subtitle1">Telephone</Typography>
         <Typography variant="body1">{profile.phone_number}</Typography>
       </Box>
       <Divider className={classes.divider} />
