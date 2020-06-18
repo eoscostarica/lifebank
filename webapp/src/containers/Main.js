@@ -83,8 +83,6 @@ const Main = ({ children, sidebarContent, topbarContent }) => {
   })
   const isHome = location.pathname === '/'
 
-  console.log({ location })
-
   return (
     <Container
       component="main"
