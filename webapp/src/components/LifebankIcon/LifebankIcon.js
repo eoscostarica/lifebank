@@ -12,11 +12,15 @@ const useStyles = makeStyles(() => ({
   svgRoot: { width: 'auto' }
 }))
 
-const LifeBankIcon = ({ color }) => {
+const LifeBankIcon = ({ color, ...props }) => {
   const classes = useStyles()
 
   return (
-    <SvgIcon viewBox="0 0 116 32" classes={{ root: classes.svgRoot }}>
+    <SvgIcon
+      viewBox="0 0 116 32"
+      classes={{ root: classes.svgRoot }}
+      {...props}
+    >
       <defs>
         <radialGradient
           id="prefix__a"
