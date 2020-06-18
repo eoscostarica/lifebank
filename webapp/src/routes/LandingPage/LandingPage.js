@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.up('md')]: {
-      height: 500,
+      height: 578,
       backgroundImage: `url(${bgImage})`,
       flexDirection: 'column',
       justifyContent: 'center',
@@ -44,9 +44,11 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up('md')]: {
       width: 'auto',
+      paddingTop: theme.spacing(8),
       '& h1': {
         fontSize: 72,
-        lineHeight: 0.68
+        lineHeight: 0.68,
+        textShadow: `0 2px 10px ${theme.palette.primary.mediumEmphasizedBlackText}`
       }
     }
   },
@@ -67,10 +69,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       width: 'auto',
       alignItems: 'center',
+      padding: theme.spacing(8, 1, 0, 0),
       '& p': {
         lineHeight: 1.22,
         letterSpacing: '1px',
-        fontSize: 32
+        fontSize: 32,
+        textShadow: `0 2px 10px ${theme.palette.primary.mediumEmphasizedBlackText}`
       }
     }
   },
@@ -86,16 +90,23 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1, 0)
     },
     [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(1, 0),
       '& h5': {
         letterSpacing: '0.25px',
         fontSize: 34,
-        margin: theme.spacing(2, 0)
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        marginLeft: '15%',
+        marginRight: '15%'
       },
       '& p': {
         fontSize: 21,
         lineHeight: 1.33,
         letterSpacing: '0.66px',
-        margin: theme.spacing(4, 0, 1, 0)
+        marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(1),
+        marginLeft: '15%',
+        marginRight: '15%'
       }
     }
   },
@@ -145,7 +156,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       width: 231,
       height: 49,
-      marginTop: theme.spacing(3)
+      marginTop: theme.spacing(5)
     }
   },
   mapBox: {
@@ -186,9 +197,9 @@ const LandingPage = () => {
             variant="contained"
             color="primary"
             component={CustomRouterLink}
-            to={`/${currentUser ? 'profile' : 'signup'}`}
+            to={`/${currentUser ? 'donations' : 'signup'}`}
           >
-            {currentUser ? 'Profile' : 'Register'}
+            {currentUser ? 'Donations' : 'Register'}
           </Button>
         </Box>
       </Box>

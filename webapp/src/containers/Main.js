@@ -11,7 +11,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import Slide from '@material-ui/core/Slide'
 
 import LifeBankIcon from '../components/LifebankIcon'
 
@@ -24,10 +23,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0)
   },
   appBar: {
-    boxShadow: 'none'
+    boxShadow: 'none',
+    paddingTop: theme.spacing(1)
   },
   backgroundHome: {
     backgroundColor: 'transparent'
+  },
+  paddingBottomHomeAppbar: {
+    paddingBottom: theme.spacing(1)
   },
   logo: {
     height: 24,
@@ -63,59 +66,76 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function HideOnScroll({ children, window, isDesktop }) {
-  const trigger = useScrollTrigger({ target: window ? window() : undefined })
+const ChangeAppBarColorOnScroll = ({
+  isHome,
+  isDesktop,
+  setOpenSidebar,
+  openSidebar,
+  topbarContent
+}) => {
+  const classes = useStyles()
+  const trigger = useScrollTrigger({
+    target: window || undefined,
+    disableHysteresis: true
+  })
+  const useTransparentBG = isDesktop && isHome && !trigger
 
   return (
-    <Slide appear={false} direction="down" in={isDesktop ? !trigger : true}>
-      {children}
-    </Slide>
+    <AppBar
+      className={clsx(classes.appBar, {
+        [classes.backgroundHome]: useTransparentBG,
+        [classes.paddingBottomHomeAppbar]: isDesktop && isHome
+      })}
+    >
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          onClick={() => setOpenSidebar(!openSidebar)}
+          className={classes.drawerToggle}
+        >
+          <MenuIcon />
+        </IconButton>
+        <RouterLink
+          to="/"
+          className={clsx({ [classes.linkBtn]: isDesktop && isHome })}
+        >
+          <LifeBankIcon
+            className={clsx(classes.logo, {
+              [classes.logoHome]: isDesktop && isHome
+            })}
+          />
+        </RouterLink>
+        {topbarContent}
+      </Toolbar>
+    </AppBar>
   )
 }
 
 const Main = ({ children, sidebarContent, topbarContent }) => {
   const classes = useStyles()
   const theme = useTheme()
-  const location = useLocation()
   const [openSidebar, setOpenSidebar] = useState(false)
+  const location = useLocation()
+  const isHome = location.pathname === '/'
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
-  const isHome = location.pathname === '/'
 
   return (
     <Container
       component="main"
       maxWidth="xl"
       className={clsx(classes.root, {
-        [classes.paddingHome]: isHome
+        [classes.paddingHome]: isDesktop && isHome
       })}
     >
-      <HideOnScroll isDesktop={isDesktop}>
-        <AppBar
-          className={clsx(classes.appBar, {
-            [classes.backgroundHome]: isHome
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              onClick={() => setOpenSidebar(!openSidebar)}
-              className={classes.drawerToggle}
-            >
-              <MenuIcon />
-            </IconButton>
-            <RouterLink to="/" className={clsx({ [classes.linkBtn]: isHome })}>
-              <LifeBankIcon
-                className={clsx(classes.logo, {
-                  [classes.logoHome]: isHome
-                })}
-              />
-            </RouterLink>
-            {topbarContent}
-          </Toolbar>
-        </AppBar>
-      </HideOnScroll>
+      <ChangeAppBarColorOnScroll
+        isDesktop={isDesktop}
+        setOpenSidebar={setOpenSidebar}
+        openSidebar={openSidebar}
+        isHome={isHome}
+        topbarContent={topbarContent}
+      />
       <Drawer
         anchor="left"
         classes={{ paper: classes.drawerPaper }}
@@ -140,10 +160,12 @@ Main.propTypes = {
   topbarContent: PropTypes.node
 }
 
-HideOnScroll.propTypes = {
-  children: PropTypes.any,
-  window: PropTypes.any,
-  isDesktop: PropTypes.bool
+ChangeAppBarColorOnScroll.propTypes = {
+  isHome: PropTypes.bool,
+  isDesktop: PropTypes.bool,
+  setOpenSidebar: PropTypes.func,
+  openSidebar: PropTypes.bool,
+  topbarContent: PropTypes.any
 }
 
 export default Main
