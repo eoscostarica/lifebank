@@ -223,7 +223,7 @@ describe ('Lifebank unit test', function(){
                     permission: 'active',
                   }],
                   data: {
-                    account: 'lifebankcXXX',
+                    account: 'lifebankcxxx',
                     lifebank_name: 'Lifebank name1',
                     description: 'Bank of description',
                     address: 'https://eoscostarica.io/',
