@@ -14,23 +14,14 @@
  *
  */
 
-const { Api, JsonRpc, RpcError } = require("eosjs");
+const { JsonRpc, RpcError } = require("eosjs");
 const { JsSignatureProvider } = require("eosjs/dist/eosjs-jssig"); // development only
 const fetch = require("node-fetch"); // node only; not needed in browsers
-const { TextEncoder, TextDecoder } = require("util"); // node only; native TextEncoder/Decoder
 const lifebank_priv_key = "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"; // the priv key for EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
 
 const BLOOD_MIN_VAL = 0; //min value for blood_urgency_level
 const BLOOD_MAX_VAL = 4; // max value for blood_urgency_level
 
-const signatureProvider = new JsSignatureProvider([lifebank_priv_key]);
-const rpc = new JsonRpc("http://localhost:8888", { fetch });
-const api = new Api({
-  rpc,
-  signatureProvider,
-  textDecoder: new TextDecoder(),
-  textEncoder: new TextEncoder(),
-});
 const get = require("lodash.get");
 var chai = require("chai"),
   assert = chai.assert;
@@ -99,7 +90,6 @@ describe("Lifebank unit test", function () {
   it("contract: lifebankcode testing addlifebank with invalid account", async () => {
     try {
     } catch (err) {
-      //console.log('\nCaught exception: ' + err);
       let errorMessage = get(err, "json.error.details[0].message");
       errorMessage &&
         (errorMessage = errorMessage
@@ -222,7 +212,6 @@ describe("Lifebank unit test", function () {
   it("contract: lifebankcode testing addsponsor  without consent", async () => {
     try {
     } catch (err) {
-      //console.log('\nCaught exception: ' + err);
       let errorMessage = get(err, "json.error.details[0].message");
       errorMessage &&
         (errorMessage = errorMessage
@@ -258,7 +247,6 @@ describe("Lifebank unit test", function () {
   it("contract: lifebankcode testing adddonor without consent", async () => {
     try {
     } catch (err) {
-      //console.log('\nCaught exception: ' + err);
       let errorMessage = get(err, "json.error.details[0].message");
       errorMessage &&
         (errorMessage = errorMessage
