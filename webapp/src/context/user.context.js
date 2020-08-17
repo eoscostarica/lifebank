@@ -5,7 +5,6 @@ const UserContext = React.createContext()
 
 const getUserFromToken = (token) => {
   const claims = jwtDecode(token)
-
   return {
     account: claims.sub,
     role: claims?.['https://hasura.io/jwt/claims']['x-hasura-default-role']
@@ -55,7 +54,6 @@ export const useUser = () => {
 
 export const UserProvider = (props) => {
   let initialValue
-
   if (localStorage.getItem('token')) {
     initialValue = getUserFromToken(localStorage.getItem('token'))
   }

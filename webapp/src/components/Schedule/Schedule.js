@@ -191,7 +191,7 @@ const Schedule = ({ handleOnAddSchedule, data, showSchedule, showButton }) => {
 
   useEffect(() => {
     showSchedule && setscheduleList(getWeekDaysSorted(data))
-  }, [data])
+  }, [showSchedule, data])
 
   return (
     <>
