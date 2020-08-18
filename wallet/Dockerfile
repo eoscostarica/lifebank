@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y wget
 
 # Install EOSIO
 RUN wget -O eosio.deb $EOSIO_PACKAGE_URL
-RUN apt-get install -y /eosio.deb
+RUN apt-get install -y /eosio.deb --no-install-recommends && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 # Remove all of the unnecesary files and apt cache
 RUN rm ./eosio.deb \
