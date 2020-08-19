@@ -29,7 +29,7 @@ const addDonor = (account, password) => {
 const addLifebank = (
   account,
   password,
-  { name, hasImmunityTest, geolocation, ...profile }
+  { name, has_immunity_test, geolocation, ...profile }
 ) => {
   return eosUtil.transact(
     [
@@ -45,7 +45,7 @@ const addLifebank = (
         data: {
           account,
           lifebank_name: name,
-          hasImmunityTest: hasImmunityTest || false,
+          has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
           ...profile
@@ -60,7 +60,7 @@ const addLifebank = (
 const upLifebank = (
   account,
   password,
-  { name, hasImmunityTest, geolocation, ...profile }
+  { name, has_immunity_test, geolocation, ...profile }
 ) => {
   return eosUtil.transact(
     [
@@ -76,7 +76,7 @@ const upLifebank = (
         data: {
           account,
           lifebank_name: name,
-          hasImmunityTest: hasImmunityTest || false,
+          has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
           ...profile
@@ -114,7 +114,7 @@ const addSponsor = (account, password, { name, geolocation, ...profile }) => {
   )
 }
 
-const getDonor = async (account) => {
+const getDonor = async account => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
@@ -128,7 +128,7 @@ const getDonor = async (account) => {
   return rows.length > 0 ? rows[0] : null
 }
 
-const getLifebank = async (account) => {
+const getLifebank = async account => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
@@ -142,7 +142,7 @@ const getLifebank = async (account) => {
   return rows.length > 0 ? rows[0] : null
 }
 
-const getComunity = async (symbol) => {
+const getComunity = async symbol => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
@@ -156,7 +156,7 @@ const getComunity = async (symbol) => {
   return rows.length > 0 ? rows[0] : null
 }
 
-const getSponsor = async (account) => {
+const getSponsor = async account => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
@@ -170,7 +170,7 @@ const getSponsor = async (account) => {
   return rows.length > 0 ? rows[0] : null
 }
 
-const getUserNetworks = async (user) => {
+const getUserNetworks = async user => {
   const { rows = [] } = await eosUtil.getTableRows({
     scope: CONTRACT_NAME,
     code: CONTRACT_NAME,
