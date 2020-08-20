@@ -138,7 +138,7 @@ const Signup = () => {
         }
       })
     }
-  }, [user?.username, checkUsername, isUsernameValid, role, user])
+  }, [user?.username, checkUsername])
 
   useEffect(() => {
     if (createAccountResult) {
