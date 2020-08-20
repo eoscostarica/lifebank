@@ -20,7 +20,6 @@ module.exports = async ({ auth: { credentials }, payload: { input } }) => {
         break
       default:
         throw new Error('Invalid role')
-        break
     }
 
     return {

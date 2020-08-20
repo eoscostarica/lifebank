@@ -31,45 +31,47 @@ function MapShowLocations({ location, ...props }) {
     skip: true
   })
 
-  const handleEvent = async (map) => {
-    const { lng, lat } = map.getCenter()
-
-    const { data } = await getNearbyLocations({
-      distance,
-      point: {
-        type: 'Point',
-        coordinates: [lng, lat]
-      }
-    })
-
-    data &&
-      data.locations &&
-      data.locations.forEach((location) => {
-        const {
-          id,
-          account,
-          type,
-          geolocation: { coordinates },
-          info
-        } = location
-
-        const markerNode = document.createElement('div')
-        ReactDOM.render(<MapMarker type={type} />, markerNode)
-
-        const popupNode = document.createElement('div')
-        ReactDOM.render(
-          <MapPopup id={id} info={info} account={account} />,
-          popupNode
-        )
-
-        new mapboxgl.Marker(markerNode)
-          .setLngLat(coordinates)
-          .setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
-          .addTo(map)
-      })
-  }
-
   useEffect(() => {
+    const handleEvent = async (map) => {
+      const { lng, lat } = map.getCenter()
+
+      const { data } = await getNearbyLocations({
+        distance,
+        point: {
+          type: 'Point',
+          coordinates: [lng, lat]
+        }
+      })
+
+      data &&
+        data.locations &&
+        data.locations.forEach((location) => {
+          const {
+            id,
+            account,
+            type,
+            geolocation: { coordinates },
+            info
+          } = location
+
+          const markerNode = document.createElement('div')
+          ReactDOM.render(<MapMarker type={type} />, markerNode)
+
+          const popupNode = document.createElement('div')
+          ReactDOM.render(
+            <MapPopup id={id} info={info} account={account} />,
+            popupNode
+          )
+
+          new mapboxgl.Marker(markerNode)
+            .setLngLat(coordinates)
+            .setPopup(
+              new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode)
+            )
+            .addTo(map)
+        })
+    }
+
     mapboxgl.accessToken = mapboxConfig.accessToken
 
     const map = new mapboxgl.Map({

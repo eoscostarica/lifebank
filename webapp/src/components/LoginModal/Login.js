@@ -148,13 +148,13 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
     if (loginResult) {
       login(loginResult.token)
     }
-  }, [loginResult])
+  }, [loginResult, login])
 
   useEffect(() => {
     if (currentUser) {
       history.replace('/profile')
     }
-  }, [currentUser])
+  }, [currentUser, history])
 
   return (
     <>

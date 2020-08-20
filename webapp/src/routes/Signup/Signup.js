@@ -79,7 +79,6 @@ const Signup = () => {
   const [
     checkUsername,
     {
-      called: checkUsernameCalled,
       loading: checkUsernameLoading,
       data: { check_username: { is_valid: isUsernameValid } = {} } = {}
     }
@@ -139,13 +138,13 @@ const Signup = () => {
         }
       })
     }
-  }, [user?.username])
+  }, [user?.username, checkUsername])
 
   useEffect(() => {
     if (createAccountResult) {
       login(createAccountResult.token)
     }
-  }, [createAccountResult])
+  }, [createAccountResult, login])
 
   useEffect(() => {
     if (!currentUser) {
@@ -159,7 +158,7 @@ const Signup = () => {
     }
 
     setActiveStep(2)
-  }, [currentUser, createAccountResult])
+  }, [currentUser, createAccountResult, history])
 
   useEffect(() => {
     if (signupResult) {
