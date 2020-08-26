@@ -102,7 +102,6 @@ const Signup = () => {
 
   const handleSetField = useCallback((field, value) => {
     setUser({ [field]: value })
-    console.log(value)
   }, [])
 
   const handleGoBack = () => {

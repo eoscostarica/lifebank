@@ -1,8 +1,9 @@
 const eosUtil = require('./eos')
+const { eosConfig } = require('../config')
 
-const CONTRACT_NAME = process.env.LIFEBANKCODE_CONTRACTNAME
-const COMMUNITY_ASSET = `0 ${process.env.BLOOD}`
-
+const CONTRACT_NAME = eosConfig.lifebankCodeContractName
+const COMMUNITY_ASSET = `0 ${eosConfig.communityAsset}`
+eosConfig.communityAsset
 const addDonor = (account, password) => {
   return eosUtil.transact(
     [
