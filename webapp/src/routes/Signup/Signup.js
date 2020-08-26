@@ -102,6 +102,7 @@ const Signup = () => {
 
   const handleSetField = useCallback((field, value) => {
     setUser({ [field]: value })
+    console.log(value)
   }, [])
 
   const handleGoBack = () => {
@@ -144,7 +145,7 @@ const Signup = () => {
     if (createAccountResult) {
       login(createAccountResult.token)
     }
-  }, [createAccountResult, login])
+  }, [createAccountResult])
 
   useEffect(() => {
     if (!currentUser) {
@@ -158,7 +159,7 @@ const Signup = () => {
     }
 
     setActiveStep(2)
-  }, [currentUser, createAccountResult, history])
+  }, [currentUser, createAccountResult])
 
   useEffect(() => {
     if (signupResult) {

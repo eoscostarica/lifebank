@@ -2,7 +2,7 @@ const crypto = require('crypto')
 
 const eosUtil = require('./eos')
 
-const CONTRACT_NAME = 'consent2life' // @todo: use ENV
+const CONTRACT_NAME = process.env.CONSENT2LIFE_CONTRACTNAME
 
 const consent = async (contract, account, password) => {
   const { code_hash: hash } = await eosUtil.getCodeHash(contract)

@@ -1,7 +1,7 @@
 const eosUtil = require('./eos')
 
-const CONTRACT_NAME = 'lifebankcoin' // @todo: use ENV
-const TOKEN_NAKE = 'LIFE' // @todo: use ENV
+const CONTRACT_NAME = process.env.LIFEBANKCOIN_CONTRACTNAME
+const TOKEN_NAKE = process.env.COMMUNITY_ASSET
 
 const getbalance = async account => {
   const result = await eosUtil.getCurrencyBalance(
