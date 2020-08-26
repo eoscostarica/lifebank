@@ -3,7 +3,6 @@ const { eosConfig } = require('../config')
 
 const CONTRACT_NAME = eosConfig.lifebankCodeContractName
 const COMMUNITY_ASSET = `0 ${eosConfig.communityAsset}`
-eosConfig.communityAsset
 const addDonor = (account, password) => {
   return eosUtil.transact(
     [
