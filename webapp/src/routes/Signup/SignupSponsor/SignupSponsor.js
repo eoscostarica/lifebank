@@ -17,9 +17,9 @@ import Tooltip from '@material-ui/core/Tooltip'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import InputAdornment from '@material-ui/core/InputAdornment'
 
-import MapSelectLocation from '../../components/MapSelectLocation'
-import Schedule from '../../components/Schedule'
-import { captchaConfig, constants } from '../../config'
+import MapSelectLocation from '../../../components/MapSelectLocation'
+import Schedule from '../../../components/Schedule'
+import { captchaConfig, constants } from '../../../config'
 
 const {
   LOCATION_TYPES: { SPONSOR },
@@ -155,6 +155,7 @@ const SponsorSignup = ({
           className={classes.textField}
           onChange={(event) => setField('telephone', event.target.value)}
         />
+
         <FormControl variant="outlined" className={classes.textField}>
           <InputLabel id="bussines-type-label">Type</InputLabel>
           <Select
