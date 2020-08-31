@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       width: '40vw'
     },
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(5, 2),
     marginTop: theme.spacing(10)
   },
   radioGroup: {
@@ -58,15 +58,20 @@ const useStyles = makeStyles((theme) => ({
   addButtonContainer: {
     textAlign: 'center',
     marginTop: '5px'
+  },
+  carouselPictureContainer: {
+    maxHeight: '440px',
+    maxWidth: '600px'
   }
 }))
 
-const LimitationHandling = ({ classes }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date())
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date)
-  }
+const LimitationHandling = ({
+  classes,
+  setQuantity,
+  setStartDate,
+  setEndDate
+}) => {
+  const [selectedDate] = useState(new Date())
 
   return (
     <Paper className={classes.limitationHandlingPaper}>
@@ -76,7 +81,7 @@ const LimitationHandling = ({ classes }) => {
       <TextField
         id="secret"
         label="Quantity"
-        type="text"
+        type="number"
         fullWidth
         placeholder="Available service quantity"
         variant="outlined"
@@ -84,7 +89,7 @@ const LimitationHandling = ({ classes }) => {
           shrink: true
         }}
         className={classes.textField}
-        // onChange={(event) => setField('secret', event.target.value)}
+        onChange={(event) => setQuantity(event.target.value)}
       />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Grid container justify="space-around">
@@ -95,7 +100,7 @@ const LimitationHandling = ({ classes }) => {
             label="Select start offer date"
             format="MM/dd/yyyy"
             value={selectedDate}
-            onChange={handleDateChange}
+            onChange={(date) => setStartDate(date)}
             KeyboardButtonProps={{
               'aria-label': 'change date'
             }}
@@ -107,11 +112,12 @@ const LimitationHandling = ({ classes }) => {
             label="Select end offer date"
             format="MM/dd/yyyy"
             value={selectedDate}
-            onChange={handleDateChange}
+            onChange={(date) => setEndDate(date)}
             KeyboardButtonProps={{
               'aria-label': 'change date'
             }}
           />
+          <br />
           <Typography variant="caption">No deadlines selected *</Typography>
         </Grid>
       </MuiPickersUtilsProvider>
@@ -121,8 +127,14 @@ const LimitationHandling = ({ classes }) => {
 
 const OffersManagement = () => {
   const classes = useStyles()
-  const [offer, setOffer] = useState({ limitation: true, images: [] })
+  const [offer, setOffer] = useState({
+    limited: true,
+    images: [],
+    online_only: true
+  })
   const imgUrlValueRef = useRef('')
+
+  const [actualImageIndex, setActualImageIndex] = useState(0)
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -149,8 +161,10 @@ const OffersManagement = () => {
       <FormControlLabel
         control={
           <Checkbox
-            //checked={state.checkedB}
-            //onChange={handleChange}
+            checked={offer.online_only}
+            onChange={(event) =>
+              setOffer({ ...offer, online_only: event.target.checked })
+            }
             name="checkedB"
             color="primary"
           />
@@ -163,6 +177,9 @@ const OffersManagement = () => {
         variant="outlined"
         placeholder="Description here"
         fullWidth
+        onChange={(event) =>
+          setOffer({ ...offer, description: event.target.value })
+        }
         InputLabelProps={{
           shrink: true
         }}
@@ -172,9 +189,9 @@ const OffersManagement = () => {
         <Typography variant="h3">Redeem availability</Typography>
         <RadioGroup
           aria-label="limitation"
-          value={offer.limitation || undefined}
+          value={offer.limited || undefined}
           onChange={(event) =>
-            setOffer({ ...offer, limitation: event.target.value })
+            setOffer({ ...offer, limited: event.target.value })
           }
         >
           <FormControlLabel value="true" control={<Radio />} label="Limited" />
@@ -184,8 +201,13 @@ const OffersManagement = () => {
             label="Unlimited"
           />
         </RadioGroup>
-        {offer && offer.limitation === 'true' && (
-          <LimitationHandling classes={classes} />
+        {offer && offer.limited === 'true' && (
+          <LimitationHandling
+            setQuantity={(val) => setOffer({ ...offer, quantity: val })}
+            setStartDate={(val) => setOffer({ ...offer, start_date: val })}
+            setEndDate={(val) => setOffer({ ...offer, end_date: val })}
+            classes={classes}
+          />
         )}
       </FormControl>
       <TextField
@@ -202,12 +224,13 @@ const OffersManagement = () => {
       />
       <Box className={classes.addButtonContainer}>
         <Button
-          onClick={() =>
+          onClick={() => {
             setOffer({
               ...offer,
               images: [...offer.images, imgUrlValueRef.current.value]
             })
-          }
+            imgUrlValueRef.current.value = ''
+          }}
           size="small"
           color="secondary"
           startIcon={<AddIcon />}
@@ -216,25 +239,54 @@ const OffersManagement = () => {
         </Button>
       </Box>
       {offer.images.length > 0 && (
-        <Carousel
-          plugins={[
-            'infinite',
-            'arrows',
-            {
-              resolve: slidesToShowPlugin,
-              options: {
-                numberOfSlides: 2
+        <Box borderRadius="8px" boxShadow={2}>
+          <Carousel
+            value={actualImageIndex}
+            onChange={(val) => setActualImageIndex(val)}
+            plugins={[
+              'infinite',
+              'arrows',
+              {
+                resolve: slidesToShowPlugin,
+                options: {
+                  numberOfSlides: 2
+                }
               }
-            }
-          ]}
-        >
-          {offer.images.map((url, key) => (
-            <img src={url} key={key} />
-          ))}
-        </Carousel>
+            ]}
+          >
+            {offer.images.map((url, key) => (
+              <Box key={key} className={classes.carouselPictureContainer}>
+                <img
+                  className={classes.imgDot}
+                  src={url}
+                  key={key}
+                  alt={`${key}`}
+                />
+              </Box>
+            ))}
+          </Carousel>
+          <Box display="flex" justifyContent="center" alignContent="center">
+            <Button
+              disabled={actualImageIndex === 0}
+              onClick={() => setActualImageIndex(actualImageIndex - 1)}
+            >
+              Prev
+            </Button>
+            <Button
+              disabled={actualImageIndex === offer.images.length - 1}
+              onClick={() => setActualImageIndex(actualImageIndex + 1)}
+            >
+              Next
+            </Button>
+          </Box>
+        </Box>
       )}
       <Box style={{ marginTop: '10px' }} className={classes.addButtonContainer}>
-        <Button variant="contained" color="primary">
+        <Button
+          onClick={() => console.log(offer)}
+          variant="contained"
+          color="primary"
+        >
           Submit
         </Button>
       </Box>
@@ -243,15 +295,15 @@ const OffersManagement = () => {
 }
 
 LimitationHandling.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  setQuantity: PropTypes.func,
+  setStartDate: PropTypes.func,
+  setEndDate: PropTypes.func
 }
 
 LimitationHandling.defaultProps = {}
 
-OffersManagement.propTypes = {
-  user: PropTypes.object,
-  setField: PropTypes.func
-}
+OffersManagement.propTypes = {}
 
 OffersManagement.defaultProps = {}
 
