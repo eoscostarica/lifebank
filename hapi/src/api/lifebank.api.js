@@ -1,4 +1,4 @@
-import { eosConfig } from '../config'
+const { eosConfig } = require('../config')
 const { lifebankcodeUtils } = require('../utils')
 
 const accountApi = require('./account.api')

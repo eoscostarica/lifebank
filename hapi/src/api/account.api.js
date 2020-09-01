@@ -1,4 +1,4 @@
-import { eosConfig } from '../config'
+const { eosConfig } = require('../config')
 const {
   eosUtils,
   jwtUtils,
