@@ -10,7 +10,10 @@ const {
     ENUM_DATA: { LOCATION_TYPES }
   }
 } = require('../config')
-const LIFE_BANK_CODE = 'lifebankcode'
+
+import { eosConfig } from '../config'
+
+const LIFE_BANK_CODE = eosConfig.lifebankCodeContractName
 
 const editProfile = async (account, profile) => {
   await accountApi.grantConsent(account)
