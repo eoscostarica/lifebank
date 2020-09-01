@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -24,6 +25,7 @@ import {
 } from '@material-ui/pickers'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
+import { CREATE_OFFER_MUTATION } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -89,7 +91,7 @@ const LimitationHandling = ({
           shrink: true
         }}
         className={classes.textField}
-        onChange={(event) => setQuantity(event.target.value)}
+        onChange={(event) => setQuantity(Number(event.target.value))}
       />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Grid container justify="space-around">
@@ -135,6 +137,12 @@ const OffersManagement = () => {
   const imgUrlValueRef = useRef('')
 
   const [actualImageIndex, setActualImageIndex] = useState(0)
+
+  const handleSubmit = () => {
+    let submittingOffer = offer
+    submittingOffer.images = JSON.stringify(submittingOffer.images)
+    console.log(submittingOffer)
+  }
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -190,13 +198,17 @@ const OffersManagement = () => {
         <RadioGroup
           aria-label="limitation"
           value={offer.limited || undefined}
-          onChange={(event) =>
+          onChange={(event) => {
             setOffer({ ...offer, limited: event.target.value })
-          }
+          }}
         >
-          <FormControlLabel value="true" control={<Radio />} label="Limited" />
           <FormControlLabel
-            value="false"
+            value={'true'}
+            control={<Radio />}
+            label="Limited"
+          />
+          <FormControlLabel
+            value={'false'}
             control={<Radio />}
             label="Unlimited"
           />
@@ -282,11 +294,7 @@ const OffersManagement = () => {
         </Box>
       )}
       <Box style={{ marginTop: '10px' }} className={classes.addButtonContainer}>
-        <Button
-          onClick={() => console.log(offer)}
-          variant="contained"
-          color="primary"
-        >
+        <Button onClick={handleSubmit} variant="contained" color="primary">
           Submit
         </Button>
       </Box>

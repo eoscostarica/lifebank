@@ -7,6 +7,7 @@ const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
 const notificationApi = require('./notification.api')
+const offerApi = require('./offer.api')
 
 module.exports = {
   accountApi,
@@ -17,5 +18,6 @@ module.exports = {
   userApi,
   vaultApi,
   locationApi,
-  notificationApi
+  notificationApi,
+  offerApi
 }
