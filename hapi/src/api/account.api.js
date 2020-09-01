@@ -1,3 +1,4 @@
+import { eosConfig } from '../config'
 const {
   eosUtils,
   jwtUtils,
@@ -5,8 +6,6 @@ const {
   lifebankcodeUtils,
   lifebankcoinUtils
 } = require('../utils')
-
-import { eosConfig } from '../config'
 
 const historyApi = require('./history.api')
 const notificationApi = require('./notification.api')

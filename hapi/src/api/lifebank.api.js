@@ -1,3 +1,4 @@
+import { eosConfig } from '../config'
 const { lifebankcodeUtils } = require('../utils')
 
 const accountApi = require('./account.api')
@@ -10,8 +11,6 @@ const {
     ENUM_DATA: { LOCATION_TYPES }
   }
 } = require('../config')
-
-import { eosConfig } from '../config'
 
 const LIFE_BANK_CODE = eosConfig.lifebankCodeContractName
 
