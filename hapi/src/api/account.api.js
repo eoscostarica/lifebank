@@ -1,3 +1,4 @@
+const { eosConfig } = require('../config')
 const {
   eosUtils,
   jwtUtils,
@@ -10,7 +11,7 @@ const historyApi = require('./history.api')
 const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
-const LIFEBANCKCODE_CONTRACT = 'lifebankcode' // @todo: use ENV
+const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
 const create = async ({ role, username, secret }) => {
   const account = `${role.substring(0, 3)}${username}`.substring(0, 12)
@@ -76,7 +77,7 @@ const getDonorData = async account => {
   }
 
   const consent = await consent2lifeUtils.getConsent(
-    LIFEBANCKCODE_CONTRACT,
+    LIFEBANKCODE_CONTRACT,
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
@@ -97,7 +98,7 @@ const getLifebankData = async account => {
   const { tx } = (await lifebankcodeUtils.getLifebank(account)) || {}
   const { lifebank_name: name, ...profile } = await getTransactionData(tx)
   const consent = await consent2lifeUtils.getConsent(
-    LIFEBANCKCODE_CONTRACT,
+    LIFEBANKCODE_CONTRACT,
     account
   )
 
@@ -122,7 +123,7 @@ const getSponsorData = async account => {
   }
 
   const consent = await consent2lifeUtils.getConsent(
-    LIFEBANCKCODE_CONTRACT,
+    LIFEBANKCODE_CONTRACT,
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
@@ -151,7 +152,7 @@ const getTransactionData = async tx => {
 const grantConsent = async account => {
   const password = await vaultApi.getPassword(account)
   const consentTransaction = await consent2lifeUtils.consent(
-    LIFEBANCKCODE_CONTRACT,
+    LIFEBANKCODE_CONTRACT,
     account,
     password
   )
@@ -193,7 +194,7 @@ const login = async ({ account, secret }) => {
 const revokeConsent = async account => {
   const password = await vaultApi.getPassword(account)
   const consentTransaction = await consent2lifeUtils.revoke(
-    LIFEBANCKCODE_CONTRACT,
+    LIFEBANKCODE_CONTRACT,
     account,
     password
   )

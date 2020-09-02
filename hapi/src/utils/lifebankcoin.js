@@ -1,17 +1,18 @@
 const eosUtil = require('./eos')
+const { eosConfig } = require('../config')
 
-const CONTRACT_NAME = 'lifebankcoin' // @todo: use ENV
-const TOKEN_NAKE = 'LIFE' // @todo: use ENV
+const CONTRACT_NAME = eosConfig.lifebankCoinContractName
+const TOKEN_NAME = eosConfig.communityAsset
 
 const getbalance = async account => {
   const result = await eosUtil.getCurrencyBalance(
     CONTRACT_NAME,
     account,
-    TOKEN_NAKE
+    TOKEN_NAME
   )
 
   if (result.length < 1) {
-    return [`0 ${TOKEN_NAKE}`]
+    return [`0 ${TOKEN_NAME}`]
   }
 
   return result
@@ -32,7 +33,7 @@ const transfer = async (account, password, { to, quantity, memo }) => {
         data: {
           to,
           memo,
-          quantity: `${quantity} ${TOKEN_NAKE}`,
+          quantity: `${quantity} ${TOKEN_NAME}`,
           from: account
         }
       }
