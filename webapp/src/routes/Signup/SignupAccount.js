@@ -41,7 +41,7 @@ const SignupAccount = ({
         <Typography variant="h6">Account</Typography>
         <Typography variant="body1">
           <Link
-            href={`https://jungle3.bloks.io/account/${account}`}
+            href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${account}`}
             target="_blank"
             rel="noopener"
             color="secondary"
@@ -56,7 +56,7 @@ const SignupAccount = ({
         <Typography variant="h6">Transaction Id</Typography>
         <Typography variant="body1">
           <Link
-            href={`https://jungle3.bloks.io/transaction/${transactionId}`}
+            href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}transaction/${transactionId}`}
             target="_blank"
             rel="noopener"
             color="secondary"

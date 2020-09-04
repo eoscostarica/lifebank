@@ -32,7 +32,7 @@ function MapPopup({ id, info, account }) {
       <div>
         Account:{' '}
         <a
-          href={`https://jungle3.bloks.io/account/${account}`}
+          href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${account}`}
           target="_blank"
           rel="noopener noreferrer"
           className={classes.link}

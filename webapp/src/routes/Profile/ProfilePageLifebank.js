@@ -45,7 +45,7 @@ const ProfilePageLifebank = ({ profile }) => {
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
           <Link
-            href={`https://jungle3.bloks.io/account/${profile.account}`}
+            href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${profile.account}`}
             target="_blank"
             rel="noopener"
             color="secondary"
