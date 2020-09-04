@@ -117,7 +117,7 @@ const ProfilePage = () => {
         <>
           Transaction{' '}
           <Link
-            href={`https://jungle.bloks.io/transaction/${
+            href={`https://jungle3.bloks.io/transaction/${
               lastConsentChange === 'grant'
                 ? grantConsentResult.transaction_id
                 : revokeConsentResult.transaction_id

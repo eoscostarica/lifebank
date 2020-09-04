@@ -49,7 +49,7 @@ const ProfilePageSponsor = ({ profile }) => {
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
           <Link
-            href={`https://jungle.bloks.io/account/${profile.account}`}
+            href={`https://jungle3.bloks.io/account/${profile.account}`}
             target="_blank"
             rel="noopener"
             color="secondary"
@@ -113,7 +113,7 @@ const ProfilePageSponsor = ({ profile }) => {
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Balance</Typography>
         <Link
-          href={`https://jungle.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
+          href={`https://jungle3.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
           target="_blank"
           rel="noopener"
           color="secondary"

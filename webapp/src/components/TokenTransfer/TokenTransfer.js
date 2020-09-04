@@ -263,7 +263,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                     >
                       Done{' '}
                       <Link
-                        href={`https://jungle.bloks.io/transaction/${transferResult.transaction_id}`}
+                        href={`https://jungle3.bloks.io/transaction/${transferResult.transaction_id}`}
                         target="_blank"
                         rel="noopener"
                         color="secondary"

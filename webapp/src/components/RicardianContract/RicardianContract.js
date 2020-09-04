@@ -43,8 +43,8 @@ const RicardianContract = ({ name, hash, abi, action }) => {
     )
 
     const mainTitle = '# Ricardian contract'
-    const nameSection = `**Name:** [${name}](https://jungle.bloks.io/account/${name}?loadContract=true&tab=Actions)`
-    const hashSection = `**Hash:** [${hash}](https://jungle.bloks.io/account/${name}?loadContract=true&tab=ABI)`
+    const nameSection = `**Name:** [${name}](https://jungle3.bloks.io/account/${name}?loadContract=true&tab=Actions)`
+    const hashSection = `**Hash:** [${hash}](https://jungle3.bloks.io/account/${name}?loadContract=true&tab=ABI)`
 
     setSource(
       [mainTitle, nameSection, hashSection, ...actions, ...clauses].join('\n\n')
