@@ -53,7 +53,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
           <Link
-            href={`https://jungle.bloks.io/account/${profile.account}`}
+            href={`https://jungle3.bloks.io/account/${profile.account}`}
             target="_blank"
             rel="noopener"
             color="secondary"
@@ -107,7 +107,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Tokens</Typography>
         <Link
-          href={`https://jungle.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
+          href={`https://jungle3.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
           target="_blank"
           rel="noopener"
           color="secondary"
