@@ -12,16 +12,18 @@ export const CREATE_OFFER_MUTATION = gql`
     $images: String!
     $sponsor_id: Int!
   ) {
-    create_offer(
-      limited: $limited
-      online_only: $online_only
-      quantity: $quantity
-      offer_type: $offer_type
-      description: $description
-      start_date: $start_date
-      end_date: $end_date
-      images: $images
-      sponsor_id: $sponsor_id
+    insert_offer_one(
+      object: {
+        limited: $limited
+        online_only: $online_only
+        quantity: $quantity
+        offer_type: $offer_type
+        description: $description
+        start_date: $start_date
+        end_date: $end_date
+        images: $images
+        sponsor_id: $sponsor_id
+      }
     ) {
       id
     }

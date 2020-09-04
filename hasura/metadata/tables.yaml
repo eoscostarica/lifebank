@@ -115,6 +115,73 @@
           _eq: X-Hasura-User-Id
 - table:
     schema: public
+    name: offer
+  object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: sponsor_id
+  insert_permissions:
+  - role: guest
+    permission:
+      check: {}
+      columns:
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      backend_only: false
+  - role: sponsor
+    permission:
+      check: {}
+      columns:
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      backend_only: false
+  select_permissions:
+  - role: guest
+    permission:
+      columns:
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      filter: {}
+  - role: sponsor
+    permission:
+      columns:
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      filter: {}
+- table:
+    schema: public
     name: raster_columns
 - table:
     schema: public
@@ -125,6 +192,14 @@
 - table:
     schema: public
     name: user
+  array_relationships:
+  - name: offers
+    using:
+      foreign_key_constraint_on:
+        column: sponsor_id
+        table:
+          schema: public
+          name: offer
 - table:
     schema: public
     name: vault
