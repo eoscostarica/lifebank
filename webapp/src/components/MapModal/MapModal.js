@@ -26,12 +26,14 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    height: '80%',
-    width: 350,
-    outlineWidth: 0
+    height: "100%",
+    width: "100%",
+    outlineWidth: 0,
+    borderRadius: '0px'
   },
   closeIcon: {
     display: 'flex',
+    height: "5vh",
     justifyContent: 'flex-end',
     '& svg': {
       fontSize: 25,
@@ -44,10 +46,15 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyWrapper: {
     height: '90%',
-    padding: theme.spacing(0, 2),
+    height: "5vh",
     '& h3': {
-      textAlign: 'center'
+      textAlign: 'center',
+      padding: 8,
+      fontSize: 20
     }
+  },
+  map: {
+    height: "90vh"
   },
   marker: {
     display: 'flex',
@@ -117,13 +124,7 @@ const MapModal = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
               <Typography variant="h3">
                 Find Lifebanks or Sponsors Near You
               </Typography>
-              <MapShowLocations width="100%" height="80%" my={2} />
-              <Box className={classes.marker}>
-                <SponsorSvg />
-                <Typography variant="body1">Sponsors</Typography>
-                <LifeBankSvg />
-                <Typography variant="body1">Lifebanks</Typography>
-              </Box>
+              <MapShowLocations className={classes.map} />
             </Box>
           </Paper>
         </Fade>
