@@ -27,8 +27,6 @@ import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 import { CREATE_OFFER_MUTATION, PROFILE_ID_QUERY } from '../../gql'
 
-const useStyles = makeStyles((theme) => ({}))
-
 const useStyles = makeStyles((theme) => ({
   form: {
     margin: 'auto',

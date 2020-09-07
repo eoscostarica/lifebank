@@ -29,3 +29,19 @@ export const CREATE_OFFER_MUTATION = gql`
     }
   }
 `
+
+export const GET_SPONSOR_OFFERS_QUERY = gql`
+  query($sponsor_id: Int!) {
+    offer(where: { sponsor_id: { _eq: $sponsor_id } }) {
+      id
+      images
+      limited
+      offer_type
+      online_only
+      quantity
+      sponsor_id
+      start_date
+      end_date
+    }
+  }
+`
