@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 
+import { eosConfig } from '../../config'
+
 const RicardianContract = ({ name, hash, abi, action }) => {
   const [source, setSource] = useState('')
   const formatRicardianClause = (text = '') => {
@@ -43,8 +45,8 @@ const RicardianContract = ({ name, hash, abi, action }) => {
     )
 
     const mainTitle = '# Ricardian contract'
-    const nameSection = `**Name:** [${name}](${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${name}?loadContract=true&tab=Actions)`
-    const hashSection = `**Hash:** [${hash}](${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${name}?loadContract=true&tab=ABI)`
+    const nameSection = `**Name:** [${name}](${eosConfig.BLOCK_EXPLORER_URL}account/${name}?loadContract=true&tab=Actions)`
+    const hashSection = `**Hash:** [${hash}](${eosConfig.BLOCK_EXPLORER_URL}account/${name}?loadContract=true&tab=ABI)`
 
     setSource(
       [mainTitle, nameSection, hashSection, ...actions, ...clauses].join('\n\n')

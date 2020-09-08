@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/styles'
+import { eosConfig } from '../../config'
 
 const URGENCY = {
   1: 'Low',
@@ -32,7 +33,7 @@ function MapPopup({ id, info, account }) {
       <div>
         Account:{' '}
         <a
-          href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${account}`}
+          href={`${eosConfig.BLOCK_EXPLORER_URL}account/${account}`}
           target="_blank"
           rel="noopener noreferrer"
           className={classes.link}

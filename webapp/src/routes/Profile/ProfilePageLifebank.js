@@ -11,6 +11,7 @@ import Link from '@material-ui/core/Link'
 
 import Schedule from '../../components/Schedule'
 import MapShowLocations from '../../components/MapShowLocations'
+import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -45,7 +46,7 @@ const ProfilePageLifebank = ({ profile }) => {
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
           <Link
-            href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${profile.account}`}
+            href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
             target="_blank"
             rel="noopener"
             color="secondary"

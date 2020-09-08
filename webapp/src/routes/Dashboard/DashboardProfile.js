@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import QRCode from 'qrcode.react'
 
 import { useUser } from '../../context/user.context'
+import { eosConfig } from '../../config'
 
 const Products = () => {
   const [currentUser] = useUser()
@@ -24,7 +25,7 @@ const Products = () => {
               <Typography variant="h4">Account</Typography>
               <Typography variant="body1">
                 <Link
-                  href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${profile.account}`}
+                  href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
                   target="_blank"
                   rel="noopener"
                   color="secondary"

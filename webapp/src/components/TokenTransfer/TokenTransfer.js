@@ -26,6 +26,7 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 
 import { useUser } from '../../context/user.context'
 import { TRANSFER_MUTATION } from '../../gql'
+import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -263,7 +264,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                     >
                       Done{' '}
                       <Link
-                        href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}transaction/${transferResult.transaction_id}`}
+                        href={`${eosConfig}transaction/${transferResult.transaction_id}`}
                         target="_blank"
                         rel="noopener"
                         color="secondary"

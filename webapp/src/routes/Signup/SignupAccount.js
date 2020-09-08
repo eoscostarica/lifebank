@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box'
 import Link from '@material-ui/core/Link'
 import Divider from '@material-ui/core/Divider'
 
+import { eosConfig } from '../../config'
+
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     maxHeight: 400
@@ -41,7 +43,7 @@ const SignupAccount = ({
         <Typography variant="h6">Account</Typography>
         <Typography variant="body1">
           <Link
-            href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}account/${account}`}
+            href={`${eosConfig.BLOCK_EXPLORER_URL}account/${account}`}
             target="_blank"
             rel="noopener"
             color="secondary"
@@ -56,7 +58,7 @@ const SignupAccount = ({
         <Typography variant="h6">Transaction Id</Typography>
         <Typography variant="body1">
           <Link
-            href={`${process.env.REACT_APP_BLOCK_EXPLORER_URL}transaction/${transactionId}`}
+            href={`${eosConfig.BLOCK_EXPLORER_URL}transaction/${transactionId}`}
             target="_blank"
             rel="noopener"
             color="secondary"
