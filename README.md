@@ -1,4 +1,3 @@
-
 <p align="center">
 	<img src="./docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg" width="600">
 <br/>
@@ -19,35 +18,34 @@
 </a>
 </p>
 
-
-
 # Lifebank.io
+
 **EOSIO VIRTUAL HACKATHON [Coding for Change - May 2020](https://hackathon.eos.io/events/coding-for-change/)**
 
-**Table of Contents**  
-  - [Inspiration](#inspiration)
-  - [What is LifeBank?](#what-is-lifebank)
-  - [User Experience](#user-experience)
-  - [Sign Up](#sign-up)
-  - [How we built it?](#how-we-built-it)
-  - [How we use EOSIO Blockchain Technology](#how-we-use-EOSIO-blockchain-technology)
-  - [Hackathon Experience](#hackathon-experience)
-  - [What's next for Lifebank.io](#whats-next-for-lifebankio)
-  - [Contributing](#contributing)
-  - [About EOS Costa Rica](#about-eos-costa-rica)
-  - [License](#license)
-  - [Contributors](#contributors)
+**Table of Contents**
 
+- [Inspiration](#inspiration)
+- [What is LifeBank?](#what-is-lifebank)
+- [User Experience](#user-experience)
+- [Sign Up](#sign-up)
+- [How we built it?](#how-we-built-it)
+- [How we use EOSIO Blockchain Technology](#how-we-use-EOSIO-blockchain-technology)
+- [Hackathon Experience](#hackathon-experience)
+- [What's next for Lifebank.io](#whats-next-for-lifebankio)
+- [Contributing](#contributing)
+- [About EOS Costa Rica](#about-eos-costa-rica)
+- [License](#license)
+- [Contributors](#contributors)
 
 ## Inspiration
 
-Blood banks should act just as their name reflects.  When we are healthy, we should be able to save for the future by making deposits. When we inevitably get sick, we should be able to withdrawal on those savings to pay for expenses related to our condition.   
+Blood banks should act just as their name reflects. When we are healthy, we should be able to save for the future by making deposits. When we inevitably get sick, we should be able to withdrawal on those savings to pay for expenses related to our condition.
 
-When our team member's father was diagnosed with cancer, he had to undergo treatment and consequently receive a blood transfusion. He needed blood to survive.  As he recovered, he only asked his family one simple request: to help him pay his new lease on life and payback the blood he received on loan. So, he asked his family to donate blood proactively. 
+When our team member's father was diagnosed with cancer, he had to undergo treatment and consequently receive a blood transfusion. He needed blood to survive. As he recovered, he only asked his family one simple request: to help him pay his new lease on life and payback the blood he received on loan. So, he asked his family to donate blood proactively.
 
-Then, our teammate understood why he needed to donate blood and how important it was to his father's life.  What he didn't understand is why he waited this long to do so.  He thought he should have been donating blood all those years prior when he was healthy and eligible, knowing that one day in the future a relative or himself would need it.  He should have been making deposits in the blood bank so that he could withdraw those savings now when he needed it. Now he needed to pay back a loan on life in the same way his father received it, by a blood donation. 
+Then, our teammate understood why he needed to donate blood and how important it was to his father's life. What he didn't understand is why he waited this long to do so. He thought he should have been donating blood all those years prior when he was healthy and eligible, knowing that one day in the future a relative or himself would need it. He should have been making deposits in the blood bank so that he could withdraw those savings now when he needed it. Now he needed to pay back a loan on life in the same way his father received it, by a blood donation.
 
-Fast forward to 2020, COVID-19 spreads to a global pandemic and national emergencies are declared in countless countries around the world.  Social distancing and quarantines cause blood shortages globally as donations plummet while demand for blood and plasma increases. Blood banks enter a short term shortage all over the world with no lifeline in sight. 
+Fast forward to 2020, COVID-19 spreads to a global pandemic and national emergencies are declared in countless countries around the world. Social distancing and quarantines cause blood shortages globally as donations plummet while demand for blood and plasma increases. Blood banks enter a short term shortage all over the world with no lifeline in sight.
 
 - ['On the precipice': COVID-19 has Canadian Blood Services worried about shortage](https://www.theglobeandmail.com/canada/article-on-the-precipice-covid-19-has-canadian-blood-services-worried-about/)
 
@@ -65,7 +63,7 @@ Fast forward to 2020, COVID-19 spreads to a global pandemic and national emergen
 
 - [Los bancos de sangre tienen hasta 50% menos de la cifra óptima para la autosuficiencia](https://www.telam.com.ar/notas/202005/464193-bancos-de-sangre-donacion-faltante.html)
 
-Donations centers across the globe need a way to encourage blood donations based on local demand during a time of crisis. As the demand for blood increases during the crisis,  the eligible donor population was told to stay home, isolate, and avoid medical facilities causing a deepened shortage. 
+Donations centers across the globe need a way to encourage blood donations based on local demand during a time of crisis. As the demand for blood increases during the crisis, the eligible donor population was told to stay home, isolate, and avoid medical facilities causing a deepened shortage.
 
 - [Blood banks drying up](https://www.dhakatribune.com/bangladesh/dhaka/2020/05/18/blood-banks-drying-up)
 
@@ -79,7 +77,7 @@ Donations centers across the globe need a way to encourage blood donations based
 
 - [How plasma from recovered coronavirus patients could help others survive the disease](https://thehill.com/changing-america/well-being/prevention-cures/493690-how-plasma-from-recovered-coronavirus-patients)
 
-Another consequence of the pandemic was the economic devastation of a lockdown.  Small businesses that rely on the local community for a majority of their business have to think of ways to incentivize customers to buy online or in-person as soon as restrictions are lifted.  Small businesses also need a lifeline. 
+Another consequence of the pandemic was the economic devastation of a lockdown. Small businesses that rely on the local community for a majority of their business have to think of ways to incentivize customers to buy online or in-person as soon as restrictions are lifted. Small businesses also need a lifeline.
 
 - [Impact of Coronavirus on Small Businesses - Where Is It Worst?](https://smallbiztrends.com/2020/04/impact-of-coronavirus-on-small-businesses.html)
 
@@ -91,17 +89,17 @@ Another consequence of the pandemic was the economic devastation of a lockdown. 
 
 - [How COVID-19 is affecting small businesses in D.C. - D.C. Policy Center](https://www.dcpolicycenter.org/publications/small-businesses-coronavirus/)
 
-During the current COVID-19 health crisis and others in the future,  we aim to build a tool that: 
+During the current COVID-19 health crisis and others in the future, we aim to build a tool that:
 
 - Provides value and recognition to blood donors that are eligible to donate when healthy.
 - Mitigates the blood shortage that exists in perpetuity and that are exasperated during a crisis.
 - Supports local businesses and have them encourage blood donation in their community.
 
-To align the relevant incentives and accomplish the above, we created **Lifebank.** 
+To align the relevant incentives and accomplish the above, we created **Lifebank.**
 
 ## **What is Lifebank?**
 
-Lifebank helps local communities create a virtuous circle of value exchange between three parties — an **eligible donor, a donation center and a sponsor.** 
+Lifebank helps local communities create a virtuous circle of value exchange between three parties — an **eligible donor, a donation center and a sponsor.**
 
 [![lifebank](./docs/lifebankflow.png)](./docs/lifebankflow.png)
 
@@ -111,14 +109,13 @@ Lifebank helps local communities create a virtuous circle of value exchange betw
 
 **Glossary:**
 
-- Potential Life Donor -  anyone who could possibly donate blood to a local donation center
-- Qualified Blood Donation -  A blood donation to a participating donation center
+- Potential Life Donor - anyone who could possibly donate blood to a local donation center
+- Qualified Blood Donation - A blood donation to a participating donation center
 - Lifebank - Any community donation center that accepts blood donations
 - Life Token - A donation token receipt given to a eligible donor after a qualified blood donation
 - Eligible Life Donor - a registered blood donor deemed eligible to donate by a participating donation center
 - Sponsor - A participating local business or community organization that agreed to return some predetermined value to a life donor in exchange for a life token
 - Value - economic or community value that sponsors communicate to life donors in order to incentivize the redemption of Life Tokens
-
 
 ## User Experience
 
@@ -129,45 +126,42 @@ Lifebank helps local communities create a virtuous circle of value exchange betw
 
 **1) Find a Lifebank and Register**
 
-Using Lifebank.io, a potential life donor can find a community donation center in their area based on their location.  The user will be able to see on a map where the centers are located and also if they have a high demand for blood.  Once the user sees that there is a demand for their type of blood in close proximity, they can review the ricardian contracts, sign the contract to register for an account, and visit the donation center location. 
+Using Lifebank.io, a potential life donor can find a community donation center in their area based on their location. The user will be able to see on a map where the centers are located and also if they have a high demand for blood. Once the user sees that there is a demand for their type of blood in close proximity, they can review the ricardian contracts, sign the contract to register for an account, and visit the donation center location.
 
 **2) Donate and Receive a Life Token**
 
-Once the potential life donor visits the community donation center, they will need to complete the eligibility criteria for the specific donation. This will be handled as usual in person at the donation center before a blood donation. The donation center will also be able to post pre-requisites on their profile page so the potential donor can decide if they meet the criteria before visiting.  
+Once the potential life donor visits the community donation center, they will need to complete the eligibility criteria for the specific donation. This will be handled as usual in person at the donation center before a blood donation. The donation center will also be able to post pre-requisites on their profile page so the potential donor can decide if they meet the criteria before visiting.
 
-If the potential donor is deemed eligible by the donation center, they can proceed with the blood donation and are referred to as eligible life donor. Once completed, the donation center can certify the completion by minting a **life token** valid in their specific community. The donor will receive the life token from the donation center to the QR code displayed through the application.  Once a life token is received in a donor's account,  the life token becomes redeemable with a sponsor.  
-
+If the potential donor is deemed eligible by the donation center, they can proceed with the blood donation and are referred to as eligible life donor. Once completed, the donation center can certify the completion by minting a **life token** valid in their specific community. The donor will receive the life token from the donation center to the QR code displayed through the application. Once a life token is received in a donor's account, the life token becomes redeemable with a sponsor.
 
 | Blood Urgency Level | Tokens Issued |
-|---|---|
-| 1 - Low | 1 |
-| 2 - Medium | 2 |
-| 3 - High | 3 |
+| ------------------- | ------------- |
+| 1 - Low             | 1             |
+| 2 - Medium          | 2             |
+| 3 - High            | 3             |
 
-**Note:**  A limit of 10,000 LIFE tokes has been placed on the amount of life tokens for each community. 
+**Note:** A limit of 10,000 LIFE tokes has been placed on the amount of life tokens for each community.
 
 **3) Redeeming a life token with a sponsor**
 
-An eligible life donor can redeem their life token with a sponsor.  The user can log into the Lifebank app to find the sponsor's general information, opening hours, and what they offer in exchange for a life token.   Once they decide on a sponsor where they would like to redeem the life token, they can go to the physical location or visit their website if the business is an e-commerce enabled business.  At checkout,  the eligible donor will be prompted to transfer the life token to the sponsor to redeem the offer.  Once the transfer is complete, the sponsor provides the offer to the donor, and the life token transfers to the sponsor's account.  Once a donation token receipt is received into a sponsor account, the life token is only transferable to other lifebank accounts.  
-
+An eligible life donor can redeem their life token with a sponsor. The user can log into the Lifebank app to find the sponsor's general information, opening hours, and what they offer in exchange for a life token. Once they decide on a sponsor where they would like to redeem the life token, they can go to the physical location or visit their website if the business is an e-commerce enabled business. At checkout, the eligible donor will be prompted to transfer the life token to the sponsor to redeem the offer. Once the transfer is complete, the sponsor provides the offer to the donor, and the life token transfers to the sponsor's account. Once a donation token receipt is received into a sponsor account, the life token is only transferable to other lifebank accounts.
 
 ### Lifebank User Flow
 
 [![clinic user flow](./docs/clinic-user-flow.png)](./docs/clinic-user-flow.png)
 **[See Donation Center User Flow on Zeplin](https://zpl.io/amAMKdQ)**
 
+1. **Register as a Lifebank**
 
-1) **Register as a Lifebank**
-
-A donation center, defined in the terms of participation as a center that is regulated and licensed to receive blood donations, can register as a Lifebank using the Lifebank application. The donation center user will be directed from the landing page to register as a Lifebank using their credentials. The donation center user will then need to review and sign the terms of participation in order to create an account and testify that they meet the criteria. Once an account is created, the donation center user may display all the information relevant to receiving donations like location, opening hours, eligibility criteria, etc on their Lifebank profile.  The donation center must indicate the amount of donation token receipts they are currently willing to issue per donation. 
+A donation center, defined in the terms of participation as a center that is regulated and licensed to receive blood donations, can register as a Lifebank using the Lifebank application. The donation center user will be directed from the landing page to register as a Lifebank using their credentials. The donation center user will then need to review and sign the terms of participation in order to create an account and testify that they meet the criteria. Once an account is created, the donation center user may display all the information relevant to receiving donations like location, opening hours, eligibility criteria, etc on their Lifebank profile. The donation center must indicate the amount of donation token receipts they are currently willing to issue per donation.
 
 **2) Verifying a Eligible Life Donor and receiving a qualified blood donation**
 
-Once a potential life donor visits a Lifebank,  they must first pass the qualifying requirements set by each donation center.  This is usually done by a simple questionnaire about the person and medical history.  No information related to the donor will be provided to the Lifebank app.  If the potential life donor is qualified to donate, they can proceed with a qualified blood donation (QBD) as defined in the terms of participation signed by the donation center.  The potential donor user will now be eligible to receive a life token and be referred to as an eligible life donor.  
+Once a potential life donor visits a Lifebank, they must first pass the qualifying requirements set by each donation center. This is usually done by a simple questionnaire about the person and medical history. No information related to the donor will be provided to the Lifebank app. If the potential life donor is qualified to donate, they can proceed with a qualified blood donation (QBD) as defined in the terms of participation signed by the donation center. The potential donor user will now be eligible to receive a life token and be referred to as an eligible life donor.
 
-3) **Issuing a Life Token and transferring to a Eligible Life Donor**
+3. **Issuing a Life Token and transferring to a Eligible Life Donor**
 
-Once a eligible life donor completes a qualified blood donation, the Lifebank will acknowledge the event by issuing a Life Token. The eligible life donor will present a QR code representing their Lifebank account and the donation center will transfer the Life Token by scanning the QR code.  If the Life token has an expiry date,  the transfer from the Lifebank to the eligible life donor will mark the beginning of the term.  
+Once a eligible life donor completes a qualified blood donation, the Lifebank will acknowledge the event by issuing a Life Token. The eligible life donor will present a QR code representing their Lifebank account and the donation center will transfer the Life Token by scanning the QR code. If the Life token has an expiry date, the transfer from the Lifebank to the eligible life donor will mark the beginning of the term.
 
 ### Sponsor User Flow
 
@@ -175,19 +169,17 @@ Once a eligible life donor completes a qualified blood donation, the Lifebank wi
 
 **[Sponsor User Flow on Zeplin](https://zpl.io/a8o9kq6)**
 
-
 **1) Register as a Sponsor**
 
-A local business or organization can register to become a sponsor on the Lifebank application.  The user will be prompted from a landing page to review and accept the terms of participation.  Once accepted, the user will be able to create a profile to enter general information, location, hours of operation, products, services and offer a value proposition in exchange for a life token.  
+A local business or organization can register to become a sponsor on the Lifebank application. The user will be prompted from a landing page to review and accept the terms of participation. Once accepted, the user will be able to create a profile to enter general information, location, hours of operation, products, services and offer a value proposition in exchange for a life token.
 
 **2) Accessing the dashboard**
 
-Once a participating business has completed the registration process, they will be able to access the Lifebank dashboard. The dashboard will show the balance of life token received over time, their current value proposition offer and a toggle to redeem life tokens.  If a eligible life donor  wishes to redeem a life token, the sponsor would access the redeem option on the dashboard. 
+Once a participating business has completed the registration process, they will be able to access the Lifebank dashboard. The dashboard will show the balance of life token received over time, their current value proposition offer and a toggle to redeem life tokens. If a eligible life donor wishes to redeem a life token, the sponsor would access the redeem option on the dashboard.
 
 **3) Accepting a Life Token**
 
-A registered sponsor can accept life tokens from any eligible life donor that wishes to buy goods or services as defined in the terms of participation.  When a eligible life donor makes a qualifying purchase as displayed on the sponsor's Lifebank profile, the eligible donor can redeem a life token in exchange for the value proposition as specified by the sponsor.   To redeem a life token,  the sponsor must show their sponsor account QR code as displayed on the application to the eligible life donor wishing the make a purchase.  The donor will scan the QR code and transfer the life token from their account to the sponsor account.  Once received in the sponsor account, the community donation token receipt is considered redeemed and is non-transferable. If the life token has an expiry date,  the transfer from the eligible donor to the participating business will mark the end of the term.  The end of the term must come before the expiry date.  
-
+A registered sponsor can accept life tokens from any eligible life donor that wishes to buy goods or services as defined in the terms of participation. When a eligible life donor makes a qualifying purchase as displayed on the sponsor's Lifebank profile, the eligible donor can redeem a life token in exchange for the value proposition as specified by the sponsor. To redeem a life token, the sponsor must show their sponsor account QR code as displayed on the application to the eligible life donor wishing the make a purchase. The donor will scan the QR code and transfer the life token from their account to the sponsor account. Once received in the sponsor account, the community donation token receipt is considered redeemed and is non-transferable. If the life token has an expiry date, the transfer from the eligible donor to the participating business will mark the end of the term. The end of the term must come before the expiry date.
 
 ## Sign Up
 
@@ -197,7 +189,7 @@ The register page creates a blockchain account and should help handle key manage
 
 ## How we built it?
 
-Lifebank uses the following technology to create a virtuous circle of value exchange between the three parties — a **donor user, a donation center and a sponsor.** 
+Lifebank uses the following technology to create a virtuous circle of value exchange between the three parties — a **donor user, a donation center and a sponsor.**
 
 ### How to run Lifebank locally
 
@@ -219,9 +211,9 @@ We use **Docker** for all app services
 - **[hapi](./hapi)::** A **NodeJS** back end service for account management, wallet service integration and synchronizing blockchain tables with postgreSQL.
 - **[wallet](./wallet)::** A **keosd** service is running to store all private keys securely and sign transactions.
 - **nginx:** Nginx is a web server which is also used as a reverse proxy to route external traffic to the appropriate services.
- **EOSIO Node:** [https://jungle.eosio.cr](https://jungle.eosio.cr/)
+  **EOSIO Node:** [https://jungle.eosio.cr](https://jungle.eosio.cr/)
 
-*Note: This project is based on our [EOS DApp Boilerplate](https://github.com/eoscostarica/webapp-boilerplate).*
+_Note: This project is based on our [EOS DApp Boilerplate](https://github.com/eoscostarica/webapp-boilerplate)._
 
 ### Test Environment
 
@@ -229,25 +221,29 @@ We are testing this application on the [Jungle TestNet](https://jungletestnet.io
 This UI is currently available at https://lifebank.io  
 We are running webapp and backend services on our own servers on premises in Costa Rica.
 
-## How we use EOSIO Blockchain Technology 
-The App creates EOS accounts for every new user, lifebank manage keys in our own wallet (we plan on making a key pair just for lifebank and giving the users their active or owner  keys as accounts that have been validated as human once they donate blood)
+## How we use EOSIO Blockchain Technology
 
-### Informed Consent Contract [`consent2life`](https://jungle.bloks.io/account/consent2life?loadContract=true&tab=Tables&account=consent2life&scope=consent2life&limit=100)
+The App creates EOS accounts for every new user, lifebank manage keys in our own wallet (we plan on making a key pair just for lifebank and giving the users their active or owner keys as accounts that have been validated as human once they donate blood)
+
+### Informed Consent Contract [`consent2life`](https://jungle3.bloks.io/account/consent2life?loadContract=true&tab=Tables&account=consent2life&scope=consent2life&limit=100)
+
 - manages informed consent onchain from any account to any smart contract for a specific version of the contract (hash derived from ABI)
 - accounts can revoke consent
 - on chain Ricardian contracts are rendered in app for user to review before consent
 
-### Community Contract [`lifebankcode`](https://jungle.bloks.io/account/lifebankcode?loadContract=true&tab=Tables&account=lifebankcode&scope=lifebankcode&limit=100)
+### Community Contract [`lifebankcode`](https://jungle3.bloks.io/account/lifebankcode?loadContract=true&tab=Tables&account=lifebankcode&scope=lifebankcode&limit=100)
+
 - checks for on-chain informed consent
 - manages community membership (donors and sponsors)
 - manages blood demand level of lifebanks to set rate of token issuance
 - users can delete their records from RAM
 - on chain Ricardian contracts are rendered in app for user
 
-### Community Token Contract [`lifebankcoin`](https://jungle.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&account=lifebankcoin&scope=lifebankcoin&limit=100)
+### Community Token Contract [`lifebankcoin`](https://jungle3.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&account=lifebankcoin&scope=lifebankcoin&limit=100)
+
 - checks for on-chain informed consent
-- manages  issuance of LIFE tokens  (only lifebanks can issue based on blood demand level)
-- manages token transfer flow  (lifebank -> donor -> sponsor -> lifebank)
+- manages issuance of LIFE tokens (only lifebanks can issue based on blood demand level)
+- manages token transfer flow (lifebank -> donor -> sponsor -> lifebank)
 - on chain Ricardian contracts are rendered in app for user
 
 ## Hackathon Experience
@@ -267,7 +263,6 @@ The App creates EOS accounts for every new user, lifebank manage keys in our own
 - Use of top-notch technologies
 - Balance of design complexity / time limitations
 
-
 ### What we learned
 
 - Learned more about creating a custom token contract with unique governance rules.
@@ -285,7 +280,6 @@ Lifebank takes a on a life of its own!
 - Track financial donations and issue certain life tokens for those donations.
 - The tracked donation funds would represent the financial demand for life tokens while the outstanding life tokens in the community would represent the supply.
 - Set a pricing algorithm like Bancor to provide a fair market price where sponsors can sell their life tokens in savings to local charities (Red Cross Fund, philanthropists, private donors, etc)
-
 
 ## Contributing
 
