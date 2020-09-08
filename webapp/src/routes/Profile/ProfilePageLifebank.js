@@ -12,7 +12,6 @@ import Link from '@material-ui/core/Link'
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 
-
 const useStyles = makeStyles((theme) => ({
   rowBox: {
     display: 'flex',
@@ -46,7 +45,7 @@ const ProfilePageLifebank = ({ profile }) => {
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
           <Link
-            href={`https://jungle.bloks.io/account/${profile.account}`}
+            href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
             target="_blank"
             rel="noopener"
             color="secondary"

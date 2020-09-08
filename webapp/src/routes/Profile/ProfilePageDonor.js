@@ -13,6 +13,8 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
+import { eosConfig } from '../../config'
+
 const useStyles = makeStyles((theme) => ({
   rowBox: {
     display: 'flex',
@@ -53,7 +55,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
           <Link
-            href={`https://jungle.bloks.io/account/${profile.account}`}
+            href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
             target="_blank"
             rel="noopener"
             color="secondary"
@@ -107,7 +109,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Tokens</Typography>
         <Link
-          href={`https://jungle.bloks.io/account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
+          href={`${eosConfig.BLOCK_EXPLORER_URL}account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
           target="_blank"
           rel="noopener"
           color="secondary"
