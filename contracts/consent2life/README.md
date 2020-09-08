@@ -8,7 +8,7 @@
 - All users must also have a way of revoking their consent.
 - Ricardian Clauses included for each terms of service consent.
 
-The Smart Contract is code deployed under the account [consent2life](https://jungle.bloks.io/account/consent2life).
+The Smart Contract is code deployed under the account [consent2life](https://jungle3.bloks.io/account/consent2life).
 
 Informed consent table must have :
 

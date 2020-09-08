@@ -1,11 +1,12 @@
 # lifebankcode
 
 ## Community Contract [lifebankcode](https://github.com/eoscostarica/lifebank/tree/master/contracts/lifebankcode)
-A community represents one or more  **blood banks** in a given region. A community must have at least one clinic, upon creating a community you must then register a clinic. Each community has its own token symbol name.
+
+A community represents one or more **blood banks** in a given region. A community must have at least one clinic, upon creating a community you must then register a clinic. Each community has its own token symbol name.
 
 Only registered donation centers can invite new donation centers in the same region to join the same community.
 
-The  Smart Contract is code deployed under the account [lifebankcode](https://jungle.bloks.io/account/lifebankcode).  
+The Smart Contract is code deployed under the account [lifebankcode](https://jungle3.bloks.io/account/lifebankcode).
 
 ### **Create a community**
 
@@ -15,7 +16,6 @@ A community represents one or more **community donation centers** **(CDC)** in
 
 - token symbol name
 - country
-
 
 ### Register as a Community Donation Center (CDC)
 
@@ -35,7 +35,6 @@ A CDC must have :
 - eligibility requirements to donate at that location? (General Eligibility Quiz)
 - immunity test?
 - blood inventory?
-
 
 **CDCs Verify Qualified Blood Donations (mint and transfer tokens)**
 
