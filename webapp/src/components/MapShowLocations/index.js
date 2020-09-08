@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import mapboxgl, { Marker } from 'mapbox-gl'
+import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
@@ -19,11 +19,11 @@ import Modal from '@material-ui/core/Modal';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import { mapboxConfig } from '../../config'
+import { mapboxConfig, constants } from '../../config'
 import MapMarker from '../MapMarker'
 import MapPopup from '../MapPopup'
 import { GET_NEARBY_LOCATIONS_QUERY } from '../../gql'
-import { constants } from '../../config'
+
 
 const initialZoom = 12.5
 var map = null
@@ -106,7 +106,7 @@ function MapShowLocations({ location, ...props }) {
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
-    if (event.target.name == "checkedLifebank") {
+    if (event.target.name === "checkedLifebank") {
       if (checkLifebank) {
         checkLifebank = false
       } else {
@@ -224,23 +224,23 @@ function MapShowLocations({ location, ...props }) {
         var markertemp = new mapboxgl.Marker(markerNode)
         markertemp.setLngLat(coordinates)
         markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
-        //markertemp.addTo(map)
 
-        if (type == "SPONSOR") {
+
+        if (type === "SPONSOR") {
           if (checkSponsor) {
-            if (filterSponsorcategory == "All") {
+            if (filterSponsorcategory === "All") {
               markertemp.addTo(map)
               markerList.push(markertemp)
             }
             else {
-              if (info.bussines_type == filterSponsorcategory) {
+              if (info.bussines_type === filterSponsorcategory) {
                 markertemp.addTo(map)
                 markerList.push(markertemp)
               }
             }
           }
         }
-        else { //LIFE_BANK
+        else {
           if (checkLifebank) {
             markertemp.addTo(map)
             markerList.push(markertemp)
@@ -271,13 +271,13 @@ function MapShowLocations({ location, ...props }) {
           .search(query.toLowerCase()) !== -1
       ) {
         if (feature.properties.type == "LIFE_BANK") {
-          feature['place_name'] = '🩸 ' + feature.properties.title;
+          feature.place_name = '🩸 ' + feature.properties.title;
         }
         else {
-          feature['place_name'] = '🏬 ' + feature.properties.title;
+          feature.place_name = '🏬 ' + feature.properties.title;
         }
-        feature['center'] = feature.geometry.coordinates;
-        feature['place_type'] = [feature.properties.type];
+        feature.center = feature.geometry.coordinates;
+        feature.place_type = [feature.properties.type];
         matchingFeatures.push(feature);
       }
     }
@@ -400,7 +400,7 @@ function MapShowLocations({ location, ...props }) {
   return (
     <Box>
       <Box ref={mapContainerRef} {...props} >
-        <FilterModalComp></FilterModalComp>
+        <FilterModalComp />
       </Box>
     </Box>
   )
