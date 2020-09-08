@@ -16,6 +16,8 @@ import * as m from 'moment-timezone'
 import moment from 'moment'
 
 import { GET_SPONSOR_OFFERS_QUERY } from '../../gql'
+import OfferDetails from './OfferDetails'
+import AddOffer from './AddOffer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +45,8 @@ const OffersManagement = () => {
   const classes = useStyles()
   const [offers, setOffers] = useState(undefined)
   const timezone = moment.tz.guess()
+  const [open, setOpen] = useState(false)
+  const [clickedOffer, setClickedOffer] = useState()
 
   const { refetch: getSponsorOffers } = useQuery(GET_SPONSOR_OFFERS_QUERY, {
     variables: {
@@ -60,6 +64,7 @@ const OffersManagement = () => {
       data && setOffers(data.offer)
     }
     getOffers()
+    console.log('update')
   }, [getSponsorOffers])
 
   const Actions = () => (
@@ -75,11 +80,10 @@ const OffersManagement = () => {
     </FormControl>
   )
 
-  const DetailsBtn = () => (
-    <IconButton aria-label="delete">
-      <MoreHorizIcon />
-    </IconButton>
-  )
+  const handleOpenClick = (offer) => {
+    setOpen(true)
+    setClickedOffer(offer)
+  }
 
   return (
     <Grid container spacing={2} className={classes.root}>
@@ -96,11 +100,19 @@ const OffersManagement = () => {
                 .tz(timezone)
                 .format('DD MMMM YYYY, h:mm:ss a z'),
               Actions,
-              DetailsBtn
+              <IconButton
+                onClick={() => handleOpenClick(offer)}
+                aria-label="delete"
+              >
+                <MoreHorizIcon />
+              </IconButton>
             ])}
             columns={columns}
           />
         )}
+        {open ? (
+          <OfferDetails offer={clickedOffer} open={open} setOpen={setOpen} />
+        ) : null}
       </Grid>
       <Fab
         size="medium"

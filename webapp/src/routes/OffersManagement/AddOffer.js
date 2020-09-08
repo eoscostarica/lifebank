@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
@@ -17,7 +17,6 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import MenuItem from '@material-ui/core/MenuItem'
-import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 import {
   MuiPickersUtilsProvider,
@@ -25,6 +24,8 @@ import {
 } from '@material-ui/pickers'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
+import CarouselComponent from '../../components/Carousel'
+
 import { CREATE_OFFER_MUTATION, PROFILE_ID_QUERY } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
@@ -60,10 +61,6 @@ const useStyles = makeStyles((theme) => ({
   addButtonContainer: {
     textAlign: 'center',
     marginTop: '5px'
-  },
-  carouselPictureContainer: {
-    maxHeight: '440px',
-    maxWidth: '600px'
   }
 }))
 
@@ -99,7 +96,7 @@ const LimitationHandling = ({
           <KeyboardDatePicker
             inputVariant="outlined"
             margin="normal"
-            id="date-picker-dialog"
+            id="start-date-picker-dialog"
             label="Select start offer date"
             format="MM/dd/yyyy"
             value={selectedStartDate}
@@ -108,13 +105,13 @@ const LimitationHandling = ({
               setSelectedStartDate(date)
             }}
             KeyboardButtonProps={{
-              'aria-label': 'change date'
+              'aria-label': 'Start date'
             }}
           />
           <KeyboardDatePicker
             inputVariant="outlined"
             margin="normal"
-            id="date-picker-dialog"
+            id="end-date-picker-dialog"
             label="Select end offer date"
             format="MM/dd/yyyy"
             value={selectedEndDate}
@@ -123,7 +120,7 @@ const LimitationHandling = ({
               setSelectedEndDate(date)
             }}
             KeyboardButtonProps={{
-              'aria-label': 'change date'
+              'aria-label': 'End date'
             }}
           />
         </Grid>
@@ -140,7 +137,6 @@ const AddOffer = () => {
     online_only: true
   })
   const imgUrlValueRef = useRef('')
-  const [actualImageIndex, setActualImageIndex] = useState(0)
   const [
     createOffer,
     {
@@ -298,50 +294,7 @@ const AddOffer = () => {
           Add image url
         </Button>
       </Box>
-      {offer.images.length > 0 && (
-        <Box borderRadius="8px" boxShadow={2}>
-          <Carousel
-            value={actualImageIndex}
-            onChange={(val) => setActualImageIndex(val)}
-            plugins={[
-              'infinite',
-              'arrows',
-              {
-                resolve: slidesToShowPlugin,
-                options: {
-                  numberOfSlides: 2
-                }
-              }
-            ]}
-          >
-            {offer.images.map &&
-              offer.images.map((url, key) => (
-                <Box key={key} className={classes.carouselPictureContainer}>
-                  <img
-                    className={classes.imgDot}
-                    src={url}
-                    key={key}
-                    alt={`${key}`}
-                  />
-                </Box>
-              ))}
-          </Carousel>
-          <Box display="flex" justifyContent="center" alignContent="center">
-            <Button
-              disabled={actualImageIndex === 0}
-              onClick={() => setActualImageIndex(actualImageIndex - 1)}
-            >
-              Prev
-            </Button>
-            <Button
-              disabled={actualImageIndex === offer.images.length - 1}
-              onClick={() => setActualImageIndex(actualImageIndex + 1)}
-            >
-              Next
-            </Button>
-          </Box>
-        </Box>
-      )}
+      {offer.images.length > 0 && <>{offer.images && <CarouselComponent />} </>}
       <Box style={{ marginTop: '10px' }} className={classes.addButtonContainer}>
         <Button
           disabled={
@@ -370,3 +323,5 @@ LimitationHandling.defaultProps = {}
 AddOffer.propTypes = {}
 
 AddOffer.defaultProps = {}
+
+export default AddOffer
