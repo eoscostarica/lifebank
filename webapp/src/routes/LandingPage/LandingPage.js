@@ -208,7 +208,7 @@ const LandingPage = () => {
           Find a Lifebank or sponsor near you.
         </Typography>
 
-        <MapStatic></MapStatic>
+        <MapStatic />
 
         <Typography variant="h5">How Lifebank works</Typography>
         <Typography variant="body1">

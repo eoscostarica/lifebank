@@ -11,8 +11,7 @@ import Link from '@material-ui/core/Link'
 
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
-//import MapEditLocation from '../../components/MapEditLocation'
-import { constants } from '../../config'
+
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {

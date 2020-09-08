@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   mapOverlay: {
     position: "absolute",
     top: 110,
-    ['@media only screen and (max-width: 900px)']: {
+    '@media only screen and (max-width: 900px)': {
       top: 120,
     },
     right: 10,
@@ -159,7 +159,7 @@ function MapShowLocations({ location, ...props }) {
   })
 
   const loadPointData = (name, type, coordinates) => {
-    customData['features'].push(
+    customData.features.push(
       {
         'type': 'Feature',
         'properties': {
@@ -175,7 +175,7 @@ function MapShowLocations({ location, ...props }) {
   }
 
   const claerPointsData = () => {
-    customData['features'] = []
+    customData.features = []
     markerList = []
   }
 
@@ -270,7 +270,7 @@ function MapShowLocations({ location, ...props }) {
           .toLowerCase()
           .search(query.toLowerCase()) !== -1
       ) {
-        if (feature.properties.type == "LIFE_BANK") {
+        if (feature.properties.type === "LIFE_BANK") {
           feature.place_name = '🩸 ' + feature.properties.title;
         }
         else {
