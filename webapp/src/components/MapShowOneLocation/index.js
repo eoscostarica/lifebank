@@ -5,7 +5,6 @@ import mapboxgl from 'mapbox-gl'
 import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
 
-
 import { mapboxConfig } from '../../config'
 import MapMarker from '../MapMarker'
 import MapPopup from '../MapPopup'
@@ -27,7 +26,6 @@ function MapShowOneLocation({ markerLocation, ...props }) {
     },
     skip: true
   })
-
 
   const loadMarkersEvent = async () => {
 

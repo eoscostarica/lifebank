@@ -8,10 +8,9 @@ import CloseIcon from '@material-ui/icons/Close'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
+
 import { mapboxConfig } from '../../config'
-
 import MapShowLocations from '../MapShowLocations'
-
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -81,12 +80,12 @@ const MapStatic = () => {
   }
 
   const LoadMap = () => {
-    var windowSize = window.innerWidth
-    var heightMap = windowSize / 2
+    let windowSize = window.innerWidth
+    let heightMap = windowSize / 2
     if (windowSize > 1280) {
       windowSize = 1280
     }
-    var api = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-84.0556371,9.9195872,7/" + windowSize.toString() + "x" + heightMap.toString() + "?access_token=" + mapboxConfig.accessToken
+    let api = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-84.0556371,9.9195872,7/" + windowSize.toString() + "x" + heightMap.toString() + "?access_token=" + mapboxConfig.accessToken
 
     return (
       <img src={api} onClick={handleOpen} />
@@ -97,8 +96,7 @@ const MapStatic = () => {
     <>
       <LoadMap />
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
+        aria-labelledby="show-location-map"
         className={classes.modal}
         open={open}
         onClose={handleOpen}
