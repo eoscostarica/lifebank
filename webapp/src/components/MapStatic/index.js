@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
-import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import SearchIcon from '@material-ui/icons/Search'
 import { mapboxConfig } from '../../config'
 
 import MapShowLocations from '../MapShowLocations'
@@ -46,8 +42,6 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyWrapper: {
     height: "90vh",
-    /*padding: theme.spacing(0, 2),
-    */
     '& h3': {
       textAlign: 'center',
       padding: 8,
@@ -78,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const MapStatic = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
+const MapStatic = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -95,14 +89,13 @@ const MapStatic = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
     var api = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-84.0556371,9.9195872,7/" + windowSize.toString() + "x" + heightMap.toString() + "?access_token=" + mapboxConfig.accessToken
 
     return (
-      <img src={api} onClick={handleOpen}></img>
+      <img src={api} onClick={handleOpen} />
     )
   }
 
   return (
     <>
-
-      <LoadMap></LoadMap>
+      <LoadMap />
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -139,6 +132,5 @@ const MapStatic = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
     </>
   )
 }
-
 
 export default MapStatic

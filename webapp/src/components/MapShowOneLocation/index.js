@@ -1,11 +1,10 @@
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import mapboxgl, { Marker } from 'mapbox-gl'
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+import mapboxgl from 'mapbox-gl'
 import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
-import { makeStyles } from '@material-ui/styles'
+
 
 import { mapboxConfig } from '../../config'
 import MapMarker from '../MapMarker'
@@ -62,7 +61,7 @@ function MapShowOneLocation({ markerLocation, ...props }) {
           popupNode
         )
 
-        if (coordinates[0] == markerLocation.longitude && coordinates[1] == markerLocation.latitude) {
+        if (coordinates[0] === markerLocation.longitude && coordinates[1] === markerLocation.latitude) {
           var markertemp = new mapboxgl.Marker(markerNode)
           markertemp.setLngLat(coordinates)
           markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
@@ -96,8 +95,7 @@ function MapShowOneLocation({ markerLocation, ...props }) {
   }, [getNearbyLocations, markerLocation.longitude, markerLocation.latitude])
 
   return (
-    <Box ref={mapContainerRef} {...props} ></Box>
-
+    <Box ref={mapContainerRef} {...props} />
   )
 }
 

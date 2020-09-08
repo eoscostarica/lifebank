@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button'
 
 import { useUser } from '../../context/user.context'
 import CustomRouterLink from '../../components/CustomRouterLink'
-import MapShowLocations from '../../components/MapShowLocations'
 import MapStatic from '../../components/MapStatic'
 import mobileBgImage from '../../assets/the-world.png'
 import bgImage from '../../assets/lifebank-hero-bg.png'
@@ -209,9 +208,6 @@ const LandingPage = () => {
           Find a Lifebank or sponsor near you.
         </Typography>
 
-        {/*
-        <MapShowLocations className={classes.mapBox} />
-        */ }
         <MapStatic></MapStatic>
 
         <Typography variant="h5">How Lifebank works</Typography>

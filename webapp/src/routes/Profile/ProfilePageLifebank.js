@@ -10,14 +10,9 @@ import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 
 import Schedule from '../../components/Schedule'
-import MapShowLocations from '../../components/MapShowLocations'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
-import MapEditLocation from '../../components/MapEditLocation'
+//import MapEditLocation from '../../components/MapEditLocation'
 import { constants } from '../../config'
-
-const {
-  LOCATION_TYPES: { LIFE_BANK }
-} = constants
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -151,7 +146,7 @@ const ProfilePageLifebank = ({ profile }) => {
         py={2}
       />
 
-      {/*Edit location
+      { /* Edit location
       <MapEditLocation
         markerLocation={JSON.parse(profile.location)}
         /*onGeolocationChange={handleOnGeolocationChange}
@@ -160,7 +155,7 @@ const ProfilePageLifebank = ({ profile }) => {
         height={400}
         mb={1}
       />
-      */}
+      */ }
 
       <Divider className={classes.divider} />
       <LinkRouter to="/edit-profile" className={classes.editBtn}>

@@ -14,8 +14,8 @@ import Fade from '@material-ui/core/Fade'
 import SearchIcon from '@material-ui/icons/Search'
 
 import MapShowLocations from '../MapShowLocations'
-import SponsorSvg from './LocatorSponsor.js'
-import LifeBankSvg from './LocatorDonators.js'
+// import SponsorSvg from './LocatorSponsor.js'
+// import LifeBankSvg from './LocatorDonators.js'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   bodyWrapper: {
-    height: '90%',
     height: "5vh",
     '& h3': {
       textAlign: 'center',

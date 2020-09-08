@@ -85,6 +85,7 @@ function MapEditLocation({
 
 MapEditLocation.propTypes = {
   onGeolocationChange: PropTypes.func,
+  markerLocation: PropTypes.object,
   markerType: PropTypes.oneOf([SPONSOR, LIFE_BANK]),
   props: PropTypes.object
 }
