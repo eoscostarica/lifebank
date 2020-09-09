@@ -1,16 +1,15 @@
-
 ## Life Token Contract [lifebankcoin](https://github.com/eoscostarica/lifebank/tree/master/contracts/lifebankcoin)
 
 Donation Centers Verify Blood Donation (mint and transfer tokens)
-Donation Center Account must verify that action of donating blood was completed , once a donor donates blood he/she will receive a token 
+Donation Center Account must verify that action of donating blood was completed , once a donor donates blood he/she will receive a token
 
 > `donor` account type receives token from `clinic` account type and may ONLY transfer token to `sponsor` account types.
 
-The  Smart Contract is code deployed under the account [lifebankcoin](https://jungle.bloks.io/account/lifebankcoin).
+The Smart Contract is code deployed under the account [lifebankcoin](https://jungle3.bloks.io/account/lifebankcoin).
 
 ### Set a max yearly supply of life tokens per community to avoid abuse of blood demand level.
 
-A community may agree to set a limit cap on the supply of active community life tokens a community can have outstanding at any given time to avoid abuse of blood demand levels.  This can be done at the creation of the community or updated periodically by the community donation centers? 
+A community may agree to set a limit cap on the supply of active community life tokens a community can have outstanding at any given time to avoid abuse of blood demand levels. This can be done at the creation of the community or updated periodically by the community donation centers?
 
 (should be a constant somewhere in the code)
 
