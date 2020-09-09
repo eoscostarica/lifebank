@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
+
+import Schedule from '../../components/Schedule'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -84,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const EditProfileBank = ({ profile, onSubmit, loading }) => {
+const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
   const classes = useStyles()
   const [user, setUser] = useState({
     description: profile.description,
@@ -121,6 +123,11 @@ const EditProfileBank = ({ profile, onSubmit, loading }) => {
     }
   }
 
+  const handleOnAddSchedule = useCallback(
+    (data) => handleSetField('schedule', JSON.stringify(data)),
+    [setField]
+  )
+
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
   }
@@ -141,17 +148,45 @@ const EditProfileBank = ({ profile, onSubmit, loading }) => {
           onChange={(event) => handleSetField('name', event.target.value)}
         />
         <TextField
-          id="email"
-          label="Email"
+          id="phone-number"
+          label="Phone number"
           fullWidth
-          placeholder="Your Email"
-          defaultValue={user.email}
           variant="outlined"
+          placeholder="Add Phone Number LifeBank"
+          defaultValue={user.phone_number}
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(event) => handleSetField('email', event.target.value)}
+          onChange={(event) => handleSetField('phone_number', event.target.value)}
         />
+        <TextField
+          id="address"
+          label="Address"
+          fullWidth
+          variant="outlined"
+          placeholder="Add Address Your LifeBank"
+          defaultValue={user.address}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(event) => handleSetField('address', event.target.value)}
+        />
+        <TextField
+          id="description"
+          label="About"
+          fullWidth
+          variant="outlined"
+          placeholder="About Your LifeBank"
+          defaultValue={user.description}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(event) => handleSetField('description', event.target.value)}
+        />
+
+        <Box width="100%" className={classes.textField}>
+          <Schedule buttonText={"Edit Schedule"} scheduleLoad={user.schedule} handleOnAddSchedule={handleOnAddSchedule} />
+        </Box>
         <Typography variant="h4">Blood Demand Level</Typography>
         <Typography variant="body1" className={classes.text}>
           Drag or tap to the demand level that represent your Lifebank actual
