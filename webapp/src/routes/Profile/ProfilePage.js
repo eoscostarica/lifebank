@@ -16,11 +16,11 @@ import {
   NOTIFICATION_SUBSCRIPTION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
-
 import ProfilePageDonor from './ProfilePageDonor'
 import ProfilePageGuest from './ProfilePageGuest'
 import ProfilePageLifebank from './ProfilePageLifebank'
 import ProfilePageSponsor from './ProfilePageSponsor'
+import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -117,7 +117,7 @@ const ProfilePage = () => {
         <>
           Transaction{' '}
           <Link
-            href={`https://jungle.bloks.io/transaction/${
+            href={`${eosConfig.BLOCK_EXPLORER_URL}transaction/${
               lastConsentChange === 'grant'
                 ? grantConsentResult.transaction_id
                 : revokeConsentResult.transaction_id

@@ -1,3 +1,4 @@
+const { eosConfig } = require('../config')
 const {
   eosUtils,
   jwtUtils,

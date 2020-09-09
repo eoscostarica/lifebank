@@ -1,7 +1,7 @@
 FROM ubuntu:18.04 as install-stage
 
 ENV WORK_DIR /opt/application
-ENV EOSIO_PACKAGE_URL https://github.com/eosio/eos/releases/download/v2.0.5/eosio_2.0.5-1-ubuntu-18.04_amd64.deb
+ENV EOSIO_PACKAGE_URL https://github.com/eosio/eos/releases/download/v2.0.7/eosio_2.0.7-1-ubuntu-18.04_amd64.deb
 
 # Install wget
 RUN apt-get update && apt-get install -y wget
