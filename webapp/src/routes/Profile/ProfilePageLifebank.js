@@ -12,6 +12,8 @@ import Link from '@material-ui/core/Link'
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 
+const { eosConfig } = require('../../config')
+
 const useStyles = makeStyles((theme) => ({
   rowBox: {
     display: 'flex',

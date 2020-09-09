@@ -80,12 +80,12 @@ const MapStatic = () => {
   }
 
   const LoadMap = () => {
-    let windowSize = window.innerWidth
-    let heightMap = windowSize / 2
+    const windowSize = window.innerWidth
+    const heightMap = windowSize / 2
     if (windowSize > 1280) {
       windowSize = 1280
     }
-    let api = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-84.0556371,9.9195872,7/" + windowSize.toString() + "x" + heightMap.toString() + "?access_token=" + mapboxConfig.accessToken
+    const api = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-84.0556371,9.9195872,7/" + windowSize.toString() + "x" + heightMap.toString() + "?access_token=" + mapboxConfig.accessToken
 
     return (
       <img src={api} onClick={handleOpen} />
