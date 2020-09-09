@@ -185,7 +185,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
 
         <Box width="100%" className={classes.textField}>
-          <Schedule buttonText={"Edit Schedule"} scheduleLoad={user.schedule} handleOnAddSchedule={handleOnAddSchedule} />
+          <Schedule buttonText="Edit Schedule" scheduleLoad={user.schedule} handleOnAddSchedule={handleOnAddSchedule} />
         </Box>
         <Typography variant="h4">Blood Demand Level</Typography>
         <Typography variant="body1" className={classes.text}>
@@ -286,6 +286,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
 EditProfileBank.propTypes = {
   profile: PropTypes.object,
   onSubmit: PropTypes.func,
+  setField: PropTypes.func,
   loading: PropTypes.bool
 }
 
