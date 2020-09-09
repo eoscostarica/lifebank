@@ -80,7 +80,7 @@ const MapStatic = () => {
   }
 
   const LoadMap = () => {
-    const windowSize = window.innerWidth
+    let windowSize = window.innerWidth
     const heightMap = windowSize / 2
     if (windowSize > 1280) {
       windowSize = 1280
