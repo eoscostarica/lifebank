@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3)
   },
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
     color: 'white'
@@ -39,13 +39,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const columns = ['Offer type', 'Start date', 'End date', 'Actions', 'Details']
+const columns = [
+  'Offer type',
+  'Start date',
+  'End date',
+  'Status',
+  'Actions',
+  'Details'
+]
 
 const OffersManagement = () => {
   const classes = useStyles()
   const [offers, setOffers] = useState(undefined)
   const timezone = moment.tz.guess()
   const [open, setOpen] = useState(false)
+  const [openAddOffer, setOpenAddOffer] = useState(false)
   const [clickedOffer, setClickedOffer] = useState()
 
   const { refetch: getSponsorOffers } = useQuery(GET_SPONSOR_OFFERS_QUERY, {
@@ -64,8 +72,8 @@ const OffersManagement = () => {
       data && setOffers(data.offer)
     }
     getOffers()
-    console.log('update')
   }, [getSponsorOffers])
+  console.log(offers)
 
   const Actions = () => (
     <FormControl variant="filled" className={classes.formControl}>
@@ -93,12 +101,13 @@ const OffersManagement = () => {
             title="All registered offers"
             data={offers.map((offer) => [
               offer.offer_type,
-              m(offer.start_date)
-                .tz(timezone)
-                .format('DD MMMM YYYY, h:mm:ss a z'),
-              m(offer.end_date)
-                .tz(timezone)
-                .format('DD MMMM YYYY, h:mm:ss a z'),
+              offer.start_date
+                ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
+                : 'No provided date',
+              offer.end_date
+                ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
+                : 'No provided date',
+              offer.active,
               Actions,
               <IconButton
                 onClick={() => handleOpenClick(offer)}
@@ -108,6 +117,13 @@ const OffersManagement = () => {
               </IconButton>
             ])}
             columns={columns}
+            options={{
+              filter: true,
+              print: false,
+              selectableRowsHideCheckboxes: true,
+              selectableRowsHeader: false,
+              download: false
+            }}
           />
         )}
         {open ? (
@@ -119,9 +135,13 @@ const OffersManagement = () => {
         className={classes.fab}
         color="secondary"
         aria-label="add"
+        onClick={() => setOpenAddOffer(true)}
       >
         <AddIcon />
       </Fab>
+      {openAddOffer ? (
+        <AddOffer open={openAddOffer} setOpen={setOpenAddOffer} />
+      ) : null}
     </Grid>
   )
 }

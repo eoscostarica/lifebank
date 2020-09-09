@@ -4,11 +4,11 @@ export const CREATE_OFFER_MUTATION = gql`
   mutation(
     $limited: Boolean!
     $online_only: Boolean!
-    $quantity: Int!
+    $quantity: Int
     $offer_type: String!
     $description: String!
-    $start_date: String!
-    $end_date: String!
+    $start_date: String
+    $end_date: String
     $images: String!
     $sponsor_id: Int!
   ) {
@@ -34,6 +34,7 @@ export const GET_SPONSOR_OFFERS_QUERY = gql`
   query($sponsor_id: Int!) {
     offer(where: { sponsor_id: { _eq: $sponsor_id } }) {
       id
+      description
       images
       limited
       offer_type

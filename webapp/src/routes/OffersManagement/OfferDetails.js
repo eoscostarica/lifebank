@@ -6,6 +6,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Dialog from '@material-ui/core/Dialog'
+import Paper from '@material-ui/core/Paper'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -20,6 +21,7 @@ import LocationOffIcon from '@material-ui/icons/LocationOff'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import * as m from 'moment-timezone'
 import moment from 'moment'
+
 import CarouselComponent from '../../components/Carousel'
 
 const Transition = forwardRef((props, ref) => {
@@ -36,11 +38,19 @@ const useStyles = makeStyles((theme) => ({
     flex: 1
   },
   content: {
-    maxWidth: '100%'
+    maxWidth: '100%',
+    margin: 'auto',
+    marginTop: theme.spacing(3)
   },
   carouselComponent: {
     justifyContent: 'center',
+    justifySelf: 'center'
+  },
+  descriptionContainer: {
     margin: 'auto'
+  },
+  paper: {
+    padding: theme.spacing(3)
   }
 }))
 
@@ -72,32 +82,48 @@ const OfferDetails = ({ offer, open, setOpen }) => {
       </AppBar>
       <Grid container spacing={3} className={classes.content}>
         <Grid item xs={12}>
-          <Typography variant="h6" className={classes.title}>
-            Icon with text
-          </Typography>
+          <Grid
+            item
+            className={classes.descriptionContainer}
+            xs={12}
+            sm={8}
+            md={6}
+            lg={4}
+          >
+            <Paper elevation={0} variant="outlined" className={classes.paper}>
+              <Typography variant="h4" style={{ textAlign: 'center' }}>
+                Description
+              </Typography>
+              <Typography variant="body1">{offer.description}</Typography>
+            </Paper>
+          </Grid>
           <List>
-            <ListItem>
-              <ListItemIcon>
-                <EventAvailableIcon color="secondary" />
-              </ListItemIcon>
-              <ListItemText>
-                <strong>Start date: </strong>
-                {m(offer.start_date)
-                  .tz(timezone)
-                  .format('DD MMMM YYYY, h:mm:ss a z')}
-              </ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <EventBusyIcon color="secondary" />
-              </ListItemIcon>
-              <ListItemText>
-                <strong>End date: </strong>{' '}
-                {m(offer.end_date)
-                  .tz(timezone)
-                  .format('DD MMMM YYYY, h:mm:ss a z')}
-              </ListItemText>
-            </ListItem>
+            {offer.start_date && (
+              <ListItem>
+                <ListItemIcon>
+                  <EventAvailableIcon color="secondary" />
+                </ListItemIcon>
+                <ListItemText>
+                  <strong>Start date: </strong>
+                  {m(offer.start_date)
+                    .tz(timezone)
+                    .format('DD MMMM YYYY, h:mm:ss a z')}
+                </ListItemText>
+              </ListItem>
+            )}
+            {offer.end_date && (
+              <ListItem>
+                <ListItemIcon>
+                  <EventBusyIcon color="secondary" />
+                </ListItemIcon>
+                <ListItemText>
+                  <strong>End date: </strong>{' '}
+                  {m(offer.end_date)
+                    .tz(timezone)
+                    .format('DD MMMM YYYY, h:mm:ss a z')}
+                </ListItemText>
+              </ListItem>
+            )}
             <ListItem>
               <ListItemIcon>
                 <BallotIcon color="secondary" />
@@ -120,8 +146,17 @@ const OfferDetails = ({ offer, open, setOpen }) => {
             </ListItem>
           </List>
         </Grid>
-        <Grid item xs={6} className={classes.carouselComponent}>
-          <CarouselComponent images={JSON.parse(offer.images)} />
+        <Grid container justify="center">
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={6}
+            lg={4}
+            className={classes.carouselComponent}
+          >
+            <CarouselComponent images={JSON.parse(offer.images)} />
+          </Grid>
         </Grid>
       </Grid>
     </Dialog>

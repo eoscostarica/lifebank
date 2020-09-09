@@ -1,7 +1,11 @@
-import React, { useState, useEffect, useRef, Fragment } from 'react'
+import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import Dialog from '@material-ui/core/Dialog'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -15,8 +19,10 @@ import FormControl from '@material-ui/core/FormControl'
 import Checkbox from '@material-ui/core/Checkbox'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import AddIcon from '@material-ui/icons/Add'
 import MenuItem from '@material-ui/core/MenuItem'
+import Slide from '@material-ui/core/Slide'
+import CloseIcon from '@material-ui/icons/Close'
+import AddIcon from '@material-ui/icons/Add'
 import '@brainhubeu/react-carousel/lib/style.css'
 import {
   MuiPickersUtilsProvider,
@@ -24,9 +30,13 @@ import {
 } from '@material-ui/pickers'
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
-import CarouselComponent from '../../components/Carousel'
 
+import CarouselComponent from '../../components/Carousel'
 import { CREATE_OFFER_MUTATION, PROFILE_ID_QUERY } from '../../gql'
+
+const Transition = forwardRef((props, ref) => {
+  return <Slide direction="up" ref={ref} {...props} />
+})
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -60,7 +70,14 @@ const useStyles = makeStyles((theme) => ({
   },
   addButtonContainer: {
     textAlign: 'center',
-    marginTop: '5px'
+    marginTop: theme.spacing(3),
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    color: 'white',
+    flex: 1
   }
 }))
 
@@ -129,14 +146,16 @@ const LimitationHandling = ({
   )
 }
 
-const AddOffer = () => {
+const AddOffer = ({ open, setOpen }) => {
   const classes = useStyles()
+  const [disableUrlInput, setDisableUrlInput] = useState(true)
   const [offer, setOffer] = useState({
     limited: true,
     images: [],
     online_only: true
   })
-  const imgUrlValueRef = useRef('')
+  const imgUrlValueRef = useRef(undefined)
+
   const [
     createOffer,
     {
@@ -167,16 +186,17 @@ const AddOffer = () => {
 
     let images = JSON.stringify(offer.images)
     const sponsor_id = profile.id
+    console.log(images)
 
     createOffer({
       variables: {
         offer_type,
-        online_only,
+        online_only: online_only || false,
         description,
         limited,
-        quantity,
-        start_date,
-        end_date,
+        quantity: quantity || undefined,
+        start_date: start_date || undefined,
+        end_date: end_date || undefined,
         images,
         sponsor_id
       }
@@ -189,125 +209,175 @@ const AddOffer = () => {
   }, [createOfferResult])
 
   return (
-    <form autoComplete="off" className={classes.form}>
-      <Typography variant="h2" style={{ textAlign: 'center' }}>
-        Offers Management
-      </Typography>
-      <FormControl variant="outlined" className={classes.textField}>
-        <InputLabel id="bussines-type-label">Select offer type</InputLabel>
-        <Select
-          labelId="offer-type-label"
-          id="offer-type"
-          value={offer.offer_type || ''}
-          onChange={(event) =>
-            setOffer({ ...offer, offer_type: event.target.value })
-          }
-          label="Type"
-        >
-          <MenuItem value="discount">Discount</MenuItem>
-          <MenuItem value="gift">Gift</MenuItem>
-          <MenuItem value="benefit">Benefit</MenuItem>
-          <MenuItem value="other">Other</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={offer.online_only}
+    <Dialog
+      fullScreen
+      open={open}
+      onClose={() => setOpen(false)}
+      TransitionComponent={Transition}
+    >
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={() => setOpen(false)}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h1" className={classes.title}>
+            Add Offer
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <form autoComplete="off" className={classes.form}>
+        <TextField
+          id="offer-name"
+          label="Offer name"
+          variant="outlined"
+          placeholder="Offer name here"
+          fullWidth
+          onChange={(event) => setOffer({ ...offer, name: event.target.value })}
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+        />
+        <FormControl variant="outlined" className={classes.textField}>
+          <InputLabel id="bussines-type-label">Select offer type</InputLabel>
+          <Select
+            labelId="offer-type-label"
+            id="offer-type"
+            value={offer.offer_type || ''}
             onChange={(event) =>
-              setOffer({ ...offer, online_only: event.target.checked })
+              setOffer({ ...offer, offer_type: event.target.value })
             }
-            name="checkedB"
-            color="primary"
-          />
-        }
-        label="Online only"
-      />
-      <TextField
-        id="offer-description"
-        label="Offer description"
-        variant="outlined"
-        placeholder="Description here"
-        fullWidth
-        onChange={(event) =>
-          setOffer({ ...offer, description: event.target.value })
-        }
-        InputLabelProps={{
-          shrink: true
-        }}
-        className={classes.textField}
-      />
-      <FormControl component="fieldset" className={classes.radioGroup}>
-        <Typography variant="h3">Redeem availability</Typography>
-        <RadioGroup
-          aria-label="limitation"
-          value={offer.limited || undefined}
-          onChange={(event) => {
-            setOffer({ ...offer, limited: event.target.value })
-          }}
-        >
-          <FormControlLabel
-            value={'true'}
-            control={<Radio />}
-            label="Limited"
-          />
-          <FormControlLabel
-            value={'false'}
-            control={<Radio />}
-            label="Unlimited"
-          />
-        </RadioGroup>
-        {offer && offer.limited === 'true' && (
-          <LimitationHandling
-            setQuantity={(val) => setOffer({ ...offer, quantity: val })}
-            setStartDate={(val) => setOffer({ ...offer, start_date: val })}
-            setEndDate={(val) => setOffer({ ...offer, end_date: val })}
-            classes={classes}
-          />
-        )}
-      </FormControl>
-      <TextField
-        id="image-url"
-        label="Image url"
-        variant="outlined"
-        placeholder="Image url here"
-        fullWidth
-        inputRef={imgUrlValueRef}
-        InputLabelProps={{
-          shrink: true
-        }}
-        className={classes.textField}
-      />
-      <Box className={classes.addButtonContainer}>
-        <Button
-          onClick={() => {
-            setOffer({
-              ...offer,
-              images: [...offer.images, imgUrlValueRef.current.value]
-            })
-            imgUrlValueRef.current.value = ''
-          }}
-          size="small"
-          color="secondary"
-          startIcon={<AddIcon />}
-        >
-          Add image url
-        </Button>
-      </Box>
-      {offer.images.length > 0 && <>{offer.images && <CarouselComponent />} </>}
-      <Box style={{ marginTop: '10px' }} className={classes.addButtonContainer}>
-        <Button
-          disabled={
-            createOfferLoading || !offer.description || !offer.start_date
+            label="Type"
+          >
+            <MenuItem value="discount">Discount</MenuItem>
+            <MenuItem value="gift">Gift</MenuItem>
+            <MenuItem value="benefit">Benefit</MenuItem>
+            <MenuItem value="other">Other</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={offer.online_only}
+              onChange={(event) =>
+                setOffer({ ...offer, online_only: event.target.checked })
+              }
+              name="checkedB"
+              color="primary"
+            />
           }
-          onClick={handleSubmit}
-          variant="contained"
-          color="primary"
+          label="Online only"
+        />
+        <TextField
+          id="offer-description"
+          label="Offer description"
+          variant="outlined"
+          placeholder="Description here"
+          fullWidth
+          onChange={(event) =>
+            setOffer({ ...offer, description: event.target.value })
+          }
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+        />
+        <FormControl component="fieldset" className={classes.radioGroup}>
+          <Typography variant="h3">Redeem availability</Typography>
+          <RadioGroup
+            aria-label="limitation"
+            value={offer.limited || undefined}
+            onChange={(event) => {
+              setOffer({ ...offer, limited: event.target.value })
+            }}
+          >
+            <FormControlLabel
+              value={'true'}
+              control={<Radio />}
+              label="Limited"
+            />
+            <FormControlLabel
+              value={'false'}
+              control={<Radio />}
+              label="Unlimited"
+            />
+          </RadioGroup>
+          {offer && offer.limited === 'true' && (
+            <LimitationHandling
+              setQuantity={(val) => setOffer({ ...offer, quantity: val })}
+              setStartDate={(val) => setOffer({ ...offer, start_date: val })}
+              setEndDate={(val) => setOffer({ ...offer, end_date: val })}
+              classes={classes}
+            />
+          )}
+        </FormControl>
+        <TextField
+          id="image-url"
+          label="Image url"
+          variant="outlined"
+          placeholder="Image url here"
+          fullWidth
+          inputRef={imgUrlValueRef}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(e) =>
+            setDisableUrlInput(e.target.value.length > 0 ? false : true)
+          }
+          className={classes.textField}
+        />
+        <Box className={classes.addButtonContainer}>
+          <div>
+            {offer.images.length < 1 ? (
+              <Typography variant="caption">
+                You need to add least one image url
+              </Typography>
+            ) : null}
+          </div>
+          <Button
+            onClick={() => {
+              setOffer({
+                ...offer,
+                images: [...offer.images, imgUrlValueRef.current.value]
+              })
+              imgUrlValueRef.current.value = ''
+            }}
+            disabled={disableUrlInput}
+            size="small"
+            color="secondary"
+            startIcon={<AddIcon />}
+          >
+            Add url
+          </Button>
+        </Box>
+        {offer.images.length > 0 && (
+          <>{offer.images && <CarouselComponent images={offer.images} />} </>
+        )}
+        <Box
+          style={{ marginTop: '10px' }}
+          className={classes.addButtonContainer}
         >
-          Submit
-        </Button>
-      </Box>
-    </form>
+          <Button
+            disabled={
+              createOfferLoading ||
+              !offer.description ||
+              !offer.offer_type ||
+              offer.images.length < 1
+            }
+            onClick={handleSubmit}
+            variant="contained"
+            color="primary"
+          >
+            Submit
+          </Button>
+        </Box>
+      </form>
+    </Dialog>
   )
 }
 

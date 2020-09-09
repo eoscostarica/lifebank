@@ -1599,20 +1599,20 @@
   resolved "https://registry.yarnpkg.com/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
   integrity sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q==
 
-"@material-ui/core@^4.9.12":
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.10.0.tgz#e214e8f7981ff7975a918404b94508418642e463"
-  integrity sha512-yVlHe4b8AaoiTHhCOZeszHZ+T2iHU5DncdMGeNcQaaaO+q/Qrq0hxP3iFzTbgjRWnWwftEVQL668GRxcPJVRaQ==
+"@material-ui/core@^4.11.0":
+  version "4.11.0"
+  resolved "https://registry.npmjs.org/@material-ui/core/-/core-4.11.0.tgz#b69b26e4553c9e53f2bfaf1053e216a0af9be15a"
+  integrity sha512-bYo9uIub8wGhZySHqLQ833zi4ZML+XCBE1XwJ8EuUVSpTWWG57Pm+YugQToJNFsEyiKFhPh8DPD0bgupz8n01g==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@material-ui/styles" "^4.10.0"
     "@material-ui/system" "^4.9.14"
     "@material-ui/types" "^5.1.0"
-    "@material-ui/utils" "^4.9.12"
+    "@material-ui/utils" "^4.10.2"
     "@types/react-transition-group" "^4.2.0"
     clsx "^1.0.4"
     hoist-non-react-statics "^3.3.2"
-    popper.js "^1.16.1-lts"
+    popper.js "1.16.1-lts"
     prop-types "^15.7.2"
     react-is "^16.8.0"
     react-transition-group "^4.4.0"
@@ -1683,7 +1683,16 @@
   resolved "https://registry.yarnpkg.com/@material-ui/types/-/types-5.1.0.tgz#efa1c7a0b0eaa4c7c87ac0390445f0f88b0d88f2"
   integrity sha512-7cqRjrY50b8QzRSYyhSpx4WRw2YuO0KKIGQEVk5J8uoz2BanawykgZGoWEqKm7pVIbzFDN0SpPcVV4IhOFkl8A==
 
-"@material-ui/utils@^4.9.12", "@material-ui/utils@^4.9.6":
+"@material-ui/utils@^4.10.2":
+  version "4.10.2"
+  resolved "https://registry.npmjs.org/@material-ui/utils/-/utils-4.10.2.tgz#3fd5470ca61b7341f1e0468ac8f29a70bf6df321"
+  integrity sha512-eg29v74P7W5r6a4tWWDAAfZldXIzfyO1am2fIsC39hdUUHm/33k6pGOKPbgDjg/U/4ifmgAePy/1OjkKN6rFRw==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0"
+
+"@material-ui/utils@^4.9.6":
   version "4.9.12"
   resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-4.9.12.tgz#0d639f1c1ed83fffb2ae10c21d15a938795d9e65"
   integrity sha512-/0rgZPEOcZq5CFA4+4n6Q6zk7fi8skHhH2Bcra8R3epoJEYy5PL55LuMazPtPH1oKeRausDV/Omz4BbgFsn1HQ==
@@ -9475,10 +9484,10 @@ pnp-webpack-plugin@1.5.0:
   dependencies:
     ts-pnp "^1.1.2"
 
-popper.js@^1.16.1-lts:
-  version "1.16.1"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
-  integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
+popper.js@1.16.1-lts:
+  version "1.16.1-lts"
+  resolved "https://registry.npmjs.org/popper.js/-/popper.js-1.16.1-lts.tgz#cf6847b807da3799d80ee3d6d2f90df8a3f50b05"
+  integrity sha512-Kjw8nKRl1m+VrSFCoVGPph93W/qrSO7ZkqPpTf7F4bk/sqcfWK019dWBUpE/fBOsOQY1dks/Bmcbfn1heM/IsA==
 
 portfinder@^1.0.9:
   version "1.0.26"
