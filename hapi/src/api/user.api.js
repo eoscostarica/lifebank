@@ -44,9 +44,8 @@ const SET_NAME = `
 
 const getOne = async (where = {}) => {
   const { user } = await hasuraUtils.request(GET_ONE, { where })
-  if (user && user.length > 0) {
-    return user[0]
-  }
+
+  if (user && user.length > 0) return user[0]
 
   return null
 }

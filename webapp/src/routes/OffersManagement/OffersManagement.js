@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -22,6 +21,7 @@ import {
   UPDATE_OFFER_AVAILABILITY_MUTATION,
   DELETE_OFFER_MUTATION
 } from '../../gql'
+
 import OfferDetails from './OfferDetails'
 import AddOffer from './AddOffer'
 
@@ -82,6 +82,7 @@ const OffersManagement = () => {
 
       data && setOffers(data.offer)
     }
+
     getOffers()
   }, [getSponsorOffers])
 
@@ -126,9 +127,11 @@ const OffersManagement = () => {
   useEffect(() => {
     if (updateOfferResult) {
       const newArr = [...offers]
+
       const indexToUpdate = offers.findIndex(
         (o) => o.id === updateOfferResult.returning[0].id
       )
+
       newArr[indexToUpdate].active = !newArr[indexToUpdate].active
       setOffers(newArr)
 
@@ -163,9 +166,7 @@ const OffersManagement = () => {
   }
 
   const handleClose = (_event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
+    if (reason === 'clickaway') return
 
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
