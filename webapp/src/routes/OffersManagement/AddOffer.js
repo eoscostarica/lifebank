@@ -156,13 +156,9 @@ const AddOffer = ({ open, setOpen }) => {
   })
   const imgUrlValueRef = useRef(undefined)
 
-  const [
-    createOffer,
-    {
-      loading: createOfferLoading,
-      data: { create_offer: createOfferResult } = {}
-    }
-  ] = useMutation(CREATE_OFFER_MUTATION)
+  const [createOffer, { loading: createOfferLoading }] = useMutation(
+    CREATE_OFFER_MUTATION
+  )
 
   const [
     loadProfileID,
@@ -187,7 +183,6 @@ const AddOffer = ({ open, setOpen }) => {
 
     const images = JSON.stringify(offer.images)
     const sponsor_id = profile.id
-    console.log(images)
 
     createOffer({
       variables: {
@@ -205,11 +200,6 @@ const AddOffer = ({ open, setOpen }) => {
       }
     })
   }
-
-  useEffect(() => {
-    if (createOfferResult)
-      console.log('Offer result success ', createOfferResult)
-  }, [createOfferResult])
 
   return (
     <Dialog
