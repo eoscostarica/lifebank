@@ -13,6 +13,7 @@ import DashboardUsers from './DashboardUsers'
 const Dashboard = () => {
   const [currentUser, { logout }] = useUser()
   const history = useHistory()
+  console.log(currentUser)
 
   return (
     <MainContainer

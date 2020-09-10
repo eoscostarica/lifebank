@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
 const ProfilePageSponsor = ({ profile }) => {
   const classes = useStyles()
 
+  console.log(profile)
+
   return (
     <>
       <Box className={classes.rowBox}>
