@@ -19,6 +19,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import BallotIcon from '@material-ui/icons/Ballot'
 import LocationOffIcon from '@material-ui/icons/LocationOff'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
+import ReceiptIcon from '@material-ui/icons/Receipt'
 import * as m from 'moment-timezone'
 import moment from 'moment'
 
@@ -126,6 +127,14 @@ const OfferDetails = ({ offer, open, setOpen }) => {
             )}
             <ListItem>
               <ListItemIcon>
+                <ReceiptIcon color="secondary" />
+              </ListItemIcon>
+              <ListItemText>
+                <strong>Offer type: </strong> {offer.offer_type}
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
                 <BallotIcon color="secondary" />
               </ListItemIcon>
               <ListItemText>
@@ -163,7 +172,7 @@ const OfferDetails = ({ offer, open, setOpen }) => {
   )
 }
 
-OfferDetails.prototype = {
+OfferDetails.propTypes = {
   offer: PropTypes.object,
   open: PropTypes.bool,
   setOpen: PropTypes.func

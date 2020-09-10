@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import { makeStyles } from '@material-ui/core/styles'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
@@ -15,7 +17,11 @@ import IconButton from '@material-ui/core/IconButton'
 import * as m from 'moment-timezone'
 import moment from 'moment'
 
-import { GET_SPONSOR_OFFERS_QUERY } from '../../gql'
+import {
+  GET_SPONSOR_OFFERS_QUERY,
+  UPDATE_OFFER_AVAILABILITY_MUTATION,
+  DELETE_OFFER_MUTATION
+} from '../../gql'
 import OfferDetails from './OfferDetails'
 import AddOffer from './AddOffer'
 
@@ -40,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const columns = [
-  'Offer type',
+  'Offer name',
   'Start date',
   'End date',
   'Status',
@@ -55,6 +61,11 @@ const OffersManagement = () => {
   const [open, setOpen] = useState(false)
   const [openAddOffer, setOpenAddOffer] = useState(false)
   const [clickedOffer, setClickedOffer] = useState()
+  const [openSnackbar, setOpenSnackbar] = useState({
+    show: false,
+    message: '',
+    severity: 'success'
+  })
 
   const { refetch: getSponsorOffers } = useQuery(GET_SPONSOR_OFFERS_QUERY, {
     variables: {
@@ -73,17 +84,75 @@ const OffersManagement = () => {
     }
     getOffers()
   }, [getSponsorOffers])
-  console.log(offers)
 
-  const Actions = () => (
+  const [
+    updateOffer,
+    { data: { update_offer: updateOfferResult } = {} }
+  ] = useMutation(UPDATE_OFFER_AVAILABILITY_MUTATION)
+
+  const [deleteOffer] = useMutation(DELETE_OFFER_MUTATION)
+
+  const handleActionClick = async (action, active, offer_id) => {
+    switch (action) {
+      case 'delete':
+        await deleteOffer({
+          variables: {
+            id: offer_id
+          }
+        })
+        setOffers(offers.filter((offer) => offer.id !== offer_id))
+        break
+      case 'deactivate':
+        await updateOffer({
+          variables: {
+            id: offer_id,
+            active: !active
+          }
+        })
+        break
+      case 'activate':
+        await updateOffer({
+          variables: {
+            id: offer_id,
+            active: !active
+          }
+        })
+        break
+      default:
+        break
+    }
+  }
+
+  useEffect(() => {
+    if (updateOfferResult) {
+      const newArr = [...offers]
+      const indexToUpdate = offers.findIndex(
+        (o) => o.id === updateOfferResult.returning[0].id
+      )
+      newArr[indexToUpdate].active = !newArr[indexToUpdate].active
+      setOffers(newArr)
+
+      setOpenSnackbar({
+        show: true,
+        message: 'Offer availability updated successfully',
+        severity: 'success'
+      })
+    }
+  }, [updateOfferResult])
+
+  const Actions = (active, offer_id) => (
     <FormControl variant="filled" className={classes.formControl}>
-      <InputLabel id="demo-simple-select-label">Action</InputLabel>
+      <InputLabel id="actions-selection-label">Action</InputLabel>
       <Select
-        labelId="demo-simple-select-filled-label"
-        id="demo-simple-select-filled"
+        onClick={(e) => handleActionClick(e.target.value, active, offer_id)}
+        labelId="actions-selection"
+        id="action-select"
       >
-        <MenuItem value={10}>Edit</MenuItem>
-        <MenuItem value={10}>Delete</MenuItem>
+        <MenuItem value="edit">Edit</MenuItem>
+        <MenuItem value="delete">Delete</MenuItem>
+        <MenuItem value={(active ? 'deactivate' : 'activate') || true}>
+          {active ? 'Deactivate' : 'Activate'}
+        </MenuItem>
       </Select>
     </FormControl>
   )
@@ -93,23 +162,32 @@ const OffersManagement = () => {
     setClickedOffer(offer)
   }
 
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
+
   return (
     <Grid container spacing={2} className={classes.root}>
       <Grid item xs={11}>
         {offers && (
           <MUIDataTable
             title="All registered offers"
-            data={offers.map((offer) => [
-              offer.offer_type,
+            data={offers.map((offer, key) => [
+              offer.offer_name,
               offer.start_date
                 ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
                 : 'No provided date',
               offer.end_date
                 ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
                 : 'No provided date',
-              offer.active,
-              Actions,
+              offer.active ? 'Active' : 'Inactive',
+              Actions(offer.active, offer.id),
               <IconButton
+                key={key}
                 onClick={() => handleOpenClick(offer)}
                 aria-label="delete"
               >
@@ -142,6 +220,13 @@ const OffersManagement = () => {
       {openAddOffer ? (
         <AddOffer open={openAddOffer} setOpen={setOpenAddOffer} />
       ) : null}
+      <Snackbar
+        open={openSnackbar.show}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
+      </Snackbar>
     </Grid>
   )
 }

@@ -181,10 +181,11 @@ const AddOffer = ({ open, setOpen }) => {
       limited,
       quantity,
       start_date,
-      end_date
+      end_date,
+      name
     } = offer
 
-    let images = JSON.stringify(offer.images)
+    const images = JSON.stringify(offer.images)
     const sponsor_id = profile.id
     console.log(images)
 
@@ -198,7 +199,9 @@ const AddOffer = ({ open, setOpen }) => {
         start_date: start_date || undefined,
         end_date: end_date || undefined,
         images,
-        sponsor_id
+        sponsor_id,
+        active: true,
+        offer_name: name
       }
     })
   }
@@ -297,12 +300,12 @@ const AddOffer = ({ open, setOpen }) => {
             }}
           >
             <FormControlLabel
-              value={'true'}
+              value="true"
               control={<Radio />}
               label="Limited"
             />
             <FormControlLabel
-              value={'false'}
+              value="false"
               control={<Radio />}
               label="Unlimited"
             />
@@ -326,9 +329,7 @@ const AddOffer = ({ open, setOpen }) => {
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(e) =>
-            setDisableUrlInput(e.target.value.length > 0 ? false : true)
-          }
+          onChange={(e) => setDisableUrlInput(e.target.value.length > 0)}
           className={classes.textField}
         />
         <Box className={classes.addButtonContainer}>
@@ -390,7 +391,10 @@ LimitationHandling.propTypes = {
 
 LimitationHandling.defaultProps = {}
 
-AddOffer.propTypes = {}
+AddOffer.propTypes = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func
+}
 
 AddOffer.defaultProps = {}
 

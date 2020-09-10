@@ -125,11 +125,13 @@
     permission:
       check: {}
       columns:
+      - active
       - description
       - end_date
       - id
       - images
       - limited
+      - offer_name
       - offer_type
       - online_only
       - quantity
@@ -140,45 +142,73 @@
     permission:
       check: {}
       columns:
-      - description
-      - end_date
-      - id
-      - images
+      - active
       - limited
-      - offer_type
       - online_only
+      - id
       - quantity
       - sponsor_id
+      - description
+      - end_date
+      - images
+      - offer_name
+      - offer_type
       - start_date
       backend_only: false
   select_permissions:
   - role: guest
     permission:
       columns:
-      - description
-      - end_date
-      - id
-      - images
+      - active
       - limited
-      - offer_type
       - online_only
+      - id
       - quantity
       - sponsor_id
+      - description
+      - end_date
+      - images
+      - offer_name
+      - offer_type
       - start_date
       filter: {}
   - role: sponsor
     permission:
       columns:
-      - description
-      - end_date
-      - id
-      - images
+      - active
       - limited
-      - offer_type
       - online_only
+      - id
       - quantity
       - sponsor_id
+      - description
+      - end_date
+      - images
+      - offer_name
+      - offer_type
       - start_date
+      filter: {}
+  update_permissions:
+  - role: sponsor
+    permission:
+      columns:
+      - limited
+      - online_only
+      - quantity
+      - offer_type
+      - description
+      - start_date
+      - end_date
+      - images
+      - sponsor_id
+      - id
+      - offer_name
+      - active
+      filter: {}
+      check: null
+  delete_permissions:
+  - role: sponsor
+    permission:
       filter: {}
 - table:
     schema: public
