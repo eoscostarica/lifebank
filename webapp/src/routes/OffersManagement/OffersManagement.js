@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import { makeStyles } from '@material-ui/core/styles'
@@ -9,6 +9,8 @@ import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
 import MUIDataTable from 'mui-datatables'
 import MenuItem from '@material-ui/core/MenuItem'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
@@ -24,7 +26,7 @@ import {
 } from '../../gql'
 
 import OfferDetails from './OfferDetails'
-import AddOffer from './AddOffer'
+import GenericOfferFormComponent from './GenericOfferFormComponent'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,9 +60,11 @@ const columns = [
 const OffersManagement = () => {
   const classes = useStyles()
   const [offers, setOffers] = useState(undefined)
+  const [profileIDLoaded, setProfileIDLoaded] = useState(false)
+  const [offersLoaded, setOffersLoaded] = useState(false)
   const timezone = moment.tz.guess()
   const [open, setOpen] = useState(false)
-  const [openAddOffer, setOpenAddOffer] = useState(false)
+  const [openGenericForm, setOpenGenericForm] = useState(false)
   const [clickedOffer, setClickedOffer] = useState()
   const [openSnackbar, setOpenSnackbar] = useState({
     show: false,
@@ -75,27 +79,15 @@ const OffersManagement = () => {
     skip: true
   })
 
-  useEffect(() => {
-    const getOffers = async () => {
-      const { data } = await getSponsorOffers({
-        sponsor_id: 17
-      })
-
-      data && setOffers(data.offer)
-    }
-
-    getOffers()
-  }, [getSponsorOffers])
+  const [
+    loadProfileID,
+    { data: { profile: { profile } = {} } = {} }
+  ] = useLazyQuery(PROFILE_ID_QUERY, { fetchPolicy: 'network-only' })
 
   const [
     updateOffer,
     { data: { update_offer: updateOfferResult } = {} }
   ] = useMutation(UPDATE_OFFER_AVAILABILITY_MUTATION)
-
-  const [
-    loadProfileID,
-    { data: { profile: { profile } = {} } = {} }
-  ] = useLazyQuery(PROFILE_ID_QUERY, { fetchPolicy: 'network-only' })
 
   const [deleteOffer] = useMutation(DELETE_OFFER_MUTATION)
 
@@ -130,29 +122,6 @@ const OffersManagement = () => {
     }
   }
 
-  useEffect(() => {
-    loadProfileID()
-  }, [loadProfileID])
-
-  useEffect(() => {
-    if (updateOfferResult) {
-      const newArr = [...offers]
-
-      const indexToUpdate = offers.findIndex(
-        (o) => o.id === updateOfferResult.returning[0].id
-      )
-
-      newArr[indexToUpdate].active = !newArr[indexToUpdate].active
-      setOffers(newArr)
-
-      setOpenSnackbar({
-        show: true,
-        message: 'Offer availability updated successfully',
-        severity: 'success'
-      })
-    }
-  }, [updateOfferResult])
-
   const Actions = (active, offer_id) => (
     <FormControl variant="filled" className={classes.formControl}>
       <InputLabel id="actions-selection-label">Action</InputLabel>
@@ -181,39 +150,103 @@ const OffersManagement = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
+  useEffect(() => {
+    const getOffers = async () => {
+      const { data } = await getSponsorOffers({
+        sponsor_id: 17
+      })
+
+      data && setOffers(data.offer)
+      setOffersLoaded(true)
+    }
+
+    if (profileIDLoaded) getOffers()
+  }, [getSponsorOffers, profileIDLoaded])
+
+  useEffect(() => {
+    loadProfileID()
+  }, [loadProfileID])
+
+  useEffect(() => {
+    if (profile) setProfileIDLoaded(true)
+  }, [profile])
+
+  useEffect(() => {
+    if (updateOfferResult) {
+      const newArr = [...offers]
+
+      const indexToUpdate = offers.findIndex(
+        (o) => o.id === updateOfferResult.returning[0].id
+      )
+
+      newArr[indexToUpdate].active = !newArr[indexToUpdate].active
+      setOffers(newArr)
+
+      setOpenSnackbar({
+        show: true,
+        message: 'Offer availability updated successfully',
+        severity: 'success'
+      })
+    }
+  }, [updateOfferResult])
+
   return (
     <Grid container spacing={2} className={classes.root}>
       <Grid item xs={11}>
-        {offers && (
-          <MUIDataTable
-            title="All registered offers"
-            data={offers.map((offer, key) => [
-              offer.offer_name,
-              offer.start_date
-                ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
-                : 'No provided date',
-              offer.end_date
-                ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
-                : 'No provided date',
-              offer.active ? 'Active' : 'Inactive',
-              Actions(offer.active, offer.id),
-              <IconButton
-                key={key}
-                onClick={() => handleOpenClick(offer)}
-                aria-label="delete"
+        {!offersLoaded ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            height="100vh"
+            alignItems="center"
+          >
+            <Typography variant="h3">Loading...</Typography>
+          </Box>
+        ) : (
+          <>
+            {offers && offers.length > 0 ? (
+              <MUIDataTable
+                title="All registered offers"
+                data={offers.map((offer, key) => [
+                  offer.offer_name,
+                  offer.start_date
+                    ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
+                    : 'No provided date',
+                  offer.end_date
+                    ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
+                    : 'No provided date',
+                  offer.active ? 'Active' : 'Inactive',
+                  Actions(offer.active, offer.id),
+                  <IconButton
+                    key={key}
+                    onClick={() => handleOpenClick(offer)}
+                    aria-label="delete"
+                  >
+                    <MoreHorizIcon />
+                  </IconButton>
+                ])}
+                columns={columns}
+                options={{
+                  filter: true,
+                  print: false,
+                  selectableRowsHideCheckboxes: true,
+                  selectableRowsHeader: false,
+                  download: false
+                }}
+              />
+            ) : (
+              <Box
+                display="flex"
+                justifyContent="center"
+                height="100vh"
+                alignItems="center"
               >
-                <MoreHorizIcon />
-              </IconButton>
-            ])}
-            columns={columns}
-            options={{
-              filter: true,
-              print: false,
-              selectableRowsHideCheckboxes: true,
-              selectableRowsHeader: false,
-              download: false
-            }}
-          />
+                <Typography variant="h3">
+                  You have no added offers...
+                </Typography>
+              </Box>
+            )}
+          </>
         )}
         {open ? (
           <OfferDetails offer={clickedOffer} open={open} setOpen={setOpen} />
@@ -224,12 +257,17 @@ const OffersManagement = () => {
         className={classes.fab}
         color="secondary"
         aria-label="add"
-        onClick={() => setOpenAddOffer(true)}
+        onClick={() => setOpenGenericForm(true)}
       >
         <AddIcon />
       </Fab>
-      {openAddOffer ? (
-        <AddOffer open={openAddOffer} setOpen={setOpenAddOffer} />
+      {openGenericForm && profileIDLoaded ? (
+        <GenericOfferFormComponent
+          open={openGenericForm}
+          setOpen={setOpenGenericForm}
+          sponsor_id={profile.id}
+          isEditing={false}
+        />
       ) : null}
       <Snackbar
         open={openSnackbar.show}
