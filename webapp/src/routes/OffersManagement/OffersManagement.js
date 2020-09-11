@@ -19,7 +19,8 @@ import moment from 'moment'
 import {
   GET_SPONSOR_OFFERS_QUERY,
   UPDATE_OFFER_AVAILABILITY_MUTATION,
-  DELETE_OFFER_MUTATION
+  DELETE_OFFER_MUTATION,
+  PROFILE_ID_QUERY
 } from '../../gql'
 
 import OfferDetails from './OfferDetails'
@@ -91,6 +92,11 @@ const OffersManagement = () => {
     { data: { update_offer: updateOfferResult } = {} }
   ] = useMutation(UPDATE_OFFER_AVAILABILITY_MUTATION)
 
+  const [
+    loadProfileID,
+    { data: { profile: { profile } = {} } = {} }
+  ] = useLazyQuery(PROFILE_ID_QUERY, { fetchPolicy: 'network-only' })
+
   const [deleteOffer] = useMutation(DELETE_OFFER_MUTATION)
 
   const handleActionClick = async (action, active, offer_id) => {
@@ -123,6 +129,10 @@ const OffersManagement = () => {
         break
     }
   }
+
+  useEffect(() => {
+    loadProfileID()
+  }, [loadProfileID])
 
   useEffect(() => {
     if (updateOfferResult) {
