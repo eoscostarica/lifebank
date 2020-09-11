@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react'
-import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+import React, { useState, useRef, forwardRef } from 'react'
+import { useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Dialog from '@material-ui/core/Dialog'
@@ -32,7 +32,7 @@ import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 
 import CarouselComponent from '../../components/Carousel'
-import { CREATE_OFFER_MUTATION, PROFILE_ID_QUERY } from '../../gql'
+import { CREATE_OFFER_MUTATION } from '../../gql'
 
 const Transition = forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />
@@ -146,7 +146,7 @@ const LimitationHandling = ({
   )
 }
 
-const AddOffer = ({ open, setOpen }) => {
+const AddOffer = ({ open, setOpen, sponsor_id }) => {
   const classes = useStyles()
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const [offer, setOffer] = useState({
@@ -159,15 +159,6 @@ const AddOffer = ({ open, setOpen }) => {
   const [createOffer, { loading: createOfferLoading }] = useMutation(
     CREATE_OFFER_MUTATION
   )
-
-  const [
-    loadProfileID,
-    { data: { profile: { profile } = {} } = {} }
-  ] = useLazyQuery(PROFILE_ID_QUERY, { fetchPolicy: 'network-only' })
-
-  useEffect(() => {
-    loadProfileID()
-  }, [loadProfileID])
 
   const handleSubmit = () => {
     const {
@@ -182,7 +173,6 @@ const AddOffer = ({ open, setOpen }) => {
     } = offer
 
     const images = JSON.stringify(offer.images)
-    const sponsor_id = profile.id
 
     createOffer({
       variables: {
@@ -319,7 +309,7 @@ const AddOffer = ({ open, setOpen }) => {
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(e) => setDisableUrlInput(e.target.value.length > 0)}
+          onChange={(e) => setDisableUrlInput(e.target.value.length < 0)}
           className={classes.textField}
         />
         <Box className={classes.addButtonContainer}>
@@ -337,6 +327,7 @@ const AddOffer = ({ open, setOpen }) => {
                 images: [...offer.images, imgUrlValueRef.current.value]
               })
               imgUrlValueRef.current.value = ''
+              setDisableUrlInput(true)
             }}
             disabled={disableUrlInput}
             size="small"
@@ -383,7 +374,8 @@ LimitationHandling.defaultProps = {}
 
 AddOffer.propTypes = {
   open: PropTypes.bool,
-  setOpen: PropTypes.func
+  setOpen: PropTypes.func,
+  sponsor_id: PropTypes.number
 }
 
 AddOffer.defaultProps = {}
