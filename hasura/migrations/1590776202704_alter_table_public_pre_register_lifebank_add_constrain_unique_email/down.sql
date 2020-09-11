@@ -1,0 +1,1 @@
+ALTER TABLE "public"."pre_register_lifebank" ALTER COLUMN "email" DROP NOT NULL;

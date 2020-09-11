@@ -128,3 +128,6 @@
 - table:
     schema: public
     name: vault
+- table: 
+    schema: public
+    name: pre_register_lifebank

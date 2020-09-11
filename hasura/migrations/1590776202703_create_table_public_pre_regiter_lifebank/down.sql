@@ -1,0 +1,1 @@
+DROP TABLE "public"."pre_register_lifebank";

@@ -1,12 +1,12 @@
 const Boom = require('@hapi/boom')
 const { INTERNAL_SERVER_ERROR } = require('http-status-codes')
 
-const { accountApi } = require('../../api')
+const lifebankApi = require('../../api/lifebank.api')
 
 module.exports = async ({ payload: { input } }) => {
   console.log("input:", input)
   try {
-    const response = await accountApi.create(input)
+    const response = await lifebankApi.preRegister(input)
 
     return response
   } catch (error) {

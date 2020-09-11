@@ -6,6 +6,7 @@ const historyApi = require('./history.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
+const preRegisterApi = require('./pre-register.api')
 const {
   constants: {
     ENUM_DATA: { LOCATION_TYPES }
@@ -13,6 +14,29 @@ const {
 } = require('../config')
 
 const LIFE_BANK_CODE = eosConfig.lifebankCodeContractName
+
+const preRegister = async ({ email, password, address, schedule, phone, description, urgency_level, coordinates, immunity_test, invitation_code }) => {
+  const verification_code = "verification_code"//`${role.substring(0, 3)}${username}`.substring(0, 12)
+  console.log("invitationcode:", invitationcode)
+
+  await preRegisterApi.insert({
+    email,
+    password,
+    address,
+    schedule,
+    phone,
+    description,
+    urgency_level,
+    coordinates,
+    immunity_test,
+    invitation_code,
+    verification_code
+  })
+
+  return {
+    verification_code
+  }
+}
 
 const editProfile = async (account, profile) => {
   await accountApi.grantConsent(account)
@@ -64,6 +88,7 @@ const signup = async (account, profile) => {
 }
 
 module.exports = {
+  preRegister,
   editProfile,
   signup
 }

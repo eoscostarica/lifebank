@@ -11,29 +11,31 @@ const historyApi = require('./history.api')
 const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
-const LIFEBANKCODE_CONTRACT = 'lifebankcode' // @todo: use ENV
+const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
-const create = async ({ role, username, secret }) => {
-  const account = `${role.substring(0, 3)}${username}`.substring(0, 12)
-  const { password, transaction } = await eosUtils.createAccount(account)
-  const token = jwtUtils.create({ role, username, account })
+const create = async ({ role, username, secret, invitationcode }) => {
+  const account = "not assigned"//`${role.substring(0, 3)}${username}`.substring(0, 12)
+  console.log("invitationcode:", invitationcode)
+  //const { password, transaction } = await eosUtils.createAccount(account)
+  //const token = jwtUtils.create({ role, username, account })
 
   await userApi.insert({
     role,
     username,
     account,
-    secret
+    secret,
+    invitationcode
   })
-  await vaultApi.insert({
+  /*await vaultApi.insert({
     account,
     password
-  })
-  await historyApi.insert(transaction)
-
+  })*/
+  //await historyApi.insert(transaction)
+  console.log("account:", account)
   return {
-    account,
-    token,
-    transaction_id: transaction.transaction_id
+    account
+    //token,
+    //transaction_id: transaction.transaction_id
   }
 }
 

@@ -11,7 +11,8 @@ import { useHistory } from 'react-router-dom'
 import {
   CHECK_USERNAME_MUTATION,
   CREATE_ACCOUNT_MUTATION,
-  SIGNUP_MUTATION
+  SIGNUP_MUTATION,
+  CREATE_PRE_REGITER_LIFEBANK
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
@@ -91,6 +92,13 @@ const Signup = () => {
     }
   ] = useMutation(CREATE_ACCOUNT_MUTATION)
   const [
+    preRegisterLifebank,
+    {
+      loading: preRegisterLifebankLoading,
+      data: { create_pre_register_lifebank: preRegisterLifebankResult } = {}
+    }
+  ] = useMutation(CREATE_PRE_REGITER_LIFEBANK)
+  const [
     signup,
     { loading: signupLoading, data: { signup: signupResult } = {} }
   ] = useMutation(SIGNUP_MUTATION)
@@ -115,6 +123,25 @@ const Signup = () => {
         role,
         username,
         secret
+      }
+    })
+  }
+
+  const handlePreRegisterLifebank = () => {
+    const { email, password, name, address, schedule, phone, description, urgency_level, coordinates, immunity_test, invitation_code } = user
+    preRegisterLifebank({
+      variables: {
+        email,
+        password,
+        name,
+        address,
+        schedule,
+        phone,
+        description,
+        urgency_level,
+        coordinates,
+        immunity_test,
+        invitation_code
       }
     })
   }
@@ -229,18 +256,12 @@ const Signup = () => {
           )}
           {activeStep === 1 && role === 'lifebank' && (
             <SignupLifeBank
-              onSubmit={handleCreateAccount}
-              loading={createAccountLoading}
+              onSubmit={handlePreRegisterLifebank}
+              loading={preRegisterLifebankLoading}
               setField={handleSetField}
               user={user}
-              isUsernameValid={isUsernameValid}
+            //isUsernameValid={isUsernameValid}
             >
-              <SignupUsername
-                isValid={isUsernameValid}
-                loading={checkUsernameLoading}
-                user={user}
-                setField={handleSetField}
-              />
             </SignupLifeBank>
           )}
           {activeStep === 2 && (

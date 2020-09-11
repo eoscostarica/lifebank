@@ -90,6 +90,22 @@ const SignupLifeBank = ({
       <div className={classes.formGroup}>{children}</div>
       <div className={classes.formGroup}>
         <TextField
+          id="email"
+          label="Email"
+          variant="outlined"
+          placeholder="Your Email"
+          fullWidth
+          type="email"
+          oninvalid="setCustomValidity('Díganos tu email')"
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setField('email', event.target.value)}
+        />
+      </div>
+      <div className={classes.formGroup}>
+        <TextField
           id="secret"
           label="Secret"
           type="password"
@@ -100,20 +116,6 @@ const SignupLifeBank = ({
             shrink: true
           }}
           onChange={(event) => setField('secret', event.target.value)}
-        />
-      </div>
-      <div className={classes.formGroup}>
-        <TextField
-          id="email"
-          label="Email"
-          variant="outlined"
-          placeholder="Your Email"
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('email', event.target.value)}
         />
       </div>
       <div className={classes.formGroup}>
@@ -172,6 +174,20 @@ const SignupLifeBank = ({
           onChange={(event) => setField('phone_number', event.target.value)}
         />
       </div>
+      <div className={classes.formGroup}>
+        <TextField
+          id="invitationCode"
+          label="Invitation Code"
+          placeholder="Invitation Code"
+          variant="outlined"
+          fullWidth
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setField('invitationcode', event.target.value)}
+        />
+      </div>
       <FormGroup className={classes.formGroup}>
         <FormControlLabel
           control={
@@ -224,14 +240,12 @@ const SignupLifeBank = ({
       <div className={classes.btnWrapper}>
         <Button
           disabled={
+            !user.email ||
             !user.secret ||
             !user.name ||
-            !user.description ||
             !user.address ||
             !user.phone_number ||
-            !user.blood_urgency_level ||
             !user.schedule ||
-            !isUsernameValid ||
             !user.geolocation ||
             !recaptchaValue ||
             loading
