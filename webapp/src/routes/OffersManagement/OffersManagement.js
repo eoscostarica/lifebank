@@ -26,7 +26,7 @@ import {
 } from '../../gql'
 
 import OfferDetails from './OfferDetails'
-import AddOffer from './AddOffer'
+import GenericOfferFormComponent from './GenericOfferFormComponent'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,7 +64,7 @@ const OffersManagement = () => {
   const [offersLoaded, setOffersLoaded] = useState(false)
   const timezone = moment.tz.guess()
   const [open, setOpen] = useState(false)
-  const [openAddOffer, setOpenAddOffer] = useState(false)
+  const [openGenericForm, setOpenGenericForm] = useState(false)
   const [clickedOffer, setClickedOffer] = useState()
   const [openSnackbar, setOpenSnackbar] = useState({
     show: false,
@@ -257,15 +257,16 @@ const OffersManagement = () => {
         className={classes.fab}
         color="secondary"
         aria-label="add"
-        onClick={() => setOpenAddOffer(true)}
+        onClick={() => setOpenGenericForm(true)}
       >
         <AddIcon />
       </Fab>
-      {openAddOffer && profileIDLoaded ? (
-        <AddOffer
-          open={openAddOffer}
-          setOpen={setOpenAddOffer}
+      {openGenericForm && profileIDLoaded ? (
+        <GenericOfferFormComponent
+          open={openGenericForm}
+          setOpen={setOpenGenericForm}
           sponsor_id={profile.id}
+          isEditing={false}
         />
       ) : null}
       <Snackbar
