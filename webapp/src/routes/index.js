@@ -8,6 +8,7 @@ import EditProfile from './EditProfile'
 import About from './About'
 import TermsOfUse from './TermsOfUse'
 import Help from './Help'
+import OffersManagement from './OffersManagement'
 
 export default [
   {
@@ -19,6 +20,11 @@ export default [
     name: 'notFound',
     path: '/not-found',
     component: NotFound
+  },
+  {
+    name: 'offersManagement',
+    path: '/offers-management',
+    component: OffersManagement
   },
   {
     name: 'signup',
