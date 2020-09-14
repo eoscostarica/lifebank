@@ -26,12 +26,12 @@ import { GET_NEARBY_LOCATIONS_QUERY } from '../../gql'
 
 
 const initialZoom = 12.5
-var map = null
-var checkLifebank = true
-var checkSponsor = true
-var markerList = []
-var searchDistance = 5000
-var filterSponsorcategory = "All"
+let map = null
+let checkLifebank = true
+let checkSponsor = true
+let markerList = []
+let searchDistance = 5000
+let filterSponsorcategory = "All"
 
 const useStyles = makeStyles((theme) => ({
   mapOverlay: {
@@ -71,20 +71,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-var customData = {
+let customData = {
   'features': [],
   'type': 'FeatureCollection'
 };
-
-const defaultCategories = [
-  "All"
-]
 
 const {
   SPONSOR_TYPES
 } = constants
 
-const sponsorsCategories = defaultCategories.concat(SPONSOR_TYPES)
+const sponsorsCategories = ["All"].concat(SPONSOR_TYPES)
 
 function getModalStyle() {
   return {
@@ -106,17 +102,15 @@ function MapShowLocations({ location, ...props }) {
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
-    if (event.target.name === "checkedLifebank") {
-      if (checkLifebank) {
-        checkLifebank = false
-      } else {
-        checkLifebank = true
+
+    switch (event.target.name) {
+      case 'checkedLifebank': {
+        checkLifebank = !checkLifebank
+        break
       }
-    } else {
-      if (checkSponsor) {
-        checkSponsor = false
-      } else {
-        checkSponsor = true
+      default: {
+        checkSponsor = !checkSponsor
+        break
       }
     }
   };
@@ -180,7 +174,7 @@ function MapShowLocations({ location, ...props }) {
   }
 
   const removeMarkers = () => {
-    for (var i = 0; i <= markerList.length - 1; i++) {
+    for (let i = 0; i <= markerList.length - 1; i++) {
       markerList[i].remove();
     }
   }
@@ -190,7 +184,6 @@ function MapShowLocations({ location, ...props }) {
     claerPointsData()
 
     const { lng, lat } = map.getCenter()
-
     const { data } = await getNearbyLocations({
       distance: searchDistance,
       point: {
@@ -213,18 +206,19 @@ function MapShowLocations({ location, ...props }) {
         loadPointData(info.name, type, coordinates)
 
         const markerNode = document.createElement('div')
+
         ReactDOM.render(<MapMarker type={type} />, markerNode)
 
         const popupNode = document.createElement('div')
+
         ReactDOM.render(
           <MapPopup id={id} info={info} account={account} />,
           popupNode
         )
 
-        var markertemp = new mapboxgl.Marker(markerNode)
+        let markertemp = new mapboxgl.Marker(markerNode)
         markertemp.setLngLat(coordinates)
         markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
-
 
         if (type === "SPONSOR") {
           if (checkSponsor) {
@@ -260,22 +254,23 @@ function MapShowLocations({ location, ...props }) {
   }
 
   const forwardGeocoder = (query) => {
-    var matchingFeatures = [];
+    let matchingFeatures = [];
 
-    for (var i = 0; i < customData.features.length; i++) {
-      var feature = customData.features[i];
+    for (let i = 0; i < customData.features.length; i++) {
+      let feature = customData.features[i];
 
       if (
         feature.properties.title
           .toLowerCase()
           .search(query.toLowerCase()) !== -1
       ) {
+
         if (feature.properties.type === "LIFE_BANK") {
           feature.place_name = '🩸 ' + feature.properties.title;
-        }
-        else {
+        } else {
           feature.place_name = '🏬 ' + feature.properties.title;
         }
+
         feature.center = feature.geometry.coordinates;
         feature.place_type = [feature.properties.type];
         matchingFeatures.push(feature);
@@ -385,11 +380,7 @@ function MapShowLocations({ location, ...props }) {
                   ))}
                 </TextField>
               </Grid>
-              {/*
-              <Grid item xs={12}><TextField label="Offer categories" variant="outlined" className={classes.inputStyle} /></Grid>
-              * */}
               <Grid item xs={12}><Button variant="contained" color="primary" className={classes.buttonStyle} onClick={handleSaveChanges}>Save changes</Button></Grid>
-
             </Grid>
           </div>
         </Modal>

@@ -146,17 +146,6 @@ const ProfilePageLifebank = ({ profile }) => {
         py={2}
       />
 
-      { /* Edit location
-      <MapEditLocation
-        markerLocation={JSON.parse(profile.location)}
-        /*onGeolocationChange={handleOnGeolocationChange}
-        markerType = { LIFE_BANK }
-        width="100%"
-        height={400}
-        mb={1}
-      />
-      */ }
-
       <Divider className={classes.divider} />
       <LinkRouter to="/edit-profile" className={classes.editBtn}>
         <Button variant="contained" color="primary">

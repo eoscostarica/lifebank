@@ -11,8 +11,8 @@ import MapPopup from '../MapPopup'
 import { GET_NEARBY_LOCATIONS_QUERY } from '../../gql'
 
 const initialZoom = 12.5
-var map = null
-var searchDistance = 5000
+let map = null
+let searchDistance = 5000
 
 function MapShowOneLocation({ markerLocation, ...props }) {
   const mapContainerRef = useRef(null)
@@ -28,9 +28,7 @@ function MapShowOneLocation({ markerLocation, ...props }) {
   })
 
   const loadMarkersEvent = async () => {
-
     const { lng, lat } = map.getCenter()
-
     const { data } = await getNearbyLocations({
       distance: searchDistance,
       point: {
@@ -51,16 +49,18 @@ function MapShowOneLocation({ markerLocation, ...props }) {
         } = location
 
         const markerNode = document.createElement('div')
+
         ReactDOM.render(<MapMarker type={type} />, markerNode)
 
         const popupNode = document.createElement('div')
+
         ReactDOM.render(
           <MapPopup id={id} info={info} account={account} />,
           popupNode
         )
 
         if (coordinates[0] === markerLocation.longitude && coordinates[1] === markerLocation.latitude) {
-          var markertemp = new mapboxgl.Marker(markerNode)
+          let markertemp = new mapboxgl.Marker(markerNode)
           markertemp.setLngLat(coordinates)
           markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
           markertemp.addTo(map)
