@@ -12,7 +12,7 @@ import { GET_NEARBY_LOCATIONS_QUERY } from '../../gql'
 
 const initialZoom = 12.5
 let map = null
-let searchDistance = 5000
+const searchDistance = 5000
 
 function MapShowOneLocation({ markerLocation, ...props }) {
   const mapContainerRef = useRef(null)
@@ -60,7 +60,7 @@ function MapShowOneLocation({ markerLocation, ...props }) {
         )
 
         if (coordinates[0] === markerLocation.longitude && coordinates[1] === markerLocation.latitude) {
-          let markertemp = new mapboxgl.Marker(markerNode)
+          const markertemp = new mapboxgl.Marker(markerNode)
           markertemp.setLngLat(coordinates)
           markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
           markertemp.addTo(map)

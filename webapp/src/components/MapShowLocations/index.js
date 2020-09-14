@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-let customData = {
+const customData = {
   'features': [],
   'type': 'FeatureCollection'
 };
@@ -216,7 +216,7 @@ function MapShowLocations({ location, ...props }) {
           popupNode
         )
 
-        let markertemp = new mapboxgl.Marker(markerNode)
+        const markertemp = new mapboxgl.Marker(markerNode)
         markertemp.setLngLat(coordinates)
         markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
 
@@ -254,10 +254,10 @@ function MapShowLocations({ location, ...props }) {
   }
 
   const forwardGeocoder = (query) => {
-    let matchingFeatures = [];
+    const matchingFeatures = [];
 
     for (let i = 0; i < customData.features.length; i++) {
-      let feature = customData.features[i];
+      const feature = customData.features[i];
 
       if (
         feature.properties.title
