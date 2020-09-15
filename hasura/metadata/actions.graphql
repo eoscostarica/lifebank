@@ -16,6 +16,23 @@ type Mutation {
 
 
 type Mutation {
+  create_pre_register_lifebank (
+    email: String!
+    password: String!
+    name: String!
+    address: String!
+    schedule: String!
+    phone: String!
+    description: String!
+    urgency_level: Int!
+    coordinates: String!
+    immunity_test: Boolean!
+    invitation_code: String!
+  ): create_pre_register_lifebank_output
+}
+
+
+type Mutation {
   credentials_recovery (
     email: String!
   ): credentials_recovery_output
@@ -128,3 +145,8 @@ type get_contract_output {
   hash : String!
   abi : jsonb!
 }
+
+type create_pre_register_lifebank_output {
+  verification_code : String!
+}
+
