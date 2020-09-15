@@ -11,11 +11,7 @@ const historyApi = require('./history.api')
 const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
-<<<<<<< HEAD
-const LIFEBANKCODE_CONTRACT = 'lifebankcode' // @todo: use ENV
-=======
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
->>>>>>> 48795ba0d2d2ce02bc7428aea18313664c58f1c2
 
 const create = async ({ role, username, secret }) => {
   const account = `${role.substring(0, 3)}${username}`.substring(0, 12)
