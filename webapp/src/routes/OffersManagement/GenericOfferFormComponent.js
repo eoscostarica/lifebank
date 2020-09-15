@@ -227,8 +227,7 @@ const GenericOfferFormComponent = ({
           images,
           offer_name,
           id,
-          active,
-          offer_name
+          active
         }
       })
   }
