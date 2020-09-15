@@ -10,8 +10,9 @@ import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 
 import Schedule from '../../components/Schedule'
-import MapShowLocations from '../../components/MapShowLocations'
-import { eosConfig } from '../../config'
+import MapShowOneLocation from '../../components/MapShowOneLocation'
+
+const { eosConfig } = require('../../config')
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -138,8 +139,8 @@ const ProfilePageLifebank = ({ profile }) => {
         <Typography variant="body1" />
       </Box>
 
-      <MapShowLocations
-        location={JSON.parse(profile.location)}
+      <MapShowOneLocation
+        markerLocation={JSON.parse(profile.location)}
         width="100%"
         height={400}
         py={2}
