@@ -42,6 +42,14 @@ export const PROFILE_QUERY = gql`
   }
 `
 
+export const PROFILE_ID_QUERY = gql`
+  query {
+    profile {
+      profile
+    }
+  }
+`
+
 export const GRANT_CONSENT_MUTATION = gql`
   mutation {
     grant_consent {
