@@ -11,12 +11,6 @@ actions:
     handler: http://hapi:9090/api/accounts
   permissions:
   - role: guest
-- name: create_pre_register_lifebank
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/pre-register
-  permissions:
-  - role: guest
 - name: credentials_recovery
   definition:
     kind: synchronous
@@ -97,7 +91,6 @@ custom_types:
   input_objects: []
   objects:
   - name: create_account_output
-  - name: create_pre_register_lifebank_output
   - name: get_abi_output
   - name: login_output
   - name: profile_output

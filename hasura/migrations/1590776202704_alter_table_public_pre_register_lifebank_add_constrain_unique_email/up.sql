@@ -1,1 +1,0 @@
-ALTER TABLE "public"."pre_register_lifebank" constraint UQ_email unique (email);
