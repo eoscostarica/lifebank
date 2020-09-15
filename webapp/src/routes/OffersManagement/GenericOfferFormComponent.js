@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
+import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -31,7 +33,7 @@ import {
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns'
 
-import { CREATE_OFFER_MUTATION } from '../../gql'
+import { CREATE_OFFER_MUTATION, UPDATE_OFFER_MUTATION } from '../../gql'
 
 import CarouselComponent from '../../components/Carousel'
 
@@ -158,10 +160,27 @@ const GenericOfferFormComponent = ({
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const imgUrlValueRef = useRef(undefined)
   const [offer, setOffer] = useState()
+  const [openSnackbar, setOpenSnackbar] = useState({
+    show: false,
+    message: '',
+    severity: 'success'
+  })
 
-  const [createOffer, { loading: createOfferLoading }] = useMutation(
-    CREATE_OFFER_MUTATION
-  )
+  const [
+    createOffer,
+    {
+      loading: createOfferLoading,
+      data: { create_offer: createOfferResult } = {}
+    }
+  ] = useMutation(CREATE_OFFER_MUTATION)
+
+  const [
+    updateOffer,
+    {
+      loading: updateOfferLoading,
+      data: { update_offer: updateOfferResult } = {}
+    }
+  ] = useMutation(UPDATE_OFFER_MUTATION)
 
   const handleSubmit = () => {
     const {
@@ -172,7 +191,9 @@ const GenericOfferFormComponent = ({
       quantity,
       start_date,
       end_date,
-      name
+      offer_name,
+      id,
+      active
     } = offer
 
     const images = JSON.stringify(offer.images)
@@ -190,9 +211,31 @@ const GenericOfferFormComponent = ({
           images,
           sponsor_id,
           active: true,
-          offer_name: name
+          offer_name: offer_name
         }
       })
+    else
+      updateOffer({
+        variables: {
+          offer_type,
+          online_only,
+          description,
+          limited,
+          quantity,
+          start_date,
+          end_date,
+          images,
+          offer_name,
+          id,
+          active
+        }
+      })
+  }
+
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') return
+
+    setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
   useEffect(() => {
@@ -206,6 +249,26 @@ const GenericOfferFormComponent = ({
         online_only: true
       })
   }, [data])
+
+  useEffect(() => {
+    if (updateOfferResult) {
+      setOpenSnackbar({
+        show: true,
+        message: 'Offer updated successfully',
+        severity: 'success'
+      })
+    }
+  }, [updateOfferResult])
+
+  useEffect(() => {
+    if (createOfferResult) {
+      setOpenSnackbar({
+        show: true,
+        message: 'Offer created successfully',
+        severity: 'success'
+      })
+    }
+  }, [createOfferResult])
 
   return (
     <Dialog
@@ -236,10 +299,10 @@ const GenericOfferFormComponent = ({
             label="Offer name"
             variant="outlined"
             placeholder="Offer name here"
-            value={offer.name || undefined}
+            value={offer.offer_name || undefined}
             fullWidth
             onChange={(event) =>
-              setOffer({ ...offer, name: event.target.value })
+              setOffer({ ...offer, offer_name: event.target.value })
             }
             InputLabelProps={{
               shrink: true
@@ -295,7 +358,7 @@ const GenericOfferFormComponent = ({
             <Typography variant="h3">Redeem availability</Typography>
             <RadioGroup
               aria-label="limitation"
-              value={offer.limited || undefined}
+              value={String(offer.limited) || undefined}
               onChange={(event) => {
                 setOffer({ ...offer, limited: event.target.value })
               }}
@@ -345,7 +408,7 @@ const GenericOfferFormComponent = ({
               onClick={() => {
                 setOffer({
                   ...offer,
-                  images: [...offer.images, imgUrlValueRef.current.value]
+                  images: offer.images.concat(imgUrlValueRef.current.value)
                 })
                 imgUrlValueRef.current.value = ''
               }}
@@ -367,6 +430,7 @@ const GenericOfferFormComponent = ({
             <Button
               disabled={
                 createOfferLoading ||
+                updateOfferLoading ||
                 !offer.description ||
                 !offer.offer_type ||
                 offer.images.length < 1
@@ -380,6 +444,13 @@ const GenericOfferFormComponent = ({
           </Box>
         </form>
       )}
+      <Snackbar
+        open={openSnackbar.show}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
+      </Snackbar>
     </Dialog>
   )
 }

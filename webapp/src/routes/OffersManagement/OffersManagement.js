@@ -64,7 +64,13 @@ const OffersManagement = () => {
   const [offersLoaded, setOffersLoaded] = useState(false)
   const timezone = moment.tz.guess()
   const [open, setOpen] = useState(false)
-  const [openGenericForm, setOpenGenericForm] = useState(false)
+  const [offerToEdit, setOfferToEdit] = useState()
+  const [openGenericFormAddVariant, setOpenGenericFormAddVariant] = useState(
+    false
+  )
+  const [openGenericFormEditVariant, setOpenGenericFormEditVariant] = useState(
+    false
+  )
   const [clickedOffer, setClickedOffer] = useState()
   const [openSnackbar, setOpenSnackbar] = useState({
     show: false,
@@ -117,6 +123,10 @@ const OffersManagement = () => {
           }
         })
         break
+      case 'edit':
+        setOpenGenericFormEditVariant(true)
+        setOfferToEdit(offers.find((o) => o.id === offer_id))
+        break
       default:
         break
     }
@@ -126,13 +136,14 @@ const OffersManagement = () => {
     <FormControl variant="filled" className={classes.formControl}>
       <InputLabel id="actions-selection-label">Action</InputLabel>
       <Select
+        value=""
         onClick={(e) => handleActionClick(e.target.value, active, offer_id)}
         labelId="actions-selection"
         id="action-select"
       >
         <MenuItem value="edit">Edit</MenuItem>
         <MenuItem value="delete">Delete</MenuItem>
-        <MenuItem value={(active ? 'deactivate' : 'activate') || true}>
+        <MenuItem value={active ? 'deactivate' : 'activate'}>
           {active ? 'Deactivate' : 'Activate'}
         </MenuItem>
       </Select>
@@ -149,6 +160,16 @@ const OffersManagement = () => {
 
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
+
+  const getGenericOfferComponent = (editing, data) => (
+    <GenericOfferFormComponent
+      open={openGenericFormEditVariant}
+      setOpen={setOpenGenericFormEditVariant}
+      sponsor_id={profile.id}
+      isEditing={editing}
+      data={data}
+    />
+  )
 
   useEffect(() => {
     const getOffers = async () => {
@@ -257,18 +278,14 @@ const OffersManagement = () => {
         className={classes.fab}
         color="secondary"
         aria-label="add"
-        onClick={() => setOpenGenericForm(true)}
+        onClick={() => setOpenGenericFormAddVariant(true)}
       >
         <AddIcon />
       </Fab>
-      {openGenericForm && profileIDLoaded ? (
-        <GenericOfferFormComponent
-          open={openGenericForm}
-          setOpen={setOpenGenericForm}
-          sponsor_id={profile.id}
-          isEditing={false}
-        />
-      ) : null}
+      {openGenericFormAddVariant && profileIDLoaded
+        ? getGenericOfferComponent(false, undefined)
+        : null}
+      {offerToEdit ? getGenericOfferComponent(true, offerToEdit) : null}
       <Snackbar
         open={openSnackbar.show}
         autoHideDuration={5000}
