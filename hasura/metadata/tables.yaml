@@ -156,6 +156,22 @@
       - start_date
       backend_only: false
   select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - limited
+      - online_only
+      - quantity
+      - offer_type
+      - description
+      - start_date
+      - end_date
+      - images
+      - sponsor_id
+      - id
+      - offer_name
+      - active
+      filter: {}
   - role: guest
     permission:
       columns:
