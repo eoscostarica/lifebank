@@ -161,15 +161,19 @@ const OffersManagement = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
-  const getGenericOfferComponent = (editing, data) => (
-    <GenericOfferFormComponent
-      open={openGenericFormEditVariant}
-      setOpen={setOpenGenericFormEditVariant}
-      sponsor_id={profile.id}
-      isEditing={editing}
-      data={data}
-    />
-  )
+  const getGenericOfferComponent = (editing, data) => {
+    return (
+      <GenericOfferFormComponent
+        open={editing ? openGenericFormEditVariant : openGenericFormAddVariant}
+        setOpen={
+          editing ? setOpenGenericFormEditVariant : setOpenGenericFormAddVariant
+        }
+        sponsor_id={profile.id}
+        isEditing={editing}
+        data={data}
+      />
+    )
+  }
 
   useEffect(() => {
     const getOffers = async () => {
