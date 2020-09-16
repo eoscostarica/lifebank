@@ -1,25 +1,22 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
-import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import SearchIcon from '@material-ui/icons/Search'
 
+import { mapboxConfig } from '../../config'
 import MapShowLocations from '../MapShowLocations'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -43,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   bodyWrapper: {
-    height: "5vh",
+    height: "90vh",
     '& h3': {
       textAlign: 'center',
       padding: 8,
@@ -66,10 +63,15 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: 1.33,
       letterSpacing: '0.4px'
     }
+  },
+  mapStatic: {
+    padding: 0,
+    margin: 0,
+    width: "100%"
   }
 }))
 
-const MapModal = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
+const MapStatic = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -77,25 +79,26 @@ const MapModal = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
     setOpen(!open)
   }
 
+  const LoadMap = () => {
+    let windowSize = window.innerWidth
+    const heightMap = windowSize / 2
+
+    if (windowSize > 1280) {
+      windowSize = 1280
+    }
+
+    const api = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-84.0556371,9.9195872,7/" + windowSize.toString() + "x" + heightMap.toString() + "?access_token=" + mapboxConfig.accessToken
+
+    return (
+      <img src={api} onClick={handleOpen} />
+    )
+  }
+
   return (
     <>
-      <Box
-        className={clsx(classes.loginBtn, overrideBoxClass)}
-        onClick={handleOpen}
-      >
-        {useButton && (
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<SearchIcon />}
-          >
-            Find Location
-          </Button>
-        )}
-      </Box>
+      <LoadMap />
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
+        aria-labelledby="show-location-map"
         className={classes.modal}
         open={open}
         onClose={handleOpen}
@@ -130,14 +133,4 @@ const MapModal = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
   )
 }
 
-MapModal.propTypes = {
-  overrideBoxClass: PropTypes.any,
-  overrideLabelClass: PropTypes.any,
-  useButton: PropTypes.bool
-}
-
-MapModal.defaultProps = {
-  useButton: false
-}
-
-export default MapModal
+export default MapStatic
