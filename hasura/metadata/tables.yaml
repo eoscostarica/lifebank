@@ -115,6 +115,9 @@
           _eq: X-Hasura-User-Id
 - table:
     schema: public
+    name: preregister_lifebank
+- table:
+    schema: public
     name: raster_columns
 - table:
     schema: public

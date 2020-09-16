@@ -23,7 +23,6 @@ const INSERT = `
       account
       email
       name
-      invitationcode 
     }
   }
 `

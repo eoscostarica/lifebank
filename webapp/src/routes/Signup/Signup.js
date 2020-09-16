@@ -129,6 +129,16 @@ const Signup = () => {
 
   const handlePreRegisterLifebank = () => {
     const { email, password, name, address, schedule, phone, description, urgency_level, coordinates, immunity_test, invitation_code } = user
+    console.log("email: ", email)
+    console.log("password: ", password)
+    console.log("name: ", name)
+    console.log("address: ", address)
+    console.log("schedule: ", schedule)
+    console.log("description: ", description)
+    console.log("urgency_level: ", urgency_level)
+    console.log("coordinates: ", coordinates)
+    console.log("immunity_test: ", immunity_test)
+    console.log("invitation_code: ", invitation_code)
     preRegisterLifebank({
       variables: {
         email,
@@ -170,6 +180,7 @@ const Signup = () => {
   useEffect(() => {
     if (createAccountResult) {
       login(createAccountResult.token)
+      console.log(preRegisterLifebankResult)
     }
   }, [createAccountResult])
 

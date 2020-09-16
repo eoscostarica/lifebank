@@ -1,8 +1,8 @@
 const { hasuraUtils } = require('../utils')
 
 const INSERT = `
-  mutation ($pre_register_lifebank: pre_register_lifebank_insert_input!) {
-    insert_pre_register_lifebank_one(object: $pre_register_lifebank) {
+  mutation ($preregister_lifebank: preregister_lifebank_insert_input!) {
+    insert_preregister_lifebank_one(object: $preregister_lifebank) {
       email
       password
       name
@@ -18,8 +18,9 @@ const INSERT = `
     }
   }
 `
-const insert = lifebankData => {
-  return hasuraUtils.request(INSERT, { lifebankData })
+const insert = preregister_lifebank => {
+  console.log("preregister_lifebank: ", preregister_lifebank)
+  return hasuraUtils.request(INSERT, { preregister_lifebank })
 }
 
 module.exports = {
