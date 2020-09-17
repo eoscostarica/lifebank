@@ -1,6 +1,7 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid';
@@ -24,12 +25,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 
 import { constants } from '../../config'
+import { GET_OFFERS_QUERY } from '../../gql'
 
 
 const { SPONSOR_TYPES, OFFER_TYPES } = constants
 const sponsorsCategories = ["All"].concat(SPONSOR_TYPES)
-const offerCategories = ["All"].concat(OFFER_TYPES)
-const tokenPrices = ["1", "2", "3", "4", "5"];
+const offerCategories = ["All", "Discount", "Gift", "Benefit", "Other"]
+const tokenPrices = ["All", "1", "2", "3", "4", "5"];
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -114,6 +116,10 @@ const useStyles = makeStyles((theme) => ({
   inputStyle: {
     width: "100%",
     marginBottom: 15
+  },
+  infoText: {
+    fontSize: 30,
+    marginBottom: theme.spacing(4)
   }
 
 }))
@@ -128,16 +134,25 @@ function getModalStyle() {
 
 const Offers = () => {
   const classes = useStyles()
+  const [loading, setLoading] = React.useState(true);
   const [offers, setOffers] = React.useState([]);
   const [searchInput, setSpensearcInput] = React.useState("");
   const [valueSponsorCat, setValueSponsorCat] = React.useState("All");
   const [valueOfferCat, setValueOfferCat] = React.useState("All");
-  const [valueTokenPrice, setValueTokenPrice] = React.useState("1");
+  const [valueTokenPrice, setValueTokenPrice] = React.useState("All");
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
 
   const handleChangeSearchInput = (event) => {
     setSpensearcInput(event.target.value)
+  }
+
+  const handleChangeLoadingFalse = (event) => {
+    setLoading(false)
+  }
+
+  const handleChangeLoadingTrue = (event) => {
+    setLoading(true)
   }
 
   const handleChangeSponsorsCat = (event) => {
@@ -159,9 +174,50 @@ const Offers = () => {
     setOpen(false);
   };
 
-  const getOfferFromBD = () => {
-    setOffers(test)
+  const handleSaveChanges = () => {
+    searchWithFilters()
+    handleClose()
   }
+
+  const searchWithFilters = () => {
+    handleChangeLoadingTrue()
+    getOffers()
+  }
+
+  const { refetch: getAllOffers } = useQuery(GET_OFFERS_QUERY, {
+    active: true,
+  }, { skip: true })
+
+  const getOffers = async () => {
+    const { data } = await getAllOffers({
+      active: true,
+    })
+    let dataTemp = data.offer
+
+    if (searchInput != "") {
+      dataTemp = dataTemp.filter(offer => offer.offer_name.toLowerCase().search(searchInput.toLowerCase()) > 0)
+    }
+
+    if (valueOfferCat != "All") {
+      dataTemp = dataTemp.filter(offer => offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase())
+    }
+
+    if (valueSponsorCat != "All") {
+      dataTemp = dataTemp.filter(offer => offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
+    }
+
+    /*
+    if (valueTokenPrice != "All") {
+      dataTemp = dataTemp.filter(offer => offer.price.toLowerCase() === valueTokenPrice.toLowerCase())
+    }*/
+
+    setOffers(dataTemp)
+    handleChangeLoadingFalse()
+  }
+
+  useEffect(() => {
+    getOffers()
+  }, [getAllOffers])
 
   const FilterModal = () => {
 
@@ -238,13 +294,15 @@ const Offers = () => {
                   ))}
                 </TextField>
               </Grid>
-              <Grid item xs={12}><Button variant="contained" color="primary" className={classes.inputStyle}>Save changes</Button></Grid>
+              <Grid item xs={12}><Button variant="contained" color="primary" className={classes.inputStyle} onClick={handleSaveChanges}>Save changes</Button></Grid>
             </Grid>
           </div>
         </Modal>
       </>
     )
   }
+
+
 
   const truncateString = (str) => {
     const num = 150
@@ -255,18 +313,20 @@ const Offers = () => {
   }
 
   const LoadOffers = () => {
-
-    const loading = true
     return (
       <React.Fragment>
-        {offers.map(offer => (
+        {loading && <CircularProgress />}
+        {!loading && offers.length <= 0 && (
+          <Typography variant="h3" className={classes.infoText}>No offer available</Typography>
+        )}
+        {!loading && offers.length > 0 && offers.map(offer => (
           <OfferCard
             key={offer.id}
-            title={offer.title}
-            sponsorName={offer.sponsorName}
+            title={offer.offer_name}
+            sponsorName={offer.user.name}
             description={offer.description}
             tokenPrice={offer.tokenPrice}
-            img={offer.img}
+            img={offer.images}
           />
         ))}
       </React.Fragment>
@@ -277,29 +337,28 @@ const Offers = () => {
     return (
       <Grid container item xs={12} md={3}>
         <Card className={classes.card}>
-          <CardActionArea onClick={(e) => {
-            e.preventDefault();
-            window.location.href = '/offer/s';
-          }}>
-            <CardMedia
-              className={classes.media}
-              image={props.img}
-              title="Offer Image"
-            />
-            <CardHeader
-              title={props.title}
-              subheader={props.sponsorName}
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">{truncateString(props.description)}</Typography>
-            </CardContent>
-            <CardContent>
-              <Box className={classes.tokenPriceBox}>
-                <FavoriteIcon />
-                <Typography className={classes.tokenPrice} variant="body2" color="textSecondary" component="p">{props.tokenPrice}</Typography>
-              </Box>
-            </CardContent>
-          </CardActionArea>
+          <Link className={classes.link} to="/offer/s">
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={props.img}
+                title="Offer Image"
+              />
+              <CardHeader
+                title={props.title}
+                subheader={props.sponsorName}
+              />
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">{truncateString(props.description)}</Typography>
+              </CardContent>
+              <CardContent>
+                <Box className={classes.tokenPriceBox}>
+                  <FavoriteIcon />
+                  <Typography className={classes.tokenPrice} variant="body2" color="textSecondary" component="p">{props.tokenPrice}</Typography>
+                </Box>
+              </CardContent>
+            </CardActionArea>
+          </Link>
         </Card>
       </Grid>
     )
@@ -327,7 +386,7 @@ const Offers = () => {
                 value={searchInput}
                 onChange={handleChangeSearchInput}
               />
-              <IconButton className={classes.iconButton} aria-label="search" onClick={getOfferFromBD}>
+              <IconButton className={classes.iconButton} aria-label="search" onClick={searchWithFilters}>
                 <SearchIcon />
               </IconButton>
             </Paper>
