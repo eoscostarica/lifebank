@@ -238,6 +238,15 @@
 - table:
     schema: public
     name: user
+  object_relationships:
+  - name: location
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: location
+        column_mapping:
+          account: account
   array_relationships:
   - name: offers
     using:
@@ -246,6 +255,15 @@
         table:
           schema: public
           name: offer
+  select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - account
+      - id
+      - name
+      - username
+      filter: {}
 - table:
     schema: public
     name: vault
