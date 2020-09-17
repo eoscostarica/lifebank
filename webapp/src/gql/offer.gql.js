@@ -108,3 +108,30 @@ export const GET_SPONSOR_OFFERS_QUERY = gql`
     }
   }
 `
+export const GET_OFFERS_QUERY = gql`
+query(
+  $active: Boolean!
+	){
+  offer(where:{ active: { _eq: $active }})
+  {
+    id
+    images
+    limited
+    offer_name
+    offer_type
+    online_only
+    quantity
+    sponsor_id
+    start_date
+    end_date
+    description
+    active
+    user{
+      account
+      location{
+        info
+      }
+    }
+  }
+}
+`
