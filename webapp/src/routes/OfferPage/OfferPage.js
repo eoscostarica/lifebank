@@ -1,35 +1,28 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
   useParams
 } from "react-router-dom";
 
+import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField';
-import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import OpacityIcon from '@material-ui/icons/Opacity';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import { Divider } from '@material-ui/core';
 
+import Button from '@material-ui/core/Button';
+import { Divider } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import TimelapseIcon from '@material-ui/icons/Timelapse';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import LanguageIcon from '@material-ui/icons/Language';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import EventBusyIcon from '@material-ui/icons/EventBusy';
+
+import { GET_OFFER_QUERY } from '../../gql'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,10 +48,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: 48,
+    marginBottom: theme.spacing(1)
   },
   subTitle: {
     fontSize: 25,
-    marginBottom: theme.spacing(2)
+  },
+  priceTitle: {
+    fontSize: 20,
+    marginBottom: theme.spacing(1)
   },
   imgBanner: {
     width: "100%",
@@ -74,17 +71,23 @@ const useStyles = makeStyles((theme) => ({
     padding: 10
   },
   text: {
-    fontSize: 18,
+    fontSize: 15,
     textAlign: "justify",
     marginBottom: 10
   },
-  tokenPrice: {
-    fontSize: 18,
-    textAlign: "left",
+  icon: {
+    marginTop: 5,
+    marginRight: 5,
+    fontSize: 20,
   },
-  price: {
-    fontSize: 25,
-    textAlign: "center",
+  iconBox: {
+    display: "flex",
+    marginTop: 3,
+  },
+  infoText: {
+    marginTop: 3,
+    fontSize: 15,
+    textAlign: "left",
   },
   redeemButton: {
     width: "100%",
@@ -93,39 +96,132 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const OfferPage = () => {
+  const [offer, setOffer] = React.useState(
+    {
+      "id": "",
+      "images": "",
+      "limited": true,
+      "offer_name": "",
+      "offer_type": "",
+      "online_only": false,
+      "quantity": 0,
+      "sponsor_id": 0,
+      "start_date": "2020-12-12",
+      "end_date": "2020-12-12",
+      "description": "",
+      "active": true,
+      "user": {
+        "account": "sponsortest1",
+      }
+    });
+  const [loading, setLoading] = React.useState(true);
+  const [isOffer, setIsOffer] = React.useState(false);
   const classes = useStyles()
   let { id } = useParams();
+
+  const handleChangeLoadingFalse = (event) => {
+    setLoading(false)
+  }
+
+  const handleChangeIsOfferTrue = (event) => {
+    setIsOffer(true)
+  }
+
+  const { refetch: getOneOffers } = useQuery(GET_OFFER_QUERY, {
+    active: true,
+    id: 0
+  }, { skip: true })
+
+  const getOffer = async () => {
+    const { data } = await getOneOffers({
+      active: true,
+      id: id
+    })
+
+    handleChangeLoadingFalse()
+
+    if (data.offer.length > 0) {
+      setOffer(data.offer[0])
+      handleChangeIsOfferTrue()
+    }
+  }
+
+  const replaceBoolean = (bool) => {
+    if (bool) {
+      return "Yes"
+    } else {
+      return "No"
+    }
+  }
+
+  useEffect(() => {
+    getOffer()
+  }, [getOneOffers])
+
   return (
     <>
-      <Box className={classes.wrapper}>
-        <Grid
-          className={classes.mainCointainer}
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <Grid item xs={12} >
-            <Typography variant="h1" className={classes.title}>10% off on reservations</Typography>
-            <Typography variant="h2" className={classes.subTitle}>Hotel Caribe</Typography>
-            <Divider />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <p className={classes.text}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Paper className={classes.priceContainer}>
-              <Typography variant="h3" className={classes.tokenPrice}> Expiration date: 12/12/20</Typography>
-              <Typography variant="h3" className={classes.tokenPrice}> Token price:2</Typography>
-              <Button variant="contained" color="primary" className={classes.redeemButton}>redeem</Button>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} >
-            <img className={classes.imgBanner} src="https://images.sunwingtravelgroup.com/repo_min/sunwingca/custom/promotions/sliders/default/mobile-en.jpg" />
-          </Grid>
-        </Grid>
-      </Box>
+      <React.Fragment>
+        <Box className={classes.wrapper}>
+          {loading && <CircularProgress />}
+          {!loading && !isOffer && (
+            <Typography variant="h3" className={classes.title}>No offer available</Typography>
+          )}
+          {!loading && isOffer && (
+            <Grid
+              className={classes.mainCointainer}
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              spacing={2}
+            >
+              <Grid item xs={12} md={8}>
+                <Typography variant="h1" className={classes.title}>{offer.offer_name}</Typography>
+                <Typography variant="h2" className={classes.subTitle}>{offer.user.account}</Typography>
+                <Typography variant="h2" className={classes.priceTitle}>Price: 5</Typography>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Button variant="contained" color="primary" className={classes.redeemButton}>redeem</Button>
+              </Grid>
+              <Grid item xs={12} >
+                <Divider />
+              </Grid>
+              <Grid item xs={12} md={8} >
+                <p className={classes.text}>{offer.description}</p>
+              </Grid>
+              <Grid item xs={12} md={4} ml={20}>
+                <Box className={classes.iconBox}>
+                  <LocalOfferIcon className={classes.icon} />
+                  <Typography variant="body1" className={classes.infoText}><b>Offer type: </b> {offer.offer_type}</Typography>
+                </Box>
+                <Box className={classes.iconBox}>
+                  <TimelapseIcon className={classes.icon} />
+                  <Typography variant="body1" className={classes.infoText}><b>Limited offer: </b> {replaceBoolean(offer.limited)}</Typography>
+                </Box>
+                <Box className={classes.iconBox}>
+                  <ShoppingBasketIcon className={classes.icon} />
+                  <Typography variant="body1" className={classes.infoText}><b>Stock: </b> {offer.quantity} </Typography>
+                </Box>
+                <Box className={classes.iconBox}>
+                  <LanguageIcon className={classes.icon} />
+                  <Typography variant="body1" className={classes.infoText}><b>Online only: </b> {replaceBoolean(offer.online_only)} </Typography>
+                </Box>
+                <Box className={classes.iconBox}>
+                  <EventAvailableIcon className={classes.icon} />
+                  <Typography variant="body1" className={classes.infoText}><b>Start date: </b> {offer.start_date}</Typography>
+                </Box>
+                <Box className={classes.iconBox}>
+                  <EventBusyIcon className={classes.icon} />
+                  <Typography variant="body1" className={classes.infoText}><b>End date: </b> {offer.end_date}</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12} >
+                <img className={classes.imgBanner} src={offer.images} />
+              </Grid>
+            </Grid>
+          )}
+        </Box>
+      </React.Fragment>
     </>
   )
 }
