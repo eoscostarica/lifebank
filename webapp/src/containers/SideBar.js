@@ -92,14 +92,16 @@ const SideBar = ({ user, onLogout }) => {
               </Typography>
             </Link>
           </Box>
-          <Box className={classes.optionLink}>
-            <MenuBookIcon className={classes.iconOption} />
-            <Link to="/offers-management">
-              <Typography variant="body1" className={classes.labelOption}>
-                Offers Management
-              </Typography>
-            </Link>
-          </Box>
+          {user.role === 'sponsor' && (
+            <Box className={classes.optionLink}>
+              <MenuBookIcon className={classes.iconOption} />
+              <Link to="/offers-management">
+                <Typography variant="body1" className={classes.labelOption}>
+                  Offers Management
+                </Typography>
+              </Link>
+            </Box>
+          )}
           <Box className={classes.optionLink} onClick={onLogout}>
             <LogoutIcon className={classes.iconOption} />
             <Typography variant="body1" className={classes.labelOption}>
