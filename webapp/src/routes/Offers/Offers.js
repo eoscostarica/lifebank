@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +14,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import OpacityIcon from '@material-ui/icons/Opacity';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
@@ -27,8 +26,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import { constants } from '../../config'
 import { GET_OFFERS_QUERY } from '../../gql'
 
-
-const { SPONSOR_TYPES, OFFER_TYPES } = constants
+const { SPONSOR_TYPES } = constants
 const sponsorsCategories = ["All"].concat(SPONSOR_TYPES)
 const offerCategories = ["All", "Discount", "Gift", "Benefit", "Other"]
 const tokenPrices = ["All", "1", "2", "3", "4", "5"];
@@ -220,7 +218,6 @@ const Offers = () => {
   }, [getAllOffers])
 
   const FilterModal = () => {
-
     return (
       <>
         <IconButton className={classes.iconButton} aria-label="menu" onClick={handleOpen}>
@@ -306,9 +303,11 @@ const Offers = () => {
 
   const truncateString = (str) => {
     const num = 150
+
     if (str.length <= num) {
       return str
     }
+
     return str.slice(0, num) + '...'
   }
 
@@ -317,11 +316,12 @@ const Offers = () => {
       <React.Fragment>
         {loading && <CircularProgress />}
         {!loading && offers.length <= 0 && (
-          <Typography variant="h3" className={classes.infoText}>No offer available</Typography>
+          <Typography variant="h3" className={classes.infoText}>No offers available</Typography>
         )}
         {!loading && offers.length > 0 && offers.map(offer => (
           <OfferCard
             key={offer.id}
+            id={offer.id}
             title={offer.offer_name}
             sponsorName={offer.user.name}
             description={offer.description}
@@ -333,11 +333,14 @@ const Offers = () => {
     )
   }
 
+
   const OfferCard = (props) => {
+    const LinkTo = "/offer/" + props.id
+
     return (
       <Grid container item xs={12} md={3}>
         <Card className={classes.card}>
-          <Link className={classes.link} to="/offer/s">
+          <Link className={classes.link} to={LinkTo}>
             <CardActionArea>
               <CardMedia
                 className={classes.media}
@@ -406,40 +409,5 @@ const Offers = () => {
     </>
   )
 }
-
-const test = [
-  {
-    id: "1",
-    title: "10% off on reservations",
-    sponsorName: "Hotel Caribe",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-    tokenPrice: "2",
-    img: "https://images.sunwingtravelgroup.com/repo_min/sunwingca/custom/promotions/sliders/default/mobile-en.jpg",
-  },
-  {
-    id: "2",
-    title: "10% off on general maintenance",
-    sponsorName: "bike store",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-    tokenPrice: "1",
-    img: "https://www.bicycleretailer.com/sites/default/files/images/article/gallery/02_Giant_Lewisburg_Interior.JPG",
-  },
-  {
-    id: "3",
-    title: "15% off on vision test",
-    sponsorName: "Vision center",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
-    tokenPrice: "3",
-    img: "https://mujerejecutiva.com.mx/wp-content/uploads/2020/02/ceguera.jpg"
-  },
-  {
-    id: "4",
-    title: "5% off on aquatic activities",
-    sponsorName: "Hotel Caribe",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
-    tokenPrice: "2",
-    img: "https://images.ctfassets.net/h82kzjd39wa1/1rkQGVMAfRTtg46DdtzbrE/a0f478daaf87e869e31297faeaa1baa0/AllInclusive_Mobile.jpg",
-  }
-]
 
 export default Offers
