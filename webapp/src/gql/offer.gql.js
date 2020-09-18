@@ -134,6 +134,7 @@ query(
     active
     user{
       account
+      name
       location{
         info
       }
@@ -169,6 +170,7 @@ query(
     active
     user{
       account
+      name
       location{
         info
       }

@@ -172,7 +172,7 @@ const OfferPage = () => {
             >
               <Grid item xs={12} md={8}>
                 <Typography variant="h1" className={classes.title}>{offer.offer_name}</Typography>
-                <Typography variant="h2" className={classes.subTitle}>{offer.user.account}</Typography>
+                <Typography variant="h2" className={classes.subTitle}>{offer.user.name}</Typography>
                 <Typography variant="h2" className={classes.priceTitle}>Price: {offer.cost_in_tokens}</Typography>
               </Grid>
               <Grid item xs={12} md={4}>
