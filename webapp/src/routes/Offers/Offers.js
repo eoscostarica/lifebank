@@ -300,8 +300,6 @@ const Offers = () => {
     )
   }
 
-
-
   const truncateString = (str) => {
     const num = 150
 
@@ -334,7 +332,6 @@ const Offers = () => {
     )
   }
 
-
   const OfferCard = (props) => {
     const LinkTo = "/offer/" + props.id
 
@@ -366,6 +363,15 @@ const Offers = () => {
         </Card>
       </Grid>
     )
+  }
+
+  OfferCard.propTypes = {
+    id: PropTypes.string,
+    img: PropTypes.string,
+    title: PropTypes.string,
+    sponsorName: PropTypes.string,
+    description: PropTypes.string,
+    tokenPrice: PropTypes.string,
   }
 
   return (
@@ -409,15 +415,6 @@ const Offers = () => {
       </Box>
     </>
   )
-}
-
-Offers.propTypes = {
-  id: PropTypes.string,
-  img: PropTypes.string,
-  title: PropTypes.string,
-  sponsorName: PropTypes.string,
-  description: PropTypes.string,
-  tokenPrice: PropTypes.string,
 }
 
 export default Offers
