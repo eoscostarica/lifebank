@@ -204,10 +204,10 @@ const Offers = () => {
       dataTemp = dataTemp.filter(offer => offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
     }
 
-    /*
+
     if (valueTokenPrice != "All") {
-      dataTemp = dataTemp.filter(offer => offer.price.toLowerCase() === valueTokenPrice.toLowerCase())
-    }*/
+      dataTemp = dataTemp.filter(offer => offer.cost_in_tokens === parseInt(valueTokenPrice))
+    }
 
     setOffers(dataTemp)
     handleChangeLoadingFalse()
@@ -325,7 +325,7 @@ const Offers = () => {
             title={offer.offer_name}
             sponsorName={offer.user.name}
             description={offer.description}
-            tokenPrice={offer.tokenPrice}
+            tokenPrice={offer.cost_in_tokens}
             img={offer.images}
           />
         ))}

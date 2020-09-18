@@ -130,6 +130,7 @@ query(
     start_date
     end_date
     description
+    cost_in_tokens
     active
     user{
       account
@@ -164,6 +165,7 @@ query(
     start_date
     end_date
     description
+    cost_in_tokens
     active
     user{
       account

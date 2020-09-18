@@ -1,17 +1,11 @@
 
 import React, { useEffect } from 'react'
-
-import {
-  BrowserRouter as Router,
-  useParams
-} from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
-
 import Button from '@material-ui/core/Button';
 import { Divider } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -103,12 +97,13 @@ const OfferPage = () => {
       "limited": true,
       "offer_name": "",
       "offer_type": "",
-      "online_only": false,
+      "online_only": true,
       "quantity": 0,
       "sponsor_id": 0,
       "start_date": "2020-12-12",
       "end_date": "2020-12-12",
       "description": "",
+      "cost_in_tokens": 1,
       "active": true,
       "user": {
         "account": "sponsortest1",
@@ -178,7 +173,7 @@ const OfferPage = () => {
               <Grid item xs={12} md={8}>
                 <Typography variant="h1" className={classes.title}>{offer.offer_name}</Typography>
                 <Typography variant="h2" className={classes.subTitle}>{offer.user.account}</Typography>
-                <Typography variant="h2" className={classes.priceTitle}>Price: 5</Typography>
+                <Typography variant="h2" className={classes.priceTitle}>Price: {offer.cost_in_tokens}</Typography>
               </Grid>
               <Grid item xs={12} md={4}>
                 <Button variant="contained" color="primary" className={classes.redeemButton}>redeem</Button>

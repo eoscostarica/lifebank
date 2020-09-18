@@ -160,18 +160,19 @@
   - role: donor
     permission:
       columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
       - limited
+      - offer_name
+      - offer_type
       - online_only
       - quantity
-      - offer_type
-      - description
-      - start_date
-      - end_date
-      - images
       - sponsor_id
-      - id
-      - offer_name
-      - active
+      - start_date
       filter: {}
   - role: guest
     permission:
