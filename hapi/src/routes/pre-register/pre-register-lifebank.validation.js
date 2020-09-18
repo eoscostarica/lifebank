@@ -13,7 +13,7 @@ module.exports = {
       urgency_level: Joi.number(),
       coordinates: Joi.string().required(),
       immunity_test: Joi.boolean(),
-      invitationcode: Joi.string()
+      invitation_code: Joi.string()
     })
   }).options({ stripUnknown: true })
 }

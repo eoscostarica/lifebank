@@ -19,7 +19,6 @@ const INSERT = `
   }
 `
 const insert = preregister_lifebank => {
-  console.log("preregister_lifebank: ", preregister_lifebank)
   return hasuraUtils.request(INSERT, { preregister_lifebank })
 }
 

@@ -12,7 +12,7 @@ import {
   CHECK_USERNAME_MUTATION,
   CREATE_ACCOUNT_MUTATION,
   SIGNUP_MUTATION,
-  CREATE_PRE_REGITER_LIFEBANK
+  CREATE_PRE_REGITER_LIFEBANK_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
@@ -97,7 +97,7 @@ const Signup = () => {
       loading: preRegisterLifebankLoading,
       data: { create_pre_register_lifebank: preRegisterLifebankResult } = {}
     }
-  ] = useMutation(CREATE_PRE_REGITER_LIFEBANK)
+  ] = useMutation(CREATE_PRE_REGITER_LIFEBANK_MUTATION)
   const [
     signup,
     { loading: signupLoading, data: { signup: signupResult } = {} }
@@ -128,17 +128,19 @@ const Signup = () => {
   }
 
   const handlePreRegisterLifebank = () => {
-    const { email, password, name, address, schedule, phone, description, urgency_level, coordinates, immunity_test, invitation_code } = user
-    console.log("email: ", email)
-    console.log("password: ", password)
-    console.log("name: ", name)
-    console.log("address: ", address)
-    console.log("schedule: ", schedule)
-    console.log("description: ", description)
-    console.log("urgency_level: ", urgency_level)
-    console.log("coordinates: ", coordinates)
-    console.log("immunity_test: ", immunity_test)
-    console.log("invitation_code: ", invitation_code)
+    const { email, password, name, address, schedule, phone, description, coordinates } = user
+    let { immunity_test, invitation_code, urgency_level } = user
+
+    if (immunity_test === undefined) {
+      immunity_test = false
+    }
+    if (invitation_code === undefined) {
+      invitation_code = " "
+    }
+    if (urgency_level === undefined) {
+      urgency_level = 1
+    }
+
     preRegisterLifebank({
       variables: {
         email,
@@ -155,6 +157,17 @@ const Signup = () => {
       }
     })
   }
+
+  useEffect(() => {
+    if (preRegisterLifebankResult) {
+      if (preRegisterLifebankResult.verification_code === "error") {
+        alert("This email already has an associated blood bank")
+      }
+      else {
+        alert("Successful registration")
+      }
+    }
+  }, [preRegisterLifebankResult])
 
   const handleSingup = () => {
     const { username, secret, ...profile } = user
@@ -180,7 +193,6 @@ const Signup = () => {
   useEffect(() => {
     if (createAccountResult) {
       login(createAccountResult.token)
-      console.log(preRegisterLifebankResult)
     }
   }, [createAccountResult])
 
