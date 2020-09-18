@@ -1,6 +1,7 @@
 
-import React, { useEffect } from 'react'
+import React, { useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
@@ -192,20 +193,20 @@ const Offers = () => {
     })
     let dataTemp = data.offer
 
-    if (searchInput != "") {
+    if (searchInput !== "") {
       dataTemp = dataTemp.filter(offer => offer.offer_name.toLowerCase().search(searchInput.toLowerCase()) > 0)
     }
 
-    if (valueOfferCat != "All") {
+    if (valueOfferCat !== "All") {
       dataTemp = dataTemp.filter(offer => offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase())
     }
 
-    if (valueSponsorCat != "All") {
+    if (valueSponsorCat !== "All") {
       dataTemp = dataTemp.filter(offer => offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
     }
 
 
-    if (valueTokenPrice != "All") {
+    if (valueTokenPrice !== "All") {
       dataTemp = dataTemp.filter(offer => offer.cost_in_tokens === parseInt(valueTokenPrice))
     }
 
@@ -313,7 +314,7 @@ const Offers = () => {
 
   const LoadOffers = () => {
     return (
-      <React.Fragment>
+      <Fragment>
         {loading && <CircularProgress />}
         {!loading && offers.length <= 0 && (
           <Typography variant="h3" className={classes.infoText}>No offers available</Typography>
@@ -329,7 +330,7 @@ const Offers = () => {
             img={offer.images}
           />
         ))}
-      </React.Fragment>
+      </Fragment>
     )
   }
 
@@ -408,6 +409,15 @@ const Offers = () => {
       </Box>
     </>
   )
+}
+
+Offers.propTypes = {
+  id: PropTypes.string,
+  img: PropTypes.string,
+  title: PropTypes.string,
+  sponsorName: PropTypes.string,
+  description: PropTypes.string,
+  tokenPrice: PropTypes.string,
 }
 
 export default Offers

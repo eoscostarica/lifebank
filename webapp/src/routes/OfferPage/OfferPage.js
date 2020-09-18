@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react'
+import React, { useEffect, Fragment } from 'react'
 import { useParams } from "react-router-dom";
 import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
@@ -112,7 +112,7 @@ const OfferPage = () => {
   const [loading, setLoading] = React.useState(true);
   const [isOffer, setIsOffer] = React.useState(false);
   const classes = useStyles()
-  let { id } = useParams();
+  const { id } = useParams();
 
   const handleChangeLoadingFalse = (event) => {
     setLoading(false)
@@ -155,7 +155,7 @@ const OfferPage = () => {
 
   return (
     <>
-      <React.Fragment>
+      <Fragment>
         <Box className={classes.wrapper}>
           {loading && <CircularProgress />}
           {!loading && !isOffer && (
@@ -216,7 +216,7 @@ const OfferPage = () => {
             </Grid>
           )}
         </Box>
-      </React.Fragment>
+      </Fragment>
     </>
   )
 }
