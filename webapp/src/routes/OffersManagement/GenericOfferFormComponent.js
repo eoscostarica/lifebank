@@ -154,6 +154,7 @@ const GenericOfferFormComponent = ({
   setOpen,
   sponsor_id,
   isEditing,
+  setOffers,
   data
 }) => {
   const classes = useStyles()
@@ -170,7 +171,7 @@ const GenericOfferFormComponent = ({
     createOffer,
     {
       loading: createOfferLoading,
-      data: { create_offer: createOfferResult } = {}
+      data: { insert_offer_one: createOfferResult } = {}
     }
   ] = useMutation(CREATE_OFFER_MUTATION)
 
@@ -221,9 +222,9 @@ const GenericOfferFormComponent = ({
           online_only,
           description,
           limited,
-          quantity,
-          start_date,
-          end_date,
+          quantity: quantity || undefined,
+          start_date: start_date || undefined,
+          end_date: end_date || undefined,
           images,
           offer_name,
           id,
@@ -267,6 +268,7 @@ const GenericOfferFormComponent = ({
         message: 'Offer created successfully',
         severity: 'success'
       })
+      setOffers((offs) => [...offs, createOfferResult])
     }
   }, [createOfferResult])
 
@@ -374,7 +376,7 @@ const GenericOfferFormComponent = ({
                 label="Unlimited"
               />
             </RadioGroup>
-            {offer && offer.limited === 'true' && (
+            {(offer.limited === true || offer.limited === 'true') && (
               <LimitationHandling
                 setQuantity={(val) => setOffer({ ...offer, quantity: val })}
                 setStartDate={(val) => setOffer({ ...offer, start_date: val })}
