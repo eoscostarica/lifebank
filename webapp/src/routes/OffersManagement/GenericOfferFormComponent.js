@@ -469,7 +469,8 @@ GenericOfferFormComponent.propTypes = {
   setOpen: PropTypes.func,
   sponsor_id: PropTypes.number,
   isEditing: PropTypes.bool,
-  data: PropTypes.object
+  data: PropTypes.object,
+  setOffers: PropTypes.func
 }
 
 export default GenericOfferFormComponent
