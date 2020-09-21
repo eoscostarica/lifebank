@@ -20,6 +20,7 @@ import BallotIcon from '@material-ui/icons/Ballot'
 import LocationOffIcon from '@material-ui/icons/LocationOff'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import ReceiptIcon from '@material-ui/icons/Receipt'
+import StyleIcon from '@material-ui/icons/Style'
 import * as m from 'moment-timezone'
 import moment from 'moment'
 
@@ -131,6 +132,14 @@ const OfferDetails = ({ offer, open, setOpen }) => {
               </ListItemIcon>
               <ListItemText>
                 <strong>Offer type: </strong> {offer.offer_type}
+              </ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <StyleIcon color="secondary" />
+              </ListItemIcon>
+              <ListItemText>
+                <strong>Cost in tokens: </strong> {offer.cost_in_tokens}
               </ListItemText>
             </ListItem>
             <ListItem>
