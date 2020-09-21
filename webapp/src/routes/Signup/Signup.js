@@ -18,10 +18,10 @@ import { useUser } from '../../context/user.context'
 import SignupRoleSelector from './SignupRoleSelector'
 import SignupUsername from './SignupUsername'
 import SignupDonor from './SignupDonor'
-import SignupSponsor from './SignupSponsor/SignupSponsor'
 import SignupLifeBank from './SignupLifeBank'
 import SignupAccount from './SignupAccount'
 import SignupConsent from './SignupConsent'
+import SimpleRegisterForm from './SignupSponsor/SimpleRegisterForm'
 
 const useStyles = makeStyles((theme) => ({
   register: {
@@ -68,6 +68,29 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     padding: theme.spacing(0, 2)
+  },
+  form: {
+    width: '100%',
+    padding: theme.spacing(0, 2),
+    marginTop: theme.spacing(3)
+  },
+  textFieldWrapper: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  textField: {
+    marginTop: theme.spacing(2),
+    width: '100%'
+  },
+  btnWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: theme.spacing(2, 0)
   }
 }))
 
@@ -167,8 +190,9 @@ const Signup = () => {
 
   useEffect(() => {
     if (signupResult) {
-      history.replace('/profile')
+      // history.replace('/profile')
     }
+    console.log(signupResult)
   }, [signupResult])
 
   return (
@@ -217,20 +241,13 @@ const Signup = () => {
             </SignupDonor>
           )}
           {activeStep === 1 && role === 'sponsor' && (
-            <SignupSponsor
+            <SimpleRegisterForm
               onSubmit={handleCreateAccount}
               loading={createAccountLoading}
               setField={handleSetField}
-              user={user}
               isUsernameValid={isUsernameValid}
-            >
-              <SignupUsername
-                isValid={isUsernameValid}
-                loading={checkUsernameLoading}
-                user={user}
-                setField={handleSetField}
-              />
-            </SignupSponsor>
+              classes={classes}
+            />
           )}
           {activeStep === 1 && role === 'lifebank' && (
             <SignupLifeBank
