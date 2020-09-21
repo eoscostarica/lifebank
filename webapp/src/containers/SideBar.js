@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
 import ContactMailIcon from '@material-ui/icons/ContactMail'
+import MenuBookIcon from '@material-ui/icons/MenuBook'
 
 import LoginModal from '../components/LoginModal'
 import CredentialsRecovery from '../components/CredentialsRecovery'
@@ -80,6 +81,16 @@ const SideBar = ({ user, onLogout }) => {
               </Typography>
             </Link>
           </Box>
+          {user.role === 'sponsor' && (
+            <Box className={classes.optionLink}>
+              <MenuBookIcon className={classes.iconOption} />
+              <Link to="/offers-management">
+                <Typography variant="body1" className={classes.labelOption}>
+                  Offers Management
+                </Typography>
+              </Link>
+            </Box>
+          )}
           <Box className={classes.optionLink} onClick={onLogout}>
             <LogoutIcon className={classes.iconOption} />
             <Typography variant="body1" className={classes.labelOption}>

@@ -53,6 +53,11 @@ const PAGES = [
     title: 'Profile',
     href: '/dashboard/profile',
     icon: <PeopleIcon />
+  },
+  {
+    title: 'Offers management',
+    href: '/dashboard/offers-management',
+    icon: <PeopleIcon />
   }
 ]
 
@@ -72,7 +77,7 @@ const DashboardSidebarContent = ({ user, onLogout, onLogin }) => {
               to={page.href}
             >
               <div className={classes.icon}>{page.icon}</div>
-              {t(page.title)}
+              {page.title}
             </Button>
           </ListItem>
         ))}

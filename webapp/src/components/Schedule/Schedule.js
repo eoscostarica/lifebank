@@ -138,7 +138,7 @@ const convertHour = (time) => {
   return (hour || '12') + ':00' + AMPM[Math.floor(time / 12)]
 }
 
-const Schedule = ({ handleOnAddSchedule, data, showSchedule, showButton }) => {
+const Schedule = ({ handleOnAddSchedule, scheduleLoad, data, showSchedule, showButton }) => {
   const classes = useStyles()
   const [open, setOpen] = useState('06:00')
   const [close, setClose] = useState('16:00')
@@ -175,6 +175,10 @@ const Schedule = ({ handleOnAddSchedule, data, showSchedule, showButton }) => {
     !isRepeated && setSchedule([...schedule, { day, open, close }])
   }
 
+  const loadSchedule = (scheduleLoad) => {
+    setSchedule(JSON.parse(scheduleLoad))
+  }
+
   const handleDeleteSchedulePerDay = (item) => {
     const newSchedule = schedule.filter(({ day }) => day !== item)
     setSchedule(newSchedule)
@@ -182,6 +186,7 @@ const Schedule = ({ handleOnAddSchedule, data, showSchedule, showButton }) => {
 
   const handleOpen = () => {
     setOpenModal(!openModal)
+    loadSchedule(scheduleLoad)
   }
 
   const onHandleOnAddSchedule = () => {
@@ -233,7 +238,7 @@ const Schedule = ({ handleOnAddSchedule, data, showSchedule, showButton }) => {
         aria-describedby="transition-modal-description"
         className={classes.modal}
         open={openModal}
-        onClose={() => {}}
+        onClose={() => { }}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -366,13 +371,15 @@ const Schedule = ({ handleOnAddSchedule, data, showSchedule, showButton }) => {
 
 Schedule.propTypes = {
   handleOnAddSchedule: PropTypes.func,
+  scheduleLoad: PropTypes.func,
   data: PropTypes.array,
   showSchedule: PropTypes.bool,
   showButton: PropTypes.bool
 }
 
 Schedule.defaultProps = {
-  handleOnAddSchedule: () => {},
+  handleOnAddSchedule: () => { },
+  scheduleLoad: () => { },
   data: null,
   showSchedule: false,
   showButton: true

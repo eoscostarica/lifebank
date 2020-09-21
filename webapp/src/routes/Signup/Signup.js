@@ -19,7 +19,7 @@ import { useUser } from '../../context/user.context'
 import SignupRoleSelector from './SignupRoleSelector'
 import SignupUsername from './SignupUsername'
 import SignupDonor from './SignupDonor'
-import SignupSponsor from './SignupSponsor'
+import SignupSponsor from './SignupSponsor/SignupSponsor'
 import SignupLifeBank from './SignupLifeBank'
 import SignupAccount from './SignupAccount'
 import SignupConsent from './SignupConsent'
@@ -40,11 +40,16 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main
     }
   },
+  gridContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    padding: '5% 0'
+  },
   goBack: {
     width: '100%',
     display: 'flex',
     justifyContent: 'flex-start',
-    marginBottom: theme.spacing(10),
     '& button': {
       padding: 0,
       display: 'flex',
@@ -218,18 +223,18 @@ const Signup = () => {
   }, [signupResult])
 
   return (
-    <Grid container>
+    <Grid container className={classes.gridContainer}>
       <Grid item xs={12} sm={8} md={6} className={classes.register}>
-        <Box className={classes.goBack}>
-          <IconButton aria-label="go-back" onClick={handleGoBack}>
-            <ArrowBackIcon color="primary" />
-            <Typography variant="h4" className={classes.registerBack}>
-              Register
-            </Typography>
-          </IconButton>
-        </Box>
         <Typography variant="h1">{`Step ${activeStep + 1}`}</Typography>
         <Box className={classes.stepperContent}>
+          <Box className={classes.goBack}>
+            <IconButton aria-label="go-back" onClick={handleGoBack}>
+              <ArrowBackIcon color="primary" />
+              <Typography variant="h4" className={classes.registerBack}>
+                Register
+              </Typography>
+            </IconButton>
+          </Box>
           {activeStep === 0 && (
             <>
               <Typography variant="h4">How do you want to help?</Typography>

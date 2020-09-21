@@ -61,6 +61,7 @@ const getProfile = async account => {
   return {
     account,
     role: user.role,
+    id: user.id,
     ...data
   }
 }
