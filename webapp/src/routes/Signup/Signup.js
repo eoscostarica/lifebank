@@ -299,9 +299,7 @@ const Signup = () => {
               setField={handleSetField}
               user={user}
               preRegisterLifebankResult={preRegisterLifebankResult}
-            //isUsernameValid={isUsernameValid}
-            >
-            </SignupLifeBank>
+            />
           )}
           {activeStep === 2 && (
             <>

@@ -18,7 +18,7 @@ const INSERT = `
     }
   }
 `
-const insert = preregister_lifebank => {
+const insert = (preregister_lifebank) => {
   return hasuraUtils.request(INSERT, { preregister_lifebank })
 }
 

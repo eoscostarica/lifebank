@@ -116,6 +116,8 @@
 - table:
     schema: public
     name: preregister_lifebank
+- table:
+    schema: public
     name: offer
   object_relationships:
   - name: user

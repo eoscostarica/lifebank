@@ -16,7 +16,17 @@ const {
 
 const LIFE_BANK_CODE = eosConfig.lifebankCodeContractName
 
-const preRegister = async ({ email, phone, immunity_test, schedule, urgency_level, address, coordinates, name, password, description, invitation_code }) => {
+const preRegister = async ({
+  email,
+  phone,
+  immunity_test,
+  schedule, urgency_level,
+  address, coordinates,
+  name,
+  password,
+  description,
+  invitation_code
+}) => {
   let verification_code = await verificationCodeApi.generate()
 
   verification_code = verification_code.verificationCode
@@ -36,13 +46,14 @@ const preRegister = async ({ email, phone, immunity_test, schedule, urgency_leve
       verification_code
     })
   } catch (error) {
-    console.error(error);
-    resultRegister = "error"
+    let resultRegister = 'error'
+
     return {
       resultRegister
     }
   }
-  resultRegister = "ok"
+  let resultRegister = 'ok'
+
   return {
     resultRegister
   }
