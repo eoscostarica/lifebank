@@ -147,6 +147,6 @@ type get_contract_output {
 }
 
 type create_pre_register_lifebank_output {
-  verification_code : String!
+  resultRegister : String!
 }
 

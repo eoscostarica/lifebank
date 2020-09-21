@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import ClearIcon from '@material-ui/icons/Clear';
+import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -44,7 +46,7 @@ const SignupLifeBank = ({
   setField,
   user,
   loading,
-  isUsernameValid,
+  preRegisterLifebankResult,
   children
 }) => {
   const classes = useStyles()
@@ -96,12 +98,24 @@ const SignupLifeBank = ({
           placeholder="Your Email"
           fullWidth
           type="email"
-          oninvalid="setCustomValidity('Díganos tu email')"
           InputLabelProps={{
             shrink: true
           }}
           className={classes.textField}
           onChange={(event) => setField('email', event.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                {preRegisterLifebankResult && <ClearIcon color="secondary" />}
+              </InputAdornment>
+            )
+          }}
+          helperText={
+            preRegisterLifebankResult
+              ? 'This email already has an associated blood bank'
+              : ''
+          }
+          error={preRegisterLifebankResult}
         />
       </div>
       <div className={classes.formGroup}>
@@ -267,7 +281,7 @@ SignupLifeBank.propTypes = {
   setField: PropTypes.func,
   user: PropTypes.object,
   loading: PropTypes.bool,
-  isUsernameValid: PropTypes.bool,
+  preRegisterLifebankResult: PropTypes.object,
   children: PropTypes.node
 }
 

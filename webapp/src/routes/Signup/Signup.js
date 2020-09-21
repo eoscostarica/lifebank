@@ -160,11 +160,12 @@ const Signup = () => {
 
   useEffect(() => {
     if (preRegisterLifebankResult) {
-      if (preRegisterLifebankResult.verification_code === "error") {
+      if (preRegisterLifebankResult.resultRegister === "error") {
         alert("This email already has an associated blood bank")
       }
       else {
-        alert("Successful registration")
+        alert("successful pre registration")
+        history.replace('/')
       }
     }
   }, [preRegisterLifebankResult])
@@ -235,13 +236,22 @@ const Signup = () => {
               <SignupRoleSelector onSubmit={handleRoleChange} />
             </>
           )}
-          {activeStep === 1 && (
+          {activeStep === 1 && role !== 'lifebank' && (
             <>
               <Typography variant="h4">Create a new account.</Typography>
               <Typography variant="body1" className={classes.text}>
                 To sign up all you need is to pick a 9 letter username and a
                 password, a unique blockchain account name will be generated
                 you.
+              </Typography>
+            </>
+          )}
+          {activeStep === 1 && role === 'lifebank' && (
+            <>
+              <Typography variant="h4">Pre-register a new account.</Typography>
+              <Typography variant="body1" className={classes.text}>
+                To carry out the pre-registration, you must indicate
+                the following data, necessary for the approval of the blood bank
               </Typography>
             </>
           )}
@@ -283,6 +293,7 @@ const Signup = () => {
               loading={preRegisterLifebankLoading}
               setField={handleSetField}
               user={user}
+              preRegisterLifebankResult={preRegisterLifebankResult}
             //isUsernameValid={isUsernameValid}
             >
             </SignupLifeBank>
