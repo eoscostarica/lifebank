@@ -205,7 +205,6 @@ const Offers = () => {
       dataTemp = dataTemp.filter(offer => offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
     }
 
-
     if (valueTokenPrice !== "All") {
       dataTemp = dataTemp.filter(offer => offer.cost_in_tokens === parseInt(valueTokenPrice))
     }
@@ -366,12 +365,12 @@ const Offers = () => {
   }
 
   OfferCard.propTypes = {
-    id: PropTypes.string,
+    id: PropTypes.number,
     img: PropTypes.string,
     title: PropTypes.string,
     sponsorName: PropTypes.string,
     description: PropTypes.string,
-    tokenPrice: PropTypes.string,
+    tokenPrice: PropTypes.number,
   }
 
   return (

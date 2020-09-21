@@ -18,7 +18,6 @@ import EventBusyIcon from '@material-ui/icons/EventBusy';
 
 import { GET_OFFER_QUERY } from '../../gql'
 
-
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
@@ -90,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const OfferPage = () => {
-  const [offer, setOffer] = React.useState(
+  const [offer, setOffer] = useState(
     {
       "id": "",
       "images": "",
@@ -109,8 +108,8 @@ const OfferPage = () => {
         "account": "sponsortest1",
       }
     });
-  const [loading, setLoading] = React.useState(true);
-  const [isOffer, setIsOffer] = React.useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isOffer, setIsOffer] = useState(false);
   const classes = useStyles()
   const { id } = useParams();
 
@@ -154,70 +153,68 @@ const OfferPage = () => {
   }, [getOneOffers])
 
   return (
-    <>
-      <Fragment>
-        <Box className={classes.wrapper}>
-          {loading && <CircularProgress />}
-          {!loading && !isOffer && (
-            <Typography variant="h3" className={classes.title}>No offer available</Typography>
-          )}
-          {!loading && isOffer && (
-            <Grid
-              className={classes.mainCointainer}
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-              spacing={2}
-            >
-              <Grid item xs={12} md={8}>
-                <Typography variant="h1" className={classes.title}>{offer.offer_name}</Typography>
-                <Typography variant="h2" className={classes.subTitle}>{offer.user.name}</Typography>
-                <Typography variant="h2" className={classes.priceTitle}>Price: {offer.cost_in_tokens}</Typography>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Button variant="contained" color="primary" className={classes.redeemButton}>redeem</Button>
-              </Grid>
-              <Grid item xs={12} >
-                <Divider />
-              </Grid>
-              <Grid item xs={12} md={8} >
-                <p className={classes.text}>{offer.description}</p>
-              </Grid>
-              <Grid item xs={12} md={4} ml={20}>
-                <Box className={classes.iconBox}>
-                  <LocalOfferIcon className={classes.icon} />
-                  <Typography variant="body1" className={classes.infoText}><b>Offer type: </b> {offer.offer_type}</Typography>
-                </Box>
-                <Box className={classes.iconBox}>
-                  <TimelapseIcon className={classes.icon} />
-                  <Typography variant="body1" className={classes.infoText}><b>Limited offer: </b> {replaceBoolean(offer.limited)}</Typography>
-                </Box>
-                <Box className={classes.iconBox}>
-                  <ShoppingBasketIcon className={classes.icon} />
-                  <Typography variant="body1" className={classes.infoText}><b>Stock: </b> {offer.quantity} </Typography>
-                </Box>
-                <Box className={classes.iconBox}>
-                  <LanguageIcon className={classes.icon} />
-                  <Typography variant="body1" className={classes.infoText}><b>Online only: </b> {replaceBoolean(offer.online_only)} </Typography>
-                </Box>
-                <Box className={classes.iconBox}>
-                  <EventAvailableIcon className={classes.icon} />
-                  <Typography variant="body1" className={classes.infoText}><b>Start date: </b> {offer.start_date}</Typography>
-                </Box>
-                <Box className={classes.iconBox}>
-                  <EventBusyIcon className={classes.icon} />
-                  <Typography variant="body1" className={classes.infoText}><b>End date: </b> {offer.end_date}</Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12} >
-                <img className={classes.imgBanner} src={offer.images} />
-              </Grid>
+    <Fragment>
+      <Box className={classes.wrapper}>
+        {loading && <CircularProgress />}
+        {!loading && !isOffer && (
+          <Typography variant="h3" className={classes.title}>No offer available</Typography>
+        )}
+        {!loading && isOffer && (
+          <Grid
+            className={classes.mainCointainer}
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            spacing={2}
+          >
+            <Grid item xs={12} md={8}>
+              <Typography variant="h1" className={classes.title}>{offer.offer_name}</Typography>
+              <Typography variant="h2" className={classes.subTitle}>{offer.user.name}</Typography>
+              <Typography variant="h2" className={classes.priceTitle}>Price: {offer.cost_in_tokens}</Typography>
             </Grid>
-          )}
-        </Box>
-      </Fragment>
-    </>
+            <Grid item xs={12} md={4}>
+              <Button variant="contained" color="primary" className={classes.redeemButton}>redeem</Button>
+            </Grid>
+            <Grid item xs={12} >
+              <Divider />
+            </Grid>
+            <Grid item xs={12} md={8} >
+              <p className={classes.text}>{offer.description}</p>
+            </Grid>
+            <Grid item xs={12} md={4} ml={20}>
+              <Box className={classes.iconBox}>
+                <LocalOfferIcon className={classes.icon} />
+                <Typography variant="body1" className={classes.infoText}><b>Offer type: </b> {offer.offer_type}</Typography>
+              </Box>
+              <Box className={classes.iconBox}>
+                <TimelapseIcon className={classes.icon} />
+                <Typography variant="body1" className={classes.infoText}><b>Limited offer: </b> {replaceBoolean(offer.limited)}</Typography>
+              </Box>
+              <Box className={classes.iconBox}>
+                <ShoppingBasketIcon className={classes.icon} />
+                <Typography variant="body1" className={classes.infoText}><b>Stock: </b> {offer.quantity} </Typography>
+              </Box>
+              <Box className={classes.iconBox}>
+                <LanguageIcon className={classes.icon} />
+                <Typography variant="body1" className={classes.infoText}><b>Online only: </b> {replaceBoolean(offer.online_only)} </Typography>
+              </Box>
+              <Box className={classes.iconBox}>
+                <EventAvailableIcon className={classes.icon} />
+                <Typography variant="body1" className={classes.infoText}><b>Start date: </b> {offer.start_date}</Typography>
+              </Box>
+              <Box className={classes.iconBox}>
+                <EventBusyIcon className={classes.icon} />
+                <Typography variant="body1" className={classes.infoText}><b>End date: </b> {offer.end_date}</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} >
+              <img className={classes.imgBanner} src={offer.images} />
+            </Grid>
+          </Grid>
+        )}
+      </Box>
+    </Fragment>
   )
 }
 
