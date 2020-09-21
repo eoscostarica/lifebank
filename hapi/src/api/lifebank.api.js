@@ -30,7 +30,8 @@ const preRegister = async ({
   invitation_code
 }) => {
   let verification_code = await verificationCodeApi.generate()
-
+  let resultRegister = 'ok'
+  
   verification_code = verification_code.verificationCode
   try {
     await preregisterApi.insert({
@@ -48,13 +49,12 @@ const preRegister = async ({
       verification_code
     })
   } catch (error) {
-    let resultRegister = 'error'
+    resultRegister = 'error'
 
     return {
       resultRegister
     }
   }
-  let resultRegister = 'ok'
 
   return {
     resultRegister
