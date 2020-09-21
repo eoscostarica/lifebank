@@ -13,6 +13,7 @@ export const CREATE_OFFER_MUTATION = gql`
     $sponsor_id: Int!
     $active: Boolean!
     $offer_name: String!
+    $cost_in_tokens: Int!
   ) {
     insert_offer_one(
       object: {
@@ -27,6 +28,7 @@ export const CREATE_OFFER_MUTATION = gql`
         sponsor_id: $sponsor_id
         active: $active
         offer_name: $offer_name
+        cost_in_tokens: $cost_in_tokens
       }
     ) {
       id
@@ -77,6 +79,7 @@ export const UPDATE_OFFER_MUTATION = gql`
     $images: String
     $active: Boolean
     $offer_name: String
+    $cost_in_tokens: Int!
     $id: Int!
   ) {
     update_offer(
@@ -91,6 +94,7 @@ export const UPDATE_OFFER_MUTATION = gql`
         images: $images
         active: $active
         offer_name: $offer_name
+        cost_in_tokens: $cost_in_tokens
       }
       where: { id: { _eq: $id } }
     ) {
@@ -115,6 +119,7 @@ export const GET_SPONSOR_OFFERS_QUERY = gql`
       start_date
       end_date
       offer_name
+      cost_in_tokens
       active
     }
   }

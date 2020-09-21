@@ -194,7 +194,8 @@ const GenericOfferFormComponent = ({
       end_date,
       offer_name,
       id,
-      active
+      active,
+      cost_in_tokens
     } = offer
 
     const images = JSON.stringify(offer.images)
@@ -209,6 +210,7 @@ const GenericOfferFormComponent = ({
           quantity: quantity || undefined,
           start_date: start_date || undefined,
           end_date: end_date || undefined,
+          cost_in_tokens,
           images,
           sponsor_id,
           active: true,
@@ -386,6 +388,22 @@ const GenericOfferFormComponent = ({
             )}
           </FormControl>
           <TextField
+            id="cost-in-tokens"
+            label="Cost in tokens (number)"
+            variant="outlined"
+            type="number"
+            placeholder="Type here"
+            value={offer.cost_in_tokens || undefined}
+            fullWidth
+            InputLabelProps={{
+              shrink: true
+            }}
+            onChange={(event) =>
+              setOffer({ ...offer, cost_in_tokens: event.target.value })
+            }
+            className={classes.textField}
+          />
+          <TextField
             id="image-url"
             label="Image url"
             variant="outlined"
@@ -435,6 +453,7 @@ const GenericOfferFormComponent = ({
                 updateOfferLoading ||
                 !offer.description ||
                 !offer.offer_type ||
+                !offer.cost_in_tokens ||
                 offer.images.length < 1
               }
               onClick={handleSubmit}
