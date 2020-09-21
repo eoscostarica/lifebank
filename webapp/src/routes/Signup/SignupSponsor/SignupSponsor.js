@@ -65,7 +65,7 @@ const SponsorSignup = ({
   children
 }) => {
   const classes = useStyles()
-  const [recaptchaValue, serRecaptchaValue] = useState('')
+  const [recaptchaValue, setRecaptchaValue] = useState('')
   const [openTooltip, setOpenTooltip] = useState(null)
 
   const handleTooltipClose = (name) => {
@@ -281,7 +281,7 @@ const SponsorSignup = ({
         />
         <ReCAPTCHA
           sitekey={captchaConfig.sitekey}
-          onChange={(value) => serRecaptchaValue(value)}
+          onChange={(value) => setRecaptchaValue(value)}
         />
       </Box>
       <Box className={classes.btnWrapper}>
