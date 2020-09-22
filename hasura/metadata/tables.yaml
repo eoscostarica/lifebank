@@ -143,16 +143,17 @@
       check: {}
       columns:
       - active
-      - limited
-      - online_only
-      - id
-      - quantity
-      - sponsor_id
+      - cost_in_tokens
       - description
       - end_date
+      - id
       - images
+      - limited
       - offer_name
       - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
       - start_date
       backend_only: false
   select_permissions:
@@ -176,34 +177,36 @@
     permission:
       columns:
       - active
-      - limited
-      - online_only
-      - id
-      - quantity
-      - sponsor_id
+      - cost_in_tokens
       - description
       - end_date
+      - id
       - images
+      - limited
       - offer_name
       - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
       - start_date
       filter: {}
   update_permissions:
   - role: sponsor
     permission:
       columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
       - limited
+      - offer_name
+      - offer_type
       - online_only
       - quantity
-      - offer_type
-      - description
-      - start_date
-      - end_date
-      - images
       - sponsor_id
-      - id
-      - offer_name
-      - active
+      - start_date
       filter: {}
       check: null
   delete_permissions:
