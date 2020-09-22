@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -11,6 +11,7 @@ import QRCode from 'qrcode.react'
 import Link from '@material-ui/core/Link'
 
 import Schedule from '../../components/Schedule'
+import FullProfileInfo from '../../components/FullProfileInfo'
 import MapShowLocations from '../../components/MapShowLocations'
 import { eosConfig } from '../../config'
 
@@ -43,10 +44,23 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfilePageSponsor = ({ profile }) => {
   const classes = useStyles()
+  const [pendingFieldsComponents, setPendingFieldsComponents] = useState()
+
+  console.log(profile)
 
   return (
     <>
       <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Email</Typography>
+        <Typography variant="body1" className={classes.noCapitalize}>
+          {profile.email}
+        </Typography>
+      </Box>
+      <FullProfileInfo
+        setPendingFieldsComponents={setPendingFieldsComponents}
+        profile={profile}
+      />
+      {/* <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
           <Link
@@ -65,12 +79,6 @@ const ProfilePageSponsor = ({ profile }) => {
         <Typography variant="body1">{profile.name}</Typography>
       </Box>
       <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Email</Typography>
-        <Typography variant="body1" className={classes.noCapitalize}>
-          {profile.email}
-        </Typography>
-      </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Role</Typography>
@@ -172,7 +180,7 @@ const ProfilePageSponsor = ({ profile }) => {
         multiline
         fullWidth
         rows={3}
-      />
+      /> */}
 
       <MapShowLocations
         location={profile ? JSON.parse(profile.location || '{}') : {}}
