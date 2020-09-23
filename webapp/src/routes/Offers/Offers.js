@@ -311,7 +311,7 @@ const Offers = () => {
 
   const LoadOffers = () => {
     return (
-      <Fragment>
+      <>
         {loading && <CircularProgress />}
         {!loading && offers.length <= 0 && (
           <Typography variant="h3" className={classes.infoText}>No offers available</Typography>
@@ -327,7 +327,7 @@ const Offers = () => {
             img={offer.images}
           />
         ))}
-      </Fragment>
+      </>
     )
   }
 
