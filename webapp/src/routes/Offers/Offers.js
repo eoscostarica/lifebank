@@ -1,5 +1,5 @@
 
-import React, { useEffect, Fragment } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/react-hooks'
