@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, useCallback } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -12,12 +12,14 @@ import {
   CHECK_USERNAME_MUTATION,
   CREATE_ACCOUNT_MUTATION,
   SIGNUP_MUTATION,
-  CREATE_PRE_REGITER_LIFEBANK_MUTATION
+  CREATE_PRE_REGITER_LIFEBANK_MUTATION,
+  VALIDATE_EMAIL_LIFEBANK
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
 import SignupRoleSelector from './SignupRoleSelector'
 import SignupUsername from './SignupUsername'
+import ValidateEmail from './ValidateEmail'
 import SignupDonor from './SignupDonor'
 import SignupSponsor from './SignupSponsor/SignupSponsor'
 import SignupLifeBank from './SignupLifeBank'
@@ -82,6 +84,11 @@ const Signup = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
+
+  const [isEmailValid, setEmailValid] = useState(false)
+  const [checkEmailLifebankLoading, setcheckEmailLifebankLoaded] = useState(false)
+
+
   const [
     checkUsername,
     {
@@ -96,6 +103,13 @@ const Signup = () => {
       data: { create_account: createAccountResult } = {}
     }
   ] = useMutation(CREATE_ACCOUNT_MUTATION)
+  /*const [
+    checkEmailLifebank,
+    {
+      loading: checkEmailLifebankLoading,
+      data: { check_email_lifebank: { is_email_valid: isEmailValid } = {} } = {}
+    }
+  ] = useMutation(VALIDATE_EMAIL_LIFEBANK)*/
   const [
     preRegisterLifebank,
     {
@@ -163,15 +177,39 @@ const Signup = () => {
     })
   }
 
+  const { refetch: checkEmailLifebank } = useQuery(VALIDATE_EMAIL_LIFEBANK, {
+    variables: {
+      email: user.email
+    },
+    skip: true
+  })
+
+
+  useEffect(() => {
+    const regularExpresion = /\S+@\S+\.\S+/
+    const validEmail = async () => {
+      const { data } = await checkEmailLifebank({
+        email: user.email
+      })
+      try {
+        if (data.preregister_lifebank.length === 0) setEmailValid(true)
+        else setEmailValid(false)
+        setcheckEmailLifebankLoaded(true)
+      } catch (error) {
+
+      }
+    }
+    if (regularExpresion.test(user?.email)) validEmail()
+    else {
+      setEmailValid(false)
+      setcheckEmailLifebankLoaded(false)
+    }
+  }, [user?.email, checkEmailLifebank])
+
   useEffect(() => {
     if (preRegisterLifebankResult) {
-      if (preRegisterLifebankResult.resultRegister === "error") {
-        alert("This email already has an associated blood bank")
-      }
-      else {
-        alert("successful pre registration")
-        history.replace('/')
-      }
+      alert("successful pre registration")
+      history.replace('/')
     }
   }, [preRegisterLifebankResult])
 
@@ -298,8 +336,15 @@ const Signup = () => {
               loading={preRegisterLifebankLoading}
               setField={handleSetField}
               user={user}
-              preRegisterLifebankResult={preRegisterLifebankResult}
-            />
+              isEmailValid={isEmailValid}
+            >
+              <ValidateEmail
+                isValid={isEmailValid}
+                loading={checkEmailLifebankLoading}
+                user={user}
+                setField={handleSetField}
+              />
+            </SignupLifeBank>
           )}
           {activeStep === 2 && (
             <>

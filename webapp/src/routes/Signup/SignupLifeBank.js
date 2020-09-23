@@ -46,7 +46,7 @@ const SignupLifeBank = ({
   setField,
   user,
   loading,
-  preRegisterLifebankResult,
+  isEmailValid,
   children
 }) => {
   const classes = useStyles()
@@ -90,34 +90,6 @@ const SignupLifeBank = ({
   return (
     <form autoComplete="off" className={classes.form}>
       <div className={classes.formGroup}>{children}</div>
-      <div className={classes.formGroup}>
-        <TextField
-          id="email"
-          label="Email"
-          variant="outlined"
-          placeholder="Your Email"
-          fullWidth
-          type="email"
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('email', event.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                {preRegisterLifebankResult && <ClearIcon color="secondary" />}
-              </InputAdornment>
-            )
-          }}
-          helperText={
-            preRegisterLifebankResult
-              ? 'This email already has an associated blood bank'
-              : ''
-          }
-          error={preRegisterLifebankResult}
-        />
-      </div>
       <div className={classes.formGroup}>
         <TextField
           id="password"
@@ -254,7 +226,7 @@ const SignupLifeBank = ({
       <div className={classes.btnWrapper}>
         <Button
           disabled={
-            !user.email ||
+            !isEmailValid ||
             !user.password ||
             !user.name ||
             !user.address ||
@@ -281,7 +253,7 @@ SignupLifeBank.propTypes = {
   setField: PropTypes.func,
   user: PropTypes.object,
   loading: PropTypes.bool,
-  preRegisterLifebankResult: PropTypes.object,
+  isEmailValid: PropTypes.bool,
   children: PropTypes.node
 }
 

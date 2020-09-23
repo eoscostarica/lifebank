@@ -115,9 +115,6 @@
           _eq: X-Hasura-User-Id
 - table:
     schema: public
-    name: preregister_lifebank
-- table:
-    schema: public
     name: offer
   object_relationships:
   - name: user
@@ -215,6 +212,30 @@
   delete_permissions:
   - role: sponsor
     permission:
+      filter: {}
+- table:
+    schema: public
+    name: preregister_lifebank
+  select_permissions:
+  - role: guest
+    permission:
+      columns:
+      - immunity_test
+      - id
+      - urgency_level
+      - created_at
+      - updated_at
+      - address
+      - coordinates
+      - description
+      - email
+      - invitation_code
+      - name
+      - password
+      - phone
+      - schedule
+      - state
+      - verification_code
       filter: {}
 - table:
     schema: public
