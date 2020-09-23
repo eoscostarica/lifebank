@@ -218,7 +218,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                 <Box className={classes.textFieldWrapper}>
                   <TextField
                     id="account"
-                    label="Account"
+                    label="Email"
                     variant="outlined"
                     InputLabelProps={{
                       shrink: true
@@ -229,7 +229,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                   />
                   <TextField
                     id="secret"
-                    label="Secret"
+                    label="Password"
                     type="password"
                     variant="outlined"
                     InputLabelProps={{

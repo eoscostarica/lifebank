@@ -114,11 +114,11 @@ const Signup = () => {
   }
 
   const handleCreateAccount = () => {
-    const { username, secret } = user
+    const { email, secret } = user
     createAccount({
       variables: {
         role,
-        username,
+        email,
         secret
       }
     })
@@ -194,7 +194,7 @@ const Signup = () => {
             <>
               <Typography variant="h4">Create a new account.</Typography>
               <Typography variant="body1" className={classes.text}>
-                To sign up all you need is to pick a 9 letter username and a
+                To sign up all you need  is an email and a
                 password, a unique blockchain account name will be generated
                 you.
               </Typography>
@@ -208,12 +208,14 @@ const Signup = () => {
               user={user}
               isUsernameValid={isUsernameValid}
             >
+              {/*
               <SignupUsername
                 isValid={isUsernameValid}
                 loading={checkUsernameLoading}
                 user={user}
                 setField={handleSetField}
               />
+              */}
             </SignupDonor>
           )}
           {activeStep === 1 && role === 'sponsor' && (

@@ -46,11 +46,24 @@ const DonorSignup = ({
       <Box className={classes.textFieldWrapper}>
         {children}
         <TextField
-          id="secret"
-          label="Secret"
+          id="email"
+          label="Email"
+          type="email"
+          fullWidth
+          placeholder="Your email"
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(event) => setField('email', event.target.value)}
+        />
+
+        <TextField
+          id="password"
+          label="Password"
           type="password"
           fullWidth
-          placeholder="Your Secret"
+          placeholder="Your password"
           variant="outlined"
           InputLabelProps={{
             shrink: true
@@ -65,10 +78,10 @@ const DonorSignup = ({
       <Box className={classes.btnWrapper}>
         <Button
           disabled={
-            !user.username ||
+            //!user.username ||
             !user.secret ||
-            !isUsernameValid ||
-            !recaptchaValue ||
+            //!isUsernameValid ||
+            //!recaptchaValue ||
             loading
           }
           variant="contained"

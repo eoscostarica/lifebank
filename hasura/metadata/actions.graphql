@@ -9,7 +9,7 @@ type Mutation {
 type Mutation {
   create_account (
     role: String!
-    username: String!
+    email: String!
     secret: String!
   ): create_account_output
 }
