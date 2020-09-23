@@ -103,13 +103,6 @@ const Signup = () => {
       data: { create_account: createAccountResult } = {}
     }
   ] = useMutation(CREATE_ACCOUNT_MUTATION)
-  /*const [
-    checkEmailLifebank,
-    {
-      loading: checkEmailLifebankLoading,
-      data: { check_email_lifebank: { is_email_valid: isEmailValid } = {} } = {}
-    }
-  ] = useMutation(VALIDATE_EMAIL_LIFEBANK)*/
   const [
     preRegisterLifebank,
     {

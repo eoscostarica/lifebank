@@ -1,8 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
-import ClearIcon from '@material-ui/icons/Clear';
-import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
