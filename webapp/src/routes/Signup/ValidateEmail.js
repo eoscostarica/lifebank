@@ -46,7 +46,7 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
       }}
       helperText={
         validateFormatEmail(user.email) && !isValid && loading
-          ? 'This email already has an associated Lifebank'
+          ? 'This email already has an associated account'
           : !isValid
       }
       error={!isValid && loading && validateFormatEmail(user.email)}

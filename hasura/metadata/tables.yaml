@@ -257,6 +257,21 @@
         table:
           schema: public
           name: offer
+  select_permissions:
+  - role: guest
+    permission:
+      columns:
+      - id
+      - role
+      - username
+      - account
+      - secret
+      - email
+      - email_verified
+      - created_at
+      - updated_at
+      - name
+      filter: {}
 - table:
     schema: public
     name: vault
