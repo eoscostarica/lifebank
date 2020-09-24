@@ -195,7 +195,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
 
         <Box width="100%" className={classes.textField}>
-          <Schedule buttonText="Edit Schedule" scheduleLoad={user.schedule} loading={true} handleOnAddSchedule={handleOnAddSchedule} />
+          <Schedule buttonText="Edit Schedule" scheduleLoad={user.schedule} loading handleOnAddSchedule={handleOnAddSchedule} />
         </Box>
 
         <Box className={classes.rowBox}>
