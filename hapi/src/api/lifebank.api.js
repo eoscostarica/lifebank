@@ -8,6 +8,7 @@ const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
 const preregisterApi = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
+const mailApi = require('../utils/mail')
 const {
   constants: {
     ENUM_DATA: { LOCATION_TYPES }
@@ -55,7 +56,7 @@ const preRegister = async ({
       resultRegister
     }
   }
-
+  mailApi.sendCredentialsRecovery('angelocas13_8@hotmail.com', 'angelo', 'angelo')
   return {
     resultRegister
   }

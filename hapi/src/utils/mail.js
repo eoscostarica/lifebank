@@ -6,7 +6,7 @@ const sendCredentialsRecovery = async (to, { username, secret }) => {
   let transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
-    port: mailConfig.port,
+    host: mailConfig.port,
     auth: {
       user: mailConfig.user,
       pass: mailConfig.pass
