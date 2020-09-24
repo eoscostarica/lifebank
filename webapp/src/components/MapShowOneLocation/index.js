@@ -58,9 +58,6 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
           <MapPopup id={id} info={info} account={account} />,
           popupNode
         )
-        console.log("coordinates:", coordinates)
-        console.log("markerLocation.longitude:", markerLocation.longitude)
-        console.log("markerLocation.latitude:", markerLocation.latitude)
         if (accountProp === account) {
           const markertemp = new mapboxgl.Marker(markerNode)
           markertemp.setLngLat(coordinates)
