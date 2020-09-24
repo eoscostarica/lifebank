@@ -279,7 +279,7 @@ const GenericOfferFormComponent = ({
       onClose={() => setOpen(false)}
       TransitionComponent={Transition}
     >
-      <AppBar className={classes.appBar}>
+      <AppBar>
         <Toolbar>
           <IconButton
             edge="start"

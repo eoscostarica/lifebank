@@ -18,7 +18,15 @@ const {
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    width: '100%',
+    [theme.breakpoints.between('xs', 'sm')]: {
+      width: '100%'
+    },
+    [theme.breakpoints.between('sm', 'md')]: {
+      width: '60%'
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
+      width: '40%'
+    },
     padding: theme.spacing(0, 2)
   },
   textFieldWrapper: {
@@ -51,14 +59,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
+const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   const classes = useStyles()
   const [user, setUser] = useState({
     benefit_description: profile.benefit_description,
     bussines_type: profile.bussines_type,
     covid_impact: profile.covid_impact,
     email: profile.email,
-    geolocation: JSON.parse(profile.location),
+    geolocation: profile.location ? JSON.parse(profile.location) : null,
     name: profile.name,
     schedule: profile.schedule,
     telephone: profile.telephone,
@@ -78,6 +86,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
       <Box className={classes.textFieldWrapper}>
         <TextField
           id="name"
+          style={{ display: user.name ? 'none' : '' }}
           label="Name"
           variant="outlined"
           placeholder="Your Sponsor Name"
@@ -91,6 +100,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
         />
         <TextField
           id="email"
+          style={{ display: user.email ? 'none' : '' }}
           label="Email"
           variant="outlined"
           placeholder="Your email"
@@ -104,6 +114,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
         />
         <TextField
           id="website"
+          style={{ display: user.website ? 'none' : '' }}
           label="Website"
           variant="outlined"
           placeholder="Website"
@@ -117,6 +128,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
         />
         <TextField
           id="telephone"
+          style={{ display: user.telephone ? 'none' : '' }}
           label="Telephone"
           variant="outlined"
           placeholder="Telephone"
@@ -131,6 +143,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
         <TextField
           id="bussinesType"
           label="Type"
+          style={{ display: user.bussines_type ? 'none' : '' }}
           variant="outlined"
           placeholder="Type"
           defaultValue={user.bussines_type}
@@ -144,18 +157,23 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
           }
         />
 
-        <Box width="100%" className={classes.textField}>
+        <Box
+          style={{ display: user.schedule ? 'none' : '' }}
+          width="100%"
+          className={classes.textField}
+        >
           <Schedule
             handleOnAddSchedule={(value) =>
               handleOnAddStringifyValues('schedule', value)
             }
-            data={JSON.parse(user.schedule)}
+            data={user.schedule ? JSON.parse(user.schedule) : undefined}
             showSchedule
           />
         </Box>
 
         <TextField
           id="covidImpact"
+          style={{ display: user.covid_impact ? 'none' : '' }}
           label="Covid Impact"
           variant="outlined"
           placeholder=""
@@ -173,6 +191,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
         />
         <TextField
           id="benefitDescription"
+          style={{ display: user.benefit_description ? 'none' : '' }}
           label="Description of benefit"
           variant="outlined"
           placeholder=""
@@ -228,6 +247,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
 
 EditProfileSponsor.propTypes = {
   profile: PropTypes.object,
+  isCompleting: PropTypes.bool,
   onSubmit: PropTypes.func,
   loading: PropTypes.bool
 }
