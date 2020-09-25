@@ -7,6 +7,8 @@ import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReCAPTCHA from 'react-google-recaptcha'
 
+import SignupWithFacebook from './socialSingup/SignupWithFacebook'
+import SignupWithGoogle from './socialSingup/SignupWithGoogle'
 import { captchaConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,12 +24,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   btnWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2)
+    display: 'block',
+    marginBottom: theme.spacing(2),
+    width: "100%"
+  },
+  btnSignup: {
+    display: 'block',
+    marginBottom: theme.spacing(2),
+    width: "40%",
+    margin: "auto",
+    '@media only screen and (max-width: 900px)': {
+      width: "100%",
+    },
   }
+
 }))
 
 const DonorSignup = ({
@@ -71,10 +81,13 @@ const DonorSignup = ({
           onChange={(event) => setField('secret', event.target.value)}
         />
         <ReCAPTCHA
+          style={{ bac: "100%" }}
           sitekey={captchaConfig.sitekey}
           onChange={(value) => serRecaptchaValue(value)}
         />
+
       </Box>
+
       <Box className={classes.btnWrapper}>
         <Button
           disabled={
@@ -84,12 +97,15 @@ const DonorSignup = ({
             //!recaptchaValue ||
             loading
           }
+          className={classes.btnSignup}
           variant="contained"
           color="primary"
           onClick={onSubmit}
         >
           Create Account
         </Button>
+        <SignupWithFacebook />
+        <SignupWithGoogle />
         {loading && <CircularProgress />}
       </Box>
     </form>
