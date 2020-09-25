@@ -157,6 +157,23 @@
       - start_date
       backend_only: false
   select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      filter: {}
   - role: guest
     permission:
       columns:
@@ -249,6 +266,15 @@
 - table:
     schema: public
     name: user
+  object_relationships:
+  - name: location
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: location
+        column_mapping:
+          account: account
   array_relationships:
   - name: offers
     using:
@@ -271,6 +297,13 @@
       - created_at
       - updated_at
       - name
+  - role: donor
+    permission:
+      columns:
+      - account
+      - id
+      - name
+      - username
       filter: {}
 - table:
     schema: public
