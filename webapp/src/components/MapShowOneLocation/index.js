@@ -14,7 +14,7 @@ const initialZoom = 12.5
 let map = null
 const searchDistance = 5000
 
-function MapShowOneLocation({ markerLocation, ...props }) {
+function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
   const mapContainerRef = useRef(null)
   const { refetch: getNearbyLocations } = useQuery(GET_NEARBY_LOCATIONS_QUERY, {
     variables: {
@@ -58,8 +58,7 @@ function MapShowOneLocation({ markerLocation, ...props }) {
           <MapPopup id={id} info={info} account={account} />,
           popupNode
         )
-
-        if (coordinates[0] === markerLocation.longitude && coordinates[1] === markerLocation.latitude) {
+        if (accountProp === account) {
           const markertemp = new mapboxgl.Marker(markerNode)
           markertemp.setLngLat(coordinates)
           markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
@@ -99,7 +98,8 @@ function MapShowOneLocation({ markerLocation, ...props }) {
 
 MapShowOneLocation.propTypes = {
   markerLocation: PropTypes.object,
-  props: PropTypes.object
+  props: PropTypes.object,
+  accountProp: PropTypes.string
 }
 
 MapShowOneLocation.defaultProps = {
