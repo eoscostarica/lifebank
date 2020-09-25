@@ -232,6 +232,30 @@
       filter: {}
 - table:
     schema: public
+    name: preregister_lifebank
+  select_permissions:
+  - role: guest
+    permission:
+      columns:
+      - immunity_test
+      - id
+      - urgency_level
+      - created_at
+      - updated_at
+      - address
+      - coordinates
+      - description
+      - email
+      - invitation_code
+      - name
+      - password
+      - phone
+      - schedule
+      - state
+      - verification_code
+      filter: {}
+- table:
+    schema: public
     name: raster_columns
 - table:
     schema: public
@@ -260,6 +284,20 @@
           schema: public
           name: offer
   select_permissions:
+  - role: guest
+    permission:
+      columns:
+      - id
+      - role
+      - username
+      - account
+      - secret
+      - email
+      - email_verified
+      - created_at
+      - updated_at
+      - name
+      filter: {}
   - role: donor
     permission:
       columns:

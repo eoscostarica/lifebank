@@ -44,12 +44,12 @@ const SignupLifeBank = ({
   setField,
   user,
   loading,
-  isUsernameValid,
+  isEmailValid,
   children
 }) => {
   const classes = useStyles()
   const handleOnGeolocationChange = useCallback(
-    (geolocation) => setField('geolocation', geolocation),
+    (coordinates) => setField('coordinates', JSON.stringify(coordinates)),
     [setField]
   )
   const handleOnAddSchedule = useCallback(
@@ -90,30 +90,16 @@ const SignupLifeBank = ({
       <div className={classes.formGroup}>{children}</div>
       <div className={classes.formGroup}>
         <TextField
-          id="secret"
-          label="Secret"
+          id="password"
+          label="password"
           type="password"
           fullWidth
-          placeholder="Your Secret"
+          placeholder="Your password"
           variant="outlined"
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(event) => setField('secret', event.target.value)}
-        />
-      </div>
-      <div className={classes.formGroup}>
-        <TextField
-          id="email"
-          label="Email"
-          variant="outlined"
-          placeholder="Your Email"
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('email', event.target.value)}
+          onChange={(event) => setField('password', event.target.value)}
         />
       </div>
       <div className={classes.formGroup}>
@@ -169,7 +155,21 @@ const SignupLifeBank = ({
             shrink: true
           }}
           className={classes.textField}
-          onChange={(event) => setField('phone_number', event.target.value)}
+          onChange={(event) => setField('phone', event.target.value)}
+        />
+      </div>
+      <div className={classes.formGroup}>
+        <TextField
+          id="invitationCode"
+          label="Invitation Code"
+          placeholder="Invitation Code"
+          variant="outlined"
+          fullWidth
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setField('invitation_code', event.target.value)}
         />
       </div>
       <FormGroup className={classes.formGroup}>
@@ -179,9 +179,9 @@ const SignupLifeBank = ({
               id="hasImmunityTest"
               name="hasImmunityTest"
               color="primary"
-              checked={user.has_immunity_test || false}
+              checked={user.immunity_test || false}
               onChange={(event) =>
-                setField('has_immunity_test', !user.has_immunity_test)
+                setField('immunity_test', !user.immunity_test)
               }
             />
           }
@@ -193,7 +193,7 @@ const SignupLifeBank = ({
         <Slider
           valueLabelDisplay="auto"
           valueLabelFormat={valueLabelFormat}
-          onChange={(event, value) => setField('blood_urgency_level', value)}
+          onChange={(event, value) => setField('urgency_level', value)}
           marks={marks}
           step={null}
           min={0}
@@ -224,15 +224,13 @@ const SignupLifeBank = ({
       <div className={classes.btnWrapper}>
         <Button
           disabled={
-            !user.secret ||
+            !isEmailValid ||
+            !user.password ||
             !user.name ||
-            !user.description ||
             !user.address ||
-            !user.phone_number ||
-            !user.blood_urgency_level ||
+            !user.phone ||
             !user.schedule ||
-            !isUsernameValid ||
-            !user.geolocation ||
+            !user.coordinates ||
             !recaptchaValue ||
             loading
           }
@@ -253,7 +251,7 @@ SignupLifeBank.propTypes = {
   setField: PropTypes.func,
   user: PropTypes.object,
   loading: PropTypes.bool,
-  isUsernameValid: PropTypes.bool,
+  isEmailValid: PropTypes.bool,
   children: PropTypes.node
 }
 

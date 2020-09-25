@@ -9,6 +9,7 @@ const profileRoute = require('./profile/profile.route')
 const revokeConsentRoute = require('./revoke-consent/revoke-consent.route')
 const signupRoute = require('./signup/signup.route')
 const transferRoute = require('./transfer/transfer.route')
+const preregisterLifebank = require('./pre-register/pre-register-lifebank.route')
 
 module.exports = [
   checkUsernameRoute,
@@ -21,5 +22,6 @@ module.exports = [
   profileRoute,
   revokeConsentRoute,
   signupRoute,
-  transferRoute
+  transferRoute,
+  preregisterLifebank
 ]
