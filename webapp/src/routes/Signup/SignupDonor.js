@@ -45,7 +45,7 @@ const DonorSignup = ({
   setField,
   user,
   loading,
-  isUsernameValid,
+  isEmailValid,
   children
 }) => {
   const classes = useStyles()
@@ -117,7 +117,7 @@ DonorSignup.propTypes = {
   setField: PropTypes.func,
   user: PropTypes.object,
   loading: PropTypes.bool,
-  isUsernameValid: PropTypes.bool,
+  isEmailValid: PropTypes.bool,
   children: PropTypes.node
 }
 

@@ -138,7 +138,7 @@ const convertHour = (time) => {
   return (hour || '12') + ':00' + AMPM[Math.floor(time / 12)]
 }
 
-const Schedule = ({ handleOnAddSchedule, scheduleLoad, data, showSchedule, showButton }) => {
+const Schedule = ({ handleOnAddSchedule, scheduleLoad, data, loading, showSchedule, showButton }) => {
   const classes = useStyles()
   const [open, setOpen] = useState('06:00')
   const [close, setClose] = useState('16:00')
@@ -186,7 +186,7 @@ const Schedule = ({ handleOnAddSchedule, scheduleLoad, data, showSchedule, showB
 
   const handleOpen = () => {
     setOpenModal(!openModal)
-    loadSchedule(scheduleLoad)
+    if (loading) loadSchedule(scheduleLoad)
   }
 
   const onHandleOnAddSchedule = () => {
@@ -371,16 +371,18 @@ const Schedule = ({ handleOnAddSchedule, scheduleLoad, data, showSchedule, showB
 
 Schedule.propTypes = {
   handleOnAddSchedule: PropTypes.func,
-  scheduleLoad: PropTypes.func,
+  scheduleLoad: PropTypes.string,
   data: PropTypes.array,
+  loading: PropTypes.bool,
   showSchedule: PropTypes.bool,
   showButton: PropTypes.bool
 }
 
 Schedule.defaultProps = {
   handleOnAddSchedule: () => { },
-  scheduleLoad: () => { },
+  scheduleLoad: "",
   data: null,
+  loading: false,
   showSchedule: false,
   showButton: true
 }

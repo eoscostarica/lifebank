@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import CheckIcon from '@material-ui/icons/Check'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -12,53 +11,56 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SignupUsername = ({ isValid, loading, user, setField }) => {
+const ValidateEmail = ({ isValid, loading, user, setField }) => {
   const classes = useStyles()
+
+  const validateFormatEmail = (email) => {
+    const regularExpresion = /\S+@\S+\.\S+/
+    if (regularExpresion.test(email)) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
 
   return (
     <TextField
-      id="username"
-      label="Username"
-      placeholder="Username"
+      id="email"
+      label="Email"
       variant="outlined"
+      placeholder="Your Email"
+      type="email"
       fullWidth
       InputLabelProps={{
         shrink: true
       }}
-      value={user?.username || ''}
-      onChange={(event) =>
-        setField(
-          'username',
-          event.target.value.length > 9 ? user.username : event.target.value
-        )
-      }
+      value={user?.email || ''}
+      onChange={(event) => setField('email', event.target.value)}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
             {isValid && <CheckIcon className={classes.success} />}
-            {loading && <CircularProgress color="primary" size={16} />}
           </InputAdornment>
         )
       }}
       helperText={
-        user?.username?.length >= 9 && !isValid && !loading
-          ? 'Invalid username or already taken'
+        validateFormatEmail(user.email) && !isValid && loading
+          ? 'This email already has an associated account'
           : !isValid
-            ? 'You must enter 9 characters (a-z 1-5)'
-            : ''
       }
-      error={!isValid && !loading && user?.username?.length >= 9}
+      error={!isValid && loading && validateFormatEmail(user.email)}
     />
   )
 }
 
-SignupUsername.propTypes = {
+ValidateEmail.propTypes = {
   loading: PropTypes.bool,
   user: PropTypes.object,
   isValid: PropTypes.bool,
   setField: PropTypes.func
 }
 
-SignupUsername.defaultProps = {}
+ValidateEmail.defaultProps = {}
 
-export default SignupUsername
+export default ValidateEmail

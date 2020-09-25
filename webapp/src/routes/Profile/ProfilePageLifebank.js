@@ -141,6 +141,7 @@ const ProfilePageLifebank = ({ profile }) => {
 
       <MapShowOneLocation
         markerLocation={JSON.parse(profile.location)}
+        accountProp={profile.account}
         width="100%"
         height={400}
         py={2}

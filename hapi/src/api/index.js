@@ -7,6 +7,8 @@ const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
 const notificationApi = require('./notification.api')
+const preregisterApi = require('./pre-register.api')
+const verificationCodeApi = require('./verification-code.api')
 
 module.exports = {
   accountApi,
@@ -17,5 +19,7 @@ module.exports = {
   userApi,
   vaultApi,
   locationApi,
-  notificationApi
+  notificationApi,
+  preregisterApi,
+  verificationCodeApi
 }
