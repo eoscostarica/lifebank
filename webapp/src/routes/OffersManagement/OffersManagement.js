@@ -168,6 +168,7 @@ const OffersManagement = () => {
         setOpen={
           editing ? setOpenGenericFormEditVariant : setOpenGenericFormAddVariant
         }
+        setOffers={setOffers}
         sponsor_id={profile.id}
         isEditing={editing}
         data={data}
@@ -178,7 +179,7 @@ const OffersManagement = () => {
   useEffect(() => {
     const getOffers = async () => {
       const { data } = await getSponsorOffers({
-        sponsor_id: 17
+        sponsor_id: profile.id
       })
 
       data && setOffers(data.offer)

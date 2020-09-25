@@ -9,6 +9,8 @@ import About from './About'
 import TermsOfUse from './TermsOfUse'
 import Help from './Help'
 import OffersManagement from './OffersManagement'
+import Offers from './Offers'
+import OfferPage from './OfferPage'
 
 export default [
   {
@@ -41,6 +43,16 @@ export default [
     name: 'donation',
     path: '/donations',
     component: Donation
+  },
+  {
+    name: 'offers',
+    path: '/offers',
+    component: Offers
+  },
+  {
+    name: 'offer-page',
+    path: '/offer/:id',
+    component: OfferPage
   },
   {
     name: 'profile',
