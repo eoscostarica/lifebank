@@ -88,8 +88,15 @@ const upLifebank = (
   )
 }
 
-const addSponsor = (account, password, { name, geolocation, ...profile }) => {
-  return eosUtil.transact(
+const addSponsor = async (
+  account,
+  password,
+  { name, geolocation, ...profile }
+) => {
+  // console.log('Add sponsor method')
+  // try {
+  console.log(profile)
+  const response = await eosUtil.transact(
     [
       {
         authorization: [
@@ -103,6 +110,15 @@ const addSponsor = (account, password, { name, geolocation, ...profile }) => {
         data: {
           account,
           sponsor_name: name,
+          covid_impact: profile.covid_impact || '',
+          benefit_description: profile.benefit_description || '',
+          name: profile.name || '',
+          email: profile.email || '',
+          website: profile.website || '',
+          telephone: profile.telephone || '',
+          bussines_type: profile.bussines_type || '',
+          schedule: profile.schedule || '',
+          longitude: profile.longitude || '',
           location: JSON.stringify(geolocation),
           ...profile,
           community_asset: COMMUNITY_ASSET
@@ -112,6 +128,10 @@ const addSponsor = (account, password, { name, geolocation, ...profile }) => {
     account,
     password
   )
+  return response
+  // } catch (error) {
+  //   console.log(`SMART CONTRACT ERROR: ${error}`)
+  // }
 }
 
 const getDonor = async account => {

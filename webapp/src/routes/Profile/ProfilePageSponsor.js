@@ -1,30 +1,19 @@
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import { Link as LinkRouter } from 'react-router-dom'
-import Dialog from '@material-ui/core/Dialog'
 import Alert from '@material-ui/lab/Alert'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import Paper from '@material-ui/core/Paper'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import Button from '@material-ui/core/Button'
-import Slide from '@material-ui/core/Slide'
 import QRCode from 'qrcode.react'
 import Link from '@material-ui/core/Link'
 import TextField from '@material-ui/core/TextField'
-import CloseIcon from '@material-ui/icons/Close'
 
 import Schedule from '../../components/Schedule'
 import MapShowLocations from '../../components/MapShowLocations'
 import { eosConfig } from '../../config'
-
-const Transition = forwardRef((props, ref) => {
-  return <Slide direction="up" ref={ref} {...props} />
-})
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -75,17 +64,33 @@ const useStyles = makeStyles((theme) => ({
   },
   noCapitalize: {
     textTransform: 'none !important'
+  },
+  customizedLinearProgress: {
+    height: 10,
+    borderRadius: 5
+  },
+  alert: {
+    '& > div.MuiAlert-message': {
+      padding: 0,
+      margin: 0
+    },
+    '& > div.MuiAlert-action': {
+      maxHeight: 50
+    },
+    paddingBottom: 0
   }
 }))
 
 const ProfilePageSponsor = ({ profile }) => {
   const classes = useStyles()
-  const [open, setOpen] = useState(false)
+  const [] = useState(false)
   const [pendingFields, setPendingFields] = useState()
-  //const [pendingFieldsComponents, setPendingFieldsComponents] = useState([])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
+
+    if (!profile.email)
+      pendingFieldsObject = { ...pendingFieldsObject, email: false }
 
     if (!profile.name)
       pendingFieldsObject = { ...pendingFieldsObject, name: false }
@@ -111,12 +116,9 @@ const ProfilePageSponsor = ({ profile }) => {
     if (!profile.location)
       pendingFieldsObject = { ...pendingFieldsObject, location: false }
 
-    setPendingFields(pendingFieldsObject)
+    if (Object.keys(pendingFieldsObject).length > 0)
+      setPendingFields(pendingFieldsObject)
   }
-
-  // const handleSetField = (field, value) => {
-  //   setUser({ ...user, [field]: value })
-  // }
 
   useEffect(() => {
     if (profile) checkAvailableFields()
@@ -126,19 +128,51 @@ const ProfilePageSponsor = ({ profile }) => {
     <>
       {pendingFields && (
         <Box>
-          <Alert severity="info">
-            Your profile is not complete
-            <Button
-              to={{ pathname: '/edit-profile', state: { isCompleting: true } }}
-              className={classes.noCapitalize}
-            >
-              Update
-            </Button>
+          <Alert
+            action={
+              <Box display="flex" justifyContent="flex-end" alignItems="center">
+                <LinkRouter
+                  style={{ textDecoration: 'none' }}
+                  to={{
+                    pathname: '/edit-profile',
+                    state: { isCompleting: true }
+                  }}
+                >
+                  <Button
+                    color="secondary"
+                    className={classes.noCapitalize}
+                    classes={{
+                      root: classes.editBtn
+                    }}
+                  >
+                    Update
+                  </Button>
+                </LinkRouter>
+              </Box>
+            }
+            className={classes.alert}
+            severity="info"
+          >
+            <Typography>Your profile is not complete </Typography>
+            <Box display="flex" alignItems="center">
+              <Box width="100%" mr={1}>
+                <LinearProgress
+                  variant="determinate"
+                  color="secondary"
+                  className={classes.customizedLinearProgress}
+                  value={((7 - Object.keys(pendingFields).length) * 100) / 7}
+                />
+              </Box>
+              <Box minWidth={35}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                >{`${Math.round(
+                  ((7 - Object.keys(pendingFields).length) * 100) / 7
+                )}%`}</Typography>
+              </Box>
+            </Box>
           </Alert>
-          <LinearProgress
-            variant="determinate"
-            value={(Object.keys(pendingFields).length * 100) / 10}
-          />
         </Box>
       )}
       <Box className={classes.rowBox}>
@@ -205,7 +239,9 @@ const ProfilePageSponsor = ({ profile }) => {
         className={classes.rowBox}
       >
         <Typography variant="subtitle1">Consent</Typography>
-        <Typography variant="body1">{`${profile.consent}`}</Typography>
+        <Typography variant="body1">{`${
+          profile.consent ? 'Approved' : 'Denied'
+        }`}</Typography>
       </Box>
       <Box
         style={{ display: !profile.community_asset ? 'none' : '' }}
@@ -269,7 +305,7 @@ const ProfilePageSponsor = ({ profile }) => {
         fullWidth
         rows={3}
       />
-      {profile.location && (
+      {profile.location && profile.location != 'null' && (
         <MapShowLocations
           location={profile ? JSON.parse(profile.location || '{}') : {}}
           width="100%"
@@ -277,61 +313,6 @@ const ProfilePageSponsor = ({ profile }) => {
           py={2}
         />
       )}
-      {/* {pendingFieldsComponents && (
-           <Paper className={classes.paper}>
-          <Box display="flex" flexDirection="column">
-            <Typography variant="h4">Your profile is not complete</Typography>
-            <LinearProgress
-              variant="determinate"
-              value={(pendingFieldsComponents.length * 100) / 10}
-            />
-            <hr />
-            <Box display="flex" justifyContent="center">
-              <Button
-                onClick={() => setOpen(true)}
-                variant="outlined"
-                color="secondary"
-              >
-                Complete profile
-              </Button>
-            </Box>
-            <Dialog
-              fullScreen
-              open={open}
-              onClose={() => setOpen(false)}
-              TransitionComponent={Transition}
-            >
-              <AppBar>
-                <Toolbar>
-                  <IconButton
-                    edge="start"
-                    color="inherit"
-                    onClick={() => setOpen(false)}
-                    aria-label="close"
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                  <Typography variant="h1" className={classes.title}>
-                    Complete your profile
-                  </Typography>
-                </Toolbar>
-              </AppBar>
-              <Box
-                className={classes.dialogContent}
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-              >
-                <ProfileCompletion
-                  fields={pendingFieldsComponents}
-                  classes={classes}
-                />
-              </Box>
-            </Dialog>
-          </Box>
-        </Paper>
-      )} */}
-
       <QRCode value={profile.account} size={200} />
       <LinkRouter
         to={{ pathname: '/edit-profile', state: { isCompleting: false } }}

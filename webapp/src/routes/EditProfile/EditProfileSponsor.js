@@ -86,7 +86,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       <Box className={classes.textFieldWrapper}>
         <TextField
           id="name"
-          style={{ display: user.name ? 'none' : '' }}
+          style={{ display: isCompleting && profile.name ? 'none' : '' }}
           label="Name"
           variant="outlined"
           placeholder="Your Sponsor Name"
@@ -100,7 +100,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="email"
-          style={{ display: user.email ? 'none' : '' }}
+          style={{ display: isCompleting && profile.email ? 'none' : '' }}
           label="Email"
           variant="outlined"
           placeholder="Your email"
@@ -114,7 +114,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="website"
-          style={{ display: user.website ? 'none' : '' }}
+          style={{ display: isCompleting && profile.website ? 'none' : '' }}
           label="Website"
           variant="outlined"
           placeholder="Website"
@@ -128,7 +128,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="telephone"
-          style={{ display: user.telephone ? 'none' : '' }}
+          style={{ display: isCompleting && profile.telephone ? 'none' : '' }}
           label="Telephone"
           variant="outlined"
           placeholder="Telephone"
@@ -143,7 +143,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="bussinesType"
           label="Type"
-          style={{ display: user.bussines_type ? 'none' : '' }}
+          style={{
+            display: isCompleting && profile.bussines_type ? 'none' : ''
+          }}
           variant="outlined"
           placeholder="Type"
           defaultValue={user.bussines_type}
@@ -158,7 +160,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
 
         <Box
-          style={{ display: user.schedule ? 'none' : '' }}
+          style={{ display: isCompleting && profile.schedule ? 'none' : '' }}
           width="100%"
           className={classes.textField}
         >
@@ -173,7 +175,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
         <TextField
           id="covidImpact"
-          style={{ display: user.covid_impact ? 'none' : '' }}
+          style={{
+            display: isCompleting && profile.covid_impact ? 'none' : ''
+          }}
           label="Covid Impact"
           variant="outlined"
           placeholder=""
@@ -191,7 +195,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="benefitDescription"
-          style={{ display: user.benefit_description ? 'none' : '' }}
+          style={{
+            display: isCompleting && profile.benefit_description ? 'none' : ''
+          }}
           label="Description of benefit"
           variant="outlined"
           placeholder=""
