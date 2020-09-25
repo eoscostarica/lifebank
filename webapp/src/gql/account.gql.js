@@ -101,3 +101,10 @@ export const EDIT_PROFILE_MUTATION = gql`
     }
   }
 `
+export const VALIDATE_EMAIL = gql`
+  query($email: String!) {
+    user(where: { email: { _eq: $email } }) {
+      email
+    }
+  }
+`
