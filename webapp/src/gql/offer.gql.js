@@ -32,6 +32,17 @@ export const CREATE_OFFER_MUTATION = gql`
       }
     ) {
       id
+      description
+      images
+      limited
+      offer_type
+      online_only
+      quantity
+      sponsor_id
+      start_date
+      end_date
+      offer_name
+      active
     }
   }
 `
@@ -112,4 +123,69 @@ export const GET_SPONSOR_OFFERS_QUERY = gql`
       active
     }
   }
+`
+export const GET_OFFERS_QUERY = gql`
+query(
+  $active: Boolean!
+	){
+  offer(where:{ active: { _eq: $active }})
+  {
+    id
+    images
+    limited
+    offer_name
+    offer_type
+    online_only
+    quantity
+    sponsor_id
+    start_date
+    end_date
+    description
+    cost_in_tokens
+    active
+    user{
+      account
+      name
+      location{
+        info
+      }
+    }
+  }
+}
+`
+
+export const GET_OFFER_QUERY = gql`
+query(
+  $active: Boolean!
+  $id: Int!
+	){
+  offer( where:{
+    _and: [
+        { active: { _eq: $active }},
+        { id: { _eq: $id }},
+      ]
+  })
+  {
+    id
+    images
+    limited
+    offer_name
+    offer_type
+    online_only
+    quantity
+    sponsor_id
+    start_date
+    end_date
+    description
+    cost_in_tokens
+    active
+    user{
+      account
+      name
+      location{
+        info
+      }
+    }
+  }
+}
 `

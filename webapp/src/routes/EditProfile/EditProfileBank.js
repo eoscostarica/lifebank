@@ -10,6 +10,12 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Schedule from '../../components/Schedule'
+import MapEditLocation from '../../components/MapEditLocation'
+import { constants } from '../../config'
+
+const {
+  LOCATION_TYPES: { LIFE_BANK }
+} = constants
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -99,6 +105,10 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
     blood_urgency_level: profile.blood_urgency_level,
     has_immunity_test: Boolean(profile.has_immunity_test)
   })
+  const handleOnGeolocationChange = useCallback(
+    (geolocation) => handleSetField('geolocation', geolocation),
+    [setField]
+  )
   const marks = [
     {
       value: 1
@@ -185,8 +195,23 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
 
         <Box width="100%" className={classes.textField}>
-          <Schedule buttonText="Edit Schedule" scheduleLoad={user.schedule} handleOnAddSchedule={handleOnAddSchedule} />
+          <Schedule buttonText="Edit Schedule" scheduleLoad={user.schedule} loading handleOnAddSchedule={handleOnAddSchedule} />
         </Box>
+
+        <Box className={classes.rowBox}>
+          <Typography variant="h4">Location</Typography>
+          <Typography variant="body1" />
+        </Box>
+
+        <MapEditLocation
+          onGeolocationChange={handleOnGeolocationChange}
+          markerLocation={user.geolocation}
+          markerType={LIFE_BANK}
+          width="100%"
+          height={400}
+          mb={1}
+        />
+
         <Typography variant="h4">Blood Demand Level</Typography>
         <Typography variant="body1" className={classes.text}>
           Drag or tap to the demand level that represent your Lifebank actual
