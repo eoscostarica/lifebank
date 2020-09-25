@@ -32,6 +32,17 @@ export const CREATE_OFFER_MUTATION = gql`
       }
     ) {
       id
+      description
+      images
+      limited
+      offer_type
+      online_only
+      quantity
+      sponsor_id
+      start_date
+      end_date
+      offer_name
+      active
     }
   }
 `
