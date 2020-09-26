@@ -297,6 +297,7 @@
       - created_at
       - updated_at
       - name
+      filter: {}
   - role: donor
     permission:
       columns:
