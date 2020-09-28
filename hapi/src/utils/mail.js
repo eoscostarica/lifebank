@@ -33,7 +33,7 @@ const sendVerificationCode = async (to, verficationCode) => {
                 font-style: normal;
                 font-weight: 400;
                 src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
-              }          ​
+              }​
               @font-face {
                 font-family: 'Source Sans Pro';
                 font-style: normal;
