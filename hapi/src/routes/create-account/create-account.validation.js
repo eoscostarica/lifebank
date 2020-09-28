@@ -5,7 +5,7 @@ module.exports = {
     input: Joi.object({
       role: Joi.string().required(),
       email: Joi.string().required(),
-      name: Joi.string(),
+      name: Joi.string().required(),
       secret: Joi.string().required()
     })
   }).options({ stripUnknown: true })
