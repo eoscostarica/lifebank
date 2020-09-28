@@ -15,7 +15,7 @@ const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
 
 
-const create = async ({ role, email, secret }) => {
+const create = async ({ role, email, name, secret }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
@@ -26,7 +26,8 @@ const create = async ({ role, email, secret }) => {
     username,
     account,
     email,
-    secret
+    secret,
+    name
   })
   await vaultApi.insert({
     account,

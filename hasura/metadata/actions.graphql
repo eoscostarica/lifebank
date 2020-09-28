@@ -10,6 +10,7 @@ type Mutation {
   create_account (
     role: String!
     email: String!
+    name: String!
     secret: String!
   ): create_account_output
 }

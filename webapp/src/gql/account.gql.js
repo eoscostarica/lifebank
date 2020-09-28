@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const CREATE_ACCOUNT_MUTATION = gql`
-  mutation($role: String!, $email: String!, $secret: String!) {
-    create_account(role: $role, email: $email, secret: $secret) {
+  mutation($role: String!, $email: String!,$name:String! $secret: String!) {
+    create_account(role: $role, email: $email, name:$name, secret: $secret) {
       account
       token
       transaction_id
