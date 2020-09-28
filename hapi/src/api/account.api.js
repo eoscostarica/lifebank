@@ -13,8 +13,6 @@ const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
-
-
 const create = async ({ role, email, name, secret }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
