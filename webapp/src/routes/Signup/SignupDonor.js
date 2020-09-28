@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DonorSignup = ({
   onSubmit,
+  onSubmitWithAuth,
   setField,
   user,
   loading,
@@ -55,19 +56,6 @@ const DonorSignup = ({
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         {children}
-        <TextField
-          id="email"
-          label="Email"
-          type="email"
-          fullWidth
-          placeholder="Your email"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => setField('email', event.target.value)}
-        />
-
         <TextField
           id="password"
           label="Password"
@@ -91,10 +79,9 @@ const DonorSignup = ({
       <Box className={classes.btnWrapper}>
         <Button
           disabled={
-            //!user.username ||
             !user.secret ||
-            //!isUsernameValid ||
-            //!recaptchaValue ||
+            !isEmailValid ||
+            !recaptchaValue ||
             loading
           }
           className={classes.btnSignup}
@@ -104,9 +91,12 @@ const DonorSignup = ({
         >
           Create Account
         </Button>
-        <SignupWithFacebook />
-        <SignupWithGoogle />
         {loading && <CircularProgress />}
+        <SignupWithFacebook
+          handlerSubmit={onSubmitWithAuth}
+        />
+        <SignupWithGoogle
+          handlerSubmit={onSubmitWithAuth} />
       </Box>
     </form>
   )
@@ -114,6 +104,7 @@ const DonorSignup = ({
 
 DonorSignup.propTypes = {
   onSubmit: PropTypes.func,
+  onSubmitWithAuth: PropTypes.func,
   setField: PropTypes.func,
   user: PropTypes.object,
   loading: PropTypes.bool,
