@@ -284,14 +284,6 @@
           schema: public
           name: offer
   select_permissions:
-  - role: donor
-    permission:
-      columns:
-      - account
-      - id
-      - name
-      - username
-      filter: {}
   - role: guest
     permission:
       columns:
