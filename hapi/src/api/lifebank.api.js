@@ -56,7 +56,7 @@ const preRegister = async ({
       resultRegister
     }
   }
-  mailApi.sendCredentialsRecovery('angelocas13_8@hotmail.com', 'angelo', 'angelo')
+  mailApi.sendVerificationCode('angelocas13_8@hotmail.com', verification_code)
   return {
     resultRegister
   }
