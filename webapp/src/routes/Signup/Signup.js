@@ -12,7 +12,6 @@ import {
   CREATE_ACCOUNT_MUTATION,
   SIGNUP_MUTATION,
   CREATE_PRE_REGITER_LIFEBANK_MUTATION,
-  VALIDATE_EMAIL_LIFEBANK,
   VALIDATE_EMAIL
 } from '../../gql'
 import { useUser } from '../../context/user.context'
@@ -170,57 +169,25 @@ const Signup = () => {
   })
 
   useEffect(() => {
-    if (role !== 'lifebank') {
-      const regularExpresion = /\S+@\S+\.\S+/
-      const validEmail = async () => {
-        const { data } = await checkEmail({
-          email: user.email
-        })
-        try {
-          if (data.user.length === 0) setEmailValid(true)
-          else setEmailValid(false)
-          setcheckEmailLoaded(true)
-        } catch (error) {
+    const regularExpresion = /\S+@\S+\.\S+/
+    const validEmail = async () => {
+      const { data } = await checkEmail({
+        email: user.email
+      })
+      try {
+        if (data.verificate_email.length === 0) setEmailValid(true)
+        else setEmailValid(false)
+        setcheckEmailLoaded(true)
+      } catch (error) {
 
-        }
       }
-      if (regularExpresion.test(user?.email)) validEmail()
-      else {
-        setEmailValid(false)
-        setcheckEmailLoaded(false)
-      }
+    }
+    if (regularExpresion.test(user?.email)) validEmail()
+    else {
+      setEmailValid(false)
+      setcheckEmailLoaded(false)
     }
   }, [user?.email, checkEmail])
-
-  const { refetch: checkEmailLifebank } = useQuery(VALIDATE_EMAIL_LIFEBANK, {
-    variables: {
-      email: user.email
-    },
-    skip: true
-  })
-
-  useEffect(() => {
-    if (role === 'lifebank') {
-      const regularExpresion = /\S+@\S+\.\S+/
-      const validEmail = async () => {
-        const { data } = await checkEmailLifebank({
-          email: user.email
-        })
-        try {
-          if (data.preregister_lifebank.length === 0) setEmailValid(true)
-          else setEmailValid(false)
-          setcheckEmailLoaded(true)
-        } catch (error) {
-
-        }
-      }
-      if (regularExpresion.test(user?.email)) validEmail()
-      else {
-        setEmailValid(false)
-        setcheckEmailLoaded(false)
-      }
-    }
-  }, [user?.email, checkEmailLifebank])
 
   useEffect(() => {
     if (preRegisterLifebankResult) {

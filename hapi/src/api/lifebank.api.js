@@ -35,7 +35,7 @@ const preRegister = async ({
 
   verification_code = verification_code.verificationCode
   try {
-    await preregisterApi.insert({
+    await preregisterApi.insertLifebank({
       email,
       password,
       name,
@@ -46,9 +46,14 @@ const preRegister = async ({
       urgency_level,
       coordinates,
       immunity_test,
-      invitation_code,
+      invitation_code
+    })
+
+    await preregisterApi.insertVerificateEmail({
+      email,
       verification_code
     })
+    mailApi.sendVerificationCode(email, verification_code)
   } catch (error) {
     resultRegister = 'error'
 
@@ -56,7 +61,7 @@ const preRegister = async ({
       resultRegister
     }
   }
-  mailApi.sendVerificationCode('angelocas13_8@hotmail.com', verification_code)
+
   return {
     resultRegister
   }
