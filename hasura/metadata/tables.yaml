@@ -305,6 +305,14 @@
       - updated_at
       - name
       filter: {}
+  - role: donor
+    permission:
+      columns:
+      - account
+      - id
+      - name
+      - username
+      filter: {}
 - table:
     schema: public
     name: vault
