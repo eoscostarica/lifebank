@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
@@ -25,8 +25,10 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 
-import { LOGIN_MUTATION } from '../../gql'
+import { LOGIN_MUTATION, VALIDATE_EMAIL } from '../../gql'
 import { useUser } from '../../context/user.context'
+import LoginWithFacebook from './LoginWithFacebook'
+import LoginWithGoogle from './LoginWithGoogle'
 
 const rows = [
   {
@@ -90,7 +92,8 @@ const useStyles = makeStyles((theme) => ({
   },
   btnWrapper: {
     display: 'flex',
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(1),
+    width: "100%"
   },
   loginBtn: {
     display: 'flex',
@@ -121,6 +124,13 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
   const [open, setOpen] = useState(false)
 
+  const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
+    variables: {
+      email: user.email
+    },
+    skip: true
+  })
+
   const handleOpen = () => {
     setOpen(!open)
   }
@@ -136,6 +146,27 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
         ...user
       }
     })
+  }
+
+  const handleLoginWithAuth = async (status, email, secret) => {
+    if (status) {
+      const { data } = await checkEmail({ email: email })
+
+      if (data.user.length === 1) {
+        setErrorMessage(null)
+        loginMutation({
+          variables: {
+            account: email,
+            secret
+          }
+        })
+      } else {
+        setErrorMessage("This account doesn't exist, please sign up")
+      }
+
+    } else {
+      setErrorMessage("Something happened with the authentication")
+    }
   }
 
   useEffect(() => {
@@ -240,8 +271,9 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                     }
                   />
                 </Box>
-                <Box className={classes.btnWrapper}>
+                <Box >
                   <Button
+                    className={classes.btnWrapper}
                     disabled={!user.account || !user.secret || loading}
                     variant="contained"
                     color="primary"
@@ -250,6 +282,9 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                     Login
                   </Button>
                   {loading && <CircularProgress />}
+                  <LoginWithFacebook onSubmit={handleLoginWithAuth} />
+                  <LoginWithGoogle onSubmit={handleLoginWithAuth} />
+
                 </Box>
               </form>
               <Typography variant="h3">Demo Credentials</Typography>
