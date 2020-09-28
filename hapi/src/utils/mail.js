@@ -60,7 +60,7 @@ const sendVerificationCode = async (to, verficationCode) => {
             td {
               mso-table-rspace: 0pt;
               mso-table-lspace: 0pt;
-            }​
+            }
             /**
              * Better fluid images in Internet Explorer.
              */
@@ -77,7 +77,7 @@ const sendVerificationCode = async (to, verficationCode) => {
               line-height: inherit !important;
               color: inherit !important;
               text-decoration: none !important;
-            }​
+            }
             /**
              * Fix centering issues in Android 4.4.
              */
@@ -133,7 +133,7 @@ const sendVerificationCode = async (to, verficationCode) => {
               <tr>
                 <td align="center" bgcolor="#f6f6f6">
               
-                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">​
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
                         <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;">Email verification</h1>
@@ -159,7 +159,7 @@ const sendVerificationCode = async (to, verficationCode) => {
                           Verify
                         </a>
                       </td>
-                    </tr>​
+                    </tr>
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify; border-bottom: 3px solid #BA0D0D">
                       </td>
