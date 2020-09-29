@@ -29,14 +29,12 @@ const useStyles = makeStyles((theme) => ({
 const SignupWithGoogle = ({ handlerSubmit }) => {
   const classes = useStyles()
 
-  const responseGoogle = (response) => {
+  const googleResponse = (response) => {
     handlerSubmit(true, response.profileObj.email, response.profileObj.name, response.profileObj.googleId)
   }
 
   const handleError = (error) => {
-    if (error) {
-      handlerSubmit(false, "", "", "")
-    }
+    if (error) { handlerSubmit(false, "", "", "") }
   }
 
   return (
@@ -57,7 +55,7 @@ const SignupWithGoogle = ({ handlerSubmit }) => {
         </Button>
       )}
       buttonText="Login"
-      onSuccess={responseGoogle}
+      onSuccess={googleResponse}
       onFailure={handleError}
       cookiePolicy='single_host_origin'
     />

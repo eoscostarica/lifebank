@@ -28,14 +28,12 @@ const useStyles = makeStyles((theme) => ({
 const SignupWithFacebook = ({ handlerSubmit }) => {
   const classes = useStyles()
 
-  const responseFacebook = (response) => {
+  const facebookResponse = (response) => {
     handlerSubmit(true, response.profile.email, response.profile.name, response.profile.id)
   }
 
   const handleError = (error) => {
-    if (error) {
-      handlerSubmit(false, "", "", "")
-    }
+    if (error) { handlerSubmit(false, "", "", "") }
   }
 
   return (
@@ -43,7 +41,7 @@ const SignupWithFacebook = ({ handlerSubmit }) => {
       <FacebookProvider appId={oAuthConfig.facebook_appID}>
         <Login
           scope="email"
-          onCompleted={responseFacebook}
+          onCompleted={facebookResponse}
           onError={handleError}
         >
           {({ handleClick, error, data }) => (

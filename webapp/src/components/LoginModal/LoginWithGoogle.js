@@ -26,14 +26,12 @@ const useStyles = makeStyles((theme) => ({
 const LoginWithGoogle = ({ onSubmit }) => {
   const classes = useStyles()
 
-  const responseGoogle = (response) => {
+  const googleResponse = (response) => {
     onSubmit(true, response.profileObj.email, response.profileObj.googleId)
   }
 
   const handleError = (error) => {
-    if (error) {
-      onSubmit(false, "", "")
-    }
+    if (error) { onSubmit(false, "", "") }
   }
 
   return (
@@ -54,7 +52,7 @@ const LoginWithGoogle = ({ onSubmit }) => {
         </Button>
       )}
       buttonText="Login"
-      onSuccess={responseGoogle}
+      onSuccess={googleResponse}
       onFailure={handleError}
       cookiePolicy='single_host_origin'
     />
