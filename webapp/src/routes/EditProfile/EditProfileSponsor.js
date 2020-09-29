@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
@@ -7,9 +7,15 @@ import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
+import AddIcon from '@material-ui/icons/Add'
+import IconButton from '@material-ui/core/IconButton'
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
+import Carousel from '../../components/Carousel'
 import Schedule from '../../components/Schedule'
+import Logo from '../../components/Logo'
+import Telephones from '../../components/Telephones'
 import { constants } from '../../config'
 
 const {
@@ -34,7 +40,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
+    '& > div.MuiFormControl-root': {
+      width: '100%'
+    }
   },
   textField: {
     marginTop: theme.spacing(2)
@@ -56,47 +65,113 @@ const useStyles = makeStyles((theme) => ({
   },
   labelBtn: {
     color: theme.palette.white
+  },
+  imageContainer: {
+    maxHeight: 430,
+    '& > div.MuiCard-root': {
+      padding: theme.spacing(2),
+      backgroundColor: 'transparent',
+      border: '1px solid lightgray'
+    }
+  },
+  logo: {
+    maxWidth: '100%',
+    maxHeight: 340
+  },
+  addBtn: {
+    color: 'white',
+    margin: theme.spacing(2, 0)
+  },
+  carouselContainer: {
+    width: '100%'
   }
 }))
 
 const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   const classes = useStyles()
+  const phoneValueRef = useRef(undefined)
+  const photoUrlValueRef = useRef(undefined)
+  const [disablePhoneInput, setDisablePhoneInput] = useState(true)
+  const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
   const [user, setUser] = useState({
+    logo: profile.logo,
+    name: profile.name,
+    address: profile.address,
+    email: profile.email,
+    website: profile.website,
     benefit_description: profile.benefit_description,
+    telephones: profile.telephones || [],
     bussines_type: profile.bussines_type,
     covid_impact: profile.covid_impact,
-    email: profile.email,
     geolocation: profile.location ? JSON.parse(profile.location) : null,
-    name: profile.name,
     schedule: profile.schedule,
-    telephone: profile.telephone,
-    website: profile.website
+    photos: profile.photos || []
   })
 
-  const handleSetField = (field, value) => {
-    setUser({ ...user, [field]: value })
-  }
+  const handleSetField = useMemo(
+    () => (field, value) => {
+      setUser({ ...user, [field]: value })
+    },
+    [user]
+  )
 
   const handleOnAddStringifyValues = (field, value) => {
-    setUser({ ...user, [field]: JSON.stringify(value) })
+    setUser({ ...user, [field]: value })
   }
 
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
+        <>
+          {(isCompleting && !user.logo) ||
+            (!isCompleting && !user.logo ? null : (
+              <Logo showCaption logoUrl={user.logo} />
+            ))}
+        </>
+        <TextField
+          id="logo-url"
+          name="logo-input"
+          style={{ display: isCompleting && profile.logo ? 'none' : '' }}
+          label="Logo url"
+          variant="outlined"
+          placeholder="Your logo url"
+          defaultValue={user.logo}
+          fullWidth
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => handleSetField('logo', event.target.value)}
+        />
         <TextField
           id="name"
+          name="name"
           style={{ display: isCompleting && profile.name ? 'none' : '' }}
           label="Name"
           variant="outlined"
           placeholder="Your Sponsor Name"
-          defaultValue={user.name}
+          value={user.name}
           fullWidth
           InputLabelProps={{
             shrink: true
           }}
           className={classes.textField}
           onChange={(event) => handleSetField('name', event.target.value)}
+        />
+        <TextField
+          id="address"
+          name="address"
+          style={{ display: isCompleting && profile.address ? 'none' : '' }}
+          label="Address"
+          variant="outlined"
+          placeholder="Your address here"
+          value={user.address}
+          fullWidth
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => handleSetField('address', event.target.value)}
         />
         <TextField
           id="email"
@@ -128,18 +203,53 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="telephone"
-          style={{ display: isCompleting && profile.telephone ? 'none' : '' }}
+          style={{ display: isCompleting && profile.telephones ? 'none' : '' }}
           label="Telephone"
           variant="outlined"
           placeholder="Telephone"
-          defaultValue={user.telephone}
           fullWidth
+          inputRef={phoneValueRef}
+          onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  disabled={disablePhoneInput}
+                  color="secondary"
+                  aria-label="toggle password visibility"
+                  onClick={() => {
+                    setUser({
+                      ...user,
+                      telephones: [
+                        ...user.telephones,
+                        phoneValueRef.current.value
+                      ]
+                    })
+                    phoneValueRef.current.value = ''
+                    setDisablePhoneInput(true)
+                  }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
           InputLabelProps={{
             shrink: true
           }}
           className={classes.textField}
-          onChange={(event) => handleSetField('telephone', event.target.value)}
         />
+        {user.telephones && user.telephones.length > 0 && (
+          <Telephones
+            phones={user.telephones}
+            deletePhone={(phone) =>
+              setUser({
+                ...user,
+                telephones: user.telephones.filter((p) => p !== phone)
+              })
+            }
+          />
+        )}
         <TextField
           id="bussinesType"
           label="Type"
@@ -174,6 +284,25 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         </Box>
 
         <TextField
+          id="about"
+          style={{
+            display: isCompleting && profile.about ? 'none' : ''
+          }}
+          label="About"
+          variant="outlined"
+          placeholder="Description about your business here"
+          defaultValue={user.about}
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          multiline
+          fullWidth
+          rows={3}
+          onChange={(event) => handleSetField('about', event.target.value)}
+        />
+
+        <TextField
           id="covidImpact"
           style={{
             display: isCompleting && profile.covid_impact ? 'none' : ''
@@ -198,7 +327,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           style={{
             display: isCompleting && profile.benefit_description ? 'none' : ''
           }}
-          label="Description of benefit"
+          label="Benefit description"
           variant="outlined"
           placeholder=""
           defaultValue={user.benefit_description}
@@ -213,6 +342,47 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             handleSetField('benefit_description', event.target.value)
           }
         />
+        <TextField
+          id="photo-url"
+          style={{ display: isCompleting && profile.photos ? 'none' : '' }}
+          label="Photo url"
+          variant="outlined"
+          placeholder="Your photo url here"
+          fullWidth
+          inputRef={photoUrlValueRef}
+          onChange={(e) => setDisablePhotoUrlInput(e.target.value.length === 0)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  disabled={disablePhotoUrlInput}
+                  color="secondary"
+                  aria-label="add photo url"
+                  onClick={() => {
+                    setUser({
+                      ...user,
+                      photos: [...user.photos, photoUrlValueRef.current.value]
+                    })
+                    photoUrlValueRef.current.value = ''
+                    setDisablePhotoUrlInput(true)
+                  }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+        />
+        {user.photos && (
+          <Box className={classes.carouselContainer}>
+            {user.photos.length > 0 && <Carousel images={user.photos} />}{' '}
+          </Box>
+        )}
+
         <Typography variant="subtitle2" gutterBottom>
           Choose your location
         </Typography>

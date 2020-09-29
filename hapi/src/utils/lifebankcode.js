@@ -93,9 +93,6 @@ const addSponsor = async (
   password,
   { name, geolocation, ...profile }
 ) => {
-  // console.log('Add sponsor method')
-  // try {
-  console.log(profile)
   const response = await eosUtil.transact(
     [
       {
@@ -129,9 +126,6 @@ const addSponsor = async (
     password
   )
   return response
-  // } catch (error) {
-  //   console.log(`SMART CONTRACT ERROR: ${error}`)
-  // }
 }
 
 const getDonor = async account => {

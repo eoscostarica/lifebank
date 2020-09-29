@@ -13,6 +13,7 @@ const {
 
 const editProfile = async (account, profile) => {
   const password = await vaultApi.getPassword(account)
+  console.log(profile)
   const addSponsorTransaction = await lifebankcodeUtils.addSponsor(
     account,
     password,

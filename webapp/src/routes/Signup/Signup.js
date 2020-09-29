@@ -192,7 +192,6 @@ const Signup = () => {
     if (signupResult) {
       // history.replace('/profile')
     }
-    console.log(signupResult)
   }, [signupResult])
 
   return (

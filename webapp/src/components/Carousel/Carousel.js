@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
+import DeleteIcon from '@material-ui/icons/Delete'
 import '@brainhubeu/react-carousel/lib/style.css'
 
 const useStyles = makeStyles({
@@ -15,12 +16,12 @@ const useStyles = makeStyles({
   }
 })
 
-const CarouselComponent = ({ images }) => {
+const CarouselComponent = ({ images, activeDeletion, deleteItem }) => {
   const classes = useStyles()
   const [actualImageIndex, setActualImageIndex] = useState(0)
 
   return (
-    <Box justifyContent="center" borderRadius="8px" boxShadow={2}>
+    <Box justifyContent="center" borderRadius="8px" boxShadow={0}>
       <Carousel
         value={actualImageIndex}
         className={classes.carousel}
@@ -36,7 +37,18 @@ const CarouselComponent = ({ images }) => {
         ]}
       >
         {images.map((url, key) => (
-          <img className={classes.img} src={url} key={key} alt={`${key}`} />
+          <Box display="flex" flexDirection="column" key={key}>
+            <img className={classes.img} src={url} key={key} alt={`${key}`} />
+            <Button
+              variant="contained"
+              disableElevation
+              size="small"
+              className={classes.button}
+              startIcon={<DeleteIcon />}
+            >
+              Delete
+            </Button>
+          </Box>
         ))}
       </Carousel>
       <Box display="flex" justifyContent="center" alignContent="center">
@@ -58,7 +70,9 @@ const CarouselComponent = ({ images }) => {
 }
 
 CarouselComponent.propTypes = {
-  images: PropTypes.array
+  images: PropTypes.array,
+  activeDeletion: PropTypes.bool,
+  deleteItem: PropTypes.func
 }
 
 export default CarouselComponent
