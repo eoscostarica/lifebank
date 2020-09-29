@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 import SvgIcon from '@material-ui/core/SvgIcon';
 
+import { oAuthConfig } from '../../../config'
+
 const useStyles = makeStyles((theme) => ({
   btnFacebook: {
     display: 'flex',
@@ -38,7 +40,7 @@ const SignupWithFacebook = ({ handlerSubmit }) => {
 
   return (
     <>
-      <FacebookProvider appId="641671940102186">
+      <FacebookProvider appId={oAuthConfig.facebook_appID}>
         <Login
           scope="email"
           onCompleted={responseFacebook}

@@ -5,6 +5,8 @@ import GoogleLogin from 'react-google-login';
 import Button from '@material-ui/core/Button'
 import SvgIcon from '@material-ui/core/SvgIcon';
 
+import { oAuthConfig } from '../../../config'
+
 const useStyles = makeStyles((theme) => ({
   btnGoogle: {
     display: 'flex',
@@ -39,7 +41,7 @@ const SignupWithGoogle = ({ handlerSubmit }) => {
 
   return (
     <GoogleLogin
-      clientId="865299157499-ht14599cb2vaqgnq0vhkihsedsfvcukf.apps.googleusercontent.com"
+      clientId={oAuthConfig.google_clienteID}
       render={handleProps => (
         <Button
           onClick={handleProps.onClick}
