@@ -29,8 +29,7 @@ const LoginWithFacebook = ({ onSubmit }) => {
   }
 
   const handleError = (error) => {
-    if (error) { onSubmit(false, "", "") }
-
+    if (error) onSubmit(false, "", "")
   }
 
   return (

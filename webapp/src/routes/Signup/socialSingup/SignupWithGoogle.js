@@ -34,7 +34,7 @@ const SignupWithGoogle = ({ handlerSubmit }) => {
   }
 
   const handleError = (error) => {
-    if (error) { handlerSubmit(false, "", "", "") }
+    if (error) handlerSubmit(false, "", "", "")
   }
 
   return (
