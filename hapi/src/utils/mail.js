@@ -143,7 +143,7 @@ const sendVerificationCode = async (to, verficationCode) => {
                   </tr>
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                        <p style="margin: 0;">Thank you for wanting to be part of the lifebank community, click on the vote to verify to validate your account.</p>
+                        <p style="margin: 0;">Thank you for wanting to be part of the lifebank community, click on the button to verify to validate your account.</p>
                       </td>
                     </tr>
                     <tr>
