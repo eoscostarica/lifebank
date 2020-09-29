@@ -1,31 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
-import LogoutIcon from '@material-ui/icons/ExitToApp'
+import PersonIcon from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
+import Divider from '@material-ui/core/Divider';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
-import LanguageSelector from '../components/LanguageSelector'
+import Notification from '../components/Notification'
 import LoginModal from '../components/LoginModal'
 
+
 const useStyles = makeStyles((theme) => ({
-  sessionText: {
-    marginLeft: 5,
-    color: theme.palette.primary.contrastText,
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'inline'
-    }
-  },
   link: {
-    display: 'flex',
-    color: 'white',
     textDecoration: 'none',
-    height: 24,
-    alignItems: 'center'
+  },
+  userIcon: {
+    color: "#121212",
+    width: 24,
+    height: 24
+  },
+  logoutIcon: {
+    color: "#121212",
+    width: 20,
+    height: 20,
+    marginRight: 10
+  },
+  menuItem: {
+    fontSize: "14px",
+    fontWeight: 500,
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: 1.14,
+    letterSpacing: "1px",
+    color: "#121212",
   },
   box: {
     display: 'flex',
@@ -36,26 +47,48 @@ const useStyles = makeStyles((theme) => ({
 
 const Topbar = ({ user, onLogout }) => {
   const classes = useStyles()
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    onLogout()
+  }
 
   return (
     <Box className={classes.box}>
-      <LanguageSelector />
+      {user && <Notification />}
       {user && (
-        <Box>
-          <IconButton color="inherit">
+        <>
+          <IconButton onClick={handleClick}>
+            <PersonIcon alt="User icon" className={classes.userIcon} />
+          </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
             <Link to="/profile" className={classes.link}>
-              <AccountCircleIcon />
-              <Typography className={classes.sessionText} variant="subtitle1">
-                {user.account}
-              </Typography>
+              <MenuItem className={classes.menuItem}>{user.account}</MenuItem>
             </Link>
-          </IconButton>
-          <IconButton color="inherit" onClick={onLogout}>
-            <LogoutIcon />
-          </IconButton>
-        </Box>
+            <Divider />
+            <MenuItem onClick={handleLogout} className={classes.menuItem}>
+              <ExitToAppIcon alt="User icon" className={classes.logoutIcon} />
+              Logout
+              </MenuItem>
+          </Menu>
+        </>
       )}
-      {!user && <LoginModal overrideLabelClass={classes.sessionText} />}
+      {!user && <LoginModal />}
     </Box>
   )
 }

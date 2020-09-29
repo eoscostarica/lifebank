@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
-import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -17,7 +16,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import FingerprintIcon from '@material-ui/icons/Fingerprint'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -92,6 +90,19 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     marginBottom: theme.spacing(3)
   },
+  btnLogin: {
+    borderRadius: "4px",
+    boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24)",
+    backgroundColor: "#ffffff",
+    fontSize: "14px",
+    fontWeight: 500,
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: 1.14,
+    letterSpacing: "1px",
+    color: "#121212",
+    padding: "10px"
+  },
   loginBtn: {
     display: 'flex',
     alignItems: 'center'
@@ -108,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
+const LoginModal = () => {
   const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
@@ -158,18 +169,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
 
   return (
     <>
-      <Box
-        className={clsx(classes.loginBtn, overrideBoxClass)}
-        onClick={handleOpen}
-      >
-        <FingerprintIcon />
-        <Typography
-          variant="body1"
-          className={clsx(classes.labelOption, overrideLabelClass)}
-        >
-          {t('login')}
-        </Typography>
-      </Box>
+      <Button className={classes.btnLogin} onClick={handleOpen}>LOGIN</Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -284,8 +284,6 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
 }
 
 LoginModal.propTypes = {
-  overrideBoxClass: PropTypes.any,
-  overrideLabelClass: PropTypes.any
 }
 
 export default LoginModal

@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     boxShadow: 'none',
-    paddingTop: theme.spacing(1)
+    paddingTop: theme.spacing(1),
+    backgroundColor: "#ffffff"
   },
   backgroundHome: {
     backgroundColor: 'transparent'
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   drawerToggle: {
+    color: "#121212",
     marginLeft: -12
   },
   drawerContent: {
