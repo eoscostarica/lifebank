@@ -175,7 +175,7 @@ const Signup = () => {
         email: user.email
       })
       try {
-        if (data.verificate_email.length === 0) setEmailValid(true)
+        if (data.verification_email.length === 0) setEmailValid(true)
         else setEmailValid(false)
         setcheckEmailLoaded(true)
       } catch (error) {

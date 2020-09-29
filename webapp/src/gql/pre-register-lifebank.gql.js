@@ -34,7 +34,7 @@ export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
 
 export const VALIDATE_EMAIL = gql`
   query($email: String!) {
-    verificate_email(where: { email: { _eq: $email } }) {
+    verification_email(where: { email: { _eq: $email } }) {
       email
     }
   }

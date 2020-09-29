@@ -1,6 +1,6 @@
 const { hasuraUtils } = require('../utils')
 
-const INSERTLIFEBANK = `
+const INSERT_LIFEBANK = `
   mutation ($preregister_lifebank: preregister_lifebank_insert_input!) {
     insert_preregister_lifebank_one(object: $preregister_lifebank) {
       email
@@ -18,9 +18,9 @@ const INSERTLIFEBANK = `
   }
 `
 
-const INSERTVERIFICATEEMAIL = `
-  mutation ($verificate_email: verificate_email_insert_input!) {
-    insert_verificate_email_one(object: $verificate_email) {
+const INSERT_VERIFICATION_EMAIL = `
+  mutation ($verification_email: verification_email_insert_input!) {
+    insert_verification_email_one(object: $verification_email) {
       email
       verification_code
     }
@@ -28,11 +28,11 @@ const INSERTVERIFICATEEMAIL = `
 `
 
 const insertLifebank = (preregister_lifebank) => {
-  return hasuraUtils.request(INSERTLIFEBANK, { preregister_lifebank })
+  return hasuraUtils.request(INSERT_LIFEBANK, { preregister_lifebank })
 }
 
-const insertVerificateEmail = (verificate_email) => {
-  return hasuraUtils.request(INSERTVERIFICATEEMAIL, { verificate_email })
+const insertVerificateEmail = (verification_email) => {
+  return hasuraUtils.request(INSERT_VERIFICATION_EMAIL, { verification_email })
 }
 
 module.exports = {

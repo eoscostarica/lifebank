@@ -305,20 +305,12 @@
       - updated_at
       - name
       filter: {}
-  - role: donor
-    permission:
-      columns:
-      - account
-      - id
-      - name
-      - username
-      filter: {}
 - table:
     schema: public
     name: vault
 - table:
     schema: public
-    name: verificate_email
+    name: verification_email
   select_permissions:
   - role: guest
     permission:
