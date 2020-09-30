@@ -177,18 +177,19 @@
   - role: guest
     permission:
       columns:
-      - active
       - limited
       - online_only
-      - id
       - quantity
-      - sponsor_id
+      - offer_type
       - description
+      - start_date
       - end_date
       - images
+      - sponsor_id
+      - id
       - offer_name
-      - offer_type
-      - start_date
+      - active
+      - cost_in_tokens
       filter: {}
   - role: sponsor
     permission:
@@ -284,6 +285,14 @@
           schema: public
           name: offer
   select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - account
+      - id
+      - name
+      - username
+      filter: {}
   - role: guest
     permission:
       columns:
@@ -297,14 +306,6 @@
       - created_at
       - updated_at
       - name
-      filter: {}
-  - role: donor
-    permission:
-      columns:
-      - account
-      - id
-      - name
-      - username
       filter: {}
 - table:
     schema: public
