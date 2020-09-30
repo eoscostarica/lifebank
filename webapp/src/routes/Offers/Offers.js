@@ -6,23 +6,23 @@ import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField';
-import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import SearchIcon from '@material-ui/icons/Search';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Avatar from '@material-ui/core/Avatar';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+
+
 
 import { constants } from '../../config'
 import { GET_OFFERS_QUERY } from '../../gql'
@@ -36,70 +36,43 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
-    width: "100%",
-    padding: theme.spacing(6, 1, 0, 1),
-    alignItems: 'center',
-    backgroundColor: "white",
-    margin: "auto",
-    "@media only screen and (max-width: 900px)": {
-      width: "100%",
-    },
-  },
-  title: {
-    fontSize: 48,
-    marginBottom: theme.spacing(4)
-  },
-  searchBar: {
-    padding: '2px 4px',
-    display: 'flex',
     alignItems: 'center',
     width: "100%",
-    border: "none",
-    marginBottom: 8
   },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
-    border: "none"
+  list: {
+    width: "100vw",
   },
-  iconButton: {
-    padding: 10,
+  listItem: {
+    width: "100%",
+    backgroundColor: "white"
+  }
+  , secondaryIconList: {
+    color: "rgba(0, 0, 0, 0.6)",
+    width: 20,
+    height: 20
   },
-  searchContainer: {
-    width: "30%",
-    margin: "auto",
-    marginTop: 10,
+  listItemPrimaryText: {
+    color: "rgba(0, 0, 0, 0.87)",
+    fontFamily: "Roboto",
+    fontSize: "16px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: 1.5,
+    letterSpacing: "0.15px",
+  },
+  listItemSecondaryText: {
+    color: "color: rgba(0, 0, 0, 0.6)",
+    fontFamily: "Roboto",
+    fontSize: "14px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: 1.43,
+    letterSpacing: "0.25px",
+  },
 
-    "@media only screen and (max-width: 900px)": {
-      width: "100%",
-    },
-  },
-  cardContainer: {
-    width: "70%",
-    margin: "auto",
-    marginTop: 30,
-    "@media only screen and (max-width: 900px)": {
-      width: "100%",
-    },
-  },
-  card: {
-    width: "100%",
-  },
-  link: {
-    textDecoration: 'none'
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  tokenPriceBox: {
-    display: 'flex',
-    color: "#F20833"
-  },
-  tokenPrice: {
-    paddingTop: 3,
-    paddingLeft: 5
-  },
+
   modal: {
     position: 'absolute',
     width: 400,
@@ -119,7 +92,10 @@ const useStyles = makeStyles((theme) => ({
   infoText: {
     fontSize: 30,
     marginBottom: theme.spacing(4)
-  }
+  },
+
+
+
 
 }))
 
@@ -312,18 +288,27 @@ const Offers = () => {
   const LoadOffers = () => {
     return (
       <>
-        {loading && <CircularProgress />}
+        {loading &&
+          <Box className={classes.wrapper}>
+            <CircularProgress />
+          </Box>
+
+        }
         {!loading && offers.length <= 0 && (
-          <Typography variant="h3" className={classes.infoText}>No offers available</Typography>
+          <ListItem className={classes.listItem} >
+            <ListItemText
+              primary={
+                <Typography className={classes.listItemPrimaryText} noWrap variant="body2">No offers available</Typography>
+              }
+            />
+          </ListItem>
         )}
         {!loading && offers.length > 0 && offers.map(offer => (
-          <OfferCard
+          <OfferItem
             key={offer.id}
             id={offer.id}
             title={offer.offer_name}
-            sponsorName={offer.user.name}
             description={offer.description}
-            tokenPrice={offer.cost_in_tokens}
             img={offer.images}
           />
         ))}
@@ -331,88 +316,42 @@ const Offers = () => {
     )
   }
 
-  const OfferCard = (props) => {
-    const LinkTo = "/offer/" + props.id
+  const OfferItem = (props) => {
+    //const LinkTo = "/offer/" + props.id
 
     return (
-      <Grid container item xs={12} md={3}>
-        <Card className={classes.card}>
-          <Link className={classes.link} to={LinkTo}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image={props.img}
-                title="Offer Image"
-              />
-              <CardHeader
-                title={props.title}
-                subheader={props.sponsorName}
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">{truncateString(props.description)}</Typography>
-              </CardContent>
-              <CardContent>
-                <Box className={classes.tokenPriceBox}>
-                  <FavoriteIcon />
-                  <Typography className={classes.tokenPrice} variant="body2" color="textSecondary" component="p">{props.tokenPrice}</Typography>
-                </Box>
-              </CardContent>
-            </CardActionArea>
-          </Link>
-        </Card>
-      </Grid>
+      <ListItem className={classes.listItem} button>
+        <ListItemAvatar>
+          <Avatar src={props.img} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.title}</Typography>
+          }
+          secondary={
+            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.description}</Typography>
+          }
+        />
+        <ListItemSecondaryAction>
+          <LocalOfferIcon className={classes.secondaryIconList} />
+        </ListItemSecondaryAction>
+      </ListItem>
+
     )
   }
 
-  OfferCard.propTypes = {
+  OfferItem.propTypes = {
     id: PropTypes.number,
     img: PropTypes.string,
     title: PropTypes.string,
-    sponsorName: PropTypes.string,
     description: PropTypes.string,
-    tokenPrice: PropTypes.number,
   }
 
   return (
-    <>
-      <Box className={classes.wrapper}>
-        <Typography variant="h1" className={classes.title}>Available Offers</Typography>
-        <Grid
-          className={classes.searchContainer}
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={1}
-        >
-          <Grid container item xs={12} md={12}>
-            <Paper component="form" className={classes.searchBar}>
-              <FilterModal />
-              <InputBase
-                className={classes.input}
-                placeholder="Search"
-                inputProps={{ 'aria-label': 'search offers' }}
-                value={searchInput}
-                onChange={handleChangeSearchInput}
-              />
-              <IconButton className={classes.iconButton} aria-label="search" onClick={searchWithFilters}>
-                <SearchIcon />
-              </IconButton>
-            </Paper>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          className={classes.cardContainer}
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <LoadOffers />
-        </Grid>
-      </Box>
-    </>
+    <List className={classes.list} >
+      <LoadOffers />
+    </List>
+
   )
 }
 

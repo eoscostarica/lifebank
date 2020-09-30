@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import { useUser } from '../../context/user.context'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,13 +18,19 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import StarIcon from '@material-ui/icons/Star';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
+import Offers from '../Offers'
+
 const useStyles = makeStyles((theme) => ({
   appBarTab: {
     backgroundColor: "#ffffff",
     boxShadow: 'none',
   },
   tabs: {
-    color: "#121212"
+    color: "#121212",
+    backgroundColor: "ffffff"
+  },
+  tabPanel: {
+    backgroundColor: "#ffffff",
   },
   bottomAppBar: {
     top: 'auto',
@@ -65,9 +72,9 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
+        <>
+          { children}
+        </>
       )}
     </div>
   );
@@ -105,18 +112,23 @@ const Home = () => {
           <Tab label="BANKS" {...a11yProps(1)} />
           <Tab label="SPONSORS" {...a11yProps(2)} />
         </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
+        <TabPanel value={value} index={0} className={classes.tabPanel}>
+          <Paper style={{ height: 'calc(100vh - 128px)', overflow: 'auto', border: "none" }}>
+            <Offers />
+          </Paper>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Paper style={{ height: 'calc(100vh - 128px)', overflow: 'auto', border: "none" }}>
 
-      <AppBar position="fixed" color="primary" className={classes.bottomAppBar}>
+          </Paper>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Paper style={{ height: 'calc(100vh - 128px)', overflow: 'auto', border: "none" }}>
+
+          </Paper>
+        </TabPanel>
+      </AppBar>
+      <AppBar position="fixed" className={classes.bottomAppBar}>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="open drawer" >
             <SearchIcon className={classes.iconBottomAppBar} />
@@ -130,8 +142,6 @@ const Home = () => {
           <IconButton edge="start" color="inherit" aria-label="open drawer" disabled>
             <StarIcon className={classes.iconBottomAppBar} />
           </IconButton>
-
-
           <Fab color="secondary" variant="extended" className={classes.fabButton}>
             <FavoriteIcon className={classes.iconFab} />
             Donate

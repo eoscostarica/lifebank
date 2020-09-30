@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     boxShadow: 'none',
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
   },
   backgroundHome: {
     backgroundColor: 'transparent'
