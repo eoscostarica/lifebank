@@ -1,6 +1,5 @@
 import Dashboard from './Dashboard'
 import NotFound from './NotFound'
-import LandingPage from './LandingPage'
 import Signup from './Signup'
 import Donation from './Donation'
 import Profile from './Profile'
@@ -11,6 +10,7 @@ import Help from './Help'
 import OffersManagement from './OffersManagement'
 import Offers from './Offers'
 import OfferPage from './OfferPage'
+import Home from './Home'
 
 export default [
   {
@@ -34,9 +34,9 @@ export default [
     component: Signup
   },
   {
-    name: 'landingpage',
+    name: 'home',
     path: '/',
-    component: LandingPage,
+    component: Home,
     exact: true
   },
   {
