@@ -19,6 +19,8 @@ import StarIcon from '@material-ui/icons/Star';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import Offers from '../Offers'
+import Banks from '../Banks';
+import Sponsors from '../Sponsors';
 
 const useStyles = makeStyles((theme) => ({
   appBarTab: {
@@ -119,12 +121,12 @@ const Home = () => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Paper style={{ height: 'calc(100vh - 128px)', overflow: 'auto', border: "none" }}>
-
+            <Banks />
           </Paper>
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Paper style={{ height: 'calc(100vh - 128px)', overflow: 'auto', border: "none" }}>
-
+            <Sponsors />
           </Paper>
         </TabPanel>
       </AppBar>
@@ -142,10 +144,12 @@ const Home = () => {
           <IconButton edge="start" color="inherit" aria-label="open drawer" disabled>
             <StarIcon className={classes.iconBottomAppBar} />
           </IconButton>
-          <Fab color="secondary" variant="extended" className={classes.fabButton}>
-            <FavoriteIcon className={classes.iconFab} />
+          {currentUser && currentUser.role === "donor" &&
+            (<Fab color="secondary" variant="extended" className={classes.fabButton}>
+              <FavoriteIcon className={classes.iconFab} />
             Donate
-          </Fab>
+            </Fab>)
+          }
         </Toolbar>
       </AppBar>
     </>
