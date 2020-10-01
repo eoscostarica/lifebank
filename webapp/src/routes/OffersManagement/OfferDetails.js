@@ -155,8 +155,8 @@ const OfferDetails = ({ offer, open, setOpen }) => {
                 {offer.online_only ? (
                   <LocationOffIcon color="secondary" />
                 ) : (
-                  <LocationOnIcon color="secondary" />
-                )}
+                    <LocationOnIcon color="secondary" />
+                  )}
               </ListItemIcon>
               <ListItemText>
                 {offer.online_only ? 'Online only' : 'Physical location'}

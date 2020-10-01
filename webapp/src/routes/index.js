@@ -11,6 +11,7 @@ import Help from './Help'
 import OffersManagement from './OffersManagement'
 import Offers from './Offers'
 import OfferPage from './OfferPage'
+import InfoPage from './InfoPage'
 
 export default [
   {
@@ -78,5 +79,10 @@ export default [
     name: 'help',
     path: '/help',
     component: Help
+  },
+  {
+    name: 'info-page',
+    path: '/info-page',
+    component: InfoPage
   }
 ]
