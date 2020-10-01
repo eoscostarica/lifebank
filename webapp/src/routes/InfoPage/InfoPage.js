@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   bodyCard: {
     width: '100%',
     height: '88%',
-    //borderStyle: 'groove'
+    borderStyle: 'groove'
   },
   carouselComponent: {
     justifyContent: 'center',
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   imageSection: {
     width: '100%',
-    //borderStyle: 'groove',
+    borderStyle: 'groove',
     height: '43%',
   },
   detailsSection: {
@@ -91,9 +91,8 @@ const useStyles = makeStyles((theme) => ({
     float: 'left'
   },
   fabButton: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
+    width: '48px',
+    height: '48px',
     boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.18), 0 2px 4px 0 rgba(0, 0, 0, 0.24)',
     backgroundColor: '#ba0d0d',
     top: -595,
@@ -156,6 +155,12 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.25px',
     color: 'rgba(0, 0, 0, 0.6)',
     marginLeft: '16px'
+  },
+  carruselImage: {
+    height: '200px',
+    objectFit: 'cover',
+    width: '100%',
+    maxWidth: '100%'
   }
 }))
 
@@ -181,18 +186,7 @@ const InfoPage = () => {
       </div>
       <div className={classes.bodyCard}>
         <div className={classes.imageSection}>
-          <Grid className={classes.grove} container justify="center">
-            <Grid
-              item
-              xs={9}
-              sm={6}
-              md={5}
-              lg={2}
-              className={classes.carouselComponent}
-            >
-              <CarouselComponent images={JSON.parse(numbers)} />
-            </Grid>
-          </Grid>
+          <CarouselComponent images={JSON.parse(numbers)} />
         </div>
         <div className={classes.detailsSection}>
           <div className={classes.headerDetails}>
@@ -226,7 +220,7 @@ const InfoPage = () => {
           </div>
         </div>
       </div>
-      <Fab variant="extended" className={classes.fabButton}>
+      <Fab className={classes.fabButton}>
         <FavoriteIcon className={classes.iconFab} />
       </Fab>
     </Box>

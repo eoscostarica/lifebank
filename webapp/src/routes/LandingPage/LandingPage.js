@@ -197,7 +197,7 @@ const LandingPage = () => {
             variant="contained"
             color="primary"
             component={CustomRouterLink}
-            to={`/${currentUser ? 'donations' : 'info-page'}`}//signup
+            to={`/${currentUser ? 'info-page' : 'signup'}`}//donations
           >
             {currentUser ? 'Donations' : 'Register'}
           </Button>

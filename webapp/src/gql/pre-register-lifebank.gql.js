@@ -31,9 +31,10 @@ export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
     }
   }
 `
-export const VALIDATE_EMAIL_LIFEBANK = gql`
+
+export const VALIDATE_EMAIL = gql`
   query($email: String!) {
-    preregister_lifebank(where: { email: { _eq: $email } }) {
+    verification_email(where: { email: { _eq: $email } }) {
       email
     }
   }
