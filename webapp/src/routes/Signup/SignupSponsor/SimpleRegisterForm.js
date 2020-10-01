@@ -94,9 +94,7 @@ SimpleRegisterForm.propTypes = {
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
   loading: PropTypes.bool,
-  isUsernameValid: PropTypes.bool,
-  classes: PropTypes.object,
-  children: PropTypes.node
+  classes: PropTypes.object
 }
 
 SimpleRegisterForm.defaultProps = {}

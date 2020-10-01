@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-//import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'

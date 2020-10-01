@@ -11,9 +11,16 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import QRCode from 'qrcode.react'
 import Link from '@material-ui/core/Link'
+import IconButton from '@material-ui/core/IconButton'
+import Icon from '@material-ui/core/Icon'
 import TextField from '@material-ui/core/TextField'
 
+import FacebookIcon from '../../assets/facebook.svg'
+import InstagramIcon from '../../assets/instagram.svg'
+import TwitterIcon from '../../assets/twitter.svg'
 import Schedule from '../../components/Schedule'
+import Telephones from '../../components/Telephones'
+import CarouselComponent from '../../components/Carousel'
 import MapShowLocations from '../../components/MapShowLocations'
 import { eosConfig } from '../../config'
 
@@ -100,8 +107,20 @@ const ProfilePageSponsor = ({ profile }) => {
     if (!profile.name)
       pendingFieldsObject = { ...pendingFieldsObject, name: false }
 
-    if (!profile.telephone)
-      pendingFieldsObject = { ...pendingFieldsObject, telephone: false }
+    if (!profile.about)
+      pendingFieldsObject = { ...pendingFieldsObject, about: false }
+
+    if (!profile.telephones)
+      pendingFieldsObject = { ...pendingFieldsObject, telephones: false }
+
+    if (!profile.photos)
+      pendingFieldsObject = { ...pendingFieldsObject, photos: false }
+
+    if (!profile.social_media_links)
+      pendingFieldsObject = {
+        ...pendingFieldsObject,
+        social_media_links: false
+      }
 
     if (!profile.website)
       pendingFieldsObject = { ...pendingFieldsObject, website: false }
@@ -129,7 +148,7 @@ const ProfilePageSponsor = ({ profile }) => {
     if (profile) checkAvailableFields()
   }, [profile])
 
-  console.log(profile)
+  console.log(profile.photos)
 
   return (
     <Grid container justify="center">
@@ -172,7 +191,9 @@ const ProfilePageSponsor = ({ profile }) => {
                     variant="determinate"
                     color="secondary"
                     className={classes.customizedLinearProgress}
-                    value={((7 - Object.keys(pendingFields).length) * 100) / 7}
+                    value={
+                      ((15 - Object.keys(pendingFields).length) * 100) / 15
+                    }
                   />
                 </Box>
                 <Box minWidth={35}>
@@ -180,7 +201,7 @@ const ProfilePageSponsor = ({ profile }) => {
                     variant="body2"
                     color="textSecondary"
                   >{`${Math.round(
-                    ((7 - Object.keys(pendingFields).length) * 100) / 7
+                    ((15 - Object.keys(pendingFields).length) * 100) / 15
                   )}%`}</Typography>
                 </Box>
               </Box>
@@ -276,6 +297,52 @@ const ProfilePageSponsor = ({ profile }) => {
             profile.consent ? 'Approved' : 'Denied'
           }`}</Typography>
         </Box>
+
+        {profile.telephones && profile.telephones.length > 0 && (
+          <Telephones phones={profile.telephones} />
+        )}
+
+        {profile.photos && (
+          <>
+            <Divider
+              style={{ display: !profile.photos ? 'none' : '' }}
+              className={classes.divider}
+            />
+            <Box className={classes.rowBox}>
+              <CarouselComponent images={JSON.parse(profile.photos)} />
+            </Box>
+          </>
+        )}
+
+        {profile.social_media_links && (
+          <>
+            <Box
+              style={{
+                display: !profile.social_media_links.find(
+                  (social) => social.name === 'facebook'
+                )
+                  ? 'none'
+                  : ''
+              }}
+            >
+              <Divider className={classes.divider} />
+              <Box className={classes.rowBox}>
+                <IconButton color="secondary" aria-label="facebook-icon-button">
+                  <Icon>
+                    <img
+                      src={FacebookIcon}
+                      alt="facebook-icon"
+                      height={25}
+                      width={25}
+                    />
+                  </Icon>
+                </IconButton>
+                <Typography variant="body1">{profile.telephone}</Typography>
+              </Box>
+            </Box>
+          </>
+        )}
+
         <Divider
           style={{ display: !profile.community_asset ? 'none' : '' }}
           className={classes.divider}

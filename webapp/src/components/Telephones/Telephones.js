@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Telephones = ({ phones, deletePhone }) => {
+const Telephones = ({ phones, showDelete, deletePhone }) => {
   const classes = useStyles()
 
   return (
@@ -29,15 +29,17 @@ const Telephones = ({ phones, deletePhone }) => {
               <PhoneIcon />
             </ListItemIcon>
             <ListItemText primary={phone} />
-            <ListItemSecondaryAction>
-              <IconButton
-                onClick={() => deletePhone(phone)}
-                edge="end"
-                aria-label="delete"
-              >
-                <DeleteIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
+            {showDelete && (
+              <ListItemSecondaryAction>
+                <IconButton
+                  onClick={() => deletePhone(phone)}
+                  edge="end"
+                  aria-label="delete"
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            )}
           </ListItem>
         ))}
       </List>
@@ -47,6 +49,7 @@ const Telephones = ({ phones, deletePhone }) => {
 
 Telephones.propTypes = {
   phones: PropTypes.array,
+  showDelete: PropTypes.bool,
   deletePhone: PropTypes.func
 }
 

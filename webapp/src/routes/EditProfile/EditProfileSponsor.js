@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
@@ -11,11 +11,15 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 
+import FacebookIcon from '../../assets/facebook.svg'
+import InstagramIcon from '../../assets/instagram.svg'
+import TwitterIcon from '../../assets/twitter.svg'
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Carousel from '../../components/Carousel'
 import Schedule from '../../components/Schedule'
 import Logo from '../../components/Logo'
 import Telephones from '../../components/Telephones'
+import SocialMediaTextField from '../../components/SocialMediaTextField'
 import { constants } from '../../config'
 
 const {
@@ -71,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     '& > div.MuiCard-root': {
       padding: theme.spacing(2),
       backgroundColor: 'transparent',
-      border: '1px solid lightgray'
+      border: '1px solid black'
     }
   },
   logo: {
@@ -84,6 +88,11 @@ const useStyles = makeStyles((theme) => ({
   },
   carouselContainer: {
     width: '100%'
+  },
+  socialMediaLinksContainer: {
+    padding: theme.spacing(2),
+    margin: theme.spacing(2),
+    border: '1px dashed lightgray'
   }
 }))
 
@@ -94,8 +103,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
   const [user, setUser] = useState({
-    logo: profile.logo,
+    logo_url: profile.logo_url,
     name: profile.name,
+    about: profile.about,
     address: profile.address,
     email: profile.email,
     website: profile.website,
@@ -105,7 +115,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     covid_impact: profile.covid_impact,
     geolocation: profile.location ? JSON.parse(profile.location) : null,
     schedule: profile.schedule,
-    photos: profile.photos || []
+    photos: profile.photos || [],
+    social_media_links: profile.social_media_links || []
   })
 
   const handleSetField = useMemo(
@@ -119,29 +130,64 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     setUser({ ...user, [field]: value })
   }
 
+  const handleOnSocialMediaTextFieldChange = (name, url) => {
+    const existingSocialMediaItem =
+      user.social_media_links.find((social) => social.name === name) !==
+      undefined
+
+    if (existingSocialMediaItem && url === '') {
+      setUser({
+        ...user,
+        social_media_links: user.social_media_links.filter(
+          (social) => social.name !== name
+        )
+      })
+      return
+    }
+
+    setUser({
+      ...user,
+      social_media_links: existingSocialMediaItem
+        ? user.social_media_links.map((social) => {
+            if (social.name === name) social.url = url
+
+            return social
+          })
+        : [...user.social_media_links, { name: name, url: url }]
+    })
+  }
+
+  const prepareDataForSubmitting = () => {
+    let userToSubmit = user
+    userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
+    userToSubmit.photos = JSON.stringify(user.photos)
+    userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
+    onSubmit(userToSubmit)
+  }
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <>
-          {(isCompleting && !user.logo) ||
-            (!isCompleting && !user.logo ? null : (
-              <Logo showCaption logoUrl={user.logo} />
+          {(isCompleting && !user.logo_url) ||
+            (!isCompleting && !user.logo_url ? null : (
+              <Logo showCaption logoUrl={user.logo_url} />
             ))}
         </>
         <TextField
           id="logo-url"
           name="logo-input"
-          style={{ display: isCompleting && profile.logo ? 'none' : '' }}
+          style={{ display: isCompleting && profile.logo_url ? 'none' : '' }}
           label="Logo url"
           variant="outlined"
           placeholder="Your logo url"
-          defaultValue={user.logo}
+          defaultValue={user.logo_url}
           fullWidth
           InputLabelProps={{
             shrink: true
           }}
           className={classes.textField}
-          onChange={(event) => handleSetField('logo', event.target.value)}
+          onChange={(event) => handleSetField('logo_url', event.target.value)}
         />
         <TextField
           id="name"
@@ -242,6 +288,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         {user.telephones && user.telephones.length > 0 && (
           <Telephones
             phones={user.telephones}
+            showDelete
             deletePhone={(phone) =>
               setUser({
                 ...user,
@@ -379,9 +426,85 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         {user.photos && (
           <Box className={classes.carouselContainer}>
-            {user.photos.length > 0 && <Carousel images={user.photos} />}{' '}
+            {user.photos.length > 0 && (
+              <Carousel
+                deleteItem={(url) => {
+                  setUser({
+                    ...user,
+                    photos: user.photos.filter((p) => p !== url)
+                  })
+                }}
+                activeDeletion
+                images={user.photos}
+              />
+            )}
           </Box>
         )}
+
+        <Box className={classes.socialMediaLinksContainer}>
+          <SocialMediaTextField
+            style={{
+              display:
+                isCompleting &&
+                profile.social_media_links &&
+                profile.social_media_links.find(
+                  (social) => social.name === 'facebook'
+                )
+                  ? 'none'
+                  : ''
+            }}
+            idText="facebook-profile-url"
+            name="facebook"
+            label="Facebook profile url"
+            placeholder="Your facebook profile url here"
+            icon={FacebookIcon}
+            onChangeSocialMediaTextField={(url) =>
+              handleOnSocialMediaTextFieldChange('facebook', url)
+            }
+          />
+          <SocialMediaTextField
+            style={{
+              display:
+                isCompleting &&
+                profile.social_media_links &&
+                profile.social_media_links.find(
+                  (social) => social.name === 'instagram'
+                )
+                  ? 'none'
+                  : ''
+            }}
+            textFieldClass={classes.textField}
+            idText="instagram-username"
+            name="instagram"
+            label="Instagram username"
+            placeholder="Your instagram username here"
+            icon={InstagramIcon}
+            onChangeSocialMediaTextField={(url) =>
+              handleOnSocialMediaTextFieldChange('instragram', url)
+            }
+          />
+          <SocialMediaTextField
+            style={{
+              display:
+                isCompleting &&
+                profile.social_media_links &&
+                profile.social_media_links.find(
+                  (social) => social.name === 'twitter'
+                )
+                  ? 'none'
+                  : ''
+            }}
+            textFieldClass={classes.textField}
+            idText="twitter-username"
+            name="twitter"
+            label="Twitter username"
+            placeholder="Your twitter username here"
+            icon={TwitterIcon}
+            onChangeSocialMediaTextField={(url) =>
+              handleOnSocialMediaTextFieldChange('twitter', url)
+            }
+          />
+        </Box>
 
         <Typography variant="subtitle2" gutterBottom>
           Choose your location
@@ -400,7 +523,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => onSubmit(user)}
+            onClick={() => prepareDataForSubmitting()}
           >
             Save
           </Button>

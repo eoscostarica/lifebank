@@ -39,15 +39,18 @@ const CarouselComponent = ({ images, activeDeletion, deleteItem }) => {
         {images.map((url, key) => (
           <Box display="flex" flexDirection="column" key={key}>
             <img className={classes.img} src={url} key={key} alt={`${key}`} />
-            <Button
-              variant="contained"
-              disableElevation
-              size="small"
-              className={classes.button}
-              startIcon={<DeleteIcon />}
-            >
-              Delete
-            </Button>
+            {activeDeletion && (
+              <Button
+                variant="contained"
+                disableElevation
+                size="small"
+                onClick={() => deleteItem(url)}
+                className={classes.button}
+                startIcon={<DeleteIcon />}
+              >
+                Delete
+              </Button>
+            )}
           </Box>
         ))}
       </Carousel>
