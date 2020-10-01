@@ -9,21 +9,8 @@ import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Snackbar from '@material-ui/core/Snackbar'
-import { Alert, AlertTitle } from '@material-ui/lab'
-import Link from '@material-ui/core/Link'
+import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
 import { useHistory } from 'react-router-dom'
-
-import {
-  PROFILE_QUERY,
-  GRANT_CONSENT_MUTATION,
-  REVOKE_CONSENT_MUTATION,
-  NOTIFICATION_SUBSCRIPTION
-} from '../../gql'
-import { useUser } from '../../context/user.context'
-import CarouselComponent from '../../components/Carousel'
-import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   cardBody: {
@@ -40,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     //borderStyle: 'groove'
   },
   avatarSection: {
-    width: '25%',
+    width: '20%',
     height: '100%',
     //borderStyle: 'groove',
     float: 'left'
@@ -54,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '13px',
   },
   tituleSection: {
-    width: '75%',
+    width: '80%',
     height: '100%',
     //borderStyle: 'groove',
     float: 'left'
@@ -62,40 +49,38 @@ const useStyles = makeStyles((theme) => ({
   bodyCard: {
     width: '100%',
     height: '88%',
-    borderStyle: 'groove'
-  },
-  carouselComponent: {
-    justifyContent: 'center',
-    justifySelf: 'center'
+    //borderStyle: 'groove'
   },
   imageSection: {
     width: '100%',
-    borderStyle: 'groove',
-    height: '43%',
+    //borderStyle: 'groove',
+    height: '35%'
   },
   detailsSection: {
     width: '100%',
-    height: '60%',
+    height: '65%',
     //borderStyle: 'groove'
   },
   headerDetails: {
     width: '50%',
     height: '10%',
+    marginTop: '4%',
     //borderStyle: 'groove',
     float: 'left'
   },
   bodyDetails: {
     width: '100%',
-    height: '90%',
+    height: '86%',
     //borderStyle: 'groove',
     float: 'left'
   },
   fabButton: {
-    width: '48px',
-    height: '48px',
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
     boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.18), 0 2px 4px 0 rgba(0, 0, 0, 0.24)',
     backgroundColor: '#ba0d0d',
-    top: -595,
+    top: -585,
     margin: '0',
     right: 20,
     float: 'right',
@@ -157,22 +142,21 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '16px'
   },
   carruselImage: {
-    height: '200px',
-    objectFit: 'cover',
+    height: '90%',
+    marginTop: '-22px',
     width: '100%',
+    maxWidth: '100%'
+  },
+  carousel: {
     maxWidth: '100%'
   }
 }))
 
-const InfoPage = () => {
+const InfoPage = ({ profile }) => {
   const classes = useStyles()
-  const history = useHistory()
-  const [snackbarState, setSnackbarState] = useState({})
-  const [lastNotification, setLastNotification] = useState()
-  const [lastConsentChange, setLastConsentChange] = useState()
-  const [currentUser] = useUser()
-  const numbers = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
-  console.log("JSON.parse(numbers):", JSON.parse(numbers))
+  const [actualImageIndex, setActualImageIndex] = useState(0)
+  const images = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
+  const numbers = JSON.parse(images)
   return (
     <Box className={classes.cardBody}>
       <div className={classes.headerCardBody}>
@@ -186,7 +170,24 @@ const InfoPage = () => {
       </div>
       <div className={classes.bodyCard}>
         <div className={classes.imageSection}>
-          <CarouselComponent images={JSON.parse(numbers)} />
+          <Carousel
+            value={actualImageIndex}
+            className={classes.carousel}
+            onChange={(val) => setActualImageIndex(val)}
+            plugins={[
+              'arrows',
+              {
+                resolve: slidesToShowPlugin,
+                options: {
+                  numberOfSlides: 1
+                }
+              }
+            ]}
+          >
+            {numbers.map((url, key) => (
+              <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+            ))}
+          </Carousel>
         </div>
         <div className={classes.detailsSection}>
           <div className={classes.headerDetails}>

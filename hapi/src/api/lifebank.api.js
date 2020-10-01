@@ -49,6 +49,8 @@ const preRegister = async ({
       invitation_code
     })
 
+    console.log("email", email)
+    console.log("invitation_code", invitation_code)
     await preregisterApi.insertVerificateEmail({
       email,
       verification_code
