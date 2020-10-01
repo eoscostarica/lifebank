@@ -112,11 +112,16 @@ const addSponsor = async (
           name: profile.name || '',
           email: profile.email || '',
           website: profile.website || '',
-          telephone: profile.telephone || '',
-          bussines_type: profile.bussines_type || '',
+          telephones: profile.telephones || '',
+          business_type: profile.business_type || '',
           schedule: profile.schedule || '',
           longitude: profile.longitude || '',
           location: JSON.stringify(geolocation),
+          logo_url: profile.logo_url || '',
+          about: profile.about || '',
+          address: profile.address || '',
+          photos: profile.photos || '',
+          social_media_links: profile.social_media_links || '',
           ...profile,
           community_asset: COMMUNITY_ASSET
         }

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
@@ -110,13 +110,13 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     email: profile.email,
     website: profile.website,
     benefit_description: profile.benefit_description,
-    telephones: profile.telephones || [],
-    bussines_type: profile.bussines_type,
+    telephones: JSON.parse(profile.telephones) || [],
+    business_type: profile.business_type,
     covid_impact: profile.covid_impact,
     geolocation: profile.location ? JSON.parse(profile.location) : null,
     schedule: profile.schedule,
-    photos: profile.photos || [],
-    social_media_links: profile.social_media_links || []
+    photos: JSON.parse(profile.photos) || [],
+    social_media_links: JSON.parse(profile.social_media_links) || []
   })
 
   const handleSetField = useMemo(
@@ -158,12 +158,14 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   }
 
   const prepareDataForSubmitting = () => {
-    let userToSubmit = user
+    let userToSubmit = { ...user }
     userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
     userToSubmit.photos = JSON.stringify(user.photos)
     userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
     onSubmit(userToSubmit)
   }
+
+  console.log(user)
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -177,7 +179,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="logo-url"
           name="logo-input"
-          style={{ display: isCompleting && profile.logo_url ? 'none' : '' }}
+          style={{ display: isCompleting && user.logo_url ? 'none' : '' }}
           label="Logo url"
           variant="outlined"
           placeholder="Your logo url"
@@ -192,7 +194,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="name"
           name="name"
-          style={{ display: isCompleting && profile.name ? 'none' : '' }}
+          style={{ display: isCompleting && user.name ? 'none' : '' }}
           label="Name"
           variant="outlined"
           placeholder="Your Sponsor Name"
@@ -207,7 +209,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="address"
           name="address"
-          style={{ display: isCompleting && profile.address ? 'none' : '' }}
+          style={{ display: isCompleting && user.address ? 'none' : '' }}
           label="Address"
           variant="outlined"
           placeholder="Your address here"
@@ -221,7 +223,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="email"
-          style={{ display: isCompleting && profile.email ? 'none' : '' }}
+          style={{ display: isCompleting && user.email ? 'none' : '' }}
           label="Email"
           variant="outlined"
           placeholder="Your email"
@@ -235,7 +237,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="website"
-          style={{ display: isCompleting && profile.website ? 'none' : '' }}
+          style={{ display: isCompleting && user.website ? 'none' : '' }}
           label="Website"
           variant="outlined"
           placeholder="Website"
@@ -249,7 +251,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="telephone"
-          style={{ display: isCompleting && profile.telephones ? 'none' : '' }}
+          style={{ display: isCompleting && user.telephones ? 'none' : '' }}
           label="Telephone"
           variant="outlined"
           placeholder="Telephone"
@@ -285,39 +287,38 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           }}
           className={classes.textField}
         />
-        {user.telephones && user.telephones.length > 0 && (
-          <Telephones
-            phones={user.telephones}
-            showDelete
-            deletePhone={(phone) =>
-              setUser({
-                ...user,
-                telephones: user.telephones.filter((p) => p !== phone)
-              })
-            }
-          />
-        )}
+        <Telephones
+          phones={user.telephones}
+          showDelete
+          deletePhone={(phone) =>
+            setUser({
+              ...user,
+              telephones: user.telephones.filter((p) => p !== phone)
+            })
+          }
+        />
+
         <TextField
           id="bussinesType"
           label="Type"
           style={{
-            display: isCompleting && profile.bussines_type ? 'none' : ''
+            display: isCompleting && user.business_type ? 'none' : ''
           }}
           variant="outlined"
           placeholder="Type"
-          defaultValue={user.bussines_type}
+          defaultValue={user.business_type}
           fullWidth
           InputLabelProps={{
             shrink: true
           }}
           className={classes.textField}
           onChange={(event) =>
-            handleSetField('bussines_type', event.target.value)
+            handleSetField('business_type', event.target.value)
           }
         />
 
         <Box
-          style={{ display: isCompleting && profile.schedule ? 'none' : '' }}
+          style={{ display: isCompleting && user.schedule ? 'none' : '' }}
           width="100%"
           className={classes.textField}
         >
@@ -333,7 +334,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="about"
           style={{
-            display: isCompleting && profile.about ? 'none' : ''
+            display: isCompleting && user.about ? 'none' : ''
           }}
           label="About"
           variant="outlined"
@@ -352,7 +353,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="covidImpact"
           style={{
-            display: isCompleting && profile.covid_impact ? 'none' : ''
+            display: isCompleting && user.covid_impact ? 'none' : ''
           }}
           label="Covid Impact"
           variant="outlined"
@@ -372,7 +373,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="benefitDescription"
           style={{
-            display: isCompleting && profile.benefit_description ? 'none' : ''
+            display: isCompleting && user.benefit_description ? 'none' : ''
           }}
           label="Benefit description"
           variant="outlined"
@@ -391,7 +392,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="photo-url"
-          style={{ display: isCompleting && profile.photos ? 'none' : '' }}
+          style={{
+            display:
+              isCompleting && user.photos && user.photos.length > 0
+                ? 'none'
+                : ''
+          }}
           label="Photo url"
           variant="outlined"
           placeholder="Your photo url here"
@@ -446,8 +452,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             style={{
               display:
                 isCompleting &&
-                profile.social_media_links &&
-                profile.social_media_links.find(
+                user.social_media_links &&
+                user.social_media_links.find(
                   (social) => social.name === 'facebook'
                 )
                   ? 'none'
@@ -466,8 +472,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             style={{
               display:
                 isCompleting &&
-                profile.social_media_links &&
-                profile.social_media_links.find(
+                user.social_media_links &&
+                user.social_media_links.find(
                   (social) => social.name === 'instagram'
                 )
                   ? 'none'
@@ -487,8 +493,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             style={{
               display:
                 isCompleting &&
-                profile.social_media_links &&
-                profile.social_media_links.find(
+                user.social_media_links &&
+                user.social_media_links.find(
                   (social) => social.name === 'twitter'
                 )
                   ? 'none'

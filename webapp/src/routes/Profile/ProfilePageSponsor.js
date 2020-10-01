@@ -144,11 +144,27 @@ const ProfilePageSponsor = ({ profile }) => {
       setPendingFields(pendingFieldsObject)
   }
 
-  useEffect(() => {
-    if (profile) checkAvailableFields()
-  }, [profile])
+  const getSocialMediaIcon = (name) => {
+    switch (name) {
+      case 'facebook':
+        return FacebookIcon
+      case 'instagram':
+        return InstagramIcon
+      case 'twitter':
+        return TwitterIcon
+      default:
+        break
+    }
+  }
 
-  console.log(profile.photos)
+  useEffect(() => {
+    if (profile) {
+      profile.social_media_links = JSON.parse(profile.social_media_links)
+      profile.photos = JSON.parse(profile.photos)
+      profile.telephones = JSON.parse(profile.telephones)
+      checkAvailableFields()
+    }
+  }, [profile])
 
   return (
     <Grid container justify="center">
@@ -242,17 +258,17 @@ const ProfilePageSponsor = ({ profile }) => {
           <Typography variant="subtitle1">Organization</Typography>
           <Typography variant="body1">{profile.name}</Typography>
         </Box>
-        <Divider
-          style={{ display: !profile.telephone ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.telephone ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">Telephone</Typography>
-          <Typography variant="body1">{profile.telephone}</Typography>
-        </Box>
+        {profile.telephones && Array.isArray(profile.telephones) && (
+          <Box
+            flexDirection="column"
+            justifySelf="center"
+            justifyContent="center"
+            display="flex"
+          >
+            <Divider className={classes.divider} />
+            <Telephones phones={profile.telephones} />
+          </Box>
+        )}
         <Divider
           style={{ display: !profile.website ? 'none' : '' }}
           className={classes.divider}
@@ -274,15 +290,15 @@ const ProfilePageSponsor = ({ profile }) => {
           </Typography>
         </Box>
         <Divider
-          style={{ display: !profile.bussines_type ? 'none' : '' }}
+          style={{ display: !profile.business_type ? 'none' : '' }}
           className={classes.divider}
         />
         <Box
-          style={{ display: !profile.bussines_type ? 'none' : '' }}
+          style={{ display: !profile.business_type ? 'none' : '' }}
           className={classes.rowBox}
         >
           <Typography variant="subtitle1">Type</Typography>
-          <Typography variant="body1">{profile.bussines_type}</Typography>
+          <Typography variant="body1">{profile.business_type}</Typography>
         </Box>
         <Divider
           style={{ display: !profile.consent ? 'none' : '' }}
@@ -298,50 +314,57 @@ const ProfilePageSponsor = ({ profile }) => {
           }`}</Typography>
         </Box>
 
-        {profile.telephones && profile.telephones.length > 0 && (
-          <Telephones phones={profile.telephones} />
-        )}
-
-        {profile.photos && (
-          <>
-            <Divider
-              style={{ display: !profile.photos ? 'none' : '' }}
-              className={classes.divider}
-            />
-            <Box className={classes.rowBox}>
-              <CarouselComponent images={JSON.parse(profile.photos)} />
-            </Box>
-          </>
-        )}
-
-        {profile.social_media_links && (
-          <>
+        {profile.photos &&
+          Array.isArray(profile.photos) &&
+          profile.photos.length > 0 && (
             <Box
-              style={{
-                display: !profile.social_media_links.find(
-                  (social) => social.name === 'facebook'
-                )
-                  ? 'none'
-                  : ''
-              }}
+              flexDirection="column"
+              justifySelf="center"
+              justifyContent="center"
+              display="flex"
             >
-              <Divider className={classes.divider} />
-              <Box className={classes.rowBox}>
-                <IconButton color="secondary" aria-label="facebook-icon-button">
-                  <Icon>
-                    <img
-                      src={FacebookIcon}
-                      alt="facebook-icon"
-                      height={25}
-                      width={25}
-                    />
-                  </Icon>
-                </IconButton>
-                <Typography variant="body1">{profile.telephone}</Typography>
-              </Box>
+              <Divider
+                style={{ display: !profile.photos ? 'none' : '' }}
+                className={classes.divider}
+              />
+              <CarouselComponent images={profile.photos} />
             </Box>
-          </>
-        )}
+          )}
+
+        {profile.social_media_links &&
+          Array.isArray(profile.social_media_links) &&
+          profile.social_media_links.map((item, key) => (
+            <>
+              <Box key={key}>
+                <Divider className={classes.divider} />
+                <Box className={classes.rowBox}>
+                  <IconButton
+                    color="secondary"
+                    aria-label={`${item.name}-icon-button`}
+                  >
+                    <Icon>
+                      <img
+                        src={getSocialMediaIcon(item.name)}
+                        alt={`${item.name}-icon`}
+                        height={25}
+                        width={25}
+                      />
+                    </Icon>
+                  </IconButton>
+                  <Typography variant="body1">
+                    <Link
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener"
+                      color="secondary"
+                    >
+                      View
+                    </Link>
+                  </Typography>
+                </Box>
+              </Box>
+            </>
+          ))}
 
         <Divider
           style={{ display: !profile.community_asset ? 'none' : '' }}

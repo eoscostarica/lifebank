@@ -132,21 +132,42 @@ public:
    *
    * @param account - The user account name,
    * @param sponsor_name - The name of sponsor
-   * @param covid_impact - TODO:
-   * @param benefit_description - TODO:
+   * @param covid_impact - covid impact
+   * @param benefit_description - Sponsor benefit description
    * @param website - Sponsor's website
-   * @param telephone - Sponsor's phone_number
-   * @param bussines_type - TODO:
+   * @param telephones - Sponsor's phone_numbers
+   * @param business_type - Sponsor business_type
    * @param schedule - Sponsor's schedule
    * @param email - Sponsor's email
    * @param community_asset - Symbol ex: 1 SYS , 1 BLOOD
    * @param location - Sponsor's location:
-   *
+   * @param address - Sponsor address
+   * @param logo_url - Sponsor logo
+   * @param about - Sponsor about
+   * @param social_media_links - Sponsor social media links
+   * @param photos - Sponsor photos
    * @pre community's symbol must exits
    *
    */
-  ACTION addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
-                    string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset, string location);
+  ACTION addsponsor(
+    eosio::name account, 
+    string sponsor_name, 
+    string covid_impact, 
+    string benefit_description,
+    string website, 
+    string telephones, 
+    string business_type, 
+    string schedule, 
+    string email, 
+    eosio::asset community_asset, 
+    string location,
+    string address,
+    string logo_url,
+    string about,
+    string social_media_links,
+    string photos
+  );
+ 
   /**
    *
    *  Clear all data in all constact's tables

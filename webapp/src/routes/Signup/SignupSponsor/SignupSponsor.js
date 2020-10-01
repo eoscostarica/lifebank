@@ -161,8 +161,8 @@ const SponsorSignup = ({
           <Select
             labelId="bussines-type-label"
             id="bussines-type"
-            value={user.bussines_type || ''}
-            onChange={(event) => setField('bussines_type', event.target.value)}
+            value={user.business_type || ''}
+            onChange={(event) => setField('business_type', event.target.value)}
             label="Type"
           >
             {SPONSOR_TYPES.map((option) => (
@@ -292,7 +292,7 @@ const SponsorSignup = ({
             !user.benefit_description ||
             !user.website ||
             !user.telephone ||
-            !user.bussines_type ||
+            !user.business_type ||
             !user.schedule ||
             !user.secret ||
             !user.geolocation ||

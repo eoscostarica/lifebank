@@ -12,38 +12,42 @@ import DeleteIcon from '@material-ui/icons/Delete'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    margin: 'auto',
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: 'transparent'
   }
 }))
 
 const Telephones = ({ phones, showDelete, deletePhone }) => {
   const classes = useStyles()
-
   return (
-    <div className={classes.root}>
-      <List component="nav">
-        {phones.map((phone, key) => (
-          <ListItem key={key} button>
-            <ListItemIcon>
-              <PhoneIcon />
-            </ListItemIcon>
-            <ListItemText primary={phone} />
-            {showDelete && (
-              <ListItemSecondaryAction>
-                <IconButton
-                  onClick={() => deletePhone(phone)}
-                  edge="end"
-                  aria-label="delete"
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            )}
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    <>
+      {phones && (
+        <div className={classes.root}>
+          <List component="nav">
+            {phones.map((phone, key) => (
+              <ListItem key={key} button>
+                <ListItemIcon>
+                  <PhoneIcon />
+                </ListItemIcon>
+                <ListItemText primary={phone} />
+                {showDelete && (
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      onClick={() => deletePhone(phone)}
+                      edge="end"
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                )}
+              </ListItem>
+            ))}
+          </List>
+        </div>
+      )}
+    </>
   )
 }
 
