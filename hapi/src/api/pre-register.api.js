@@ -19,15 +19,6 @@ const INSERT_LIFEBANK = `
   }
 `
 
-const INSERT_VERIFICATION_EMAIL = `
-  mutation ($verification_email: verification_email_insert_input!) {
-    insert_verification_email_one(object: $verification_email) {
-      email
-      verification_code
-    }
-  }
-`
-
 const insertLifebank = (preregister_lifebank) => {
   return hasuraUtils.request(INSERT_LIFEBANK, { preregister_lifebank })
 }
