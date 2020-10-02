@@ -18,6 +18,8 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import StarIcon from '@material-ui/icons/Star';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
+
+import MapModal from '../../components/MapModal'
 import Offers from '../Offers'
 import Banks from '../Banks';
 import Sponsors from '../Sponsors';
@@ -132,16 +134,14 @@ const Home = () => {
       </AppBar>
       <AppBar position="fixed" className={classes.bottomAppBar}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="open drawer" >
+          <IconButton  >
             <SearchIcon className={classes.iconBottomAppBar} />
           </IconButton>
-          <IconButton edge="start" color="inherit" aria-label="open drawer">
-            <RoomIcon className={classes.iconBottomAppBar} />
-          </IconButton>
-          <IconButton edge="start" color="inherit" aria-label="open drawer">
+          <MapModal></MapModal>
+          <IconButton >
             <FilterListIcon className={classes.iconBottomAppBar} />
           </IconButton>
-          <IconButton edge="start" color="inherit" aria-label="open drawer" disabled>
+          <IconButton disabled>
             <StarIcon className={classes.iconBottomAppBar} />
           </IconButton>
           {currentUser && currentUser.role === "donor" &&
