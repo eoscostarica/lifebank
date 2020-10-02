@@ -30,10 +30,9 @@ const preRegister = async ({
   description,
   invitation_code
 }) => {
-  let verification_code = await verificationCodeApi.generate()
+  const { verification_code } = await verificationCodeApi.generate()
   let resultRegister = 'ok'
 
-  verification_code = verification_code.verificationCode
   try {
     await preregisterApi.insertLifebank({
       email,
