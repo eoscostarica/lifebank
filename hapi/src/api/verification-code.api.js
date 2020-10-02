@@ -1,5 +1,6 @@
+const crypto = require('crypto')
+
 const generate = async () => {
-  const crypto = require('crypto')
   const verificationCode = crypto.randomBytes(20).toString('hex')
 
   return {

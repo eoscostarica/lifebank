@@ -22,7 +22,8 @@ const INSERT = `
       username
       account
       email
-      name
+      name,
+      verification_code
     }
   }
 `

@@ -34,37 +34,30 @@ const preRegister = async ({
   let resultRegister = 'ok'
 
   verification_code = verification_code.verificationCode
-  console.log(email)
-  console.log(phone)
-  console.log(immunity_test)
-  console.log(schedule)
-  console.log(urgency_level)
-  console.log(address)
-  console.log(coordinates)
-  console.log(name)
-  console.log(password)
-  console.log(description)
-  console.log(invitation_code)
+  try {
+    await preregisterApi.insertLifebank({
+      email,
+      password,
+      name,
+      address,
+      schedule,
+      phone,
+      description,
+      urgency_level,
+      coordinates,
+      immunity_test,
+      invitation_code,
+      verification_code
+    })
 
-  await preregisterApi.insertLifebank({
-    email,
-    password,
-    name,
-    address,
-    schedule,
-    phone,
-    description,
-    urgency_level,
-    coordinates,
-    immunity_test,
-    invitation_code
-  })
+    mailApi.sendVerificationCode(email, verification_code)
+  } catch (error) {
+    resultRegister = 'error'
 
-  await preregisterApi.insertVerificateEmail({
-    email,
-    verification_code
-  })
-  mailApi.sendVerificationCode(email, verification_code)
+    return {
+      resultRegister
+    }
+  }
 
   return {
     resultRegister

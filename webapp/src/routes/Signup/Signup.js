@@ -168,15 +168,11 @@ const Signup = () => {
     } = user
     let { immunity_test, invitation_code, urgency_level } = user
 
-    if (immunity_test === undefined) {
-      immunity_test = false
-    }
-    if (invitation_code === undefined) {
-      invitation_code = ' '
-    }
-    if (urgency_level === undefined) {
-      urgency_level = 1
-    }
+    if (immunity_test === undefined) immunity_test = false
+
+    if (invitation_code === undefined) invitation_code = ' '
+
+    if (urgency_level === undefined) urgency_level = 1
 
     preRegisterLifebank({
       variables: {
@@ -208,12 +204,14 @@ const Signup = () => {
       const { data } = await checkEmail({
         email: user.email
       })
-      try {
-        if (data.verification_email.length === 0) setEmailValid(true)
-        else setEmailValid(false)
-        setcheckEmailLoaded(true)
-      } catch (error) {}
+
+      data.preregister_lifebank.length === 0 && data.user.length === 0
+        ? setEmailValid(true)
+        : setEmailValid(false)
+
+      setcheckEmailLoaded(true)
     }
+
     if (regularExpresion.test(user?.email)) validEmail()
     else {
       setEmailValid(false)

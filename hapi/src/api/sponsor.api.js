@@ -5,8 +5,7 @@ const historyApi = require('./history.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
-const preregisterApi = require('./pre-register.api')
-const verificationCodeApi = require('./verification-code.api')
+
 const {
   constants: {
     ENUM_DATA: { LOCATION_TYPES }
@@ -41,7 +40,6 @@ const editProfile = async (account, profile) => {
 
 const signup = async (account, profile) => {
   await accountApi.grantConsent(account)
-  const verification_code = await verificationCodeApi.generate()
 
   const password = await vaultApi.getPassword(account)
   const addSponsorTransaction = await lifebankcodeUtils.addSponsor(
