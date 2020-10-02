@@ -46,13 +46,10 @@ const preRegister = async ({
       urgency_level,
       coordinates,
       immunity_test,
-      invitation_code
-    })
-
-    await preregisterApi.insertVerificateEmail({
-      email,
+      invitation_code,
       verification_code
     })
+
     mailApi.sendVerificationCode(email, verification_code)
   } catch (error) {
     resultRegister = 'error'
