@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, useCallback } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -9,14 +9,15 @@ import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 
 import {
-  CHECK_USERNAME_MUTATION,
   CREATE_ACCOUNT_MUTATION,
-  SIGNUP_MUTATION
+  SIGNUP_MUTATION,
+  CREATE_PRE_REGITER_LIFEBANK_MUTATION,
+  VALIDATE_EMAIL
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
 import SignupRoleSelector from './SignupRoleSelector'
-import SignupUsername from './SignupUsername'
+import ValidateEmail from './ValidateEmail'
 import SignupDonor from './SignupDonor'
 import SignupLifeBank from './SignupLifeBank'
 import SignupAccount from './SignupAccount'
@@ -104,13 +105,10 @@ const Signup = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
-  const [
-    checkUsername,
-    {
-      loading: checkUsernameLoading,
-      data: { check_username: { is_valid: isUsernameValid } = {} } = {}
-    }
-  ] = useMutation(CHECK_USERNAME_MUTATION)
+
+  const [isEmailValid, setEmailValid] = useState(false)
+  const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
+
   const [
     createAccount,
     {
@@ -118,6 +116,13 @@ const Signup = () => {
       data: { create_account: createAccountResult } = {}
     }
   ] = useMutation(CREATE_ACCOUNT_MUTATION)
+  const [
+    preRegisterLifebank,
+    {
+      loading: preRegisterLifebankLoading,
+      data: { create_pre_register_lifebank: preRegisterLifebankResult } = {}
+    }
+  ] = useMutation(CREATE_PRE_REGITER_LIFEBANK_MUTATION)
   const [
     signup,
     { loading: signupLoading, data: { signup: signupResult } = {} }
@@ -134,18 +139,94 @@ const Signup = () => {
 
   const handleGoBack = () => {
     activeStep && setActiveStep(activeStep - 1)
+    handleSetField('email', ' ')
   }
 
   const handleCreateAccount = () => {
-    const { username, secret } = user
+    const { email, secret } = user
+    const name = 'undefined'
     createAccount({
       variables: {
         role,
-        username,
+        email,
+        name,
         secret
       }
     })
   }
+
+  const handlePreRegisterLifebank = () => {
+    const {
+      email,
+      password,
+      name,
+      address,
+      schedule,
+      phone,
+      description,
+      coordinates
+    } = user
+    let { immunity_test, invitation_code, urgency_level } = user
+
+    if (immunity_test === undefined) {
+      immunity_test = false
+    }
+    if (invitation_code === undefined) {
+      invitation_code = ' '
+    }
+    if (urgency_level === undefined) {
+      urgency_level = 1
+    }
+
+    preRegisterLifebank({
+      variables: {
+        email,
+        password,
+        name,
+        address,
+        schedule,
+        phone,
+        description,
+        urgency_level,
+        coordinates,
+        immunity_test,
+        invitation_code
+      }
+    })
+  }
+
+  const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
+    variables: {
+      email: user.email
+    },
+    skip: true
+  })
+
+  useEffect(() => {
+    const regularExpresion = /\S+@\S+\.\S+/
+    const validEmail = async () => {
+      const { data } = await checkEmail({
+        email: user.email
+      })
+      try {
+        if (data.verification_email.length === 0) setEmailValid(true)
+        else setEmailValid(false)
+        setcheckEmailLoaded(true)
+      } catch (error) {}
+    }
+    if (regularExpresion.test(user?.email)) validEmail()
+    else {
+      setEmailValid(false)
+      setcheckEmailLoaded(false)
+    }
+  }, [user?.email, checkEmail])
+
+  useEffect(() => {
+    if (preRegisterLifebankResult) {
+      alert('successful pre registration')
+      history.replace('/')
+    }
+  }, [preRegisterLifebankResult])
 
   const handleSingup = () => {
     const { username, secret, ...profile } = user
@@ -156,17 +237,6 @@ const Signup = () => {
       }
     })
   }
-
-  useEffect(() => {
-    if (user?.username?.length === 9 || isUsernameValid) {
-      checkUsername({
-        variables: {
-          role,
-          username: user.username
-        }
-      })
-    }
-  }, [user?.username, checkUsername])
 
   useEffect(() => {
     if (createAccountResult) {
@@ -189,9 +259,7 @@ const Signup = () => {
   }, [currentUser, createAccountResult])
 
   useEffect(() => {
-    if (signupResult) {
-      // history.replace('/profile')
-    }
+    if (signupResult) history.replace('/profile')
   }, [signupResult])
 
   return (
@@ -213,13 +281,20 @@ const Signup = () => {
               <SignupRoleSelector onSubmit={handleRoleChange} />
             </>
           )}
-          {activeStep === 1 && (
+          {activeStep === 1 && role !== 'lifebank' && (
             <>
               <Typography variant="h4">Create a new account.</Typography>
               <Typography variant="body1" className={classes.text}>
-                To sign up all you need is to pick a 9 letter username and a
-                password, a unique blockchain account name will be generated
-                you.
+                To register, all you need to do is add your email and password.
+              </Typography>
+            </>
+          )}
+          {activeStep === 1 && role === 'lifebank' && (
+            <>
+              <Typography variant="h4">Pre-register a new account.</Typography>
+              <Typography variant="body1" className={classes.text}>
+                To carry out the pre-registration, you must indicate the
+                following data, necessary for the approval of the blood bank
               </Typography>
             </>
           )}
@@ -229,11 +304,11 @@ const Signup = () => {
               loading={createAccountLoading}
               setField={handleSetField}
               user={user}
-              isUsernameValid={isUsernameValid}
+              isEmailValid={isEmailValid}
             >
-              <SignupUsername
-                isValid={isUsernameValid}
-                loading={checkUsernameLoading}
+              <ValidateEmail
+                isValid={isEmailValid}
+                loading={checkEmailLoading}
                 user={user}
                 setField={handleSetField}
               />
@@ -244,21 +319,27 @@ const Signup = () => {
               onSubmit={handleCreateAccount}
               loading={createAccountLoading}
               setField={handleSetField}
-              isUsernameValid={isUsernameValid}
               classes={classes}
-            />
+            >
+              <ValidateEmail
+                isValid={isEmailValid}
+                loading={checkEmailLoading}
+                user={user}
+                setField={handleSetField}
+              />
+            </SimpleRegisterForm>
           )}
           {activeStep === 1 && role === 'lifebank' && (
             <SignupLifeBank
-              onSubmit={handleCreateAccount}
-              loading={createAccountLoading}
+              onSubmit={handlePreRegisterLifebank}
+              loading={preRegisterLifebankLoading}
               setField={handleSetField}
               user={user}
-              isUsernameValid={isUsernameValid}
+              isEmailValid={isEmailValid}
             >
-              <SignupUsername
-                isValid={isUsernameValid}
-                loading={checkUsernameLoading}
+              <ValidateEmail
+                isValid={isEmailValid}
+                loading={checkEmailLoading}
                 user={user}
                 setField={handleSetField}
               />

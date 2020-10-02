@@ -143,19 +143,37 @@
       check: {}
       columns:
       - active
-      - limited
-      - online_only
-      - id
-      - quantity
-      - sponsor_id
+      - cost_in_tokens
       - description
       - end_date
+      - id
       - images
+      - limited
       - offer_name
       - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
       - start_date
       backend_only: false
   select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      filter: {}
   - role: guest
     permission:
       columns:
@@ -176,39 +194,64 @@
     permission:
       columns:
       - active
-      - limited
-      - online_only
-      - id
-      - quantity
-      - sponsor_id
+      - cost_in_tokens
       - description
       - end_date
+      - id
       - images
+      - limited
       - offer_name
       - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
       - start_date
       filter: {}
   update_permissions:
   - role: sponsor
     permission:
       columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
       - limited
+      - offer_name
+      - offer_type
       - online_only
       - quantity
-      - offer_type
-      - description
-      - start_date
-      - end_date
-      - images
       - sponsor_id
-      - id
-      - offer_name
-      - active
+      - start_date
       filter: {}
       check: null
   delete_permissions:
   - role: sponsor
     permission:
+      filter: {}
+- table:
+    schema: public
+    name: preregister_lifebank
+  select_permissions:
+  - role: guest
+    permission:
+      columns:
+      - immunity_test
+      - id
+      - urgency_level
+      - created_at
+      - updated_at
+      - address
+      - coordinates
+      - description
+      - email
+      - invitation_code
+      - name
+      - password
+      - phone
+      - schedule
+      - state
       filter: {}
 - table:
     schema: public
@@ -222,6 +265,15 @@
 - table:
     schema: public
     name: user
+  object_relationships:
+  - name: location
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: location
+        column_mapping:
+          account: account
   array_relationships:
   - name: offers
     using:
@@ -230,6 +282,40 @@
         table:
           schema: public
           name: offer
+  select_permissions:
+  - role: donor
+    permission:
+      columns:
+      - account
+      - id
+      - name
+      - username
+      filter: {}
+  - role: guest
+    permission:
+      columns:
+      - id
+      - role
+      - username
+      - account
+      - secret
+      - email
+      - email_verified
+      - created_at
+      - updated_at
+      - name
+      filter: {}
 - table:
     schema: public
     name: vault
+- table:
+    schema: public
+    name: verification_email
+  select_permissions:
+  - role: guest
+    permission:
+      columns:
+      - id
+      - email
+      - verification_code
+      filter: {}

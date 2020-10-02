@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
     maxHeight: 430,
+    margin: 'auto',
     '& > div.MuiCard-root': {
       padding: theme.spacing(2),
       backgroundColor: 'transparent',
@@ -16,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     maxWidth: '100%',
-    maxHeight: 340
+    maxHeight: 340,
+    margin: 'auto'
   }
 }))
 
@@ -32,8 +34,9 @@ const Logo = ({ logoUrl, showCaption }) => {
       md={12}
       lg={12}
     >
-      <Card elevation={0}>
+      <Card style={{ textAlign: 'center' }} elevation={0}>
         <img className={classes.logo} src={logoUrl} alt="user-logo" />
+        <br />
         {showCaption && (
           <Typography variant="caption" style={{ textAlign: 'right' }}>
             *Add image with transparent background if possible

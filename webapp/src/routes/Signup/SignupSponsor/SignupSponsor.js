@@ -61,7 +61,7 @@ const SponsorSignup = ({
   setField,
   user,
   loading,
-  isUsernameValid,
+  isEmailValid,
   children
 }) => {
   const classes = useStyles()
@@ -106,18 +106,6 @@ const SponsorSignup = ({
           }}
           className={classes.textField}
           onChange={(event) => setField('secret', event.target.value)}
-        />
-        <TextField
-          id="email"
-          label="Email"
-          variant="outlined"
-          placeholder="Your email"
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('email', event.target.value)}
         />
         <TextField
           id="name"
@@ -297,7 +285,7 @@ const SponsorSignup = ({
             !user.secret ||
             !user.geolocation ||
             !recaptchaValue ||
-            !isUsernameValid ||
+            !isEmailValid ||
             loading
           }
           variant="contained"
@@ -317,7 +305,7 @@ SponsorSignup.propTypes = {
   setField: PropTypes.func,
   user: PropTypes.object,
   loading: PropTypes.bool,
-  isUsernameValid: PropTypes.bool,
+  isEmailValid: PropTypes.bool,
   children: PropTypes.node
 }
 

@@ -142,6 +142,7 @@ const Schedule = ({
   handleOnAddSchedule,
   scheduleLoad,
   data,
+  loading,
   showSchedule,
   showButton
 }) => {
@@ -192,7 +193,7 @@ const Schedule = ({
 
   const handleOpen = () => {
     setOpenModal(!openModal)
-    loadSchedule(scheduleLoad)
+    if (loading) loadSchedule(scheduleLoad)
   }
 
   const onHandleOnAddSchedule = () => {
@@ -377,16 +378,18 @@ const Schedule = ({
 
 Schedule.propTypes = {
   handleOnAddSchedule: PropTypes.func,
-  scheduleLoad: PropTypes.func,
+  scheduleLoad: PropTypes.string,
   data: PropTypes.array,
+  loading: PropTypes.bool,
   showSchedule: PropTypes.bool,
   showButton: PropTypes.bool
 }
 
 Schedule.defaultProps = {
   handleOnAddSchedule: () => {},
-  scheduleLoad: () => {},
+  scheduleLoad: '',
   data: null,
+  loading: false,
   showSchedule: false,
   showButton: true
 }

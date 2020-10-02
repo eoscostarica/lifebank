@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import FavoriteIcon from '@material-ui/icons/Favorite'
+import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined'
 import InfoIcon from '@material-ui/icons/Info'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
@@ -64,14 +65,24 @@ const SideBar = ({ user, onLogout }) => {
       {user && (
         <>
           {user.role === 'donor' && (
-            <Box className={classes.optionLink}>
-              <FavoriteIcon className={classes.iconDonor} />
-              <Link to="/donations">
-                <Typography variant="body1" className={classes.labelOption}>
-                  Your Donations
-                </Typography>
-              </Link>
-            </Box>
+            <>
+              <Box className={classes.optionLink}>
+                <FavoriteIcon className={classes.iconDonor} />
+                <Link to="/donations">
+                  <Typography variant="body1" className={classes.labelOption}>
+                    Your Donations
+                  </Typography>
+                </Link>
+              </Box>
+              <Box className={classes.optionLink}>
+                <LocalOfferOutlinedIcon className={classes.iconOption} />
+                <Link to="/offers">
+                  <Typography variant="body1" className={classes.labelOption}>
+                    Available offers
+                  </Typography>
+                </Link>
+              </Box>
+            </>
           )}
           <Box className={classes.optionLink}>
             <AccountCircleIcon className={classes.iconOption} />

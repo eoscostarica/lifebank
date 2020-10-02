@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
+import FormControl from '@material-ui/core/FormControl'
+import MenuItem from '@material-ui/core/MenuItem'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
@@ -23,7 +27,8 @@ import SocialMediaTextField from '../../components/SocialMediaTextField'
 import { constants } from '../../config'
 
 const {
-  LOCATION_TYPES: { SPONSOR }
+  LOCATION_TYPES: { SPONSOR },
+  SPONSOR_TYPES
 } = constants
 
 const useStyles = makeStyles((theme) => ({
@@ -110,13 +115,20 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     email: profile.email,
     website: profile.website,
     benefit_description: profile.benefit_description,
-    telephones: JSON.parse(profile.telephones) || [],
+    telephones:
+      profile.telephones && profile.telephones !== ''
+        ? JSON.parse(profile.telephones)
+        : [],
     business_type: profile.business_type,
     covid_impact: profile.covid_impact,
     geolocation: profile.location ? JSON.parse(profile.location) : null,
     schedule: profile.schedule,
-    photos: JSON.parse(profile.photos) || [],
-    social_media_links: JSON.parse(profile.social_media_links) || []
+    photos:
+      profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
+    social_media_links:
+      profile.social_media_links && profile.social_media_links !== ''
+        ? JSON.parse(profile.social_media_links)
+        : []
   })
 
   const handleSetField = useMemo(
@@ -158,14 +170,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   }
 
   const prepareDataForSubmitting = () => {
-    let userToSubmit = { ...user }
+    const userToSubmit = { ...user }
     userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
     userToSubmit.photos = JSON.stringify(user.photos)
     userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
     onSubmit(userToSubmit)
   }
-
-  console.log(user)
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -179,7 +189,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="logo-url"
           name="logo-input"
-          style={{ display: isCompleting && user.logo_url ? 'none' : '' }}
+          style={{
+            display: isCompleting && user.logo_url !== '' ? 'none' : ''
+          }}
           label="Logo url"
           variant="outlined"
           placeholder="Your logo url"
@@ -221,6 +233,24 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           className={classes.textField}
           onChange={(event) => handleSetField('address', event.target.value)}
         />
+        <FormControl variant="outlined" className={classes.textField}>
+          <InputLabel id="bussines-type-label">Type</InputLabel>
+          <Select
+            labelId="bussines-type-label"
+            id="bussines-type"
+            value={user.business_type || ''}
+            onChange={(event) =>
+              handleSetField('business_type', event.target.value)
+            }
+            label="Type"
+          >
+            {SPONSOR_TYPES.map((option) => (
+              <MenuItem key={`bussines-type-option-${option}`} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <TextField
           id="email"
           style={{ display: isCompleting && user.email ? 'none' : '' }}
@@ -295,25 +325,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               ...user,
               telephones: user.telephones.filter((p) => p !== phone)
             })
-          }
-        />
-
-        <TextField
-          id="bussinesType"
-          label="Type"
-          style={{
-            display: isCompleting && user.business_type ? 'none' : ''
-          }}
-          variant="outlined"
-          placeholder="Type"
-          defaultValue={user.business_type}
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) =>
-            handleSetField('business_type', event.target.value)
           }
         />
 
@@ -393,10 +404,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="photo-url"
           style={{
-            display:
-              isCompleting && user.photos && user.photos.length > 0
-                ? 'none'
-                : ''
+            display: isCompleting && !user.photos ? 'none' : ''
           }}
           label="Photo url"
           variant="outlined"

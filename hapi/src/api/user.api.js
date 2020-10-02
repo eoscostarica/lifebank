@@ -22,6 +22,7 @@ const INSERT = `
       username
       account
       email
+      name
     }
   }
 `

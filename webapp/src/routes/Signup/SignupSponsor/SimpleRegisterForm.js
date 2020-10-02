@@ -8,7 +8,13 @@ import ReCAPTCHA from 'react-google-recaptcha'
 
 import { captchaConfig } from '../../../config'
 
-const SimpleRegisterForm = ({ onSubmit, setField, loading, classes }) => {
+const SimpleRegisterForm = ({
+  onSubmit,
+  setField,
+  loading,
+  classes,
+  children
+}) => {
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
   const [recaptchaValue, setRecaptchaValue] = useState('')
@@ -26,19 +32,7 @@ const SimpleRegisterForm = ({ onSubmit, setField, loading, classes }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        <TextField
-          id="email"
-          label="Email"
-          type="email"
-          fullWidth
-          placeholder="Your Email"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => setField('email', event.target.value)}
-        />
+        {children}
         <TextField
           id="secret"
           label="Password"
@@ -60,7 +54,7 @@ const SimpleRegisterForm = ({ onSubmit, setField, loading, classes }) => {
           label="Confirm password"
           type="password"
           fullWidth
-          error={error}
+          error={error ? true : false}
           helperText={error && error.text}
           placeholder="Your confirmation"
           variant="outlined"
@@ -82,7 +76,7 @@ const SimpleRegisterForm = ({ onSubmit, setField, loading, classes }) => {
           color="primary"
           onClick={onSubmit}
         >
-          Continue
+          Create account
         </Button>
         {loading && <CircularProgress />}
       </Box>
@@ -94,7 +88,8 @@ SimpleRegisterForm.propTypes = {
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
   loading: PropTypes.bool,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  children: PropTypes.node
 }
 
 SimpleRegisterForm.defaultProps = {}

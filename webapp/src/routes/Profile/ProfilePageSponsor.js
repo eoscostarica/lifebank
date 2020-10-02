@@ -18,6 +18,7 @@ import TextField from '@material-ui/core/TextField'
 import FacebookIcon from '../../assets/facebook.svg'
 import InstagramIcon from '../../assets/instagram.svg'
 import TwitterIcon from '../../assets/twitter.svg'
+import Logo from '../../components/Logo'
 import Schedule from '../../components/Schedule'
 import Telephones from '../../components/Telephones'
 import CarouselComponent from '../../components/Carousel'
@@ -95,7 +96,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfilePageSponsor = ({ profile }) => {
   const classes = useStyles()
-  const [] = useState(false)
   const [pendingFields, setPendingFields] = useState()
 
   const checkAvailableFields = () => {
@@ -159,9 +159,11 @@ const ProfilePageSponsor = ({ profile }) => {
 
   useEffect(() => {
     if (profile) {
-      profile.social_media_links = JSON.parse(profile.social_media_links)
-      profile.photos = JSON.parse(profile.photos)
-      profile.telephones = JSON.parse(profile.telephones)
+      if (profile.social_media_links)
+        profile.social_media_links = JSON.parse(profile.social_media_links)
+      if (profile.photos) profile.photos = JSON.parse(profile.photos)
+      if (profile.telephones)
+        profile.telephones = JSON.parse(profile.telephones)
       checkAvailableFields()
     }
   }, [profile])
@@ -223,6 +225,10 @@ const ProfilePageSponsor = ({ profile }) => {
               </Box>
             </Alert>
           </Grid>
+        )}
+        <br />
+        {profile.logo_url && profile.logo_url !== '' && (
+          <Logo logoUrl={profile.logo_url} />
         )}
         <Box className={classes.rowBox}>
           <Typography variant="subtitle1">Email</Typography>
