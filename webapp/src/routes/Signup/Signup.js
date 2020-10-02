@@ -237,15 +237,11 @@ const Signup = () => {
   }
 
   useEffect(() => {
-    if (createAccountResult) {
-      login(createAccountResult.token)
-    }
+    if (createAccountResult) login(createAccountResult.token)
   }, [createAccountResult])
 
   useEffect(() => {
-    if (!currentUser) {
-      return
-    }
+    if (!currentUser) return
 
     if (!createAccountResult) {
       history.replace('/profile')
