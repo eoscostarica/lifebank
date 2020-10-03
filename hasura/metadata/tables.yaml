@@ -308,14 +308,3 @@
 - table:
     schema: public
     name: vault
-- table:
-    schema: public
-    name: verification_email
-  select_permissions:
-  - role: guest
-    permission:
-      columns:
-      - id
-      - email
-      - verification_code
-      filter: {}
