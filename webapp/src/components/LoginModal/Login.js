@@ -156,7 +156,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
       const hash = data.user[0].secret
 
       bcrypt.compare(user.secret, hash, function (err, res) {
-        if (res) {
+        if (!err && res) {
           setErrorMessage(null)
           loginMutation({
             variables: {
@@ -187,7 +187,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
         const hash = data.user[0].secret
 
         bcrypt.compare(secret, hash, function (err, res) {
-          if (res) {
+          if (!err && res) {
             setErrorMessage(null)
             loginMutation({
               variables: {
