@@ -25,7 +25,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 
-import { LOGIN_MUTATION, VALIDATE_EMAIL } from '../../gql'
+import { LOGIN_MUTATION, VALIDATE_EMAIL, GET_SECRET_BY_ACCOUNT } from '../../gql'
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
@@ -131,6 +131,13 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
     skip: true
   })
 
+  const { refetch: getHash } = useQuery(GET_SECRET_BY_ACCOUNT, {
+    variables: {
+      email: user.email
+    },
+    skip: true
+  })
+
   const handleOpen = () => {
     setOpen(!open)
   }
@@ -139,27 +146,58 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setErrorMessage(null)
-    loginMutation({
-      variables: {
-        ...user
-      }
-    })
+    const bcrypt = require('bcryptjs');
+    const { data } = await getHash({ email: user.account })
+
+    if (data.user.length >= 1) {
+
+      const hash = data.user[0].secret
+
+      bcrypt.compare(user.secret, hash, function (err, res) {
+        if (res) {
+          setErrorMessage(null)
+          loginMutation({
+            variables: {
+              account: user.account,
+              secret: hash
+            }
+          })
+        } else {
+          setErrorMessage("Invalid account or secret")
+
+        }
+      })
+
+    } else {
+      setErrorMessage("This account doesn't exist, please sign up")
+    }
   }
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
+
       const { data } = await checkEmail({ email: email })
 
       if (data.user.length === 1) {
-        setErrorMessage(null)
-        loginMutation({
-          variables: {
-            account: email,
-            secret
+
+        const bcrypt = require('bcryptjs');
+        const { data } = await getHash({ email: email })
+        const hash = data.user[0].secret
+
+        bcrypt.compare(secret, hash, function (err, res) {
+          if (res) {
+            setErrorMessage(null)
+            loginMutation({
+              variables: {
+                account: email,
+                secret: hash
+              }
+            })
           }
         })
+
       } else {
         setErrorMessage("This account doesn't exist, please sign up")
       }

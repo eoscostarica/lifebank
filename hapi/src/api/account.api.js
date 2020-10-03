@@ -168,15 +168,10 @@ const grantConsent = async account => {
 
 const login = async ({ account, secret }) => {
   const user = await userApi.getOne({
-    _and: [
-      {
-        _or: [
-          { account: { _eq: account } },
-          { username: { _eq: account } },
-          { email: { _eq: account } }
-        ]
-      },
-      { secret: { _eq: secret } }
+    _or: [
+      { account: { _eq: account } },
+      { username: { _eq: account } },
+      { email: { _eq: account } }
     ]
   })
 

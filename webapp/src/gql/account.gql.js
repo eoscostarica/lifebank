@@ -108,3 +108,11 @@ export const VALIDATE_EMAIL = gql`
     }
   }
 `
+
+export const GET_SECRET_BY_ACCOUNT = gql`
+  query($email: String!) {
+    user(where: { email: { _eq: $email } }) {
+      secret
+    }
+  }
+`

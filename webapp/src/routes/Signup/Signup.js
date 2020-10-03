@@ -131,38 +131,50 @@ const Signup = () => {
   const handleCreateAccount = () => {
     const { email, secret } = user
     const name = "undefined"
-    createAccount({
-      variables: {
-        role,
-        email,
-        name,
-        secret
-      }
-    })
-  }
+    const bcrypt = require('bcryptjs');
+    const saltRounds = 10;
 
-
-  const handleCreateAccountWithAuth = async (status, email, name, secret) => {
-    if (status) {
-      const { data } = await checkEmail({ email: email })
-
-      if (data.user.length === 0) {
+    bcrypt.hash(secret, saltRounds, function (err, hash) {
+      if (!err) {
         createAccount({
           variables: {
             role,
             email,
             name,
-            secret
+            secret: hash
           }
         })
-      } else {
-        setErrorMessage("This account is already taken, please login")
       }
+    });
+  }
 
-    }
-    else {
-      setErrorMessage("Something happened with the authentication")
 
+  const handleCreateAccountWithAuth = async (status, email, name, secret) => {
+    if (status) {
+
+      const { data } = await checkEmail({ email: email })
+
+      if (data.user.length === 0) {
+
+        const bcrypt = require('bcryptjs');
+        const saltRounds = 10;
+
+        bcrypt.hash(secret, saltRounds, function (err, hash) {
+          if (!err) {
+            createAccount({
+              variables: {
+                role,
+                email,
+                name,
+                secret: hash
+              }
+            })
+          }
+        });
+
+      } else {
+        setErrorMessage("Something happened with the authentication")
+      }
     }
   }
 
@@ -427,6 +439,7 @@ const Signup = () => {
     </Grid>
   )
 }
+
 
 Signup.propTypes = {}
 
