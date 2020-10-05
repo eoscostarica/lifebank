@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 
 import routes from './routes'
 import { MainContainer, TopBar, SideBar } from './containers'
+import SplashIntro from './components/SplashIntro'
 import { useUser } from './context/user.context'
 
 const App = ({ ual }) => {
@@ -18,14 +19,15 @@ const App = ({ ual }) => {
         sidebarContent={<SideBar user={currentUser} onLogout={logout} />}
       >
         <Grid container>
-          <Switch>
+          <SplashIntro />
+          {/* <Switch>
             {routes.map(({ path, component: Component, ...args }) => (
               <Route key={`path-${path}`} path={path} {...args}>
                 <Component ual={ual} />
               </Route>
             ))}
             <Redirect to="/not-found" />
-          </Switch>
+          </Switch> */}
         </Grid>
       </MainContainer>
     </BrowserRouter>
