@@ -1,6 +1,6 @@
 import CarouselComponent from '../../components/Carousel'
 
-import React, { useState, useEffect, useRef, forwardRef } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import { Link as LinkRouter } from 'react-router-dom'
@@ -11,13 +11,10 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
-import AddIcon from '@material-ui/icons/Add'
-
 
 import '@brainhubeu/react-carousel/lib/style.css'
 
 import 'date-fns'
-
 
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -50,19 +47,32 @@ const useStyles = makeStyles((theme) => ({
   },
   secondaryText: {
     color: `${theme.palette.secondary.main} !important`
+  },
+  carouselDiv: {
+    width: '100%',
+    objectFit: 'cover'
+  },
+  img: {
+    width: '65px',
+    objectFit: 'cover',
+    height: '65px',
+    borderRadius: '50%',
+    marginBottom: '30px'
   }
 }))
 
 const ProfilePageLifebank = ({ profile }) => {
   const classes = useStyles()
-  const [disableUrlInput, setDisableUrlInput] = useState(true)
-  const imgUrlValueRef = useRef(undefined)
-  //const [arrayImage, setOffer] = useState()
-
+  let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
   const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
 
   return (
     <>
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Logo</Typography>
+        <img className={classes.img} src={logo} alt={'logo image'} />
+      </Box>
+      <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Account</Typography>
         <Typography variant="body1">
@@ -128,7 +138,6 @@ const ProfilePageLifebank = ({ profile }) => {
         </Typography>
       </Box>
       <Divider className={classes.divider} />
-
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Schedule</Typography>
         <Typography variant="body1" />
@@ -154,65 +163,24 @@ const ProfilePageLifebank = ({ profile }) => {
         fullWidth
         rows={3}
       />
-
-
-
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Images</Typography>
         <Typography variant="body1" />
       </Box>
-      <TextField
-        id="image-url"
-        variant="outlined"
-        placeholder="Image url here"
-        fullWidth
-        inputRef={imgUrlValueRef}
-        InputLabelProps={{
-          shrink: true
-        }}
-        onChange={(e) => setDisableUrlInput(e.target.value.length < 1)}
-        className={classes.textField}
-      />
-      <Box className={classes.addButtonContainer}>
-        <div>
-          {arrayImage.length < 1 ? (
-            <Typography variant="caption">
-              You need to add least one image url
-            </Typography>
-          ) : null}
-        </div>
-        <Button
-          onClick={() => {
-            arrayImage.push(imgUrlValueRef.current.value)
-            console.log("arrayImage:", arrayImage)
-          }}
-          disabled={disableUrlInput}
-          size="small"
-          color="secondary"
-          startIcon={<AddIcon />}
-        >
-          Add url
-        </Button>
-      </Box>
-      {arrayImage.length > 0 && (
-        <>{arrayImage && <Grid
-          item
-          xs={12}
-          sm={8}
-          md={6}
-          lg={4}
-          className={classes.carouselComponent}
-        >
-          <CarouselComponent images={arrayImage} />
-        </Grid>} </>
-      )}
-
-
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={6}
+        lg={4}
+        className={classes.carouselComponent}
+      >
+        <CarouselComponent images={arrayImage} />
+      </Grid>
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Location</Typography>
         <Typography variant="body1" />
       </Box>
-
       <MapShowOneLocation
         markerLocation={JSON.parse(profile.location)}
         accountProp={profile.account}
@@ -220,7 +188,6 @@ const ProfilePageLifebank = ({ profile }) => {
         height={400}
         py={2}
       />
-
       <Divider className={classes.divider} />
       <LinkRouter to="/edit-profile" className={classes.editBtn}>
         <Button variant="contained" color="primary">

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
@@ -6,8 +6,11 @@ import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
+import CarouselComponent from '../../components/Carousel'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import AddIcon from '@material-ui/icons/Add'
 
 import Schedule from '../../components/Schedule'
 import MapEditLocation from '../../components/MapEditLocation'
@@ -84,16 +87,44 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 18
     }
   },
+  carouselComponent: {
+    justifyContent: 'center',
+    justifySelf: 'center'
+  },
   slider: {
     padding: theme.spacing(0, 2)
   },
   midLabel: {
     marginLeft: theme.spacing(3)
+  },
+  addButtonContainer: {
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  marginTitule:
+  {
+    marginTop: '3%'
+  },
+  carouselDiv: {
+    width: '100%',
+    objectFit: 'cover'
+  },
+  img: {
+    maxWidth: '100%',
+    objectFit: 'cover',
+    marginBottom: '6%',
   }
 }))
 
 const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
   const classes = useStyles()
+  const [disableUrlInput, setDisableUrlInput] = useState(true)
+  const imgUrlValueRef = useRef(undefined)
+  const [disableUrlLogoInput, setDisableUrlLogoInput] = useState(true)
+  const imgUrlLogoValueRef = useRef(undefined)
+  let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+  const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
   const [user, setUser] = useState({
     description: profile.description,
     address: profile.address,
@@ -105,6 +136,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
     blood_urgency_level: profile.blood_urgency_level,
     has_immunity_test: Boolean(profile.has_immunity_test)
   })
+
   const handleOnGeolocationChange = useCallback(
     (geolocation) => handleSetField('geolocation', geolocation),
     [setField]
@@ -145,6 +177,45 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
+        <Box className={classes.marginTitule}>
+          <Typography variant="h4">Logo</Typography>
+          <Typography variant="body1" />
+        </Box>
+        <div className={classes.carouselDiv}>
+          {arrayImage.length > 0 && (
+            <>{arrayImage && <Grid container justify="center">{console.log("logo:", logo)}
+              <img className={classes.img} src={logo} alt={'logo image'} />
+            </Grid>} </>
+          )}
+        </div>
+        <TextField
+          id="image-url"
+          label="Logo url"
+          variant="outlined"
+          placeholder="logo url here"
+          fullWidth
+          inputRef={imgUrlLogoValueRef}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(e) => setDisableUrlLogoInput(e.target.value.length < 1)}
+          className={classes.textField}
+        />
+        <Box className={classes.addButtonContainer}>
+          <Button
+            onClick={() => {
+              logo = imgUrlLogoValueRef.current.value
+              imgUrlLogoValueRef.current.value = ''
+              console.log("logo:", logo.length)
+            }}
+            disabled={disableUrlLogoInput}
+            size="small"
+            color="secondary"
+            startIcon={<AddIcon />}
+          >
+            Add url
+          </Button>
+        </Box>
         <TextField
           id="fullname"
           label="Organization"
@@ -198,7 +269,64 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
           <Schedule buttonText="Edit Schedule" scheduleLoad={user.schedule} loading handleOnAddSchedule={handleOnAddSchedule} />
         </Box>
 
-        <Box className={classes.rowBox}>
+        <Box className={classes.marginTitule}>
+          <Typography variant="h4">Images</Typography>
+          <Typography variant="body1" />
+        </Box>
+        <TextField
+          id="image-url"
+          label="Image url"
+          variant="outlined"
+          placeholder="Image url here"
+          fullWidth
+          inputRef={imgUrlValueRef}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(e) => setDisableUrlInput(e.target.value.length < 1)}
+          className={classes.textField}
+        />
+        <Box className={classes.addButtonContainer}>
+          <div>
+            {arrayImage.length < 1 ? (
+              <Typography variant="caption">
+                You need to add least one image url
+              </Typography>
+            ) : null}
+          </div>
+          <Button
+            onClick={() => {
+              arrayImage.push(imgUrlValueRef.current.value)
+              imgUrlValueRef.current.value = ''
+              console.log("arrayImage:", arrayImage)
+            }}
+            disabled={disableUrlInput}
+            size="small"
+            color="secondary"
+            startIcon={<AddIcon />}
+          >
+            Add url
+          </Button>
+        </Box>
+        <div className={classes.carouselDiv}>
+          {arrayImage.length > 0 && (
+            <>{arrayImage && <Grid container justify="center">
+              <Grid
+                item
+                xs={12}
+                sm={8}
+                md={6}
+                lg={4}
+                className={classes.carouselComponent}
+              >
+                <CarouselComponent images={arrayImage} />
+              </Grid>
+            </Grid>} </>
+          )}
+        </div>
+
+
+        <Box className={classes.marginTitule}>
           <Typography variant="h4">Location</Typography>
           <Typography variant="body1" />
         </Box>
