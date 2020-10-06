@@ -163,6 +163,12 @@ const grantConsent = async account => {
   return consentTransaction
 }
 
+const verifyEmail = async ({ code }) => {
+  return {
+    is_verified: false
+  }
+}
+
 const login = async ({ account, secret }) => {
   const user = await userApi.getOne({
     _and: [
@@ -248,5 +254,6 @@ module.exports = {
   login,
   grantConsent,
   revokeConsent,
-  transfer
+  transfer,
+  verifyEmail
 }

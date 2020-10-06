@@ -101,3 +101,12 @@ export const EDIT_PROFILE_MUTATION = gql`
     }
   }
 `
+
+
+export const VERIFY_EMAIL = gql`
+  mutation($code: String!) {
+    verify_email(code: $code) {
+      is_verified
+    }
+  }
+`

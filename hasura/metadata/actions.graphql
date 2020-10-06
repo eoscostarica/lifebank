@@ -9,7 +9,8 @@ type Mutation {
 type Mutation {
   create_account (
     role: String!
-    username: String!
+    email: String!
+    name: String!
     secret: String!
   ): create_account_output
 }
@@ -92,6 +93,13 @@ type Mutation {
 }
 
 
+type Mutation {
+  verify_email (
+    code: String!
+  ): verify_email_output
+}
+
+
 
 
 type create_account_output {
@@ -148,5 +156,9 @@ type get_contract_output {
 
 type create_pre_register_lifebank_output {
   resultRegister : String!
+}
+
+type verify_email_output {
+  is_verified : Boolean!
 }
 
