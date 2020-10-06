@@ -1,6 +1,6 @@
 CREATE TABLE "public"."preregister_lifebank"(
   "id" serial NOT NULL,
-  "email" varchar UNIQUE NOT NULL,
+  "email" varchar NOT NULL,
   "password" varchar NOT NULL,
   "name" varchar NOT NULL,
   "address" varchar NOT NULL,
@@ -11,8 +11,8 @@ CREATE TABLE "public"."preregister_lifebank"(
   "coordinates" varchar NOT NULL,
   "immunity_test" boolean DEFAULT false,
   "invitation_code" varchar,
+  "state" varchar NOT NULL DEFAULT 'Pediente',
   "verification_code" varchar NOT NULL,
-  "state" varchar NOT NULL DEFAULT 'Pendiente',
   "created_at" timestamptz DEFAULT now(),
   "updated_at" timestamptz DEFAULT now(),
   PRIMARY KEY ("id"),

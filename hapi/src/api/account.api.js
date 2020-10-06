@@ -19,9 +19,7 @@ const create = async ({ role, email, name, secret }) => {
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
   const token = jwtUtils.create({ role, username, account })
-  let verification_code = await verificationCodeApi.generate()
-
-  verification_code = verification_code.verificationCode
+  const { verification_code } = await verificationCodeApi.generate()
 
   await userApi.insert({
     role,

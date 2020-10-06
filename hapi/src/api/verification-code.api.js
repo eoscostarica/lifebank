@@ -4,7 +4,7 @@ const generate = async () => {
   const verificationCode = crypto.randomBytes(20).toString('hex')
 
   return {
-    verificationCode
+    verification_code
   }
 }
 
