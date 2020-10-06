@@ -61,7 +61,9 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
         if (accountProp === account) {
           const markertemp = new mapboxgl.Marker(markerNode)
           markertemp.setLngLat(coordinates)
-          markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
+          markertemp.setPopup(
+            new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode)
+          )
           markertemp.addTo(map)
         }
       })
@@ -84,16 +86,14 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
         },
         trackUserLocation: true
       })
-    );
+    )
 
     map.on('load', () => loadMarkersEvent())
 
     return () => map.remove()
   }, [getNearbyLocations, markerLocation.longitude, markerLocation.latitude])
 
-  return (
-    <Box ref={mapContainerRef} {...props} />
-  )
+  return <Box ref={mapContainerRef} {...props} />
 }
 
 MapShowOneLocation.propTypes = {

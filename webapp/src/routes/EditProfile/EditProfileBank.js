@@ -167,7 +167,9 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(event) => handleSetField('phone_number', event.target.value)}
+          onChange={(event) =>
+            handleSetField('phone_number', event.target.value)
+          }
         />
         <TextField
           id="address"
@@ -191,11 +193,18 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(event) => handleSetField('description', event.target.value)}
+          onChange={(event) =>
+            handleSetField('description', event.target.value)
+          }
         />
 
         <Box width="100%" className={classes.textField}>
-          <Schedule buttonText="Edit Schedule" scheduleLoad={user.schedule} loading handleOnAddSchedule={handleOnAddSchedule} />
+          <Schedule
+            buttonText="Edit Schedule"
+            scheduleLoad={user.schedule}
+            loading
+            handleOnAddSchedule={handleOnAddSchedule}
+          />
         </Box>
 
         <Box className={classes.rowBox}>

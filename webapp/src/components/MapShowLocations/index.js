@@ -6,24 +6,23 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
-import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid'
 
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Checkbox from '@material-ui/core/Checkbox'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import Divider from '@material-ui/core/Divider'
+import Button from '@material-ui/core/Button'
+import Modal from '@material-ui/core/Modal'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
 
 import { mapboxConfig, constants } from '../../config'
 import MapMarker from '../MapMarker'
 import MapPopup from '../MapPopup'
 import { GET_NEARBY_LOCATIONS_QUERY } from '../../gql'
-
 
 const initialZoom = 12.5
 let map = null
@@ -31,77 +30,75 @@ let checkLifebank = true
 let checkSponsor = true
 let markerList = []
 let searchDistance = 5000
-let filterSponsorcategory = "All"
+let filterSponsorcategory = 'All'
 
 const useStyles = makeStyles((theme) => ({
   mapOverlay: {
-    position: "absolute",
+    position: 'absolute',
     top: 110,
     '@media only screen and (max-width: 900px)': {
-      top: 120,
+      top: 120
     },
     right: 10,
-    boxShadow: "0 1px 5px rgba(0, 0, 0, 0.2)"
+    boxShadow: '0 1px 5px rgba(0, 0, 0, 0.2)'
   },
   mapOverlayinner: {
-    backgroundColor: "#fff",
-    borderRadius: "3px",
-    padding: "5px",
+    backgroundColor: '#fff',
+    borderRadius: '3px',
+    padding: '5px'
   },
   icon: {
-    fontSize: 18,
+    fontSize: 18
   },
   paper: {
     position: 'absolute',
     width: 400,
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 4, 3)
   },
   inputStyle: {
-    width: "100%",
+    width: '100%',
     marginBottom: 15
   },
   checkBoxForm: {
     marginBottom: 10
   },
   buttonStyle: {
-    width: "100%",
+    width: '100%',
     marginBottom: 15
-  },
+  }
 }))
 
 const customData = {
-  'features': [],
-  'type': 'FeatureCollection'
-};
+  features: [],
+  type: 'FeatureCollection'
+}
 
-const {
-  SPONSOR_TYPES
-} = constants
+const { SPONSOR_TYPES } = constants
 
-const sponsorsCategories = ["All"].concat(SPONSOR_TYPES)
+const sponsorsCategories = ['All'].concat(SPONSOR_TYPES)
 
 function getModalStyle() {
   return {
     top: `50%`,
     left: `50%`,
-    transform: `translate(-50%, -50%)`,
-  };
+    transform: `translate(-50%, -50%)`
+  }
 }
 
 function MapShowLocations({ location, ...props }) {
-  const [distance, setDistance] = React.useState(5000);
+  const [distance, setDistance] = React.useState(5000)
   const [state, setState] = React.useState({
     checkedLifebank: true,
-    checkedSponsor: true,
-  });
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
-  const [sponsorsCat, setSponsorsCat] = React.useState('All');
+    checkedSponsor: true
+  })
+  const [modalStyle] = React.useState(getModalStyle)
+  const [open, setOpen] = React.useState(false)
+  const [sponsorsCat, setSponsorsCat] = React.useState('All')
 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setState({ ...state, [event.target.name]: event.target.checked })
 
     switch (event.target.name) {
       case 'checkedLifebank': {
@@ -113,31 +110,31 @@ function MapShowLocations({ location, ...props }) {
         break
       }
     }
-  };
+  }
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(false)
     loadMarkersEvent()
-  };
+  }
 
   const handleSaveChanges = () => {
-    setOpen(false);
+    setOpen(false)
     loadMarkersEvent()
-  };
+  }
 
   const handleChangeDistance = (event) => {
-    setDistance(event.target.value);
+    setDistance(event.target.value)
     searchDistance = parseInt(event.target.value)
-  };
+  }
 
   const handleChangeSponsorsCat = (event) => {
-    setSponsorsCat(event.target.value);
+    setSponsorsCat(event.target.value)
     filterSponsorcategory = event.target.value
-  };
+  }
 
   const mapContainerRef = useRef(null)
 
@@ -153,19 +150,17 @@ function MapShowLocations({ location, ...props }) {
   })
 
   const loadPointData = (name, type, coordinates) => {
-    customData.features.push(
-      {
-        'type': 'Feature',
-        'properties': {
-          'title': name,
-          'type': type
-        },
-        'geometry': {
-          'coordinates': [coordinates[0], coordinates[1]],
-          'type': 'Point'
-        }
+    customData.features.push({
+      type: 'Feature',
+      properties: {
+        title: name,
+        type: type
+      },
+      geometry: {
+        coordinates: [coordinates[0], coordinates[1]],
+        type: 'Point'
       }
-    );
+    })
   }
 
   const claerPointsData = () => {
@@ -175,7 +170,7 @@ function MapShowLocations({ location, ...props }) {
 
   const removeMarkers = () => {
     for (let i = 0; i <= markerList.length - 1; i++) {
-      markerList[i].remove();
+      markerList[i].remove()
     }
   }
 
@@ -218,23 +213,23 @@ function MapShowLocations({ location, ...props }) {
 
         const markertemp = new mapboxgl.Marker(markerNode)
         markertemp.setLngLat(coordinates)
-        markertemp.setPopup(new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode))
+        markertemp.setPopup(
+          new mapboxgl.Popup({ offset: 15 }).setDOMContent(popupNode)
+        )
 
-        if (type === "SPONSOR") {
+        if (type === 'SPONSOR') {
           if (checkSponsor) {
-            if (filterSponsorcategory === "All") {
+            if (filterSponsorcategory === 'All') {
               markertemp.addTo(map)
               markerList.push(markertemp)
-            }
-            else {
-              if (info.bussines_type === filterSponsorcategory) {
+            } else {
+              if (info.business_type === filterSponsorcategory) {
                 markertemp.addTo(map)
                 markerList.push(markertemp)
               }
             }
           }
-        }
-        else {
+        } else {
           if (checkLifebank) {
             markertemp.addTo(map)
             markerList.push(markertemp)
@@ -254,29 +249,27 @@ function MapShowLocations({ location, ...props }) {
   }
 
   const forwardGeocoder = (query) => {
-    const matchingFeatures = [];
+    const matchingFeatures = []
 
     for (let i = 0; i < customData.features.length; i++) {
-      const feature = customData.features[i];
+      const feature = customData.features[i]
 
       if (
-        feature.properties.title
-          .toLowerCase()
-          .search(query.toLowerCase()) !== -1
+        feature.properties.title.toLowerCase().search(query.toLowerCase()) !==
+        -1
       ) {
-
-        if (feature.properties.type === "LIFE_BANK") {
-          feature.place_name = '🩸 ' + feature.properties.title;
+        if (feature.properties.type === 'LIFE_BANK') {
+          feature.place_name = '🩸 ' + feature.properties.title
         } else {
-          feature.place_name = '🏬 ' + feature.properties.title;
+          feature.place_name = '🏬 ' + feature.properties.title
         }
 
-        feature.center = feature.geometry.coordinates;
-        feature.place_type = [feature.properties.type];
-        matchingFeatures.push(feature);
+        feature.center = feature.geometry.coordinates
+        feature.place_type = [feature.properties.type]
+        matchingFeatures.push(feature)
       }
     }
-    return matchingFeatures;
+    return matchingFeatures
   }
 
   useEffect(() => {
@@ -298,7 +291,7 @@ function MapShowLocations({ location, ...props }) {
         mapboxgl: mapboxgl,
         marker: null
       })
-    );
+    )
 
     map.addControl(
       new mapboxgl.GeolocateControl({
@@ -307,7 +300,7 @@ function MapShowLocations({ location, ...props }) {
         },
         trackUserLocation: true
       })
-    );
+    )
 
     map.on('moveend', () => loadMarkersEvent())
 
@@ -340,17 +333,37 @@ function MapShowLocations({ location, ...props }) {
               alignItems="flex-start"
               spacing={0}
             >
-              <Grid item xs={12}><h1 color="textSecondary" className={classes.accordionTittle}>Filters </h1></Grid>
               <Grid item xs={12}>
-                <TextField autoFocus label="Distance" value={distance} onChange={handleChangeDistance} name="Distance" variant="outlined" type="number" className={classes.inputStyle} InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="start">m</InputAdornment>
-                  ),
-                }} />
+                <h1 color="textSecondary" className={classes.accordionTittle}>
+                  Filters{' '}
+                </h1>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoFocus
+                  label="Distance"
+                  value={distance}
+                  onChange={handleChangeDistance}
+                  name="Distance"
+                  variant="outlined"
+                  type="number"
+                  className={classes.inputStyle}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="start">m</InputAdornment>
+                    )
+                  }}
+                />
                 <Grid item xs={12}>
                   <FormControlLabel
                     className={classes.checkBoxForm}
-                    control={<Checkbox checked={state.checkedLifebank} onChange={handleChange} name="checkedLifebank" />}
+                    control={
+                      <Checkbox
+                        checked={state.checkedLifebank}
+                        onChange={handleChange}
+                        name="checkedLifebank"
+                      />
+                    }
                     label="Lifebanks"
                   />
                 </Grid>
@@ -359,7 +372,13 @@ function MapShowLocations({ location, ...props }) {
               <Grid item xs={12}>
                 <FormControlLabel
                   className={classes.checkBoxForm}
-                  control={<Checkbox checked={state.checkedSponsor} onChange={handleChange} name="checkedSponsor" />}
+                  control={
+                    <Checkbox
+                      checked={state.checkedSponsor}
+                      onChange={handleChange}
+                      name="checkedSponsor"
+                    />
+                  }
                   label="Sponsors"
                 />
               </Grid>
@@ -380,7 +399,16 @@ function MapShowLocations({ location, ...props }) {
                   ))}
                 </TextField>
               </Grid>
-              <Grid item xs={12}><Button variant="contained" color="primary" className={classes.buttonStyle} onClick={handleSaveChanges}>Save changes</Button></Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.buttonStyle}
+                  onClick={handleSaveChanges}
+                >
+                  Save changes
+                </Button>
+              </Grid>
             </Grid>
           </div>
         </Modal>
@@ -390,7 +418,7 @@ function MapShowLocations({ location, ...props }) {
 
   return (
     <Box>
-      <Box ref={mapContainerRef} {...props} >
+      <Box ref={mapContainerRef} {...props}>
         <FilterModalComp />
       </Box>
     </Box>
