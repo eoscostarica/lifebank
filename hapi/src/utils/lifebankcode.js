@@ -88,8 +88,12 @@ const upLifebank = (
   )
 }
 
-const addSponsor = (account, password, { name, geolocation, ...profile }) => {
-  return eosUtil.transact(
+const addSponsor = async (
+  account,
+  password,
+  { name, geolocation, ...profile }
+) => {
+  const response = await eosUtil.transact(
     [
       {
         authorization: [
@@ -103,7 +107,21 @@ const addSponsor = (account, password, { name, geolocation, ...profile }) => {
         data: {
           account,
           sponsor_name: name,
+          covid_impact: profile.covid_impact || '',
+          benefit_description: profile.benefit_description || '',
+          name: profile.name || '',
+          email: profile.email || '',
+          website: profile.website || '',
+          telephones: profile.telephones || '',
+          business_type: profile.business_type || '',
+          schedule: profile.schedule || '',
+          longitude: profile.longitude || '',
           location: JSON.stringify(geolocation),
+          logo_url: profile.logo_url || '',
+          about: profile.about || '',
+          address: profile.address || '',
+          photos: profile.photos || '',
+          social_media_links: profile.social_media_links || '',
           ...profile,
           community_asset: COMMUNITY_ASSET
         }
@@ -112,6 +130,7 @@ const addSponsor = (account, password, { name, geolocation, ...profile }) => {
     account,
     password
   )
+  return response
 }
 
 const getDonor = async account => {

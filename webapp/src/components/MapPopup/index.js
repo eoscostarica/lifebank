@@ -50,7 +50,7 @@ function MapPopup({ id, info, account }) {
           {info.telephone || info.phone_number}
         </a>
       </div>
-      {info.bussines_type && <div>Business type: {info.bussines_type}</div>}
+      {info.business_type && <div>Business type: {info.business_type}</div>}
       {info.benefit_description && (
         <div>Benefits: {info.benefit_description}</div>
       )}

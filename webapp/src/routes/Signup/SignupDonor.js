@@ -26,18 +26,17 @@ const useStyles = makeStyles((theme) => ({
   btnWrapper: {
     display: 'block',
     marginBottom: theme.spacing(2),
-    width: "100%"
+    width: '100%'
   },
   btnSignup: {
     display: 'block',
     marginBottom: theme.spacing(2),
-    width: "40%",
-    margin: "auto",
+    width: '40%',
+    margin: 'auto',
     '@media only screen and (max-width: 900px)': {
-      width: "100%",
-    },
+      width: '100%'
+    }
   }
-
 }))
 
 const DonorSignup = ({
@@ -69,21 +68,15 @@ const DonorSignup = ({
           onChange={(event) => setField('secret', event.target.value)}
         />
         <ReCAPTCHA
-          style={{ bac: "100%" }}
+          style={{ bac: '100%' }}
           sitekey={captchaConfig.sitekey}
           onChange={(value) => serRecaptchaValue(value)}
         />
-
       </Box>
 
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={
-            !user.secret ||
-            !isEmailValid ||
-            !recaptchaValue ||
-            loading
-          }
+          disabled={!user.secret || !isEmailValid || !recaptchaValue || loading}
           className={classes.btnSignup}
           variant="contained"
           color="primary"
@@ -92,11 +85,8 @@ const DonorSignup = ({
           Create Account
         </Button>
         {loading && <CircularProgress />}
-        <SignupWithFacebook
-          handlerSubmit={onSubmitWithAuth}
-        />
-        <SignupWithGoogle
-          handlerSubmit={onSubmitWithAuth} />
+        <SignupWithFacebook handlerSubmit={onSubmitWithAuth} />
+        <SignupWithGoogle handlerSubmit={onSubmitWithAuth} />
       </Box>
     </form>
   )

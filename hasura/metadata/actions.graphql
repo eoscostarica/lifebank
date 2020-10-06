@@ -1,13 +1,9 @@
 type Mutation {
-  check_username (
-    role: String!
-    username: String!
-  ): check_username_output
+  check_username(role: String!, username: String!): check_username_output
 }
 
-
 type Mutation {
-  create_account (
+  create_account(
     role: String!
     email: String!
     name: String!
@@ -15,9 +11,8 @@ type Mutation {
   ): create_account_output
 }
 
-
 type Mutation {
-  create_pre_register_lifebank (
+  create_pre_register_lifebank(
     email: String!
     password: String!
     name: String!
@@ -32,122 +27,94 @@ type Mutation {
   ): create_pre_register_lifebank_output
 }
 
-
 type Mutation {
-  credentials_recovery (
-    email: String!
-  ): credentials_recovery_output
+  credentials_recovery(email: String!): credentials_recovery_output
 }
 
-
 type Mutation {
-  edit_profile (
-    profile: jsonb!
-  ): edit_profile_output
+  edit_profile(profile: jsonb!): edit_profile_output
 }
-
 
 type Query {
-  get_contract (
-    name: String!
-  ): get_contract_output
+  get_contract(name: String!): get_contract_output
 }
-
 
 type Mutation {
-  grant_consent : grant_consent_output
+  grant_consent: grant_consent_output
 }
-
 
 type Mutation {
-  login (
-    account: String!
-    secret: String!
-  ): login_output
+  login(account: String!, secret: String!): login_output
 }
-
 
 type Query {
-  profile : profile_output
+  profile: profile_output
 }
-
 
 type Mutation {
-  revoke_consent : revoke_consent_output
+  revoke_consent: revoke_consent_output
 }
-
 
 type Mutation {
-  signup (
-    profile: jsonb!
-  ): signup_output
+  signup(profile: jsonb!): signup_output
 }
-
 
 type Mutation {
-  transfer (
-    to: String!
-    memo: String!
-    quantity: Int
-  ): transfer_output
+  transfer(to: String!, memo: String!, quantity: Int): transfer_output
 }
-
-
-
 
 type create_account_output {
-  account : String!
-  transaction_id : String!
-  token : String!
+  account: String!
+  transaction_id: String!
+  token: String!
 }
 
 type get_abi_output {
-  abi : jsonb!
+  abi: jsonb!
 }
 
 type login_output {
-  token : String!
+  token: String!
 }
 
 type profile_output {
-  profile : jsonb!
+  profile: jsonb!
 }
 
 type signup_output {
-  success : Boolean!
+  success: Boolean!
 }
 
 type check_username_output {
-  is_valid : Boolean!
+  is_valid: Boolean!
 }
 
 type revoke_consent_output {
-  transaction_id : String!
+  transaction_id: String!
 }
 
 type grant_consent_output {
-  transaction_id : String!
+  transaction_id: String!
 }
 
 type credentials_recovery_output {
-  success : Boolean!
+  success: Boolean!
 }
 
 type transfer_output {
-  transaction_id : String!
+  transaction_id: String!
 }
 
 type edit_profile_output {
-  success : Boolean!
+  success: Boolean!
 }
 
 type get_contract_output {
-  name : String!
-  hash : String!
-  abi : jsonb!
+  name: String!
+  hash: String!
+  abi: jsonb!
 }
 
 type create_pre_register_lifebank_output {
-  resultRegister : String!
+  resultRegister: String!
 }
-

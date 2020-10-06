@@ -25,7 +25,11 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 
-import { LOGIN_MUTATION, VALIDATE_EMAIL, GET_SECRET_BY_ACCOUNT } from '../../gql'
+import {
+  LOGIN_MUTATION,
+  VALIDATE_EMAIL,
+  GET_SECRET_BY_ACCOUNT
+} from '../../gql'
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
@@ -93,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
   btnWrapper: {
     display: 'flex',
     marginBottom: theme.spacing(1),
-    width: "100%"
+    width: '100%'
   },
   loginBtn: {
     display: 'flex',
@@ -148,11 +152,10 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const handleLogin = async () => {
     setErrorMessage(null)
-    const bcrypt = require('bcryptjs');
+    const bcrypt = require('bcryptjs')
     const { data } = await getHash({ email: user.account })
 
     if (data.user.length >= 1) {
-
       const hash = data.user[0].secret
 
       bcrypt.compare(user.secret, hash, function (err, res) {
@@ -165,11 +168,9 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
             }
           })
         } else {
-          setErrorMessage("Invalid account or secret")
-
+          setErrorMessage('Invalid account or secret')
         }
       })
-
     } else {
       setErrorMessage("This account doesn't exist, please sign up")
     }
@@ -177,12 +178,10 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
-
       const { data } = await checkEmail({ email: email })
 
       if (data.user.length === 1) {
-
-        const bcrypt = require('bcryptjs');
+        const bcrypt = require('bcryptjs')
         const { data } = await getHash({ email: email })
         const hash = data.user[0].secret
 
@@ -197,13 +196,11 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
             })
           }
         })
-
       } else {
         setErrorMessage("This account doesn't exist, please sign up")
       }
-
     } else {
-      setErrorMessage("Something happened with the authentication")
+      setErrorMessage('Something happened with the authentication')
     }
   }
 
@@ -309,7 +306,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                     }
                   />
                 </Box>
-                <Box >
+                <Box>
                   <Button
                     className={classes.btnWrapper}
                     disabled={!user.account || !user.secret || loading}
@@ -322,7 +319,6 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                   {loading && <CircularProgress />}
                   <LoginWithFacebook onSubmit={handleLoginWithAuth} />
                   <LoginWithGoogle onSubmit={handleLoginWithAuth} />
-
                 </Box>
               </form>
               <Typography variant="h3">Demo Credentials</Typography>

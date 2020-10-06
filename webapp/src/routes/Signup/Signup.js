@@ -14,17 +14,17 @@ import {
   CREATE_ACCOUNT_MUTATION,
   SIGNUP_MUTATION,
   CREATE_PRE_REGITER_LIFEBANK_MUTATION,
-  VALIDATE_EMAIL
+  VALIDATION_EMAIL
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
 import SignupRoleSelector from './SignupRoleSelector'
 import ValidateEmail from './ValidateEmail'
 import SignupDonor from './SignupDonor'
-import SignupSponsor from './SignupSponsor/SignupSponsor'
 import SignupLifeBank from './SignupLifeBank'
 import SignupAccount from './SignupAccount'
 import SignupConsent from './SignupConsent'
+import SimpleRegisterForm from './SignupSponsor/SimpleRegisterForm'
 
 const useStyles = makeStyles((theme) => ({
   register: {
@@ -72,11 +72,34 @@ const useStyles = makeStyles((theme) => ({
   text: {
     padding: theme.spacing(0, 2)
   },
+  form: {
+    width: '100%',
+    padding: theme.spacing(0, 2),
+    marginTop: theme.spacing(3)
+  },
+  textFieldWrapper: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  textField: {
+    marginTop: theme.spacing(2),
+    width: '100%'
+  },
+  btnWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: theme.spacing(2, 0)
+  },
   alert: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    width: "100%"
-  },
+    width: '100%'
+  }
 }))
 
 const Signup = () => {
@@ -129,9 +152,9 @@ const Signup = () => {
 
   const handleCreateAccount = () => {
     const { email, secret } = user
-    const name = "undefined"
-    const bcrypt = require('bcryptjs');
-    const saltRounds = 10;
+    const name = 'undefined'
+    const bcrypt = require('bcryptjs')
+    const saltRounds = 10
 
     bcrypt.hash(secret, saltRounds, function (err, hash) {
       if (!err) {
@@ -144,19 +167,16 @@ const Signup = () => {
           }
         })
       }
-    });
+    })
   }
-
 
   const handleCreateAccountWithAuth = async (status, email, name, secret) => {
     if (status) {
-
       const { data } = await checkEmail({ email: email })
 
       if (data.user.length === 0) {
-
-        const bcrypt = require('bcryptjs');
-        const saltRounds = 10;
+        const bcrypt = require('bcryptjs')
+        const saltRounds = 10
 
         bcrypt.hash(secret, saltRounds, function (err, hash) {
           if (!err) {
@@ -169,27 +189,31 @@ const Signup = () => {
               }
             })
           }
-        });
-
+        })
       } else {
-        setErrorMessage("Something happened with the authentication")
+        setErrorMessage('Something happened with the authentication')
       }
     }
   }
 
   const handlePreRegisterLifebank = () => {
-    const { email, password, name, address, schedule, phone, description, coordinates } = user
+    const {
+      email,
+      password,
+      name,
+      address,
+      schedule,
+      phone,
+      description,
+      coordinates
+    } = user
     let { immunity_test, invitation_code, urgency_level } = user
 
-    if (immunity_test === undefined) {
-      immunity_test = false
-    }
-    if (invitation_code === undefined) {
-      invitation_code = " "
-    }
-    if (urgency_level === undefined) {
-      urgency_level = 1
-    }
+    if (immunity_test === undefined) immunity_test = false
+
+    if (invitation_code === undefined) invitation_code = ' '
+
+    if (urgency_level === undefined) urgency_level = 1
 
     preRegisterLifebank({
       variables: {
@@ -208,7 +232,7 @@ const Signup = () => {
     })
   }
 
-  const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
+  const { refetch: checkEmail } = useQuery(VALIDATION_EMAIL, {
     variables: {
       email: user.email
     },
@@ -221,14 +245,14 @@ const Signup = () => {
       const { data } = await checkEmail({
         email: user.email
       })
-      try {
-        if (data.preregister_lifebank.length === 0 && data.user.length === 0) setEmailValid(true)
-        else setEmailValid(false)
-        setcheckEmailLoaded(true)
-      } catch (error) {
 
-      }
+      data.preregister_lifebank.length === 0 && data.user.length === 0
+        ? setEmailValid(true)
+        : setEmailValid(false)
+
+      setcheckEmailLoaded(true)
     }
+
     if (regularExpresion.test(user?.email)) validEmail()
     else {
       setEmailValid(false)
@@ -238,7 +262,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (preRegisterLifebankResult) {
-      alert("successful pre registration")
+      alert('successful pre registration')
       history.replace('/')
     }
   }, [preRegisterLifebankResult])
@@ -254,15 +278,11 @@ const Signup = () => {
   }
 
   useEffect(() => {
-    if (createAccountResult) {
-      login(createAccountResult.token)
-    }
+    if (createAccountResult) login(createAccountResult.token)
   }, [createAccountResult])
 
   useEffect(() => {
-    if (!currentUser) {
-      return
-    }
+    if (!currentUser) return
 
     if (!createAccountResult) {
       history.replace('/profile')
@@ -274,9 +294,7 @@ const Signup = () => {
   }, [currentUser, createAccountResult])
 
   useEffect(() => {
-    if (signupResult) {
-      history.replace('/profile')
-    }
+    if (signupResult) history.replace('/profile')
   }, [signupResult])
 
   const ErrorMessage = () => {
@@ -336,13 +354,12 @@ const Signup = () => {
             <>
               <Typography variant="h4">Pre-register a new account.</Typography>
               <Typography variant="body1" className={classes.text}>
-                To carry out the pre-registration, you must indicate
-                the following data, necessary for the approval of the blood bank
+                To carry out the pre-registration, you must indicate the
+                following data, necessary for the approval of the blood bank
               </Typography>
             </>
           )}
           {activeStep === 1 && role === 'donor' && (
-
             <SignupDonor
               onSubmit={handleCreateAccount}
               onSubmitWithAuth={handleCreateAccountWithAuth}
@@ -361,12 +378,11 @@ const Signup = () => {
             </SignupDonor>
           )}
           {activeStep === 1 && role === 'sponsor' && (
-            <SignupSponsor
+            <SimpleRegisterForm
               onSubmit={handleCreateAccount}
               loading={createAccountLoading}
               setField={handleSetField}
-              user={user}
-              isEmailValid={isEmailValid}
+              classes={classes}
             >
               <ValidateEmail
                 isValid={isEmailValid}
@@ -374,7 +390,7 @@ const Signup = () => {
                 user={user}
                 setField={handleSetField}
               />
-            </SignupSponsor>
+            </SimpleRegisterForm>
           )}
           {activeStep === 1 && role === 'lifebank' && (
             <SignupLifeBank
@@ -406,7 +422,6 @@ const Signup = () => {
     </Grid>
   )
 }
-
 
 Signup.propTypes = {}
 
