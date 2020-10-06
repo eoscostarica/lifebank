@@ -171,16 +171,12 @@ const grantConsent = async account => {
 }
 
 const verifyEmail = async ({ code }) => {
-
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })
   const resLifebank = await preRegLifebank.verifyEmail({
     verification_code: { _eq: code }
   })
-
-  console.log(resLifebank)
-
   let result = false
 
   if (resUser.update_user.affected_rows != 0 || resLifebank.update_preregister_lifebank.affected_rows != 0) {
