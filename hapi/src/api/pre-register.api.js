@@ -19,10 +19,23 @@ const INSERT_LIFEBANK = `
   }
 `
 
+const SET_EMAIL_VERIFIED = `
+  mutation ($where: preregister_lifebank_bool_exp!) {
+    update_preregister_lifebank(where: $where, _set: { email_verified: true }) {
+      affected_rows
+    }
+  }
+`
+
 const insertLifebank = (preregister_lifebank) => {
   return hasuraUtils.request(INSERT_LIFEBANK, { preregister_lifebank })
 }
 
+const verifyEmail = (where) => {
+  return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+}
+
 module.exports = {
-  insertLifebank
+  insertLifebank,
+  verifyEmail
 }

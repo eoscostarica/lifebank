@@ -57,7 +57,7 @@ const EmailVerification = (props) => {
   useEffect(() => {
     if (verifyEmailResult) {
       setLoading(false)
-      console.log("result", verifyEmailResult)
+      setValidate(verifyEmailResult.is_verified)
     }
 
   }, [verifyEmailResult])
@@ -78,7 +78,7 @@ const EmailVerification = (props) => {
             {!loading && !validate &&
               (
                 <Typography variant="h1">
-                  Something happened when trying to verify email
+                  Something happened when trying to verify your email
                 </Typography>
               )
             }
