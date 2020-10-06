@@ -51,16 +51,20 @@ const signup = async (account, profile) => {
   await historyApi.insert(addSponsorTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
 
-  await locationApi.insert({
-    account,
-    name: profile.name,
-    geolocation: {
-      type: 'Point',
-      coordinates: [profile.geolocation.longitude, profile.geolocation.latitude]
-    },
-    type: LOCATION_TYPES.SPONSOR,
-    info: profile
-  })
+  if (profile.geolocation)
+    await locationApi.insert({
+      account,
+      name: profile.name,
+      geolocation: {
+        type: 'Point',
+        coordinates: [
+          profile.geolocation.longitude,
+          profile.geolocation.latitude
+        ]
+      },
+      type: LOCATION_TYPES.SPONSOR,
+      info: profile
+    })
 }
 
 module.exports = {
