@@ -11,6 +11,7 @@ const historyApi = require('./history.api')
 const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
+const verificationCodeApi = require('./verification-code.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
 const create = async ({ role, email, name, secret }) => {
@@ -18,6 +19,7 @@ const create = async ({ role, email, name, secret }) => {
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
   const token = jwtUtils.create({ role, username, account })
+  const { verification_code } = await verificationCodeApi.generate()
 
   await userApi.insert({
     role,
@@ -25,7 +27,8 @@ const create = async ({ role, email, name, secret }) => {
     account,
     email,
     secret,
-    name
+    name,
+    verification_code
   })
   await vaultApi.insert({
     account,
