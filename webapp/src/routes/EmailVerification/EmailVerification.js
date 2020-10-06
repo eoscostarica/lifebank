@@ -40,7 +40,6 @@ const EmailVerification = (props) => {
   const [
     verifyEmail,
     {
-      loading: verifyEmailLoading,
       data: { verify_email: verifyEmailResult } = {}
     }
   ] = useMutation(VERIFY_EMAIL)
