@@ -13,15 +13,7 @@ const INSERT_LIFEBANK = `
       urgency_level
       coordinates
       immunity_test
-      invitation_code
-    }
-  }
-`
-
-const INSERT_VERIFICATION_EMAIL = `
-  mutation ($verification_email: verification_email_insert_input!) {
-    insert_verification_email_one(object: $verification_email) {
-      email
+      invitation_code,
       verification_code
     }
   }
@@ -31,11 +23,6 @@ const insertLifebank = (preregister_lifebank) => {
   return hasuraUtils.request(INSERT_LIFEBANK, { preregister_lifebank })
 }
 
-const insertVerificateEmail = (verification_email) => {
-  return hasuraUtils.request(INSERT_VERIFICATION_EMAIL, { verification_email })
-}
-
 module.exports = {
-  insertLifebank,
-  insertVerificateEmail
+  insertLifebank
 }
