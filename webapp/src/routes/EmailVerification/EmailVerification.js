@@ -58,7 +58,6 @@ const EmailVerification = (props) => {
       setLoading(false)
       setValidate(verifyEmailResult.is_verified)
     }
-
   }, [verifyEmailResult])
 
   return (

@@ -182,9 +182,8 @@ const verifyEmail = async ({ code }) => {
   if (
     resUser.update_user.affected_rows !== 0 ||
     resLifebank.update_preregister_lifebank.affected_rows !== 0
-  ) {
+  )
     result = true
-  }
 
   return {
     is_verified: result
