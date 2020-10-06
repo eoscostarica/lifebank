@@ -11,6 +11,7 @@ const historyApi = require('./history.api')
 const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
+const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
@@ -169,6 +170,26 @@ const grantConsent = async account => {
   return consentTransaction
 }
 
+const verifyEmail = async ({ code }) => {
+  const resUser = await userApi.verifyEmail({
+    verification_code: { _eq: code }
+  })
+  const resLifebank = await preRegLifebank.verifyEmail({
+    verification_code: { _eq: code }
+  })
+  let result = false
+
+  if (
+    resUser.update_user.affected_rows !== 0 ||
+    resLifebank.update_preregister_lifebank.affected_rows !== 0
+  )
+    result = true
+
+  return {
+    is_verified: result
+  }
+}
+
 const login = async ({ account, secret }) => {
   const user = await userApi.getOne({
     _or: [
@@ -249,5 +270,6 @@ module.exports = {
   login,
   grantConsent,
   revokeConsent,
-  transfer
+  transfer,
+  verifyEmail
 }
