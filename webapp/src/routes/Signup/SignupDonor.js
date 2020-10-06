@@ -7,6 +7,8 @@ import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReCAPTCHA from 'react-google-recaptcha'
 
+import SignupWithFacebook from './socialSingup/SignupWithFacebook'
+import SignupWithGoogle from './socialSingup/SignupWithGoogle'
 import { captchaConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,16 +24,25 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   btnWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2)
+    display: 'block',
+    marginBottom: theme.spacing(2),
+    width: "100%"
+  },
+  btnSignup: {
+    display: 'block',
+    marginBottom: theme.spacing(2),
+    width: "40%",
+    margin: "auto",
+    '@media only screen and (max-width: 900px)': {
+      width: "100%",
+    },
   }
+
 }))
 
 const DonorSignup = ({
   onSubmit,
+  onSubmitWithAuth,
   setField,
   user,
   loading,
@@ -46,11 +57,11 @@ const DonorSignup = ({
       <Box className={classes.textFieldWrapper}>
         {children}
         <TextField
-          id="secret"
-          label="Secret"
+          id="password"
+          label="Password"
           type="password"
           fullWidth
-          placeholder="Your Secret"
+          placeholder="Your password"
           variant="outlined"
           InputLabelProps={{
             shrink: true
@@ -58,19 +69,22 @@ const DonorSignup = ({
           onChange={(event) => setField('secret', event.target.value)}
         />
         <ReCAPTCHA
+          style={{ bac: "100%" }}
           sitekey={captchaConfig.sitekey}
           onChange={(value) => serRecaptchaValue(value)}
         />
+
       </Box>
+
       <Box className={classes.btnWrapper}>
         <Button
           disabled={
-            !user.username ||
             !user.secret ||
             !isEmailValid ||
             !recaptchaValue ||
             loading
           }
+          className={classes.btnSignup}
           variant="contained"
           color="primary"
           onClick={onSubmit}
@@ -78,6 +92,11 @@ const DonorSignup = ({
           Create Account
         </Button>
         {loading && <CircularProgress />}
+        <SignupWithFacebook
+          handlerSubmit={onSubmitWithAuth}
+        />
+        <SignupWithGoogle
+          handlerSubmit={onSubmitWithAuth} />
       </Box>
     </form>
   )
@@ -85,6 +104,7 @@ const DonorSignup = ({
 
 DonorSignup.propTypes = {
   onSubmit: PropTypes.func,
+  onSubmitWithAuth: PropTypes.func,
   setField: PropTypes.func,
   user: PropTypes.object,
   loading: PropTypes.bool,

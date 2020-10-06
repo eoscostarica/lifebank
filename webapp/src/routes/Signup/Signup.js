@@ -5,6 +5,8 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import IconButton from '@material-ui/core/IconButton'
+import Alert from '@material-ui/lab/Alert'
+import CloseIcon from '@material-ui/icons/Close'
 import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 
@@ -69,7 +71,12 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     padding: theme.spacing(0, 2)
-  }
+  },
+  alert: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    width: "100%"
+  },
 }))
 
 const Signup = () => {
@@ -83,6 +90,7 @@ const Signup = () => {
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
 
+  const [errorMessage, setErrorMessage] = useState(null)
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
 
@@ -120,14 +128,53 @@ const Signup = () => {
   }
 
   const handleCreateAccount = () => {
-    const { username, secret } = user
-    createAccount({
-      variables: {
-        role,
-        username,
-        secret
+    const { email, secret } = user
+    const name = "undefined"
+    const bcrypt = require('bcryptjs');
+    const saltRounds = 10;
+
+    bcrypt.hash(secret, saltRounds, function (err, hash) {
+      if (!err) {
+        createAccount({
+          variables: {
+            role,
+            email,
+            name,
+            secret: hash
+          }
+        })
       }
-    })
+    });
+  }
+
+
+  const handleCreateAccountWithAuth = async (status, email, name, secret) => {
+    if (status) {
+
+      const { data } = await checkEmail({ email: email })
+
+      if (data.user.length === 0) {
+
+        const bcrypt = require('bcryptjs');
+        const saltRounds = 10;
+
+        bcrypt.hash(secret, saltRounds, function (err, hash) {
+          if (!err) {
+            createAccount({
+              variables: {
+                role,
+                email,
+                name,
+                secret: hash
+              }
+            })
+          }
+        });
+
+      } else {
+        setErrorMessage("Something happened with the authentication")
+      }
+    }
   }
 
   const handlePreRegisterLifebank = () => {
@@ -232,6 +279,31 @@ const Signup = () => {
     }
   }, [signupResult])
 
+  const ErrorMessage = () => {
+    return (
+      <>
+        {errorMessage && (
+          <Alert
+            className={classes.alert}
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => setErrorMessage(null)}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            {errorMessage}
+          </Alert>
+        )}
+      </>
+    )
+  }
+
   return (
     <Grid container className={classes.gridContainer}>
       <Grid item xs={12} sm={8} md={6} className={classes.register}>
@@ -251,6 +323,7 @@ const Signup = () => {
               <SignupRoleSelector onSubmit={handleRoleChange} />
             </>
           )}
+
           {activeStep === 1 && role !== 'lifebank' && (
             <>
               <Typography variant="h4">Create a new account.</Typography>
@@ -269,13 +342,16 @@ const Signup = () => {
             </>
           )}
           {activeStep === 1 && role === 'donor' && (
+
             <SignupDonor
               onSubmit={handleCreateAccount}
+              onSubmitWithAuth={handleCreateAccountWithAuth}
               loading={createAccountLoading}
               setField={handleSetField}
               user={user}
               isEmailValid={isEmailValid}
             >
+              <ErrorMessage />
               <ValidateEmail
                 isValid={isEmailValid}
                 loading={checkEmailLoading}
@@ -330,6 +406,7 @@ const Signup = () => {
     </Grid>
   )
 }
+
 
 Signup.propTypes = {}
 
