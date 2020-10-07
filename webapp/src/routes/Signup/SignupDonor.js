@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
@@ -49,14 +49,26 @@ const DonorSignup = ({
   children
 }) => {
   const classes = useStyles()
+  const [password, setPassword] = useState()
   const [recaptchaValue, serRecaptchaValue] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState()
+  const [error, setError] = useState()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (confirmPassword && confirmPassword !== password)
+        setError({ text: 'Password do not match' })
+      else setError(undefined)
+    }, 1500)
+    return () => clearTimeout(timer)
+  }, [confirmPassword])
 
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         {children}
         <TextField
-          id="password"
+          id="secret"
           label="Password"
           type="password"
           fullWidth
@@ -65,7 +77,26 @@ const DonorSignup = ({
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(event) => setField('secret', event.target.value)}
+          className={classes.textField}
+          onChange={(event) => {
+            setField('secret', event.target.value)
+            setPassword(event.target.value)
+          }}
+        />
+        <TextField
+          id="confirm-password"
+          label="Confirm password"
+          type="password"
+          fullWidth
+          error={error ? true : false}
+          helperText={error && error.text}
+          placeholder="Your confirmation"
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setConfirmPassword(event.target.value)}
         />
         <ReCAPTCHA
           style={{ bac: '100%' }}
@@ -76,7 +107,7 @@ const DonorSignup = ({
 
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={!user.secret || !isEmailValid || !recaptchaValue || loading}
+          disabled={!user.secret || !isEmailValid || !recaptchaValue || loading || error !== undefined}
           className={classes.btnSignup}
           variant="contained"
           color="primary"

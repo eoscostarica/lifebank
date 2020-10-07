@@ -178,7 +178,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
-      const { data } = await checkEmail({ email: email })
+      const { data } = await checkEmail({ account: email })
 
       if (data.user.length === 1) {
         const bcrypt = require('bcryptjs')
