@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -28,9 +27,9 @@ import { constants } from '../../config'
 import { GET_OFFERS_QUERY } from '../../gql'
 
 const { SPONSOR_TYPES } = constants
-const sponsorsCategories = ["All"].concat(SPONSOR_TYPES)
-const offerCategories = ["All", "Discount", "Gift", "Benefit", "Other"]
-const tokenPrices = ["All", "1", "2", "3", "4", "5"];
+const sponsorsCategories = ['All'].concat(SPONSOR_TYPES)
+const offerCategories = ['All', 'Discount', 'Gift', 'Benefit', 'Other']
+const tokenPrices = ['All', '1', '2', '3', '4', '5']
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -76,17 +75,17 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     position: 'absolute',
     width: 400,
-    border: "0px",
-    backgroundColor: "#FFF",
+    border: '0px',
+    backgroundColor: '#FFF',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 4, 3)
   },
   modalTitle: {
     fontSize: 30,
     marginBottom: theme.spacing(4)
   },
   inputStyle: {
-    width: "100%",
+    width: '100%',
     marginBottom: 15
   },
   infoText: {
@@ -103,20 +102,20 @@ function getModalStyle() {
   return {
     top: `50%`,
     left: `50%`,
-    transform: `translate(-50%, -50%)`,
-  };
+    transform: `translate(-50%, -50%)`
+  }
 }
 
 const Offers = () => {
   const classes = useStyles()
-  const [loading, setLoading] = React.useState(true);
-  const [offers, setOffers] = React.useState([]);
-  const [searchInput, setSpensearcInput] = React.useState("");
-  const [valueSponsorCat, setValueSponsorCat] = React.useState("All");
-  const [valueOfferCat, setValueOfferCat] = React.useState("All");
-  const [valueTokenPrice, setValueTokenPrice] = React.useState("All");
-  const [open, setOpen] = React.useState(false);
-  const [modalStyle] = React.useState(getModalStyle);
+  const [loading, setLoading] = React.useState(true)
+  const [offers, setOffers] = React.useState([])
+  const [searchInput, setSpensearcInput] = React.useState('')
+  const [valueSponsorCat, setValueSponsorCat] = React.useState('All')
+  const [valueOfferCat, setValueOfferCat] = React.useState('All')
+  const [valueTokenPrice, setValueTokenPrice] = React.useState('All')
+  const [open, setOpen] = React.useState(false)
+  const [modalStyle] = React.useState(getModalStyle)
 
   const handleChangeSearchInput = (event) => {
     setSpensearcInput(event.target.value)
@@ -142,12 +141,12 @@ const Offers = () => {
   }
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleSaveChanges = () => {
     searchWithFilters()
@@ -159,30 +158,46 @@ const Offers = () => {
     getOffers()
   }
 
-  const { refetch: getAllOffers } = useQuery(GET_OFFERS_QUERY, {
-    active: true,
-  }, { skip: true })
+  const { refetch: getAllOffers } = useQuery(
+    GET_OFFERS_QUERY,
+    {
+      active: true
+    },
+    { skip: true }
+  )
 
   const getOffers = async () => {
     const { data } = await getAllOffers({
-      active: true,
+      active: true
     })
     let dataTemp = data.offer
 
-    if (searchInput !== "") {
-      dataTemp = dataTemp.filter(offer => offer.offer_name.toLowerCase().search(searchInput.toLowerCase()) > 0)
+    if (searchInput !== '') {
+      dataTemp = dataTemp.filter(
+        (offer) =>
+          offer.offer_name.toLowerCase().search(searchInput.toLowerCase()) > 0
+      )
     }
 
-    if (valueOfferCat !== "All") {
-      dataTemp = dataTemp.filter(offer => offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase())
+    if (valueOfferCat !== 'All') {
+      dataTemp = dataTemp.filter(
+        (offer) =>
+          offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase()
+      )
     }
 
-    if (valueSponsorCat !== "All") {
-      dataTemp = dataTemp.filter(offer => offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
+    if (valueSponsorCat !== 'All') {
+      dataTemp = dataTemp.filter(
+        (offer) =>
+          offer.user.location.info.bussines_type.toLowerCase() ===
+          valueSponsorCat.toLowerCase()
+      )
     }
 
-    if (valueTokenPrice !== "All") {
-      dataTemp = dataTemp.filter(offer => offer.cost_in_tokens === parseInt(valueTokenPrice))
+    if (valueTokenPrice !== 'All') {
+      dataTemp = dataTemp.filter(
+        (offer) => offer.cost_in_tokens === parseInt(valueTokenPrice)
+      )
     }
 
     setOffers(dataTemp)
@@ -196,7 +211,11 @@ const Offers = () => {
   const FilterModal = () => {
     return (
       <>
-        <IconButton className={classes.iconButton} aria-label="menu" onClick={handleOpen}>
+        <IconButton
+          className={classes.iconButton}
+          aria-label="menu"
+          onClick={handleOpen}
+        >
           <MenuIcon />
         </IconButton>
         <Modal
@@ -214,7 +233,9 @@ const Offers = () => {
               spacing={0}
             >
               <Grid item xs={12}>
-                <Typography variant="h3" className={classes.modalTitle}>Filters</Typography>
+                <Typography variant="h3" className={classes.modalTitle}>
+                  Filters
+                </Typography>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -267,7 +288,16 @@ const Offers = () => {
                   ))}
                 </TextField>
               </Grid>
-              <Grid item xs={12}><Button variant="contained" color="primary" className={classes.inputStyle} onClick={handleSaveChanges}>Save changes</Button></Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.inputStyle}
+                  onClick={handleSaveChanges}
+                >
+                  Save changes
+                </Button>
+              </Grid>
             </Grid>
           </div>
         </Modal>

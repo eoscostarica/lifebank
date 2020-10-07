@@ -18,8 +18,7 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
     const regularExpresion = /\S+@\S+\.\S+/
     if (regularExpresion.test(email)) {
       return true
-    }
-    else {
+    } else {
       return false
     }
   }
@@ -48,6 +47,8 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
         validateFormatEmail(user.email) && !isValid && loading
           ? 'This email already has an associated account'
           : !isValid
+          ? ''
+          : ''
       }
       error={!isValid && loading && validateFormatEmail(user.email)}
     />

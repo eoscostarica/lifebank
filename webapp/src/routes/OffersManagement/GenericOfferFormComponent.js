@@ -281,7 +281,7 @@ const GenericOfferFormComponent = ({
       onClose={() => setOpen(false)}
       TransitionComponent={Transition}
     >
-      <AppBar className={classes.appBar}>
+      <AppBar>
         <Toolbar>
           <IconButton
             edge="start"
@@ -488,8 +488,8 @@ GenericOfferFormComponent.propTypes = {
   setOpen: PropTypes.func,
   sponsor_id: PropTypes.number,
   isEditing: PropTypes.bool,
-  data: PropTypes.object,
-  setOffers: PropTypes.func
+  setOffers: PropTypes.func,
+  data: PropTypes.object
 }
 
 export default GenericOfferFormComponent

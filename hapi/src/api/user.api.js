@@ -22,7 +22,8 @@ const INSERT = `
       username
       account
       email
-      name
+      name,
+      verification_code
     }
   }
 `
@@ -38,6 +39,14 @@ const SET_EMAIL = `
 const SET_NAME = `
   mutation ($where: user_bool_exp!, $name: String) {
     update_user(where: $where, _set: { name: $name }) {
+      affected_rows
+    }
+  }
+`
+
+const SET_EMAIL_VERIFIED = `
+  mutation ($where: user_bool_exp!) {
+    update_user(where: $where, _set: { email_verified: true }) {
       affected_rows
     }
   }
@@ -63,9 +72,14 @@ const setName = (where, name) => {
   return hasuraUtils.request(SET_NAME, { where, name })
 }
 
+const verifyEmail = (where) => {
+  return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+}
+
 module.exports = {
   getOne,
   insert,
   setEmail,
-  setName
+  setName,
+  verifyEmail
 }

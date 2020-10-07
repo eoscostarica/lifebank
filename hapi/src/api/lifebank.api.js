@@ -8,6 +8,7 @@ const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
 const preregisterApi = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
+const mailApi = require('../utils/mail')
 const {
   constants: {
     ENUM_DATA: { LOCATION_TYPES }
@@ -29,12 +30,11 @@ const preRegister = async ({
   description,
   invitation_code
 }) => {
-  let verification_code = await verificationCodeApi.generate()
+  const { verification_code } = await verificationCodeApi.generate()
   let resultRegister = 'ok'
 
-  verification_code = verification_code.verificationCode
   try {
-    await preregisterApi.insert({
+    await preregisterApi.insertLifebank({
       email,
       password,
       name,
@@ -48,6 +48,8 @@ const preRegister = async ({
       invitation_code,
       verification_code
     })
+
+    mailApi.sendVerificationCode(email, verification_code)
   } catch (error) {
     resultRegister = 'error'
 

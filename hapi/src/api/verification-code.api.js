@@ -1,9 +1,10 @@
+const crypto = require('crypto')
+
 const generate = async () => {
-  const crypto = require('crypto')
-  const verificationCode = crypto.randomBytes(20).toString('hex')
+  const verification_code = crypto.randomBytes(20).toString('hex')
 
   return {
-    verificationCode
+    verification_code
   }
 }
 
