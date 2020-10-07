@@ -15,7 +15,7 @@ const sendVerificationCode = async (to, verficationCode) => {
   })
 
   await transporter.sendMail({
-    from: 'webmaster@lifebank.io',
+    from: 'Lifebank',
     to,
     subject: 'Lifebank Verfication Code',
     html: `
@@ -111,7 +111,7 @@ const sendVerificationCode = async (to, verficationCode) => {
           <body style="background-color: #f6f6f6;">
             <!-- start preheader -->
             <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-              Candidato al CI, Campus Tecnológicos y Centros Académicos.
+              Lifebank email verification.
             </div>
             <!-- end preheader -->
             <!-- start body -->
