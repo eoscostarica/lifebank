@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
+import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import { ReactComponent as ReactLogo } from '../../assets/lifebank.svg'
+import LifeBankIcon from '../LifebankIcon'
 import Carousel, { Dots } from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
-import { ReactComponent as ReactLogo } from '../../assets/lifebank.svg'
 
 const useStyles = makeStyles((theme) => ({
   imageIcon: {
@@ -19,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
     height: '100%'
   },
   carouselContainer: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: 'grid',
+    justifyContent: 'space-between',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '100vh',
+    height: '90vh',
     width: '100%'
   },
   slide: {
@@ -56,56 +58,98 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3)
   },
   nextBtn: {
-    borderRadius: '10px',
-    backgroundColor: theme.palette.secondary.main,
+    borderRadius: '48px',
     height: '32px',
     width: '106px',
+    marginTop: 142,
     verticalAlign: 'middle',
     color: 'white'
+  },
+  carousel: {
+    '& > button.BrainhubCarousel_dot': {
+      backgroundColor: 'transparent'
+    }
+  },
+  mainHeading: {
+    fontSize: 24,
+    letterSpacing: 0.86,
+    fontWeight: 500,
+    lineHeight: 'normal',
+    marginTop: 50,
+    maxWidth: 220,
+    fontStretch: 'normal'
+  },
+  subHeading: {
+    fontSize: 18,
+    fontWeight: 500,
+    maxWidth: 220,
+    fontStyle: 'normal',
+    fontStretch: 'normal'
   }
 }))
 
-const SplashIntro = () => {
+const SplashIntro = ({ skipHandling }) => {
   const classes = useStyles()
-  const [slides, setSlides] = useState([
+  const [index, setIndex] = useState(0)
+  const [slides] = useState([
     <Box className={classes.slide}>
-      <Typography variant="h2" className={classes.capitalize}>
+      <Typography className={clsx(classes.mainHeading, classes.capitalize)}>
         Welcome to
       </Typography>
       <ReactLogo />
-      <Typography variant="h2" className={classes.capitalize}>
+      <Typography
+        variant="h2"
+        className={clsx(classes.subHeading, classes.capitalize)}
+      >
         Let's work together and keep life flowing
       </Typography>
-      <Box>
-        <Button></Button>
-      </Box>
+    </Box>,
+    <Box className={classes.slide}>
+      <Typography
+        variant="h2"
+        className={clsx(classes.mainHeading, classes.capitalize)}
+      >
+        Welcome to
+      </Typography>
+      <ReactLogo />
+      <Typography className={clsx(classes.subHeading, classes.capitalize)}>
+        Let's work together and keep life flowing
+      </Typography>
     </Box>
   ])
 
   return (
     <Box className={classes.carouselContainer}>
       <Box className={classes.slideHeader}>
-        <Button>
+        <Button onClick={() => skipHandling('splash')}>
           <Typography className={classes.caption}>Skip</Typography>
         </Button>
       </Box>
-      <Carousel plugins={['clickToChange']} slides={slides} />
+      <Carousel value={index} slides={slides} />
       <Box className={classes.nextBtnContainer}>
         <Button
           className={classes.nextBtn}
-          // disabled={actualImageIndex === images.length - 1}
-          // onClick={() => setActualImageIndex(actualImageIndex + 1)}
+          disabled={index === slides.length - 1}
+          onClick={() => setIndex(index + 1)}
+          style={{
+            backgroundColor:
+              index === slides.length - 1 ? 'lightgray' : '#B71C1C'
+          }}
         >
           Next
         </Button>
       </Box>
       <Dots
-        value={slides}
-        onChange={(value) => setSlides({ value })}
+        value={index}
+        onChange={(value) => setIndex(value)}
         number={slides.length}
       />
     </Box>
   )
+}
+
+SplashIntro.propTypes = {
+  skipHandling: PropTypes.func
 }
 
 export default SplashIntro

@@ -1,0 +1,9 @@
+.BrainhubCarousel__dots .BrainhubCarousel__dot {
+  background-color: transparent;
+}
+
+.BrainhubCarousel__dots .BrainhubCarousel__dot:before {
+  width: 8px;
+  background-color: #b71c1c;
+  height: 8px;
+}
