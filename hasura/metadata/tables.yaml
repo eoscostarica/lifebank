@@ -323,7 +323,6 @@
       - updated_at
       - name
       filter: {}
-<<<<<<< HEAD
   - role: lifebank
     permission:
       columns:
@@ -343,8 +342,6 @@
       - role
       - username
       filter: {}
-=======
->>>>>>> master
 - table:
     schema: public
     name: vault
