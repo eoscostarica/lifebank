@@ -47,7 +47,9 @@ const verifyEmail = (where) => {
 }
 
 const validationVerificationCode = (verification_code) => {
-  return hasuraUtils.request(VALIDATION_VERIFICATION_CODE, { verification_code })
+  return hasuraUtils.request(VALIDATION_VERIFICATION_CODE, {
+    verification_code
+  })
 }
 
 module.exports = {

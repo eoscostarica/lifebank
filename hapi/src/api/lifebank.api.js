@@ -51,7 +51,6 @@ const preRegister = async ({
 
     mailApi.sendVerificationCode(email, verification_code)
   } catch (error) {
-    console.log("error:", error)
     resultRegister = 'error'
 
     return {
