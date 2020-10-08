@@ -14,8 +14,10 @@ const sendVerificationCode = async (to, verficationCode) => {
     tls: { rejectUnauthorized: false }
   })
 
+  const from = 'Lifebank <webmaster@lifebank.io>'
+
   await transporter.sendMail({
-    from: 'Lifebank',
+    from,
     to,
     subject: 'Lifebank Verfication Code',
     html: `

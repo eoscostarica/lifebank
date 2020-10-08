@@ -137,7 +137,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const { refetch: getHash } = useQuery(GET_SECRET_BY_ACCOUNT, {
     variables: {
-      email: user.email
+      account: user.email
     },
     skip: true
   })
@@ -153,7 +153,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
   const handleLogin = async () => {
     setErrorMessage(null)
     const bcrypt = require('bcryptjs')
-    const { data } = await getHash({ email: user.account })
+    const { data } = await getHash({ account: user.account })
 
     if (data.user.length >= 1) {
       const hash = data.user[0].secret
@@ -178,11 +178,11 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
-      const { data } = await checkEmail({ email: email })
+      const { data } = await checkEmail({ account: email })
 
       if (data.user.length === 1) {
         const bcrypt = require('bcryptjs')
-        const { data } = await getHash({ email: email })
+        const { data } = await getHash({ account: email })
         const hash = data.user[0].secret
 
         bcrypt.compare(secret, hash, function (err, res) {

@@ -54,7 +54,7 @@ const SimpleRegisterForm = ({
           label="Confirm password"
           type="password"
           fullWidth
-          error={error ? true : false}
+          error={error}
           helperText={error && error.text}
           placeholder="Your confirmation"
           variant="outlined"
