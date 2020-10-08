@@ -304,7 +304,7 @@ const OffersManagement = () => {
         : null}
       {offerToEdit ? getGenericOfferComponent(true, offerToEdit) : null}
       <Dialog open={openDeleteDialog} aria-labelledby="delete-dialog-title">
-        <DialogTitle id="delete-dialog-title">{'Delete offer?'}</DialogTitle>
+        <DialogTitle id="delete-dialog-title">Delete offer?</DialogTitle>
         <DialogActions>
           <Button
             autoFocus
