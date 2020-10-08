@@ -6,7 +6,6 @@ import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { ReactComponent as ReactLogo } from '../../assets/lifebank.svg'
-import LifeBankIcon from '../LifebankIcon'
 import Carousel, { Dots } from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 
@@ -83,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     fontWeight: 500,
     maxWidth: 220,
+    marginTop: 73,
     fontStyle: 'normal',
     fontStretch: 'normal'
   }
@@ -96,7 +96,7 @@ const SplashIntro = ({ skipHandling }) => {
       <Typography className={clsx(classes.mainHeading, classes.capitalize)}>
         Welcome to
       </Typography>
-      <ReactLogo />
+      <ReactLogo style={{ marginTop: 67 }} />
       <Typography
         variant="h2"
         className={clsx(classes.subHeading, classes.capitalize)}
