@@ -92,10 +92,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 30,
     marginBottom: theme.spacing(4)
   },
-
-
-
-
 }))
 
 function getModalStyle() {
