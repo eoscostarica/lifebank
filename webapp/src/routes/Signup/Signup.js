@@ -211,7 +211,7 @@ const Signup = () => {
 
     if (immunity_test === undefined) immunity_test = false
 
-    if (invitation_code === undefined) invitation_code = ' '
+    if (invitation_code === undefined || !invitation_code) invitation_code = ' '
 
     if (urgency_level === undefined) urgency_level = 1
 
