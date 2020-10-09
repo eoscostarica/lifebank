@@ -32,10 +32,12 @@ const create = async ({ role, email, name, secret }) => {
     name,
     verification_code
   })
+
   await vaultApi.insert({
     account,
     password
   })
+
   await historyApi.insert(transaction)
 
   mailApi.sendVerificationCode(email, verification_code)

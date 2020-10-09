@@ -7,8 +7,11 @@ import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
-    maxHeight: 430,
+    maxHeight: 300,
     margin: 'auto',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
     '& > div.MuiCard-root': {
       padding: theme.spacing(2),
       backgroundColor: 'transparent',
