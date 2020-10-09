@@ -21,8 +21,16 @@ const App = ({ ual }) => {
         sidebarContent={<SideBar user={currentUser} onLogout={logout} />}
       >
         <Grid container>
-          {!cookies['splash'] ? (
-            <SplashIntro skipHandling={(cookie) => setCookie(cookie)} />
+          {!cookies.splash ? (
+            <SplashIntro
+              skipHandling={(cookie) => {
+                const d = new Date()
+                d.setMonth(d.getMonth() + 3)
+                setCookie(cookie, undefined, {
+                  expires: d
+                })
+              }}
+            />
           ) : (
             <Switch>
               {routes.map(({ path, component: Component, ...args }) => (

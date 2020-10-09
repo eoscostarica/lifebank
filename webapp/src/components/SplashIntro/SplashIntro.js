@@ -5,7 +5,10 @@ import Box from '@material-ui/core/Box'
 import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import { ReactComponent as ReactLogo } from '../../assets/lifebank.svg'
+import { ReactComponent as FirstLogo } from '../../assets/lifebank.svg'
+import { ReactComponent as SecondLogo } from '../../assets/second.svg'
+import { ReactComponent as ThirdLogo } from '../../assets/third.svg'
+import { ReactComponent as FourthLogo } from '../../assets/fourth.svg'
 import Carousel, { Dots } from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   carouselContainer: {
     display: 'grid',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
     height: '90vh',
@@ -60,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '48px',
     height: '32px',
     width: '106px',
-    marginTop: 142,
     verticalAlign: 'middle',
     color: 'white'
   },
@@ -74,15 +76,13 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: 0.86,
     fontWeight: 500,
     lineHeight: 'normal',
-    marginTop: 50,
-    maxWidth: 220,
+    textAlign: 'center',
     fontStretch: 'normal'
   },
-  subHeading: {
-    fontSize: 18,
+  medium: {
+    fontSize: 14,
     fontWeight: 500,
-    maxWidth: 220,
-    marginTop: 73,
+    letterSpacing: 0.5,
     fontStyle: 'normal',
     fontStretch: 'normal'
   }
@@ -92,29 +92,88 @@ const SplashIntro = ({ skipHandling }) => {
   const classes = useStyles()
   const [index, setIndex] = useState(0)
   const [slides] = useState([
-    <Box className={classes.slide}>
+    <Box className={classes.slide} key={0}>
       <Typography className={clsx(classes.mainHeading, classes.capitalize)}>
         Welcome to
       </Typography>
-      <ReactLogo style={{ marginTop: 67 }} />
-      <Typography
-        variant="h2"
-        className={clsx(classes.subHeading, classes.capitalize)}
+      <FirstLogo style={{ marginTop: 67 }} />
+      <Box
+        style={{
+          margin: 'auto',
+          marginTop: 50,
+          maxWidth: 175,
+          textAlign: 'center'
+        }}
       >
-        Let's work together and keep life flowing
-      </Typography>
+        <Typography
+          variant="h2"
+          className={clsx(classes.medium, classes.capitalize)}
+        >
+          Let's work together and keep life flowing
+        </Typography>
+      </Box>
     </Box>,
-    <Box className={classes.slide}>
-      <Typography
-        variant="h2"
-        className={clsx(classes.mainHeading, classes.capitalize)}
+    <Box className={classes.slide} key={1}>
+      <Box
+        style={{
+          margin: 'auto',
+          maxWidth: 175,
+          textAlign: 'center'
+        }}
       >
-        Welcome to
-      </Typography>
-      <ReactLogo />
-      <Typography className={clsx(classes.subHeading, classes.capitalize)}>
-        Let's work together and keep life flowing
-      </Typography>
+        <Typography
+          variant="h2"
+          className={clsx(classes.mainHeading, classes.capitalize)}
+        >
+          Lifebank
+        </Typography>
+        <Typography
+          variant="h2"
+          className={clsx(classes.medium, classes.capitalize)}
+          style={{ marginTop: '0 !important' }}
+        >
+          Is a place where you can donate blood
+        </Typography>
+      </Box>
+      <SecondLogo />
+    </Box>,
+    <Box className={classes.slide} key={2}>
+      <Box style={{ margin: 'auto', maxWidth: 317, textAlign: 'center' }}>
+        <Typography
+          variant="h2"
+          className={clsx(classes.mainHeading, classes.capitalize)}
+        >
+          Sponsors
+        </Typography>
+        <Typography
+          variant="h2"
+          className={clsx(classes.medium, classes.capitalize)}
+          style={{ marginTop: '0 !important' }}
+        >
+          Are businesses that will reward people that have donated through a
+          lifebank
+        </Typography>
+      </Box>
+      <ThirdLogo />
+    </Box>,
+    <Box className={classes.slide} key={3}>
+      <Box style={{ margin: 'auto', maxWidth: 317, textAlign: 'center' }}>
+        <Typography
+          variant="h2"
+          className={clsx(classes.mainHeading, classes.capitalize)}
+        >
+          Donors
+        </Typography>
+        <Typography
+          variant="h2"
+          className={clsx(classes.medium, classes.capitalize)}
+          style={{ marginTop: '0 !important' }}
+        >
+          Will donate blood and be rewarded with life tokens which they can
+          redeem at their convenience with sponsors of the community.
+        </Typography>
+      </Box>
+      <FourthLogo />
     </Box>
   ])
 
@@ -129,14 +188,16 @@ const SplashIntro = ({ skipHandling }) => {
       <Box className={classes.nextBtnContainer}>
         <Button
           className={classes.nextBtn}
-          disabled={index === slides.length - 1}
-          onClick={() => setIndex(index + 1)}
+          onClick={() =>
+            index === slides.length - 1
+              ? skipHandling('splash')
+              : setIndex(index + 1)
+          }
           style={{
-            backgroundColor:
-              index === slides.length - 1 ? 'lightgray' : '#B71C1C'
+            backgroundColor: '#B71C1C'
           }}
         >
-          Next
+          {index === slides.length - 1 ? 'Start' : 'Next'}
         </Button>
       </Box>
       <Dots
