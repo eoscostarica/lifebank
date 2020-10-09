@@ -1,28 +1,17 @@
-
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { useQuery } from '@apollo/react-hooks'
+
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Avatar from '@material-ui/core/Avatar';
-import StorefrontIcon from '@material-ui/icons/Storefront';
-
-import { GET_OFFERS_QUERY, GET_LOCATIONS_QUERY } from '../../gql'
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -63,32 +52,35 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.43,
     letterSpacing: "0.25px",
   },
+
+
+  modal: {
+    position: 'absolute',
+    width: 400,
+    border: '0px',
+    backgroundColor: '#FFF',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
+  },
+  modalTitle: {
+    fontSize: 30,
+    marginBottom: theme.spacing(4)
+  },
+  inputStyle: {
+    width: '100%',
+    marginBottom: 15
+  },
+  infoText: {
+    fontSize: 30,
+    marginBottom: theme.spacing(4)
+  },
 }))
 
 
-
-const Sponsors = () => {
+const ShowOffers = ({ offers, loading }) => {
   const classes = useStyles()
-  const [loading, setLoading] = React.useState(true);
-  const [sponsors, setSponsors] = React.useState([]);
 
-
-  const { refetch: getAllSponsors } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true })
-
-  const getSponsors = async () => {
-    const { data } = await getAllSponsors({})
-    let dataTemp = data.location
-    dataTemp = dataTemp.filter(bank => bank.type === "SPONSOR")
-    setSponsors(dataTemp)
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    getSponsors()
-  }, [getAllSponsors])
-
-
-  const LoadSponsors = () => {
+  const LoadOffers = () => {
     return (
       <>
         {loading &&
@@ -97,62 +89,69 @@ const Sponsors = () => {
           </Box>
 
         }
-        {!loading && sponsors.length <= 0 && (
+        {!loading && offers.length <= 0 && (
           <ListItem className={classes.listItem} >
             <ListItemText
               primary={
-                <Typography className={classes.listItemPrimaryText} noWrap variant="body2">No sponsors available</Typography>
+                <Typography className={classes.listItemPrimaryText} noWrap variant="body2">No offers available</Typography>
               }
             />
           </ListItem>
         )}
-        {!loading && sponsors.length > 0 && sponsors.map(sponsor => (
-          <SponsorItem
-            key={sponsor.id}
-            id={sponsor.id}
-            name={sponsor.name}
-            bussines_type={sponsor.info.bussines_type}
+        {!loading && offers.length > 0 && offers.map(offer => (
+          <OfferItem
+            key={offer.id}
+            id={offer.id}
+            title={offer.offer_name}
+            description={offer.description}
+            img={offer.images}
           />
         ))}
       </>
     )
   }
 
-  const SponsorItem = (props) => {
-    //const LinkTo = "/offer/" + props.id
+  const OfferItem = (props) => {
 
     return (
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
-          <Avatar>
-            <StorefrontIcon />
-          </Avatar>
+          <Avatar src={props.img} />
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.name}</Typography>
+            <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.title}</Typography>
           }
           secondary={
-            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bussines_type}</Typography>
+            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.description}</Typography>
           }
         />
+        <ListItemSecondaryAction>
+          <LocalOfferIcon className={classes.secondaryIconList} />
+        </ListItemSecondaryAction>
       </ListItem>
 
     )
   }
 
-  SponsorItem.propTypes = {
+  OfferItem.propTypes = {
     id: PropTypes.number,
-    name: PropTypes.string,
-    bussines_type: PropTypes.string,
+    img: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
   }
 
   return (
     <List className={classes.list} >
-      <LoadSponsors />
+      <LoadOffers />
     </List>
 
   )
 }
 
-export default Sponsors
+ShowOffers.propTypes = {
+  offers: PropTypes.array,
+  loading: PropTypes.bool,
+}
+
+export default ShowOffers

@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
+import { useCookies } from 'react-cookie';
+import PropTypes from 'prop-types'
+import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -15,6 +16,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 import { constants } from '../../config'
+import { GET_OFFERS_QUERY, GET_LOCATIONS_QUERY } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   closeIcon: {
@@ -53,53 +55,97 @@ const sponsorsCategories = ['All'].concat(SPONSOR_TYPES)
 const offerCategories = ['All', 'Discount', 'Gift', 'Benefit', 'Other']
 const tokenPrices = ['All', '1', '2', '3', '4', '5']
 
-const FilterHome = () => {
+
+const FilterHome = ({
+  handlerApplyFilterOffer,
+  openDialogFilter,
+  setOpenDialogFilter,
+}) => {
+
   const classes = useStyles()
-  const [open, setOpen] = useState(false)
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [maxWidth] = React.useState('md');
-  const [loading, setLoading] = React.useState(true)
-  const [valueSponsorCat, setValueSponsorCat] = React.useState('All')
-  const [valueOfferCat, setValueOfferCat] = React.useState('All')
-  const [valueTokenPrice, setValueTokenPrice] = React.useState('All')
+  const [maxWidth] = useState('md');
+  const [cookies, setCookie] = useCookies(['valueSponsorCat', 'valueOfferCat', 'valueTokenPrice']);
+
+  const [valueSponsorCat, setValueSponsorCat] = useState(cookies.valueSponsorCat)
+  const [valueOfferCat, setValueOfferCat] = useState(cookies.valueOfferCat)
+  const [valueTokenPrice, setValueTokenPrice] = useState(cookies.valueTokenPrice)
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenDialogFilter(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenDialogFilter(false);
   };
-
-  const handleChangeLoadingFalse = (event) => {
-    setLoading(false)
-  }
-
-  const handleChangeLoadingTrue = (event) => {
-    setLoading(true)
-  }
 
   const handleChangeSponsorsCat = (event) => {
     setValueSponsorCat(event.target.value)
+
   }
+
   const handleChangeOfferCat = (event) => {
     setValueOfferCat(event.target.value)
+
   }
 
   const handleChangeTokenPrice = (event) => {
     setValueTokenPrice(event.target.value)
-  }
 
+  }
 
   const handleSaveChanges = () => {
-    //searchWithFilters()
-    //handleClose()
+    getOffers()
+    setCookie('valueSponsorCat', valueSponsorCat, { path: '/' })
+    setCookie('valueOfferCat', valueOfferCat, { path: '/' })
+    setCookie('valueTokenPrice', valueTokenPrice, { path: '/' })
+    handleClose()
   }
 
-  const searchWithFilters = () => {
-    //handleChangeLoadingTrue()
-    //getOffers()
+
+  const { refetch: getAllOffers } = useQuery(
+    GET_OFFERS_QUERY,
+    {
+      active: true
+    },
+    { skip: true }
+  )
+
+  const getOffers = async () => {
+    const { data } = await getAllOffers({
+      active: true
+    })
+    let dataTemp = data.offer
+
+    /*
+    if (searchInput !== '') {
+      dataTemp = dataTemp.filter(
+        (offer) =>
+          offer.offer_name.toLowerCase().search(searchInput.toLowerCase()) > 0
+      )
+    }*/
+
+    if (valueOfferCat !== 'All') {
+      dataTemp = dataTemp.filter(
+        (offer) =>
+          offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase()
+      )
+    }
+
+    if (valueSponsorCat !== 'All') {
+      dataTemp = dataTemp.filter(
+        (offer) =>
+          offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase()
+      )
+    }
+
+    if (valueTokenPrice !== 'All') {
+      dataTemp = dataTemp.filter(
+        (offer) => offer.cost_in_tokens === parseInt(valueTokenPrice)
+      )
+    }
+
+    handlerApplyFilterOffer(dataTemp)
   }
 
 
@@ -109,10 +155,9 @@ const FilterHome = () => {
         <FilterListIcon className={classes.iconBottomAppBar} />
       </IconButton>
       <Dialog
-        //fullScreen={fullScreen}
         maxWidth={maxWidth}
         className={classes.dialog}
-        open={open}
+        open={openDialogFilter}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
@@ -202,10 +247,12 @@ const FilterHome = () => {
 }
 
 FilterHome.propTypes = {
+  handlerApplyFilterOffer: PropTypes.func,
+  openDialogFilter: PropTypes.bool,
 }
 
 FilterHome.defaultProps = {
-  useButton: false
+  openDialogFilter: false,
 }
 
 export default FilterHome
