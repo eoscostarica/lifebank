@@ -170,8 +170,24 @@ ACTION lifebankcode::uplifebank(eosio::name account, string lifebank_name,
   }
 }
 
-ACTION lifebankcode::addsponsor(eosio::name account, string sponsor_name, string covid_impact, string benefit_description,
-                                string website, string telephone, string bussines_type, string schedule, string email, eosio::asset community_asset, string location)
+ACTION lifebankcode::addsponsor(
+  eosio::name account, 
+  string sponsor_name, 
+  string covid_impact, 
+  string benefit_description,
+  string website, 
+  string telephones, 
+  string business_type, 
+  string schedule, 
+  string email,
+  eosio::asset community_asset, 
+  string location,
+  string address,
+  string logo_url,
+  string about,
+  string social_media_links,
+  string photos
+)
 {
   require_auth(account);
   check_consent(account);

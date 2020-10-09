@@ -1,8 +1,10 @@
 import CarouselComponent from '../../components/Carousel'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
+import Alert from '@material-ui/lab/Alert'
+import LinearProgress from '@material-ui/core/LinearProgress'
 import { Link as LinkRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -58,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     height: '65px',
     borderRadius: '50%',
     marginBottom: '30px'
+  },
+  divProgressProfile: {
+    width: '100%',
+    marginBottom: '40px'
   }
 }))
 
@@ -66,8 +72,86 @@ const ProfilePageLifebank = ({ profile }) => {
   let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
   const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
 
+  const [pendingFields, setPendingFields] = useState()
+
+  const checkAvailableFields = () => {
+    let pendingFieldsObject = {}
+
+    if (profile.email)
+      pendingFieldsObject = { ...pendingFieldsObject, email: false }
+
+    if (Object.keys(pendingFieldsObject).length > 0)
+      setPendingFields(pendingFieldsObject)
+  }
+
+  useEffect(() => {
+    if (profile) {
+      //if (profile.photos) profile.photos = JSON.parse(profile.photos)
+      //if (profile.telephones)
+      //profile.telephones = JSON.parse(profile.telephones)
+      checkAvailableFields()
+    }
+  }, [profile])
+
   return (
     <>
+      <div className={classes.divProgressProfile}>
+        {pendingFields && (
+          <Grid style={{ maxWidth: 500, margin: 'auto' }} item>
+            <Alert
+              action={
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
+                  <LinkRouter
+                    style={{ textDecoration: 'none' }}
+                    to={{
+                      pathname: '/edit-profile',
+                      state: { isCompleting: true }
+                    }}
+                  >
+                    <Button
+                      color="secondary"
+                      className={classes.noCapitalize}
+                      classes={{
+                        root: classes.editBtn
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </LinkRouter>
+                </Box>
+              }
+              className={classes.alert}
+              severity="info"
+            >
+              <Typography>Your profile is not complete </Typography>
+              <Box display="flex" alignItems="center">
+                <Box width="100%" mr={1}>
+                  <LinearProgress
+                    variant="determinate"
+                    color="secondary"
+                    className={classes.customizedLinearProgress}
+                    value={
+                      ((15 - Object.keys(pendingFields).length) * 100) / 15
+                    }
+                  />
+                </Box>
+                <Box minWidth={35}>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                  >{`${Math.round(
+                    ((15 - Object.keys(pendingFields).length) * 100) / 15
+                  )}%`}</Typography>
+                </Box>
+              </Box>
+            </Alert>
+          </Grid>
+        )}
+      </div>
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Logo</Typography>
         <img className={classes.img} src={logo} alt={'logo image'} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
@@ -25,8 +25,14 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 
-import { LOGIN_MUTATION } from '../../gql'
+import {
+  LOGIN_MUTATION,
+  VALIDATE_EMAIL,
+  GET_SECRET_BY_ACCOUNT
+} from '../../gql'
 import { useUser } from '../../context/user.context'
+import LoginWithFacebook from './LoginWithFacebook'
+import LoginWithGoogle from './LoginWithGoogle'
 
 const rows = [
   {
@@ -90,7 +96,8 @@ const useStyles = makeStyles((theme) => ({
   },
   btnWrapper: {
     display: 'flex',
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(1),
+    width: '100%'
   },
   loginBtn: {
     display: 'flex',
@@ -121,6 +128,20 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
   const [open, setOpen] = useState(false)
 
+  const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
+    variables: {
+      email: user.email
+    },
+    skip: true
+  })
+
+  const { refetch: getHash } = useQuery(GET_SECRET_BY_ACCOUNT, {
+    variables: {
+      account: user.email
+    },
+    skip: true
+  })
+
   const handleOpen = () => {
     setOpen(!open)
   }
@@ -129,13 +150,58 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setErrorMessage(null)
-    loginMutation({
-      variables: {
-        ...user
+    const bcrypt = require('bcryptjs')
+    const { data } = await getHash({ account: user.account })
+
+    if (data.user.length >= 1) {
+      const hash = data.user[0].secret
+
+      bcrypt.compare(user.secret, hash, function (err, res) {
+        if (!err && res) {
+          setErrorMessage(null)
+          loginMutation({
+            variables: {
+              account: user.account,
+              secret: hash
+            }
+          })
+        } else {
+          setErrorMessage('Invalid account or secret')
+        }
+      })
+    } else {
+      setErrorMessage("This account doesn't exist, please sign up")
+    }
+  }
+
+  const handleLoginWithAuth = async (status, email, secret) => {
+    if (status) {
+      const { data } = await checkEmail({ account: email })
+
+      if (data.user.length === 1) {
+        const bcrypt = require('bcryptjs')
+        const { data } = await getHash({ account: email })
+        const hash = data.user[0].secret
+
+        bcrypt.compare(secret, hash, function (err, res) {
+          if (!err && res) {
+            setErrorMessage(null)
+            loginMutation({
+              variables: {
+                account: email,
+                secret: hash
+              }
+            })
+          }
+        })
+      } else {
+        setErrorMessage("This account doesn't exist, please sign up")
       }
-    })
+    } else {
+      setErrorMessage('Something happened with the authentication')
+    }
   }
 
   useEffect(() => {
@@ -218,7 +284,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                 <Box className={classes.textFieldWrapper}>
                   <TextField
                     id="account"
-                    label="Account"
+                    label="Email"
                     variant="outlined"
                     InputLabelProps={{
                       shrink: true
@@ -229,7 +295,7 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                   />
                   <TextField
                     id="secret"
-                    label="Secret"
+                    label="Password"
                     type="password"
                     variant="outlined"
                     InputLabelProps={{
@@ -240,8 +306,9 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                     }
                   />
                 </Box>
-                <Box className={classes.btnWrapper}>
+                <Box>
                   <Button
+                    className={classes.btnWrapper}
                     disabled={!user.account || !user.secret || loading}
                     variant="contained"
                     color="primary"
@@ -250,6 +317,8 @@ const LoginModal = ({ overrideBoxClass, overrideLabelClass }) => {
                     Login
                   </Button>
                   {loading && <CircularProgress />}
+                  <LoginWithFacebook onSubmit={handleLoginWithAuth} />
+                  <LoginWithGoogle onSubmit={handleLoginWithAuth} />
                 </Box>
               </form>
               <Typography variant="h3">Demo Credentials</Typography>

@@ -96,7 +96,7 @@
                     "type": "string"
                 },
                 {
-                    "name": "bussines_type",
+                    "name": "business_type",
                     "type": "string"
                 },
                 {
