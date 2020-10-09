@@ -8,9 +8,12 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import CarouselComponent from '../../components/Carousel'
+import Carousel from '../../components/Carousel'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import AddIcon from '@material-ui/icons/Add'
+import IconButton from '@material-ui/core/IconButton'
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 import Schedule from '../../components/Schedule'
 import MapEditLocation from '../../components/MapEditLocation'
@@ -165,6 +168,22 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
     }
   }
 
+  const validateimageTextFile = (textFileTipe) => {
+    if (textFileTipe === 1) {
+      if (imgUrlLogoValueRef.current.value !== '') {
+        logo = imgUrlLogoValueRef.current.value
+        imgUrlLogoValueRef.current.value = ''
+      }
+    }
+    else {
+      console.log("imgUrlValueRef:", imgUrlValueRef)
+      if (imgUrlValueRef.current.value !== '') {
+        arrayImage.push(imgUrlValueRef.current.value)
+        imgUrlValueRef.current.value = ''
+      }
+    }
+  }
+
   const handleOnAddSchedule = useCallback(
     (data) => handleSetField('schedule', JSON.stringify(data)),
     [setField]
@@ -183,39 +202,42 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         </Box>
         <div className={classes.carouselDiv}>
           {arrayImage.length > 0 && (
-            <>{arrayImage && <Grid container justify="center">{console.log("logo:", logo)}
+            <>{arrayImage && <Grid container justify="center">
               <img className={classes.img} src={logo} alt={'logo image'} />
             </Grid>} </>
           )}
         </div>
         <TextField
-          id="image-url"
+          id="logo-url"
           label="Logo url"
           variant="outlined"
-          placeholder="logo url here"
+          placeholder="Logo url here"
           fullWidth
           inputRef={imgUrlLogoValueRef}
+          onChange={(e) => setDisableUrlLogoInput(e.target.value.length < 1)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  //disabled={disableUrlLogoInput}
+                  color="secondary"
+                  aria-label="add photo url"
+                  onClick={() => {
+                    validateimageTextFile(1)
+                  }}
+                  disabled={disableUrlLogoInput}
+                >
+                  <AddIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(e) => setDisableUrlLogoInput(e.target.value.length < 1)}
           className={classes.textField}
         />
-        <Box className={classes.addButtonContainer}>
-          <Button
-            onClick={() => {
-              logo = imgUrlLogoValueRef.current.value
-              imgUrlLogoValueRef.current.value = ''
-              console.log("logo:", logo.length)
-            }}
-            disabled={disableUrlLogoInput}
-            size="small"
-            color="secondary"
-            startIcon={<AddIcon />}
-          >
-            Add url
-          </Button>
-        </Box>
+
         <TextField
           id="fullname"
           label="Organization"
@@ -268,7 +290,6 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
             handleSetField('description', event.target.value)
           }
         />
-
         <Box width="100%" className={classes.textField}>
           <Schedule
             buttonText="Edit Schedule"
@@ -277,7 +298,6 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
             handleOnAddSchedule={handleOnAddSchedule}
           />
         </Box>
-
         <Box className={classes.marginTitule}>
           <Typography variant="h4">Images</Typography>
           <Typography variant="body1" />
@@ -289,34 +309,28 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
           placeholder="Image url here"
           fullWidth
           inputRef={imgUrlValueRef}
+          onChange={(e) => setDisableUrlInput(e.target.value.length < 1)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  color="secondary"
+                  aria-label="add photo url"
+                  onClick={() => {
+                    validateimageTextFile(0)
+                  }}
+                  disabled={disableUrlInput}
+                >
+                  <AddIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(e) => setDisableUrlInput(e.target.value.length < 1)}
           className={classes.textField}
         />
-        <Box className={classes.addButtonContainer}>
-          <div>
-            {arrayImage.length < 1 ? (
-              <Typography variant="caption">
-                You need to add least one image url
-              </Typography>
-            ) : null}
-          </div>
-          <Button
-            onClick={() => {
-              arrayImage.push(imgUrlValueRef.current.value)
-              imgUrlValueRef.current.value = ''
-              console.log("arrayImage:", arrayImage)
-            }}
-            disabled={disableUrlInput}
-            size="small"
-            color="secondary"
-            startIcon={<AddIcon />}
-          >
-            Add url
-          </Button>
-        </Box>
         <div className={classes.carouselDiv}>
           {arrayImage.length > 0 && (
             <>{arrayImage && <Grid container justify="center">
@@ -328,13 +342,17 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
                 lg={4}
                 className={classes.carouselComponent}
               >
-                <CarouselComponent images={arrayImage} />
+                <Carousel
+                  deleteItem={(url) => {
+                    arrayImage.filter((p) => p !== url)
+                  }}
+                  activeDeletion
+                  images={arrayImage}
+                />
               </Grid>
             </Grid>} </>
           )}
         </div>
-
-
         <Box className={classes.marginTitule}>
           <Typography variant="h4">Location</Typography>
           <Typography variant="body1" />

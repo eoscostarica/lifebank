@@ -315,9 +315,8 @@ const ProfilePageSponsor = ({ profile }) => {
           className={classes.rowBox}
         >
           <Typography variant="subtitle1">Consent</Typography>
-          <Typography variant="body1">{`${
-            profile.consent ? 'Approved' : 'Denied'
-          }`}</Typography>
+          <Typography variant="body1">{`${profile.consent ? 'Approved' : 'Denied'
+            }`}</Typography>
         </Box>
 
         {profile.photos &&
