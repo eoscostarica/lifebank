@@ -92,6 +92,15 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
+- name: verify_email
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/verify-email
+  permissions:
+  - role: donor
+  - role: guest
+  - role: lifebank
+  - role: sponsor
 custom_types:
   enums: []
   input_objects: []
@@ -109,4 +118,5 @@ custom_types:
   - name: edit_profile_output
   - name: get_contract_output
   - name: create_pre_register_lifebank_output
+  - name: verify_email_output
   scalars: []

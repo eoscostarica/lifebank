@@ -101,3 +101,33 @@ export const EDIT_PROFILE_MUTATION = gql`
     }
   }
 `
+
+
+export const VERIFY_EMAIL = gql`
+  mutation($code: String!) {
+    verify_email(code: $code) {
+      is_verified
+    }
+  }
+`
+export const VALIDATE_EMAIL = gql`
+  query($email: String!) {
+    user(where: { email: { _eq: $email } }) {
+      email
+    }
+  }
+`
+
+export const GET_SECRET_BY_ACCOUNT = gql`
+  query($account: String!) {
+    user(where: {
+      _or: [
+        { account: { _eq: $account } },
+        { username: { _eq: $account } },
+        { email: { _eq: $account } }
+      ]
+    }) {
+      secret
+    }
+  }
+`

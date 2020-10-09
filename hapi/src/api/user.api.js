@@ -44,6 +44,14 @@ const SET_NAME = `
   }
 `
 
+const SET_EMAIL_VERIFIED = `
+  mutation ($where: user_bool_exp!) {
+    update_user(where: $where, _set: { email_verified: true }) {
+      affected_rows
+    }
+  }
+`
+
 const getOne = async (where = {}) => {
   const { user } = await hasuraUtils.request(GET_ONE, { where })
 
@@ -64,9 +72,14 @@ const setName = (where, name) => {
   return hasuraUtils.request(SET_NAME, { where, name })
 }
 
+const verifyEmail = (where) => {
+  return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+}
+
 module.exports = {
   getOne,
   insert,
   setEmail,
-  setName
+  setName,
+  verifyEmail
 }

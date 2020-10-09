@@ -5,6 +5,8 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import IconButton from '@material-ui/core/IconButton'
+import Alert from '@material-ui/lab/Alert'
+import CloseIcon from '@material-ui/icons/Close'
 import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 
@@ -12,7 +14,7 @@ import {
   CREATE_ACCOUNT_MUTATION,
   SIGNUP_MUTATION,
   CREATE_PRE_REGITER_LIFEBANK_MUTATION,
-  VALIDATE_EMAIL
+  VALIDATION_EMAIL
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
@@ -92,6 +94,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     margin: theme.spacing(2, 0)
+  },
+  alert: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    width: '100%'
   }
 }))
 
@@ -106,6 +113,7 @@ const Signup = () => {
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
 
+  const [errorMessage, setErrorMessage] = useState(null)
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
 
@@ -145,14 +153,47 @@ const Signup = () => {
   const handleCreateAccount = () => {
     const { email, secret } = user
     const name = 'undefined'
-    createAccount({
-      variables: {
-        role,
-        email,
-        name,
-        secret
+    const bcrypt = require('bcryptjs')
+    const saltRounds = 10
+
+    bcrypt.hash(secret, saltRounds, function (err, hash) {
+      if (!err) {
+        createAccount({
+          variables: {
+            role,
+            email,
+            name,
+            secret: hash
+          }
+        })
       }
     })
+  }
+
+  const handleCreateAccountWithAuth = async (status, email, name, secret) => {
+    if (status) {
+      const { data } = await checkEmail({ email: email })
+
+      if (data.user.length === 0) {
+        const bcrypt = require('bcryptjs')
+        const saltRounds = 10
+
+        bcrypt.hash(secret, saltRounds, function (err, hash) {
+          if (!err) {
+            createAccount({
+              variables: {
+                role,
+                email,
+                name,
+                secret: hash
+              }
+            })
+          }
+        })
+      } else {
+        setErrorMessage('Something happened with the authentication')
+      }
+    }
   }
 
   const handlePreRegisterLifebank = () => {
@@ -170,7 +211,7 @@ const Signup = () => {
 
     if (immunity_test === undefined) immunity_test = false
 
-    if (invitation_code === undefined) invitation_code = ' '
+    if (invitation_code === undefined || !invitation_code) invitation_code = ' '
 
     if (urgency_level === undefined) urgency_level = 1
 
@@ -191,7 +232,7 @@ const Signup = () => {
     })
   }
 
-  const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
+  const { refetch: checkEmail } = useQuery(VALIDATION_EMAIL, {
     variables: {
       email: user.email
     },
@@ -199,21 +240,24 @@ const Signup = () => {
   })
 
   useEffect(() => {
-    const regularExpresion = /\S+@\S+\.\S+/
+    const regularExpresion = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
     const validEmail = async () => {
       const { data } = await checkEmail({
         email: user.email
       })
 
-      data.preregister_lifebank.length === 0 && data.user.length === 0
-        ? setEmailValid(true)
-        : setEmailValid(false)
+      if (data) {
+        data.preregister_lifebank.length === 0 && data.user.length === 0
+          ? setEmailValid(true)
+          : setEmailValid(false)
 
-      setcheckEmailLoaded(true)
+        setcheckEmailLoaded(true)
+      }
     }
 
-    if (regularExpresion.test(user?.email)) validEmail()
-    else {
+    if (regularExpresion.test(user?.email)) {
+      validEmail()
+    } else {
       setEmailValid(false)
       setcheckEmailLoaded(false)
     }
@@ -256,6 +300,31 @@ const Signup = () => {
     if (signupResult) history.replace('/profile')
   }, [signupResult])
 
+  const ErrorMessage = () => {
+    return (
+      <>
+        {errorMessage && (
+          <Alert
+            className={classes.alert}
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => setErrorMessage(null)}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            {errorMessage}
+          </Alert>
+        )}
+      </>
+    )
+  }
+
   return (
     <Grid container className={classes.gridContainer}>
       <Grid item xs={12} sm={8} md={6} className={classes.register}>
@@ -275,6 +344,7 @@ const Signup = () => {
               <SignupRoleSelector onSubmit={handleRoleChange} />
             </>
           )}
+
           {activeStep === 1 && role !== 'lifebank' && (
             <>
               <Typography variant="h4">Create a new account.</Typography>
@@ -295,11 +365,13 @@ const Signup = () => {
           {activeStep === 1 && role === 'donor' && (
             <SignupDonor
               onSubmit={handleCreateAccount}
+              onSubmitWithAuth={handleCreateAccountWithAuth}
               loading={createAccountLoading}
               setField={handleSetField}
               user={user}
               isEmailValid={isEmailValid}
             >
+              <ErrorMessage />
               <ValidateEmail
                 isValid={isEmailValid}
                 loading={checkEmailLoading}
