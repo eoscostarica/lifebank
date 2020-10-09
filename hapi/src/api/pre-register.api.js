@@ -19,10 +19,41 @@ const INSERT_LIFEBANK = `
   }
 `
 
+const SET_EMAIL_VERIFIED = `
+  mutation ($where: preregister_lifebank_bool_exp!) {
+    update_preregister_lifebank(where: $where, _set: { email_verified: true }) {
+      affected_rows
+    }
+  }
+`
+
+const VALIDATION_VERIFICATION_CODE = `
+  query($verification_code: String!) {
+    preregister_lifebank(where: { verification_code: { _eq: $verification_code } }) {
+      verification_code
+    }
+    user(where: { verification_code: { _eq: $verification_code } }) {
+      verification_code
+    }
+  }
+`
+
 const insertLifebank = (preregister_lifebank) => {
   return hasuraUtils.request(INSERT_LIFEBANK, { preregister_lifebank })
 }
 
+const verifyEmail = (where) => {
+  return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+}
+
+const validationVerificationCode = (verification_code) => {
+  return hasuraUtils.request(VALIDATION_VERIFICATION_CODE, {
+    verification_code
+  })
+}
+
 module.exports = {
-  insertLifebank
+  insertLifebank,
+  verifyEmail,
+  validationVerificationCode
 }

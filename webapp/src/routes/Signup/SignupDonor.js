@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
@@ -7,6 +7,8 @@ import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReCAPTCHA from 'react-google-recaptcha'
 
+import SignupWithFacebook from './socialSingup/SignupWithFacebook'
+import SignupWithGoogle from './socialSingup/SignupWithGoogle'
 import { captchaConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,16 +24,24 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   btnWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2)
+    display: 'block',
+    marginBottom: theme.spacing(2),
+    width: '100%'
+  },
+  btnSignup: {
+    display: 'block',
+    marginBottom: theme.spacing(2),
+    width: '40%',
+    margin: 'auto',
+    '@media only screen and (max-width: 900px)': {
+      width: '100%'
+    }
   }
 }))
 
 const DonorSignup = ({
   onSubmit,
+  onSubmitWithAuth,
   setField,
   user,
   loading,
@@ -39,7 +49,19 @@ const DonorSignup = ({
   children
 }) => {
   const classes = useStyles()
+  const [password, setPassword] = useState()
   const [recaptchaValue, serRecaptchaValue] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState()
+  const [error, setError] = useState()
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (confirmPassword && confirmPassword !== password)
+        setError({ text: 'Password do not match' })
+      else setError(undefined)
+    }, 1500)
+    return () => clearTimeout(timer)
+  }, [confirmPassword])
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -47,30 +69,46 @@ const DonorSignup = ({
         {children}
         <TextField
           id="secret"
-          label="Secret"
+          label="Password"
           type="password"
           fullWidth
-          placeholder="Your Secret"
+          placeholder="Your password"
           variant="outlined"
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(event) => setField('secret', event.target.value)}
+          className={classes.textField}
+          onChange={(event) => {
+            setField('secret', event.target.value)
+            setPassword(event.target.value)
+          }}
+        />
+        <TextField
+          id="confirm-password"
+          label="Confirm password"
+          type="password"
+          fullWidth
+          error={error}
+          helperText={error && error.text}
+          placeholder="Your confirmation"
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          onChange={(event) => setConfirmPassword(event.target.value)}
         />
         <ReCAPTCHA
+          style={{ bac: '100%' }}
           sitekey={captchaConfig.sitekey}
           onChange={(value) => serRecaptchaValue(value)}
         />
       </Box>
+
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={
-            !user.username ||
-            !user.secret ||
-            !isEmailValid ||
-            !recaptchaValue ||
-            loading
-          }
+          disabled={!user.secret || !isEmailValid || !recaptchaValue || loading || error !== undefined}
+          className={classes.btnSignup}
           variant="contained"
           color="primary"
           onClick={onSubmit}
@@ -78,6 +116,8 @@ const DonorSignup = ({
           Create Account
         </Button>
         {loading && <CircularProgress />}
+        <SignupWithFacebook handlerSubmit={onSubmitWithAuth} />
+        <SignupWithGoogle handlerSubmit={onSubmitWithAuth} />
       </Box>
     </form>
   )
@@ -85,6 +125,7 @@ const DonorSignup = ({
 
 DonorSignup.propTypes = {
   onSubmit: PropTypes.func,
+  onSubmitWithAuth: PropTypes.func,
   setField: PropTypes.func,
   user: PropTypes.object,
   loading: PropTypes.bool,
