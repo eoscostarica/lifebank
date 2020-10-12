@@ -1,11 +1,11 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-import { Link } from 'react-router-dom'
+import { Alert, AlertTitle } from '@material-ui/lab'
+import { Link, useLocation } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import { Alert, AlertTitle } from '@material-ui/lab'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import CloseIcon from '@material-ui/icons/Close'
 
@@ -66,12 +66,15 @@ const useStyles = makeStyles((theme) => ({
 
 const EditProfilePage = () => {
   const classes = useStyles()
+  const location = useLocation()
   const [currentUser] = useUser()
   const [showAlert, setShowAlert] = useState({ error: false, success: false })
+  const [isCompleting, setIsCompleting] = useState()
   const [
     loadProfile,
     { loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
+
   const [
     revokeConsent,
     {
@@ -79,6 +82,7 @@ const EditProfilePage = () => {
       data: { revoke_consent: revokeConsentResult } = {}
     }
   ] = useMutation(REVOKE_CONSENT_MUTATION)
+
   const [
     grantConsent,
     {
@@ -98,6 +102,7 @@ const EditProfilePage = () => {
 
   const handleUpdateUser = useCallback(
     (userEdited) => {
+      console.log(userEdited)
       editProfile({
         variables: {
           profile: userEdited
@@ -133,6 +138,12 @@ const EditProfilePage = () => {
       setShowAlert({ error: true, success: false })
     }
   }, [editProfileResult, loadProfile])
+
+  useEffect(() => {
+    location.state
+      ? setIsCompleting(location.state.isCompleting)
+      : setIsCompleting(false)
+  }, [location])
 
   return (
     <Box className={classes.wrapper}>
@@ -195,6 +206,7 @@ const EditProfilePage = () => {
       {!loading && currentUser && profile?.role === 'sponsor' && (
         <EditProfileSponsor
           profile={profile}
+          isCompleting={isCompleting}
           onSubmit={handleUpdateUser}
           loading={editLoading}
         />

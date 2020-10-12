@@ -11,7 +11,12 @@ import Help from './Help'
 import OffersManagement from './OffersManagement'
 import Offers from './Offers'
 import OfferPage from './OfferPage'
+<<<<<<< HEAD
 import InfoPage from './InfoPage'
+=======
+import EmailVerification from './EmailVerification'
+
+>>>>>>> 3502c34b19bcf422f8557708e57b968e60898c20
 
 export default [
   {
@@ -54,6 +59,11 @@ export default [
     name: 'offer-page',
     path: '/offer/:id',
     component: OfferPage
+  },
+  {
+    name: 'email-verificatio',
+    path: '/verification/:code',
+    component: EmailVerification
   },
   {
     name: 'profile',

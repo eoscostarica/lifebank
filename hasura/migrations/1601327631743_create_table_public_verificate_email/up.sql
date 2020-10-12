@@ -1,1 +1,8 @@
-CREATE TABLE "public"."verificate_email"("id" serial NOT NULL, "email" varchar NOT NULL, "verification_code" varchar NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("email") REFERENCES "public"."preregister_lifebank"("email") ON UPDATE restrict ON DELETE restrict, FOREIGN KEY ("email") REFERENCES "public"."user"("email") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"), UNIQUE ("email"));
+CREATE TABLE "public"."verificate_email"(
+  "id" serial NOT NULL,
+  "email" varchar NOT NULL,
+  "verification_code" varchar NOT NULL,
+  PRIMARY KEY ("id"),
+  UNIQUE ("id"),
+  UNIQUE ("email")
+);

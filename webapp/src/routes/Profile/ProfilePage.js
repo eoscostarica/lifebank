@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
+    height: 'auto',
     width: '100%',
     padding: theme.spacing(6, 1, 0, 1),
     alignItems: 'center'

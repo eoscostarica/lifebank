@@ -44,8 +44,8 @@ const SignupUsername = ({ isValid, loading, user, setField }) => {
         user?.username?.length >= 9 && !isValid && !loading
           ? 'Invalid username or already taken'
           : !isValid
-            ? 'You must enter 9 characters (a-z 1-5)'
-            : ''
+          ? 'You must enter 9 characters (a-z 1-5)'
+          : ''
       }
       error={!isValid && !loading && user?.username?.length >= 9}
     />
