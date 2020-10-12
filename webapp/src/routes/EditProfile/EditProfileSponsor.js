@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
@@ -130,9 +130,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     [user]
   )
 
-  const handleOnAddStringifyValues = (field, value) => {
-    setUser({ ...user, [field]: value })
-  }
+  const handleOnAddSchedule = useCallback(
+    (data) => setUser('schedule', JSON.stringify(data)),
+    []
+  )
 
   const handleOnSocialMediaTextFieldChange = (name, url) => {
     const existingSocialMediaItem =
@@ -327,7 +328,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         >
           <Schedule
             handleOnAddSchedule={(value) =>
-              handleOnAddStringifyValues('schedule', value)
+              handleOnAddSchedule('schedule', value)
             }
             data={user.schedule ? JSON.parse(user.schedule) : undefined}
             showSchedule
