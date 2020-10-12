@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import clsx from 'clsx'
+import Box from '@material-ui/core/Box'
+import Dialog from '@material-ui/core/Dialog'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import Carousel, { Dots } from '@brainhubeu/react-carousel'
+import '@brainhubeu/react-carousel/lib/style.css'
+
 import { ReactComponent as FirstLogo } from '../../assets/lifebank.svg'
 import { ReactComponent as SecondLogo } from '../../assets/second.svg'
 import { ReactComponent as ThirdLogo } from '../../assets/third.svg'
 import { ReactComponent as FourthLogo } from '../../assets/fourth.svg'
-import Carousel, { Dots } from '@brainhubeu/react-carousel'
-import '@brainhubeu/react-carousel/lib/style.css'
 
 const useStyles = makeStyles((theme) => ({
   imageIcon: {
@@ -35,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    maxHeight: 600,
     width: '100%'
   },
   capitalize: {
@@ -67,9 +73,10 @@ const useStyles = makeStyles((theme) => ({
     color: 'white'
   },
   carousel: {
-    '& > button.BrainhubCarousel_dot': {
-      backgroundColor: 'transparent'
-    }
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    maxHeight: 600
   },
   mainHeading: {
     fontSize: 24,
@@ -85,12 +92,17 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: 0.5,
     fontStyle: 'normal',
     fontStretch: 'normal'
+  },
+  dialog: {
+    padding: 100
   }
 }))
 
 const SplashIntro = ({ skipHandling }) => {
   const classes = useStyles()
   const [index, setIndex] = useState(0)
+  const matches = useMediaQuery('(min-width:600px)')
+
   const [slides] = useState([
     <Box className={classes.slide} key={0}>
       <Typography className={clsx(classes.mainHeading, classes.capitalize)}>
@@ -178,34 +190,74 @@ const SplashIntro = ({ skipHandling }) => {
   ])
 
   return (
-    <Box className={classes.carouselContainer}>
-      <Box className={classes.slideHeader}>
-        <Button onClick={() => skipHandling('splash')}>
-          <Typography className={classes.caption}>Skip</Typography>
-        </Button>
-      </Box>
-      <Carousel value={index} slides={slides} />
-      <Box className={classes.nextBtnContainer}>
-        <Button
-          className={classes.nextBtn}
-          onClick={() =>
-            index === slides.length - 1
-              ? skipHandling('splash')
-              : setIndex(index + 1)
-          }
-          style={{
-            backgroundColor: '#B71C1C'
-          }}
-        >
-          {index === slides.length - 1 ? 'Start' : 'Next'}
-        </Button>
-      </Box>
-      <Dots
-        value={index}
-        onChange={(value) => setIndex(value)}
-        number={slides.length}
-      />
-    </Box>
+    <>
+      {matches ? (
+        <Dialog style={{ padding: 10 }} open={matches} maxWidth="md">
+          <Box className={classes.slideHeader}>
+            <IconButton onClick={() => skipHandling('splash')}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Carousel
+            className={classes.carousel}
+            value={index}
+            slides={slides}
+          />
+          <Box className={classes.nextBtnContainer}>
+            <Button
+              className={classes.nextBtn}
+              onClick={() =>
+                index === slides.length - 1
+                  ? skipHandling('splash')
+                  : setIndex(index + 1)
+              }
+              style={{
+                backgroundColor: '#B71C1C'
+              }}
+            >
+              {index === slides.length - 1 ? 'Start' : 'Next'}
+            </Button>
+          </Box>
+          <Dots
+            value={index}
+            onChange={(value) => setIndex(value)}
+            number={slides.length}
+          />
+          <br />
+          <br />
+          <br />
+        </Dialog>
+      ) : (
+        <Box className={classes.carouselContainer}>
+          <Box className={classes.slideHeader}>
+            <Button onClick={() => skipHandling('splash')}>
+              <Typography className={classes.caption}>Skip</Typography>
+            </Button>
+          </Box>
+          <Carousel value={index} slides={slides} />
+          <Box className={classes.nextBtnContainer}>
+            <Button
+              className={classes.nextBtn}
+              onClick={() =>
+                index === slides.length - 1
+                  ? skipHandling('splash')
+                  : setIndex(index + 1)
+              }
+              style={{
+                backgroundColor: '#B71C1C'
+              }}
+            >
+              {index === slides.length - 1 ? 'Start' : 'Next'}
+            </Button>
+          </Box>
+          <Dots
+            value={index}
+            onChange={(value) => setIndex(value)}
+            number={slides.length}
+          />
+        </Box>
+      )}
+    </>
   )
 }
 
