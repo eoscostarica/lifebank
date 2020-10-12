@@ -77,8 +77,35 @@ const ProfilePageLifebank = ({ profile }) => {
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
 
-    if (profile.email)
+    if (!profile.email)
       pendingFieldsObject = { ...pendingFieldsObject, email: false }
+
+    if (!profile.name)
+      pendingFieldsObject = { ...pendingFieldsObject, name: false }
+
+    if (!profile.phone_number)
+      pendingFieldsObject = { ...pendingFieldsObject, phone_number: false }
+
+    if (!profile.photos)
+      pendingFieldsObject = { ...pendingFieldsObject, photos: false }
+
+    if (!profile.logo)
+      pendingFieldsObject = { ...pendingFieldsObject, logo: false }
+
+    if (!profile.schedule)
+      pendingFieldsObject = { ...pendingFieldsObject, schedule: false }
+
+    if (!profile.location)
+      pendingFieldsObject = { ...pendingFieldsObject, location: false }
+
+    if (!profile.address)
+      pendingFieldsObject = { ...pendingFieldsObject, address: false }
+
+    if (!profile.description)
+      pendingFieldsObject = { ...pendingFieldsObject, description: false }
+
+    if (!profile.blood_urgency_level)
+      pendingFieldsObject = { ...pendingFieldsObject, blood_urgency_level: false }
 
     if (Object.keys(pendingFieldsObject).length > 0)
       setPendingFields(pendingFieldsObject)
@@ -135,7 +162,7 @@ const ProfilePageLifebank = ({ profile }) => {
                     color="secondary"
                     className={classes.customizedLinearProgress}
                     value={
-                      ((15 - Object.keys(pendingFields).length) * 100) / 15
+                      ((10 - Object.keys(pendingFields).length) * 100) / 10
                     }
                   />
                 </Box>
@@ -144,7 +171,7 @@ const ProfilePageLifebank = ({ profile }) => {
                     variant="body2"
                     color="textSecondary"
                   >{`${Math.round(
-                    ((15 - Object.keys(pendingFields).length) * 100) / 15
+                    ((10 - Object.keys(pendingFields).length) * 100) / 10
                   )}%`}</Typography>
                 </Box>
               </Box>
@@ -273,7 +300,7 @@ const ProfilePageLifebank = ({ profile }) => {
         py={2}
       />
       <Divider className={classes.divider} />
-      <LinkRouter to="/edit-profile" className={classes.editBtn}>
+      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }} className={classes.editBtn}>
         <Button variant="contained" color="primary">
           Edit
         </Button>

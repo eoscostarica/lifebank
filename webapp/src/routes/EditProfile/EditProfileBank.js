@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
+const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading }) => {
   const classes = useStyles()
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const imgUrlValueRef = useRef(undefined)
@@ -239,6 +239,8 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
 
         <TextField
           id="fullname"
+          name="name"
+          style={{ display: isCompleting && user.name ? 'none' : '' }}
           label="Organization"
           fullWidth
           variant="outlined"
@@ -251,6 +253,9 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
         <TextField
           id="phone-number"
+          style={{
+            display: isCompleting && user.phone_number ? 'none' : ''
+          }}
           label="Phone number"
           fullWidth
           variant="outlined"
@@ -265,6 +270,9 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
         <TextField
           id="address"
+          style={{
+            display: isCompleting && user.address ? 'none' : ''
+          }}
           label="Address"
           fullWidth
           variant="outlined"
@@ -277,6 +285,9 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
         <TextField
           id="description"
+          style={{
+            display: isCompleting && user.description ? 'none' : ''
+          }}
           label="About"
           fullWidth
           variant="outlined"
@@ -289,7 +300,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
             handleSetField('description', event.target.value)
           }
         />
-        <Box width="100%" className={classes.textField}>
+        <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" className={classes.textField}>
           <Schedule
             buttonText="Edit Schedule"
             scheduleLoad={user.schedule}
@@ -352,12 +363,13 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
             </Grid>} </>
           )}
         </div>
-        <Box className={classes.marginTitule}>
+        <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} className={classes.marginTitule}>
           <Typography variant="h4">Location</Typography>
           <Typography variant="body1" />
         </Box>
 
         <MapEditLocation
+          style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
           onGeolocationChange={handleOnGeolocationChange}
           markerLocation={user.geolocation}
           markerType={LIFE_BANK}
@@ -366,76 +378,78 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
           mb={1}
         />
 
-        <Typography variant="h4">Blood Demand Level</Typography>
-        <Typography variant="body1" className={classes.text}>
-          Drag or tap to the demand level that represent your Lifebank actual
-          necesities. You can set the token rewards depending on this levels.
-        </Typography>
+        <div style={{ display: isCompleting && user.blood_urgency_level ? 'none' : '' }}>
+          <Typography variant="h4">Blood Demand Level</Typography>
+          <Typography variant="body1" className={classes.text}>
+            Drag or tap to the demand level that represent your Lifebank actual
+            necesities. You can set the token rewards depending on this levels.
+          </Typography>
 
-        <Box className={classes.bloodDemand}>
-          <Box className={classes.markLabel}>
-            <Typography variant="h4">Low</Typography>
-            <Typography variant="h4" className={classes.midLabel}>
-              Medium
-            </Typography>
-            <Typography variant="h4">Urgent</Typography>
+          <Box className={classes.bloodDemand}>
+            <Box className={classes.markLabel}>
+              <Typography variant="h4">Low</Typography>
+              <Typography variant="h4" className={classes.midLabel}>
+                Medium
+              </Typography>
+              <Typography variant="h4">Urgent</Typography>
+            </Box>
+            <Box className={classes.slider}>
+              <Slider
+                valueLabelDisplay="off"
+                color="secondary"
+                defaultValue={user.blood_urgency_level}
+                valueLabelFormat={valueLabelFormat}
+                onChange={(event, value) =>
+                  handleSetField('blood_urgency_level', value)
+                }
+                marks={marks}
+                step={null}
+                min={1}
+                max={3}
+              />
+            </Box>
           </Box>
-          <Box className={classes.slider}>
-            <Slider
-              valueLabelDisplay="off"
-              color="secondary"
-              defaultValue={user.blood_urgency_level}
-              valueLabelFormat={valueLabelFormat}
-              onChange={(event, value) =>
-                handleSetField('blood_urgency_level', value)
-              }
-              marks={marks}
-              step={null}
-              min={1}
-              max={3}
+
+          <Box className={classes.levelReward}>
+            <Typography variant="h4">Low Level Reward</Typography>
+            <TextField
+              id="lowLevelReward"
+              type="number"
+              disabled
+              variant="outlined"
+              defaultValue={1}
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </Box>
-        </Box>
-
-        <Box className={classes.levelReward}>
-          <Typography variant="h4">Low Level Reward</Typography>
-          <TextField
-            id="lowLevelReward"
-            type="number"
-            disabled
-            variant="outlined"
-            defaultValue={1}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-        </Box>
-        <Box className={classes.levelReward}>
-          <Typography variant="h4">Medium Level Reward</Typography>
-          <TextField
-            id="mediumLevelReward"
-            type="number"
-            disabled
-            variant="outlined"
-            defaultValue={2}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-        </Box>
-        <Box className={classes.levelReward}>
-          <Typography variant="h4">Urgent Level Reward</Typography>
-          <TextField
-            id="urgentLevelReward"
-            type="number"
-            disabled
-            variant="outlined"
-            defaultValue={3}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-        </Box>
+          <Box className={classes.levelReward}>
+            <Typography variant="h4">Medium Level Reward</Typography>
+            <TextField
+              id="mediumLevelReward"
+              type="number"
+              disabled
+              variant="outlined"
+              defaultValue={2}
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          </Box>
+          <Box className={classes.levelReward}>
+            <Typography variant="h4">Urgent Level Reward</Typography>
+            <TextField
+              id="urgentLevelReward"
+              type="number"
+              disabled
+              variant="outlined"
+              defaultValue={3}
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          </Box>
+        </div>
       </Box>
       <Box className={classes.btnWrapper}>
         <Box className={classes.boxBtn}>
@@ -464,6 +478,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
 
 EditProfileBank.propTypes = {
   profile: PropTypes.object,
+  isCompleting: PropTypes.bool,
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
   loading: PropTypes.bool
