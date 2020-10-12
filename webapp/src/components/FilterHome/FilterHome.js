@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie';
 import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/react-hooks'
@@ -60,6 +60,13 @@ const FilterHome = ({
   handlerApplyFilterOffer,
   openDialogFilter,
   setOpenDialogFilter,
+
+  valueSponsorCat,
+  setValueSponsorCat,
+  valueOfferCat,
+  setValueOfferCat,
+  valueTokenPrice,
+  setValueTokenPrice,
 }) => {
 
   const classes = useStyles()
@@ -67,9 +74,15 @@ const FilterHome = ({
   const [maxWidth] = useState('md');
   const [cookies, setCookie] = useCookies(['valueSponsorCat', 'valueOfferCat', 'valueTokenPrice']);
 
-  const [valueSponsorCat, setValueSponsorCat] = useState(cookies.valueSponsorCat)
-  const [valueOfferCat, setValueOfferCat] = useState(cookies.valueOfferCat)
-  const [valueTokenPrice, setValueTokenPrice] = useState(cookies.valueTokenPrice)
+  /*const [valueSponsorCat, setValueSponsorCat] = useState("all")
+  const [valueOfferCat, setValueOfferCat] = useState("all")
+  const [valueTokenPrice, setValueTokenPrice] = useState("all")*/
+
+  const { refetch: getAllOffers } = useQuery(GET_OFFERS_QUERY, { active: true }, { skip: true })
+  const { refetch: getAllSponsors } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true })
+
+  let dataOffers = []
+  let dataSponsors = []
 
   const handleClickOpen = () => {
     setOpenDialogFilter(true);
@@ -81,73 +94,60 @@ const FilterHome = ({
 
   const handleChangeSponsorsCat = (event) => {
     setValueSponsorCat(event.target.value)
-
   }
 
   const handleChangeOfferCat = (event) => {
     setValueOfferCat(event.target.value)
-
   }
 
   const handleChangeTokenPrice = (event) => {
     setValueTokenPrice(event.target.value)
-
   }
 
-  const handleSaveChanges = () => {
-    getOffers()
-    setCookie('valueSponsorCat', valueSponsorCat, { path: '/' })
-    setCookie('valueOfferCat', valueOfferCat, { path: '/' })
-    setCookie('valueTokenPrice', valueTokenPrice, { path: '/' })
-    handleClose()
+  const handleSaveChanges = async () => {
+    //getOffers()
+    getSponsors()
+    //console.log("hanlde ")
+    //handlerApplyFilterOffer(dataOffers, dataSponsors, valueSponsorCat, valueOfferCat, valueTokenPrice)
   }
-
-
-  const { refetch: getAllOffers } = useQuery(
-    GET_OFFERS_QUERY,
-    {
-      active: true
-    },
-    { skip: true }
-  )
 
   const getOffers = async () => {
     const { data } = await getAllOffers({
       active: true
     })
-    let dataTemp = data.offer
-
-    /*
-    if (searchInput !== '') {
-      dataTemp = dataTemp.filter(
-        (offer) =>
-          offer.offer_name.toLowerCase().search(searchInput.toLowerCase()) > 0
-      )
-    }*/
+    dataOffers = data.offer
 
     if (valueOfferCat !== 'All') {
-      dataTemp = dataTemp.filter(
+      dataOffers = dataOffers.filter(
         (offer) =>
           offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase()
       )
     }
 
     if (valueSponsorCat !== 'All') {
-      dataTemp = dataTemp.filter(
+      dataOffers = dataOffers.filter(
         (offer) =>
           offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase()
       )
     }
 
     if (valueTokenPrice !== 'All') {
-      dataTemp = dataTemp.filter(
+      dataOffers = dataOffers.filter(
         (offer) => offer.cost_in_tokens === parseInt(valueTokenPrice)
       )
     }
 
-    handlerApplyFilterOffer(dataTemp)
+    //
   }
 
+  const getSponsors = async () => {
+    console.log("eNTRE")
+    const { data } = await getAllSponsors({})
+    let dataSponsors = data.location
+
+    dataSponsors = dataSponsors.filter(bank => bank.type === "SPONSOR")
+    //sdataSponsors = dataSponsors.filter(bank => bank.type === "SPONSOR")
+  }
 
   return (
     <>
@@ -249,10 +249,17 @@ const FilterHome = ({
 FilterHome.propTypes = {
   handlerApplyFilterOffer: PropTypes.func,
   openDialogFilter: PropTypes.bool,
+
+  valueSponsorCat: PropTypes.string,
+  setValueSponsorCat: PropTypes.func,
+  valueOfferCat: PropTypes.string,
+  setValueOfferCat: PropTypes.func,
+  valueTokenPrice: PropTypes.string,
+  setValueTokenPrice: PropTypes.func,
 }
 
 FilterHome.defaultProps = {
-  openDialogFilter: false,
+  //openDialogFilter: false,
 }
 
 export default FilterHome

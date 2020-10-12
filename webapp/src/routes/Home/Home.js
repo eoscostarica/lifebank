@@ -5,6 +5,14 @@ import { makeStyles, useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import AppBar from '@material-ui/core/AppBar';
 import { useUser } from '../../context/user.context'
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import CloseIcon from '@material-ui/icons/Close'
+import FilterListIcon from '@material-ui/icons/FilterList';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
@@ -16,13 +24,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import StarIcon from '@material-ui/icons/Star';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MapModal from '../../components/MapModal'
-import FilterHome from '../../components/FilterHome'
 import ShowOffers from './ShowOffers';
-import Banks from '../Banks';
-import Sponsors from '../Sponsors';
+import ShowLifebanks from './ShowLifebanks';
+import ShowSponsors from './ShowSponsors';
 import mobileBgImage from '../../assets/the-world.png'
 import bgImage from '../../assets/lifebank-hero-bg.png'
 
+import { constants } from '../../config'
 import { GET_OFFERS_QUERY, GET_LOCATIONS_QUERY } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
@@ -77,8 +85,39 @@ const useStyles = makeStyles((theme) => ({
   iconFab: {
     color: "#ffffff",
     marginRight: 10
-  }
+  },
+  closeIcon: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 5,
+    right: 1,
+    margin: '0',
+    height: "5vh",
+    '& svg': {
+      fontSize: 25,
+      color: theme.palette.secondary.main
+    }
+  },
+  title: {
+    height: "50px",
+    [theme.breakpoints.down('md')]: {
+      marginBottom: 30,
+    }
+  },
+  inputStyle: {
+    width: '100%',
+    marginBottom: 15
+  },
+  infoText: {
+    fontSize: 30,
+    marginBottom: theme.spacing(4)
+  },
 }));
+
+const { SPONSOR_TYPES } = constants
+const sponsorsCategories = ['All'].concat(SPONSOR_TYPES)
+const offerCategories = ['All', 'Discount', 'Gift', 'Benefit', 'Other']
+const tokenPrices = ['All', '1', '2', '3', '4', '5']
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -121,7 +160,7 @@ const Home = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
-
+  const [maxWidth] = useState('md');
   const [loadingOffers, setLoadingOffers] = useState(true);
   const [offers, setOffers] = useState([]);
   const [loadingLifebanks, setLoadingLifebanks] = useState(true);
@@ -130,31 +169,66 @@ const Home = () => {
   const [sponsors, setSponsors] = useState([]);
   const [openDialogFilter, setOpenDialogFilter] = useState(false)
 
+  const [valueSponsorCat, setValueSponsorCat] = useState("All")
+  const [valueOfferCat, setValueOfferCat] = useState("All")
+  const [valueTokenPrice, setValueTokenPrice] = useState("All")
+
   const { refetch: getAllOffers } = useQuery(GET_OFFERS_QUERY, { active: true }, { skip: true })
   const { refetch: getAllBanks } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true })
   const { refetch: getAllSponsors } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true })
 
   const getOffers = async () => {
-    const { data } = await getAllOffers({ active: true })
-    const dataTemp = data.offer
+    setLoadingOffers(true)
+    const { data } = await getAllOffers({
+      active: true
+    })
+    let dataOffers = data.offer
 
-    setOffers(dataTemp)
+    if (valueOfferCat !== 'All') {
+      dataOffers = dataOffers.filter(
+        (offer) =>
+          offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase()
+      )
+    }
+
+    if (valueSponsorCat !== 'All') {
+      dataOffers = dataOffers.filter(
+        (offer) =>
+          offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase()
+      )
+    }
+
+    if (valueTokenPrice !== 'All') {
+      dataOffers = dataOffers.filter(
+        (offer) => offer.cost_in_tokens === parseInt(valueTokenPrice)
+      )
+    }
+
+    setOffers(dataOffers)
     setLoadingOffers(false)
   }
 
   const getLifebanks = async () => {
+    setLoadingLifebanks(true)
     const { data } = await getAllBanks({})
     let dataTemp = data.location
     dataTemp = dataTemp.filter(bank => bank.type === "LIFE_BANK")
+
 
     setLifebanks(dataTemp)
     setLoadingLifebanks(false)
   }
 
   const getSponsors = async () => {
+    setLoadingSponsors(true)
     const { data } = await getAllSponsors({})
     let dataTemp = data.location
+
     dataTemp = dataTemp.filter(bank => bank.type === "SPONSOR")
+
+    if (valueSponsorCat !== 'All') {
+      dataTemp = dataTemp.filter(bank => bank.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
+    }
 
     setSponsors(dataTemp)
     setLoadingSponsors(false)
@@ -172,13 +246,114 @@ const Home = () => {
     getSponsors()
   }, [getAllSponsors])
 
-  const handlerApplyFilterOffer = (data) => {
-    setOffers(data)
+  const handlerApplyFilters = (dataOffers, dataSponsors, p_sponsor_cat, p_offer_cat, p_tokenPrice) => {
+    setOpenDialogFilter(false)
+    getOffers()
+    getSponsors()
   }
 
   const handleChangeTabs = (event, newValue) => {
     setValue(newValue);
   };
+
+
+  const FilterHome = () => {
+    return (
+      <>
+        <IconButton onClick={() => setOpenDialogFilter(true)}>
+          <FilterListIcon className={classes.iconBottomAppBar} />
+        </IconButton>
+        <Dialog
+          maxWidth={maxWidth}
+          className={classes.dialog}
+          open={openDialogFilter}
+          onClose={() => setOpenDialogFilter(false)}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <Box className={classes.closeIcon}>
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => setOpenDialogFilter(false)}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
+          <DialogTitle id="responsive-dialog-title" className={classes.title}>Filter offers, lifebanks or sponsors</DialogTitle>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+          >
+            <Grid item xs={10}>
+              <TextField
+                id="standard-select-currency"
+                select
+                label="Sponsors categories"
+                value={valueSponsorCat}
+                onChange={(event) => setValueSponsorCat(event.target.value)}
+                className={classes.inputStyle}
+                variant="outlined"
+              >
+                {sponsorsCategories.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={10}>
+              <TextField
+                id="standard-select-currency"
+                select
+                label="Offers categories"
+                value={valueOfferCat}
+                onChange={(event) => setValueOfferCat(event.target.value)}
+                className={classes.inputStyle}
+                variant="outlined"
+              >
+                {offerCategories.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={10}>
+              <TextField
+                id="standard-select-currency"
+                select
+                label="Token price"
+                value={valueTokenPrice}
+                onChange={(event) => setValueTokenPrice(event.target.value)}
+                className={classes.inputStyle}
+                variant="outlined"
+              >
+                {tokenPrices.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={10}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.inputStyle}
+                onClick={handlerApplyFilters}
+              >
+                Save changes
+                  </Button>
+            </Grid>
+          </Grid>
+        </Dialog>
+      </>
+    )
+  }
 
   const HomeMobile = () => {
     return (
@@ -199,12 +374,18 @@ const Home = () => {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Paper style={{ height: 'calc(100vh - 128px)', overflow: 'auto', border: "none" }}>
-              <Banks />
+              <ShowLifebanks
+                banks={lifebanks}
+                loading={loadingLifebanks}
+              />
             </Paper>
           </TabPanel>
           <TabPanel value={value} index={2}>
             <Paper style={{ height: 'calc(100vh - 128px)', overflow: 'auto', border: "none" }}>
-              <Sponsors />
+              <ShowSponsors
+                sponsors={sponsors}
+                loading={loadingSponsors}
+              />
             </Paper>
           </TabPanel>
         </AppBar>
@@ -214,11 +395,7 @@ const Home = () => {
               <SearchIcon className={classes.iconBottomAppBar} />
             </IconButton>
             <MapModal />
-            <FilterHome
-              handlerApplyFilterOffer={handlerApplyFilterOffer}
-              openDialogFilter={openDialogFilter}
-              setOpenDialogFilter={setOpenDialogFilter}
-            />
+            <FilterHome />
             <IconButton disabled>
               <StarIcon className={classes.iconBottomAppBar} />
             </IconButton>
@@ -240,7 +417,6 @@ const Home = () => {
         <Box className={classes.homeHeader}>
 
         </Box>
-        <FilterHome />
       </>
     )
   }
