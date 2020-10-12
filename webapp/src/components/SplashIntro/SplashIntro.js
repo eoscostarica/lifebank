@@ -9,6 +9,11 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import Stepper from '@material-ui/core/Stepper'
+import StepContent from '@material-ui/core/StepContent'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
+import Check from '@material-ui/icons/Check'
 import Carousel, { Dots } from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css'
 
@@ -86,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     fontStretch: 'normal'
   },
+  stepper: {},
   medium: {
     fontSize: 14,
     fontWeight: 500,
@@ -198,11 +204,22 @@ const SplashIntro = ({ skipHandling }) => {
               <CloseIcon />
             </IconButton>
           </Box>
-          <Carousel
-            className={classes.carousel}
-            value={index}
-            slides={slides}
-          />
+          <Stepper activeStep={0} className={classes.stepper}>
+            {slides.map((slide, key) => (
+              <Step className={classes.slide} key={key}>
+                <StepLabel>{key}</StepLabel>
+                <StepContent></StepContent>
+                {slide}
+              </Step>
+            ))}
+          </Stepper>
+          {/* {slides && slides.length === 4 && (
+            <Carousel
+              className={classes.carousel}
+              value={index}
+              slides={slides}
+            />
+          )} */}
           <Box className={classes.nextBtnContainer}>
             <Button
               className={classes.nextBtn}
