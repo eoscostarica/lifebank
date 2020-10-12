@@ -10,6 +10,13 @@ import CloseIcon from '@material-ui/icons/Close'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Stepper from '@material-ui/core/Stepper'
+import MobileStepper from '@material-ui/core/MobileStepper'
+
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import {} from '@material-ui/core/stepper'
+import SwipeableViews from 'react-swipeable-views'
+import { autoPlay } from 'react-swipeable-views-utils'
 import StepContent from '@material-ui/core/StepContent'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
@@ -22,6 +29,8 @@ import { ReactComponent as SecondLogo } from '../../assets/second.svg'
 import { ReactComponent as ThirdLogo } from '../../assets/third.svg'
 import { ReactComponent as FourthLogo } from '../../assets/fourth.svg'
 
+//const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
+
 const useStyles = makeStyles((theme) => ({
   imageIcon: {
     height: '100%',
@@ -33,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%'
   },
   carouselContainer: {
-    display: 'grid',
+    display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
@@ -45,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    maxHeight: 600,
+    height: '100%',
     width: '100%'
   },
   capitalize: {
@@ -91,7 +100,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     fontStretch: 'normal'
   },
-  stepper: {},
+  stepper: {
+    backgroundColor: 'transparent'
+  },
   medium: {
     fontSize: 14,
     fontWeight: 500,
@@ -108,6 +119,18 @@ const SplashIntro = ({ skipHandling }) => {
   const classes = useStyles()
   const [index, setIndex] = useState(0)
   const matches = useMediaQuery('(min-width:600px)')
+  const [activeStep, setActiveStep] = useState(0)
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  }
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
+  const handleStepChange = (step) => {
+    setActiveStep(step)
+  }
 
   const [slides] = useState([
     <Box className={classes.slide} key={0}>
@@ -117,7 +140,6 @@ const SplashIntro = ({ skipHandling }) => {
       <FirstLogo style={{ marginTop: 67 }} />
       <Box
         style={{
-          margin: 'auto',
           marginTop: 50,
           maxWidth: 175,
           textAlign: 'center'
@@ -126,6 +148,7 @@ const SplashIntro = ({ skipHandling }) => {
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
+          style={{ marginBottom: 0 }}
         >
           Let's work together and keep life flowing
         </Typography>
@@ -204,15 +227,51 @@ const SplashIntro = ({ skipHandling }) => {
               <CloseIcon />
             </IconButton>
           </Box>
-          <Stepper activeStep={0} className={classes.stepper}>
-            {slides.map((slide, key) => (
-              <Step className={classes.slide} key={key}>
-                <StepLabel>{key}</StepLabel>
-                <StepContent></StepContent>
+          <SwipeableViews
+            index={activeStep}
+            onChangeIndex={handleStepChange}
+            enableMouseEvents
+          >
+            {slides.map((slide, index) => (
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                style={{ height: 600 }}
+                key={index}
+              >
                 {slide}
-              </Step>
+              </Box>
             ))}
-          </Stepper>
+          </SwipeableViews>
+          <MobileStepper
+            variant="dots"
+            steps={4}
+            position="static"
+            activeStep={activeStep}
+            className={classes.stepper}
+            nextButton={
+              <Button
+                size="small"
+                onClick={handleNext}
+                disabled={activeStep === 3}
+              >
+                Next
+                <KeyboardArrowRight />
+              </Button>
+            }
+            backButton={
+              <Button
+                size="small"
+                onClick={handleBack}
+                disabled={activeStep === 0}
+              >
+                <KeyboardArrowLeft />
+                Back
+              </Button>
+            }
+          />
           {/* {slides && slides.length === 4 && (
             <Carousel
               className={classes.carousel}
@@ -220,7 +279,7 @@ const SplashIntro = ({ skipHandling }) => {
               slides={slides}
             />
           )} */}
-          <Box className={classes.nextBtnContainer}>
+          {/* <Box className={classes.nextBtnContainer}>
             <Button
               className={classes.nextBtn}
               onClick={() =>
@@ -239,7 +298,7 @@ const SplashIntro = ({ skipHandling }) => {
             value={index}
             onChange={(value) => setIndex(value)}
             number={slides.length}
-          />
+          /> */}
           <br />
           <br />
           <br />
@@ -251,8 +310,53 @@ const SplashIntro = ({ skipHandling }) => {
               <Typography className={classes.caption}>Skip</Typography>
             </Button>
           </Box>
-          <Carousel value={index} slides={slides} />
-          <Box className={classes.nextBtnContainer}>
+          <SwipeableViews
+            index={activeStep}
+            onChangeIndex={handleStepChange}
+            enableMouseEvents
+          >
+            {slides.map((slide, index) => (
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                style={{ height: 600 }}
+                key={index}
+              >
+                {slide}
+              </Box>
+            ))}
+          </SwipeableViews>
+          <MobileStepper
+            variant="dots"
+            steps={4}
+            position="static"
+            activeStep={activeStep}
+            className={classes.stepper}
+            style={{ width: '100%' }}
+            nextButton={
+              <Button
+                size="small"
+                onClick={handleNext}
+                disabled={activeStep === 3}
+              >
+                Next
+                <KeyboardArrowRight />
+              </Button>
+            }
+            backButton={
+              <Button
+                size="small"
+                onClick={handleBack}
+                disabled={activeStep === 0}
+              >
+                <KeyboardArrowLeft />
+                Back
+              </Button>
+            }
+          />
+          {/* <Box className={classes.nextBtnContainer}>
             <Button
               className={classes.nextBtn}
               onClick={() =>
@@ -271,7 +375,7 @@ const SplashIntro = ({ skipHandling }) => {
             value={index}
             onChange={(value) => setIndex(value)}
             number={slides.length}
-          />
+          /> */}
         </Box>
       )}
     </>
