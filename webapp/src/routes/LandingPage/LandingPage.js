@@ -207,9 +207,7 @@ const LandingPage = () => {
         <Typography variant="h5">
           Find a Lifebank or sponsor near you.
         </Typography>
-
         <MapStatic />
-
         <Typography variant="h5">How Lifebank works</Typography>
         <Typography variant="body1">
           Lifebank is a powerful application that uses blockchain technology to

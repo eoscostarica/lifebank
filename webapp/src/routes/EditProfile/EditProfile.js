@@ -214,6 +214,7 @@ const EditProfilePage = () => {
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <EditProfileBank
           profile={profile}
+          isCompleting={isCompleting}
           onSubmit={handleUpdateUser}
           loading={editLoading}
         />
