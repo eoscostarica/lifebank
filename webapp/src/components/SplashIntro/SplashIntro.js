@@ -240,7 +240,7 @@ const SplashIntro = ({ skipHandling }) => {
               enableMouseEvents
             >
               {slides.map((slide, index) => (
-                <Fragment>{slide}</Fragment>
+                <Fragment key={index}>{slide}</Fragment>
               ))}
             </SwipeableViews>
           </Grid>
@@ -292,7 +292,7 @@ const SplashIntro = ({ skipHandling }) => {
               enableMouseEvents
             >
               {slides.map((slide, index) => (
-                <Fragment>{slide}</Fragment>
+                <Fragment key={index}>{slide}</Fragment>
               ))}
             </SwipeableViews>
           </Grid>

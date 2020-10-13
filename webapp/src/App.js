@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
 
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
