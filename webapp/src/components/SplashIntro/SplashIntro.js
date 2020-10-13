@@ -29,16 +29,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%'
   },
   carouselContainer: {
-    // [theme.breakpoints.between('xs', 'sm')]: {
-    //   maxHeight: '500px'
-    // },
-    // [theme.breakpoints.between('sm', 'md')]: {
-    //   maxHeight: '640px'
-    // },
-    // [theme.breakpoints.between('md', 'lg')]: {
-    //   maxHeight: '640px'
-    // },
-    height: '80vh',
+    height: '99vh',
     width: '100%'
   },
   slide: {
@@ -48,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    maxHeight: 400
+    maxHeight: 640
   },
   capitalize: {
     textTransform: 'uppercase',
@@ -63,14 +54,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    width: '100%',
-    padding: theme.spacing(2)
+    width: '100%'
   },
   nextBtnContainer: {
     display: 'flex',
     justifyContent: 'center',
-    alignContent: 'center',
-    margin: theme.spacing(3)
+    alignContent: 'center'
   },
   nextBtn: {
     borderRadius: '48px',
@@ -235,7 +224,7 @@ const SplashIntro = ({ skipHandling }) => {
           <Grid container direction="row" justify="center" alignItems="center">
             <SwipeableViews
               index={activeStep}
-              style={{ maxHeight: 400 }}
+              style={{ maxHeight: 500 }}
               onChangeIndex={handleStepChange}
               enableMouseEvents
             >
@@ -287,7 +276,7 @@ const SplashIntro = ({ skipHandling }) => {
           <Grid container direction="row" justify="center" alignItems="center">
             <SwipeableViews
               index={activeStep}
-              style={{ maxHeight: 400 }}
+              style={{ maxHeight: 500 }}
               onChangeIndex={handleStepChange}
               enableMouseEvents
             >

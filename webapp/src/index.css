@@ -7,8 +7,8 @@ div.MuiMobileStepper-dot {
 }
 
 div.react-swipeable-view-container {
-  max-height: 400px !important;
-  height: 400px !important;
+  max-height: 480px !important;
+  height: 480px !important;
   display: flex;
   justify-items: center;
   align-items: center;
