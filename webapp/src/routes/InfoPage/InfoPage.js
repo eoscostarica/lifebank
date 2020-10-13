@@ -6,13 +6,25 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Divider from '@material-ui/core/Divider'
 import Slider from '@material-ui/core/Slider'
+import Dialog from '@material-ui/core/Dialog';
+import Toolbar from '@material-ui/core/Toolbar';
 import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import AppBar from '@material-ui/core/AppBar';
+import Slide from '@material-ui/core/Slide';
 import { useHistory } from 'react-router-dom'
+
+import Schedule from '../../components/Schedule'
+import MapShowOneLocation from '../../components/MapShowOneLocation'
 
 const useStyles = makeStyles((theme) => ({
   cardBody: {
@@ -178,26 +190,30 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     marginBottom: theme.spacing(1)
-  }
+  },
+  appBar: {
+    position: 'relative',
+  },
 }))
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const InfoPage = ({ profile }) => {
   const classes = useStyles()
   const [actualImageIndex, setActualImageIndex] = useState(0)
   const images = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
   const numbers = JSON.parse(images)
-  const valueLabelFormat = (value) => {
-    switch (value) {
-      case 1:
-        return 'Low'
-      case 2:
-        return 'Medium'
-      case 3:
-        return 'High'
-      default:
-        return 'N/A'
-    }
-  }
+  const [open, setOpenModal] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
 
   return (
     <Box className={classes.cardBody}>
@@ -236,9 +252,19 @@ const InfoPage = ({ profile }) => {
             <Button
               className={classes.label}
               startIcon={<LocationOnIcon color="action" />}
+              onClick={handleClickOpen}
             >
               Location
             </Button>
+            <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+              <MapShowOneLocation
+                //markerLocation={JSON.parse(profile.location)}
+                //accountProp={profile.account}
+                width="100%"
+                height="100%"
+                py={2}
+              />
+            </Dialog>
           </div>
           <div className={classes.headerDetails}>
             <Button
@@ -285,7 +311,6 @@ const InfoPage = ({ profile }) => {
                     valueLabelDisplay="off"
                     color="secondary"
                     defaultValue={2}
-                    //valueLabelFormat={valueLabelFormat}
                     step={null}
                     min={1}
                     max={3}
