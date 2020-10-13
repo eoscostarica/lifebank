@@ -89,7 +89,7 @@ export default [
   },
   {
     name: 'info-page',
-    path: '/info-page',
+    path: '/info-page/:lifebank',
     component: InfoPage
   }
 ]

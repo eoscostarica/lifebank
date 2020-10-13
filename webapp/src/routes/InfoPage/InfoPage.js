@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import Divider from '@material-ui/core/Divider'
+import Slider from '@material-ui/core/Slider'
 import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -149,6 +151,33 @@ const useStyles = makeStyles((theme) => ({
   },
   carousel: {
     maxWidth: '100%'
+  },
+  divider: {
+    width: '100%'
+  },
+  boldText: {
+    fontWeight: 'bold'
+  },
+  bloodDemand: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    marginBottom: theme.spacing(2)
+  },
+  markLabel: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    '& h4': {
+      fontSize: 18
+    }
+  },
+  slider: {
+    padding: theme.spacing(0, 2)
+  },
+  midLabel: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   }
 }))
 
@@ -157,6 +186,19 @@ const InfoPage = ({ profile }) => {
   const [actualImageIndex, setActualImageIndex] = useState(0)
   const images = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
   const numbers = JSON.parse(images)
+  const valueLabelFormat = (value) => {
+    switch (value) {
+      case 1:
+        return 'Low'
+      case 2:
+        return 'Medium'
+      case 3:
+        return 'High'
+      default:
+        return 'N/A'
+    }
+  }
+
   return (
     <Box className={classes.cardBody}>
       <div className={classes.headerCardBody}>
@@ -207,17 +249,50 @@ const InfoPage = ({ profile }) => {
             </Button>
           </div>
           <div className={classes.bodyDetails}>
-            <p className={classes.text}>
-              We’re very exited to participate in this awesome initiative and more intro text.
-              Then more non-teaser text will continue here...
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Praesent fermentum nisi vitae vehicula convallis. Vestibulum ultrices quam massa.
-              Curabitur a finibus est. Nulla volutpat odio quis efficitur faucibus.
-              Quisque tincidunt hendrerit tellus, ac vestibulum massa ullamcorper a.
-              Sed in metus eu urna euismod vulputate at sed quam. Nulla euismod feugiat est sit amet vulputate.
-              Nullam egestas posuere accumsan. Fusce suscipit, ex rutrum commodo mattis,
-              mi justo bibendum augue, id molestie metus magna in metus.
-            </p>
+            <Divider className={classes.divider} />
+            <Box className={classes.rowBox, classes.midLabel}>
+              <Typography className={classes.boldText} variant="subtitle1">Description</Typography>
+              <Typography variant="body1"> We are an institution created to save lives through the
+              collection of blood. Remember that giving blood is giving life.
+              </Typography>
+            </Box>
+            <Divider className={classes.divider} />
+            <Box className={classes.rowBox, classes.midLabel}>
+              <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
+              <Typography variant="body1">Siquirres, Limon, Costa Rica</Typography>
+            </Box>
+            <Divider className={classes.divider} />
+            <Box className={classes.rowBox, classes.midLabel}>
+              <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
+              <Typography variant="body1">BancoSangre@mail.com</Typography>
+            </Box>
+            <Divider className={classes.divider} />
+            <Box className={classes.rowBox, classes.midLabel}>
+              <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
+              <Typography variant="body1">800-010-800</Typography>
+            </Box>
+            <Divider className={classes.divider} />
+            <Box className={classes.rowBox, classes.midLabel}>
+              <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
+              <Box className={classes.bloodDemand}>
+                <Box className={classes.markLabel}>
+                  <Typography variant="body1" className={classes.midLabel}>Low</Typography>
+                  <Typography variant="body1" className={classes.midLabel}>Medium</Typography>
+                  <Typography variant="body1" className={classes.midLabel}>Urgent</Typography>
+                </Box>
+                <Box className={classes.slider}>
+                  <Slider
+                    valueLabelDisplay="off"
+                    color="secondary"
+                    defaultValue={2}
+                    //valueLabelFormat={valueLabelFormat}
+                    step={null}
+                    min={1}
+                    max={3}
+                  />
+                </Box>
+              </Box>
+            </Box>
           </div>
         </div>
       </div>
