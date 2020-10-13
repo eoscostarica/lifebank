@@ -14,14 +14,21 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import SwipeableViews from 'react-swipeable-views'
 
 import { ReactComponent as FirstLogo } from '../../assets/lifebank.svg'
-import { ReactComponent as SecondLogo } from '../../assets/second.svg'
-import { ReactComponent as ThirdLogo } from '../../assets/third.svg'
-import { ReactComponent as FourthLogo } from '../../assets/fourth.svg'
+import SecondLogoUrl from '../../assets/second.svg'
+import ThirdLogoUrl from '../../assets/third.svg'
+import FourthLogoUrl from '../../assets/fourth.svg'
 
 const useStyles = makeStyles((theme) => ({
   imageIcon: {
-    height: '100%',
-    width: '100%'
+    [theme.breakpoints.between('xs', 'sm')]: {
+      width: '360px'
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '100%'
+    },
+    height: '400px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
   },
   iconRoot: {
     textAlign: 'center',
@@ -151,7 +158,13 @@ const SplashIntro = ({ skipHandling }) => {
           Is a place where you can donate blood
         </Typography>
       </Box>
-      <SecondLogo />
+      <Box
+        className={classes.imageIcon}
+        style={{
+          backgroundImage: `url(${SecondLogoUrl})`,
+          backgroundPosition: 'center'
+        }}
+      ></Box>
     </Box>,
     <Box className={classes.slide} key={2}>
       <Box style={{ margin: 'auto', maxWidth: 317, textAlign: 'center' }}>
@@ -171,7 +184,13 @@ const SplashIntro = ({ skipHandling }) => {
           lifebank
         </Typography>
       </Box>
-      <ThirdLogo />
+      <Box
+        className={classes.imageIcon}
+        style={{
+          backgroundImage: `url(${ThirdLogoUrl})`,
+          backgroundPosition: 'center'
+        }}
+      ></Box>
     </Box>,
     <Box className={classes.slide} key={3}>
       <Box style={{ margin: 'auto', maxWidth: 317, textAlign: 'center' }}>
@@ -190,7 +209,14 @@ const SplashIntro = ({ skipHandling }) => {
           redeem at their convenience with sponsors of the community.
         </Typography>
       </Box>
-      <FourthLogo />
+      <Box
+        className={classes.imageIcon}
+        style={{
+          backgroundImage: `url(${FourthLogoUrl})`,
+          backgroundPosition: 'center',
+          height: '320px'
+        }}
+      ></Box>
     </Box>
   ])
 
