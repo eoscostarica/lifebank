@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "react-swipeable-views": "^0.13.9",
-    "react-swipeable-views-utils": "^0.14.0-alpha.0"
-  }
-}
