@@ -193,7 +193,13 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     position: 'relative',
+    height: '32px'
   },
+  positionXIcon: {
+    position: 'absolute',
+    top: '-6px',
+    right: '0px',
+  }
 }))
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -205,14 +211,22 @@ const InfoPage = ({ profile }) => {
   const [actualImageIndex, setActualImageIndex] = useState(0)
   const images = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
   const numbers = JSON.parse(images)
-  const [open, setOpenModal] = useState(false);
+  const [open, setOpenModalLocation] = useState(false);
+  const [openSchedule, setOpenModalSchedule] = useState(false);
 
   const handleClickOpen = () => {
-    setOpenModal(true);
+    setOpenModalLocation(true);
   };
 
   const handleClose = () => {
-    setOpenModal(false);
+    setOpenModalLocation(false);
+  };
+  const handleClickOpenSchedule = () => {
+    setOpenModalSchedule(true);
+  };
+
+  const handleCloseSchedule = () => {
+    setOpenModalSchedule(false);
   };
 
   return (
@@ -257,6 +271,16 @@ const InfoPage = ({ profile }) => {
               Location
             </Button>
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+              <div className={classes.appBar}>
+                <Toolbar>
+                  <Typography variant="subtitle1">
+                    Lifebank Location
+                  </Typography>
+                  <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                    <CloseIcon color="secondary" />
+                  </IconButton>
+                </Toolbar>
+              </div>
               <MapShowOneLocation
                 //markerLocation={JSON.parse(profile.location)}
                 //accountProp={profile.account}
@@ -270,9 +294,23 @@ const InfoPage = ({ profile }) => {
             <Button
               className={classes.label}
               startIcon={<CalendarTodayIcon color="action" />}
+              onClick={handleClickOpenSchedule}
             >
               Schedule
             </Button>
+            <Dialog open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
+              <div className={classes.appBar}>
+                <Toolbar>
+                  <Typography variant="subtitle1">
+                    Lifebank Schedule
+                  </Typography>
+                  <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
+                    <CloseIcon color="secondary" />
+                  </IconButton>
+                </Toolbar>
+              </div>
+
+            </Dialog>
           </div>
           <div className={classes.bodyDetails}>
             <Divider className={classes.divider} />
