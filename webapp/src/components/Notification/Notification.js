@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/styles'
+import React from 'react'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
@@ -9,6 +9,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Slide from '@material-ui/core/Slide';
+import clsx from 'clsx'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +21,10 @@ const useStyles = makeStyles((theme) => ({
   notificationIcon: {
     color: "#121212",
     width: 24,
-    height: 24
+    height: 24,
+  },
+  notificationIconTransparent: {
+    color: "#ffffff",
   },
   appBar: {
     position: 'relative',
@@ -43,6 +49,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Notification = () => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme()
+
+  const trigger = useScrollTrigger({
+    target: window || undefined,
+    disableHysteresis: true
+  })
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true
+  })
+
+  const useTransparentBG = isDesktop && !trigger
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,7 +73,10 @@ const Notification = () => {
   return (
     <>
       <IconButton className={classes.wrapper} onClick={handleClickOpen}>
-        <NotificationsIcon alt="Notification icon" className={classes.notificationIcon} />
+        <NotificationsIcon alt="Notification icon"
+          className={clsx(classes.notificationIcon, {
+            [classes.notificationIconTransparent]: useTransparentBG
+          })} />
       </IconButton>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>

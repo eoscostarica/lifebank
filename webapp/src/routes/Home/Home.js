@@ -3,11 +3,13 @@ import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import CustomRouterLink from '../../components/CustomRouterLink'
 import AppBar from '@material-ui/core/AppBar';
 import { useUser } from '../../context/user.context'
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -48,6 +50,65 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'center',
       alignItems: 'center'
     }
+  },
+  boxLeft: {
+    width: '60%',
+    paddingTop: theme.spacing(2),
+    '& h1': {
+      color: theme.palette.white,
+      letterSpacing: '1px',
+      marginLeft: theme.spacing(1)
+    },
+    '& h5': {
+      color: theme.palette.secondary.main,
+      letterSpacing: '0.25px',
+      fontSize: 18,
+      fontWeight: 500
+    },
+    [theme.breakpoints.up('md')]: {
+      width: 'auto',
+      paddingTop: theme.spacing(8),
+      '& h1': {
+        fontSize: 72,
+        lineHeight: 0.68,
+        textShadow: `0 2px 10px ${theme.palette.primary.mediumEmphasizedBlackText}`
+      }
+    }
+  },
+  boxRight: {
+    width: '40%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    padding: theme.spacing(5, 1, 0, 0),
+    '& p': {
+      color: theme.palette.white,
+      textAlign: 'end',
+      fontSize: 16,
+      lineHeight: 1.25,
+      letterSpacing: '0.5px',
+      marginBottom: theme.spacing(1)
+    },
+    [theme.breakpoints.up('md')]: {
+      width: 'auto',
+      alignItems: 'center',
+      padding: theme.spacing(8, 1, 0, 0),
+      '& p': {
+        lineHeight: 1.22,
+        letterSpacing: '1px',
+        fontSize: 32,
+        textShadow: `0 2px 10px ${theme.palette.primary.mediumEmphasizedBlackText}`
+      }
+    }
+  },
+  registerBtn: {
+    width: 180,
+    height: 49,
+    backgroundColor: "transparent",
+    margin: theme.spacing(2, 0, 4, 0),
+    borderRadius: " 2px",
+    border: "solid 2px #ffffff"
+
   },
   appBarTab: {
     backgroundColor: "#ffffff",
@@ -415,6 +476,24 @@ const Home = () => {
     return (
       <>
         <Box className={classes.homeHeader}>
+          <Box className={classes.boxLeft}>
+            <Typography variant="h1">Start Saving Lives</Typography>
+          </Box>
+          <Box className={classes.boxRight}>
+            <Typography variant="body1">Give blood banks a lifeline.</Typography>
+            <Typography variant="body1">Register to donate life.</Typography>
+            <Button
+              className={classes.registerBtn}
+              variant="contained"
+              color="primary"
+              component={CustomRouterLink}
+              to={`/${currentUser ? 'donations' : 'signup'}`}
+            >
+              {currentUser ? 'Donations' : 'Register'}
+            </Button>
+          </Box>
+        </Box>
+        <Box style={{ height: 2500, backgroundColor: "blue" }}>
 
         </Box>
       </>

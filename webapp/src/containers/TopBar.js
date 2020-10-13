@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -9,7 +9,12 @@ import { Link } from 'react-router-dom'
 import Divider from '@material-ui/core/Divider';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import ShareIcon from '@material-ui/icons/Share';
+import clsx from 'clsx'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
+import LanguageSelector from '../components/LanguageSelector'
 import Notification from '../components/Notification'
 import LoginModal from '../components/LoginModal'
 
@@ -23,11 +28,14 @@ const useStyles = makeStyles((theme) => ({
     width: 24,
     height: 24
   },
+  userIconTransparent: {
+    color: "#ffffff",
+  },
   logoutIcon: {
     color: "#121212",
     width: 20,
     height: 20,
-    marginRight: 10
+    marginRight: 10,
   },
   menuItem: {
     fontSize: "14px",
@@ -48,6 +56,18 @@ const useStyles = makeStyles((theme) => ({
 const Topbar = ({ user, onLogout }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null);
+  const theme = useTheme()
+
+  const trigger = useScrollTrigger({
+    target: window || undefined,
+    disableHysteresis: true
+  })
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true
+  })
+
+  const useTransparentBG = isDesktop && !trigger
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,11 +84,23 @@ const Topbar = ({ user, onLogout }) => {
 
   return (
     <Box className={classes.box}>
+      <LanguageSelector />
+      {user && isDesktop &&
+        <IconButton onClick={handleClick}>
+          <ShareIcon alt="User icon"
+            className={clsx(classes.userIcon, {
+              [classes.userIconTransparent]: useTransparentBG
+            })} />
+        </IconButton>
+      }
       {user && <Notification />}
       {user && (
         <>
           <IconButton onClick={handleClick}>
-            <PersonIcon alt="User icon" className={classes.userIcon} />
+            <PersonIcon alt="User icon"
+              className={clsx(classes.userIcon, {
+                [classes.userIconTransparent]: useTransparentBG
+              })} />
           </IconButton>
           <Menu
             id="simple-menu"
