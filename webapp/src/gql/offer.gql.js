@@ -79,7 +79,7 @@ export const UPDATE_OFFER_MUTATION = gql`
     $images: String
     $active: Boolean
     $offer_name: String
-    $cost_in_tokens: Int!
+    $cost_in_tokens: Int
     $id: Int!
   ) {
     update_offer(
