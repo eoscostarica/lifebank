@@ -65,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
   cardRoot: {
     position: "relative",
     width: "100%",
-    height: "100%",
     padding: 10,
     height: "145px",
   },
@@ -198,7 +197,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   BankItem.propTypes = {
-    id: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
   }
@@ -258,7 +256,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
-          <Avatar className={classes.cardAvatar} src={props.img} >
+          <Avatar className={classes.cardAvatar} >
             <LocalHospitalIcon />
           </Avatar>
           <Box className={classes.cardTitleContainer}>
@@ -279,7 +277,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   BankCard.propTypes = {
-    id: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
   }
@@ -311,7 +308,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
 }
 
 ShowLifebanks.propTypes = {
-  lifebanks: PropTypes.array,
+  banks: PropTypes.array,
   loading: PropTypes.bool,
   isDesktop: PropTypes.bool,
 }

@@ -4,9 +4,6 @@ import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
-import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
@@ -16,9 +13,7 @@ import Button from '@material-ui/core/Button'
 import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
-import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
-import Fade from '@material-ui/core/Fade'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -106,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoginModal = () => {
-  const { t } = useTranslation('translations')
+  //const { t } = useTranslation('translations')
   const [maxWidth] = useState('md');
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
@@ -333,9 +328,6 @@ const LoginModal = () => {
       </Dialog>
     </>
   )
-}
-
-LoginModal.propTypes = {
 }
 
 export default LoginModal

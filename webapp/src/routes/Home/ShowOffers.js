@@ -221,7 +221,6 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
   }
 
   OfferItem.propTypes = {
-    id: PropTypes.number,
     img: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
@@ -302,7 +301,6 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
   }
 
   OfferCard.propTypes = {
-    id: PropTypes.number,
     img: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,

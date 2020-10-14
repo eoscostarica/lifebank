@@ -89,8 +89,7 @@ const Notification = () => {
             </Typography>
           </Toolbar>
         </AppBar>
-        <List>
-        </List>
+        <List />
       </Dialog>
     </>
   )

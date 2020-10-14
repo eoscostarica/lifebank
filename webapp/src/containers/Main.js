@@ -13,7 +13,6 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 import LifeBankIcon from '../components/LifebankIcon'
-import { blue } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,9 +68,6 @@ const useStyles = makeStyles((theme) => ({
   drawerContent: {
     backgroundColor: "#ffffff",
     height: '100%',
-    [theme.breakpoints.up('md')]: {
-      //marginTop: 64,
-    }
   }
 }))
 
@@ -90,7 +86,7 @@ const ChangeAppBarColorOnScroll = ({
   })
   const useTransparentBG = isDesktop && isHome && !trigger
 
-  let colorLogo = "#121212"
+  const colorLogo = "#121212"
 
   return (
     <AppBar
@@ -164,7 +160,6 @@ const Main = ({ children, sidebarContent, topbarContent }) => {
         anchor="left"
         classes={{ paper: classes.drawerPaper }}
         onClose={() => setOpenSidebar(false)}
-        //variant={isDesktop ? 'persistent' : 'temporary'}
         open={openSidebar}
         className={clsx({
           [classes.drawer]: true,
@@ -187,7 +182,9 @@ Main.propTypes = {
 ChangeAppBarColorOnScroll.propTypes = {
   setOpenSidebar: PropTypes.func,
   openSidebar: PropTypes.bool,
-  topbarContent: PropTypes.any
+  topbarContent: PropTypes.any,
+  isHome: PropTypes.bool,
+  isDesktop: PropTypes.bool,
 }
 
 export default Main

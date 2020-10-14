@@ -1,23 +1,13 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
-import Paper from '@material-ui/core/Paper'
-import clsx from 'clsx'
-import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import Fade from '@material-ui/core/Fade'
 import RoomIcon from '@material-ui/icons/Room';
 
 import MapShowLocations from '../MapShowLocations'

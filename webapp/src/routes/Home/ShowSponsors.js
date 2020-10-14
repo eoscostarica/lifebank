@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
   cardRoot: {
     position: "relative",
     width: "100%",
-    height: "100%",
     padding: 10,
     height: "145px",
   },
@@ -198,7 +197,6 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   }
 
   SponsorItem.propTypes = {
-    id: PropTypes.number,
     name: PropTypes.string,
     bussines_type: PropTypes.string,
   }
@@ -259,7 +257,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
-          <Avatar className={classes.cardAvatar} src={props.img} >
+          <Avatar className={classes.cardAvatar} >
             <StorefrontIcon />
           </Avatar>
           <Box className={classes.cardTitleContainer}>
@@ -280,7 +278,6 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   }
 
   SponsorCard.propTypes = {
-    id: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
   }
