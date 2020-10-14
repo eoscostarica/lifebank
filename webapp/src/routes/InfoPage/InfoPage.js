@@ -19,7 +19,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
-import AppBar from '@material-ui/core/AppBar';
 import Slide from '@material-ui/core/Slide';
 import { useHistory } from 'react-router-dom'
 
@@ -66,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
     //borderStyle: 'groove'
   },
   imageSection: {
+    position: "relative",
     width: '100%',
     //borderStyle: 'groove',
     height: '35%'
@@ -89,16 +89,17 @@ const useStyles = makeStyles((theme) => ({
     float: 'left'
   },
   fabButton: {
+    position: "absolute",
     width: '40px',
     height: '40px',
     borderRadius: '50%',
     boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.18), 0 2px 4px 0 rgba(0, 0, 0, 0.24)',
     backgroundColor: '#ba0d0d',
-    top: -585,
+    top: -20,
+    right: 15,
     margin: '0',
-    right: 20,
-    float: 'right',
-    color: "#ffffff"
+    color: "#ffffff",
+    zIndex: 1
   },
   title: {
     width: '196px',
@@ -192,13 +193,17 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   appBar: {
-    position: 'relative',
+    position: '-webkit-sticky',
+    position: 'sticky',
     height: '32px'
   },
   positionXIcon: {
     position: 'absolute',
     top: '-6px',
-    right: '0px',
+    right: '0px'
+  },
+  modal: {
+    margin: theme.spacing(6)
   }
 }))
 
@@ -211,6 +216,7 @@ const InfoPage = ({ profile }) => {
   const [actualImageIndex, setActualImageIndex] = useState(0)
   const images = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
   const numbers = JSON.parse(images)
+  const location = '{ "latitude": 10.08792178595354, "longitude": -83.49028827421655 }'
   const [open, setOpenModalLocation] = useState(false);
   const [openSchedule, setOpenModalSchedule] = useState(false);
 
@@ -260,6 +266,9 @@ const InfoPage = ({ profile }) => {
               <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
             ))}
           </Carousel>
+          <Fab className={classes.fabButton}>
+            <FavoriteIcon className={classes.iconFab} />
+          </Fab>
         </div>
         <div className={classes.detailsSection}>
           <div className={classes.headerDetails}>
@@ -282,8 +291,8 @@ const InfoPage = ({ profile }) => {
                 </Toolbar>
               </div>
               <MapShowOneLocation
-                //markerLocation={JSON.parse(profile.location)}
-                //accountProp={profile.account}
+                markerLocation={JSON.parse(location)}
+                accountProp={"12letterlife"}
                 width="100%"
                 height="100%"
                 py={2}
@@ -298,7 +307,7 @@ const InfoPage = ({ profile }) => {
             >
               Schedule
             </Button>
-            <Dialog open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
+            <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
               <div className={classes.appBar}>
                 <Toolbar>
                   <Typography variant="subtitle1">
@@ -309,7 +318,36 @@ const InfoPage = ({ profile }) => {
                   </IconButton>
                 </Toolbar>
               </div>
-
+              <List>
+                <Divider />
+                <ListItem button>
+                  <ListItemText primary="Monday" secondary="8:00am to 11:00am" />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                  <ListItemText primary="Tuesday" secondary="8:00am to 11:00am" />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                  <ListItemText primary="Wednesday" secondary="8:00am to 11:00am" />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                  <ListItemText primary="Thursday" secondary="8:00am to 11:00am" />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                  <ListItemText primary="Friday" secondary="8:00am to 11:00am" />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                  <ListItemText primary="Saturday" secondary="8:00am to 11:00am" />
+                </ListItem>
+                <Divider />
+                <ListItem button>
+                  <ListItemText primary="Sunday" secondary="8:00am to 11:00am" />
+                </ListItem>
+              </List>
             </Dialog>
           </div>
           <div className={classes.bodyDetails}>
@@ -359,9 +397,6 @@ const InfoPage = ({ profile }) => {
           </div>
         </div>
       </div>
-      <Fab className={classes.fabButton}>
-        <FavoriteIcon className={classes.iconFab} />
-      </Fab>
     </Box>
   )
 }
