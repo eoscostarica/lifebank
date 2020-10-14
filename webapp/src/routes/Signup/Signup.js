@@ -211,7 +211,7 @@ const Signup = () => {
 
     if (immunity_test === undefined) immunity_test = false
 
-    if (invitation_code === undefined) invitation_code = ' '
+    if (invitation_code === undefined || !invitation_code) invitation_code = ' '
 
     if (urgency_level === undefined) urgency_level = 1
 
@@ -240,21 +240,24 @@ const Signup = () => {
   })
 
   useEffect(() => {
-    const regularExpresion = /\S+@\S+\.\S+/
+    const regularExpresion = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
     const validEmail = async () => {
       const { data } = await checkEmail({
         email: user.email
       })
 
-      data.preregister_lifebank.length === 0 && data.user.length === 0
-        ? setEmailValid(true)
-        : setEmailValid(false)
+      if (data) {
+        data.preregister_lifebank.length === 0 && data.user.length === 0
+          ? setEmailValid(true)
+          : setEmailValid(false)
 
-      setcheckEmailLoaded(true)
+        setcheckEmailLoaded(true)
+      }
     }
 
-    if (regularExpresion.test(user?.email)) validEmail()
-    else {
+    if (regularExpresion.test(user?.email)) {
+      validEmail()
+    } else {
       setEmailValid(false)
       setcheckEmailLoaded(false)
     }
