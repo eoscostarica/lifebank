@@ -63,6 +63,11 @@ const useStyles = makeStyles((theme) => ({
   iconBottomAppBar: {
     color: "#121212"
   },
+  buttonMapDesktop: {
+    padding: 20,
+    backgroundColor: "white",
+    color: "rgba(0, 0, 0, 0.6)"
+  }
 }))
 
 const MapModal = () => {
@@ -70,7 +75,10 @@ const MapModal = () => {
   const [open, setOpen] = useState(false)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [maxWidth] = React.useState('md');
+  const [maxWidth] = useState('md');
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true
+  })
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -83,9 +91,20 @@ const MapModal = () => {
 
   return (
     <>
-      <IconButton onClick={handleClickOpen}>
-        <RoomIcon className={classes.iconBottomAppBar} />
-      </IconButton>
+      {isDesktop &&
+        <Button
+          onClick={handleClickOpen}
+          className={classes.buttonMapDesktop}
+          startIcon={<RoomIcon />}
+        >
+          BROWSE WITH A MAP
+      </Button>
+      }
+      {!isDesktop &&
+        <IconButton onClick={handleClickOpen}>
+          <RoomIcon className={classes.iconBottomAppBar} />
+        </IconButton>
+      }
       <Dialog
         fullScreen={fullScreen}
         maxWidth={maxWidth}
