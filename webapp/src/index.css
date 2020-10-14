@@ -1,9 +1,26 @@
-.BrainhubCarousel__dots .BrainhubCarousel__dot {
-  background-color: transparent;
+div.MuiMobileStepper-dotActive {
+  background-color: #b71c1c;
+  margin: 0 10px !important;
+}
+div.MuiMobileStepper-dot {
+  margin: 0 10px !important;
 }
 
-.BrainhubCarousel__dots .BrainhubCarousel__dot:before {
-  width: 8px;
-  background-color: #b71c1c;
-  height: 8px;
+div.react-swipeable-view-container {
+  max-height: 480px !important;
+  height: 480px !important;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+div.react-swipeable-view-container > div {
+  max-height: 100% !important;
+  height: fit-content;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
 }

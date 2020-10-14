@@ -16,22 +16,22 @@ const App = ({ ual }) => {
 
   return (
     <BrowserRouter>
-      <MainContainer
-        topbarContent={<TopBar user={currentUser} onLogout={logout} />}
-        sidebarContent={<SideBar user={currentUser} onLogout={logout} />}
-      >
-        <Grid container>
-          {!cookies.splash ? (
-            <SplashIntro
-              skipHandling={(cookie) => {
-                const d = new Date()
-                d.setMonth(d.getMonth() + 3)
-                setCookie(cookie, undefined, {
-                  expires: d
-                })
-              }}
-            />
-          ) : (
+      {!cookies.splash ? (
+        <SplashIntro
+          skipHandling={(cookie) => {
+            const d = new Date()
+            d.setMonth(d.getMonth() + 3)
+            setCookie(cookie, undefined, {
+              expires: d
+            })
+          }}
+        />
+      ) : (
+        <MainContainer
+          topbarContent={<TopBar user={currentUser} onLogout={logout} />}
+          sidebarContent={<SideBar user={currentUser} onLogout={logout} />}
+        >
+          <Grid container justify="center" alignItems="center">
             <Switch>
               {routes.map(({ path, component: Component, ...args }) => (
                 <Route key={`path-${path}`} path={path} {...args}>
@@ -40,9 +40,9 @@ const App = ({ ual }) => {
               ))}
               <Redirect to="/not-found" />
             </Switch>
-          )}
-        </Grid>
-      </MainContainer>
+          </Grid>
+        </MainContainer>
+      )}
     </BrowserRouter>
   )
 }
