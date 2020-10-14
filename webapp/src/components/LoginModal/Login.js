@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog';
 import Box from '@material-ui/core/Box'
@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoginModal = () => {
-  //const { t } = useTranslation('translations')
+  // const { t } = useTranslation('translations')
   const [maxWidth] = useState('md');
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)

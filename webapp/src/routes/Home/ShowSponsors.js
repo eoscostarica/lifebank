@@ -228,7 +228,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
           </Grid>
         )}
         {!loading && sponsors.length > 0 && sponsors.map(sponsor => (
-          <Grid item md={3} lg={2}>
+          <Grid item md={3} lg={2} key={sponsor.id}>
             <SponsorCard
               key={sponsor.id}
               id={sponsor.id}

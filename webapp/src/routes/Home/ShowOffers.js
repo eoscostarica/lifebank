@@ -252,7 +252,7 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           </Grid>
         )}
         {!loading && offers.length > 0 && offers.map(offer => (
-          <Grid item md={3} lg={2}>
+          <Grid item md={3} lg={2} key={offer.id}>
             <OfferCard
               key={offer.id}
               id={offer.id}

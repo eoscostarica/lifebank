@@ -227,7 +227,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           </Grid>
         )}
         {!loading && banks.length > 0 && banks.map(bank => (
-          <Grid item md={3} lg={2}>
+          <Grid item md={3} lg={2} key={bank.id}>
             <BankCard
               key={bank.id}
               id={bank.id}
