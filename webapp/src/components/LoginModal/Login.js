@@ -164,7 +164,7 @@ const LoginModal = () => {
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
-      const { data } = await checkEmail({ account: email })
+      const { data } = await checkEmail({ email })
 
       if (data.user.length === 1) {
         const bcrypt = require('bcryptjs')
