@@ -177,18 +177,36 @@
   - role: guest
     permission:
       columns:
-      - active
       - limited
       - online_only
-      - id
       - quantity
-      - sponsor_id
+      - offer_type
       - description
+      - start_date
       - end_date
       - images
+      - sponsor_id
+      - id
       - offer_name
+      - active
+      - cost_in_tokens
+      filter: {}
+  - role: lifebank
+    permission:
+      columns:
+      - limited
+      - online_only
+      - quantity
       - offer_type
+      - description
       - start_date
+      - end_date
+      - images
+      - sponsor_id
+      - id
+      - offer_name
+      - active
+      - cost_in_tokens
       filter: {}
   - role: sponsor
     permission:
@@ -304,6 +322,25 @@
       - created_at
       - updated_at
       - name
+      filter: {}
+  - role: lifebank
+    permission:
+      columns:
+      - account
+      - created_at
+      - id
+      - name
+      - role
+      - username
+      filter: {}
+  - role: sponsor
+    permission:
+      columns:
+      - account
+      - id
+      - name
+      - role
+      - username
       filter: {}
 - table:
     schema: public
