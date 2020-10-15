@@ -16,7 +16,6 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
-
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
@@ -175,7 +174,6 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   }
 
   const SponsorItem = (props) => {
-
     return (
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
@@ -192,7 +190,6 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
           }
         />
       </ListItem>
-
     )
   }
 
@@ -200,7 +197,6 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     name: PropTypes.string,
     bussines_type: PropTypes.string,
   }
-
 
   const LoadSponsorsDesktop = () => {
     return (
@@ -244,16 +240,13 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   const truncateString = (str) => {
     const num = 55
 
-    if (str.length <= num) {
+    if (str.length <= num)
       return str
-    }
 
     return str.slice(0, num) + '...'
   }
 
-
   const SponsorCard = (props) => {
-
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
@@ -282,9 +275,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     description: PropTypes.string,
   }
 
-
   return (
-
     <>
       {!isDesktop &&
         <List className={classes.list} >
@@ -304,7 +295,6 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
         </Grid>
       }
     </>
-
   )
 }
 

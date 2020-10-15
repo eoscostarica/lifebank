@@ -16,8 +16,6 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
-
-
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
@@ -192,7 +190,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           }
         />
       </ListItem>
-
     )
   }
 
@@ -243,16 +240,13 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   const truncateString = (str) => {
     const num = 55
 
-    if (str.length <= num) {
+    if (str.length <= num)
       return str
-    }
 
     return str.slice(0, num) + '...'
   }
 
-
   const BankCard = (props) => {
-
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
@@ -281,8 +275,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     description: PropTypes.string,
   }
 
-
-
   return (
     <>
       {!isDesktop &&
@@ -303,7 +295,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         </Grid>
       }
     </>
-
   )
 }
 

@@ -95,8 +95,6 @@ const Notification = () => {
   )
 }
 
-Notification.propTypes = {
-
-}
+Notification.propTypes = {}
 
 export default Notification

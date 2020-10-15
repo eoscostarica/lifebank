@@ -16,8 +16,6 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
-
-
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
@@ -198,7 +196,6 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
   }
 
   const OfferItem = (props) => {
-
     return (
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
@@ -216,7 +213,6 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           <LocalOfferIcon className={classes.secondaryIconList} />
         </ListItemSecondaryAction>
       </ListItem>
-
     )
   }
 
@@ -269,9 +265,8 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
   const truncateString = (str) => {
     const num = 55
 
-    if (str.length <= num) {
+    if (str.length <= num)
       return str
-    }
 
     return str.slice(0, num) + '...'
   }
@@ -326,15 +321,8 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
         </Grid>
       }
     </>
-
-
-
   )
 }
-
-
-
-
 
 ShowOffers.propTypes = {
   offers: PropTypes.array,
