@@ -63,7 +63,17 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    [theme.breakpoints.between('xs', 'sm')]: {
+      zIndex: 9999,
+      position: 'absolute',
+      right: 0,
+      top: 10
+    },
+    [theme.breakpoints.up('sm')]: {
+      zIndex: 0,
+      position: 'relative'
+    }
   },
   nextBtnContainer: {
     display: 'flex',
@@ -97,8 +107,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: 0.5,
     fontStyle: 'normal',
     fontStretch: 'normal',
-    lineHeight: 'normal',
-    marginBottom: theme.spacing(2)
+    lineHeight: 'normal'
   },
   dialog: {
     padding: 100
@@ -116,7 +125,7 @@ const SplashIntro = ({ skipHandling }) => {
   }
 
   const [slides] = useState([
-    <Box className={classes.slide} key={0}>
+    <Box className={classes.slide} justifyContent="space-evenly" key={0}>
       <Typography
         style={{
           fontSize: 24,
@@ -151,8 +160,7 @@ const SplashIntro = ({ skipHandling }) => {
         style={{
           margin: 'auto',
           maxWidth: 175,
-          textAlign: 'center',
-          zIndex: 9999
+          textAlign: 'center'
         }}
       >
         <Typography
@@ -172,8 +180,9 @@ const SplashIntro = ({ skipHandling }) => {
       <Box
         className={classes.imageIcon}
         style={{
+          backgroundPositionY: 'center',
           backgroundImage: `url(${SecondLogoUrl})`,
-          backgroundSize: matches ? '250%' : '70%'
+          backgroundSize: matches ? 'normal' : '620px'
         }}
       ></Box>
     </Box>,
@@ -199,7 +208,7 @@ const SplashIntro = ({ skipHandling }) => {
         className={classes.imageIcon}
         style={{
           backgroundImage: `url(${ThirdLogoUrl})`,
-          backgroundSize: matches ? '210%' : '100%'
+          backgroundSize: matches ? 'normal' : '760px'
         }}
       ></Box>
     </Box>,
@@ -224,7 +233,8 @@ const SplashIntro = ({ skipHandling }) => {
         className={classes.imageIcon}
         style={{
           backgroundImage: `url(${FourthLogoUrl})`,
-          backgroundSize: 'normal'
+          backgroundPositionY: matches ? 'center' : '80%',
+          backgroundSize: matches ? 'normal' : '550px'
         }}
       ></Box>
     </Box>
