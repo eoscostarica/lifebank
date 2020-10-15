@@ -48,6 +48,38 @@
       "isAplace": "Es un lugar donde podés donar sangre",
       "sponsorDescription": " son negocios que ofrecen recompensas a las personas que han donado a través de un Lifebank",
       "donorsDescription": " donarán sangre y recibirán un activo único que puede ser canjeado "
+    },
+    "common": {
+      "description": "Descripción"
+    },
+    "offersManagement": {
+      "offerName": "Nombre de oferta",
+      "offerNamePlaceholder": "Ingresar el nombre aquí",
+      "offerType": "Tipo de oferta",
+      "onlineOnly": "Sólo en línea",
+      "offerDescription": "Descripción de oferta",
+      "offerDescriptionPlaceholder": "La descripción aquí",
+      "redeemAvailability": "Disponibilidad de canje",
+      "limited": "Limitado",
+      "unlimited": "Ilimitado",
+      "quantity": "Cantidad",
+      "quantityPlaceholder": "Cantidad disponible del servicio",
+      "selectStartOfferDate": "Selecciona una fecha de inicio",
+      "selectEndOfferDate": "Selecciona una fecha de finalización",
+      "costInTokens": "Costo en tokens",
+      "costInTokensPlaceholder": "Costo en tokens",
+      "imageUrl": "Dirección de imagen",
+      "imageUrlPlaceholder": "Escribe la dirección de imagen aquí",
+      "tableTitle": "Todas las ofertas",
+      "limitationHandling": "Manejo de limitación",
+      "startDate": "Fecha inicio",
+      "endDate": "Fecha fin",
+      "status": "Estado",
+      "actions": "Acciones",
+      "details": "Detalles",
+      "offerDetails": "Offer Details",
+      "quantityToRedeem": "Cantidad a canjear",
+      "business_type": "Tipo de negocio"
     }
   }
 }

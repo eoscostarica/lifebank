@@ -48,6 +48,8 @@ const useStyles = makeStyles((theme) => ({
 const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
   const classes = useStyles()
 
+  console.log(profile)
+
   return (
     <>
       <Divider className={classes.divider} />
