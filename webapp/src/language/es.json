@@ -1,10 +1,46 @@
 {
   "translations": {
+    "hero": {
+      "title": "¡Empieza a salvar vidas!",
+      "subtitle1": "Ayuda a los bancos de sangre",
+      "subtitle2": "Regístrate para donar vida",
+      "register": "Registrarse"
+    },
+    "contentToolbar": {
+      "browseWithMap": "Buscar con el mapa",
+      "filters": "Filtros",
+      "favorites": "Favoritos",
+      "inputPlaceholder": "Busca Ofertas, Bancos de Sangre o Comercios Afiliados"
+    },
+    "rolesTitle": {
+      "singular": {
+        "lifebank": "Banco de Sangre",
+        "sponsor": "Comercio Afiliado",
+        "donor": "Donador"
+      },
+      "plural": {
+        "lifebanks": "Bancos de Sangre",
+        "sponsors": "Comercios Afiliados",
+        "donors": "Donadores"
+      }
+    },
+    "cardsSection": {
+      "availableOffers": "Ofertas disponibles",
+      "moreInfo": "Más información"
+    },
     "login": "Iniciar sesión",
     "users": "Usuarios",
     "products": "Productos",
     "productsTitle": "Listado de productos",
     "usersTitle": "Listado de usuarios",
-    "logout": "Salir"
+    "logout": "Salir",
+    "splash": {
+      "nextBtn": "Siguiente",
+      "welcomeTo": "Bienvenido a",
+      "workTogether": "Trabajemos juntos y ayudemos a que la vida siga fluyendo",
+      "isAplace": "Es un lugar donde podés donar sangre",
+      "sponsorDescription": " son negocios que ofrecen recompensas a las personas que han donado a través de un Lifebank",
+      "donorsDescription": " donarán sangre y recibirán un activo único que puede ser canjeado "
+    }
   }
 }
