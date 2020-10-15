@@ -28,6 +28,13 @@
       "availableOffers": "Ofertas disponibles",
       "moreInfo": "Más información"
     },
+    "navigationDrawer": {
+      "credentialsRecovery": "Recuperación de credenciales",
+      "information": "Información",
+      "aboutLifebank": "Acerca de Lifebank",
+      "useTerms": "Términos de uso",
+      "help": "Ayuda"
+    },
     "login": "Iniciar sesión",
     "users": "Usuarios",
     "products": "Productos",
