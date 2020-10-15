@@ -161,6 +161,7 @@ const GenericOfferFormComponent = ({
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const imgUrlValueRef = useRef(undefined)
   const [offer, setOffer] = useState()
+  const [updatedOffer, setUpdatedOffer] = useState()
   const [openSnackbar, setOpenSnackbar] = useState({
     show: false,
     message: '',
@@ -217,7 +218,7 @@ const GenericOfferFormComponent = ({
           offer_name: offer_name
         }
       })
-    else
+    else {
       updateOffer({
         variables: {
           offer_type,
@@ -227,12 +228,28 @@ const GenericOfferFormComponent = ({
           quantity: quantity || undefined,
           start_date: start_date || undefined,
           end_date: end_date || undefined,
+          cost_in_tokens,
           images,
           offer_name,
           id,
           active
         }
       })
+      setUpdatedOffer({
+        offer_type,
+        online_only,
+        description,
+        limited,
+        quantity: quantity || undefined,
+        start_date: start_date || undefined,
+        end_date: end_date || undefined,
+        cost_in_tokens,
+        images,
+        offer_name,
+        id,
+        active
+      })
+    }
   }
 
   const handleClose = (_event, reason) => {
@@ -260,6 +277,12 @@ const GenericOfferFormComponent = ({
         message: 'Offer updated successfully',
         severity: 'success'
       })
+      setOffers((offs) =>
+        offs.map((offr) => {
+          if (offr.id === updatedOffer.id) offr = updatedOffer
+          return offr
+        })
+      )
     }
   }, [updateOfferResult])
 

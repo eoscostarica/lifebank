@@ -1,26 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, createRef, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import clsx from 'clsx'
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 import Dialog from '@material-ui/core/Dialog'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import Carousel, { Dots } from '@brainhubeu/react-carousel'
-import '@brainhubeu/react-carousel/lib/style.css'
+import MobileStepper from '@material-ui/core/MobileStepper'
+import SwipeableViews from 'react-swipeable-views'
 
 import { ReactComponent as FirstLogo } from '../../assets/lifebank.svg'
-import { ReactComponent as SecondLogo } from '../../assets/second.svg'
-import { ReactComponent as ThirdLogo } from '../../assets/third.svg'
-import { ReactComponent as FourthLogo } from '../../assets/fourth.svg'
+import SecondLogoUrl from '../../assets/second.svg'
+import ThirdLogoUrl from '../../assets/third.svg'
+import FourthLogoUrl from '../../assets/fourth.svg'
 
 const useStyles = makeStyles((theme) => ({
   imageIcon: {
-    height: '100%',
-    width: '100%'
+    [theme.breakpoints.between('xs', 'sm')]: {
+      width: '360px'
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '100%'
+    },
+    height: '400px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
   },
   iconRoot: {
     textAlign: 'center',
@@ -28,11 +36,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%'
   },
   carouselContainer: {
-    display: 'grid',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    height: '90vh',
+    height: '99vh',
     width: '100%'
   },
   slide: {
@@ -40,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    maxHeight: 600,
-    width: '100%'
+    width: '100%',
+    height: '100%',
+    maxHeight: 640
   },
   capitalize: {
     textTransform: 'uppercase',
@@ -56,14 +61,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    width: '100%',
-    padding: theme.spacing(2)
+    width: '100%'
   },
   nextBtnContainer: {
     display: 'flex',
     justifyContent: 'center',
-    alignContent: 'center',
-    margin: theme.spacing(3)
+    alignContent: 'center'
   },
   nextBtn: {
     borderRadius: '48px',
@@ -72,19 +75,22 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: 'middle',
     color: 'white'
   },
-  carousel: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    maxHeight: 600
-  },
   mainHeading: {
     fontSize: 24,
     letterSpacing: 0.86,
     fontWeight: 500,
-    lineHeight: 'normal',
     textAlign: 'center',
     fontStretch: 'normal'
+  },
+  stepper: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    justifyContent: 'center'
+  },
+  swipeable: {
+    '& > div.react-swipeable-view-container': {
+      maxHeight: 500
+    }
   },
   medium: {
     fontSize: 14,
@@ -100,8 +106,13 @@ const useStyles = makeStyles((theme) => ({
 
 const SplashIntro = ({ skipHandling }) => {
   const classes = useStyles()
-  const [index, setIndex] = useState(0)
+  const dotsRef = createRef()
   const matches = useMediaQuery('(min-width:600px)')
+  const [activeStep, setActiveStep] = useState(0)
+
+  const handleStepChange = (step) => {
+    setActiveStep(step)
+  }
 
   const [slides] = useState([
     <Box className={classes.slide} key={0}>
@@ -111,7 +122,6 @@ const SplashIntro = ({ skipHandling }) => {
       <FirstLogo style={{ marginTop: 67 }} />
       <Box
         style={{
-          margin: 'auto',
           marginTop: 50,
           maxWidth: 175,
           textAlign: 'center'
@@ -120,6 +130,7 @@ const SplashIntro = ({ skipHandling }) => {
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
+          style={{ marginBottom: 0 }}
         >
           Let's work together and keep life flowing
         </Typography>
@@ -142,17 +153,24 @@ const SplashIntro = ({ skipHandling }) => {
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
-          style={{ marginTop: '0 !important' }}
+          style={{ marginTop: '0 !important', lineHeight: '24px' }}
         >
           Is a place where you can donate blood
         </Typography>
       </Box>
-      <SecondLogo />
+      <Box
+        className={classes.imageIcon}
+        style={{
+          backgroundImage: `url(${SecondLogoUrl})`,
+          backgroundPosition: 'center'
+        }}
+      ></Box>
     </Box>,
     <Box className={classes.slide} key={2}>
       <Box style={{ margin: 'auto', maxWidth: 317, textAlign: 'center' }}>
         <Typography
           variant="h2"
+          style={{ lineHeight: '24px' }}
           className={clsx(classes.mainHeading, classes.capitalize)}
         >
           Sponsors
@@ -160,13 +178,19 @@ const SplashIntro = ({ skipHandling }) => {
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
-          style={{ marginTop: '0 !important' }}
+          style={{ marginTop: '0 !important', lineHeight: '24px' }}
         >
           Are businesses that will reward people that have donated through a
           lifebank
         </Typography>
       </Box>
-      <ThirdLogo />
+      <Box
+        className={classes.imageIcon}
+        style={{
+          backgroundImage: `url(${ThirdLogoUrl})`,
+          backgroundPosition: 'center'
+        }}
+      ></Box>
     </Box>,
     <Box className={classes.slide} key={3}>
       <Box style={{ margin: 'auto', maxWidth: 317, textAlign: 'center' }}>
@@ -179,15 +203,40 @@ const SplashIntro = ({ skipHandling }) => {
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
-          style={{ marginTop: '0 !important' }}
+          style={{ marginTop: '0 !important', lineHeight: '24px' }}
         >
           Will donate blood and be rewarded with life tokens which they can
           redeem at their convenience with sponsors of the community.
         </Typography>
       </Box>
-      <FourthLogo />
+      <Box
+        className={classes.imageIcon}
+        style={{
+          backgroundImage: `url(${FourthLogoUrl})`,
+          backgroundPosition: 'center',
+          height: '320px'
+        }}
+      ></Box>
     </Box>
   ])
+
+  const handleDotClick = (event) => {
+    console.log(event.target.id)
+    setActiveStep(Number(event.target.id))
+  }
+
+  useEffect(() => {
+    if (dotsRef.current) {
+      for (let i = 0; i < dotsRef.current.children[0].children.length; i++) {
+        dotsRef.current.children[0].children[i].id = String(i)
+        dotsRef.current.children[0].children[i].addEventListener(
+          'click',
+          handleDotClick
+        )
+      }
+      console.log(dotsRef.current.children[1])
+    }
+  }, [dotsRef])
 
   return (
     <>
@@ -198,64 +247,94 @@ const SplashIntro = ({ skipHandling }) => {
               <CloseIcon />
             </IconButton>
           </Box>
-          <Carousel
-            className={classes.carousel}
-            value={index}
-            slides={slides}
-          />
+          <Grid container direction="row" justify="center" alignItems="center">
+            <SwipeableViews
+              index={activeStep}
+              style={{ maxHeight: 500 }}
+              onChangeIndex={handleStepChange}
+              enableMouseEvents
+            >
+              {slides.map((slide, index) => (
+                <Fragment key={index}>{slide}</Fragment>
+              ))}
+            </SwipeableViews>
+          </Grid>
           <Box className={classes.nextBtnContainer}>
             <Button
               className={classes.nextBtn}
               onClick={() =>
-                index === slides.length - 1
+                activeStep === slides.length - 1
                   ? skipHandling('splash')
-                  : setIndex(index + 1)
+                  : setActiveStep(activeStep + 1)
               }
               style={{
                 backgroundColor: '#B71C1C'
               }}
             >
-              {index === slides.length - 1 ? 'Start' : 'Next'}
+              {activeStep === slides.length - 1 ? 'Start' : 'Next'}
             </Button>
           </Box>
-          <Dots
-            value={index}
-            onChange={(value) => setIndex(value)}
-            number={slides.length}
+          <MobileStepper
+            ref={dotsRef}
+            variant="dots"
+            steps={4}
+            position="static"
+            activeStep={activeStep}
+            className={classes.stepper}
           />
           <br />
           <br />
           <br />
         </Dialog>
       ) : (
-        <Box className={classes.carouselContainer}>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          className={classes.carouselContainer}
+        >
           <Box className={classes.slideHeader}>
             <Button onClick={() => skipHandling('splash')}>
               <Typography className={classes.caption}>Skip</Typography>
             </Button>
           </Box>
-          <Carousel value={index} slides={slides} />
+          <Grid container direction="row" justify="center" alignItems="center">
+            <SwipeableViews
+              index={activeStep}
+              style={{ maxHeight: 500 }}
+              onChangeIndex={handleStepChange}
+              enableMouseEvents
+            >
+              {slides.map((slide, index) => (
+                <Fragment key={index}>{slide}</Fragment>
+              ))}
+            </SwipeableViews>
+          </Grid>
           <Box className={classes.nextBtnContainer}>
             <Button
               className={classes.nextBtn}
               onClick={() =>
-                index === slides.length - 1
+                activeStep === slides.length - 1
                   ? skipHandling('splash')
-                  : setIndex(index + 1)
+                  : setActiveStep(activeStep + 1)
               }
               style={{
                 backgroundColor: '#B71C1C'
               }}
             >
-              {index === slides.length - 1 ? 'Start' : 'Next'}
+              {activeStep === slides.length - 1 ? 'Start' : 'Next'}
             </Button>
           </Box>
-          <Dots
-            value={index}
-            onChange={(value) => setIndex(value)}
-            number={slides.length}
+          <MobileStepper
+            ref={dotsRef}
+            variant="dots"
+            steps={4}
+            position="static"
+            activeStep={activeStep}
+            className={classes.stepper}
           />
-        </Box>
+        </Grid>
       )}
     </>
   )

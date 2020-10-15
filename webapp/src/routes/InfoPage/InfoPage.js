@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
   cardBody: {
     width: '100%',
     height: '100%',
-    position: 'absolute',
     marginBottom: '0',
     marginTop: '16px',
     //borderStyle: 'groove'
@@ -51,12 +50,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '50%',
     marginLeft: '16px',
     marginRight: '13px',
-    marginTop: '13px',
+    marginTop: '13px'
   },
   tituleSection: {
     width: '80%',
     height: '100%',
-    //borderStyle: 'groove',
     float: 'left'
   },
   bodyCard: {
@@ -78,13 +76,13 @@ const useStyles = makeStyles((theme) => ({
   headerDetails: {
     width: '50%',
     height: '10%',
-    marginTop: '4%',
+    marginTop: '2%',
     //borderStyle: 'groove',
     float: 'left'
   },
   bodyDetails: {
     width: '100%',
-    height: '86%',
+    height: '88%',
     //borderStyle: 'groove',
     float: 'left'
   },
@@ -102,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1
   },
   title: {
-    width: '196px',
+    width: '97%',
     height: '23px',
     fontFamily: 'Roboto',
     fontSize: '20px',
@@ -113,11 +111,12 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.15px',
     color: 'rgba(0, 0, 0, 0.87)',
     marginRight: '60px',
+    marginLeft: '2%',
     marginTop: '14px',
-    marginBottom: '4px'
+    marginBottom: '4px',
   },
   subtitle: {
-    width: '194.4px',
+    width: '97%',
     height: '16px',
     fontFamily: 'Roboto',
     fontSize: '14px',
@@ -128,6 +127,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.25px',
     color: 'rgba(0, 0, 0, 0.6)',
     marginRight: '91.6px',
+    marginLeft: '2%',
     marginTop: '4px',
   },
   label: {

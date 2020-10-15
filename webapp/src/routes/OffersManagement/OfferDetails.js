@@ -173,7 +173,13 @@ const OfferDetails = ({ offer, open, setOpen }) => {
             lg={4}
             className={classes.carouselComponent}
           >
-            <CarouselComponent images={JSON.parse(offer.images)} />
+            <CarouselComponent
+              images={
+                typeof offer.images === 'string'
+                  ? JSON.parse(offer.images)
+                  : offer.images
+              }
+            />
           </Grid>
         </Grid>
       </Grid>

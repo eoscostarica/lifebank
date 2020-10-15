@@ -24,23 +24,14 @@ const useStyles = makeStyles(() => ({
 }))
 
 // TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
-function MapPopup({ id, info, account }) {
+function MapPopup({ id, info }) {
   const classes = useStyles()
-
+  const nameURL = info.name.replaceAll(" ", "-")
+  console.log("nameURL", nameURL)
+  console.log("info.geolocation.latitude", info.geolocation.latitude)
   return (
     <Box key={id}>
       <div className={classes.title}>{info.name}</div>
-      <div>
-        Account:{' '}
-        <a
-          href={`${eosConfig.BLOCK_EXPLORER_URL}account/${account}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={classes.link}
-        >
-          {account}
-        </a>
-      </div>
       <div>
         Phone:{' '}
         <a
@@ -51,37 +42,27 @@ function MapPopup({ id, info, account }) {
         </a>
       </div>
       {info.business_type && <div>Business type: {info.business_type}</div>}
-      {info.benefit_description && (
-        <div>Benefits: {info.benefit_description}</div>
-      )}
-      {info.description && <div>Description: {info.description}</div>}
-      {info.description && (
-        <div>Blood urgency: {URGENCY[info.blood_urgency_level]}</div>
-      )}
-      {info.website && (
+      {(
         <div>
           Website:{' '}
           <a
-            href={info.website}
+            href={window.location.href}
             target="_blank"
             rel="noopener noreferrer"
             className={classes.link}
           >
-            {info.website}
+            Open site
           </a>
         </div>
       )}
       <div>
-        Schedule:
-        <ul className={classes.ul}>
-          {JSON.parse((info.schedule || '[]').replace(/\\/g, '')).map(
-            (item, i) => (
-              <li key={`${i}-${item.day}`}>
-                {item.day}: {item.open} - {item.close}
-              </li>
-            )
-          )}
-        </ul>
+        Location:{' '}
+        <a
+          className={classes.link}
+          href={"http://maps.google.com/maps?q=" + info.geolocation.latitude + "," + info.geolocation.longitude}
+        >
+          Go to
+        </a>
       </div>
     </Box>
   )
