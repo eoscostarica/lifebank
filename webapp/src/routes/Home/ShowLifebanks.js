@@ -178,12 +178,11 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   const BankItem = (props) => {
-    console.log("props", props)
     return (
       <LinkRouter
         style={{ textDecoration: 'none' }}
         to={{
-          pathname: 'info-page/' + props.bank.info.name.replaceAll(" ", "-"),
+          pathname: 'info/' + props.bank.info.name.replaceAll(" ", "-"),
           state: { profile: props.bank }
         }}
       >
@@ -262,7 +261,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   const BankCard = (props) => {
-    console.log("props", props)
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
@@ -279,14 +277,20 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           <Typography className={classes.cardContentText} >{truncateString(props.bank.info.description)}
           </Typography>
         </CardContent>
-        <Button
-          color="primary"
-          className={classes.cardActionButton}
-          component={CustomRouterLink}
-          to={`/${currentUser ? 'info-page/' + props.bank.info.name : 'info-page/' + props.bank.info.name}`}
+        <LinkRouter
+          style={{ textDecoration: 'none' }}
+          to={{
+            pathname: 'info/' + props.bank.info.name.replaceAll(" ", "-"),
+            state: { profile: props.bank }
+          }}
         >
-          More info
-        </Button>
+          <Button
+            color="primary"
+            className={classes.cardActionButton}
+          >
+            More info
+          </Button>
+        </LinkRouter>
       </Card>
     )
   }

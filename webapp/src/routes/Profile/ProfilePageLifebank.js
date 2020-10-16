@@ -40,8 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfilePageLifebank = ({ profile }) => {
   const classes = useStyles()
-  console.log("profile.location", profile.location)
-  console.log("profile.locationJS", JSON.parse(profile.location))
+
   return (
     <>
       <Box className={classes.rowBox}>

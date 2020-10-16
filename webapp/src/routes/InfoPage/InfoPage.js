@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Grid from '@material-ui/core/Grid'
+import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -21,9 +21,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import Slide from '@material-ui/core/Slide';
-import { useHistory } from 'react-router-dom'
 
-import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 
 const useStyles = makeStyles((theme) => ({
@@ -31,18 +29,15 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     marginBottom: '0',
-    marginTop: '16px',
-    //borderStyle: 'groove'
+    marginTop: '16px'
   },
   headerCardBody: {
     width: '100%',
-    height: '12%',
-    //borderStyle: 'groove'
+    height: '12%'
   },
   avatarSection: {
     width: '20%',
     height: '100%',
-    //borderStyle: 'groove',
     float: 'left'
   },
   avatarRound: {
@@ -60,31 +55,26 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyCard: {
     width: '100%',
-    height: '88%',
-    //borderStyle: 'groove'
+    height: '88%'
   },
   imageSection: {
     position: "relative",
     width: '100%',
-    //borderStyle: 'groove',
     height: '35%'
   },
   detailsSection: {
     width: '100%',
-    height: '65%',
-    //borderStyle: 'groove'
+    height: '65%'
   },
   headerDetails: {
     width: '50%',
     height: '10%',
     marginTop: '2%',
-    //borderStyle: 'groove',
     float: 'left'
   },
   bodyDetails: {
     width: '100%',
     height: '88%',
-    //borderStyle: 'groove',
     float: 'left'
   },
   fabButton: {
@@ -217,7 +207,6 @@ const InfoPage = () => {
   const [actualImageIndex, setActualImageIndex] = useState(0)
   const images = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
   const numbers = JSON.parse(images)
-  const geolocation = '{ "latitude": 10.08792178595354, "longitude": -83.49028827421655 }'
   const [open, setOpenModalLocation] = useState(false);
   const [openSchedule, setOpenModalSchedule] = useState(false);
   const location = useLocation()
@@ -243,7 +232,7 @@ const InfoPage = () => {
       ? setProfile(location.state.profile)
       : setProfile(location.state.profile)
   }, [location])
-  console.log("profile:", profile)
+
   return (
     <>
       {profile &&
@@ -289,13 +278,13 @@ const InfoPage = () => {
                   onClick={handleClickOpen}
                 >
                   Location
-            </Button>
+              </Button>
                 <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
                   <div className={classes.appBar}>
                     <Toolbar>
                       <Typography variant="subtitle1">
                         Lifebank Location
-                  </Typography>
+                    </Typography>
                       <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
                         <CloseIcon color="secondary" />
                       </IconButton>
@@ -317,48 +306,19 @@ const InfoPage = () => {
                   onClick={handleClickOpenSchedule}
                 >
                   Schedule
-            </Button>
+              </Button>
                 <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
                   <div className={classes.appBar}>
                     <Toolbar>
                       <Typography variant="subtitle1">
                         Lifebank Schedule
-                  </Typography>
+                    </Typography>
                       <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
                         <CloseIcon color="secondary" />
                       </IconButton>
                     </Toolbar>
                   </div>
-                  <List>
-                    <Divider />
-                    <ListItem button>
-                      <ListItemText primary="Monday" secondary="8:00am to 11:00am" />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button>
-                      <ListItemText primary="Tuesday" secondary="8:00am to 11:00am" />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button>
-                      <ListItemText primary="Wednesday" secondary="8:00am to 11:00am" />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button>
-                      <ListItemText primary="Thursday" secondary="8:00am to 11:00am" />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button>
-                      <ListItemText primary="Friday" secondary="8:00am to 11:00am" />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button>
-                      <ListItemText primary="Saturday" secondary="8:00am to 11:00am" />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button>
-                      <ListItemText primary="Sunday" secondary="8:00am to 11:00am" />
-                    </ListItem>
-                  </List>
+
                 </Dialog>
               </div>
               <div className={classes.bodyDetails}>
@@ -411,6 +371,22 @@ const InfoPage = () => {
       }
     </>
   )
+}
+
+const scheduleItem = (schedule) => {
+  return (
+    <List>
+      <Divider />
+      <ListItem button>
+        <ListItemText primary={schedule} secondary="8:00am to 11:00am" />
+      </ListItem>
+    </List>
+  )
+}
+
+scheduleItem.propTypes = {
+  day: PropTypes.string,
+  hours: PropTypes.string
 }
 
 export default InfoPage

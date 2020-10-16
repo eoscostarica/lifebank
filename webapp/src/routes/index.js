@@ -82,8 +82,8 @@ export default [
     component: Help
   },
   {
-    name: 'info-page',
-    path: '/info-page/:lifebank',
+    name: 'info',
+    path: '/info/:lifebank',
     component: InfoPage
   }
 ]
