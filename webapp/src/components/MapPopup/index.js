@@ -29,6 +29,7 @@ function MapPopup({ id, info }) {
   const nameURL = info.name.replaceAll(" ", "-")
   console.log("nameURL", nameURL)
   console.log("info.geolocation.latitude", info.geolocation.latitude)
+  console.log("info.geolocation.latitude", info.geolocation.longitude)
   return (
     <Box key={id}>
       <div className={classes.title}>{info.name}</div>

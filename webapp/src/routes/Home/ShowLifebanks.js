@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import { Link as LinkRouter } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -177,27 +178,34 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   const BankItem = (props) => {
+    console.log("props", props)
     return (
-      <ListItem
-        className={classes.listItem}
-        button
-        component={CustomRouterLink}
-        to={`/${currentUser ? 'info-page/' + props.bank.info.name : 'info-page/' + props.bank.info.name}`}
+      <LinkRouter
+        style={{ textDecoration: 'none' }}
+        to={{
+          pathname: 'info-page/' + props.bank.info.name.replaceAll(" ", "-"),
+          state: { profile: props.bank }
+        }}
       >
-        <ListItemAvatar>
-          <Avatar>
-            <LocalHospitalIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
-          }
-          secondary={
-            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
-          }
-        />
-      </ListItem>
+        <ListItem
+          className={classes.listItem}
+          button
+        >
+          <ListItemAvatar>
+            <Avatar>
+              <LocalHospitalIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
+            }
+            secondary={
+              <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
+            }
+          />
+        </ListItem>
+      </LinkRouter>
     )
   }
 

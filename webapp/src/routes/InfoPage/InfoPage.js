@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider'
 import Slider from '@material-ui/core/Slider'
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
+import { Link, useLocation } from 'react-router-dom';
 import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -211,14 +212,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const InfoPage = ({ profile }) => {
+const InfoPage = () => {
   const classes = useStyles()
   const [actualImageIndex, setActualImageIndex] = useState(0)
   const images = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
   const numbers = JSON.parse(images)
-  const location = '{ "latitude": 10.08792178595354, "longitude": -83.49028827421655 }'
+  const geolocation = '{ "latitude": 10.08792178595354, "longitude": -83.49028827421655 }'
   const [open, setOpenModalLocation] = useState(false);
   const [openSchedule, setOpenModalSchedule] = useState(false);
+  const location = useLocation()
+  const [profile, setProfile] = useState()
 
   const handleClickOpen = () => {
     setOpenModalLocation(true);
@@ -235,169 +238,178 @@ const InfoPage = ({ profile }) => {
     setOpenModalSchedule(false);
   };
 
+  useEffect(() => {
+    location.state
+      ? setProfile(location.state.profile)
+      : setProfile(location.state.profile)
+  }, [location])
+  console.log("profile:", profile)
   return (
-    <Box className={classes.cardBody}>
-      <div className={classes.headerCardBody}>
-        <div className={classes.avatarSection}>
-          <img className={classes.avatarRound} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar"></img>
-        </div>
-        <div className={classes.tituleSection}>
-          <h2 className={classes.title}>Metropolitan Hospital</h2>
-          <h3 className={classes.subtitle}>Hospital</h3>
-        </div>
-      </div>
-      <div className={classes.bodyCard}>
-        <div className={classes.imageSection}>
-          <Carousel
-            value={actualImageIndex}
-            className={classes.carousel}
-            onChange={(val) => setActualImageIndex(val)}
-            plugins={[
-              'arrows',
-              {
-                resolve: slidesToShowPlugin,
-                options: {
-                  numberOfSlides: 1
-                }
-              }
-            ]}
-          >
-            {numbers.map((url, key) => (
-              <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
-            ))}
-          </Carousel>
-          <Fab className={classes.fabButton}>
-            <FavoriteIcon className={classes.iconFab} />
-          </Fab>
-        </div>
-        <div className={classes.detailsSection}>
-          <div className={classes.headerDetails}>
-            <Button
-              className={classes.label}
-              startIcon={<LocationOnIcon color="action" />}
-              onClick={handleClickOpen}
-            >
-              Location
-            </Button>
-            <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-              <div className={classes.appBar}>
-                <Toolbar>
-                  <Typography variant="subtitle1">
-                    Lifebank Location
-                  </Typography>
-                  <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
-                    <CloseIcon color="secondary" />
-                  </IconButton>
-                </Toolbar>
-              </div>
-              <MapShowOneLocation
-                markerLocation={JSON.parse(location)}
-                accountProp={"12letterlife"}
-                width="100%"
-                height="100%"
-                py={2}
-              />
-            </Dialog>
+    <>
+      {profile &&
+        <Box className={classes.cardBody}>
+          <div className={classes.headerCardBody}>
+            <div className={classes.avatarSection}>
+              <img className={classes.avatarRound} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar"></img>
+            </div>
+            <div className={classes.tituleSection}>
+              <h2 className={classes.title}>{profile.info.name}</h2>
+              <h3 className={classes.subtitle}>Hospital</h3>
+            </div>
           </div>
-          <div className={classes.headerDetails}>
-            <Button
-              className={classes.label}
-              startIcon={<CalendarTodayIcon color="action" />}
-              onClick={handleClickOpenSchedule}
-            >
-              Schedule
+          <div className={classes.bodyCard}>
+            <div className={classes.imageSection}>
+              <Carousel
+                value={actualImageIndex}
+                className={classes.carousel}
+                onChange={(val) => setActualImageIndex(val)}
+                plugins={[
+                  'arrows',
+                  {
+                    resolve: slidesToShowPlugin,
+                    options: {
+                      numberOfSlides: 1
+                    }
+                  }
+                ]}
+              >
+                {numbers.map((url, key) => (
+                  <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                ))}
+              </Carousel>
+              <Fab className={classes.fabButton}>
+                <FavoriteIcon className={classes.iconFab} />
+              </Fab>
+            </div>
+            <div className={classes.detailsSection}>
+              <div className={classes.headerDetails}>
+                <Button
+                  className={classes.label}
+                  startIcon={<LocationOnIcon color="action" />}
+                  onClick={handleClickOpen}
+                >
+                  Location
             </Button>
-            <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
-              <div className={classes.appBar}>
-                <Toolbar>
-                  <Typography variant="subtitle1">
-                    Lifebank Schedule
+                <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                  <div className={classes.appBar}>
+                    <Toolbar>
+                      <Typography variant="subtitle1">
+                        Lifebank Location
                   </Typography>
-                  <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
-                    <CloseIcon color="secondary" />
-                  </IconButton>
-                </Toolbar>
-              </div>
-              <List>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary="Monday" secondary="8:00am to 11:00am" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary="Tuesday" secondary="8:00am to 11:00am" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary="Wednesday" secondary="8:00am to 11:00am" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary="Thursday" secondary="8:00am to 11:00am" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary="Friday" secondary="8:00am to 11:00am" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary="Saturday" secondary="8:00am to 11:00am" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary="Sunday" secondary="8:00am to 11:00am" />
-                </ListItem>
-              </List>
-            </Dialog>
-          </div>
-          <div className={classes.bodyDetails}>
-            <Divider className={classes.divider} />
-            <Box className={classes.rowBox, classes.midLabel}>
-              <Typography className={classes.boldText} variant="subtitle1">Description</Typography>
-              <Typography variant="body1"> We are an institution created to save lives through the
-              collection of blood. Remember that giving blood is giving life.
-              </Typography>
-            </Box>
-            <Divider className={classes.divider} />
-            <Box className={classes.rowBox, classes.midLabel}>
-              <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
-              <Typography variant="body1">Siquirres, Limon, Costa Rica</Typography>
-            </Box>
-            <Divider className={classes.divider} />
-            <Box className={classes.rowBox, classes.midLabel}>
-              <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
-              <Typography variant="body1">BancoSangre@mail.com</Typography>
-            </Box>
-            <Divider className={classes.divider} />
-            <Box className={classes.rowBox, classes.midLabel}>
-              <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
-              <Typography variant="body1">800-010-800</Typography>
-            </Box>
-            <Divider className={classes.divider} />
-            <Box className={classes.rowBox, classes.midLabel}>
-              <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
-              <Box className={classes.bloodDemand}>
-                <Box className={classes.markLabel}>
-                  <Typography variant="body1" className={classes.midLabel}>Low</Typography>
-                  <Typography variant="body1" className={classes.midLabel}>Medium</Typography>
-                  <Typography variant="body1" className={classes.midLabel}>Urgent</Typography>
-                </Box>
-                <Box className={classes.slider}>
-                  <Slider
-                    valueLabelDisplay="off"
-                    color="secondary"
-                    defaultValue={2}
-                    step={null}
-                    min={1}
-                    max={3}
+                      <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                        <CloseIcon color="secondary" />
+                      </IconButton>
+                    </Toolbar>
+                  </div>
+                  <MapShowOneLocation
+                    markerLocation={profile.info.geolocation}
+                    accountProp={profile.account}
+                    width="100%"
+                    height="100%"
+                    py={2}
                   />
+                </Dialog>
+              </div>
+              <div className={classes.headerDetails}>
+                <Button
+                  className={classes.label}
+                  startIcon={<CalendarTodayIcon color="action" />}
+                  onClick={handleClickOpenSchedule}
+                >
+                  Schedule
+            </Button>
+                <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
+                  <div className={classes.appBar}>
+                    <Toolbar>
+                      <Typography variant="subtitle1">
+                        Lifebank Schedule
+                  </Typography>
+                      <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
+                        <CloseIcon color="secondary" />
+                      </IconButton>
+                    </Toolbar>
+                  </div>
+                  <List>
+                    <Divider />
+                    <ListItem button>
+                      <ListItemText primary="Monday" secondary="8:00am to 11:00am" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button>
+                      <ListItemText primary="Tuesday" secondary="8:00am to 11:00am" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button>
+                      <ListItemText primary="Wednesday" secondary="8:00am to 11:00am" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button>
+                      <ListItemText primary="Thursday" secondary="8:00am to 11:00am" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button>
+                      <ListItemText primary="Friday" secondary="8:00am to 11:00am" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button>
+                      <ListItemText primary="Saturday" secondary="8:00am to 11:00am" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button>
+                      <ListItemText primary="Sunday" secondary="8:00am to 11:00am" />
+                    </ListItem>
+                  </List>
+                </Dialog>
+              </div>
+              <div className={classes.bodyDetails}>
+                <Divider className={classes.divider} />
+                <Box className={classes.rowBox, classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">Description</Typography>
+                  <Typography variant="body1"> {profile.info.description}
+                  </Typography>
                 </Box>
-              </Box>
-            </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.rowBox, classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
+                  <Typography variant="body1">{profile.info.address}</Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.rowBox, classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
+                  <Typography variant="body1">{profile.info.email}</Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.rowBox, classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
+                  <Typography variant="body1">{profile.info.phone_number}</Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.rowBox, classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
+                  <Box className={classes.bloodDemand}>
+                    <Box className={classes.markLabel}>
+                      <Typography variant="body1" className={classes.midLabel}>Low</Typography>
+                      <Typography variant="body1" className={classes.midLabel}>Medium</Typography>
+                      <Typography variant="body1" className={classes.midLabel}>Urgent</Typography>
+                    </Box>
+                    <Box className={classes.slider}>
+                      <Slider
+                        valueLabelDisplay="off"
+                        color="secondary"
+                        defaultValue={profile.info.blood_urgency_level}
+                        step={null}
+                        min={1}
+                        max={3}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </Box>
+        </Box>
+      }
+    </>
   )
 }
 
