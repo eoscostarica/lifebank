@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import PersonIcon from '@material-ui/icons/Person';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Box from '@material-ui/core/Box'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Divider from '@material-ui/core/Divider';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -57,6 +57,8 @@ const Topbar = ({ user, onLogout }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme()
+  const location = useLocation()
+  const isHome = location.pathname === '/'
 
   const trigger = useScrollTrigger({
     target: window || undefined,
@@ -67,7 +69,7 @@ const Topbar = ({ user, onLogout }) => {
     defaultMatches: true
   })
 
-  const useTransparentBG = isDesktop && !trigger
+  const useTransparentBG = isDesktop && !trigger && isHome
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
