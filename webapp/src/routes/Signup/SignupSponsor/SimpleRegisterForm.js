@@ -64,14 +64,14 @@ const SimpleRegisterForm = ({
           className={classes.textField}
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
-        <ReCAPTCHA
+        {/* <ReCAPTCHA
           sitekey={captchaConfig.sitekey}
           onChange={(value) => setRecaptchaValue(value)}
-        />
+        /> */}
       </Box>
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={!recaptchaValue || error !== undefined || loading}
+          disabled={error !== undefined || loading}
           variant="contained"
           color="primary"
           onClick={onSubmit}

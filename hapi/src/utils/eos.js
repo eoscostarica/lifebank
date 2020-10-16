@@ -21,6 +21,7 @@ const createAccount = async accountName => {
   const password = await wallet.create(accountName)
   const key = await wallet.createKey(accountName)
 
+  console.log(`Account name ${accountName}`)
   try {
     await wallet.unlock(eosConfig.baseAccount, eosConfig.baseAccountPassword)
   } catch (error) {}
@@ -42,6 +43,8 @@ const createAccount = async accountName => {
       permission: 'active'
     }
   ]
+
+  console.log(authorization)
 
   const transaction = await api.transact(
     {
@@ -94,8 +97,8 @@ const createAccount = async accountName => {
           data: {
             from: eosConfig.baseAccount,
             receiver: accountName,
-            stake_net_quantity: '1.0000 EOS',
-            stake_cpu_quantity: '1.0000 EOS',
+            stake_net_quantity: '10 EOS',
+            stake_cpu_quantity: '10 EOS',
             transfer: false
           }
         }
@@ -107,6 +110,8 @@ const createAccount = async accountName => {
     }
   )
   await wallet.lock(eosConfig.baseAccount)
+
+  console.log(`TRX: ${transaction}`)
 
   return {
     password,
