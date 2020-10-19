@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const OfferDetails = ({ offer, open, setOpen }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const timezone = moment.tz.guess()
 
@@ -78,7 +79,7 @@ const OfferDetails = ({ offer, open, setOpen }) => {
             <CloseIcon />
           </IconButton>
           <Typography variant="h1" className={classes.title}>
-            Offer details
+            {t('offersManagement.offerDetails')}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -94,7 +95,7 @@ const OfferDetails = ({ offer, open, setOpen }) => {
           >
             <Paper elevation={0} variant="outlined" className={classes.paper}>
               <Typography variant="h4" style={{ textAlign: 'center' }}>
-                Description
+                {t('common.description')}
               </Typography>
               <Typography variant="body1">{offer.description}</Typography>
             </Paper>
@@ -119,7 +120,7 @@ const OfferDetails = ({ offer, open, setOpen }) => {
                   <EventBusyIcon color="secondary" />
                 </ListItemIcon>
                 <ListItemText>
-                  <strong>End date: </strong>{' '}
+                  <strong>{t('offersManagement.endDate')}: </strong>
                   {m(offer.end_date)
                     .tz(timezone)
                     .format('DD MMMM YYYY, h:mm:ss a z')}
@@ -131,7 +132,8 @@ const OfferDetails = ({ offer, open, setOpen }) => {
                 <ReceiptIcon color="secondary" />
               </ListItemIcon>
               <ListItemText>
-                <strong>Offer type: </strong> {offer.offer_type}
+                <strong>{t('offersManagement.offerType')}: </strong>{' '}
+                {offer.offer_type}
               </ListItemText>
             </ListItem>
             <ListItem>
@@ -139,7 +141,8 @@ const OfferDetails = ({ offer, open, setOpen }) => {
                 <StyleIcon color="secondary" />
               </ListItemIcon>
               <ListItemText>
-                <strong>Cost in tokens: </strong> {offer.cost_in_tokens}
+                <strong>{t('offersManagement.costInTokens')}: </strong>{' '}
+                {offer.cost_in_tokens}
               </ListItemText>
             </ListItem>
             <ListItem>
@@ -147,7 +150,8 @@ const OfferDetails = ({ offer, open, setOpen }) => {
                 <BallotIcon color="secondary" />
               </ListItemIcon>
               <ListItemText>
-                <strong>Quantity to redeem: </strong> {offer.quantity}
+                <strong>{t('offersManagement.quantity')}: </strong>{' '}
+                {offer.quantity}
               </ListItemText>
             </ListItem>
             <ListItem>
@@ -159,7 +163,9 @@ const OfferDetails = ({ offer, open, setOpen }) => {
                 )}
               </ListItemIcon>
               <ListItemText>
-                {offer.online_only ? 'Online only' : 'Physical location'}
+                {offer.online_only
+                  ? t('offersManagement.onlineOnly')
+                  : t('offersManagement.physicalLocation')}
               </ListItemText>
             </ListItem>
           </List>

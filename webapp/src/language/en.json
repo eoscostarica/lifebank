@@ -1,10 +1,102 @@
 {
   "translations": {
+    "hero": {
+      "title": "Start saving lifes!",
+      "subtitle1": "Give blood banks a lifeline.",
+      "subtitle2": "Register to donate life.",
+      "register": "Register"
+    },
+    "contentToolbar": {
+      "browseWithMap": "Browse with a map",
+      "filters": "Filters",
+      "favorites": "Favorites",
+      "inputPlaceholder": "Search Offers, Lifebank or Sponsors"
+    },
+    "rolesTitle": {
+      "singular": {
+        "lifebank": "Lifebank",
+        "sponsor": "Sponsor",
+        "donor": "Donor"
+      },
+      "plural": {
+        "lifebanks": "Lifebanks",
+        "sponsors": "Sponsors",
+        "donors": "Donors"
+      }
+    },
+    "cardsSection": {
+      "availableOffers": "Available offers",
+      "moreInfo": "More info"
+    },
+    "navigationDrawer": {
+      "credentialsRecovery": "Credentials Recovery",
+      "yourDonations": "Your donations",
+      "information": "Information",
+      "aboutLifebank": "About Lifebank",
+      "useTerms": "Terms of Use",
+      "help": "Help"
+    },
     "login": "Login",
+    "profile": "Profile",
     "users": "Users",
     "products": "Products",
-    "productsTitle": "Products list",
-    "usersTitle": "Users list",
-    "logout": "Logout"
+    "productsTitle": "Listado de productos",
+    "usersTitle": "Listado de usuarios",
+    "logout": "Logout",
+    "splash": {
+      "nextBtn": "Next",
+      "welcomeTo": "Welcome",
+      "workTogether": "Let's work together and keep the life flowing",
+      "isAplace": "is a place where you can donate blood",
+      "sponsorDescription": " are businesses that will reward people that have donated through a Lifebank",
+      "donorsDescription": " will donate blood and be rewarded with life tokens which they can redeem at their convenience with sponsors of their community."
+    },
+    "common": {
+      "description": "Description",
+      "submit": "Submit",
+      "delete": "Delete"
+    },
+    "offersManagement": {
+      "offersManagement": "Offers Management",
+      "addOffer": "Añadir oferta",
+      "offerName": "Offer name",
+      "offerNamePlaceholder": "Type the name here",
+      "offerType": "Offer type",
+      "type": "Type",
+      "discount": "Discount",
+      "gift": "Gift",
+      "benefit": "Benefit",
+      "other": "Other",
+      "onlineOnly": "Online only",
+      "physicalLocation": "Physical location",
+      "offerDescription": "Offer description",
+      "offerDescriptionPlaceholder": "Description here",
+      "redeemAvailability": "Redeem availability",
+      "limited": "Limited",
+      "unlimited": "Unlimited",
+      "quantity": "Quantity",
+      "quantityPlaceholder": "Service quantity available",
+      "selectStartOfferDate": "Select a start date",
+      "selectEndOfferDate": "Select a end date",
+      "selectOfferType": "Select offer type",
+      "costInTokens": "Cost in tokens",
+      "costInTokensPlaceholder": "Type the cost in tokens here",
+      "imageUrl": "Image url",
+      "imageUrlPlaceholder": "Type the image url here",
+      "imageRestriction": "You need to add at least one image url",
+      "addUrl": "Add url",
+      "tableTitle": "All the offers",
+      "limitationHandling": "Limitation handling",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "status": "Status",
+      "actions": "Actions",
+      "details": "Details",
+      "offerDetails": "Details",
+      "quantityToRedeem": "Quantity to redeem",
+      "business_type": "Business type",
+      "offerUpdatedMessage": "Offer updated successfully",
+      "offerCreatedMessage": "Offer created successfully"
+    }
   }
 }

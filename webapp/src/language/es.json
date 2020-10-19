@@ -30,12 +30,14 @@
     },
     "navigationDrawer": {
       "credentialsRecovery": "Recuperación de credenciales",
+      "yourDonations": "Tus donaciones",
       "information": "Información",
       "aboutLifebank": "Acerca de Lifebank",
       "useTerms": "Términos de uso",
       "help": "Ayuda"
     },
     "login": "Iniciar sesión",
+    "profile": "Perfil",
     "users": "Usuarios",
     "products": "Productos",
     "productsTitle": "Listado de productos",
@@ -50,13 +52,23 @@
       "donorsDescription": " donarán sangre y recibirán un activo único que puede ser canjeado "
     },
     "common": {
-      "description": "Descripción"
+      "description": "Descripción",
+      "submit": "Enviar",
+      "delete": "Eliminar"
     },
     "offersManagement": {
+      "offersManagement": "Manejo de ofertas",
+      "addOffer": "Añadir oferta",
       "offerName": "Nombre de oferta",
       "offerNamePlaceholder": "Ingresar el nombre aquí",
       "offerType": "Tipo de oferta",
+      "type": "Tipo",
+      "discount": "Descuento",
+      "gift": "Regalo",
+      "benefit": "Beneficio",
+      "other": "Otro",
       "onlineOnly": "Sólo en línea",
+      "physicalLocation": "Locación física",
       "offerDescription": "Descripción de oferta",
       "offerDescriptionPlaceholder": "La descripción aquí",
       "redeemAvailability": "Disponibilidad de canje",
@@ -66,10 +78,13 @@
       "quantityPlaceholder": "Cantidad disponible del servicio",
       "selectStartOfferDate": "Selecciona una fecha de inicio",
       "selectEndOfferDate": "Selecciona una fecha de finalización",
+      "selectOfferType": "Seleccione el tipo de oferta",
       "costInTokens": "Costo en tokens",
       "costInTokensPlaceholder": "Costo en tokens",
       "imageUrl": "Dirección de imagen",
       "imageUrlPlaceholder": "Escribe la dirección de imagen aquí",
+      "imageRestriction": "Necesitas agregar una url de imagens",
+      "addUrl": "Añadir url",
       "tableTitle": "Todas las ofertas",
       "limitationHandling": "Manejo de limitación",
       "startDate": "Fecha inicio",
@@ -77,9 +92,11 @@
       "status": "Estado",
       "actions": "Acciones",
       "details": "Detalles",
-      "offerDetails": "Offer Details",
+      "offerDetails": "Detalles",
       "quantityToRedeem": "Cantidad a canjear",
-      "business_type": "Tipo de negocio"
+      "business_type": "Tipo de negocio",
+      "offerUpdatedMessage": "Oferta actualizada exitósamente",
+      "offerCreatedMessage": "Oferta creada exitósamente"
     }
   }
 }
