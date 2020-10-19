@@ -199,8 +199,8 @@ const useStyles = makeStyles((theme) => ({
   mainGridDesktop: {
     paddingTop: 30,
     paddingLeft: 20,
-    paddingRigth: 20,
-    backgroundColor: "#ffffff"
+    paddingRight: 20,
+    backgroundColor: "ffffff"
   },
   boxIcons: {
     marginRight: "15px"

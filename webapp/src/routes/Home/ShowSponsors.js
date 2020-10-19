@@ -56,15 +56,32 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "0.25px",
   },
   sponsorsGridContainer: {
+    overflow: "auto",
+    whiteSpace: "nowrap",
     width: "100%",
     marginTop: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    paddingBottom: 5,
+    paddingLeft: 5,
+    '&::-webkit-scrollbar': {
+      height: '0.5em'
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.3)',
+      borderRadius: "10px",
+    }
   },
   cardRoot: {
+    whiteSpace: "normal",
+    display: "inline-block",
     position: "relative",
-    width: "100%",
-    padding: 10,
+    width: "265px",
     height: "145px",
+    padding: 10,
+    marginRight: theme.spacing(2),
   },
   cardHeader: {
     padding: 0,
@@ -207,31 +224,27 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
           </Box>
         }
         {!loading && sponsors.length <= 0 && (
-          <Grid item xs={2}>
-            <Card className={classes.cardRoot}>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                style={{ height: "100%" }}
-              >
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  No sponsors available
+          <Card className={classes.cardRoot}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              style={{ height: "100%" }}
+            >
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                No sponsors available
               </Typography>
-              </Grid>
-            </Card>
-          </Grid>
+            </Grid>
+          </Card>
         )}
         {!loading && sponsors.length > 0 && sponsors.map(sponsor => (
-          <Grid item md={3} lg={2} key={sponsor.id}>
-            <SponsorCard
-              key={sponsor.id}
-              id={sponsor.id}
-              name={sponsor.name}
-              description={sponsor.info.benefit_description}
-            />
-          </Grid>
+          <SponsorCard
+            key={sponsor.id}
+            id={sponsor.id}
+            name={sponsor.name}
+            description={sponsor.info.benefit_description}
+          />
         ))}
       </>
     )
@@ -283,16 +296,9 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
         </List>
       }
       {isDesktop &&
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="center"
-          className={classes.sponsorsGridContainer}
-          spacing={2}
-        >
+        <Box className={classes.sponsorsGridContainer}>
           <LoadSponsorsDesktop />
-        </Grid>
+        </Box>
       }
     </>
   )

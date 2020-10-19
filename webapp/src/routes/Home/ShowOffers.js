@@ -17,6 +17,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
 const useStyles = makeStyles((theme) => ({
+
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -76,15 +77,32 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4)
   },
   offersGridContainer: {
+    overflow: "auto",
+    whiteSpace: "nowrap",
     width: "100%",
     marginTop: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    paddingBottom: 5,
+    paddingLeft: 5,
+    '&::-webkit-scrollbar': {
+      height: '0.5em'
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.3)',
+      borderRadius: "10px",
+    }
   },
   cardRoot: {
+    whiteSpace: "normal",
+    display: "inline-block",
     position: "relative",
-    width: "100%",
+    width: "265px",
     height: "145px",
-    padding: 10
+    padding: 10,
+    marginRight: theme.spacing(2),
   },
   cardHeader: {
     padding: 0,
@@ -231,32 +249,28 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           </Box>
         }
         {!loading && offers.length <= 0 && (
-          <Grid item xs={2}>
-            <Card className={classes.cardRoot}>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                style={{ height: "100%" }}
-              >
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  No offers available
+          <Card className={classes.cardRoot}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              style={{ height: "100%" }}
+            >
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                No offers available
                 </Typography>
-              </Grid>
-            </Card>
-          </Grid>
+            </Grid>
+          </Card>
         )}
         {!loading && offers.length > 0 && offers.map(offer => (
-          <Grid item md={3} lg={2} key={offer.id}>
-            <OfferCard
-              key={offer.id}
-              id={offer.id}
-              title={offer.offer_name}
-              description={offer.description}
-              img={offer.images}
-            />
-          </Grid>
+          <OfferCard
+            key={offer.id}
+            id={offer.id}
+            title={offer.offer_name}
+            description={offer.description}
+            img={offer.images}
+          />
         ))}
       </>
     )
@@ -285,7 +299,7 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           <LocalOfferIcon className={classes.cardIconOffer} />
         </Box>
         <CardContent className={classes.cardContent}>
-          <Typography className={classes.cardContentText} >{truncateString(props.description)}
+          <Typography paragraph className={classes.cardContentText} >{truncateString(props.description)}
           </Typography>
         </CardContent>
         <Button color="primary" className={classes.cardActionButton}>
@@ -309,16 +323,9 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
         </List>
       }
       {isDesktop &&
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="center"
-          className={classes.offersGridContainer}
-          spacing={2}
-        >
+        <Box className={classes.offersGridContainer} spacing={2}>
           <LoadOfferDesktop />
-        </Grid>
+        </Box>
       }
     </>
   )
