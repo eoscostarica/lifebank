@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     color: "#121212",
-    backgroundColor: "ffffff"
+    backgroundColor: "#ffffff"
   },
   tabPanel: {
     backgroundColor: "#ffffff",
@@ -200,7 +200,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: "ffffff"
+    backgroundColor: "#ffffff"
   },
   boxIcons: {
     marginRight: "15px"
