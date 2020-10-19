@@ -248,6 +248,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading })
           InputLabelProps={{
             shrink: true
           }}
+          InputProps={{
+            startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
+          }}
           onChange={(event) => handleSetField('usermane', event.target.value)}
         />
         <TextField
