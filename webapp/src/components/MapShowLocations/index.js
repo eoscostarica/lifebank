@@ -92,21 +92,12 @@ const { SPONSOR_TYPES } = constants
 
 const sponsorsCategories = ['All'].concat(SPONSOR_TYPES)
 
-function getModalStyle() {
-  return {
-    top: `50%`,
-    left: `50%`,
-    transform: `translate(-50%, -50%)`
-  }
-}
-
 function MapShowLocations({ location, ...props }) {
   const [distance, setDistance] = React.useState(5000)
   const [state, setState] = React.useState({
     checkedLifebank: true,
     checkedSponsor: true
   })
-  const [modalStyle] = React.useState(getModalStyle)
   const [open, setOpen] = React.useState(false)
   const [sponsorsCat, setSponsorsCat] = React.useState('All')
   const [maxWidth] = useState('md');
