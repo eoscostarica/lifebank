@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl'
@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Grid from '@material-ui/core/Grid'
-
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -15,9 +14,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
-import Modal from '@material-ui/core/Modal'
+import Dialog from '@material-ui/core/Dialog'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import CloseIcon from '@material-ui/icons/Close'
+import Typography from '@material-ui/core/Typography'
 
 import { mapboxConfig, constants } from '../../config'
 import MapMarker from '../MapMarker'
@@ -42,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     right: 10,
     boxShadow: '0 1px 5px rgba(0, 0, 0, 0.2)'
   },
+  dialog: {
+    zIndex: 100
+  },
   mapOverlayinner: {
     backgroundColor: '#fff',
     borderRadius: '3px',
@@ -50,12 +54,21 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     fontSize: 18
   },
-  paper: {
+  closeIcon: {
     position: 'absolute',
-    width: 400,
-    backgroundColor: '#FFF',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    zIndex: 1,
+    top: 5,
+    right: 1,
+    margin: '0',
+    height: "5vh",
+    '& svg': {
+      fontSize: 25,
+      color: theme.palette.secondary.main
+    }
+  },
+  dialogTitle: {
+    marginTop: 20,
+    marginBottom: 30
   },
   inputStyle: {
     width: '100%',
@@ -79,23 +92,15 @@ const { SPONSOR_TYPES } = constants
 
 const sponsorsCategories = ['All'].concat(SPONSOR_TYPES)
 
-function getModalStyle() {
-  return {
-    top: `50%`,
-    left: `50%`,
-    transform: `translate(-50%, -50%)`
-  }
-}
-
 function MapShowLocations({ location, ...props }) {
   const [distance, setDistance] = React.useState(5000)
   const [state, setState] = React.useState({
     checkedLifebank: true,
     checkedSponsor: true
   })
-  const [modalStyle] = React.useState(getModalStyle)
   const [open, setOpen] = React.useState(false)
   const [sponsorsCat, setSponsorsCat] = React.useState('All')
+  const [maxWidth] = useState('md');
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked })
@@ -315,30 +320,39 @@ function MapShowLocations({ location, ...props }) {
 
   const FilterModalComp = () => {
     return (
-      <div className={classes.mapOverlay}>
+      <Box className={classes.mapOverlay}>
         <IconButton className={classes.mapOverlayinner} onClick={handleOpen}>
           <MenuIcon fontSize="inherit" className={classes.icon} />
         </IconButton>
-        <Modal
+        <Dialog
+          maxWidth={maxWidth}
+          className={classes.dialog}
           open={open}
           onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          closeAfterTransition
         >
-          <div style={modalStyle} className={classes.paper}>
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="flex-start"
-              spacing={0}
-            >
-              <Grid item xs={12}>
-                <h1 color="textSecondary" className={classes.accordionTittle}>
-                  Filters{' '}
-                </h1>
-              </Grid>
-              <Grid item xs={12}>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+          >
+            <Grid item xs={10}>
+              <Box className={classes.closeIcon}>
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={handleClose}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              </Box>
+              <Typography variant="h3" className={classes.dialogTitle}>Filters</Typography>
+              <Box>
                 <TextField
                   autoFocus
                   label="Distance"
@@ -354,22 +368,20 @@ function MapShowLocations({ location, ...props }) {
                     )
                   }}
                 />
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    className={classes.checkBoxForm}
-                    control={
-                      <Checkbox
-                        checked={state.checkedLifebank}
-                        onChange={handleChange}
-                        name="checkedLifebank"
-                      />
-                    }
-                    label="Lifebanks"
-                  />
-                </Grid>
-              </Grid>
-              <Divider className={classes.inputStyle} />
-              <Grid item xs={12}>
+                <FormControlLabel
+                  className={classes.checkBoxForm}
+                  control={
+                    <Checkbox
+                      checked={state.checkedLifebank}
+                      onChange={handleChange}
+                      name="checkedLifebank"
+                    />
+                  }
+                  label="Lifebanks"
+                />
+              </Box>
+              <Divider />
+              <Box>
                 <FormControlLabel
                   className={classes.checkBoxForm}
                   control={
@@ -381,8 +393,6 @@ function MapShowLocations({ location, ...props }) {
                   }
                   label="Sponsors"
                 />
-              </Grid>
-              <Grid item xs={12}>
                 <TextField
                   id="standard-select-currency"
                   select
@@ -398,8 +408,8 @@ function MapShowLocations({ location, ...props }) {
                     </MenuItem>
                   ))}
                 </TextField>
-              </Grid>
-              <Grid item xs={12}>
+              </Box>
+              <Box>
                 <Button
                   variant="contained"
                   color="primary"
@@ -408,11 +418,11 @@ function MapShowLocations({ location, ...props }) {
                 >
                   Save changes
                 </Button>
-              </Grid>
+              </Box>
             </Grid>
-          </div>
-        </Modal>
-      </div>
+          </Grid>
+        </Dialog>
+      </Box >
     )
   }
 

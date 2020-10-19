@@ -1,4 +1,3 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
@@ -57,15 +56,32 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "0.25px",
   },
   lifebanksGridContainer: {
+    overflow: "auto",
+    whiteSpace: "nowrap",
     width: "100%",
     marginTop: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    paddingBottom: 5,
+    paddingLeft: 5,
+    '&::-webkit-scrollbar': {
+      height: '0.5em'
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'rgba(0,0,0,.05)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      borderRadius: "10px",
+    }
   },
   cardRoot: {
+    whiteSpace: "normal",
+    display: "inline-block",
     position: "relative",
-    width: "100%",
-    padding: 10,
+    width: "265px",
     height: "145px",
+    padding: 10,
+    marginRight: theme.spacing(2),
   },
   cardHeader: {
     padding: 0,
@@ -219,30 +235,26 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           </Box>
         }
         {!loading && banks.length <= 0 && (
-          <Grid item xs={2}>
-            <Card className={classes.cardRoot}>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                style={{ height: "100%" }}
-              >
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  No blood bank available
+          <Card className={classes.cardRoot}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              style={{ height: "100%" }}
+            >
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                No blood bank available
               </Typography>
-              </Grid>
-            </Card>
-          </Grid>
+            </Grid>
+          </Card>
         )}
         {!loading && banks.length > 0 && banks.map(bank => (
-          <Grid item md={3} lg={2} key={bank.id}>
-            <BankCard
-              key={bank.id}
-              id={bank.id}
-              bank={bank}
-            />
-          </Grid>
+          <BankCard
+            key={bank.id}
+            id={bank.id}
+            bank={bank}
+          />
         ))}
       </>
     )
@@ -306,16 +318,9 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         </List>
       }
       {isDesktop &&
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="center"
-          className={classes.lifebanksGridContainer}
-          spacing={2}
-        >
+        <Box className={classes.lifebanksGridContainer}>
           <LoadBanksDesktop />
-        </Grid>
+        </Box>
       }
     </>
   )
