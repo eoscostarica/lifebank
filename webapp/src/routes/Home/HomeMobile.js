@@ -12,6 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import SearchIcon from '@material-ui/icons/Search'
 import StarIcon from '@material-ui/icons/Star'
 import FavoriteIcon from '@material-ui/icons/Favorite'
+
 import MapModal from '../../components/MapModal'
 import ShowOffers from './ShowOffers'
 import ShowLifebanks from './ShowLifebanks'
