@@ -164,4 +164,14 @@ const HomeMobile = (props) => {
   )
 }
 
+HomeMobile.propTypes = {
+  offers: PropTypes.object,
+  loadingOffers: PropTypes.bool,
+  lifebanks: PropTypes.object,
+  loadingLifebanks: PropTypes.bool,
+  sponsors: PropTypes.object,
+  loadingSponsors: PropTypes.bool,
+  applyFilters: PropTypes.func,
+}
+
 export default HomeMobile

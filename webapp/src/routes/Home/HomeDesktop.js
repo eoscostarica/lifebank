@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import CustomRouterLink from '../../components/CustomRouterLink'
 import { useUser } from '../../context/user.context'
@@ -265,6 +266,16 @@ const HomeDesktop = (props) => {
       }
     </>
   )
+}
+
+HomeDesktop.propTypes = {
+  offers: PropTypes.object,
+  loadingOffers: PropTypes.bool,
+  lifebanks: PropTypes.object,
+  loadingLifebanks: PropTypes.bool,
+  sponsors: PropTypes.object,
+  loadingSponsors: PropTypes.bool,
+  applyFilters: PropTypes.func,
 }
 
 export default HomeDesktop
