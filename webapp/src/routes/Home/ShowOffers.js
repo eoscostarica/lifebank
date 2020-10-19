@@ -88,10 +88,10 @@ const useStyles = makeStyles((theme) => ({
       height: '0.5em'
     },
     '&::-webkit-scrollbar-track': {
-      backgroundColor: 'rgba(0,0,0,.1)',
+      backgroundColor: 'rgba(0,0,0,.05)',
     },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0,0,0,.3)',
+      backgroundColor: 'rgba(0,0,0,.1)',
       borderRadius: "10px",
     }
   },
