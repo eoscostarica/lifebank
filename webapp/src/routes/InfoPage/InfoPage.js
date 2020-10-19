@@ -317,10 +317,10 @@ const InfoPage = () => {
                       </IconButton>
                     </Toolbar>
                   </div>
-                  {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map(schedule => (
+                  {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map((schedule, index) => (
                     <ScheduleItem
-                      key={schedule.id}
-                      id={schedule.id}
+                      key={index}
+                      id={index}
                       schedule={schedule}
                     />
                   ))}
