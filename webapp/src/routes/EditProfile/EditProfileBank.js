@@ -236,7 +236,20 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading })
           }}
           className={classes.textField}
         />
-
+        <TextField
+          id="username"
+          name="username"
+          style={{ display: isCompleting && user.usermane ? 'none' : '' }}
+          label="URL"
+          fullWidth
+          variant="outlined"
+          placeholder="Your URL site"
+          defaultValue={user.usermane}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(event) => handleSetField('usermane', event.target.value)}
+        />
         <TextField
           id="fullname"
           name="name"
