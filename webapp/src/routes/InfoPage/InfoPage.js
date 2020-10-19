@@ -183,7 +183,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   appBar: {
-    position: '-webkit-sticky',
     position: 'sticky',
     height: '32px'
   },
@@ -238,7 +237,7 @@ const InfoPage = () => {
         <Box className={classes.cardBody}>
           <div className={classes.headerCardBody}>
             <div className={classes.avatarSection}>
-              <img className={classes.avatarRound} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar"></img>
+              <img className={classes.avatarRound} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
             </div>
             <div className={classes.tituleSection}>
               <h2 className={classes.title}>{profile.info.name}</h2>
@@ -390,8 +389,7 @@ const ScheduleItem = (schedule) => {
 }
 
 ScheduleItem.propTypes = {
-  day: PropTypes.string,
-  hours: PropTypes.string
+  schedule: PropTypes.object
 }
 
 export default InfoPage

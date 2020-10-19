@@ -205,6 +205,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   BankItem.propTypes = {
+    bank: PropTypes.object,
     name: PropTypes.string,
     description: PropTypes.string,
   }
@@ -292,6 +293,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   BankCard.propTypes = {
+    bank: PropTypes.object,
     name: PropTypes.string,
     description: PropTypes.string,
   }

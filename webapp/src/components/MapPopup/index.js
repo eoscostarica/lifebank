@@ -50,19 +50,17 @@ function MapPopup({ id, info }) {
           {info.telephone || info.phone_number}
         </a>
       </div>
-      {(
-        <div>
-          Website:{' '}
-          <a
-            href={window.location.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={classes.link}
-          >
-            Open site
+      <div>
+        Website:{' '}
+        <a
+          href={window.location.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={classes.link}
+        >
+          Open site
           </a>
-        </div>
-      )}
+      </div>
       <div>
         Location:{' '}
         <a
@@ -78,8 +76,7 @@ function MapPopup({ id, info }) {
 
 MapPopup.propTypes = {
   id: PropTypes.number.isRequired,
-  info: PropTypes.object.isRequired,
-  account: PropTypes.string.isRequired
+  info: PropTypes.object.isRequired
 }
 
 export default MapPopup
