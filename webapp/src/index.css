@@ -1,0 +1,23 @@
+div.MuiMobileStepper-dotActive {
+  background-color: #b71c1c;
+  margin: 0 10px !important;
+}
+div.MuiMobileStepper-dot {
+  margin: 0 10px !important;
+}
+
+div.react-swipeable-view-container {
+  justify-items: center;
+  align-items: center;
+}
+
+div.react-swipeable-view-container > div {
+  max-height: 100% !important;
+  height: fit-content;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}

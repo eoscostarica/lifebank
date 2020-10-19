@@ -10,11 +10,15 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import MUIDataTable from 'mui-datatables'
 import MenuItem from '@material-ui/core/MenuItem'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import IconButton from '@material-ui/core/IconButton'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import * as m from 'moment-timezone'
 import moment from 'moment'
 
@@ -64,6 +68,8 @@ const OffersManagement = () => {
   const [offersLoaded, setOffersLoaded] = useState(false)
   const timezone = moment.tz.guess()
   const [open, setOpen] = useState(false)
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+  const [offerIDToDelete, setOfferIDToDelete] = useState()
   const [offerToEdit, setOfferToEdit] = useState()
   const [openGenericFormAddVariant, setOpenGenericFormAddVariant] = useState(
     false
@@ -97,15 +103,21 @@ const OffersManagement = () => {
 
   const [deleteOffer] = useMutation(DELETE_OFFER_MUTATION)
 
+  const deleteOfferRequest = async () => {
+    setOpenDeleteDialog(false)
+    await deleteOffer({
+      variables: {
+        id: offerIDToDelete
+      }
+    })
+    setOffers(offers.filter((offer) => offer.id !== offerIDToDelete))
+  }
+
   const handleActionClick = async (action, active, offer_id) => {
     switch (action) {
       case 'delete':
-        await deleteOffer({
-          variables: {
-            id: offer_id
-          }
-        })
-        setOffers(offers.filter((offer) => offer.id !== offer_id))
+        setOfferIDToDelete(offer_id)
+        setOpenDeleteDialog(true)
         break
       case 'deactivate':
         await updateOffer({
@@ -291,6 +303,21 @@ const OffersManagement = () => {
         ? getGenericOfferComponent(false, undefined)
         : null}
       {offerToEdit ? getGenericOfferComponent(true, offerToEdit) : null}
+      <Dialog open={openDeleteDialog} aria-labelledby="delete-dialog-title">
+        <DialogTitle id="delete-dialog-title">Delete offer?</DialogTitle>
+        <DialogActions>
+          <Button
+            autoFocus
+            onClick={() => setOpenDeleteDialog(false)}
+            color="primary"
+          >
+            Cancel
+          </Button>
+          <Button onClick={deleteOfferRequest} color="primary" autoFocus>
+            Yes, delete it
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Snackbar
         open={openSnackbar.show}
         autoHideDuration={5000}

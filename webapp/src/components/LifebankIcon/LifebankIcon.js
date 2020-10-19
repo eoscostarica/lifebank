@@ -100,7 +100,7 @@ LifeBankIcon.propTypes = {
 }
 
 LifeBankIcon.defaultProps = {
-  color: '#FFF'
+  color: '#121212'
 }
 
 export default LifeBankIcon

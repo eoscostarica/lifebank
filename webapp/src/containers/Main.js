@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Container from '@material-ui/core/Container'
 import Drawer from '@material-ui/core/Drawer'
 import Toolbar from '@material-ui/core/Toolbar'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 import LifeBankIcon from '../components/LifebankIcon'
 
@@ -23,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0)
   },
   appBar: {
-    boxShadow: 'none',
-    paddingTop: theme.spacing(1)
+    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.24), 0 4px 8px 0 rgba(0, 0, 0, 0.3)',
+    backgroundColor: "#ffffff",
   },
   backgroundHome: {
+    boxShadow: "none",
     backgroundColor: 'transparent'
   },
   paddingBottomHomeAppbar: {
@@ -34,15 +35,18 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     height: 24,
+    marginTop: 3,
     [theme.breakpoints.up('md')]: {
-      height: 43
+      height: 40,
+      marginTop: 10
     }
   },
   logoHome: {
-    height: 69
+    height: 40,
+    marginTop: 10
   },
   linkBtn: {
-    marginLeft: '5%'
+    marginLeft: 20
   },
   drawer: {
     width: 0,
@@ -53,16 +57,20 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: 240,
-    [theme.breakpoints.up('md')]: {
-      marginTop: 64
-    }
   },
   drawerToggle: {
-    marginLeft: -12
+    color: "#121212",
+    marginLeft: -12,
+    [theme.breakpoints.up('md')]: {
+      marginTop: 10,
+    }
+  },
+  drawerToggleDesktop: {
+    color: "#ffffff",
   },
   drawerContent: {
-    backgroundColor: theme.palette.white,
-    height: '100%'
+    backgroundColor: "#ffffff",
+    height: '100%',
   }
 }))
 
@@ -74,36 +82,49 @@ const ChangeAppBarColorOnScroll = ({
   topbarContent
 }) => {
   const classes = useStyles()
+
   const trigger = useScrollTrigger({
     target: window || undefined,
     disableHysteresis: true
   })
   const useTransparentBG = isDesktop && isHome && !trigger
 
+  const colorLogo = "#121212"
+
   return (
     <AppBar
       className={clsx(classes.appBar, {
         [classes.backgroundHome]: useTransparentBG,
-        [classes.paddingBottomHomeAppbar]: isDesktop && isHome
+        [classes.paddingBottomHomeAppbar]: isDesktop
       })}
     >
       <Toolbar>
         <IconButton
           color="inherit"
           onClick={() => setOpenSidebar(!openSidebar)}
-          className={classes.drawerToggle}
+          className={clsx(classes.drawerToggle, {
+            [classes.drawerToggleDesktop]: useTransparentBG
+          })}
         >
           <MenuIcon />
         </IconButton>
         <RouterLink
           to="/"
-          className={clsx({ [classes.linkBtn]: isDesktop && isHome })}
-        >
-          <LifeBankIcon
-            className={clsx(classes.logo, {
-              [classes.logoHome]: isDesktop && isHome
-            })}
-          />
+          className={clsx({ [classes.linkBtn]: isDesktop })}>
+          {useTransparentBG &&
+            <LifeBankIcon
+              className={clsx(classes.logo)}
+              color="#ffffff"
+            />
+          }
+          {!useTransparentBG &&
+            <LifeBankIcon
+              className={clsx(classes.logo, {
+                [classes.logoHome]: isDesktop && isHome
+              })}
+              color={colorLogo}
+            />
+          }
         </RouterLink>
         {topbarContent}
       </Toolbar>
@@ -141,7 +162,6 @@ const Main = ({ children, sidebarContent, topbarContent }) => {
         classes={{ paper: classes.drawerPaper }}
         onClose={() => setOpenSidebar(false)}
         open={openSidebar}
-        variant={isDesktop ? 'persistent' : 'temporary'}
         className={clsx({
           [classes.drawer]: true,
           [classes.drawerDesktop]: isDesktop && openSidebar
@@ -161,11 +181,11 @@ Main.propTypes = {
 }
 
 ChangeAppBarColorOnScroll.propTypes = {
-  isHome: PropTypes.bool,
-  isDesktop: PropTypes.bool,
   setOpenSidebar: PropTypes.func,
   openSidebar: PropTypes.bool,
-  topbarContent: PropTypes.any
+  topbarContent: PropTypes.any,
+  isHome: PropTypes.bool,
+  isDesktop: PropTypes.bool,
 }
 
 export default Main
