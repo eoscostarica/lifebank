@@ -37,6 +37,19 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginBottom: 15
   },
+  buttonMapDesktop: {
+    padding: 20,
+    backgroundColor: "white",
+    color: "rgba(0, 0, 0, 0.6)"
+  },
+  iconBottomAppBar: {
+    color: "#121212"
+  },
+  buttonIconDesktop: {
+    padding: 20,
+    backgroundColor: "white",
+    color: "rgba(0, 0, 0, 0.6)"
+  },
 }));
 
 const { SPONSOR_TYPES } = constants
