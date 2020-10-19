@@ -165,11 +165,11 @@ const HomeMobile = (props) => {
 }
 
 HomeMobile.propTypes = {
-  offers: PropTypes.object,
+  offers: PropTypes.array,
   loadingOffers: PropTypes.bool,
-  lifebanks: PropTypes.object,
+  lifebanks: PropTypes.array,
   loadingLifebanks: PropTypes.bool,
-  sponsors: PropTypes.object,
+  sponsors: PropTypes.array,
   loadingSponsors: PropTypes.bool,
   applyFilters: PropTypes.func,
 }

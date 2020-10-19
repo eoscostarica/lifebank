@@ -198,11 +198,11 @@ const HomeDesktop = (props) => {
       >
         <Grid item md={7} lg={6} className={classes.boxControls}>
           <Box className={classes.boxIcons}>
-            <MapModal isDesktop={true} />
+            <MapModal isDesktop />
           </Box>
           <Box className={classes.boxIcons}>
             <FilterHome
-              isDesktop={true}
+              isDesktop
               applyFilters={props.applyFilters}
             />
           </Box>
@@ -238,7 +238,7 @@ const HomeDesktop = (props) => {
           <ShowOffers
             offers={props.offers}
             loading={props.loadingOffers}
-            isDesktop={true}
+            isDesktop
           />
         </Grid>
         <Grid item md={12} >
@@ -246,7 +246,7 @@ const HomeDesktop = (props) => {
           <ShowLifebanks
             banks={props.lifebanks}
             loading={props.loadingLifebanks}
-            isDesktop={true}
+            isDesktop
           />
         </Grid>
         <Grid item md={12} >
@@ -254,7 +254,7 @@ const HomeDesktop = (props) => {
           <ShowSponsors
             sponsors={props.sponsors}
             loading={props.loadingSponsors}
-            isDesktop={true}
+            isDesktop
           />
         </Grid>
       </Grid>
@@ -269,11 +269,11 @@ const HomeDesktop = (props) => {
 }
 
 HomeDesktop.propTypes = {
-  offers: PropTypes.object,
+  offers: PropTypes.array,
   loadingOffers: PropTypes.bool,
-  lifebanks: PropTypes.object,
+  lifebanks: PropTypes.array,
   loadingLifebanks: PropTypes.bool,
-  sponsors: PropTypes.object,
+  sponsors: PropTypes.array,
   loadingSponsors: PropTypes.bool,
   applyFilters: PropTypes.func,
 }
