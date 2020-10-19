@@ -8,8 +8,7 @@ import Divider from '@material-ui/core/Divider'
 import Slider from '@material-ui/core/Slider'
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Link, useLocation } from 'react-router-dom';
-import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
+import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -318,7 +317,13 @@ const InfoPage = () => {
                       </IconButton>
                     </Toolbar>
                   </div>
-
+                  {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map(schedule => (
+                    <ScheduleItem
+                      key={schedule.id}
+                      id={schedule.id}
+                      schedule={schedule}
+                    />
+                  ))}
                 </Dialog>
               </div>
               <div className={classes.bodyDetails}>
@@ -373,18 +378,18 @@ const InfoPage = () => {
   )
 }
 
-const scheduleItem = (schedule) => {
+const ScheduleItem = (schedule) => {
   return (
     <List>
       <Divider />
       <ListItem button>
-        <ListItemText primary={schedule} secondary="8:00am to 11:00am" />
+        <ListItemText primary={schedule.schedule.day} secondary={schedule.schedule.open + " - " + schedule.schedule.close} />
       </ListItem>
     </List>
   )
 }
 
-scheduleItem.propTypes = {
+ScheduleItem.propTypes = {
   day: PropTypes.string,
   hours: PropTypes.string
 }

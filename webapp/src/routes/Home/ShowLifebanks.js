@@ -17,9 +17,6 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
-import { useUser } from '../../context/user.context'
-import CustomRouterLink from '../../components/CustomRouterLink'
-
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
@@ -147,7 +144,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   const classes = useStyles()
-  const [currentUser] = useUser()
 
   const LoadBanks = () => {
     return (
