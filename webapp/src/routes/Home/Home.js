@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     color: "#121212",
-    backgroundColor: "ffffff"
+    backgroundColor: "#ffffff"
   },
   tabPanel: {
     backgroundColor: "#ffffff",
@@ -199,7 +199,7 @@ const useStyles = makeStyles((theme) => ({
   mainGridDesktop: {
     paddingTop: 30,
     paddingLeft: 20,
-    paddingRigth: 20,
+    paddingRight: 20,
     backgroundColor: "#ffffff"
   },
   boxIcons: {
