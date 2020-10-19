@@ -180,7 +180,8 @@ const useStyles = makeStyles((theme) => ({
   midLabel: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    padding: theme.spacing(1)
   },
   appBar: {
     position: 'sticky',
@@ -327,28 +328,28 @@ const InfoPage = () => {
               </div>
               <div className={classes.bodyDetails}>
                 <Divider className={classes.divider} />
-                <Box className={classes.rowBox, classes.midLabel}>
+                <Box className={classes.midLabel}>
                   <Typography className={classes.boldText} variant="subtitle1">Description</Typography>
                   <Typography variant="body1"> {profile.info.description}
                   </Typography>
                 </Box>
                 <Divider className={classes.divider} />
-                <Box className={classes.rowBox, classes.midLabel}>
+                <Box className={classes.midLabel}>
                   <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
                   <Typography variant="body1">{profile.info.address}</Typography>
                 </Box>
                 <Divider className={classes.divider} />
-                <Box className={classes.rowBox, classes.midLabel}>
+                <Box className={classes.midLabel}>
                   <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
                   <Typography variant="body1">{profile.info.email}</Typography>
                 </Box>
                 <Divider className={classes.divider} />
-                <Box className={classes.rowBox, classes.midLabel}>
+                <Box className={classes.midLabel}>
                   <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
                   <Typography variant="body1">{profile.info.phone_number}</Typography>
                 </Box>
                 <Divider className={classes.divider} />
-                <Box className={classes.rowBox, classes.midLabel}>
+                <Box className={classes.midLabel}>
                   <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
                   <Box className={classes.bloodDemand}>
                     <Box className={classes.markLabel}>
