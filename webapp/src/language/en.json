@@ -54,7 +54,11 @@
     "common": {
       "description": "Description",
       "submit": "Submit",
-      "delete": "Delete"
+      "delete": "Delete",
+      "edit": "Edit",
+      "update": "Update",
+      "loading": "Loading",
+      "cancel": "Cancel"
     },
     "offersManagement": {
       "offersManagement": "Offers Management",
@@ -91,12 +95,22 @@
       "endDate": "End date",
       "status": "Status",
       "actions": "Actions",
+      "action": "Action",
       "details": "Details",
       "offerDetails": "Details",
       "quantityToRedeem": "Quantity to redeem",
       "business_type": "Business type",
       "offerUpdatedMessage": "Offer updated successfully",
-      "offerCreatedMessage": "Offer created successfully"
+      "offerCreatedMessage": "Offer created successfully",
+      "offerAvailabilityUpdatedMessage": "Offer availability updated successfully",
+      "deactivate": "Deactivate",
+      "activate": "Activate",
+      "active": "Active",
+      "inactive": "Inactive",
+      "noProvidedDate": "No provided date",
+      "youHaveNoAddedOffers": "You have no added offers",
+      "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
+      "yesDeleteIt": "Yes, delete it"
     }
   }
 }

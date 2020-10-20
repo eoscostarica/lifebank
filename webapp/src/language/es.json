@@ -54,7 +54,11 @@
     "common": {
       "description": "Descripción",
       "submit": "Enviar",
-      "delete": "Eliminar"
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "update": "Actualizar",
+      "loading": "Cargando",
+      "cancel": "Cancelar"
     },
     "offersManagement": {
       "offersManagement": "Manejo de ofertas",
@@ -91,12 +95,22 @@
       "endDate": "Fecha fin",
       "status": "Estado",
       "actions": "Acciones",
+      "action": "Acción",
       "details": "Detalles",
       "offerDetails": "Detalles",
       "quantityToRedeem": "Cantidad a canjear",
       "business_type": "Tipo de negocio",
       "offerUpdatedMessage": "Oferta actualizada exitósamente",
-      "offerCreatedMessage": "Oferta creada exitósamente"
+      "offerCreatedMessage": "Oferta creada exitósamente",
+      "offerAvailabilityUpdatedMessage": "Disponibilidad de oferta actualizada exitósamente",
+      "deactivate": "Desactivar",
+      "activate": "Activar",
+      "active": "Activa",
+      "inactive": "Inactiva",
+      "noProvidedDate": "Sin fecha",
+      "youHaveNoAddedOffers": "No tienes ofertas agregadas",
+      "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
+      "yesDeleteIt": "Si, borrar"
     }
   }
 }
