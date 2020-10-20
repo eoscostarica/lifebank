@@ -637,8 +637,6 @@ const Home = () => {
             Donate
           </Fab>)
         }
-
-
       </>
     )
   }
