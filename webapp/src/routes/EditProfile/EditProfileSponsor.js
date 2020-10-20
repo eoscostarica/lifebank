@@ -130,10 +130,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     [user]
   )
 
-  const handleOnAddSchedule = useCallback(
-    (data) => setUser('schedule', JSON.stringify(data)),
-    []
-  )
+  const handleOnAddSchedule = useCallback((value) => {
+    console.log(value)
+    setUser('schedule', JSON.stringify(value))
+  }, [])
 
   const handleOnSocialMediaTextFieldChange = (name, url) => {
     const existingSocialMediaItem =
@@ -226,7 +226,13 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           className={classes.textField}
           onChange={(event) => handleSetField('address', event.target.value)}
         />
-        <FormControl variant="outlined" className={classes.textField}>
+        <FormControl
+          style={{
+            display: isCompleting && profile.business_type ? 'none' : ''
+          }}
+          variant="outlined"
+          className={classes.textField}
+        >
           <InputLabel id="bussines-type-label">Type</InputLabel>
           <Select
             labelId="bussines-type-label"
@@ -327,9 +333,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           className={classes.textField}
         >
           <Schedule
-            handleOnAddSchedule={(value) =>
-              handleOnAddSchedule('schedule', value)
-            }
+            handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
             data={user.schedule ? JSON.parse(user.schedule) : undefined}
             showSchedule
           />
