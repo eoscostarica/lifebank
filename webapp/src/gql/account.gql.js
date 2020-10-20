@@ -130,11 +130,3 @@ export const GET_SECRET_BY_ACCOUNT = gql`
     }
   }
 `
-
-export const GET_USERNAME = gql`
-  query($email: String!) {
-    user(where: {email: {_eq: $email}}) {
-      username
-    }
-  }
-`

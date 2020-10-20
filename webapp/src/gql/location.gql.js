@@ -25,6 +25,9 @@ export const GET_LOCATIONS_QUERY = gql`
       type
       id
       info
+      user {
+        username
+      }
     }
   }
 `

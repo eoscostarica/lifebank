@@ -17,8 +17,6 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
-import { GET_USERNAME } from '../../gql'
-
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
@@ -163,26 +161,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   const classes = useStyles()
-  const [emailUser, setEmailUser] = useState()
-  const [userName, setUserName] = useState('')
-  const { refetch: getUserN } = useQuery(GET_USERNAME, {
-    variables: {
-      email: emailUser
-    },
-    skip: true
-  })
-
-  useEffect(() => {
-    const getUserName = async () => {
-      const { data } = await getUserN({
-        email: emailUser
-      })
-
-      if (data) setUserName(data.user)
-    }
-
-    if (emailUser) getUserName()
-  }, [emailUser])
 
   const LoadBanks = () => {
     return (
@@ -213,38 +191,34 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   const BankItem = (props) => {
-    setEmailUser(props.bank.info.email)
 
     return (
-      <> {userName &&
-        <LinkRouter
-          style={{ textDecoration: 'none' }}
-          to={{
-            pathname: 'info/' + userName[0].username.replaceAll(" ", "-"),
-            state: { profile: props.bank }
-          }}
+      <LinkRouter
+        style={{ textDecoration: 'none' }}
+        to={{
+          pathname: 'info/' + props.bank.user.username.replaceAll(" ", "-"),
+          state: { profile: props.bank }
+        }}
+      >
+        <ListItem
+          className={classes.listItem}
+          button
         >
-          <ListItem
-            className={classes.listItem}
-            button
-          >
-            <ListItemAvatar>
-              <Avatar>
-                <LocalHospitalIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
-              }
-              secondary={
-                <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
-              }
-            />
-          </ListItem>
-        </LinkRouter>
-      }
-      </>
+          <ListItemAvatar>
+            <Avatar>
+              <LocalHospitalIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
+            }
+            secondary={
+              <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
+            }
+          />
+        </ListItem>
+      </LinkRouter>
     )
   }
 
@@ -318,7 +292,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         <LinkRouter
           style={{ textDecoration: 'none' }}
           to={{
-            pathname: 'info/' + userName.replaceAll(" ", "-"),
+            pathname: 'info/' + props,
             state: { profile: props.bank }
           }}
         >
