@@ -130,10 +130,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     [user]
   )
 
-  const handleOnAddSchedule = useCallback((value) => {
-    console.log(value)
-    setUser('schedule', JSON.stringify(value))
-  }, [])
+  const handleOnAddSchedule = useMemo(
+    () => (value) => {
+      if (value) setUser({ ...user, schedule: JSON.stringify(value) })
+    },
+    [user.schedule]
+  )
 
   const handleOnSocialMediaTextFieldChange = (name, url) => {
     const existingSocialMediaItem =
@@ -170,14 +172,15 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     onSubmit(userToSubmit)
   }
 
+  console.log(user)
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <>
-          {(isCompleting && !user.logo_url) ||
-            (!isCompleting && !user.logo_url ? null : (
-              <Logo showCaption logoUrl={user.logo_url} />
-            ))}
+          {isCompleting && !profile.logo_url && (
+            <Logo showCaption logoUrl={user.logo_url} />
+          )}
         </>
         <TextField
           id="logo-url"
@@ -334,7 +337,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         >
           <Schedule
             handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
-            data={user.schedule ? JSON.parse(user.schedule) : undefined}
+            style={{ display: !profile.schedule ? 'none' : '' }}
+            data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
             showSchedule
           />
         </Box>
