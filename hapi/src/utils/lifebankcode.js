@@ -123,7 +123,7 @@ const addSponsor = async (
           photos: profile.photos || '',
           social_media_links: profile.social_media_links || '',
           ...profile,
-          community_asset: COMMUNITY_ASSET
+          community_asset: '0 LIFE'
         }
       }
     ],

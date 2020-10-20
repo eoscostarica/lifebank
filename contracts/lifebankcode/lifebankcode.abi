@@ -92,7 +92,7 @@
                     "type": "string"
                 },
                 {
-                    "name": "telephone",
+                    "name": "telephones",
                     "type": "string"
                 },
                 {
@@ -113,6 +113,26 @@
                 },
                 {
                     "name": "location",
+                    "type": "string"
+                },
+                {
+                    "name": "address",
+                    "type": "string"
+                },
+                {
+                    "name": "logo_url",
+                    "type": "string"
+                },
+                {
+                    "name": "about",
+                    "type": "string"
+                },
+                {
+                    "name": "social_media_links",
+                    "type": "string"
+                },
+                {
+                    "name": "photos",
                     "type": "string"
                 }
             ]

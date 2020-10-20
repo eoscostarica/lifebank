@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-EOS_PRIV_KEY=5JvEJvWVxWx9VQ5JmQreeB6WgG1a5DhDHYcdcJTzf4Hi4KBSQYL
-EOS_PUB_KEY=EOS7ZKSa9zYuCmxRkzXQ696F5bNc5U8yPq4doH8hhLNQgkUpybGtN
+EOS_PRIV_KEY=# TODO: write priv key here
+EOS_PUB_KEY=# TODO: write pub key here
 
 set -e
 
@@ -56,6 +56,7 @@ assign_resources() {
     cleos -u https://lifebank.eosio.cr get account lbacccreator 
     cleos -u https://lifebank.eosio.cr system buyram eosio lbacccreator "10000.0000 EOS"
     cleos -u https://lifebank.eosio.cr get account lbacccreator 
+    cleos -u https://lifebank.eosio.cr transfer eosio lbacccreator "10000000.0000 EOS" "Lifebank initial funding"
 }
 
 deploy_lifebank_contracts() {
@@ -130,7 +131,7 @@ create_community() {
         "community_asset":"0 LIFE",
         "description":"LifeBank development Instance",
         "logo":"https://raw.githubusercontent.com/eoscostarica/lifebank/master/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg",
-        "maximum_supply":"1000000 LIFE"
+        "maximum_supply":"1000000.0000 LIFE"
     }' -p lifebankcode@active
 }
 
@@ -226,16 +227,16 @@ clear_tables() {
 
 run_lifebank() {
     echo 'Installing LifeBank ...'
-    create_lifebank_wallet
-    create_lifebank_accounts
+    #create_lifebank_wallet
+    #create_lifebank_accounts
     #assign_resources
-    deploy_lifebank_contracts
-    consent
-    create_community
-    register_lifebank
-    register_donor
-    register_sponsor
-    test_token_lifecycle
+    #deploy_lifebank_contracts
+    #consent
+    #create_community
+    #register_lifebank
+    #register_donor
+    #register_sponsor
+    #test_token_lifecycle
     # TO DO: update_sponsor
     # TO DO: update_lifebank
     # TO DO: update_donor
