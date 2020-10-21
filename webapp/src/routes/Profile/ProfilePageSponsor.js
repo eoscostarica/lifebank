@@ -24,12 +24,6 @@ import Telephones from '../../components/Telephones'
 import CarouselComponent from '../../components/Carousel'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { eosConfig } from '../../config'
-import { constants } from '../../config'
-import MapEditLocation from '../../components/MapEditLocation'
-
-const {
-  LOCATION_TYPES: { SPONSOR }
-} = constants
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
