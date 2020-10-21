@@ -209,13 +209,10 @@ const useStyles = makeStyles((theme) => ({
 
 const EmptyHeartSVG = ({ balance, isDesktop }) => {
   const classes = useStyles()
-  let textColor
 
-  if (isDesktop) {
-    textColor = "#ffffff"
-  } else {
-    textColor = "#000000"
-  }
+  const textColor = isDesktop
+    ? "#ffffff"
+    : "#000000"
 
   return (
     <svg viewBox="0 0 800 700" className={classes.heart}>
@@ -287,17 +284,14 @@ const DonationsDashboard = ({ isDesktop }) => {
   const toggleDrawer = (anchor, open) => (event) => {
     if (event) {
 
-      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-        return;
-      }
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift'))
+        return
 
-      setState({ ...state, [anchor]: open });
+      setState({ ...state, [anchor]: open })
     }
   };
 
-  const handleOpen = () => {
-    setOpen(!open)
-  }
+  const handleOpen = () => setOpen(!open)
 
   const DashboardContent = () => {
     return (
