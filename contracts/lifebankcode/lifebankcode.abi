@@ -30,7 +30,7 @@
                     "type": "string"
                 },
                 {
-                    "name": "description",
+                    "name": "about",
                     "type": "string"
                 },
                 {
@@ -42,7 +42,7 @@
                     "type": "string"
                 },
                 {
-                    "name": "phone_number",
+                    "name": "telephones",
                     "type": "string"
                 },
                 {
@@ -63,6 +63,18 @@
                 },
                 {
                     "name": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "photos",
+                    "type": "string"
+                },
+                {
+                    "name": "logo_url",
+                    "type": "string"
+                },
+                {
+                    "name": "social_media_links",
                     "type": "string"
                 }
             ]
