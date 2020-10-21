@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+import CardMedia from '@material-ui/core/CardMedia';
 
 import VideoSection from '../../components/VideoSection'
 
@@ -27,7 +28,11 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   video: {
-    marginBottom: theme.spacing(2)
+    margin: "auto",
+    maxWidth: "800px",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    borderRadius: "1rem"
   }
 }))
 
