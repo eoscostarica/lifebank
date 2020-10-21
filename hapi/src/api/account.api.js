@@ -13,7 +13,7 @@ const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
-const mailApi = require('../utils/mail')
+//const mailApi = require('../utils/mail')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
 const create = async ({ role, email, name, secret }) => {
@@ -38,7 +38,9 @@ const create = async ({ role, email, name, secret }) => {
   })
 
   await historyApi.insert(transaction)
+
   //mailApi.sendVerificationCode(email, verification_code)
+
   return {
     account,
     token,

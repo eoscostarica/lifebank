@@ -6,6 +6,7 @@ wallet_data
 certificates
 node_modules
 
+secrets
 *.pub
 *.priv
 *password.txt
