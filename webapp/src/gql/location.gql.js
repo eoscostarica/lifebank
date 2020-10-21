@@ -16,3 +16,15 @@ export const GET_NEARBY_LOCATIONS_QUERY = gql`
     }
   }
 `
+
+export const GET_LOCATIONS_QUERY = gql`
+  query nearbyLocations {
+    location {
+      account
+      name
+      type
+      id
+      info
+    }
+  }
+`

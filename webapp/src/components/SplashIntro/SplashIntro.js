@@ -21,12 +21,13 @@ import FourthLogoUrl from '../../assets/fourth.svg'
 const useStyles = makeStyles((theme) => ({
   imageIcon: {
     [theme.breakpoints.between('xs', 'sm')]: {
-      width: '360px'
+      width: '100%',
+      height: '70vh'
     },
     [theme.breakpoints.up('sm')]: {
-      width: '100%'
+      width: '100%',
+      height: '40vh'
     },
-    height: '400px',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'
   },
@@ -37,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
   },
   carouselContainer: {
     height: '99vh',
-    width: '100%'
+    width: '100%',
+    position: 'relative'
   },
   slide: {
     display: 'flex',
@@ -61,12 +63,23 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    [theme.breakpoints.between('xs', 'sm')]: {
+      zIndex: 9999,
+      position: 'absolute',
+      right: 0,
+      top: 10
+    },
+    [theme.breakpoints.up('sm')]: {
+      zIndex: 0,
+      position: 'relative'
+    }
   },
   nextBtnContainer: {
     display: 'flex',
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
+    marginBottom: theme.spacing(2)
   },
   nextBtn: {
     borderRadius: '48px',
@@ -75,29 +88,26 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: 'middle',
     color: 'white'
   },
-  mainHeading: {
-    fontSize: 24,
-    letterSpacing: 0.86,
-    fontWeight: 500,
-    textAlign: 'center',
-    fontStretch: 'normal'
-  },
   stepper: {
     backgroundColor: 'transparent',
     width: '100%',
     justifyContent: 'center'
   },
-  swipeable: {
-    '& > div.react-swipeable-view-container': {
-      maxHeight: 500
-    }
+  mainHeading: {
+    fontSize: '18px',
+    letterSpacing: '0.64px',
+    fontWeight: 'bold',
+    lineHeight: '1.33',
+    textAlign: 'center',
+    fontStretch: 'normal'
   },
   medium: {
-    fontSize: 14,
+    fontSize: '14px',
     fontWeight: 500,
     letterSpacing: 0.5,
     fontStyle: 'normal',
-    fontStretch: 'normal'
+    fontStretch: 'normal',
+    lineHeight: 'normal'
   },
   dialog: {
     padding: 100
@@ -115,8 +125,17 @@ const SplashIntro = ({ skipHandling }) => {
   }
 
   const [slides] = useState([
-    <Box className={classes.slide} key={0}>
-      <Typography className={clsx(classes.mainHeading, classes.capitalize)}>
+    <Box className={classes.slide} justifyContent="space-evenly" key={0}>
+      <Typography
+        style={{
+          fontSize: 24,
+          letterSpacing: 0.86,
+          fontWeight: 500,
+          textAlign: 'center',
+          fontStretch: 'normal'
+        }}
+        className={classes.capitalize}
+      >
         Welcome to
       </Typography>
       <FirstLogo style={{ marginTop: 67 }} />
@@ -153,7 +172,7 @@ const SplashIntro = ({ skipHandling }) => {
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
-          style={{ marginTop: '0 !important', lineHeight: '24px' }}
+          style={{ marginTop: '0 !important' }}
         >
           Is a place where you can donate blood
         </Typography>
@@ -161,8 +180,9 @@ const SplashIntro = ({ skipHandling }) => {
       <Box
         className={classes.imageIcon}
         style={{
+          backgroundPositionY: 'center',
           backgroundImage: `url(${SecondLogoUrl})`,
-          backgroundPosition: 'center'
+          backgroundSize: matches ? 'normal' : '620px'
         }}
       ></Box>
     </Box>,
@@ -178,7 +198,7 @@ const SplashIntro = ({ skipHandling }) => {
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
-          style={{ marginTop: '0 !important', lineHeight: '24px' }}
+          style={{ marginTop: '0 !important', maxWidth: '300px' }}
         >
           Are businesses that will reward people that have donated through a
           lifebank
@@ -188,7 +208,7 @@ const SplashIntro = ({ skipHandling }) => {
         className={classes.imageIcon}
         style={{
           backgroundImage: `url(${ThirdLogoUrl})`,
-          backgroundPosition: 'center'
+          backgroundSize: matches ? 'normal' : '760px'
         }}
       ></Box>
     </Box>,
@@ -203,7 +223,7 @@ const SplashIntro = ({ skipHandling }) => {
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
-          style={{ marginTop: '0 !important', lineHeight: '24px' }}
+          style={{ marginTop: '0 !important' }}
         >
           Will donate blood and be rewarded with life tokens which they can
           redeem at their convenience with sponsors of the community.
@@ -213,8 +233,8 @@ const SplashIntro = ({ skipHandling }) => {
         className={classes.imageIcon}
         style={{
           backgroundImage: `url(${FourthLogoUrl})`,
-          backgroundPosition: 'center',
-          height: '320px'
+          backgroundPositionY: matches ? 'center' : '80%',
+          backgroundSize: matches ? 'normal' : '550px'
         }}
       ></Box>
     </Box>
@@ -250,7 +270,6 @@ const SplashIntro = ({ skipHandling }) => {
           <Grid container direction="row" justify="center" alignItems="center">
             <SwipeableViews
               index={activeStep}
-              style={{ maxHeight: 500 }}
               onChangeIndex={handleStepChange}
               enableMouseEvents
             >
@@ -302,7 +321,6 @@ const SplashIntro = ({ skipHandling }) => {
           <Grid container direction="row" justify="center" alignItems="center">
             <SwipeableViews
               index={activeStep}
-              style={{ maxHeight: 500 }}
               onChangeIndex={handleStepChange}
               enableMouseEvents
             >
@@ -311,29 +329,31 @@ const SplashIntro = ({ skipHandling }) => {
               ))}
             </SwipeableViews>
           </Grid>
-          <Box className={classes.nextBtnContainer}>
-            <Button
-              className={classes.nextBtn}
-              onClick={() =>
-                activeStep === slides.length - 1
-                  ? skipHandling('splash')
-                  : setActiveStep(activeStep + 1)
-              }
-              style={{
-                backgroundColor: '#B71C1C'
-              }}
-            >
-              {activeStep === slides.length - 1 ? 'Start' : 'Next'}
-            </Button>
+          <Box style={{ zIndex: 9999, position: 'absolute', bottom: 20 }}>
+            <Box className={classes.nextBtnContainer}>
+              <Button
+                className={classes.nextBtn}
+                onClick={() =>
+                  activeStep === slides.length - 1
+                    ? skipHandling('splash')
+                    : setActiveStep(activeStep + 1)
+                }
+                style={{
+                  backgroundColor: '#B71C1C'
+                }}
+              >
+                {activeStep === slides.length - 1 ? 'Start' : 'Next'}
+              </Button>
+            </Box>
+            <MobileStepper
+              ref={dotsRef}
+              variant="dots"
+              steps={4}
+              position="static"
+              activeStep={activeStep}
+              className={classes.stepper}
+            />
           </Box>
-          <MobileStepper
-            ref={dotsRef}
-            variant="dots"
-            steps={4}
-            position="static"
-            activeStep={activeStep}
-            className={classes.stepper}
-          />
         </Grid>
       )}
     </>
