@@ -9,7 +9,7 @@ import Divider from '@material-ui/core/Divider'
 import Slider from '@material-ui/core/Slider'
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -212,6 +212,7 @@ const InfoPage = () => {
   const [open, setOpenModalLocation] = useState(false);
   const [openSchedule, setOpenModalSchedule] = useState(false);
   const location = useLocation()
+  const history = useHistory()
   const [profile, setProfile] = useState()
 
   const handleClickOpen = () => {
@@ -246,8 +247,11 @@ const InfoPage = () => {
           username: window.location.pathname.slice(6, window.location.pathname.length)
         })
 
-        if (data) {
+        if (data.location.length > 0) {
           setProfile(data.location[0])
+        }
+        else {
+          history.push("/not-found")
         }
       }
 

@@ -109,6 +109,7 @@ export const VERIFY_EMAIL = gql`
     }
   }
 `
+
 export const VALIDATE_EMAIL = gql`
   query($email: String!) {
     user(where: { email: { _eq: $email } }) {
