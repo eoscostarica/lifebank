@@ -249,7 +249,7 @@ const EmptyHeartSVG = ({ balance, isDesktop }) => {
 }
 
 EmptyHeartSVG.propTypes = {
-  balance: PropTypes.string,
+  balance: PropTypes.number,
   isDesktop: PropTypes.bool,
 }
 
