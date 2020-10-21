@@ -27,7 +27,11 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   video: {
-    marginBottom: theme.spacing(2)
+    margin: "auto",
+    maxWidth: "800px",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    borderRadius: "1rem"
   }
 }))
 
