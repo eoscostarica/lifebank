@@ -125,7 +125,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
           variant="body1"
           className={clsx(classes.labelOption, overrideLabelClass)}
         >
-          Credentials recovery
+          {t('credentialsRecovery.credentialsRecovery')}
         </Typography>
       </Box>
       <Modal
@@ -153,7 +153,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
               </IconButton>
             </Box>
             <Box className={classes.bodyWrapper}>
-              <Typography variant="h3">Credentials Recovery</Typography>
+              <Typography variant="h3">
+                {t('credentialsRecovery.credentialsRecovery')}
+              </Typography>
               {errorMessage && (
                 <Alert
                   className={classes.alert}
@@ -187,14 +189,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                     </IconButton>
                   }
                 >
-                  Check your email
+                  {t('credentialsRecovery.checkYourEmail')}
                 </Alert>
               )}
               <form autoComplete="off">
                 <Box className={classes.textFieldWrapper}>
                   <TextField
                     id="account"
-                    label="Email"
+                    label={t('common.email')}
                     variant="outlined"
                     InputLabelProps={{
                       shrink: true
@@ -212,7 +214,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                     color="primary"
                     onClick={handleSubmit}
                   >
-                    Recovery
+                    {t('credentialsRecovery.recovery')}
                   </Button>
                   {loading && <CircularProgress />}
                 </Box>

@@ -23,6 +23,7 @@ import ReceiptIcon from '@material-ui/icons/Receipt'
 import StyleIcon from '@material-ui/icons/Style'
 import * as m from 'moment-timezone'
 import moment from 'moment'
+import { useTranslation } from 'react-i18next'
 
 import CarouselComponent from '../../components/Carousel'
 

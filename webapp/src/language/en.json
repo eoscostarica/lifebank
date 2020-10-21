@@ -29,7 +29,6 @@
       "moreInfo": "More info"
     },
     "navigationDrawer": {
-      "credentialsRecovery": "Credentials Recovery",
       "yourDonations": "Your donations",
       "information": "Information",
       "aboutLifebank": "About Lifebank",
@@ -58,7 +57,22 @@
       "edit": "Edit",
       "update": "Update",
       "loading": "Loading",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "prev": "Prev",
+      "next": "Next",
+      "email": "Email"
+    },
+    "claimReward": {
+      "claimReward": "Claim Reward",
+      "claimYourReward": "Claim Your Reward",
+      "showThisCode": "Show this code",
+      "orYourUsername": "Or your username",
+      "imDone": "I'm Done"
+    },
+    "credentialsRecovery": {
+      "credentialsRecovery": "Credentials Recovery",
+      "checkYourEmail": "Check your email",
+      "recovery": "Recover"
     },
     "offersManagement": {
       "offersManagement": "Offers Management",

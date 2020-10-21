@@ -29,7 +29,6 @@
       "moreInfo": "Más información"
     },
     "navigationDrawer": {
-      "credentialsRecovery": "Recuperación de credenciales",
       "yourDonations": "Tus donaciones",
       "information": "Información",
       "aboutLifebank": "Acerca de Lifebank",
@@ -58,7 +57,22 @@
       "edit": "Editar",
       "update": "Actualizar",
       "loading": "Cargando",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "email": "Correo"
+    },
+    "claimReward": {
+      "claimReward": "Reclamar recompensa",
+      "claimYourReward": "Reclamar tu recompensa",
+      "showThisCode": "Mostrar este código",
+      "orYourUsername": "O tu nombre de usuario",
+      "imDone": "Listo"
+    },
+    "credentialsRecovery": {
+      "credentialsRecovery": "Recuperación de credenciales",
+      "checkYourEmail": "Revisa tu correo",
+      "recovery": "Recuperar"
     },
     "offersManagement": {
       "offersManagement": "Manejo de ofertas",
