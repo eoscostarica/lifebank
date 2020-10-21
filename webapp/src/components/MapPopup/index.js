@@ -34,7 +34,7 @@ function MapPopup({ id, info }) {
       return "geo:0,0?q=" + info.geolocation.latitude + "," + info.geolocation.longitude
     }
     else {
-      return "http://maps.google.com/maps?q=" + info.geolocation.latitude + "," + info.geolocation.longitude
+      return "https://maps.google.com/maps?q=" + info.geolocation.latitude + "," + info.geolocation.longitude
     }
   }
 
@@ -66,6 +66,8 @@ function MapPopup({ id, info }) {
         <a
           className={classes.link}
           href={goto()}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Go to
         </a>

@@ -31,3 +31,16 @@ export const GET_LOCATIONS_QUERY = gql`
     }
   }
 `
+
+export const GET_LOCATION_PROFILE = gql`
+  query nearbyLocations ($username: String!) {
+    location(where: {user: {username: {_eq: $username}}}) {
+      info
+      name
+      type
+      geolocation
+      id
+      account
+    }
+  }
+`
