@@ -248,6 +248,11 @@ const EmptyHeartSVG = ({ balance, isDesktop }) => {
   )
 }
 
+EmptyHeartSVG.propTypes = {
+  balance: PropTypes.string,
+  isDesktop: PropTypes.bool,
+}
+
 const DonationsDashboard = ({ isDesktop }) => {
   const [maxWidth] = useState('md');
   const [open, setOpen] = useState(false)
