@@ -8,11 +8,10 @@ import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
-import Fab from '@material-ui/core/Fab'
 import SearchIcon from '@material-ui/icons/Search'
 import StarIcon from '@material-ui/icons/Star'
-import FavoriteIcon from '@material-ui/icons/Favorite'
 
+import DonationsDashboard from '../../components/DonationsDashboard'
 import MapModal from '../../components/MapModal'
 import ShowOffers from './ShowOffers'
 import ShowLifebanks from './ShowLifebanks'
@@ -258,13 +257,11 @@ const HomeDesktop = (props) => {
             isDesktop
           />
         </Grid>
+        {currentUser && currentUser.role === "donor" &&
+          <DonationsDashboard isDesktop />
+        }
       </Grid>
-      {currentUser && currentUser.role === "donor" &&
-        (<Fab color="secondary" variant="extended" className={classes.fabButtonDesktop}>
-          <FavoriteIcon className={classes.iconFab} />
-          Donate
-        </Fab>)
-      }
+
     </>
   )
 }

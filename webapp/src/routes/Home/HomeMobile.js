@@ -13,6 +13,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import StarIcon from '@material-ui/icons/Star'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 
+import DonationsDashboard from '../../components/DonationsDashboard'
 import MapModal from '../../components/MapModal'
 import ShowOffers from './ShowOffers'
 import ShowLifebanks from './ShowLifebanks'
@@ -154,10 +155,7 @@ const HomeMobile = (props) => {
             <StarIcon className={classes.iconBottomAppBar} />
           </IconButton>
           {currentUser && currentUser.role === "donor" &&
-            (<Fab color="secondary" variant="extended" className={classes.fabButton}>
-              <FavoriteIcon className={classes.iconFab} />
-          Donate
-            </Fab>)
+            <DonationsDashboard isDesktop={false} />
           }
         </Toolbar>
       </AppBar>
