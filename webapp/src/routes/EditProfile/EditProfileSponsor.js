@@ -18,7 +18,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import FacebookIcon from '../../assets/facebook.svg'
 import InstagramIcon from '../../assets/instagram.svg'
 import TwitterIcon from '../../assets/twitter.svg'
-import MapSelectLocation from '../../components/MapSelectLocation'
+import MapEditLocation from '../../components/MapEditLocation'
 import Carousel from '../../components/Carousel'
 import Schedule from '../../components/Schedule'
 import Logo from '../../components/Logo'
@@ -524,9 +524,17 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           Choose your location
         </Typography>
 
-        <MapSelectLocation
-          onGeolocationChange={(value) => handleSetField('geolocation', value)}
+        <MapEditLocation
+          onGeolocationChange={(value) => {
+            console.log(value)
+            handleSetField('geolocation', value)
+          }}
           markerType={SPONSOR}
+          markerLocation={
+            user.geolocation
+              ? user.geolocation
+              : { longitude: -84.0556371, latitude: 9.9195872 }
+          }
           width="100%"
           height={400}
           mb={1}

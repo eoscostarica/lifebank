@@ -22,8 +22,14 @@ import Logo from '../../components/Logo'
 import Schedule from '../../components/Schedule'
 import Telephones from '../../components/Telephones'
 import CarouselComponent from '../../components/Carousel'
-import MapShowLocations from '../../components/MapShowLocations'
+import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { eosConfig } from '../../config'
+import { constants } from '../../config'
+import MapEditLocation from '../../components/MapEditLocation'
+
+const {
+  LOCATION_TYPES: { SPONSOR }
+} = constants
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -167,6 +173,8 @@ const ProfilePageSponsor = ({ profile }) => {
       checkAvailableFields()
     }
   }, [profile])
+
+  console.log(profile)
 
   return (
     <Grid container justify="center">
@@ -448,8 +456,13 @@ const ProfilePageSponsor = ({ profile }) => {
           rows={3}
         />
         {profile.location && profile.location !== 'null' && (
-          <MapShowLocations
-            location={profile ? JSON.parse(profile.location || '{}') : {}}
+          <MapShowOneLocation
+            markerLocation={
+              profile && profile.location
+                ? JSON.parse(profile.location || '{}')
+                : {}
+            }
+            accountProp={profile.account}
             width="100%"
             height={400}
             py={2}
