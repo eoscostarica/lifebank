@@ -74,6 +74,11 @@
       "checkYourEmail": "Check your email",
       "recovery": "Recover"
     },
+    "emailVerification": {
+      "emailVerified": "Your email has been verified",
+      "somethingHappened": "Something happened when trying to verify your email",
+      "takeHome": "Take me home"
+    },
     "offersManagement": {
       "offersManagement": "Offers Management",
       "addOffer": "Añadir oferta",

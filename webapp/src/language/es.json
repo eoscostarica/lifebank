@@ -74,6 +74,11 @@
       "checkYourEmail": "Revisa tu correo",
       "recovery": "Recuperar"
     },
+    "emailVerification": {
+      "emailVerified": "Tu correo ha sido verificado",
+      "somethingHappened": "Ha ocurrido un evento inesperado al tratar de verificar tu email",
+      "takeHome": "Ir al inicio"
+    },
     "offersManagement": {
       "offersManagement": "Manejo de ofertas",
       "addOffer": "Añadir oferta",
