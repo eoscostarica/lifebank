@@ -95,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageSponsor = ({ profile }) => {
-  console.log(profile)
   const classes = useStyles()
   const [pendingFields, setPendingFields] = useState()
 

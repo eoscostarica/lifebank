@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageLifebank = ({ profile }) => {
+  console.log("profile lifebank:", profile)
   const classes = useStyles()
   let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
   const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
@@ -186,8 +187,8 @@ const ProfilePageLifebank = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">URL site</Typography>
-        {console.log("profile:", profile)}
-        <a variant="body1" href={'https://lifebank.io/info/' + profile.usermane}> {'https://lifebank.io/info/' + profile.usermane}</a>
+        {console.log("profile 2:", profile)}
+        <a variant="body1" href={'https://lifebank.io/info/' + profile.role}> {'https://lifebank.io/info/' + profile.role}</a>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
@@ -205,6 +206,7 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
+        {console.log("profile 3:", profile)}
         <Typography variant="subtitle1">Organization</Typography>
         <Typography variant="body1">{profile.name}</Typography>
       </Box>
@@ -225,6 +227,7 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
+        {console.log("profile 4:", profile)}
         <Typography variant="subtitle1">Telephone</Typography>
         <Typography variant="body1">{profile.phone_number}</Typography>
       </Box>
@@ -256,6 +259,7 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
+        {console.log("profile 5:", profile.schedule)}
         <Typography variant="subtitle1">Schedule</Typography>
         <Typography variant="body1" />
       </Box>
@@ -265,6 +269,7 @@ const ProfilePageLifebank = ({ profile }) => {
         showButton={false}
       />
       <Box className={classes.rowBox}>
+        {console.log("profile 6:", profile)}
         <Typography variant="subtitle1">Benefit Description</Typography>
         <Typography variant="body1" />
       </Box>
@@ -281,6 +286,7 @@ const ProfilePageLifebank = ({ profile }) => {
         rows={3}
       />
       <Box className={classes.rowBox}>
+        {console.log("profile 7:", profile)}
         <Typography variant="subtitle1">Images</Typography>
         <Typography variant="body1" />
       </Box>
@@ -295,6 +301,7 @@ const ProfilePageLifebank = ({ profile }) => {
         <CarouselComponent images={arrayImage} />
       </Grid>
       <Box className={classes.rowBox}>
+        {console.log("profile 8:", profile)}
         <Typography variant="subtitle1">Location</Typography>
         <Typography variant="body1" />
       </Box>
