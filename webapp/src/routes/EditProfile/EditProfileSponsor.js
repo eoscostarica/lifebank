@@ -526,7 +526,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
         <MapEditLocation
           onGeolocationChange={(value) => {
-            console.log(value)
             handleSetField('geolocation', value)
           }}
           markerType={SPONSOR}

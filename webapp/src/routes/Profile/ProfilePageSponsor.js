@@ -168,8 +168,6 @@ const ProfilePageSponsor = ({ profile }) => {
     }
   }, [profile])
 
-  console.log(profile)
-
   return (
     <Grid container justify="center">
       <Grid item xs={12} sm={6} mdß={4} lg={4}>
