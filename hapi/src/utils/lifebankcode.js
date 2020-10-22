@@ -48,6 +48,10 @@ const addLifebank = (
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
+          about: profile.about || '',
+          photos: profile.photos || '',
+          logo_url: profile.logo_url || '',
+          social_media_links: profile.social_media_links || '',
           ...profile
         }
       }
@@ -157,7 +161,7 @@ const getLifebank = async account => {
     lower_bound: account,
     upper_bound: account
   })
-
+  console.log("rows:", rows)
   return rows.length > 0 ? rows[0] : null
 }
 

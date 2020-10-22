@@ -1,6 +1,6 @@
 import CarouselComponent from '../../components/Carousel'
-
 import React, { useState, useEffect } from 'react'
+import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Alert from '@material-ui/lab/Alert'
@@ -13,13 +13,12 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
-
 import '@brainhubeu/react-carousel/lib/style.css'
-
 import 'date-fns'
 
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
+import { GET_USERNAME } from '../../gql'
 
 const { eosConfig } = require('../../config')
 
@@ -68,12 +67,30 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageLifebank = ({ profile }) => {
-  console.log("profile lifebank:", profile)
   const classes = useStyles()
   let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
   const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
-
+  const [userName, setUsername] = useState()
   const [pendingFields, setPendingFields] = useState()
+
+  const { refetch: getData } = useQuery(GET_USERNAME, {
+    variables: {
+      account: '12letterlife'
+    },
+    skip: true
+  })
+
+  useEffect(() => {
+    const getUsername = async () => {
+      const { data } = await getData({
+        account: '12letterlife'
+      })
+      console.log("data:", data)
+      if (data) setUsername(data.user[0].username)
+
+    }
+    if (!userName) getUsername()
+  })
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -187,8 +204,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">URL site</Typography>
-        {console.log("profile 2:", profile)}
-        <a variant="body1" href={'https://lifebank.io/info/' + profile.role}> {'https://lifebank.io/info/' + profile.role}</a>
+        <a variant="body1" href={'https://lifebank.io/info/' + userName}> {'lifebank.io/info/' + userName}</a>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
@@ -206,7 +222,6 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        {console.log("profile 3:", profile)}
         <Typography variant="subtitle1">Organization</Typography>
         <Typography variant="body1">{profile.name}</Typography>
       </Box>
@@ -227,7 +242,6 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        {console.log("profile 4:", profile)}
         <Typography variant="subtitle1">Telephone</Typography>
         <Typography variant="body1">{profile.phone_number}</Typography>
       </Box>
@@ -257,19 +271,7 @@ const ProfilePageLifebank = ({ profile }) => {
           {profile.blood_urgency_level}
         </Typography>
       </Box>
-      <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        {console.log("profile 5:", profile.schedule)}
-        <Typography variant="subtitle1">Schedule</Typography>
-        <Typography variant="body1" />
-      </Box>
-      <Schedule
-        data={JSON.parse(profile.schedule)}
-        showSchedule
-        showButton={false}
-      />
-      <Box className={classes.rowBox}>
-        {console.log("profile 6:", profile)}
         <Typography variant="subtitle1">Benefit Description</Typography>
         <Typography variant="body1" />
       </Box>
@@ -286,7 +288,6 @@ const ProfilePageLifebank = ({ profile }) => {
         rows={3}
       />
       <Box className={classes.rowBox}>
-        {console.log("profile 7:", profile)}
         <Typography variant="subtitle1">Images</Typography>
         <Typography variant="body1" />
       </Box>
@@ -300,18 +301,6 @@ const ProfilePageLifebank = ({ profile }) => {
       >
         <CarouselComponent images={arrayImage} />
       </Grid>
-      <Box className={classes.rowBox}>
-        {console.log("profile 8:", profile)}
-        <Typography variant="subtitle1">Location</Typography>
-        <Typography variant="body1" />
-      </Box>
-      <MapShowOneLocation
-        markerLocation={JSON.parse(profile.location)}
-        accountProp={profile.account}
-        width="100%"
-        height={400}
-        py={2}
-      />
       <Divider className={classes.divider} />
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }} className={classes.editBtn}>
         <Button variant="contained" color="primary">
