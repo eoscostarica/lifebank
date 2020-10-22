@@ -25,32 +25,23 @@ const editProfile = async (account, profile) => {
 
   if (profile.geolocation) {
     const { location } = await locationApi.verifyExistence(account)
+
+    const requestParams = {
+      name: profile.name,
+      geolocation: {
+        type: 'Point',
+        coordinates: [
+          profile.geolocation.longitude,
+          profile.geolocation.latitude
+        ]
+      },
+      type: LOCATION_TYPES.SPONSOR,
+      info: profile
+    }
+
     location[0]
-      ? await locationApi.update(account, {
-          name: profile.name,
-          geolocation: {
-            type: 'Point',
-            coordinates: [
-              profile.geolocation.longitude,
-              profile.geolocation.latitude
-            ]
-          },
-          type: LOCATION_TYPES.SPONSOR,
-          info: profile
-        })
-      : await locationApi.insert({
-          account,
-          name: profile.name,
-          geolocation: {
-            type: 'Point',
-            coordinates: [
-              profile.geolocation.longitude,
-              profile.geolocation.latitude
-            ]
-          },
-          type: LOCATION_TYPES.SPONSOR,
-          info: profile
-        })
+      ? await locationApi.update(account, requestParams)
+      : await locationApi.insert({ account, ...requestParams })
   }
 }
 
