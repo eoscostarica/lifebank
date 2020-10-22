@@ -85,10 +85,10 @@ const ProfilePageLifebank = ({ profile }) => {
       const { data } = await getData({
         account: '12letterlife'
       })
-      console.log("data:", data)
-      if (data) setUsername(data.user[0].username)
 
+      if (data) setUsername(data.user[0].username)
     }
+
     if (!userName) getUsername()
   })
 
