@@ -147,6 +147,9 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "normal",
     lineHeight: "1.75",
     letterSpacing: "0.44px",
+    "& .MuiInputBase-input " : {
+      paddingTop: "12px"
+    }
   },
   iconSeachBar: {
     color: "rgba(0, 0, 0, 0.6)",
