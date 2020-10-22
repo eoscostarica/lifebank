@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
@@ -136,6 +136,11 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       setUser({ ...user, [field]: value })
     },
     [user]
+  )
+
+  const handleOnGeolocationChange = useCallback(
+    (geolocation) => setUser({ ...user, geolocation: geolocation }),
+    [user.geolocation]
   )
 
   const handleOnAddStringifyValues = (field, value) => {
@@ -525,9 +530,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         </Typography>
 
         <MapEditLocation
-          onGeolocationChange={(value) => {
-            handleSetField('geolocation', value)
-          }}
+          onGeolocationChange={handleOnGeolocationChange}
           markerType={SPONSOR}
           markerLocation={
             user.geolocation
