@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageSponsor = ({ profile }) => {
+  console.log(profile)
   const classes = useStyles()
   const [pendingFields, setPendingFields] = useState()
 
@@ -103,6 +104,21 @@ const ProfilePageSponsor = ({ profile }) => {
 
     if (!profile.email)
       pendingFieldsObject = { ...pendingFieldsObject, email: false }
+
+    if (!profile.address)
+      pendingFieldsObject = { ...pendingFieldsObject, address: false }
+
+    if (!profile.about)
+      pendingFieldsObject = { ...pendingFieldsObject, about: false }
+
+    if (!profile.logo_url)
+      pendingFieldsObject = { ...pendingFieldsObject, logo_url: false }
+
+    if (!profile.benefit_description)
+      pendingFieldsObject = {
+        ...pendingFieldsObject,
+        benefit_description: false
+      }
 
     if (!profile.name)
       pendingFieldsObject = { ...pendingFieldsObject, name: false }
@@ -264,17 +280,19 @@ const ProfilePageSponsor = ({ profile }) => {
           <Typography variant="subtitle1">Organization</Typography>
           <Typography variant="body1">{profile.name}</Typography>
         </Box>
-        {profile.telephones && Array.isArray(profile.telephones) && (
-          <Box
-            flexDirection="column"
-            justifySelf="center"
-            justifyContent="center"
-            display="flex"
-          >
-            <Divider className={classes.divider} />
-            <Telephones phones={profile.telephones} />
-          </Box>
-        )}
+        {profile.telephones &&
+          Array.isArray(profile.telephones) &&
+          profile.telephones.length > 0 && (
+            <Box
+              flexDirection="column"
+              justifySelf="center"
+              justifyContent="center"
+              display="flex"
+            >
+              <Divider className={classes.divider} />
+              <Telephones phones={profile.telephones} />
+            </Box>
+          )}
         <Divider
           style={{ display: !profile.website ? 'none' : '' }}
           className={classes.divider}
@@ -400,6 +418,54 @@ const ProfilePageSponsor = ({ profile }) => {
           data={profile ? JSON.parse(profile.schedule || '[]') : []}
           showSchedule
           showButton={false}
+        />
+        <Divider
+          style={{ display: !profile.about ? 'none' : '' }}
+          className={classes.divider}
+        />
+        <Box
+          style={{ display: !profile.about ? 'none' : '' }}
+          className={classes.rowBox}
+        >
+          <Typography variant="subtitle1">About</Typography>
+          <Typography variant="body1" />
+        </Box>
+        <TextField
+          style={{ display: !profile.address ? 'none' : '' }}
+          id="address"
+          variant="outlined"
+          disabled
+          defaultValue={profile.address}
+          InputLabelProps={{
+            shrink: true
+          }}
+          multiline
+          fullWidth
+          rows={3}
+        />
+        <Divider
+          style={{ display: !profile.address ? 'none' : '' }}
+          className={classes.divider}
+        />
+        <Box
+          style={{ display: !profile.address ? 'none' : '' }}
+          className={classes.rowBox}
+        >
+          <Typography variant="subtitle1">Address</Typography>
+          <Typography variant="body1" />
+        </Box>
+        <TextField
+          style={{ display: !profile.address ? 'none' : '' }}
+          id="address"
+          variant="outlined"
+          disabled
+          defaultValue={profile.address}
+          InputLabelProps={{
+            shrink: true
+          }}
+          multiline
+          fullWidth
+          rows={3}
         />
         <Divider
           style={{ display: !profile.covid_impact ? 'none' : '' }}

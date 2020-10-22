@@ -1,7 +1,7 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import { Link as LinkRouter } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -182,8 +182,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           <BankItem
             key={bank.id}
             id={bank.id}
-            name={bank.name}
-            description={bank.info.description}
+            bank={bank}
           />
         ))}
       </>
@@ -192,25 +191,37 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
 
   const BankItem = (props) => {
     return (
-      <ListItem className={classes.listItem} button>
-        <ListItemAvatar>
-          <Avatar>
-            <LocalHospitalIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.name}</Typography>
-          }
-          secondary={
-            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.description}</Typography>
-          }
-        />
-      </ListItem>
+      <LinkRouter
+        style={{ textDecoration: 'none' }}
+        to={{
+          pathname: 'info/' + props.bank.info.name.replaceAll(" ", "-"),
+          state: { profile: props.bank }
+        }}
+      >
+        <ListItem
+          className={classes.listItem}
+          button
+        >
+          <ListItemAvatar>
+            <Avatar>
+              <LocalHospitalIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
+            }
+            secondary={
+              <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
+            }
+          />
+        </ListItem>
+      </LinkRouter>
     )
   }
 
   BankItem.propTypes = {
+    bank: PropTypes.object,
     name: PropTypes.string,
     description: PropTypes.string,
   }
@@ -242,8 +253,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           <BankCard
             key={bank.id}
             id={bank.id}
-            name={bank.name}
-            description={bank.info.description}
+            bank={bank}
           />
         ))}
       </>
@@ -268,22 +278,34 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           </Avatar>
           <Box className={classes.cardTitleContainer}>
             <Typography className={classes.cardTitle} noWrap>
-              {props.name}
+              {props.bank.info.name}
             </Typography>
           </Box>
         </Box>
         <CardContent className={classes.cardContent}>
-          <Typography className={classes.cardContentText} >{truncateString(props.description)}
+          <Typography className={classes.cardContentText} >{truncateString(props.bank.info.description)}
           </Typography>
         </CardContent>
-        <Button color="primary" className={classes.cardActionButton}>
-          more info
-        </Button>
+        <LinkRouter
+          style={{ textDecoration: 'none' }}
+          to={{
+            pathname: 'info/' + props.bank.info.name.replaceAll(" ", "-"),
+            state: { profile: props.bank }
+          }}
+        >
+          <Button
+            color="primary"
+            className={classes.cardActionButton}
+          >
+            More info
+          </Button>
+        </LinkRouter>
       </Card>
     )
   }
 
   BankCard.propTypes = {
+    bank: PropTypes.object,
     name: PropTypes.string,
     description: PropTypes.string,
   }

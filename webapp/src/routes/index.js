@@ -9,6 +9,7 @@ import TermsOfUse from './TermsOfUse'
 import Help from './Help'
 import OffersManagement from './OffersManagement'
 import OfferPage from './OfferPage'
+import InfoPage from './InfoPage'
 import Home from './Home'
 import EmailVerification from './EmailVerification'
 
@@ -79,5 +80,10 @@ export default [
     name: 'help',
     path: '/help',
     component: Help
+  },
+  {
+    name: 'info',
+    path: '/info/:lifebank',
+    component: InfoPage
   }
 ]
