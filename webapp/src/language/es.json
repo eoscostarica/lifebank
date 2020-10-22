@@ -35,6 +35,22 @@
       "useTerms": "Términos de uso",
       "help": "Ayuda"
     },
+    "signup": {
+      "sucessfulPreregistration": "Pre-registro exitoso",
+      "howDoYouWantToHelp": "¿Cómo te gustaría ayudar?",
+      "createAnewAccount": "Crear una nueva cuenta",
+      "allYouNeed": "Para registrarte, lo único que tienes que poner es tu email y contraseña",
+      "preRegisterAnewAccount": "Pre-registrar una nueva cuenta",
+      "preRegistrationRequirement": "Para poder realizar el pre-registro, necesitas indicar la siguiente información, necesaria para la aprobación del banco de sangre",
+      "readOurTermsAndConditions": "Lee nuestros términos y condiciones",
+      "transactionId": "Id transacción",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Tu contraseña aquí",
+      "confirmPassword": "Confirmar contraseña",
+      "confirmPasswordPlaceholder": "Tu confirmación",
+      "passwordNotMatch": "Las contraseñas no coinciden",
+      "iAccept": "Acepto"
+    },
     "login": "Iniciar sesión",
     "profile": "Perfil",
     "users": "Usuarios",
@@ -60,7 +76,8 @@
       "cancel": "Cancelar",
       "prev": "Anterior",
       "next": "Siguiente",
-      "email": "Correo"
+      "email": "Correo",
+      "account": "Cuenta"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",

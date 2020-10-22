@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { useTranslation } from 'react-i18next'
 
 import SignupWithFacebook from './socialSingup/SignupWithFacebook'
 import SignupWithGoogle from './socialSingup/SignupWithGoogle'
@@ -69,7 +70,7 @@ const DonorSignup = ({
         {children}
         <TextField
           id="secret"
-          label="Password"
+          label={t('')}
           type="password"
           fullWidth
           placeholder="Your password"
@@ -107,7 +108,13 @@ const DonorSignup = ({
 
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={!user.secret || !isEmailValid || !recaptchaValue || loading || error !== undefined}
+          disabled={
+            !user.secret ||
+            !isEmailValid ||
+            !recaptchaValue ||
+            loading ||
+            error !== undefined
+          }
           className={classes.btnSignup}
           variant="contained"
           color="primary"

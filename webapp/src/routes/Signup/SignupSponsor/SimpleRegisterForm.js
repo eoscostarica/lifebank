@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { useTranslation } from 'react-i18next'
 
 import { captchaConfig } from '../../../config'
 
@@ -15,6 +16,7 @@ const SimpleRegisterForm = ({
   classes,
   children
 }) => {
+  const { t } = useTranslation('translations')
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
   const [recaptchaValue, setRecaptchaValue] = useState('')
@@ -23,7 +25,7 @@ const SimpleRegisterForm = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       if (confirmPassword && confirmPassword !== password)
-        setError({ text: 'Password do not match' })
+        setError({ text: t('signup.passwordNotMatch') })
       else setError(undefined)
     }, 1500)
     return () => clearTimeout(timer)
@@ -35,10 +37,10 @@ const SimpleRegisterForm = ({
         {children}
         <TextField
           id="secret"
-          label="Password"
+          label={t('signup.Password')}
           type="password"
           fullWidth
-          placeholder="Your password"
+          placeholder={t('signup.passwordPlaceholder')}
           variant="outlined"
           InputLabelProps={{
             shrink: true
@@ -51,12 +53,12 @@ const SimpleRegisterForm = ({
         />
         <TextField
           id="confirm-password"
-          label="Confirm password"
+          label={t('signup.confirmPassword')}
           type="password"
           fullWidth
           error={error}
           helperText={error && error.text}
-          placeholder="Your confirmation"
+          placeholder={t('confirmPasswordPlaceholder')}
           variant="outlined"
           InputLabelProps={{
             shrink: true
