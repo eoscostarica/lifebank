@@ -75,14 +75,6 @@ const useStyles = makeStyles((theme) => ({
   labelBtn: {
     color: theme.palette.white
   },
-  imageContainer: {
-    maxHeight: 430,
-    '& > div.MuiCard-root': {
-      padding: theme.spacing(2),
-      backgroundColor: 'transparent',
-      border: '1px solid black'
-    }
-  },
   logo: {
     maxWidth: '100%',
     maxHeight: 340
@@ -137,15 +129,18 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     },
     [user]
   )
-
+  
   const handleOnGeolocationChange = useCallback(
     (geolocation) => setUser({ ...user, geolocation: geolocation }),
     [user.geolocation]
   )
 
-  const handleOnAddStringifyValues = (field, value) => {
-    setUser({ ...user, [field]: value })
-  }
+  const handleOnAddSchedule = useMemo(
+    () => (value) => {
+      if (value) setUser({ ...user, schedule: JSON.stringify(value) })
+    },
+    [user.schedule]
+  )
 
   const handleOnSocialMediaTextFieldChange = (name, url) => {
     const existingSocialMediaItem =
@@ -182,20 +177,21 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     onSubmit(userToSubmit)
   }
 
+  console.log(user)
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <>
-          {(isCompleting && !user.logo_url) ||
-            (!isCompleting && !user.logo_url ? null : (
-              <Logo showCaption logoUrl={user.logo_url} />
-            ))}
+          {isCompleting && !profile.logo_url && (
+            <Logo showCaption logoUrl={user.logo_url} />
+          )}
         </>
         <TextField
           id="logo-url"
           name="logo-input"
           style={{
-            display: isCompleting && user.logo_url !== '' ? 'none' : ''
+            display: isCompleting && !profile.logo_url ? 'block' : 'none'
           }}
           label="Logo url"
           variant="outlined"
@@ -211,7 +207,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="name"
           name="name"
-          style={{ display: isCompleting && user.name ? 'none' : '' }}
+          style={{ display: isCompleting && profile.name ? 'none' : '' }}
           label="Name"
           variant="outlined"
           placeholder="Your Sponsor Name"
@@ -226,7 +222,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="address"
           name="address"
-          style={{ display: isCompleting && user.address ? 'none' : '' }}
+          style={{ display: isCompleting && profile.address ? 'none' : '' }}
           label="Address"
           variant="outlined"
           placeholder="Your address here"
@@ -238,7 +234,13 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           className={classes.textField}
           onChange={(event) => handleSetField('address', event.target.value)}
         />
-        <FormControl variant="outlined" className={classes.textField}>
+        <FormControl
+          style={{
+            display: isCompleting && profile.business_type ? 'none' : ''
+          }}
+          variant="outlined"
+          className={classes.textField}
+        >
           <InputLabel id="bussines-type-label">Type</InputLabel>
           <Select
             labelId="bussines-type-label"
@@ -258,7 +260,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         </FormControl>
         <TextField
           id="email"
-          style={{ display: isCompleting && user.email ? 'none' : '' }}
+          style={{ display: isCompleting && profile.email ? 'none' : '' }}
           label="Email"
           variant="outlined"
           placeholder="Your email"
@@ -272,7 +274,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="website"
-          style={{ display: isCompleting && user.website ? 'none' : '' }}
+          style={{ display: isCompleting && profile.website ? 'none' : '' }}
           label="Website"
           variant="outlined"
           placeholder="Website"
@@ -286,7 +288,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="telephone"
-          style={{ display: isCompleting && user.telephones ? 'none' : '' }}
+          style={{ display: isCompleting && profile.telephones ? 'none' : '' }}
           label="Telephone"
           variant="outlined"
           placeholder="Telephone"
@@ -334,15 +336,14 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
 
         <Box
-          style={{ display: isCompleting && user.schedule ? 'none' : '' }}
+          style={{ display: isCompleting && profile.schedule ? 'none' : '' }}
           width="100%"
           className={classes.textField}
         >
           <Schedule
-            handleOnAddSchedule={(value) =>
-              handleOnAddStringifyValues('schedule', value)
-            }
-            data={user.schedule ? JSON.parse(user.schedule) : undefined}
+            handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
+            style={{ display: !profile.schedule ? 'none' : '' }}
+            data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
             showSchedule
           />
         </Box>
@@ -350,7 +351,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="about"
           style={{
-            display: isCompleting && user.about ? 'none' : ''
+            display: isCompleting && profile.about ? 'none' : ''
           }}
           label="About"
           variant="outlined"
@@ -369,7 +370,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="covidImpact"
           style={{
-            display: isCompleting && user.covid_impact ? 'none' : ''
+            display: isCompleting && profile.covid_impact ? 'none' : ''
           }}
           label="Covid Impact"
           variant="outlined"
@@ -389,7 +390,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="benefitDescription"
           style={{
-            display: isCompleting && user.benefit_description ? 'none' : ''
+            display: isCompleting && profile.benefit_description ? 'none' : ''
           }}
           label="Benefit description"
           variant="outlined"
@@ -409,7 +410,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="photo-url"
           style={{
-            display: isCompleting && !user.photos ? 'none' : ''
+            display: isCompleting && !profile.photos ? 'none' : ''
           }}
           label="Photo url"
           variant="outlined"

@@ -56,12 +56,14 @@ const useStyles = makeStyles((theme) => ({
   },
   loginBtn: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: "16px"
   },
   labelOption: {
     color: theme.palette.primary.main,
     marginLeft: theme.spacing(3),
-    fontSize: 14
+    fontSize: 14,
+    cursor: "pointer"
   },
   bodyWrapper: {
     height: '90%',
