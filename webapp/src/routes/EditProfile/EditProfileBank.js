@@ -129,9 +129,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
   const [username, setUserName] = useState()
   const [user, setUser] = useState({
-    description: profile.description,
+    about: profile.about,
     address: profile.address,
-    phone_number: profile.phone_number,
+    telephone: profile.telephones,
     email: profile.email,
     geolocation: JSON.parse(profile.location),
     name: profile.name,
@@ -269,20 +269,20 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           onChange={(event) => handleSetField('name', event.target.value)}
         />
         <TextField
-          id="phone-number"
+          id="telephone"
           style={{
             display: isCompleting && user.phone_number ? 'none' : ''
           }}
-          label="Phone number"
+          label="Telephone"
           fullWidth
           variant="outlined"
-          placeholder="Add Phone Number LifeBank"
-          defaultValue={user.phone_number}
+          placeholder="Add Telephone LifeBank"
+          defaultValue={user.telephone}
           InputLabelProps={{
             shrink: true
           }}
           onChange={(event) =>
-            handleSetField('phone_number', event.target.value)
+            handleSetField('telephones', event.target.value)
           }
         />
         <TextField
@@ -301,20 +301,20 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           onChange={(event) => handleSetField('address', event.target.value)}
         />
         <TextField
-          id="description"
+          id="about"
           style={{
-            display: isCompleting && user.description ? 'none' : ''
+            display: isCompleting && user.about ? 'none' : ''
           }}
           label="About"
           fullWidth
           variant="outlined"
           placeholder="About Your LifeBank"
-          defaultValue={user.description}
+          defaultValue={user.about}
           InputLabelProps={{
             shrink: true
           }}
           onChange={(event) =>
-            handleSetField('description', event.target.value)
+            handleSetField('about', event.target.value)
           }
         />
         <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" className={classes.textField}>
