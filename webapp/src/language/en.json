@@ -67,7 +67,22 @@
       "asAsponsor": "As a Sponsor",
       "asAbank": "As a Blood Bank"
     },
-    "login": "Login",
+    "login": {
+      "login": "Login",
+      "accountDoesntExist": "This account doesn't exist, please sign up",
+      "somethingHappenedWithAuth": "Something happened with the authentication",
+      "demoCredentials": "Demo credentials",
+      "invalidAccountOrPassword": "Invalid account or password",
+      "loginWithFacebook": "Login with Facebook",
+      "loginWithGoogle": "Login with Google"
+    },
+    "map": {
+      "findLifebank": "Find Lifebanks or Sponsors near you",
+      "browseWithAmap": "Browse with a map",
+      "mapInputPlaceholder": "Search: Places, Lifebanks, Sponsors",
+      "distance": "Distance",
+      "sponsorCategories": "Sponsor categories"
+    },
     "profile": "Profile",
     "users": "Users",
     "products": "Products",
@@ -93,7 +108,13 @@
       "prev": "Prev",
       "next": "Next",
       "email": "Email",
-      "account": "Account"
+      "account": "Account",
+      "telephone": "Telephones",
+      "website": "Website",
+      "benefits": "Benefits",
+      "bloodUrgency": "Blood urgency",
+      "schedule": "Schedule",
+      "saveChanges": "Save changes"
     },
     "claimReward": {
       "claimReward": "Claim Reward",

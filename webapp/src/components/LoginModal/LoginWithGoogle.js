@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles'
 import GoogleLogin from 'react-google-login'
 import Button from '@material-ui/core/Button'
 import SvgIcon from '@material-ui/core/SvgIcon'
+import { useTranslation } from 'react'
 
 import { oAuthConfig } from '../../config'
 
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoginWithGoogle = ({ onSubmit }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   const googleResponse = (response) => {
@@ -66,7 +68,7 @@ const LoginWithGoogle = ({ onSubmit }) => {
             </SvgIcon>
           }
         >
-          Login with Google
+          {t('login.loginWithGoogle')}
         </Button>
       )}
       buttonText="Login"

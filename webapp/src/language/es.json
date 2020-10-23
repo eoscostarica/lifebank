@@ -67,7 +67,22 @@
       "asAsponsor": "Como Comercio",
       "asAbank": "Como Banco de Sangre"
     },
-    "login": "Iniciar sesión",
+    "login": {
+      "login": "Iniciar sesión",
+      "accountDoesntExist": "Esta cuenta no existe",
+      "somethingHappenedWithAuth": "Un evento inesperado ha ocurrido",
+      "demoCredentials": "Credenciales de prueba",
+      "invalidAccountOrPassword": "Cuenta o contraseña incorrecta",
+      "loginWithFacebook": "Iniciar sesión con Facebook",
+      "loginWithGoogle": "Iniciar sesión con Google"
+    },
+    "map": {
+      "findLifebank": "Encontrar Bancos de Sangre o Comercios Afiliados cerca de ti",
+      "browseWithAmap": "Buscar con el mapa",
+      "mapInputPlaceholder": "Buscar: Lugares, Bancos de Sangre, Comercios Afiliados",
+      "distance": "Distancia",
+      "sponsorCategories": "Categorías de comercios"
+    },
     "profile": "Perfil",
     "users": "Usuarios",
     "products": "Productos",
@@ -93,7 +108,13 @@
       "prev": "Anterior",
       "next": "Siguiente",
       "email": "Correo",
-      "account": "Cuenta"
+      "account": "Cuenta",
+      "telephone": "Teléfono",
+      "website": "Sitio web",
+      "benefits": "Beneficios",
+      "bloodUrgency": "Urgencia de sangre",
+      "schedule": "Horario",
+      "saveChanges": "Guardar cambios"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",

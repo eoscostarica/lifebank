@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button'
 import Modal from '@material-ui/core/Modal'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import { uselocation } from 'react-i18next'
 
 import { mapboxConfig, constants } from '../../config'
 import MapMarker from '../MapMarker'
@@ -88,6 +89,7 @@ function getModalStyle() {
 }
 
 function MapShowLocations({ location, ...props }) {
+  const { t } = uselocation('translations')
   const [distance, setDistance] = React.useState(5000)
   const [state, setState] = React.useState({
     checkedLifebank: true,
@@ -287,7 +289,7 @@ function MapShowLocations({ location, ...props }) {
         accessToken: mapboxgl.accessToken,
         localGeocoder: forwardGeocoder,
         zoom: 16,
-        placeholder: 'Search: Places, Lifebanks, Sponsors',
+        placeholder: t('map.mapInputPlaceholder'),
         mapboxgl: mapboxgl,
         marker: null
       })
@@ -335,16 +337,16 @@ function MapShowLocations({ location, ...props }) {
             >
               <Grid item xs={12}>
                 <h1 color="textSecondary" className={classes.accordionTittle}>
-                  Filters{' '}
+                  {t('contentToolbar.filters')}
                 </h1>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   autoFocus
-                  label="Distance"
+                  label={t('map.distance')}
                   value={distance}
                   onChange={handleChangeDistance}
-                  name="Distance"
+                  name="distance"
                   variant="outlined"
                   type="number"
                   className={classes.inputStyle}
@@ -364,7 +366,7 @@ function MapShowLocations({ location, ...props }) {
                         name="checkedLifebank"
                       />
                     }
-                    label="Lifebanks"
+                    label={t('rolesTitle.plural.lifebanks')}
                   />
                 </Grid>
               </Grid>
@@ -379,14 +381,14 @@ function MapShowLocations({ location, ...props }) {
                       name="checkedSponsor"
                     />
                   }
-                  label="Sponsors"
+                  label={t('rolesTitle.plural.sponsors')}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   id="standard-select-currency"
                   select
-                  label="Sponsors categories"
+                  label={t('map.sponsorCategories')}
                   value={sponsorsCat}
                   onChange={handleChangeSponsorsCat}
                   className={classes.inputStyle}
@@ -406,7 +408,7 @@ function MapShowLocations({ location, ...props }) {
                   className={classes.buttonStyle}
                   onClick={handleSaveChanges}
                 >
-                  Save changes
+                  {t('common.saveChanges')}
                 </Button>
               </Grid>
             </Grid>

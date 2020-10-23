@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
-// import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
-import Dialog from '@material-ui/core/Dialog';
+import Dialog from '@material-ui/core/Dialog'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
@@ -34,20 +34,19 @@ import { Grid } from '@material-ui/core'
 const rows = [
   {
     email: 'lifebank@lifebank.io',
-    secrect: 'plasma2020',
+    secrect: 'plasma2020'
   },
   {
     email: 'donor@lifebank.io',
-    secrect: 'plasma2020',
+    secrect: 'plasma2020'
   },
   {
     email: 'sponsor@lifebank.io',
-    secrect: 'plasma2020',
-  },
+    secrect: 'plasma2020'
+  }
 ]
 
 const useStyles = makeStyles((theme) => ({
-
   alert: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)
@@ -58,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     top: 5,
     right: 1,
     margin: '0',
-    height: "5vh",
+    height: '5vh',
     '& svg': {
       fontSize: 25,
       color: theme.palette.secondary.main
@@ -81,28 +80,27 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15
   },
   btnLogin: {
-    borderRadius: "4px",
-    boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24)",
-    backgroundColor: "#ffffff",
-    fontSize: "14px",
+    borderRadius: '4px',
+    boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24)',
+    backgroundColor: '#ffffff',
+    fontSize: '14px',
     fontWeight: 500,
-    fontStretch: "normal",
-    fontStyle: "normal",
+    fontStretch: 'normal',
+    fontStyle: 'normal',
     lineHeight: 1.14,
-    letterSpacing: "1px",
-    color: "#121212",
-    padding: "10px"
+    letterSpacing: '1px',
+    color: '#121212',
+    padding: '10px'
   },
   inputStyle: {
     width: '100%',
     marginBottom: 15
-  },
-
+  }
 }))
 
 const LoginModal = () => {
-  // const { t } = useTranslation('translations')
-  const [maxWidth] = useState('md');
+  const { t } = useTranslation('translations')
+  const [maxWidth] = useState('md')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const classes = useStyles()
@@ -154,11 +152,11 @@ const LoginModal = () => {
             }
           })
         } else {
-          setErrorMessage('Invalid account or secret')
+          setErrorMessage(t('login.invalidAccountOrPassword'))
         }
       })
     } else {
-      setErrorMessage("This account doesn't exist, please sign up")
+      setErrorMessage(t('invalidAccountOrPassword'))
     }
   }
 
@@ -183,10 +181,10 @@ const LoginModal = () => {
           }
         })
       } else {
-        setErrorMessage("This account doesn't exist, please sign up")
+        setErrorMessage(t('login.accountDoesntExist'))
       }
     } else {
-      setErrorMessage('Something happened with the authentication')
+      setErrorMessage(t('login.somethingHappenedWithAuth'))
     }
   }
 
@@ -210,7 +208,9 @@ const LoginModal = () => {
 
   return (
     <>
-      <Button className={classes.btnLogin} onClick={handleOpen}>LOGIN</Button>
+      <Button className={classes.btnLogin} onClick={handleOpen}>
+        {t('login.login')}
+      </Button>
       <Dialog
         maxWidth={maxWidth}
         className={classes.dialog}
@@ -230,7 +230,8 @@ const LoginModal = () => {
           justify="center"
           alignItems="flex-start"
           spacing={0}
-          className={classes.grid}>
+          className={classes.grid}
+        >
           <Grid item xs={10}>
             <Box className={classes.closeIcon}>
               <IconButton
@@ -242,7 +243,9 @@ const LoginModal = () => {
                 <CloseIcon fontSize="inherit" />
               </IconButton>
             </Box>
-            <Typography variant="h3" className={classes.title}>Sign In</Typography>
+            <Typography variant="h3" className={classes.title}>
+              Sign In
+            </Typography>
             {errorMessage && (
               <Alert
                 className={classes.alert}
@@ -262,10 +265,10 @@ const LoginModal = () => {
               </Alert>
             )}
             <form autoComplete="off">
-              <Box >
+              <Box>
                 <TextField
                   id="account"
-                  label="Email"
+                  label={t('common.email')}
                   variant="outlined"
                   className={classes.inputStyle}
                   InputLabelProps={{
@@ -277,7 +280,7 @@ const LoginModal = () => {
                 />
                 <TextField
                   id="secret"
-                  label="Password"
+                  label={t('common.password')}
                   type="password"
                   variant="outlined"
                   className={classes.inputStyle}
@@ -297,26 +300,30 @@ const LoginModal = () => {
                   color="primary"
                   onClick={handleLogin}
                 >
-                  Login
-                  </Button>
+                  {t('login.login')}
+                </Button>
                 {loading && <CircularProgress />}
                 <LoginWithFacebook onSubmit={handleLoginWithAuth} />
                 <LoginWithGoogle onSubmit={handleLoginWithAuth} />
               </Box>
             </form>
-            <Typography variant="h3" className={classes.demo}>Demo credentials</Typography>
+            <Typography variant="h3" className={classes.demo}>
+              {t('login.demoCredentials')}
+            </Typography>
             <TableContainer component={Paper}>
               <Table size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Mail</TableCell>
-                    <TableCell>Secrect</TableCell>
+                    <TableCell>{t('common.email')}</TableCell>
+                    <TableCell>{t('signup.password')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {rows.map((row, i) => (
                     <TableRow key={`row-${i}`}>
-                      <TableCell component="th" scope="row">{row.email}</TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.email}
+                      </TableCell>
                       <TableCell>{row.secrect}</TableCell>
                     </TableRow>
                   ))}
