@@ -1,6 +1,6 @@
 import CarouselComponent from '../../components/Carousel'
+
 import React, { useState, useEffect } from 'react'
-import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Alert from '@material-ui/lab/Alert'
@@ -13,7 +13,9 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
+import { useQuery } from '@apollo/react-hooks'
 import '@brainhubeu/react-carousel/lib/style.css'
+
 import 'date-fns'
 
 import Schedule from '../../components/Schedule'
@@ -70,7 +72,7 @@ const ProfilePageLifebank = ({ profile }) => {
   const classes = useStyles()
   let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
   const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
-  const [userName, setUsername] = useState()
+  const [userName, setuserName] = useState()
   const [pendingFields, setPendingFields] = useState()
 
   const { refetch: getData } = useQuery(GET_USERNAME, {
@@ -86,7 +88,7 @@ const ProfilePageLifebank = ({ profile }) => {
         account: '12letterlife'
       })
 
-      if (data) setUsername(data.user[0].username)
+      if (data) setuserName(data.user[0].username)
     }
 
     if (!userName) getUsername()
@@ -137,7 +139,7 @@ const ProfilePageLifebank = ({ profile }) => {
       checkAvailableFields()
     }
   }, [profile])
-
+  console.log("profile:", profile)
   return (
     <>
       <div className={classes.divProgressProfile}>
@@ -154,7 +156,7 @@ const ProfilePageLifebank = ({ profile }) => {
                     style={{ textDecoration: 'none' }}
                     to={{
                       pathname: '/edit-profile',
-                      state: { isCompleting: true }
+                      state: { isCompleting: true, userName: userName }
                     }}
                   >
                     <Button
@@ -204,6 +206,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">URL site</Typography>
+
         <a variant="body1" href={'https://lifebank.io/info/' + userName}> {'lifebank.io/info/' + userName}</a>
       </Box>
       <Divider className={classes.divider} />
@@ -243,7 +246,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Telephone</Typography>
-        <Typography variant="body1">{profile.phone_number}</Typography>
+        <Typography variant="body1">{profile.telephones}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
@@ -271,6 +274,16 @@ const ProfilePageLifebank = ({ profile }) => {
           {profile.blood_urgency_level}
         </Typography>
       </Box>
+      <Divider className={classes.divider} />
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Schedule</Typography>
+        <Typography variant="body1" />
+      </Box>
+      <Schedule
+        data={JSON.parse(profile.schedule)}
+        showSchedule
+        showButton={false}
+      />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Benefit Description</Typography>
         <Typography variant="body1" />
@@ -301,8 +314,19 @@ const ProfilePageLifebank = ({ profile }) => {
       >
         <CarouselComponent images={arrayImage} />
       </Grid>
+      <Box className={classes.rowBox}>
+        <Typography variant="subtitle1">Location</Typography>
+        <Typography variant="body1" />
+      </Box>
+      <MapShowOneLocation
+        markerLocation={JSON.parse(profile.location)}
+        accountProp={profile.account}
+        width="100%"
+        height={400}
+        py={2}
+      />
       <Divider className={classes.divider} />
-      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }} className={classes.editBtn}>
+      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false, userName: userName } }} className={classes.editBtn}>
         <Button variant="contained" color="primary">
           Edit
         </Button>

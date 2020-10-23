@@ -70,6 +70,7 @@ const EditProfilePage = () => {
   const [currentUser] = useUser()
   const [showAlert, setShowAlert] = useState({ error: false, success: false })
   const [isCompleting, setIsCompleting] = useState()
+  const [userName, setuserName] = useState()
   const [
     loadProfile,
     { loading, data: { profile: { profile } = {} } = {} }
@@ -142,6 +143,7 @@ const EditProfilePage = () => {
     location.state
       ? setIsCompleting(location.state.isCompleting)
       : setIsCompleting(false)
+    setuserName(location.state.userName)
   }, [location])
 
   return (
@@ -213,6 +215,7 @@ const EditProfilePage = () => {
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <EditProfileBank
           profile={profile}
+          userName={userName}
           isCompleting={isCompleting}
           onSubmit={handleUpdateUser}
           loading={editLoading}

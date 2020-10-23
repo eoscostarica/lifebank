@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading }) => {
+const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, userName }) => {
   const classes = useStyles()
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const imgUrlValueRef = useRef(undefined)
@@ -127,6 +127,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading })
   const imgUrlLogoValueRef = useRef(undefined)
   let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
   const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
+  const [username, setUserName] = useState()
   const [user, setUser] = useState({
     description: profile.description,
     address: profile.address,
@@ -239,19 +240,19 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading })
         <TextField
           id="username"
           name="username"
-          style={{ display: isCompleting && user.usermane ? 'none' : '' }}
-          label="URL"
+          style={{ display: isCompleting && userName ? 'none' : '' }}
+          label="Direction website"
           fullWidth
           variant="outlined"
-          placeholder="Your URL site"
-          defaultValue={user.usermane}
+          placeholder="URL website"
+          defaultValue={userName}
           InputLabelProps={{
             shrink: true
           }}
           InputProps={{
             startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
           }}
-          onChange={(event) => handleSetField('usermane', event.target.value)}
+          onChange={(event) => setUserName(event.target.value)}
         />
         <TextField
           id="fullname"
@@ -497,7 +498,8 @@ EditProfileBank.propTypes = {
   isCompleting: PropTypes.bool,
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  userName: PropTypes.string
 }
 
 export default EditProfileBank
