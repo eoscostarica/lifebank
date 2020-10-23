@@ -62,7 +62,10 @@
       "phoneNumberPlaceholder": "Escribe el número aquí",
       "invitationCode": "Código de invitación",
       "invitationCodePlaceholder": "Escribe el código aquí",
-      "chooseYourLocation": "Escoge tu ubicación"
+      "chooseYourLocation": "Escoge tu ubicación",
+      "asAdonor": "Como Donador",
+      "asAsponsor": "Como Comercio",
+      "asAbank": "Como Banco de Sangre"
     },
     "login": "Iniciar sesión",
     "profile": "Perfil",
