@@ -22,7 +22,7 @@ import Logo from '../../components/Logo'
 import Schedule from '../../components/Schedule'
 import Telephones from '../../components/Telephones'
 import CarouselComponent from '../../components/Carousel'
-import MapShowLocations from '../../components/MapShowLocations'
+import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
@@ -95,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageSponsor = ({ profile }) => {
-  console.log(profile)
   const classes = useStyles()
   const [pendingFields, setPendingFields] = useState()
 
@@ -514,8 +513,13 @@ const ProfilePageSponsor = ({ profile }) => {
           rows={3}
         />
         {profile.location && profile.location !== 'null' && (
-          <MapShowLocations
-            location={profile ? JSON.parse(profile.location || '{}') : {}}
+          <MapShowOneLocation
+            markerLocation={
+              profile && profile.location
+                ? JSON.parse(profile.location || '{}')
+                : {}
+            }
+            accountProp={profile.account}
             width="100%"
             height={400}
             py={2}

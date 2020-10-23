@@ -18,7 +18,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import FacebookIcon from '../../assets/facebook.svg'
 import InstagramIcon from '../../assets/instagram.svg'
 import TwitterIcon from '../../assets/twitter.svg'
-import MapSelectLocation from '../../components/MapSelectLocation'
+import MapEditLocation from '../../components/MapEditLocation'
 import Carousel from '../../components/Carousel'
 import Schedule from '../../components/Schedule'
 import Logo from '../../components/Logo'
@@ -130,6 +130,11 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     [user]
   )
 
+  const handleOnGeolocationChange = useCallback(
+    (geolocation) => setUser({ ...user, geolocation: geolocation }),
+    [user.geolocation]
+  )
+
   const handleOnAddSchedule = useMemo(
     () => (value) => {
       if (value) setUser({ ...user, schedule: JSON.stringify(value) })
@@ -171,8 +176,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
     onSubmit(userToSubmit)
   }
-
-  console.log(user)
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -525,9 +528,14 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           Choose your location
         </Typography>
 
-        <MapSelectLocation
-          onGeolocationChange={(value) => handleSetField('geolocation', value)}
+        <MapEditLocation
+          onGeolocationChange={handleOnGeolocationChange}
           markerType={SPONSOR}
+          markerLocation={
+            user.geolocation
+              ? user.geolocation
+              : { longitude: -84.0556371, latitude: 9.9195872 }
+          }
           width="100%"
           height={400}
           mb={1}
