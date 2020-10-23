@@ -193,7 +193,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     <LinkRouter
       style={{ textDecoration: 'none' }}
       to={{
-        pathname: 'info/' + props.bank.user.username.replaceAll(" ", "-"),
+        pathname: `info/${props.bank.user.username.replaceAll(" ", "-")}`,
         state: { profile: props.bank }
       }}
     >
@@ -287,7 +287,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
       <LinkRouter
         style={{ textDecoration: 'none' }}
         to={{
-          pathname: 'info/' + props.bank.user.username.replaceAll(" ", "-"),
+          pathname: `info/${props.bank.user.username.replaceAll(" ", "-")}`,
           state: { profile: props.bank }
         }}
       >

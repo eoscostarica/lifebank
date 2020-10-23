@@ -238,21 +238,17 @@ const InfoPage = () => {
   })
 
   useEffect(() => {
-    if (location.state) {
+    if (location.state)
       setProfile(location.state.profile)
-    }
     else {
       const getProfile = async () => {
         const { data } = await getData({
           username: window.location.pathname.slice(6, window.location.pathname.length)
         })
 
-        if (data.location.length > 0) {
-          setProfile(data.location[0])
-        }
-        else {
-          history.push("/not-found")
-        }
+        data.location.length > 0
+          ? setProfile(data.location[0])
+          : history.push("/not-found")
       }
 
       if (!location.state) getProfile()
