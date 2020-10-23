@@ -23,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0)
   },
   appBar: {
-    boxShadow: 'none',
+    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.24), 0 4px 8px 0 rgba(0, 0, 0, 0.3)',
     backgroundColor: "#ffffff",
   },
   backgroundHome: {
+    boxShadow: "none",
     backgroundColor: 'transparent'
   },
   paddingBottomHomeAppbar: {
@@ -34,8 +35,10 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     height: 24,
+    marginTop: 3,
     [theme.breakpoints.up('md')]: {
-      height: 43
+      height: 40,
+      marginTop: 10
     }
   },
   logoHome: {
@@ -92,7 +95,7 @@ const ChangeAppBarColorOnScroll = ({
     <AppBar
       className={clsx(classes.appBar, {
         [classes.backgroundHome]: useTransparentBG,
-        [classes.paddingBottomHomeAppbar]: isDesktop && isHome
+        [classes.paddingBottomHomeAppbar]: isDesktop
       })}
     >
       <Toolbar>
@@ -107,12 +110,10 @@ const ChangeAppBarColorOnScroll = ({
         </IconButton>
         <RouterLink
           to="/"
-          className={clsx({ [classes.linkBtn]: isDesktop && isHome })}>
+          className={clsx({ [classes.linkBtn]: isDesktop })}>
           {useTransparentBG &&
             <LifeBankIcon
-              className={clsx(classes.logo, {
-                [classes.logoHome]: isDesktop && isHome
-              })}
+              className={clsx(classes.logo)}
               color="#ffffff"
             />
           }

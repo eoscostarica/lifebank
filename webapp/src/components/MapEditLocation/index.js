@@ -14,7 +14,7 @@ const {
 } = constants
 
 function MapEditLocation({
-  onGeolocationChange = () => { },
+  onGeolocationChange = () => {},
   markerLocation,
   markerType,
   ...props
@@ -39,9 +39,10 @@ function MapEditLocation({
     ReactDOM.render(<MapMarker type={markerType} />, markerNode)
 
     marker = new mapboxgl.Marker(markerNode)
-    marker.setLngLat([markerLocation.longitude, markerLocation.latitude]).addTo(map)
+    marker
+      .setLngLat([markerLocation.longitude, markerLocation.latitude])
+      .addTo(map)
     currentMarker.current = marker
-
 
     map.addControl(
       new MapboxGeocoder({
@@ -77,7 +78,7 @@ function MapEditLocation({
     })
 
     return () => map.remove()
-  }, [onGeolocationChange, markerType])
+  }, [])
 
   return <Box ref={mapContainerRef} {...props} />
 }

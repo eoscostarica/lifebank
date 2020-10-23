@@ -66,6 +66,7 @@ const SimpleRegisterForm = ({
           className={classes.textField}
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
+        <br />
         <ReCAPTCHA
           sitekey={captchaConfig.sitekey}
           onChange={(value) => setRecaptchaValue(value)}

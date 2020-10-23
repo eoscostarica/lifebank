@@ -1,7 +1,7 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import { Link as LinkRouter } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -56,15 +56,32 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "0.25px",
   },
   lifebanksGridContainer: {
+    overflow: "auto",
+    whiteSpace: "nowrap",
     width: "100%",
     marginTop: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    paddingBottom: 5,
+    paddingLeft: 5,
+    '&::-webkit-scrollbar': {
+      height: '0.5em'
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'rgba(0,0,0,.05)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      borderRadius: "10px",
+    }
   },
   cardRoot: {
+    whiteSpace: "normal",
+    display: "inline-block",
     position: "relative",
-    width: "100%",
-    padding: 10,
+    width: "265px",
     height: "145px",
+    padding: 10,
+    marginRight: theme.spacing(2),
   },
   cardHeader: {
     padding: 0,
@@ -165,8 +182,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           <BankItem
             key={bank.id}
             id={bank.id}
-            name={bank.name}
-            description={bank.info.description}
+            bank={bank}
           />
         ))}
       </>
@@ -175,25 +191,37 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
 
   const BankItem = (props) => {
     return (
-      <ListItem className={classes.listItem} button>
-        <ListItemAvatar>
-          <Avatar>
-            <LocalHospitalIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.name}</Typography>
-          }
-          secondary={
-            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.description}</Typography>
-          }
-        />
-      </ListItem>
+      <LinkRouter
+        style={{ textDecoration: 'none' }}
+        to={{
+          pathname: 'info/' + props.bank.info.name.replaceAll(" ", "-"),
+          state: { profile: props.bank }
+        }}
+      >
+        <ListItem
+          className={classes.listItem}
+          button
+        >
+          <ListItemAvatar>
+            <Avatar>
+              <LocalHospitalIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
+            }
+            secondary={
+              <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
+            }
+          />
+        </ListItem>
+      </LinkRouter>
     )
   }
 
   BankItem.propTypes = {
+    bank: PropTypes.object,
     name: PropTypes.string,
     description: PropTypes.string,
   }
@@ -207,31 +235,26 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           </Box>
         }
         {!loading && banks.length <= 0 && (
-          <Grid item xs={2}>
-            <Card className={classes.cardRoot}>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-                style={{ height: "100%" }}
-              >
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  No blood bank available
+          <Card className={classes.cardRoot}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              style={{ height: "100%" }}
+            >
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                No blood bank available
               </Typography>
-              </Grid>
-            </Card>
-          </Grid>
+            </Grid>
+          </Card>
         )}
         {!loading && banks.length > 0 && banks.map(bank => (
-          <Grid item md={3} lg={2} key={bank.id}>
-            <BankCard
-              key={bank.id}
-              id={bank.id}
-              name={bank.name}
-              description={bank.info.description}
-            />
-          </Grid>
+          <BankCard
+            key={bank.id}
+            id={bank.id}
+            bank={bank}
+          />
         ))}
       </>
     )
@@ -255,22 +278,34 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           </Avatar>
           <Box className={classes.cardTitleContainer}>
             <Typography className={classes.cardTitle} noWrap>
-              {props.name}
+              {props.bank.info.name}
             </Typography>
           </Box>
         </Box>
         <CardContent className={classes.cardContent}>
-          <Typography className={classes.cardContentText} >{truncateString(props.description)}
+          <Typography className={classes.cardContentText} >{truncateString(props.bank.info.description)}
           </Typography>
         </CardContent>
-        <Button color="primary" className={classes.cardActionButton}>
-          more info
-        </Button>
+        <LinkRouter
+          style={{ textDecoration: 'none' }}
+          to={{
+            pathname: 'info/' + props.bank.info.name.replaceAll(" ", "-"),
+            state: { profile: props.bank }
+          }}
+        >
+          <Button
+            color="primary"
+            className={classes.cardActionButton}
+          >
+            More info
+          </Button>
+        </LinkRouter>
       </Card>
     )
   }
 
   BankCard.propTypes = {
+    bank: PropTypes.object,
     name: PropTypes.string,
     description: PropTypes.string,
   }
@@ -283,16 +318,9 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         </List>
       }
       {isDesktop &&
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="center"
-          className={classes.lifebanksGridContainer}
-          spacing={2}
-        >
+        <Box className={classes.lifebanksGridContainer}>
           <LoadBanksDesktop />
-        </Grid>
+        </Box>
       }
     </>
   )
