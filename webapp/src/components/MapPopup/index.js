@@ -28,13 +28,13 @@ function MapPopup({ id, info }) {
 
   const goto = () => {
     if (navigator.userAgent.match(/iPhone|iPad|iPod/i) && isMobile.platform()) {
-      return "maps:0,0?q=" + info.geolocation.latitude + "," + info.geolocation.longitude
+      return `maps:0,0?q=${info.geolocation.latitude},${info.geolocation.longitude}`
     }
     else if (navigator.userAgent.match(/Android|BlackBerry|Opera Mini/i) && isMobile.platform()) {
-      return "geo:0,0?q=" + info.geolocation.latitude + "," + info.geolocation.longitude
+      return `geo:0,0?q=${info.geolocation.latitude},${info.geolocation.longitude}`
     }
     else {
-      return "http://maps.google.com/maps?q=" + info.geolocation.latitude + "," + info.geolocation.longitude
+      return `https://maps.google.com/maps?q=${info.geolocation.latitude},${info.geolocation.longitude}`
     }
   }
 
@@ -44,7 +44,7 @@ function MapPopup({ id, info }) {
       <div>
         Phone:{' '}
         <a
-          href={`tel:${info.telephone || info.phone_number}`}
+          href={`tel: ${info.telephone || info.phone_number} `}
           className={classes.link}
         >
           {info.telephone || info.phone_number}
@@ -66,6 +66,8 @@ function MapPopup({ id, info }) {
         <a
           className={classes.link}
           href={goto()}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Go to
         </a>

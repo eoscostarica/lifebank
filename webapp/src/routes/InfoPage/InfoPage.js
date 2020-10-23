@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -8,7 +9,7 @@ import Divider from '@material-ui/core/Divider'
 import Slider from '@material-ui/core/Slider'
 import Dialog from '@material-ui/core/Dialog';
 import Toolbar from '@material-ui/core/Toolbar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -22,13 +23,15 @@ import List from '@material-ui/core/List';
 import Slide from '@material-ui/core/Slide';
 
 import MapShowOneLocation from '../../components/MapShowOneLocation'
+import { GET_LOCATION_PROFILE } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   cardBody: {
     width: '100%',
     height: '100%',
+    backgroundColor: '#ffffff',
     marginBottom: '0',
-    marginTop: '16px'
+    paddingTop: '16px'
   },
   headerCardBody: {
     width: '100%',
@@ -209,6 +212,7 @@ const InfoPage = () => {
   const [open, setOpenModalLocation] = useState(false);
   const [openSchedule, setOpenModalSchedule] = useState(false);
   const location = useLocation()
+  const history = useHistory()
   const [profile, setProfile] = useState()
 
   const handleClickOpen = () => {
@@ -226,10 +230,29 @@ const InfoPage = () => {
     setOpenModalSchedule(false);
   };
 
+  const { refetch: getData } = useQuery(GET_LOCATION_PROFILE, {
+    variables: {
+      username: window.location.pathname.slice(6, window.location.pathname.length)
+    },
+    skip: true
+  })
+
   useEffect(() => {
-    location.state
-      ? setProfile(location.state.profile)
-      : setProfile(location.state.profile)
+    if (location.state)
+      setProfile(location.state.profile)
+    else {
+      const getProfile = async () => {
+        const { data } = await getData({
+          username: window.location.pathname.slice(6, window.location.pathname.length)
+        })
+
+        data.location.length > 0
+          ? setProfile(data.location[0])
+          : history.push("/not-found")
+      }
+
+      if (!location.state) getProfile()
+    }
   }, [location])
 
   return (

@@ -189,39 +189,38 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     )
   }
 
-  const BankItem = (props) => {
-    return (
-      <LinkRouter
-        style={{ textDecoration: 'none' }}
-        to={{
-          pathname: 'info/' + props.bank.info.name.replaceAll(" ", "-"),
-          state: { profile: props.bank }
-        }}
+  const BankItem = (props) => (
+    <LinkRouter
+      style={{ textDecoration: 'none' }}
+      to={{
+        pathname: `info/${props.bank.user.username.replaceAll(" ", "-")}`,
+        state: { profile: props.bank }
+      }}
+    >
+      <ListItem
+        className={classes.listItem}
+        button
       >
-        <ListItem
-          className={classes.listItem}
-          button
-        >
-          <ListItemAvatar>
-            <Avatar>
-              <LocalHospitalIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary={
-              <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
-            }
-            secondary={
-              <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
-            }
-          />
-        </ListItem>
-      </LinkRouter>
-    )
-  }
+        <ListItemAvatar>
+          <Avatar>
+            <LocalHospitalIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
+          }
+          secondary={
+            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
+          }
+        />
+      </ListItem>
+    </LinkRouter>
+  )
 
   BankItem.propTypes = {
     bank: PropTypes.object,
+    username: PropTypes.object,
     name: PropTypes.string,
     description: PropTypes.string,
   }
@@ -269,40 +268,38 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     return str.slice(0, num) + '...'
   }
 
-  const BankCard = (props) => {
-    return (
-      <Card className={classes.cardRoot}>
-        <Box className={classes.cardHeader}>
-          <Avatar className={classes.cardAvatar} >
-            <LocalHospitalIcon />
-          </Avatar>
-          <Box className={classes.cardTitleContainer}>
-            <Typography className={classes.cardTitle} noWrap>
-              {props.bank.info.name}
-            </Typography>
-          </Box>
-        </Box>
-        <CardContent className={classes.cardContent}>
-          <Typography className={classes.cardContentText} >{truncateString(props.bank.info.description)}
+  const BankCard = (props) => (
+    <Card className={classes.cardRoot}>
+      <Box className={classes.cardHeader}>
+        <Avatar className={classes.cardAvatar} >
+          <LocalHospitalIcon />
+        </Avatar>
+        <Box className={classes.cardTitleContainer}>
+          <Typography className={classes.cardTitle} noWrap>
+            {props.bank.info.name}
           </Typography>
-        </CardContent>
-        <LinkRouter
-          style={{ textDecoration: 'none' }}
-          to={{
-            pathname: 'info/' + props.bank.info.name.replaceAll(" ", "-"),
-            state: { profile: props.bank }
-          }}
+        </Box>
+      </Box>
+      <CardContent className={classes.cardContent}>
+        <Typography className={classes.cardContentText} >{truncateString(props.bank.info.description)}
+        </Typography>
+      </CardContent>
+      <LinkRouter
+        style={{ textDecoration: 'none' }}
+        to={{
+          pathname: `info/${props.bank.user.username.replaceAll(" ", "-")}`,
+          state: { profile: props.bank }
+        }}
+      >
+        <Button
+          color="primary"
+          className={classes.cardActionButton}
         >
-          <Button
-            color="primary"
-            className={classes.cardActionButton}
-          >
-            More info
+          More info
           </Button>
-        </LinkRouter>
-      </Card>
-    )
-  }
+      </LinkRouter>
+    </Card>
+  )
 
   BankCard.propTypes = {
     bank: PropTypes.object,

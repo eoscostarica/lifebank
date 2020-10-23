@@ -161,10 +161,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       ...user,
       social_media_links: existingSocialMediaItem
         ? user.social_media_links.map((social) => {
-            if (social.name === name) social.url = url
+          if (social.name === name) social.url = url
 
-            return social
-          })
+          return social
+        })
         : [...user.social_media_links, { name: name, url: url }]
     })
   }
@@ -464,10 +464,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             style={{
               display:
                 isCompleting &&
-                user.social_media_links &&
-                user.social_media_links.find(
-                  (social) => social.name === 'facebook'
-                )
+                  user.social_media_links &&
+                  user.social_media_links.find(
+                    (social) => social.name === 'facebook'
+                  )
                   ? 'none'
                   : ''
             }}
@@ -484,10 +484,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             style={{
               display:
                 isCompleting &&
-                user.social_media_links &&
-                user.social_media_links.find(
-                  (social) => social.name === 'instagram'
-                )
+                  user.social_media_links &&
+                  user.social_media_links.find(
+                    (social) => social.name === 'instagram'
+                  )
                   ? 'none'
                   : ''
             }}
@@ -505,10 +505,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             style={{
               display:
                 isCompleting &&
-                user.social_media_links &&
-                user.social_media_links.find(
-                  (social) => social.name === 'twitter'
-                )
+                  user.social_media_links &&
+                  user.social_media_links.find(
+                    (social) => social.name === 'twitter'
+                  )
                   ? 'none'
                   : ''
             }}
