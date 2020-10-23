@@ -95,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageSponsor = ({ profile }) => {
-  console.log(profile)
   const classes = useStyles()
   const [pendingFields, setPendingFields] = useState()
 
@@ -333,9 +332,8 @@ const ProfilePageSponsor = ({ profile }) => {
           className={classes.rowBox}
         >
           <Typography variant="subtitle1">Consent</Typography>
-          <Typography variant="body1">{`${
-            profile.consent ? 'Approved' : 'Denied'
-          }`}</Typography>
+          <Typography variant="body1">{`${profile.consent ? 'Approved' : 'Denied'
+            }`}</Typography>
         </Box>
 
         {profile.photos &&
