@@ -10,6 +10,7 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { useTranslation } from 'react-i18next'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
@@ -47,6 +48,7 @@ const SignupLifeBank = ({
   isEmailValid,
   children
 }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const handleOnGeolocationChange = useCallback(
     (coordinates) => setField('coordinates', JSON.stringify(coordinates)),
@@ -91,10 +93,10 @@ const SignupLifeBank = ({
       <div className={classes.formGroup}>
         <TextField
           id="password"
-          label="password"
+          label={t('signup.password')}
           type="password"
           fullWidth
-          placeholder="Your password"
+          placeholder={t('signup.passwordPlaceholder')}
           variant="outlined"
           InputLabelProps={{
             shrink: true
@@ -105,8 +107,8 @@ const SignupLifeBank = ({
       <div className={classes.formGroup}>
         <TextField
           id="name"
-          label="Name"
-          placeholder="Name"
+          label={t('signup.name')}
+          placeholder={t('signup.namePlaceholder')}
           variant="outlined"
           fullWidth
           InputLabelProps={{
@@ -119,8 +121,8 @@ const SignupLifeBank = ({
       <div className={classes.formGroup}>
         <TextField
           id="description"
-          label="Description"
-          placeholder="Description"
+          label={t('common.description')}
+          placeholder={t('common.descriptionPlaceholder')}
           variant="outlined"
           fullWidth
           InputLabelProps={{
@@ -133,8 +135,8 @@ const SignupLifeBank = ({
       <div className={classes.formGroup}>
         <TextField
           id="address"
-          label="Address"
-          placeholder="Address"
+          label={t('signup.address')}
+          placeholder={t('signup.addressPlaceholder')}
           variant="outlined"
           fullWidth
           InputLabelProps={{
@@ -147,8 +149,8 @@ const SignupLifeBank = ({
       <div className={classes.formGroup}>
         <TextField
           id="phoneNumber"
-          label="Phone Number"
-          placeholder="Phone Number"
+          label={t('signup.phoneNumber')}
+          placeholder={t('signup.phoneNumberPlaceholder')}
           variant="outlined"
           fullWidth
           InputLabelProps={{
@@ -161,8 +163,8 @@ const SignupLifeBank = ({
       <div className={classes.formGroup}>
         <TextField
           id="invitationCode"
-          label="Invitation Code"
-          placeholder="Invitation Code"
+          label={t('signup.invitationCode')}
+          placeholder={t('signup.invitationCodePlaceholder')}
           variant="outlined"
           fullWidth
           InputLabelProps={{
@@ -180,9 +182,7 @@ const SignupLifeBank = ({
               name="hasImmunityTest"
               color="primary"
               checked={user.immunity_test || false}
-              onChange={(event) =>
-                setField('immunity_test', !user.immunity_test)
-              }
+              onChange={() => setField('immunity_test', !user.immunity_test)}
             />
           }
           label="Has immunity test?"
@@ -205,7 +205,7 @@ const SignupLifeBank = ({
       </div>
       <div className={classes.formGroup}>
         <Typography variant="subtitle2" gutterBottom>
-          Choose your location
+          {t('signup.chooseYourLocation')}
         </Typography>
         <MapSelectLocation
           onGeolocationChange={handleOnGeolocationChange}
