@@ -74,7 +74,8 @@
       "demoCredentials": "Demo credentials",
       "invalidAccountOrPassword": "Invalid account or password",
       "loginWithFacebook": "Login with Facebook",
-      "loginWithGoogle": "Login with Google"
+      "loginWithGoogle": "Login with Google",
+      "logout": "Logout"
     },
     "map": {
       "findLifebank": "Find Lifebanks or Sponsors near you",
@@ -82,6 +83,22 @@
       "mapInputPlaceholder": "Search: Places, Lifebanks, Sponsors",
       "distance": "Distance",
       "sponsorCategories": "Sponsor categories"
+    },
+    "miscellaneous": {
+      "recentActivity": "Actividad reciente"
+    },
+    "schedule": {
+      "sunday": "Domingo",
+      "monday": "Lunes",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "addSchedule": "Añadir horario",
+      "day": "Día",
+      "open": "Abierto",
+      "close": "Cerrado"
     },
     "profile": "Profile",
     "users": "Users",
@@ -95,7 +112,24 @@
       "workTogether": "Let's work together and keep the life flowing",
       "isAplace": "is a place where you can donate blood",
       "sponsorDescription": " are businesses that will reward people that have donated through a Lifebank",
-      "donorsDescription": " will donate blood and be rewarded with life tokens which they can redeem at their convenience with sponsors of their community."
+      "donorsDescription": " will donate blood and be rewarded with life tokens which they can redeem at their convenience with sponsors of their community.",
+      "skip": "Skip"
+    },
+    "tokenTransfer": {
+      "redeemToken": "Redeem Token",
+      "transfer": "Transfer",
+      "redeem": "Redeem",
+      "send": "Send",
+      "memo": "Memo"
+    },
+    "about": {
+      "eosioBased": "Lifebank is an EOSIO-based dapp that helps local communities create a virtuous circle of value exchange between three parties — eligible life donors, community donation centers, and participating local businesses (sponsors).",
+      "eoscrInitiative": "Lifebank is an initiative of EOS Costa Rica, a company that develops blockchain-based solutions to solve real-world problems. Lifebank is our entry to the Coding for Change challenge organized by leading blockchain company, Block.one.",
+      "storyBehindLifebank": "The Story Behind Lifebank",
+      "weIdentified": "We identified two main problems: a blood donation shortage and a local economic slowdown. Amid the COVID-19 outbreak, blood banks urgently need donors. People who are potential qualifying donors are prompted to stay home and isolate. As donations plummet and demand for blood and plasma increases, blood banks are experiencing a pronounced global shortage.",
+      "moreOver": "Moreover, the pandemic is impacting local economies due to a generalized lockdown. Small businesses that rely on the local community must think of ways to incentivize customers to buy as soon as restrictions are lifted.",
+      "aDonorCanEarn": "A donor can earn life tokens after completing a blood donation at a Lifebank participating donation center. Donation centers can issue a maximum of 10,000 life tokens. These tokens can then be redeemed by the donor at any local business (or sponsor) in exchange for discounts or promotions.",
+      "also": "Also, sponsors can save these tokens and then return them to donation centers to keep the tokens active."
     },
     "common": {
       "description": "Description",
@@ -114,6 +148,7 @@
       "benefits": "Benefits",
       "bloodUrgency": "Blood urgency",
       "schedule": "Schedule",
+      "save": "Guardar",
       "saveChanges": "Save changes"
     },
     "claimReward": {

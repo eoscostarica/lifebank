@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import SwipeableViews from 'react-swipeable-views'
+import { useTranslation } from 'react-i18next'
 
 import { ReactComponent as FirstLogo } from '../../assets/lifebank.svg'
 import SecondLogoUrl from '../../assets/second.svg'
@@ -115,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SplashIntro = ({ skipHandling }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const dotsRef = createRef()
   const matches = useMediaQuery('(min-width:600px)')
@@ -136,7 +138,7 @@ const SplashIntro = ({ skipHandling }) => {
         }}
         className={classes.capitalize}
       >
-        Welcome to
+        {t('splash.welcomeTo')}
       </Typography>
       <FirstLogo style={{ marginTop: 67 }} />
       <Box
@@ -151,7 +153,7 @@ const SplashIntro = ({ skipHandling }) => {
           className={clsx(classes.medium, classes.capitalize)}
           style={{ marginBottom: 0 }}
         >
-          Let's work together and keep life flowing
+          {t('splash.workTogether')}
         </Typography>
       </Box>
     </Box>,
@@ -167,14 +169,14 @@ const SplashIntro = ({ skipHandling }) => {
           variant="h2"
           className={clsx(classes.mainHeading, classes.capitalize)}
         >
-          Lifebank
+          {t('rolesTitle.singular.lifebank')}
         </Typography>
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
           style={{ marginTop: '0 !important' }}
         >
-          Is a place where you can donate blood
+          {t('splash.isAplace')}
         </Typography>
       </Box>
       <Box
@@ -193,15 +195,14 @@ const SplashIntro = ({ skipHandling }) => {
           style={{ lineHeight: '24px' }}
           className={clsx(classes.mainHeading, classes.capitalize)}
         >
-          Sponsors
+          {t('rolesTitle.plural.sponsors')}
         </Typography>
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
           style={{ marginTop: '0 !important', maxWidth: '300px' }}
         >
-          Are businesses that will reward people that have donated through a
-          lifebank
+          {t('splash.sponsorDescription')}
         </Typography>
       </Box>
       <Box
@@ -218,15 +219,14 @@ const SplashIntro = ({ skipHandling }) => {
           variant="h2"
           className={clsx(classes.mainHeading, classes.capitalize)}
         >
-          Donors
+          {t('rolesTitle.plural.donors')}
         </Typography>
         <Typography
           variant="h2"
           className={clsx(classes.medium, classes.capitalize)}
           style={{ marginTop: '0 !important' }}
         >
-          Will donate blood and be rewarded with life tokens which they can
-          redeem at their convenience with sponsors of the community.
+          {t('splash.donorsDescription')}
         </Typography>
       </Box>
       <Box
@@ -315,7 +315,9 @@ const SplashIntro = ({ skipHandling }) => {
         >
           <Box className={classes.slideHeader}>
             <Button onClick={() => skipHandling('splash')}>
-              <Typography className={classes.caption}>Skip</Typography>
+              <Typography className={classes.caption}>
+                {t('splash.skip')}
+              </Typography>
             </Button>
           </Box>
           <Grid container direction="row" justify="center" alignItems="center">

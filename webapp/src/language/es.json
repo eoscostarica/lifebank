@@ -74,7 +74,8 @@
       "demoCredentials": "Credenciales de prueba",
       "invalidAccountOrPassword": "Cuenta o contraseña incorrecta",
       "loginWithFacebook": "Iniciar sesión con Facebook",
-      "loginWithGoogle": "Iniciar sesión con Google"
+      "loginWithGoogle": "Iniciar sesión con Google",
+      "logout": "Cerrar sesión"
     },
     "map": {
       "findLifebank": "Encontrar Bancos de Sangre o Comercios Afiliados cerca de ti",
@@ -82,6 +83,22 @@
       "mapInputPlaceholder": "Buscar: Lugares, Bancos de Sangre, Comercios Afiliados",
       "distance": "Distancia",
       "sponsorCategories": "Categorías de comercios"
+    },
+    "miscellaneous": {
+      "recentActivity": "Actividad reciente"
+    },
+    "schedule": {
+      "sunday": "Domingo",
+      "monday": "Lunes",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "addSchedule": "Añadir horario",
+      "day": "Día",
+      "open": "Abierto",
+      "close": "Cerrado"
     },
     "profile": "Perfil",
     "users": "Usuarios",
@@ -94,8 +111,25 @@
       "welcomeTo": "Bienvenido a",
       "workTogether": "Trabajemos juntos y ayudemos a que la vida siga fluyendo",
       "isAplace": "Es un lugar donde podés donar sangre",
-      "sponsorDescription": " son negocios que ofrecen recompensas a las personas que han donado a través de un Lifebank",
-      "donorsDescription": " donarán sangre y recibirán un activo único que puede ser canjeado "
+      "sponsorDescription": "Son negocios que ofrecen recompensas a las personas que han donado a través de un Lifebank",
+      "donorsDescription": " donarán sangre y recibirán un activo único que puede ser canjeado ",
+      "skip": "Saltar"
+    },
+    "tokenTransfer": {
+      "redeemToken": "Canajear Token",
+      "transfer": "Transferir",
+      "redeem": "Canjear",
+      "send": "Enviar",
+      "memo": "Memo"
+    },
+    "about": {
+      "eosioBased": "El Banco de Vida es un dapp basado en EOSIO que ayuda a las comunidades locales a crear un círculo virtuoso de intercambio de valores entre tres partes - donantes de vida elegibles, centros de donación de la comunidad y empresas locales participantes (Comercios Afiliados).",
+      "eoscrInitiative": "Lifebank es una iniciativa de EOS Costa Rica, una compañía que desarrolla soluciones basadas en blockchain para resolver problemas del mundo real. Lifebank es nuestra propuesta al desafío organizado por la compañía líder en blockchain, Block.one.",
+      "storyBehindLifebank": "La historia detrás de Lifebank",
+      "weIdentified": "Identificamos dos problemas principales: la escasez de donaciones de sangre y la desaceleración de la economía local. En medio del brote de COVID-19, los bancos de sangre necesitan urgentemente donantes. Las personas que son potenciales donantes cualificados son incitados a quedarse en casa y aislarse. A medida que las donaciones caen en picada y la demanda de sangre y plasma aumenta, los bancos de sangre están experimentando una pronunciada escasez mundial.",
+      "moreOver": "Además, la pandemia está afectando a las economías locales debido a un bloqueo generalizado. Las pequeñas empresas que dependen de la comunidad local deben pensar en formas de incentivar a los clientes para que compren tan pronto como se levanten las restricciones.",
+      "aDonorCanEarn": "Un donante puede ganar tokens después de completar una donación de sangre en un centro de donación participante en el Banco de Sangre. Los centros de donación pueden emitir un máximo de 10.000 tokens. Estos tokens pueden ser canjeados por el donante en cualquier comercio afiliado a cambio de descuentos o promociones.",
+      "also": "Además, los comercios afiliados pueden guardar los tokens y luego devolverlos a los centros de donación para mantenerlos activos."
     },
     "common": {
       "description": "Descripción",
@@ -114,6 +148,7 @@
       "benefits": "Beneficios",
       "bloodUrgency": "Urgencia de sangre",
       "schedule": "Horario",
+      "save": "Guardar",
       "saveChanges": "Guardar cambios"
     },
     "claimReward": {
