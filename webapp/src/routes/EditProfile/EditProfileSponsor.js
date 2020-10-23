@@ -129,7 +129,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     },
     [user]
   )
-  
+
   const handleOnGeolocationChange = useCallback(
     (geolocation) => setUser({ ...user, geolocation: geolocation }),
     [user.geolocation]
@@ -176,8 +176,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
     onSubmit(userToSubmit)
   }
-
-  console.log(user)
 
   return (
     <form autoComplete="off" className={classes.form}>
