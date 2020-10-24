@@ -473,7 +473,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Button
             variant="contained"
             color="primary"
-            onClick={() => onSubmit(user)}
+            onClick={() => onSubmit(user, username, profile.account)}
           >
             Save
           </Button>

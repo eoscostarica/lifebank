@@ -13,7 +13,8 @@ import {
   PROFILE_QUERY,
   GRANT_CONSENT_MUTATION,
   REVOKE_CONSENT_MUTATION,
-  EDIT_PROFILE_MUTATION
+  EDIT_PROFILE_MUTATION,
+  SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
@@ -97,15 +98,27 @@ const EditProfilePage = () => {
     { loading: editLoading, data: { edit_profile: editProfileResult } = {} }
   ] = useMutation(EDIT_PROFILE_MUTATION)
 
+  const [
+    setUsername,
+    { loading: setUsernameLoading, data: { set_username: setUsernameResult } = {} }
+  ] = useMutation(SET_USERNAME)
+
   const handleConsentChange = () => {
     profile?.consent ? revokeConsent() : grantConsent()
   }
 
   const handleUpdateUser = useCallback(
-    (userEdited) => {
+    (userEdited, userNameEdited, account) => {
+      console.log("profile.account", account)
       editProfile({
         variables: {
           profile: userEdited
+        }
+      })
+      setUsername({
+        variables: {
+          account: account,
+          username: userNameEdited
         }
       })
     },

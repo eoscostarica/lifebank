@@ -49,6 +49,7 @@ const addLifebank = (
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
           about: profile.about || '',
+          telephones: profile.telephones || '',
           photos: profile.photos || '',
           logo_url: profile.logo_url || '',
           social_media_links: profile.social_media_links || '',
@@ -83,6 +84,11 @@ const upLifebank = (
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
+          about: profile.about || '',
+          telephones: profile.telephones || '',
+          photos: profile.photos || '',
+          logo_url: profile.logo_url || '',
+          social_media_links: profile.social_media_links || '',
           ...profile
         }
       }

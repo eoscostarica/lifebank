@@ -140,3 +140,11 @@ export const GET_USERNAME = gql`
     }
   }
 `
+
+export const SET_USERNAME = gql`
+  mutation ($account: String!, $username: String!) {
+    update_user(_set: { username: $username }, where: {account: {_eq: $account}}) {
+      affected_rows
+    }
+  }
+`
