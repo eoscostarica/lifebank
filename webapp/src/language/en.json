@@ -85,20 +85,22 @@
       "sponsorCategories": "Sponsor categories"
     },
     "miscellaneous": {
-      "recentActivity": "Actividad reciente"
+      "recentActivity": "Recent activity",
+      "openSite": "Open site",
+      "goTo": "Go to"
     },
     "schedule": {
-      "sunday": "Domingo",
-      "monday": "Lunes",
+      "sunday": "Sunday",
+      "monday": "Monady",
       "tuesday": "Tuesday",
       "wednesday": "Wednesday",
-      "thursday": "Jueves",
-      "friday": "Viernes",
-      "saturday": "Sábado",
-      "addSchedule": "Añadir horario",
-      "day": "Día",
-      "open": "Abierto",
-      "close": "Cerrado"
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "addSchedule": "Add schedule",
+      "day": "Day",
+      "open": "Open",
+      "close": "Closed"
     },
     "profile": {
       "profile": "Profile",

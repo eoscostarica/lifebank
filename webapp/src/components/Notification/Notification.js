@@ -13,6 +13,7 @@ import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -52,6 +53,8 @@ const Notification = () => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const theme = useTheme()
+  const location = useLocation()
+  const isHome = location.pathname === '/'
 
   const trigger = useScrollTrigger({
     target: window || undefined,
@@ -62,7 +65,7 @@ const Notification = () => {
     defaultMatches: true
   })
 
-  const useTransparentBG = isDesktop && !trigger
+  const useTransparentBG = isDesktop && !trigger && isHome
 
   const handleClickOpen = () => {
     setOpen(true)

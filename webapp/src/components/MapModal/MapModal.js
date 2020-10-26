@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -61,16 +62,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const MapModal = () => {
+const MapModal = ({ isDesktop }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [maxWidth] = useState('md')
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
-    defaultMatches: true
-  })
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -123,10 +121,12 @@ const MapModal = () => {
   )
 }
 
-MapModal.propTypes = {}
+MapModal.propTypes = {
+  isDesktop: PropTypes.bool
+}
 
 MapModal.defaultProps = {
-  useButton: false
+  isDesktop: false
 }
 
 export default MapModal

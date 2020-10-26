@@ -102,7 +102,6 @@ export const EDIT_PROFILE_MUTATION = gql`
   }
 `
 
-
 export const VERIFY_EMAIL = gql`
   mutation($code: String!) {
     verify_email(code: $code) {
@@ -110,6 +109,7 @@ export const VERIFY_EMAIL = gql`
     }
   }
 `
+
 export const VALIDATE_EMAIL = gql`
   query($email: String!) {
     user(where: { email: { _eq: $email } }) {

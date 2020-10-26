@@ -23,7 +23,7 @@ import Logo from '../../components/Logo'
 import Schedule from '../../components/Schedule'
 import Telephones from '../../components/Telephones'
 import CarouselComponent from '../../components/Carousel'
-import MapShowLocations from '../../components/MapShowLocations'
+import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
@@ -105,6 +105,21 @@ const ProfilePageSponsor = ({ profile }) => {
 
     if (!profile.email)
       pendingFieldsObject = { ...pendingFieldsObject, email: false }
+
+    if (!profile.address)
+      pendingFieldsObject = { ...pendingFieldsObject, address: false }
+
+    if (!profile.about)
+      pendingFieldsObject = { ...pendingFieldsObject, about: false }
+
+    if (!profile.logo_url)
+      pendingFieldsObject = { ...pendingFieldsObject, logo_url: false }
+
+    if (!profile.benefit_description)
+      pendingFieldsObject = {
+        ...pendingFieldsObject,
+        benefit_description: false
+      }
 
     if (!profile.name)
       pendingFieldsObject = { ...pendingFieldsObject, name: false }
@@ -266,17 +281,19 @@ const ProfilePageSponsor = ({ profile }) => {
           <Typography variant="subtitle1">Organization</Typography>
           <Typography variant="body1">{profile.name}</Typography>
         </Box>
-        {profile.telephones && Array.isArray(profile.telephones) && (
-          <Box
-            flexDirection="column"
-            justifySelf="center"
-            justifyContent="center"
-            display="flex"
-          >
-            <Divider className={classes.divider} />
-            <Telephones phones={profile.telephones} />
-          </Box>
-        )}
+        {profile.telephones &&
+          Array.isArray(profile.telephones) &&
+          profile.telephones.length > 0 && (
+            <Box
+              flexDirection="column"
+              justifySelf="center"
+              justifyContent="center"
+              display="flex"
+            >
+              <Divider className={classes.divider} />
+              <Telephones phones={profile.telephones} />
+            </Box>
+          )}
         <Divider
           style={{ display: !profile.website ? 'none' : '' }}
           className={classes.divider}
@@ -317,9 +334,8 @@ const ProfilePageSponsor = ({ profile }) => {
           className={classes.rowBox}
         >
           <Typography variant="subtitle1">Consent</Typography>
-          <Typography variant="body1">{`${
-            profile.consent ? 'Approved' : 'Denied'
-          }`}</Typography>
+          <Typography variant="body1">{`${profile.consent ? 'Approved' : 'Denied'
+            }`}</Typography>
         </Box>
 
         {profile.photos &&
@@ -405,6 +421,54 @@ const ProfilePageSponsor = ({ profile }) => {
           showButton={false}
         />
         <Divider
+          style={{ display: !profile.about ? 'none' : '' }}
+          className={classes.divider}
+        />
+        <Box
+          style={{ display: !profile.about ? 'none' : '' }}
+          className={classes.rowBox}
+        >
+          <Typography variant="subtitle1">About</Typography>
+          <Typography variant="body1" />
+        </Box>
+        <TextField
+          style={{ display: !profile.address ? 'none' : '' }}
+          id="address"
+          variant="outlined"
+          disabled
+          defaultValue={profile.address}
+          InputLabelProps={{
+            shrink: true
+          }}
+          multiline
+          fullWidth
+          rows={3}
+        />
+        <Divider
+          style={{ display: !profile.address ? 'none' : '' }}
+          className={classes.divider}
+        />
+        <Box
+          style={{ display: !profile.address ? 'none' : '' }}
+          className={classes.rowBox}
+        >
+          <Typography variant="subtitle1">Address</Typography>
+          <Typography variant="body1" />
+        </Box>
+        <TextField
+          style={{ display: !profile.address ? 'none' : '' }}
+          id="address"
+          variant="outlined"
+          disabled
+          defaultValue={profile.address}
+          InputLabelProps={{
+            shrink: true
+          }}
+          multiline
+          fullWidth
+          rows={3}
+        />
+        <Divider
           style={{ display: !profile.covid_impact ? 'none' : '' }}
           className={classes.divider}
         />
@@ -450,8 +514,13 @@ const ProfilePageSponsor = ({ profile }) => {
           rows={3}
         />
         {profile.location && profile.location !== 'null' && (
-          <MapShowLocations
-            location={profile ? JSON.parse(profile.location || '{}') : {}}
+          <MapShowOneLocation
+            markerLocation={
+              profile && profile.location
+                ? JSON.parse(profile.location || '{}')
+                : {}
+            }
+            accountProp={profile.account}
             width="100%"
             height={400}
             py={2}

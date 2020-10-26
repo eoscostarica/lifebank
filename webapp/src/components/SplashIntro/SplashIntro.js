@@ -241,7 +241,6 @@ const SplashIntro = ({ skipHandling }) => {
   ])
 
   const handleDotClick = (event) => {
-    console.log(event.target.id)
     setActiveStep(Number(event.target.id))
   }
 
@@ -254,7 +253,6 @@ const SplashIntro = ({ skipHandling }) => {
           handleDotClick
         )
       }
-      console.log(dotsRef.current.children[1])
     }
   }, [dotsRef])
 

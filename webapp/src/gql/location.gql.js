@@ -20,10 +20,27 @@ export const GET_NEARBY_LOCATIONS_QUERY = gql`
 export const GET_LOCATIONS_QUERY = gql`
   query nearbyLocations {
     location {
+      account
       name
       type
       id
       info
+      user {
+        username
+      }
+    }
+  }
+`
+
+export const GET_LOCATION_PROFILE = gql`
+  query nearbyLocations ($username: String!) {
+    location(where: {user: {username: {_eq: $username}}}) {
+      info
+      name
+      type
+      geolocation
+      id
+      account
     }
   }
 `

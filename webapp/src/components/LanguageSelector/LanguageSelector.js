@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useLocation } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -42,6 +43,8 @@ const LanguageSelector = ({ alt }) => {
   const { i18n } = useTranslation('translations')
   const [anchorEl, setAnchorEl] = useState(null)
   const theme = useTheme()
+  const location = useLocation()
+  const isHome = location.pathname === '/'
 
   const trigger = useScrollTrigger({
     target: window || undefined,
@@ -52,7 +55,7 @@ const LanguageSelector = ({ alt }) => {
     defaultMatches: true
   })
 
-  const useTransparentBG = isDesktop && !trigger
+  const useTransparentBG = isDesktop && !trigger && isHome
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)

@@ -85,7 +85,9 @@
       "sponsorCategories": "Categorías de comercios"
     },
     "miscellaneous": {
-      "recentActivity": "Actividad reciente"
+      "recentActivity": "Actividad reciente",
+      "openSite": "Abrir sitio",
+      "goTo": "Ir a"
     },
     "schedule": {
       "sunday": "Domingo",
