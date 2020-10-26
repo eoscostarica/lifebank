@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles'
 import GoogleLogin from 'react-google-login'
 import Button from '@material-ui/core/Button'
 import SvgIcon from '@material-ui/core/SvgIcon'
-import { useTranslation } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { oAuthConfig } from '../../config'
 

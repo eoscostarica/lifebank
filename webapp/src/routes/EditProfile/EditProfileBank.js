@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { useTranslation } from 'react-i18next'
 
 import Schedule from '../../components/Schedule'
 import MapEditLocation from '../../components/MapEditLocation'
@@ -94,7 +93,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
-  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [user, setUser] = useState({
     description: profile.description,
