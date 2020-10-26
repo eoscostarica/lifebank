@@ -211,7 +211,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
             <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.bank.name}</Typography>
           }
           secondary={
-            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.description}</Typography>
+            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.bank.about}</Typography>
           }
         />
       </ListItem>
@@ -222,7 +222,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     bank: PropTypes.object,
     username: PropTypes.object,
     name: PropTypes.string,
-    description: PropTypes.string,
+    about: PropTypes.string,
   }
 
   const LoadBanksDesktop = () => {
@@ -281,7 +281,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         </Box>
       </Box>
       <CardContent className={classes.cardContent}>
-        <Typography className={classes.cardContentText} >{truncateString(props.bank.info.description)}
+        <Typography className={classes.cardContentText} >{truncateString(props.bank.info.about)}
         </Typography>
       </CardContent>
       <LinkRouter
@@ -304,7 +304,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   BankCard.propTypes = {
     bank: PropTypes.object,
     name: PropTypes.string,
-    description: PropTypes.string,
+    about: PropTypes.string,
   }
 
   return (

@@ -21,7 +21,6 @@ const Home = () => {
   const [loadingSponsors, setLoadingSponsors] = useState(true);
   const [sponsors, setSponsors] = useState([]);
 
-
   const [valueSponsorCat, setValueSponsorCat] = useState("All")
   const [valueOfferCat, setValueOfferCat] = useState("All")
   const [valueTokenPrice, setValueTokenPrice] = useState("All")
