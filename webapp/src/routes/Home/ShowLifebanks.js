@@ -283,7 +283,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           </Box>
         </Box>
         <CardContent className={classes.cardContent}>
-          <Typography className={classes.cardContentText} >{truncateString(props.bank.info.description)}
+          <Typography className={classes.cardContentText} >{truncateString(props.bank.info.about)}
           </Typography>
         </CardContent>
         <LinkRouter
