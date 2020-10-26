@@ -14,7 +14,6 @@ import Link from '@material-ui/core/Link'
 import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 import TextField from '@material-ui/core/TextField'
-import { useTranslation } from 'react-i18next'
 
 import FacebookIcon from '../../assets/facebook.svg'
 import InstagramIcon from '../../assets/instagram.svg'
@@ -96,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageSponsor = ({ profile }) => {
-  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [pendingFields, setPendingFields] = useState()
 
@@ -334,8 +332,9 @@ const ProfilePageSponsor = ({ profile }) => {
           className={classes.rowBox}
         >
           <Typography variant="subtitle1">Consent</Typography>
-          <Typography variant="body1">{`${profile.consent ? 'Approved' : 'Denied'
-            }`}</Typography>
+          <Typography variant="body1">{`${
+            profile.consent ? 'Approved' : 'Denied'
+          }`}</Typography>
         </Box>
 
         {profile.photos &&
