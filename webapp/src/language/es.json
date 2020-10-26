@@ -65,7 +65,10 @@
       "chooseYourLocation": "Escoge tu ubicación",
       "asAdonor": "Como Donador",
       "asAsponsor": "Como Comercio",
-      "asAbank": "Como Banco de Sangre"
+      "asAbank": "Como Banco de Sangre",
+      "about": "Acerca de",
+      "aboutBusiness": "La descripción de su negocio aquí",
+      "aboutPlaceholder": "Acerca del LifeBank"
     },
     "login": {
       "login": "Iniciar sesión",
@@ -87,7 +90,19 @@
     "miscellaneous": {
       "recentActivity": "Actividad reciente",
       "openSite": "Abrir sitio",
-      "goTo": "Ir a"
+      "goTo": "Ir a",
+      "help": "Ayuda",
+      "thankYouForUsingLifebank": "Gracias por usar Lifebank. Lifebank sigue en progreso. Si estás teniendo algún problema, por favor contáctanos en cualquiera de los siguientes vínculos:",
+      "telegram": "Canal de Telegram",
+      "websiteEoscr": "Página web de EOS Costa Rica",
+      "noBloodBank": "Sin bancos de sangre disponibles",
+      "noOffersAvailable": "Sin ofertas disponibles",
+      "noSponsorsAvailable": "Sin Comercios Afiliados disponibles"
+    },
+    "notFound": {
+      "404Error": "404: La página que buscas no existe",
+      "notFoundMessage": "O intentaste una ruta dudosa o viniste aquí por error. Sea lo que sea, intenta usar la navegación",
+      "takeMeHome": "Llévame al inicio"
     },
     "schedule": {
       "sunday": "Domingo",
@@ -100,7 +115,8 @@
       "addSchedule": "Añadir horario",
       "day": "Día",
       "open": "Abierto",
-      "close": "Cerrado"
+      "close": "Cerrado",
+      "editSchedule": "Editar horario"
     },
     "profile": {
       "profile": "Perfil",
@@ -124,7 +140,29 @@
       "duringSaveProfileData": "Mientras se guardaba la información del perfil - ",
       "goToProfile": "Ir al perfil!",
       "success": "Éxito",
-      "profileWasUpdated": "El perfil fue actualizado - "
+      "profileWasUpdated": "El perfil fue actualizado - ",
+      "low": "Bajo",
+      "medium": "Medio",
+      "high": "Alto",
+      "organizationPlaceholder": "El nombre de tu organización",
+      "bloodDemandLevel": "Nivel de Demanda de Sangre",
+      "dragOrtap": "Arrastre o toque el nivel de demanda que representa las necesidades reales de su Banco de Sangre. Puede establecer las recompensas simbólicas dependiendo de estos niveles.",
+      "lowLevelReward": "Nivel Bajo de Recompensa",
+      "mediumLevelReward": "Nivel Medio de Recompensa",
+      "highLevelReward": "Alto Nivel de Recompensa",
+      "logoUrl": "Dirección de imagen",
+      "logoUrlPlaceholder": "La dirección de la imagen aquí",
+      "sponsorNamePlaceholder": "El nombre de tu Comercio Afiliado aquí",
+      "covidImpact": "Impacto de la pandemia del virus Sars-Cov2",
+      "covidImpactPlaceholder": "Escribe el impacto que has tenido de la pandemia aquí",
+      "photoUrl": "Dirección de foto",
+      "photoUrlPlaceholder": "La dirección de la imagen aquí",
+      "facebookProfileUrl": "Dirección del perfil de Facebook",
+      "facebookProfileUrlPlaceholder": "La dirección del perfil de Facebook aquí",
+      "instagramUsername": "Usuario de Instagram",
+      "instagramUsernamePlaceholder": "El usuario de Instagram aquí",
+      "twitterUsername": "Usuario de Twitter",
+      "twitterUsernamePlaceholder": "El usuario de Twitter aquí"
     },
     "donations": {
       "yourDonations": "Tus Donaciones",
@@ -159,7 +197,8 @@
       "weIdentified": "Identificamos dos problemas principales: la escasez de donaciones de sangre y la desaceleración de la economía local. En medio del brote de COVID-19, los bancos de sangre necesitan urgentemente donantes. Las personas que son potenciales donantes cualificados son incitados a quedarse en casa y aislarse. A medida que las donaciones caen en picada y la demanda de sangre y plasma aumenta, los bancos de sangre están experimentando una pronunciada escasez mundial.",
       "moreOver": "Además, la pandemia está afectando a las economías locales debido a un bloqueo generalizado. Las pequeñas empresas que dependen de la comunidad local deben pensar en formas de incentivar a los clientes para que compren tan pronto como se levanten las restricciones.",
       "aDonorCanEarn": "Un donante puede ganar tokens después de completar una donación de sangre en un centro de donación participante en el Banco de Sangre. Los centros de donación pueden emitir un máximo de 10.000 tokens. Estos tokens pueden ser canjeados por el donante en cualquier comercio afiliado a cambio de descuentos o promociones.",
-      "also": "Además, los comercios afiliados pueden guardar los tokens y luego devolverlos a los centros de donación para mantenerlos activos."
+      "also": "Además, los comercios afiliados pueden guardar los tokens y luego devolverlos a los centros de donación para mantenerlos activos.",
+      "weDontRequest": "No solicitamos ni almacenamos ninguna información personal en el blockchain. Puedes añadir opcionalmente un nombre completo y una dirección de correo electrónico una vez que haya completado el registro."
     },
     "common": {
       "description": "Descripción",
@@ -172,6 +211,7 @@
       "prev": "Anterior",
       "next": "Siguiente",
       "email": "Correo",
+      "emailPlaceholder": "Escribe el correo aquí",
       "account": "Cuenta",
       "telephone": "Teléfono",
       "website": "Sitio web",

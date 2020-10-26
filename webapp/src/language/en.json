@@ -65,7 +65,10 @@
       "chooseYourLocation": "Choose your location",
       "asAdonor": "As a Donor",
       "asAsponsor": "As a Sponsor",
-      "asAbank": "As a Blood Bank"
+      "asAbank": "As a Blood Bank",
+      "about": "About",
+      "aboutBusiness": "Description about your business here",
+      "aboutPlaceholder": "About the LifeBank"
     },
     "login": {
       "login": "Login",
@@ -87,7 +90,19 @@
     "miscellaneous": {
       "recentActivity": "Recent activity",
       "openSite": "Open site",
-      "goTo": "Go to"
+      "goTo": "Go to",
+      "help": "Help",
+      "thankYouForUsingLifebank": "Thank you for using Lifebank. Lifebank is still in progress. If you are experiencing any issues, please contact us using the following links:",
+      "telegram": "Telegram Channel",
+      "websiteEoscr": "Website EOS Costa Rica",
+      "noBloodBank": "No blood bank available",
+      "noOffersAvailable": "No offers available",
+      "noSponsorsAvailable": "No Sponsors available"
+    },
+    "notFound": {
+      "404Error": "404: The page you are looking for isn’t here",
+      "notFoundMessage": "You either tried some shady route or you came here by mistake. Whichever it is, try using the navigation",
+      "takeMeHome": "Take me home"
     },
     "schedule": {
       "sunday": "Sunday",
@@ -100,7 +115,8 @@
       "addSchedule": "Add schedule",
       "day": "Day",
       "open": "Open",
-      "close": "Closed"
+      "close": "Closed",
+      "editSchedule": "Edit Schedule"
     },
     "profile": {
       "profile": "Profile",
@@ -124,7 +140,29 @@
       "duringSaveProfileData": "During save profile data -",
       "goToProfile": "Go to profile!",
       "success": "Success",
-      "profileWasUpdated": "Profile was updated - "
+      "profileWasUpdated": "Profile was updated - ",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "organizationPlaceholder": "Your Organization Name",
+      "bloodDemandLevel": "Blood Demand Level",
+      "dragOrtap": "Drag or tap to the demand level that represent your Lifebank actual necesities. You can set the token rewards depending on this levels.",
+      "lowLevelReward": "Low Level Reward",
+      "mediumLevelReward": "Medium Level Reward",
+      "highLevelReward": "High Level Reward",
+      "logoUrl": "Logo Url",
+      "logoUrlPlaceholder": "Your logo url here",
+      "sponsorNamePlaceholder": "Your Sponsor name here",
+      "covidImpact": "Covid Impact",
+      "covidImpactPlaceholder": "Description about covid impact here",
+      "photoUrl": "Photo url",
+      "photoUrlPlaceholder": "Your photo url here",
+      "facebookProfileUrl": "Facebook profile url",
+      "facebookProfileUrlPlaceholder": "Your Facebook profile url here",
+      "instagramUsername": "Instagram username",
+      "instagramUsernamePlaceholder": "Your Instagram username here",
+      "twitterUsername": "Twitter username",
+      "twitterUsernamePlaceholder": "Your Twitter username here"
     },
     "donations": {
       "yourDonations": "Your Donations",
@@ -159,7 +197,8 @@
       "weIdentified": "We identified two main problems: a blood donation shortage and a local economic slowdown. Amid the COVID-19 outbreak, blood banks urgently need donors. People who are potential qualifying donors are prompted to stay home and isolate. As donations plummet and demand for blood and plasma increases, blood banks are experiencing a pronounced global shortage.",
       "moreOver": "Moreover, the pandemic is impacting local economies due to a generalized lockdown. Small businesses that rely on the local community must think of ways to incentivize customers to buy as soon as restrictions are lifted.",
       "aDonorCanEarn": "A donor can earn life tokens after completing a blood donation at a Lifebank participating donation center. Donation centers can issue a maximum of 10,000 life tokens. These tokens can then be redeemed by the donor at any local business (or sponsor) in exchange for discounts or promotions.",
-      "also": "Also, sponsors can save these tokens and then return them to donation centers to keep the tokens active."
+      "also": "Also, sponsors can save these tokens and then return them to donation centers to keep the tokens active.",
+      "weDontRequest": "We don't request or store any personal information on the blockchain. You may optionally add a full name and email address once you have completed registration."
     },
     "common": {
       "description": "Description",
@@ -172,8 +211,9 @@
       "prev": "Prev",
       "next": "Next",
       "email": "Email",
+      "emailPlaceholder": "Type the email here",
       "account": "Account",
-      "telephone": "Telephones",
+      "telephone": "Telephone",
       "website": "Website",
       "benefits": "Benefits",
       "bloodUrgency": "Blood urgency",
