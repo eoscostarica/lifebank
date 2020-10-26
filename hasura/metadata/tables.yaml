@@ -342,6 +342,18 @@
       - role
       - username
       filter: {}
+  update_permissions:
+  - role: lifebank
+    permission:
+      columns:
+      - email
+      - email_verified
+      - name
+      - secret
+      - updated_at
+      - username
+      filter: {}
+      check: null
 - table:
     schema: public
     name: vault

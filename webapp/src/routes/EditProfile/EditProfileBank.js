@@ -131,7 +131,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
-    telephone: profile.telephones,
+    telephones: profile.telephones,
     email: profile.email,
     geolocation: JSON.parse(profile.location),
     name: profile.name,
@@ -277,7 +277,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           fullWidth
           variant="outlined"
           placeholder="Add Telephone LifeBank"
-          defaultValue={user.telephone}
+          defaultValue={user.telephones}
           InputLabelProps={{
             shrink: true
           }}

@@ -109,7 +109,6 @@ const EditProfilePage = () => {
 
   const handleUpdateUser = useCallback(
     (userEdited, userNameEdited, account) => {
-      console.log("profile.account", account)
       editProfile({
         variables: {
           profile: userEdited
