@@ -5,6 +5,7 @@ import { useLazyQuery } from '@apollo/react-hooks'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import { useHistory } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import TokenTransfer from '../../components/TokenTransfer'
 import MapModal from '../../components/MapModal'
@@ -89,6 +90,7 @@ const EmptyHeartSVG = ({ balance }) => {
 }
 
 const DonationPage = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [currentUser] = useUser()
   const history = useHistory()
@@ -115,13 +117,13 @@ const DonationPage = () => {
   return (
     <Box className={classes.wrapper}>
       <Typography variant="h1" className={classes.title}>
-        Your Donations
+        {t('donations.yourDonations')}
       </Typography>
       <EmptyHeartSVG balance={parseInt(tokens)} />
       <Typography variant="body1" className={classes.infoLabel}>
         {parseInt(tokens)
-          ? 'Find a Sponsor and Redeem your LifeTokens!'
-          : 'You have not donated yet.'}
+          ? t('donations.findAsponsor')
+          : t('donations.youHavenotDonated')}
       </Typography>
       <Box className={classes.wrapper}>
         <MapModal useButton />

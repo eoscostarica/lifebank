@@ -16,6 +16,7 @@ import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import LockIcon from '@material-ui/icons/Lock'
+import { useTranslation } from 'react-i18next'
 
 import { CREDENTIALS_RECOVERY } from '../../gql'
 
@@ -74,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
+  const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)

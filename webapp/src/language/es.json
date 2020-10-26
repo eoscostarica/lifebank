@@ -100,7 +100,35 @@
       "open": "Abierto",
       "close": "Cerrado"
     },
-    "profile": "Perfil",
+    "profile": {
+      "profile": "Perfil",
+      "role": "Rol",
+      "community": "Comunidad",
+      "fullname": "Nombre completo",
+      "consentStatus": "Estado de consentimiento",
+      "granted": "Aceptado",
+      "revoked": "Revocado",
+      "guest": "Invitado",
+      "organization": "Organización",
+      "consent": "Consentimiento",
+      "communityAsset": "Activo de Comunidad",
+      "hasImmunityTest": "Tiene test de inmunidad",
+      "benefitDescription": "Descripción del beneficio",
+      "location": "Localización"
+    },
+    "editProfile": {
+      "editProfile": "Editar Perfil",
+      "error": "Error",
+      "duringSaveProfileData": "Mientras se guardaba la información del perfil - ",
+      "goToProfile": "Ir al perfil!",
+      "success": "Éxito",
+      "profileWasUpdated": "El perfil fue actualizado - "
+    },
+    "donations": {
+      "yourDonations": "Tus Donaciones",
+      "findAsponsor": "Encuentra un Comercio Afiliado y canjea tus Tokens!",
+      "youHavenotDonated": "No has donado aún."
+    },
     "users": "Usuarios",
     "products": "Productos",
     "productsTitle": "Listado de productos",

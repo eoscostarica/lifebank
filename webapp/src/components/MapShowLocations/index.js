@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Button'
 import Modal from '@material-ui/core/Modal'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import { uselocation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 import { mapboxConfig, constants } from '../../config'
 import MapMarker from '../MapMarker'
@@ -89,7 +89,7 @@ function getModalStyle() {
 }
 
 function MapShowLocations({ location, ...props }) {
-  const { t } = uselocation('translations')
+  const { t } = useTranslation('translations')
   const [distance, setDistance] = React.useState(5000)
   const [state, setState] = React.useState({
     checkedLifebank: true,

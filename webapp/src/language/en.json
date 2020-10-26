@@ -100,7 +100,35 @@
       "open": "Abierto",
       "close": "Cerrado"
     },
-    "profile": "Profile",
+    "profile": {
+      "profile": "Profile",
+      "role": "Role",
+      "community": "Community",
+      "fullname": "Full Name",
+      "consentStatus": "Consent status",
+      "granted": "Granted",
+      "revoked": "Revoked",
+      "guest": "Guest",
+      "organization": "Organization",
+      "consent": "Consent",
+      "communityAsset": "Community Asset",
+      "hasImmunityTest": "Has Immunity Test",
+      "benefitDescription": "Benefit Description",
+      "location": "Location"
+    },
+    "editProfile": {
+      "editProfile": "Edit Profile",
+      "error": "Error",
+      "duringSaveProfileData": "During save profile data -",
+      "goToProfile": "Go to profile!",
+      "success": "Success",
+      "profileWasUpdated": "Profile was updated - "
+    },
+    "donations": {
+      "yourDonations": "Your Donations",
+      "findAsponsor": "Find a Sponsor and Redeem your LifebankTokens!",
+      "youHavenotDonated": "You have not donated yet."
+    },
     "users": "Users",
     "products": "Products",
     "productsTitle": "Listado de productos",
