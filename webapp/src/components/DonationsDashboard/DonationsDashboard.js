@@ -229,7 +229,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EmptyHeartSVG = ({ balance, isDesktop }) => {
-  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   const textColor = isDesktop ? '#ffffff' : '#000000'
