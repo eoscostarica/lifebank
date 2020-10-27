@@ -281,6 +281,9 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
             offer={offer}
           />
         ))}
+        {selectOffer &&
+          < OfferView selectOffer={selectOffer} isDesktop openOfferView={openOfferView} handleCloseOfferView={handleCloseOfferView} />
+        }
       </>
     )
   }
@@ -311,7 +314,7 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           <Typography paragraph className={classes.cardContentText} >{truncateString(props.offer.description)}
           </Typography>
         </CardContent>
-        <Button color="primary" className={classes.cardActionButton}>
+        <Button color="primary" className={classes.cardActionButton} onClick={() => handleOpenOfferView(props.offer)}>
           more info
         </Button>
       </Card>

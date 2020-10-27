@@ -394,10 +394,17 @@ const DonationsDashboard = ({ isDesktop, isOffer }) => {
       }
       {isDesktop &&
         <>
-          <Fab color="secondary" variant="extended" className={classes.fabButtonDesktop} onClick={handleOpen}>
-            < FavoriteIcon className={classes.iconFab} />
+          {!isOffer &&
+            <Fab color="secondary" variant="extended" className={classes.fabButtonDesktop} onClick={handleOpen}>
+              < FavoriteIcon className={classes.iconFab} />
             Donate
           </Fab>
+          }
+          {isOffer &&
+            <Button variant="contained" color="secondary" className={classes.fabButtonOffer} onClick={handleOpen}>
+              Redeem
+          </Button>
+          }
           <Dialog
             maxWidth={maxWidth}
             open={open}

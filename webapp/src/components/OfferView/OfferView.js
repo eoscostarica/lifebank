@@ -16,6 +16,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import CloseIcon from '@material-ui/icons/Close'
 
 import MapModalOneLocation from '../MapModalOneLocation/MapModalOneLocation';
 import DonationsDashboard from '../DonationsDashboard/DonationsDashboard';
@@ -39,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
   },
   backIcon: {
     color: "#121212",
+  },
+  buttonIconDesktop: {
+    padding: 20,
+    backgroundColor: "white",
+    color: "rgba(0, 0, 0, 0.6)"
   },
   title: {
     marginLeft: theme.spacing(2),
@@ -98,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
     marginBttom: 10,
   },
-  cardContentText: {
+  componentontentText: {
     fontFamily: "Roboto",
     fontsize: "14px",
     fontweight: "normal",
@@ -109,11 +115,24 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: "rgba(0, 0, 0, 0.6)",
   },
+  componentontentTextAux: {
+    fontFamily: "Roboto",
+    fontsize: "14px",
+    fontweight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.43",
+    letterSpacing: "0.25px",
+    textAlign: "left",
+    color: "#121212",
+  },
   componentActionsButton: {
     width: "100%",
-    position: "absolute",
-    bottom: 0,
-    padding: 10,
+    [theme.breakpoints.down('md')]: {
+      position: "absolute",
+      bottom: 0,
+      padding: 10,
+    }
   },
   cardActionButton: {
     position: "absolute",
@@ -136,7 +155,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
   },
   iconBottomAppBar: {
-    color: "#121212"
+    color: "rgba(0, 0, 0, 0.6);"
   },
   stepper: {
     backgroundColor: "#ffffff",
@@ -148,7 +167,23 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     width: '100%',
   },
+  closeIcon: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 20,
+    right: 20,
+    margin: '0',
+    height: "5vh",
+    '& svg': {
+      fontSize: 25,
+      color: "#121212"
+    }
+  },
 }))
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -161,16 +196,7 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
   const images = JSON.parse(selectOffer.images)
   const [activeStep, setActiveStep] = useState(0);
   const [currentUser] = useUser()
-  const [openOpenModalLocation, setOpenModalLocation] = useState(false);
   const maxSteps = images.length;
-
-  const handleClickOpen = () => {
-    setOpenModalLocation(true);
-  };
-
-  const handleClose = () => {
-    setOpenModalLocation(false);
-  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -233,13 +259,24 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
           <ShowImages />
         </Box>
         <Box className={classes.componentContent}>
-          <Typography paragraph className={classes.cardContentText} >{truncateString(selectOffer.description)}</Typography>
-          <Typography paragraph className={classes.cardContentText}>This offer is only for online purchases.</Typography>
+          <Typography paragraph className={classes.componentontentText} >{truncateString(selectOffer.description)}</Typography>
+          <Typography paragraph className={classes.componentontentTextAux}>This offer is only for online purchases.</Typography>
         </Box>
         <Box className={classes.componentActionsButton}>
-          <IconButton disabled>
-            <StarBorderIcon className={classes.iconBottomAppBar} />
-          </IconButton>
+          {!isDesktop &&
+            <IconButton disabled>
+              <StarBorderIcon className={classes.iconBottomAppBar} />
+            </IconButton>
+          }
+          {isDesktop &&
+            <Button
+              disabled
+              className={classes.buttonIconDesktop}
+              startIcon={<StarBorderIcon />}
+            >
+              FAVORITE
+           </Button>
+          }
           <MapModalOneLocation
             isDesktop={isDesktop}
             isSponor
@@ -275,15 +312,17 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
       {
         isDesktop &&
         <Dialog open={openOfferView} onClose={handleCloseOfferView} TransitionComponent={Transition}>
-          <IconButton className={classes.backIcon} onClick={handleCloseOfferView} aria-label="close">
-            <KeyboardBackspaceIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Selected Offer
-            </Typography>
-          <Typography variant="h6" className={classes.title}>
-            {selectOffer.offer_name}
-          </Typography>
+          <Box className={classes.closeIcon}>
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleCloseOfferView}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
+          <OfferContent />
         </Dialog>
       }
     </>
