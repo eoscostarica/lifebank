@@ -219,13 +219,13 @@ const useStyles = makeStyles((theme) => ({
   },
   contentBodySection: {
     width: '50%',
-    height: '70%',
+    height: '65%',
     float: 'left',
     borderStyle: 'groove'
   },
   headerContent: {
     width: '100%',
-    height: '8%',
+    height: '9%',
     borderStyle: 'groove'
   },
   avatarSectionDesktop: {
@@ -328,6 +328,38 @@ const InfoPage = () => {
     },
     skip: true
   })
+
+  const generateSchedule = (schedules) => {
+    let scheduleFinal = []
+    for (schedule of schedules) {
+      if (scheduleFinal.length > 0) {
+        let insert = 0
+        scheduleFinal.forEach(element => {
+          if (schedule.open === element[1][0] && schedule.close === element[1][1]) {
+            element[0].push(schedule.dia)
+            insert++
+          }
+        }
+        );
+        if (insert > 0) {
+          const tempaSchedule = [[schedule.dia], [schedule.open, schedule.close]]
+          scheduleFinal.push(tempaSchedule)
+        }
+
+
+      }
+
+
+
+    }
+
+    schedules.forEach(element => console.log(element));
+    {
+      JSON.parse(schedules).length > 0 && JSON.parse(schedules).map((schedule) => (
+      
+    ))
+    }
+  }
 
   useEffect(() => {
     if (location.state)
