@@ -14,6 +14,7 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import LanguageIcon from '@material-ui/icons/Language'
 import EventAvailableIcon from '@material-ui/icons/EventAvailable'
 import EventBusyIcon from '@material-ui/icons/EventBusy'
+import { useTranslation } from 'react-i18next'
 
 import { GET_OFFER_QUERY } from '../../gql'
 
@@ -88,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const OfferPage = () => {
+  const { t } = useTranslation('translations')
   const [offer, setOffer] = useState({
     id: '',
     images: '',
@@ -160,7 +162,7 @@ const OfferPage = () => {
         {loading && <CircularProgress />}
         {!loading && !isOffer && (
           <Typography variant="h3" className={classes.title}>
-            No offer available
+            {t('miscellaneous.noOfferAvailable')}
           </Typography>
         )}
         {!loading && isOffer && (
@@ -180,7 +182,7 @@ const OfferPage = () => {
                 {offer.user.name}
               </Typography>
               <Typography variant="h2" className={classes.priceTitle}>
-                Price: {offer.cost_in_tokens}
+                {t('miscellaneous.price')}: {offer.cost_in_tokens}
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -189,7 +191,7 @@ const OfferPage = () => {
                 color="primary"
                 className={classes.redeemButton}
               >
-                redeem
+                {t('tokenTransfer.redeem')}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -202,37 +204,39 @@ const OfferPage = () => {
               <Box className={classes.iconBox}>
                 <LocalOfferIcon className={classes.icon} />
                 <Typography variant="body1" className={classes.infoText}>
-                  <b>Offer type: </b> {offer.offer_type}
+                  <b>{t('offersManagement.offerType')}: </b> {offer.offer_type}
                 </Typography>
               </Box>
               <Box className={classes.iconBox}>
                 <TimelapseIcon className={classes.icon} />
                 <Typography variant="body1" className={classes.infoText}>
-                  <b>Limited offer: </b> {replaceBoolean(offer.limited)}
+                  <b>{t('miscellaneous.limitedOffer')}: </b>{' '}
+                  {replaceBoolean(offer.limited)}
                 </Typography>
               </Box>
               <Box className={classes.iconBox}>
                 <ShoppingBasketIcon className={classes.icon} />
                 <Typography variant="body1" className={classes.infoText}>
-                  <b>Stock: </b> {offer.quantity}{' '}
+                  <b>{t('miscellaneous.stock')}: </b> {offer.quantity}{' '}
                 </Typography>
               </Box>
               <Box className={classes.iconBox}>
                 <LanguageIcon className={classes.icon} />
                 <Typography variant="body1" className={classes.infoText}>
-                  <b>Online only: </b> {replaceBoolean(offer.online_only)}{' '}
+                  <b>{t('offersManagemenet.onlineOnly')}: </b>{' '}
+                  {replaceBoolean(offer.online_only)}{' '}
                 </Typography>
               </Box>
               <Box className={classes.iconBox}>
                 <EventAvailableIcon className={classes.icon} />
                 <Typography variant="body1" className={classes.infoText}>
-                  <b>Start date: </b> {offer.start_date}
+                  <b>{t('offersManagement.startDate')}: </b> {offer.start_date}
                 </Typography>
               </Box>
               <Box className={classes.iconBox}>
                 <EventBusyIcon className={classes.icon} />
                 <Typography variant="body1" className={classes.infoText}>
-                  <b>End date: </b> {offer.end_date}
+                  <b>{t('offersManagement.endDate')}: </b> {offer.end_date}
                 </Typography>
               </Box>
             </Grid>

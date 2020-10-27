@@ -16,6 +16,7 @@ import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import LockIcon from '@material-ui/icons/Lock'
+import { useTranslation } from 'react-i18next'
 
 import { CREDENTIALS_RECOVERY } from '../../gql'
 
@@ -76,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
+  const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
@@ -127,7 +129,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
           variant="body1"
           className={clsx(classes.labelOption, overrideLabelClass)}
         >
-          Credentials recovery
+          {t('credentialsRecovery.credentialsRecovery')}
         </Typography>
       </Box>
       <Modal
@@ -155,7 +157,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
               </IconButton>
             </Box>
             <Box className={classes.bodyWrapper}>
-              <Typography variant="h3">Credentials Recovery</Typography>
+              <Typography variant="h3">
+                {t('credentialsRecovery.credentialsRecovery')}
+              </Typography>
               {errorMessage && (
                 <Alert
                   className={classes.alert}
@@ -189,14 +193,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                     </IconButton>
                   }
                 >
-                  Check your email
+                  {t('credentialsRecovery.checkYourEmail')}
                 </Alert>
               )}
               <form autoComplete="off">
                 <Box className={classes.textFieldWrapper}>
                   <TextField
                     id="account"
-                    label="Email"
+                    label={t('common.email')}
                     variant="outlined"
                     InputLabelProps={{
                       shrink: true
@@ -214,7 +218,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                     color="primary"
                     onClick={handleSubmit}
                   >
-                    Recovery
+                    {t('credentialsRecovery.recovery')}
                   </Button>
                   {loading && <CircularProgress />}
                 </Box>

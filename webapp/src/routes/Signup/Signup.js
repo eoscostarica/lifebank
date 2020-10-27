@@ -9,6 +9,7 @@ import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import {
   CREATE_ACCOUNT_MUTATION,
@@ -103,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Signup = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const history = useHistory()
   const [user, setUser] = useReducer(
@@ -191,7 +193,7 @@ const Signup = () => {
           }
         })
       } else {
-        setErrorMessage('Something happened with the authentication')
+        setErrorMessage(t('errors.authError'))
       }
     }
   }
@@ -265,7 +267,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (preRegisterLifebankResult) {
-      alert('successful pre registration')
+      alert(t('signup.sucessfulPreregistration'))
       history.replace('/')
     }
   }, [preRegisterLifebankResult])
@@ -328,37 +330,44 @@ const Signup = () => {
   return (
     <Grid container className={classes.gridContainer}>
       <Grid item xs={12} sm={8} md={6} className={classes.register}>
-        <Typography variant="h1">{`Step ${activeStep + 1}`}</Typography>
+        <Typography variant="h1">{`${t('miscellaneous.step')} ${
+          activeStep + 1
+        }`}</Typography>
         <Box className={classes.stepperContent}>
           <Box className={classes.goBack}>
             <IconButton aria-label="go-back" onClick={handleGoBack}>
               <ArrowBackIcon color="primary" />
               <Typography variant="h4" className={classes.registerBack}>
-                Register
+                {t('hero.register')}
               </Typography>
             </IconButton>
           </Box>
           {activeStep === 0 && (
             <>
-              <Typography variant="h4">How do you want to help?</Typography>
+              <Typography variant="h4">
+                {t('signup.howDoYouWantToHelp')}
+              </Typography>
               <SignupRoleSelector onSubmit={handleRoleChange} />
             </>
           )}
 
           {activeStep === 1 && role !== 'lifebank' && (
             <>
-              <Typography variant="h4">Create a new account.</Typography>
+              <Typography variant="h4">
+                {t('signup.createAnewAccount')}
+              </Typography>
               <Typography variant="body1" className={classes.text}>
-                To register, all you need to do is add your email and password.
+                {t('signup.AllYouNeed')}
               </Typography>
             </>
           )}
           {activeStep === 1 && role === 'lifebank' && (
             <>
-              <Typography variant="h4">Pre-register a new account.</Typography>
+              <Typography variant="h4">
+                {t('signup.preRegisterAnewAccount')}
+              </Typography>
               <Typography variant="body1" className={classes.text}>
-                To carry out the pre-registration, you must indicate the
-                following data, necessary for the approval of the blood bank
+                {t('signup.preRegistrationRequirement')}
               </Typography>
             </>
           )}
@@ -414,7 +423,7 @@ const Signup = () => {
           {activeStep === 2 && (
             <>
               <Typography variant="h4">
-                Read our Terms and Conditions
+                {t('readOurTermsAndConditions')}
               </Typography>
               <SignupAccount data={createAccountResult} />
               <SignupConsent onSubmit={handleSingup} loading={signupLoading} />

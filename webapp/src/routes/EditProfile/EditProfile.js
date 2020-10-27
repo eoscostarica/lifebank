@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import CloseIcon from '@material-ui/icons/Close'
+import { useTranslation } from 'react-i18next'
 
 import {
   PROFILE_QUERY,
@@ -65,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EditProfilePage = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const location = useLocation()
   const [currentUser] = useUser()
@@ -161,10 +163,10 @@ const EditProfilePage = () => {
               </IconButton>
             }
           >
-            <AlertTitle>Error</AlertTitle>
-            During save profile data -
+            <AlertTitle>{t('editProfile.error')}</AlertTitle>
+            {t('editProfile.duringSaveProfileData')}
             <Link to="/profile" className={classes.linkError}>
-              <strong> Go to profile!</strong>
+              <strong>{t('donations.goToProfile')}</strong>
             </Link>
           </Alert>
         )}
@@ -182,16 +184,16 @@ const EditProfilePage = () => {
               </IconButton>
             }
           >
-            <AlertTitle>Success</AlertTitle>
-            Profile was updated —
+            <AlertTitle>{t('editProfile.success')}</AlertTitle>
+            {t('editProfile.profileWasUpdated')}
             <Link to="/profile" className={classes.linkSuccess}>
-              <strong> Go to profile!</strong>
+              <strong>{t('editProfile.goToProfile')}</strong>
             </Link>
           </Alert>
         )}
       </Box>
       <Typography variant="h1" className={classes.title}>
-        Edit Profile
+        {t('editProfile.editProfile')}
       </Typography>
       {loading && <CircularProgress />}
       {!loading && currentUser && profile?.role === 'donor' && (

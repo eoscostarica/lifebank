@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import FavoriteIcon from '@material-ui/icons/Favorite'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SignupRoleSelector = ({ onSubmit }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
@@ -31,7 +33,7 @@ const SignupRoleSelector = ({ onSubmit }) => {
           onSubmit('donor')
         }}
       >
-        As a Donor
+        {t('signup.asAdonor')}
       </Button>
       <Button
         className={classes.btn}
@@ -42,7 +44,7 @@ const SignupRoleSelector = ({ onSubmit }) => {
           onSubmit('sponsor')
         }}
       >
-        As a Sponsor
+        {t('signup.asAsponsor')}
       </Button>
       <Button
         className={classes.btn}
@@ -53,7 +55,7 @@ const SignupRoleSelector = ({ onSubmit }) => {
           onSubmit('lifebank')
         }}
       >
-        As a Bank
+        {t('signup.asAbank')}
       </Button>
     </Box>
   )

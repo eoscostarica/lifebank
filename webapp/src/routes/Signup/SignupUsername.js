@@ -5,6 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/styles'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   success: {
@@ -13,13 +14,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SignupUsername = ({ isValid, loading, user, setField }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
     <TextField
       id="username"
-      label="Username"
-      placeholder="Username"
+      label={t('miscellaneous.username')}
+      placeholder={t('miscellaneous.username')}
       variant="outlined"
       fullWidth
       InputLabelProps={{
@@ -42,9 +44,9 @@ const SignupUsername = ({ isValid, loading, user, setField }) => {
       }}
       helperText={
         user?.username?.length >= 9 && !isValid && !loading
-          ? 'Invalid username or already taken'
+          ? t('miscellaneous.invalidrOrTaken')
           : !isValid
-          ? 'You must enter 9 characters (a-z 1-5)'
+          ? t('miscellaneous.youMustEnter')
           : ''
       }
       error={!isValid && !loading && user?.username?.length >= 9}

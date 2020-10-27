@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import { useTranslation } from 'react-i18next'
 import CloseIcon from '@material-ui/icons/Close'
 import Typography from '@material-ui/core/Typography'
 
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     top: 5,
     right: 1,
     margin: '0',
-    height: "5vh",
+    height: '5vh',
     '& svg': {
       fontSize: 25,
       color: theme.palette.secondary.main
@@ -93,6 +94,7 @@ const { SPONSOR_TYPES } = constants
 const sponsorsCategories = ['All'].concat(SPONSOR_TYPES)
 
 function MapShowLocations({ location, ...props }) {
+  const { t } = useTranslation('translations')
   const [distance, setDistance] = React.useState(5000)
   const [state, setState] = React.useState({
     checkedLifebank: true,
@@ -100,7 +102,7 @@ function MapShowLocations({ location, ...props }) {
   })
   const [open, setOpen] = React.useState(false)
   const [sponsorsCat, setSponsorsCat] = React.useState('All')
-  const [maxWidth] = useState('md');
+  const [maxWidth] = useState('md')
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked })
@@ -292,7 +294,7 @@ function MapShowLocations({ location, ...props }) {
         accessToken: mapboxgl.accessToken,
         localGeocoder: forwardGeocoder,
         zoom: 16,
-        placeholder: 'Search: Places, Lifebanks, Sponsors',
+        placeholder: t('map.mapInputPlaceholder'),
         mapboxgl: mapboxgl,
         marker: null
       })
@@ -351,14 +353,16 @@ function MapShowLocations({ location, ...props }) {
                   <CloseIcon fontSize="inherit" />
                 </IconButton>
               </Box>
-              <Typography variant="h3" className={classes.dialogTitle}>Filters</Typography>
+              <Typography variant="h3" className={classes.dialogTitle}>
+                {t('contentToolbar.filters')}
+              </Typography>
               <Box>
                 <TextField
                   autoFocus
-                  label="Distance"
+                  label={t('map.distance')}
                   value={distance}
                   onChange={handleChangeDistance}
-                  name="Distance"
+                  name="distance"
                   variant="outlined"
                   type="number"
                   className={classes.inputStyle}
@@ -377,7 +381,7 @@ function MapShowLocations({ location, ...props }) {
                       name="checkedLifebank"
                     />
                   }
-                  label="Lifebanks"
+                  label={t('rolesTitle.plural.lifebanks')}
                 />
               </Box>
               <Divider />
@@ -391,12 +395,12 @@ function MapShowLocations({ location, ...props }) {
                       name="checkedSponsor"
                     />
                   }
-                  label="Sponsors"
+                  label={t('rolesTitle.plural.sponsors')}
                 />
                 <TextField
                   id="standard-select-currency"
                   select
-                  label="Sponsors categories"
+                  label={t('map.sponsorCategories')}
                   value={sponsorsCat}
                   onChange={handleChangeSponsorsCat}
                   className={classes.inputStyle}
@@ -416,13 +420,13 @@ function MapShowLocations({ location, ...props }) {
                   className={classes.buttonStyle}
                   onClick={handleSaveChanges}
                 >
-                  Save changes
+                  {t('common.saveChanges')}
                 </Button>
               </Box>
             </Grid>
           </Grid>
         </Dialog>
-      </Box >
+      </Box>
     )
   }
 

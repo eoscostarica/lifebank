@@ -6,11 +6,13 @@ import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import QRCode from 'qrcode.react'
+import { useTranslation } from 'react-i18next'
 
 import { useUser } from '../../context/user.context'
 import { eosConfig } from '../../config'
 
 const Products = () => {
+  const { t } = useTranslation('translations')
   const [currentUser] = useUser()
   const profile = {}
   const loading = false
@@ -22,7 +24,7 @@ const Products = () => {
           {loading && <CircularProgress />}
           {currentUser && profile && (
             <>
-              <Typography variant="h4">Account</Typography>
+              <Typography variant="h4">{t('common.account')}</Typography>
               <Typography variant="body1">
                 <Link
                   href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
@@ -34,24 +36,24 @@ const Products = () => {
                 </Link>
               </Typography>
               <QRCode value={profile.account} size={400} />
-              <Typography variant="h4">Role</Typography>
+              <Typography variant="h4">{t('profile.role')}</Typography>
               <Typography variant="body1">{profile.role}</Typography>
-              <Typography variant="h4">Community</Typography>
+              <Typography variant="h4">{t('common.community')}</Typography>
               <Typography variant="body1">
                 {profile.communities.join(', ') || 'N/A'}
               </Typography>
-              <Typography variant="h4">Fullname</Typography>
+              <Typography variant="h4">{t('profile.fullname')}</Typography>
               <Typography variant="body1">{profile.fullname}</Typography>
-              <Typography variant="h4">Consent status</Typography>
+              <Typography variant="h4">{t('profile.consentStatus')}</Typography>
               <Typography variant="body1">
-                {profile.consent ? 'Granted' : 'Revoked'}
+                {profile.consent ? t('profile.granted') : t('profile.revoked')}
               </Typography>
             </>
           )}
           {!currentUser && (
             <>
-              <Typography variant="h4">Account</Typography>
-              <Typography variant="body1">Guest</Typography>
+              <Typography variant="h4">{t('common.account')}</Typography>
+              <Typography variant="body1">{t('profile.guest')}</Typography>
             </>
           )}
         </CardContent>

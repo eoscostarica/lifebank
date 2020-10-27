@@ -25,6 +25,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Slide from '@material-ui/core/Slide'
 import CloseIcon from '@material-ui/icons/Close'
 import AddIcon from '@material-ui/icons/Add'
+import { useTranslation } from 'react-i18next'
 import '@brainhubeu/react-carousel/lib/style.css'
 import {
   MuiPickersUtilsProvider,
@@ -90,20 +91,21 @@ const LimitationHandling = ({
   setStartDate,
   setEndDate
 }) => {
+  const { t } = useTranslation('translations')
   const [selectedStartDate, setSelectedStartDate] = useState(new Date())
   const [selectedEndDate, setSelectedEndDate] = useState(new Date())
 
   return (
     <Paper className={classes.limitationHandlingPaper}>
       <Typography variant="h4" style={{ textAlign: 'center' }}>
-        Limitation Handling
+        {t('offersManagement.limitationHandling')}
       </Typography>
       <TextField
         id="secret"
-        label="Quantity"
+        label={t('offersManagement.quantity')}
         type="number"
         fullWidth
-        placeholder="Available service quantity"
+        placeholder={t('offersManagement.quantityPlaceholder')}
         variant="outlined"
         InputLabelProps={{
           shrink: true
@@ -117,7 +119,7 @@ const LimitationHandling = ({
             inputVariant="outlined"
             margin="normal"
             id="start-date-picker-dialog"
-            label="Select start offer date"
+            label={t('offersManagement.selectStartOfferDate')}
             format="MM/dd/yyyy"
             value={selectedStartDate}
             onChange={(date) => {
@@ -125,14 +127,14 @@ const LimitationHandling = ({
               setSelectedStartDate(date)
             }}
             KeyboardButtonProps={{
-              'aria-label': 'Start date'
+              'aria-label': t('offersManagement.startDate')
             }}
           />
           <KeyboardDatePicker
             inputVariant="outlined"
             margin="normal"
             id="end-date-picker-dialog"
-            label="Select end offer date"
+            label={t('offersManagement.selectEndOfferDate')}
             format="MM/dd/yyyy"
             value={selectedEndDate}
             onChange={(date) => {
@@ -140,7 +142,7 @@ const LimitationHandling = ({
               setSelectedEndDate(date)
             }}
             KeyboardButtonProps={{
-              'aria-label': 'End date'
+              'aria-label': t('offersManagement.endDate')
             }}
           />
         </Grid>
@@ -157,6 +159,7 @@ const GenericOfferFormComponent = ({
   setOffers,
   data
 }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const imgUrlValueRef = useRef(undefined)
@@ -274,7 +277,7 @@ const GenericOfferFormComponent = ({
     if (updateOfferResult) {
       setOpenSnackbar({
         show: true,
-        message: 'Offer updated successfully',
+        message: t('offersManagement.offerUpdatedMessage'),
         severity: 'success'
       })
       setOffers((offs) =>
@@ -290,7 +293,7 @@ const GenericOfferFormComponent = ({
     if (createOfferResult) {
       setOpenSnackbar({
         show: true,
-        message: 'Offer created successfully',
+        message: t('offersManagement.offerCreatedMessage'),
         severity: 'success'
       })
       setOffers((offs) => [...offs, createOfferResult])
@@ -315,7 +318,7 @@ const GenericOfferFormComponent = ({
             <CloseIcon />
           </IconButton>
           <Typography variant="h1" className={classes.title}>
-            Add Offer
+            t("offersManagement.addOffer")
           </Typography>
         </Toolbar>
       </AppBar>
@@ -323,9 +326,9 @@ const GenericOfferFormComponent = ({
         <form autoComplete="off" className={classes.form}>
           <TextField
             id="offer-name"
-            label="Offer name"
+            label={t('offersManagement.offerName')}
             variant="outlined"
-            placeholder="Offer name here"
+            placeholder={t('offersManagement.offerNamePlaceHolder')}
             value={offer.offer_name || undefined}
             fullWidth
             onChange={(event) =>
@@ -337,7 +340,9 @@ const GenericOfferFormComponent = ({
             className={classes.textField}
           />
           <FormControl variant="outlined" className={classes.textField}>
-            <InputLabel id="bussines-type-label">Select offer type</InputLabel>
+            <InputLabel id="bussines-type-label">
+              {t('offersManagement.selectOfferType')}
+            </InputLabel>
             <Select
               labelId="offer-type-label"
               id="offer-type"
@@ -345,12 +350,16 @@ const GenericOfferFormComponent = ({
               onChange={(event) =>
                 setOffer({ ...offer, offer_type: event.target.value })
               }
-              label="Type"
+              label={t('offersManagement.type')}
             >
-              <MenuItem value="discount">Discount</MenuItem>
-              <MenuItem value="gift">Gift</MenuItem>
-              <MenuItem value="benefit">Benefit</MenuItem>
-              <MenuItem value="other">Other</MenuItem>
+              <MenuItem value="discount">
+                {t('offersManagement.discount')}
+              </MenuItem>
+              <MenuItem value="gift">{t('offersManagement.gift')}</MenuItem>//
+              <MenuItem value="benefit">
+                {t('offersManagement.benefit')}
+              </MenuItem>
+              <MenuItem value="other">{t('offersManagement.other')}</MenuItem>//
             </Select>
           </FormControl>
           <FormControlLabel
@@ -364,13 +373,13 @@ const GenericOfferFormComponent = ({
                 color="primary"
               />
             }
-            label="Online only"
+            label={t('offersManagement.onlineOnly')}
           />
           <TextField
             id="offer-description"
-            label="Offer description"
+            label={t('offersManagement.offerDescription')}
             variant="outlined"
-            placeholder="Description here"
+            placeholder={t('offersManagement.offerDescriptionPlaceholder')}
             value={offer.description || undefined}
             fullWidth
             onChange={(event) =>
@@ -382,7 +391,9 @@ const GenericOfferFormComponent = ({
             className={classes.textField}
           />
           <FormControl component="fieldset" className={classes.radioGroup}>
-            <Typography variant="h3">Redeem availability</Typography>
+            <Typography variant="h3">
+              {t('offersManagement.redeemAvailability')}
+            </Typography>
             <RadioGroup
               aria-label="limitation"
               value={String(offer.limited) || undefined}
@@ -393,12 +404,12 @@ const GenericOfferFormComponent = ({
               <FormControlLabel
                 value="true"
                 control={<Radio />}
-                label="Limited"
+                label={t('offersManagement.limited')}
               />
               <FormControlLabel
                 value="false"
                 control={<Radio />}
-                label="Unlimited"
+                label={t('offersManagement.unlimited')}
               />
             </RadioGroup>
             {(offer.limited === true || offer.limited === 'true') && (
@@ -412,10 +423,10 @@ const GenericOfferFormComponent = ({
           </FormControl>
           <TextField
             id="cost-in-tokens"
-            label="Cost in tokens (number)"
+            label={t('offersManagement.costInTokens')}
             variant="outlined"
             type="number"
-            placeholder="Type here"
+            placeholder={t('offersManagement.costInTokensPlaceholder')}
             value={offer.cost_in_tokens || undefined}
             fullWidth
             InputLabelProps={{
@@ -428,9 +439,9 @@ const GenericOfferFormComponent = ({
           />
           <TextField
             id="image-url"
-            label="Image url"
+            label={t('offersManagement.imageUrl')}
             variant="outlined"
-            placeholder="Image url here"
+            placeholder={t('offersManagement.imageUrlPlaceholder')}
             fullWidth
             inputRef={imgUrlValueRef}
             InputLabelProps={{
@@ -443,7 +454,7 @@ const GenericOfferFormComponent = ({
             <div>
               {offer.images.length < 1 ? (
                 <Typography variant="caption">
-                  You need to add least one image url
+                  {t('offersManagement.imageRestriction')}
                 </Typography>
               ) : null}
             </div>
@@ -460,7 +471,7 @@ const GenericOfferFormComponent = ({
               color="secondary"
               startIcon={<AddIcon />}
             >
-              Add url
+              {t('offersManagement.addUrl')}
             </Button>
           </Box>
           {offer.images.length > 0 && (
@@ -483,7 +494,7 @@ const GenericOfferFormComponent = ({
               variant="contained"
               color="primary"
             >
-              Submit
+              {t('common.submit')}
             </Button>
           </Box>
         </form>

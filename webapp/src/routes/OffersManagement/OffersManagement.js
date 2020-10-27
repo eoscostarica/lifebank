@@ -21,6 +21,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import * as m from 'moment-timezone'
 import moment from 'moment'
+import { useTranslation } from 'react-i18next'
 
 import {
   GET_SPONSOR_OFFERS_QUERY,
@@ -62,6 +63,7 @@ const columns = [
 ]
 
 const OffersManagement = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [offers, setOffers] = useState(undefined)
   const [profileIDLoaded, setProfileIDLoaded] = useState(false)
@@ -146,17 +148,21 @@ const OffersManagement = () => {
 
   const Actions = (active, offer_id) => (
     <FormControl variant="filled" className={classes.formControl}>
-      <InputLabel id="actions-selection-label">Action</InputLabel>
+      <InputLabel id="actions-selection-label">
+        {t('offersManagement.action')}
+      </InputLabel>
       <Select
         value=""
         onClick={(e) => handleActionClick(e.target.value, active, offer_id)}
         labelId="actions-selection"
         id="action-select"
       >
-        <MenuItem value="edit">Edit</MenuItem>
-        <MenuItem value="delete">Delete</MenuItem>
+        <MenuItem value="edit">{t('common.edit')}</MenuItem>
+        <MenuItem value="delete">{t('common.delete')}</MenuItem>
         <MenuItem value={active ? 'deactivate' : 'activate'}>
-          {active ? 'Deactivate' : 'Activate'}
+          {active
+            ? t('offersManagement.deactivate')
+            : t('offersManagement.activate')}
         </MenuItem>
       </Select>
     </FormControl>
@@ -222,7 +228,7 @@ const OffersManagement = () => {
 
       setOpenSnackbar({
         show: true,
-        message: 'Offer availability updated successfully',
+        message: t('offersManagement.offerAvailabilityUpdatedMessage'),
         severity: 'success'
       })
     }
@@ -238,22 +244,24 @@ const OffersManagement = () => {
             height="100vh"
             alignItems="center"
           >
-            <Typography variant="h3">Loading...</Typography>
+            <Typography variant="h3">{t('common.loading')}...</Typography>
           </Box>
         ) : (
           <>
             {offers && offers.length > 0 ? (
               <MUIDataTable
-                title="All registered offers"
+                title={t('offersManagement.tableTitle')}
                 data={offers.map((offer, key) => [
                   offer.offer_name,
                   offer.start_date
                     ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
-                    : 'No provided date',
+                    : t('offersManagement.noProvidedDate'),
                   offer.end_date
                     ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
-                    : 'No provided date',
-                  offer.active ? 'Active' : 'Inactive',
+                    : t('offersManagement.noProvidedDate'),
+                  offer.active
+                    ? t('offersManagement.active')
+                    : t('offersManagement.inactive'),
                   Actions(offer.active, offer.id),
                   <IconButton
                     key={key}
@@ -280,7 +288,7 @@ const OffersManagement = () => {
                 alignItems="center"
               >
                 <Typography variant="h3">
-                  You have no added offers...
+                  {t('offersManagement.youHaveNoAddedOffers')}
                 </Typography>
               </Box>
             )}
@@ -304,17 +312,19 @@ const OffersManagement = () => {
         : null}
       {offerToEdit ? getGenericOfferComponent(true, offerToEdit) : null}
       <Dialog open={openDeleteDialog} aria-labelledby="delete-dialog-title">
-        <DialogTitle id="delete-dialog-title">Delete offer?</DialogTitle>
+        <DialogTitle id="delete-dialog-title">
+          {t('offersManagement.deleteOfferConfirmation')}
+        </DialogTitle>
         <DialogActions>
           <Button
             autoFocus
             onClick={() => setOpenDeleteDialog(false)}
             color="primary"
           >
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button onClick={deleteOfferRequest} color="primary" autoFocus>
-            Yes, delete it
+            {t('offersManagement.yesDeleteIt')}
           </Button>
         </DialogActions>
       </Dialog>
