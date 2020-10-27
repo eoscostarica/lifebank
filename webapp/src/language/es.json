@@ -121,7 +121,11 @@
       "step": "Paso",
       "done": "Done",
       "sendTo": "Send to",
-      "add": "Añadir"
+      "add": "Añadir",
+      "offers": "Ofertas",
+      "banks": "Bancos",
+      "sponsors": "Comercios",
+      "all": "All"
     },
     "notFound": {
       "404Error": "404: La página que buscas no existe",
