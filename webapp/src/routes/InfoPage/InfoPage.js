@@ -219,13 +219,13 @@ const useStyles = makeStyles((theme) => ({
   },
   contentBodySection: {
     width: '50%',
-    height: '100%',
+    height: '70%',
     float: 'left',
     borderStyle: 'groove'
   },
   headerContent: {
     width: '100%',
-    height: '6%',
+    height: '8%',
     borderStyle: 'groove'
   },
   avatarSectionDesktop: {
@@ -251,8 +251,6 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.18',
     letterSpacing: '0.25px',
     color: 'rgba(0, 0, 0, 0.87)',
-    marginRight: '60px',
-    marginLeft: '2%',
     marginTop: '10px',
     marginBottom: '4px',
     textAlign: 'left'
@@ -268,9 +266,8 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.43',
     letterSpacing: '0.25px',
     color: 'rgba(0, 0, 0, 0.6)',
-    marginRight: '91.6px',
-    marginLeft: '2%',
-    marginTop: '4px',
+    paddingTop: '4px',
+
   },
   subTituleSectionDesktop: {
     width: '20%',
@@ -283,6 +280,11 @@ const useStyles = makeStyles((theme) => ({
     height: '40px',
     borderRadius: '50%',
     marginTop: '10px'
+  },
+  bodyDetailsDesktop: {
+    width: '100%',
+    height: '100%',
+    float: 'left'
   }
 }))
 
@@ -443,8 +445,8 @@ const InfoPage = () => {
                 <div className={classes.bodyDetails}>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Description</Typography>
-                    <Typography variant="body1"> {profile.info.description}
+                    <Typography className={classes.boldText} variant="subtitle1">About</Typography>
+                    <Typography variant="body1"> {profile.info.about}
                     </Typography>
                   </Box>
                   <Divider className={classes.divider} />
@@ -460,7 +462,7 @@ const InfoPage = () => {
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
-                    <Typography variant="body1">{profile.info.phone_number}</Typography>
+                    <Typography variant="body1">{profile.info.telephone}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
@@ -509,10 +511,108 @@ const InfoPage = () => {
                   <div className={classes.subTituleSectionDesktop}>
                     <h3 className={classes.subtitleDesktop}>Hospital</h3>
                   </div>
+                  <div className={classes.bodyDetailsDesktop}>
+                    <Divider className={classes.divider} />
+                    <Box className={classes.midLabel}>
+                      <Typography className={classes.boldText} variant="subtitle1">About</Typography>
+                      <Typography variant="body1"> {profile.info.about}
+                      </Typography>
+                    </Box>
+                    <Divider className={classes.divider} />
+                    <Box className={classes.midLabel}>
+                      <Typography className={classes.boldText} variant="subtitle1">Schedule</Typography>
+                      {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map((schedule) => (
+                        <Typography variant="body1">{schedule.day}</Typography>
+                      ))}
+                    </Box>
+                    <Divider className={classes.divider} />
+                    <Box className={classes.midLabel}>
+                      <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
+                      <Typography variant="body1">{profile.info.address}</Typography>
+                    </Box>
+                    <Box className={classes.midLabel}>
+                      <Button
+                        className={classes.label, classes.boldText}
+                        startIcon={<LocationOnIcon color="action" />}
+                        onClick={handleClickOpen}
+                      >
+                        Show location
+                      </Button>
+                      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                        <div className={classes.appBar}>
+                          <Toolbar>
+                            <Typography variant="subtitle1">
+                              Lifebank Location
+                            </Typography>
+                            <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                              <CloseIcon color="secondary" />
+                            </IconButton>
+                          </Toolbar>
+                        </div>
+                        <MapShowOneLocation
+                          markerLocation={profile.info.geolocation}
+                          accountProp={profile.account}
+                          width="100%"
+                          height="100%"
+                          py={2}
+                        />
+                      </Dialog>
+                    </Box>
+                    <Divider className={classes.divider} />
+                    <Box className={classes.midLabel}>
+                      <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
+                      <Typography variant="body1">{profile.info.email}</Typography>
+                    </Box>
+                    <Divider className={classes.divider} />
+                    <Box className={classes.midLabel}>
+                      <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
+                      <Typography variant="body1">{profile.info.telephone}</Typography>
+                    </Box>
+                    <Divider className={classes.divider} />
+                    <Box className={classes.midLabel}>
+                      <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
+                      <Box className={classes.bloodDemand}>
+                        <Box className={classes.markLabel}>
+                          <Typography variant="body1" className={classes.midLabel}>Low</Typography>
+                          <Typography variant="body1" className={classes.midLabel}>Medium</Typography>
+                          <Typography variant="body1" className={classes.midLabel}>Urgent</Typography>
+                        </Box>
+                        <Box className={classes.slider}>
+                          <Slider
+                            valueLabelDisplay="off"
+                            color="secondary"
+                            defaultValue={profile.info.blood_urgency_level}
+                            step={null}
+                            min={1}
+                            max={3}
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+                  </div>
                 </div>
               </div>
               <div className={classes.contentBodySection}>
-
+                <div className={classes.imageSection}>
+                  <Carousel
+                    value={actualImageIndex}
+                    className={classes.carousel}
+                    onChange={(val) => setActualImageIndex(val)}
+                    plugins={[
+                      'arrows',
+                      {
+                        resolve: slidesToShowPlugin,
+                        options: {
+                          numberOfSlides: 1
+                        }
+                      }
+                    ]}
+                  >
+                    {numbers.map((url, key) => (
+                      <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                    ))}
+                  </Carousel>
+                </div>
               </div>
             </div>
           </Box>
