@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ffffff',
     marginBottom: '0',
     paddingTop: '16px',
-    borderStyle: 'groove'
+    //borderStyle: 'groove'
   },
   headerCardBody: {
     width: '100%',
@@ -206,39 +206,39 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     backgroundColor: '#ffffff',
     marginBottom: '0',
-    paddingTop: '2.5%',
-    borderStyle: 'groove'
+    marginTop: '2.5%',
+    //borderStyle: 'groove'
   },
   bodyDesktop: {
     width: '98%',
-    height: '1255px',
+    height: '100%',
     backgroundColor: '#ffffff',
     marginLeft: '1%',
     marginRight: '1%',
-    borderStyle: 'groove'
+    //borderStyle: 'groove'
   },
   contentBodySection: {
     width: '50%',
-    height: '65%',
+    height: '100%',
     float: 'left',
-    borderStyle: 'groove'
+    //borderStyle: 'groove'
   },
   headerContent: {
     width: '100%',
-    height: '9%',
-    borderStyle: 'groove'
+    height: '10%',
+    //borderStyle: 'groove'
   },
   avatarSectionDesktop: {
     width: '10%',
     height: '100%',
     float: 'left',
-    borderStyle: 'groove'
+    //borderStyle: 'groove'
   },
   tituleSectionDesktop: {
     width: '70%',
     height: '100%',
     float: 'left',
-    borderStyle: 'groove'
+    //borderStyle: 'groove'
   },
   titleDesktop: {
     width: '100%',
@@ -273,7 +273,7 @@ const useStyles = makeStyles((theme) => ({
     width: '20%',
     height: '100%',
     float: 'left',
-    borderStyle: 'groove'
+    //borderStyle: 'groove'
   },
   avatarRoundDesktop: {
     width: '40px',
@@ -285,7 +285,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     float: 'left'
-  }
+  },
+  imageSectionDesktop: {
+    position: "relative",
+    width: '98%',
+    height: '35%',
+    paddingLeft: '2%'
+  },
 }))
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -331,34 +337,30 @@ const InfoPage = () => {
 
   const generateSchedule = (schedules) => {
     let scheduleFinal = []
+    var schedule;
     for (schedule of schedules) {
       if (scheduleFinal.length > 0) {
         let insert = 0
         scheduleFinal.forEach(element => {
           if (schedule.open === element[1][0] && schedule.close === element[1][1]) {
-            element[0].push(schedule.dia)
+            element[0] = `${element[0]}, ${schedule.day}`
             insert++
           }
         }
         );
-        if (insert > 0) {
-          const tempaSchedule = [[schedule.dia], [schedule.open, schedule.close]]
+        if (insert === 0) {
+          const tempaSchedule = [[schedule.day], [schedule.open, schedule.close]]
           scheduleFinal.push(tempaSchedule)
         }
-
-
       }
-
-
-
+      else {
+        const tempaSchedule = [[schedule.day], [schedule.open, schedule.close]]
+        scheduleFinal.push(tempaSchedule)
+      }
     }
 
-    schedules.forEach(element => console.log(element));
-    {
-      JSON.parse(schedules).length > 0 && JSON.parse(schedules).map((schedule) => (
-      
-    ))
-    }
+    return scheduleFinal
+
   }
 
   useEffect(() => {
@@ -553,8 +555,8 @@ const InfoPage = () => {
                     <Divider className={classes.divider} />
                     <Box className={classes.midLabel}>
                       <Typography className={classes.boldText} variant="subtitle1">Schedule</Typography>
-                      {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map((schedule) => (
-                        <Typography variant="body1">{schedule.day}</Typography>
+                      {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
+                        <Typography id={index} variant="body1">{schedule[0] + " from " + schedule[1][0] + " to " + schedule[1][1]}</Typography>
                       ))}
                     </Box>
                     <Divider className={classes.divider} />
@@ -625,7 +627,7 @@ const InfoPage = () => {
                 </div>
               </div>
               <div className={classes.contentBodySection}>
-                <div className={classes.imageSection}>
+                <div className={classes.imageSectionDesktop}>
                   <Carousel
                     value={actualImageIndex}
                     className={classes.carousel}
