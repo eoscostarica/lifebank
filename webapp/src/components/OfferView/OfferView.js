@@ -190,13 +190,14 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView }) => {
-
   const classes = useStyles()
-  const theme = useTheme();
+  const theme = useTheme()
   const images = JSON.parse(selectOffer.images)
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(0)
   const [currentUser] = useUser()
-  const maxSteps = images.length;
+  const maxSteps = images.length
+  const startDate = new Date(selectOffer.start_date)
+  const endDate = new Date(selectOffer.end_date)
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -260,7 +261,12 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
         </Box>
         <Box className={classes.componentContent}>
           <Typography paragraph className={classes.componentontentText} >{truncateString(selectOffer.description)}</Typography>
-          <Typography paragraph className={classes.componentontentTextAux}>This offer is only for online purchases.</Typography>
+          {!isNaN(startDate.getMonth()) && !isNaN(endDate.getMonth()) &&
+            <Typography paragraph className={classes.componentontentTextAux}>Available from {monthNames[startDate.getMonth()]} {startDate.getDay()} to {monthNames[endDate.getMonth()]} {endDate.getDay()}</Typography>
+          }
+          {selectOffer.online_only &&
+            <Typography paragraph className={classes.componentontentTextAux}>This offer is only for online purchases.</Typography>
+          }
         </Box>
         <Box className={classes.componentActionsButton}>
           {!isDesktop &&
