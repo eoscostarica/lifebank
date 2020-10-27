@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const NotFound = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
