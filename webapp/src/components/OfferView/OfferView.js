@@ -290,7 +290,7 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
             account={selectOffer.user.account}
           />
           {currentUser && currentUser.role === "donor" &&
-            <DonationsDashboard isDesktop={isDesktop} isOffer={true} />
+            <DonationsDashboard isDesktop={isDesktop} isOffer />
           }
         </Box>
       </Box>
