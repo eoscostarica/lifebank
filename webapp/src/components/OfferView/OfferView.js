@@ -17,6 +17,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import CloseIcon from '@material-ui/icons/Close'
+import { useTranslation } from 'react-i18next'
 
 import MapModalOneLocation from '../MapModalOneLocation/MapModalOneLocation';
 import DonationsDashboard from '../DonationsDashboard/DonationsDashboard';
@@ -181,9 +182,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
+const monthKey = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Agt", "Sep", "Oct", "Nov", "Dec"]
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -198,6 +197,7 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
   const maxSteps = images.length
   const startDate = new Date(selectOffer.start_date)
   const endDate = new Date(selectOffer.end_date)
+  const { t } = useTranslation('translations')
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -231,14 +231,14 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
           activeStep={activeStep}
           nextButton={
             <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-              Next
+              {t('common.next')}
               {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
             </Button>
           }
           backButton={
             <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
               {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-              Back
+              {t('common.prev')}
             </Button>
           }
         />
@@ -260,12 +260,13 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
           <ShowImages />
         </Box>
         <Box className={classes.componentContent}>
+          {console.log("tranlation", t())}
           <Typography paragraph className={classes.componentontentText} >{truncateString(selectOffer.description)}</Typography>
           {!isNaN(startDate.getMonth()) && !isNaN(endDate.getMonth()) &&
-            <Typography paragraph className={classes.componentontentTextAux}>Available from {monthNames[startDate.getMonth()]} {startDate.getDay()} to {monthNames[endDate.getMonth()]} {endDate.getDay()}</Typography>
+            <Typography paragraph className={classes.componentontentTextAux}>{t("offerView.available")} {t(`months.${monthKey[startDate.getMonth()]}`)} {startDate.getDay()} {t("offerView.to")} {t(`months.${monthKey[endDate.getMonth()]}`)} {endDate.getDay()}</Typography>
           }
           {selectOffer.online_only &&
-            <Typography paragraph className={classes.componentontentTextAux}>This offer is only for online purchases.</Typography>
+            <Typography paragraph className={classes.componentontentTextAux}>{t('offerView.onlinePurchases')}</Typography>
           }
         </Box>
         <Box className={classes.componentActionsButton}>
@@ -308,7 +309,7 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
                 <KeyboardBackspaceIcon />
               </IconButton>
               <Typography variant="h6" className={classes.title}>
-                Selected Offer
+                {t('offerView.selectedOffer')}
               </Typography>
             </Toolbar>
           </AppBar>
