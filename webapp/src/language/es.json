@@ -97,7 +97,20 @@
       "websiteEoscr": "Página web de EOS Costa Rica",
       "noBloodBank": "Sin bancos de sangre disponibles",
       "noOffersAvailable": "Sin ofertas disponibles",
-      "noSponsorsAvailable": "Sin Comercios Afiliados disponibles"
+      "noOfferAvailable": "Oferta no disponible",
+      "noSponsorsAvailable": "Sin Comercios Afiliados disponibles",
+      "price": "Precio",
+      "limitedOffer": "Oferta limitada",
+      "stock": "Inventario",
+      "transaction": "Transacción",
+      "communities": "Communidades",
+      "tokens": "Activos",
+      "redeemed": "Canjeado",
+      "expired": "Expirado",
+      "view": "Ver",
+      "alreadyAssociated": "Esta cuenta tiene una cuenta asociada",
+      "readMore": "Leer más",
+      "howLifebankWorks": "Cómo funciona Lifebank"
     },
     "notFound": {
       "404Error": "404: La página que buscas no existe",
@@ -119,6 +132,7 @@
       "editSchedule": "Editar horario"
     },
     "profile": {
+      "myProfile": "Mi Perfil",
       "profile": "Perfil",
       "role": "Rol",
       "community": "Comunidad",
@@ -132,7 +146,8 @@
       "communityAsset": "Activo de Comunidad",
       "hasImmunityTest": "Tiene test de inmunidad",
       "benefitDescription": "Descripción del beneficio",
-      "location": "Localización"
+      "location": "Localización",
+      "yourProfileIsNotComplete": "Tu perfil no está completo"
     },
     "editProfile": {
       "editProfile": "Editar Perfil",
@@ -193,6 +208,7 @@
     "about": {
       "eosioBased": "El Banco de Vida es un dapp basado en EOSIO que ayuda a las comunidades locales a crear un círculo virtuoso de intercambio de valores entre tres partes - donantes de vida elegibles, centros de donación de la comunidad y empresas locales participantes (Comercios Afiliados).",
       "eoscrInitiative": "Lifebank es una iniciativa de EOS Costa Rica, una compañía que desarrolla soluciones basadas en blockchain para resolver problemas del mundo real. Lifebank es nuestra propuesta al desafío organizado por la compañía líder en blockchain, Block.one.",
+      "lifebankIsApowerful": "Lifebank es una poderosa aplicación que utiliza tecnología blockchain para salvar vidas. Después de completar una donación en cualquier banco de sangre registrado, un donador ganará un activo LIFE que puede ser canjeado en un Comercio Afiliado",
       "storyBehindLifebank": "La historia detrás de Lifebank",
       "weIdentified": "Identificamos dos problemas principales: la escasez de donaciones de sangre y la desaceleración de la economía local. En medio del brote de COVID-19, los bancos de sangre necesitan urgentemente donantes. Las personas que son potenciales donantes cualificados son incitados a quedarse en casa y aislarse. A medida que las donaciones caen en picada y la demanda de sangre y plasma aumenta, los bancos de sangre están experimentando una pronunciada escasez mundial.",
       "moreOver": "Además, la pandemia está afectando a las economías locales debido a un bloqueo generalizado. Las pequeñas empresas que dependen de la comunidad local deben pensar en formas de incentivar a los clientes para que compren tan pronto como se levanten las restricciones.",

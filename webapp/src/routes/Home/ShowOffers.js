@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import { useTranslations } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -180,7 +180,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ShowOffers = ({ offers, loading, isDesktop }) => {
-  const { t } = useTranslations('translations')
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   const LoadOffers = () => {

@@ -4,6 +4,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/styles'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   success: {
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ValidateEmail = ({ isValid, loading, user, setField }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   const validateFormatEmail = (email) => {
@@ -26,9 +28,9 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
   return (
     <TextField
       id="email"
-      label="Email"
+      label={t('common.email')}
       variant="outlined"
-      placeholder="Your Email"
+      placeholder={t('common.emailPlaceholder')}
       type="email"
       fullWidth
       InputLabelProps={{
@@ -45,7 +47,7 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
       }}
       helperText={
         validateFormatEmail(user.email) && !isValid && loading
-          ? 'This email already has an associated account'
+          ? t('miscellaneous.alreadyAssociated')
           : !isValid
           ? ''
           : ''

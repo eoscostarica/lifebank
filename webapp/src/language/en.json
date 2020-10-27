@@ -97,7 +97,20 @@
       "websiteEoscr": "Website EOS Costa Rica",
       "noBloodBank": "No blood bank available",
       "noOffersAvailable": "No offers available",
-      "noSponsorsAvailable": "No Sponsors available"
+      "noOfferAvailable": "No offer available",
+      "noSponsorsAvailable": "No Sponsors available",
+      "price": "Price",
+      "limitedOffer": "Limited offer",
+      "stock": "Stock",
+      "transaction": "Transaction",
+      "communities": "Communities",
+      "tokens": "Tokens",
+      "redeemed": "Redeemed",
+      "expired": "Expired",
+      "view": "View",
+      "alreadyAssociated": "This email has an associated account",
+      "readMore": "Read more",
+      "howLifebankWorks": "How Lifebank works"
     },
     "notFound": {
       "404Error": "404: The page you are looking for isn’t here",
@@ -119,6 +132,7 @@
       "editSchedule": "Edit Schedule"
     },
     "profile": {
+      "myProfile": "My Profile",
       "profile": "Profile",
       "role": "Role",
       "community": "Community",
@@ -132,7 +146,8 @@
       "communityAsset": "Community Asset",
       "hasImmunityTest": "Has Immunity Test",
       "benefitDescription": "Benefit Description",
-      "location": "Location"
+      "location": "Location",
+      "yourProfileIsNotComplete": "Your profile is not complete"
     },
     "editProfile": {
       "editProfile": "Edit Profile",
@@ -193,6 +208,7 @@
     "about": {
       "eosioBased": "Lifebank is an EOSIO-based dapp that helps local communities create a virtuous circle of value exchange between three parties — eligible life donors, community donation centers, and participating local businesses (sponsors).",
       "eoscrInitiative": "Lifebank is an initiative of EOS Costa Rica, a company that develops blockchain-based solutions to solve real-world problems. Lifebank is our entry to the Coding for Change challenge organized by leading blockchain company, Block.one.",
+      "lifebankIsApowerful": "Lifebank is a powerful application that uses blockchain technology to save lives. After completing a donation at any registered Lifebank, a life donor will earn a Life Token that can be redeemed at a local sponsor.",
       "storyBehindLifebank": "The Story Behind Lifebank",
       "weIdentified": "We identified two main problems: a blood donation shortage and a local economic slowdown. Amid the COVID-19 outbreak, blood banks urgently need donors. People who are potential qualifying donors are prompted to stay home and isolate. As donations plummet and demand for blood and plasma increases, blood banks are experiencing a pronounced global shortage.",
       "moreOver": "Moreover, the pandemic is impacting local economies due to a generalized lockdown. Small businesses that rely on the local community must think of ways to incentivize customers to buy as soon as restrictions are lifted.",
