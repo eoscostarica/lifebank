@@ -4,6 +4,7 @@ import { FacebookProvider, Login } from 'react-facebook'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 import SvgIcon from '@material-ui/core/SvgIcon'
+import { useTranslation } from 'react-i18next'
 
 import { oAuthConfig } from '../../../config'
 
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SignupWithFacebook = ({ handlerSubmit }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   const facebookResponse = (response) => {
@@ -61,7 +63,7 @@ const SignupWithFacebook = ({ handlerSubmit }) => {
               </SvgIcon>
             }
           >
-            Sign up with Facebook
+            {t('signup.signupWithFacebook')}
           </Button>
         )}
       </Login>

@@ -20,6 +20,7 @@ import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import CloseIcon from '@material-ui/icons/Close'
+import { useTranslation } from 'react-i18next'
 
 const AMPM = ['am', 'pm']
 const useStyles = makeStyles((theme) => ({
@@ -146,6 +147,7 @@ const Schedule = ({
   showSchedule,
   showButton
 }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState('06:00')
   const [close, setClose] = useState('16:00')
@@ -154,13 +156,13 @@ const Schedule = ({
   const [schedule, setSchedule] = useState([])
   const [openModal, setOpenModal] = useState(false)
   const days = [
-    { value: 'Sunday', label: 'Sunday' },
-    { value: 'Monday', label: 'Monday' },
-    { value: 'Tuesday', label: 'Tuesday' },
-    { value: 'Wenesday', label: 'Wenesday' },
-    { value: 'Thursday', label: 'Thursday' },
-    { value: 'Friday', label: 'Friday' },
-    { value: 'Saturday', label: 'Saturday' }
+    { value: 'Sunday', label: t('schedule.sunday') },
+    { value: 'Monday', label: t('schedule.monday') },
+    { value: 'Tuesday', label: t('schedule.tuesday') },
+    { value: 'Wenesday', label: t('schedule.wednesday') },
+    { value: 'Thursday', label: t('schedule.thursday') },
+    { value: 'Friday', label: t('schedule.friday') },
+    { value: 'Saturday', label: t('schedule.saturday') }
   ]
   const hours = getHours()
 
@@ -214,7 +216,7 @@ const Schedule = ({
           onClick={handleOpen}
           fullWidth
         >
-          Add Schedule
+          {t('schedule.addSchedule')}
         </Button>
       )}
       {showSchedule &&
@@ -265,12 +267,14 @@ const Schedule = ({
               </IconButton>
             </Box>
             <Box className={classes.root}>
-              <Typography variant="h3">Choose Your Schedule</Typography>
+              <Typography variant="h3">
+                {t('schedule.chooseYourSchedule')}
+              </Typography>
               <TextField
                 id="outlined-select-currency"
                 select
                 fullWidth
-                label="Day"
+                label={t('schedule.day')}
                 value={day}
                 onChange={handleChangeDay}
                 variant="outlined"
@@ -296,7 +300,7 @@ const Schedule = ({
                 <TextField
                   id="outlined-select-currency"
                   select
-                  label="Open"
+                  label={t('schedule.open')}
                   value={open}
                   onChange={handleChangeOpen}
                   variant="outlined"
@@ -311,7 +315,7 @@ const Schedule = ({
                 <TextField
                   id="outlined-select-currency"
                   select
-                  label="Close"
+                  label={t('schedule.close')}
                   value={close}
                   onChange={handleChangeClose}
                   variant="outlined"
@@ -328,7 +332,7 @@ const Schedule = ({
                 color="primary"
                 onClick={handleAddSchedulePerDay}
               >
-                Add
+                {t('miscellaneous.add')}
               </Button>
               <Box className={classes.list}>
                 <List className={classes.scheduleList}>
@@ -364,7 +368,7 @@ const Schedule = ({
                     color="primary"
                     onClick={onHandleOnAddSchedule}
                   >
-                    Save
+                    {t('common.save')}
                   </Button>
                 </Box>
               )}

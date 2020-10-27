@@ -13,6 +13,7 @@ import Backdrop from '@material-ui/core/Backdrop'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import Fade from '@material-ui/core/Fade'
 import QRCode from 'qrcode.react'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -68,12 +69,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ClaimReward = ({
-  overrideBoxClass,
-  overrideLabelClass,
-  useButton,
-  profile
-}) => {
+const ClaimReward = ({ overrideBoxClass, useButton, profile }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -94,7 +91,7 @@ const ClaimReward = ({
             color="secondary"
             startIcon={<FavoriteIcon />}
           >
-            Claim Reward
+            {t('claimReward.claimReward')}
           </Button>
         )}
       </Box>
@@ -123,13 +120,19 @@ const ClaimReward = ({
               </IconButton>
             </Box>
             <Box className={classes.bodyWrapper}>
-              <Typography variant="h1">Claim Your Reward</Typography>
-              <Typography variant="h4">Show this code</Typography>
+              <Typography variant="h1">
+                {t('claimReward.claimYourReward')}
+              </Typography>
+              <Typography variant="h4">
+                {t('claimReward.showThisCode')}
+              </Typography>
               <QRCode value={profile.account || 'n/a'} size={200} />
-              <Typography variant="h4">Or your user name</Typography>
+              <Typography variant="h4">
+                {t('claimReward.orYourUsername')}
+              </Typography>
               <Typography variant="h3">{profile.account}</Typography>
               <Button variant="outlined" color="primary" onClick={handleOpen}>
-                I'm Done
+                {t('claimReward.imDone')}
               </Button>
             </Box>
           </Paper>

@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EditProfileDonor = ({ profile, onSubmit, loading }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [user, setUser] = useState({
     email: profile.email || ''
@@ -61,9 +63,9 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
       <Box className={classes.textFieldWrapper}>
         <TextField
           id="email"
-          label="Name"
+          label={t('sigup.name')}
           fullWidth
-          placeholder="Your Name"
+          placeholder={t('sigup.namePlaceholder')}
           defaultValue={user.email}
           variant="outlined"
           InputLabelProps={{
@@ -74,9 +76,9 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
         />
         <TextField
           id="email"
-          label="Email"
+          label={t('common.email')}
           fullWidth
-          placeholder="Your Email"
+          placeholder={t('common.emailPlaceholder')}
           defaultValue={user.email}
           variant="outlined"
           InputLabelProps={{
@@ -93,7 +95,7 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
             color="primary"
             onClick={() => onSubmit(user)}
           >
-            Save
+            {t('common.save')}
           </Button>
           <Link to="/profile" className={classes.labelBtn}>
             <Button
@@ -101,17 +103,13 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
               color="secondary"
               className={classes.labelBtn}
             >
-              cancel
+              {t('common.cancel')}
             </Button>
           </Link>
         </Box>
         {loading && <CircularProgress />}
       </Box>
-      <Typography variant="body1">
-        We don't request or store any personal information on the blockchain.
-        You may optionally add a full name and email address once you have
-        completed registration.
-      </Typography>
+      <Typography variant="body1">{t('about.weDontRequest')}</Typography>
     </form>
   )
 }

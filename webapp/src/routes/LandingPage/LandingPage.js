@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/styles'
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
+import { useTranslation } from 'react-i18next'
 
 import { useUser } from '../../context/user.context'
 import CustomRouterLink from '../../components/CustomRouterLink'
@@ -171,6 +172,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LandingPage = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [currentUser] = useUser()
 
@@ -178,20 +180,20 @@ const LandingPage = () => {
     <Grid container justify="center">
       <Box className={classes.homeHeader}>
         <Box className={classes.boxLeft}>
-          <Typography variant="h1">Start Saving Lives</Typography>
+          <Typography variant="h1">{t('hero.title')}</Typography>
           <Box className={classes.loginTypeDonor}>
-            <Typography variant="h5">As a Donor</Typography>
+            <Typography variant="h5">{t('signup.asAdonor')}</Typography>
           </Box>
           <Box className={classes.loginTypeSponsor}>
-            <Typography variant="h5">As a Sponsor</Typography>
+            <Typography variant="h5">{t('signup.asAsponsor')}</Typography>
           </Box>
           <Box className={classes.loginTypeLifeBank}>
-            <Typography variant="h5">As a Lifebank</Typography>
+            <Typography variant="h5">{t('signup.asAbank')}</Typography>
           </Box>
         </Box>
         <Box className={classes.boxRight}>
-          <Typography variant="body1">Give blood banks a lifeline.</Typography>
-          <Typography variant="body1">Register to donate life.</Typography>
+          <Typography variant="body1">{t('hero.subtitle1')}</Typography>
+          <Typography variant="body1">{t('hero.subtitle2')}</Typography>
           <Button
             className={classes.registerBtn}
             variant="contained"
@@ -204,23 +206,20 @@ const LandingPage = () => {
         </Box>
       </Box>
       <Grid item xs={12} className={classes.bodyHome}>
-        <Typography variant="h5">
-          Find a Lifebank or sponsor near you.
-        </Typography>
+        <Typography variant="h5">{t('map.findLifebank')}</Typography>
 
         <MapStatic />
 
-        <Typography variant="h5">How Lifebank works</Typography>
+        <Typography variant="h5">
+          {t('miscellaneous.howLifebankWorks')}
+        </Typography>
         <Typography variant="body1">
-          Lifebank is a powerful application that uses blockchain technology to
-          save lives. After completing a donation at any registered Lifebank, a
-          life donor will earn a Life Token that can be redeemed at a local
-          sponsor.
+          {t('about.lifebankIsApowerful')}
         </Typography>
         <Box className={classes.readMoreBox}>
           <Link to="/about" className={classes.linkBtn}>
             <Button variant="outlined" color="primary" fullWidth>
-              Read more
+              {t('miscellaneous.readMore')}
             </Button>
           </Link>
         </Box>

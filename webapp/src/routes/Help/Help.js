@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link'
 import HttpIcon from '@material-ui/icons/Http'
 import TelegramIcon from '@material-ui/icons/Telegram'
 import GitHubIcon from '@material-ui/icons/GitHub'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   contentInfo: {
@@ -38,14 +39,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Help = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
     <Box className={classes.contentInfo}>
-      <Typography variant="h4">Help</Typography>
+      <Typography variant="h4">{t('miscellaneous.help')}</Typography>
       <Typography variant="body1">
-        Thank you for using Lifebank. Lifebank is still in progress. If you are
-        experiencing any issues, please contact us using the following links:
+        {t('miscellaneous.thankYouForUsingLifebank')}
       </Typography>
       <Box className={classes.boxLinks}>
         <GitHubIcon />
@@ -64,7 +65,7 @@ const Help = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Typography variant="body1">Telegram Channel</Typography>
+          <Typography variant="body1">{t('miscellaneous.telegram')}</Typography>
         </Link>
       </Box>
       <Box className={classes.boxLinks}>
@@ -74,7 +75,9 @@ const Help = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Typography variant="body1">Website EOS Costa Rica</Typography>
+          <Typography variant="body1">
+            {t('miscellaneous.websiteEoscr')}
+          </Typography>
         </Link>
       </Box>
     </Box>

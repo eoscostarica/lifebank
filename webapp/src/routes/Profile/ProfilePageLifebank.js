@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
+import { useTranslation } from 'react-i18next'
 
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -39,12 +40,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageLifebank = ({ profile }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
     <>
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Account</Typography>
+        <Typography variant="subtitle1">{t('common.account')}</Typography>
         <Typography variant="body1">
           <Link
             href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
@@ -58,51 +60,55 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Organization</Typography>
+        <Typography variant="subtitle1">{t('profile.organization')}</Typography>
         <Typography variant="body1">{profile.name}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Role</Typography>
+        <Typography variant="subtitle1">{t('profile.role')}</Typography>
         <Typography variant="body1">{profile.role}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Email</Typography>
+        <Typography variant="subtitle1">{t('common.email')}</Typography>
         <Typography variant="body1">{profile.email}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Address</Typography>
+        <Typography variant="subtitle1">{t('signup.address')}</Typography>
         <Typography variant="body1">{profile.address}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Telephone</Typography>
+        <Typography variant="subtitle1">{t('common.telephone')}</Typography>
         <Typography variant="body1">{profile.phone_number}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Consent</Typography>
+        <Typography variant="subtitle1">{t('profile.consent')}</Typography>
         <Typography variant="body1">{`${profile.consent}`}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Community Assets</Typography>
+        <Typography variant="subtitle1">
+          {t('profile.communityAsset')}
+        </Typography>
         <Typography variant="body1" className={classes.secondaryText}>
           {profile.community_asset}
         </Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Has Immunity Test</Typography>
+        <Typography variant="subtitle1">
+          {t('profile.hasImmunityTest')}
+        </Typography>
         <Typography variant="body1">{`${Boolean(
           profile.has_inmmunity_test
         )}`}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Blood Urgency Level</Typography>
+        <Typography variant="subtitle1">{t('common.bloodUrgency')}</Typography>
         <Typography variant="body1" className={classes.secondaryText}>
           {profile.blood_urgency_level}
         </Typography>
@@ -110,7 +116,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <Divider className={classes.divider} />
 
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Schedule</Typography>
+        <Typography variant="subtitle1">{t('common.Schedule')}</Typography>
         <Typography variant="body1" />
       </Box>
       <Schedule
@@ -119,7 +125,9 @@ const ProfilePageLifebank = ({ profile }) => {
         showButton={false}
       />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Benefit Description</Typography>
+        <Typography variant="subtitle1">
+          {t('profile.benefitDescription')}
+        </Typography>
         <Typography variant="body1" />
       </Box>
       <TextField
@@ -135,7 +143,7 @@ const ProfilePageLifebank = ({ profile }) => {
         rows={3}
       />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Location</Typography>
+        <Typography variant="subtitle1">{t('profile.location')}</Typography>
         <Typography variant="body1" />
       </Box>
 
@@ -150,7 +158,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <Divider className={classes.divider} />
       <LinkRouter to="/edit-profile" className={classes.editBtn}>
         <Button variant="contained" color="primary">
-          Edit
+          {t('common.edit')}
         </Button>
       </LinkRouter>
     </>

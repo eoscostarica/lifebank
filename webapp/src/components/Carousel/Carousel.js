@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
 import DeleteIcon from '@material-ui/icons/Delete'
 import '@brainhubeu/react-carousel/lib/style.css'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles({
   carousel: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles({
 })
 
 const CarouselComponent = ({ images, activeDeletion, deleteItem }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [actualImageIndex, setActualImageIndex] = useState(0)
 
@@ -48,7 +50,7 @@ const CarouselComponent = ({ images, activeDeletion, deleteItem }) => {
                 className={classes.button}
                 startIcon={<DeleteIcon />}
               >
-                Delete
+                {t('common.delete')}
               </Button>
             )}
           </Box>
@@ -59,13 +61,13 @@ const CarouselComponent = ({ images, activeDeletion, deleteItem }) => {
           disabled={actualImageIndex === 0}
           onClick={() => setActualImageIndex(actualImageIndex - 1)}
         >
-          Prev
+          {t('common.prev')}
         </Button>
         <Button
           disabled={actualImageIndex === images.length - 1}
           onClick={() => setActualImageIndex(actualImageIndex + 1)}
         >
-          Next
+          {t('common.next')}
         </Button>
       </Box>
     </Box>

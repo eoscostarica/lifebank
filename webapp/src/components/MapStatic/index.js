@@ -8,6 +8,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
+import { useTranslation } from 'react-i18next'
 
 import { mapboxConfig } from '../../config'
 import MapShowLocations from '../MapShowLocations'
@@ -16,19 +17,19 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    height: "100%",
-    width: "100%",
+    height: '100%',
+    width: '100%',
     outlineWidth: 0,
     borderRadius: '0px'
   },
   closeIcon: {
     display: 'flex',
-    height: "5vh",
+    height: '5vh',
     justifyContent: 'flex-end',
     '& svg': {
       fontSize: 25,
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   bodyWrapper: {
-    height: "90vh",
+    height: '90vh',
     '& h3': {
       textAlign: 'center',
       padding: 8,
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   map: {
-    height: "90vh"
+    height: '90vh'
   },
   marker: {
     display: 'flex',
@@ -67,11 +68,12 @@ const useStyles = makeStyles((theme) => ({
   mapStatic: {
     padding: 0,
     margin: 0,
-    width: "100%"
+    width: '100%'
   }
 }))
 
 const MapStatic = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -87,11 +89,15 @@ const MapStatic = () => {
       windowSize = 1280
     }
 
-    const api = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-84.0556371,9.9195872,7/" + windowSize.toString() + "x" + heightMap.toString() + "?access_token=" + mapboxConfig.accessToken
+    const api =
+      'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-84.0556371,9.9195872,7/' +
+      windowSize.toString() +
+      'x' +
+      heightMap.toString() +
+      '?access_token=' +
+      mapboxConfig.accessToken
 
-    return (
-      <img src={api} onClick={handleOpen} />
-    )
+    return <img src={api} onClick={handleOpen} />
   }
 
   return (
@@ -121,9 +127,7 @@ const MapStatic = () => {
               </IconButton>
             </Box>
             <Box className={classes.bodyWrapper}>
-              <Typography variant="h3">
-                Find Lifebanks or Sponsors Near You
-              </Typography>
+              <Typography variant="h3">{t('map.findLifebank')}</Typography>
               <MapShowLocations className={classes.map} />
             </Box>
           </Paper>

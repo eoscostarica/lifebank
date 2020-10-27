@@ -11,6 +11,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import Box from '@material-ui/core/Box'
 import IconButton from '@material-ui/core/IconButton'
+import { useTranslation } from 'react-i18next'
 
 import { constants } from '../../config'
 
@@ -21,16 +22,16 @@ const useStyles = makeStyles((theme) => ({
     top: 5,
     right: 1,
     margin: '0',
-    height: "5vh",
+    height: '5vh',
     '& svg': {
       fontSize: 25,
       color: theme.palette.secondary.main
     }
   },
   title: {
-    height: "50px",
+    height: '50px',
     [theme.breakpoints.down('md')]: {
-      marginBottom: 30,
+      marginBottom: 30
     }
   },
   inputStyle: {
@@ -39,31 +40,38 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonMapDesktop: {
     padding: 20,
-    backgroundColor: "white",
-    color: "rgba(0, 0, 0, 0.6)"
+    backgroundColor: 'white',
+    color: 'rgba(0, 0, 0, 0.6)'
   },
   iconBottomAppBar: {
-    color: "#121212"
+    color: '#121212'
   },
   buttonIconDesktop: {
     padding: 20,
-    backgroundColor: "white",
-    color: "rgba(0, 0, 0, 0.6)"
-  },
-}));
+    backgroundColor: 'white',
+    color: 'rgba(0, 0, 0, 0.6)'
+  }
+}))
 
 const { SPONSOR_TYPES } = constants
 const sponsorsCategories = ['All'].concat(SPONSOR_TYPES)
-const offerCategories = ['All', 'Discount', 'Gift', 'Benefit', 'Other']
 const tokenPrices = ['All', '1', '2', '3', '4', '5']
 
 const FilterHome = ({ isDesktop, applyFilters }) => {
+  const { t } = useTranslation('translations')
+  const offerCategories = [
+    t('miscellaneous.all'),
+    t('offersManagement.discount'),
+    t('offersManagement.gift'),
+    t('offersManagement.benefit'),
+    t('offersManagement.other')
+  ]
   const classes = useStyles()
-  const [maxWidth] = useState('md');
+  const [maxWidth] = useState('md')
   const [openDialogFilter, setOpenDialogFilter] = useState(false)
-  const [valueSponsorCat, setValueSponsorCat] = useState("All")
-  const [valueOfferCat, setValueOfferCat] = useState("All")
-  const [valueTokenPrice, setValueTokenPrice] = useState("All")
+  const [valueSponsorCat, setValueSponsorCat] = useState('All')
+  const [valueOfferCat, setValueOfferCat] = useState('All')
+  const [valueTokenPrice, setValueTokenPrice] = useState('All')
 
   const handleApplyFilters = () => {
     setOpenDialogFilter(false)
@@ -72,20 +80,20 @@ const FilterHome = ({ isDesktop, applyFilters }) => {
 
   return (
     <>
-      {isDesktop &&
+      {isDesktop && (
         <Button
           onClick={() => setOpenDialogFilter(true)}
           className={classes.buttonIconDesktop}
           startIcon={<FilterListIcon />}
         >
-          FILTERS
+          {t('contentToolbar.filters')}
         </Button>
-      }
-      {!isDesktop &&
+      )}
+      {!isDesktop && (
         <IconButton onClick={() => setOpenDialogFilter(true)}>
           <FilterListIcon className={classes.iconBottomAppBar} />
         </IconButton>
-      }
+      )}
       <Dialog
         maxWidth={maxWidth}
         className={classes.dialog}
@@ -103,7 +111,9 @@ const FilterHome = ({ isDesktop, applyFilters }) => {
             <CloseIcon fontSize="inherit" />
           </IconButton>
         </Box>
-        <DialogTitle id="responsive-dialog-title" className={classes.title}>Filter offers, lifebanks or sponsors</DialogTitle>
+        <DialogTitle id="responsive-dialog-title" className={classes.title}>
+          Filter offers, lifebanks or sponsors
+        </DialogTitle>
         <Grid
           container
           direction="row"
@@ -170,7 +180,7 @@ const FilterHome = ({ isDesktop, applyFilters }) => {
               onClick={handleApplyFilters}
             >
               Save changes
-                </Button>
+            </Button>
           </Grid>
         </Grid>
       </Dialog>

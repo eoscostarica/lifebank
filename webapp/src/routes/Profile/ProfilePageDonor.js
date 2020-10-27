@@ -12,6 +12,7 @@ import Switch from '@material-ui/core/Switch'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { useTranslation } from 'react-i18next'
 
 import { eosConfig } from '../../config'
 
@@ -46,13 +47,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
     <>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Account</Typography>
+        <Typography variant="subtitle1">{t('common.account')}</Typography>
         <Typography variant="body1">
           <Link
             href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
@@ -65,28 +67,32 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         </Typography>
       </Box>
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Email</Typography>
+        <Typography variant="subtitle1">{t('common.email')}</Typography>
         <Typography variant="body1">{profile.email || 'N/A'}</Typography>
       </Box>
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Name</Typography>
+        <Typography variant="subtitle1">{t('signup.name')}</Typography>
         <Typography variant="body1">{profile.name || 'N/A'}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Role</Typography>
+        <Typography variant="subtitle1">{t('profile.role')}</Typography>
         <Typography variant="body1">{profile.role}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Communities</Typography>
+        <Typography variant="subtitle1">
+          {t('miscellaneous.communities')}
+        </Typography>
         <Typography variant="body1">
           {(profile.communities || []).join(', ') || 'N/A'}
         </Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Consent status</Typography>
+        <Typography variant="subtitle1">
+          {t('profile.consentStatus')}
+        </Typography>
         <FormGroup row className={classes.formGroup}>
           {!loading && (
             <FormControlLabel
@@ -107,7 +113,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       <Divider className={classes.divider} />
       <Box height={30} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Tokens</Typography>
+        <Typography variant="subtitle1">{t('miscellaneous.tokens')}</Typography>
         <Link
           href={`${eosConfig.BLOCK_EXPLORER_URL}account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
           target="_blank"
@@ -121,19 +127,23 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Redeemed</Typography>
+        <Typography variant="subtitle1">
+          {t('miscellaneous.redeemed')}
+        </Typography>
         <Typography variant="body1">0</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Expired</Typography>
+        <Typography variant="subtitle1">
+          {t('miscellaneous.expired')}
+        </Typography>
         <Typography variant="body1">0</Typography>
       </Box>
       <Divider className={classes.divider} />
       <QRCode value={profile.account || 'n/a'} size={200} />
       <LinkRouter to="/edit-profile" className={classes.editBtn}>
         <Button variant="contained" color="primary">
-          Edit
+          {t('common.edit')}
         </Button>
       </LinkRouter>
     </>

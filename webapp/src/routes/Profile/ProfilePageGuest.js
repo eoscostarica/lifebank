@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Divider from '@material-ui/core/Divider'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -23,13 +24,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageGuest = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
     <>
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Name</Typography>
-        <Typography variant="body1">Guest</Typography>
+        <Typography variant="subtitle1">{t('common.name')}</Typography>
+        <Typography variant="body1">{t('profile.guest')}</Typography>
       </Box>
       <Divider className={classes.divider} />
     </>

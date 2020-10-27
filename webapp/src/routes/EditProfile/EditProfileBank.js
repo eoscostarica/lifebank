@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { useTranslation } from 'react-i18next'
 
 import Schedule from '../../components/Schedule'
 import MapEditLocation from '../../components/MapEditLocation'
@@ -93,6 +94,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [user, setUser] = useState({
     description: profile.description,
@@ -123,11 +125,11 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
   const valueLabelFormat = (value) => {
     switch (value) {
       case 1:
-        return 'Low'
+        return t('editProfile.low')
       case 2:
-        return 'Medium'
+        return t('editProfile.medium')
       case 3:
-        return 'High'
+        return t('editProfile.high')
       default:
         return 'N/A'
     }
@@ -147,10 +149,10 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
       <Box className={classes.textFieldWrapper}>
         <TextField
           id="fullname"
-          label="Organization"
+          label={t('profile.organization')}
           fullWidth
           variant="outlined"
-          placeholder="Your Organization Name"
+          placeholder={t('editProfile.organizationPlaceholder')}
           defaultValue={user.name}
           InputLabelProps={{
             shrink: true
@@ -159,10 +161,10 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
         <TextField
           id="phone-number"
-          label="Phone number"
+          label={t('signup.phoneNumber')}
           fullWidth
           variant="outlined"
-          placeholder="Add Phone Number LifeBank"
+          placeholder={t('signup.phoneNumberPlaceholder')}
           defaultValue={user.phone_number}
           InputLabelProps={{
             shrink: true
@@ -173,10 +175,10 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
         <TextField
           id="address"
-          label="Address"
+          label={t('signup.address')}
           fullWidth
           variant="outlined"
-          placeholder="Add Address Your LifeBank"
+          placeholder={t('signup.addressPlaceholder')}
           defaultValue={user.address}
           InputLabelProps={{
             shrink: true
@@ -185,10 +187,10 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
         />
         <TextField
           id="description"
-          label="About"
+          label={t('signup.about')}
           fullWidth
           variant="outlined"
-          placeholder="About Your LifeBank"
+          placeholder={t('aboutPlaceholder')}
           defaultValue={user.description}
           InputLabelProps={{
             shrink: true
@@ -197,21 +199,18 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
             handleSetField('description', event.target.value)
           }
         />
-
         <Box width="100%" className={classes.textField}>
           <Schedule
-            buttonText="Edit Schedule"
+            buttonText={t('schedule.editSchedule')}
             scheduleLoad={user.schedule}
             loading
             handleOnAddSchedule={handleOnAddSchedule}
           />
         </Box>
-
         <Box className={classes.rowBox}>
-          <Typography variant="h4">Location</Typography>
+          <Typography variant="h4">{t('profile.location')}</Typography>
           <Typography variant="body1" />
         </Box>
-
         <MapEditLocation
           onGeolocationChange={handleOnGeolocationChange}
           markerLocation={user.geolocation}
@@ -220,20 +219,20 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
           height={400}
           mb={1}
         />
-
-        <Typography variant="h4">Blood Demand Level</Typography>
-        <Typography variant="body1" className={classes.text}>
-          Drag or tap to the demand level that represent your Lifebank actual
-          necesities. You can set the token rewards depending on this levels.
+        |
+        <Typography variant="h4">
+          {t('editProfile.bloodDemandLevel')}
         </Typography>
-
+        <Typography variant="body1" className={classes.text}>
+          {t('editProfile.dragOrtap')}
+        </Typography>
         <Box className={classes.bloodDemand}>
           <Box className={classes.markLabel}>
-            <Typography variant="h4">Low</Typography>
+            <Typography variant="h4">{t('editProfile.low')}</Typography>
             <Typography variant="h4" className={classes.midLabel}>
-              Medium
+              {t('editProfile.medium')}
             </Typography>
-            <Typography variant="h4">Urgent</Typography>
+            <Typography variant="h4">{t('editProfile.high')}</Typography>
           </Box>
           <Box className={classes.slider}>
             <Slider
@@ -251,9 +250,10 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
             />
           </Box>
         </Box>
-
         <Box className={classes.levelReward}>
-          <Typography variant="h4">Low Level Reward</Typography>
+          <Typography variant="h4">
+            {t('editProfile.lowLevelReward')}
+          </Typography>
           <TextField
             id="lowLevelReward"
             type="number"
@@ -266,7 +266,9 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
           />
         </Box>
         <Box className={classes.levelReward}>
-          <Typography variant="h4">Medium Level Reward</Typography>
+          <Typography variant="h4">
+            {t('editProfile.mediumLevelReward')}
+          </Typography>
           <TextField
             id="mediumLevelReward"
             type="number"
@@ -279,7 +281,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
           />
         </Box>
         <Box className={classes.levelReward}>
-          <Typography variant="h4">Urgent Level Reward</Typography>
+          <Typography variant="h4">{t('highLevelReward')}</Typography>
           <TextField
             id="urgentLevelReward"
             type="number"
@@ -299,7 +301,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
             color="primary"
             onClick={() => onSubmit(user)}
           >
-            Save
+            {t('common.save')}
           </Button>
           <Link to="/profile" className={classes.labelBtn}>
             <Button
@@ -307,7 +309,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading }) => {
               color="secondary"
               className={classes.labelBtn}
             >
-              cancel
+              {t('common.cancel')}
             </Button>
           </Link>
         </Box>
