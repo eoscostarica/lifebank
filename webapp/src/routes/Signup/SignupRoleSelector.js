@@ -55,7 +55,7 @@ const SignupRoleSelector = ({ onSubmit }) => {
           onSubmit('lifebank')
         }}
       >
-        {t('asAbank')}
+        {t('signup.asAbank')}
       </Button>
     </Box>
   )

@@ -110,7 +110,18 @@
       "view": "View",
       "alreadyAssociated": "This email has an associated account",
       "readMore": "Read more",
-      "howLifebankWorks": "How Lifebank works"
+      "howLifebankWorks": "How Lifebank works",
+      "hospital": "Hospital",
+      "lifebankLocation": "Lifebank location",
+      "lifebankSchedule": "Lifebank Schedule",
+      "username": "Username",
+      "invalidOrTaken": "Invalid username or already taken",
+      "youMustEnter": "You must enter 9 characters (a-z 1-5)",
+      "continue": "Continue",
+      "step": "Step",
+      "done": "Done",
+      "sendTo": "Send to",
+      "add": "Add"
     },
     "notFound": {
       "404Error": "404: The page you are looking for isn’t here",
@@ -129,7 +140,8 @@
       "day": "Day",
       "open": "Open",
       "close": "Closed",
-      "editSchedule": "Edit Schedule"
+      "editSchedule": "Edit Schedule",
+      "chooseYourSchedule": "Choose Your Schedule"
     },
     "profile": {
       "myProfile": "My Profile",
@@ -148,6 +160,9 @@
       "benefitDescription": "Benefit Description",
       "location": "Location",
       "yourProfileIsNotComplete": "Your profile is not complete"
+    },
+    "errors": {
+      "authError": "Something happened with the authentication"
     },
     "editProfile": {
       "editProfile": "Edit Profile",
@@ -180,9 +195,19 @@
       "twitterUsernamePlaceholder": "Your Twitter username here"
     },
     "donations": {
+      "donations": "Donations",
       "yourDonations": "Your Donations",
       "findAsponsor": "Find a Sponsor and Redeem your LifebankTokens!",
-      "youHavenotDonated": "You have not donated yet."
+      "youHavenotDonated": "You have not donated yet.",
+      "donate": "Donate",
+      "yourDonationsAndRewards": "Your Donations and Rewards",
+      "youOwn": "You Own",
+      "receiveTokens": "Receive Tokens",
+      "toReceiveTokens": "To receive tokens from a Lifebank you need to provide your user name or show the following QR.",
+      "toSendTo": "To send tokens to a sponsor you need to enter their username or detect a QR with your camera.",
+      "sendTokens": "Send tokens",
+      "sendToken": "Send Token",
+      "enterSponsorUsername": "Enter username here"
     },
     "users": "Users",
     "products": "Products",
@@ -214,7 +239,8 @@
       "moreOver": "Moreover, the pandemic is impacting local economies due to a generalized lockdown. Small businesses that rely on the local community must think of ways to incentivize customers to buy as soon as restrictions are lifted.",
       "aDonorCanEarn": "A donor can earn life tokens after completing a blood donation at a Lifebank participating donation center. Donation centers can issue a maximum of 10,000 life tokens. These tokens can then be redeemed by the donor at any local business (or sponsor) in exchange for discounts or promotions.",
       "also": "Also, sponsors can save these tokens and then return them to donation centers to keep the tokens active.",
-      "weDontRequest": "We don't request or store any personal information on the blockchain. You may optionally add a full name and email address once you have completed registration."
+      "weDontRequest": "We don't request or store any personal information on the blockchain. You may optionally add a full name and email address once you have completed registration.",
+      "aboutLifeTokens": "About LIFE tokens"
     },
     "common": {
       "description": "Description",
@@ -256,7 +282,7 @@
     },
     "offersManagement": {
       "offersManagement": "Offers Management",
-      "addOffer": "Añadir oferta",
+      "addOffer": "Add Offer",
       "offerName": "Offer name",
       "offerNamePlaceholder": "Type the name here",
       "offerType": "Offer type",

@@ -90,7 +90,7 @@ const SideBar = ({ user, onLogout }) => {
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">
               <Typography variant="body1" className={classes.labelOption}>
-                {`${user.role} ${t('profile')}`}
+                {`${user.role} ${t('profile.profile')}`}
               </Typography>
             </Link>
           </Box>

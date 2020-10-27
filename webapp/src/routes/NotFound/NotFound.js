@@ -43,7 +43,7 @@ const NotFound = () => {
               component={CustomRouterLink}
               to="/"
             >
-              {t('notFoundTakeMeHome')}
+              {t('notFound.TakeMeHome')}
             </Button>
           </div>
         </Grid>

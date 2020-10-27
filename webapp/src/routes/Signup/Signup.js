@@ -193,7 +193,7 @@ const Signup = () => {
           }
         })
       } else {
-        setErrorMessage('Something happened with the authentication')
+        setErrorMessage(t('errors.authError'))
       }
     }
   }
@@ -330,7 +330,9 @@ const Signup = () => {
   return (
     <Grid container className={classes.gridContainer}>
       <Grid item xs={12} sm={8} md={6} className={classes.register}>
-        <Typography variant="h1">{`Step ${activeStep + 1}`}</Typography>
+        <Typography variant="h1">{`${t('miscellaneous.step')} ${
+          activeStep + 1
+        }`}</Typography>
         <Box className={classes.stepperContent}>
           <Box className={classes.goBack}>
             <IconButton aria-label="go-back" onClick={handleGoBack}>

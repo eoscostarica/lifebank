@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   video: {
-    margin: "auto",
-    maxWidth: "800px",
+    margin: 'auto',
+    maxWidth: '800px',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    borderRadius: "1rem"
+    borderRadius: '1rem'
   }
 }))
 
@@ -56,7 +56,7 @@ const About = () => {
       <Typography variant="body1">{t('about.weIdentified')}</Typography>
       <Typography variant="body1">{t('about.moreOver')}</Typography>
 
-      <Typography variant="h4">About Life Tokens:</Typography>
+      <Typography variant="h4">{t('about.aboutLifeTokens')}:</Typography>
       <Typography variant="body1">{t('aDonorCanEarn')}</Typography>
       <Typography variant="body1">{t('about.also')}</Typography>
     </Box>

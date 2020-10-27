@@ -110,7 +110,18 @@
       "view": "Ver",
       "alreadyAssociated": "Esta cuenta tiene una cuenta asociada",
       "readMore": "Leer más",
-      "howLifebankWorks": "Cómo funciona Lifebank"
+      "howLifebankWorks": "Cómo funciona Lifebank",
+      "hospital": "Hospital",
+      "lifebankLocation": "Lifebank location",
+      "lifebankSchedule": "Lifebank Schedule",
+      "username": "Nombre de usuario",
+      "invalidOrTaken": "Nombre de usuario inválido o en uso",
+      "youMustEnter": "El nombre de usario debe ser de 9 caracteres (a-z 1-5)",
+      "continue": "Continuar",
+      "step": "Paso",
+      "done": "Done",
+      "sendTo": "Send to",
+      "add": "Añadir"
     },
     "notFound": {
       "404Error": "404: La página que buscas no existe",
@@ -129,7 +140,8 @@
       "day": "Día",
       "open": "Abierto",
       "close": "Cerrado",
-      "editSchedule": "Editar horario"
+      "editSchedule": "Editar horario",
+      "chooseYourSchedule": "Escoge tu Horario"
     },
     "profile": {
       "myProfile": "Mi Perfil",
@@ -148,6 +160,9 @@
       "benefitDescription": "Descripción del beneficio",
       "location": "Localización",
       "yourProfileIsNotComplete": "Tu perfil no está completo"
+    },
+    "errors": {
+      "authError": "Ha ocurrido un error con la autenticación"
     },
     "editProfile": {
       "editProfile": "Editar Perfil",
@@ -180,9 +195,19 @@
       "twitterUsernamePlaceholder": "El usuario de Twitter aquí"
     },
     "donations": {
+      "donations": "Donaciones",
       "yourDonations": "Tus Donaciones",
       "findAsponsor": "Encuentra un Comercio Afiliado y canjea tus Tokens!",
-      "youHavenotDonated": "No has donado aún."
+      "youHavenotDonated": "No has donado aún.",
+      "donate": "Donar",
+      "yourDonationsAndRewards": "Tus Donaciones y Recompensas",
+      "youOwn": "Tu tienes",
+      "receiveTokens": "Recibir Tokens",
+      "toReceiveTokens": "Para recibir Tokens de un Lifebank necesita proporcionar su nombre de usuario o mostrar el siguiente QR.",
+      "toSendTo": "Para enviar Tokens a un Comercio Afiliado debe introducir su nombre de usuario o detectar un QR con tu cámara.",
+      "sendTokens": "Enviar Tokens",
+      "sendToken": "Enviar Token",
+      "enterSponsorUsername": "Ingrese el nombre de usuario del Comercio Afiliado"
     },
     "users": "Usuarios",
     "products": "Productos",
@@ -214,7 +239,8 @@
       "moreOver": "Además, la pandemia está afectando a las economías locales debido a un bloqueo generalizado. Las pequeñas empresas que dependen de la comunidad local deben pensar en formas de incentivar a los clientes para que compren tan pronto como se levanten las restricciones.",
       "aDonorCanEarn": "Un donante puede ganar tokens después de completar una donación de sangre en un centro de donación participante en el Banco de Sangre. Los centros de donación pueden emitir un máximo de 10.000 tokens. Estos tokens pueden ser canjeados por el donante en cualquier comercio afiliado a cambio de descuentos o promociones.",
       "also": "Además, los comercios afiliados pueden guardar los tokens y luego devolverlos a los centros de donación para mantenerlos activos.",
-      "weDontRequest": "No solicitamos ni almacenamos ninguna información personal en el blockchain. Puedes añadir opcionalmente un nombre completo y una dirección de correo electrónico una vez que haya completado el registro."
+      "weDontRequest": "No solicitamos ni almacenamos ninguna información personal en el blockchain. Puedes añadir opcionalmente un nombre completo y una dirección de correo electrónico una vez que haya completado el registro.",
+      "aboutLifeTokens": "Acerca de los tokens LIFE"
     },
     "common": {
       "description": "Descripción",

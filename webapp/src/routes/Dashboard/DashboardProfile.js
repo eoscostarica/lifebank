@@ -12,7 +12,7 @@ import { useUser } from '../../context/user.context'
 import { eosConfig } from '../../config'
 
 const Products = () => {
-  const { t } = useTranslation('translation')
+  const { t } = useTranslation('translations')
   const [currentUser] = useUser()
   const profile = {}
   const loading = false

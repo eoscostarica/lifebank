@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EditProfilePage = () => {
-  const { t } = useTranslation('translation')
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const location = useLocation()
   const [currentUser] = useUser()

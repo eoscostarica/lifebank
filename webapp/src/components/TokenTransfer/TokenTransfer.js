@@ -266,7 +266,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                         </IconButton>
                       }
                     >
-                      Done{' '}
+                      {t('miscellaneous.done')}
                       <Link
                         href={`${eosConfig}transaction/${transferResult.transaction_id}`}
                         target="_blank"
@@ -344,7 +344,9 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                           </Box>
                         </>
                       )}
-                      <Typography variant="h4">Send to:</Typography>
+                      <Typography variant="h4">
+                        {t('miscellaneous.sendTo')}:
+                      </Typography>
 
                       <TextField
                         id="to"

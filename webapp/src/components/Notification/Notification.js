@@ -49,7 +49,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 })
 
 const Notification = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const theme = useTheme()

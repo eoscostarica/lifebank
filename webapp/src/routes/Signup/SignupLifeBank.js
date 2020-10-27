@@ -77,11 +77,11 @@ const SignupLifeBank = ({
   const valueLabelFormat = (value) => {
     switch (value) {
       case 1:
-        return 'Low'
+        return t('editProfile.low')
       case 2:
-        return 'Medium'
+        return t('editProfile.medium')
       case 3:
-        return 'High'
+        return t('editProfile.high')
       default:
         return 'N/A'
     }
@@ -189,7 +189,7 @@ const SignupLifeBank = ({
         />
       </FormGroup>
       <div className={classes.formGroup}>
-        <Typography gutterBottom>Blood urgency level</Typography>
+        <Typography gutterBottom>{t('common.bloodUrgency')}</Typography>
         <Slider
           valueLabelDisplay="auto"
           valueLabelFormat={valueLabelFormat}
@@ -238,7 +238,7 @@ const SignupLifeBank = ({
           color="primary"
           onClick={onSubmit}
         >
-          Continue
+          {t('miscellaneous.continue')}
         </Button>
         {loading && <CircularProgress />}
       </div>

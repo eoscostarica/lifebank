@@ -65,9 +65,7 @@ const Help = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Typography variant="body1">
-            {t('miscellaneous.telegramChannel')}
-          </Typography>
+          <Typography variant="body1">{t('miscellaneous.telegram')}</Typography>
         </Link>
       </Box>
       <Box className={classes.boxLinks}>

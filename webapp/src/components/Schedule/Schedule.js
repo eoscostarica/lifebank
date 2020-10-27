@@ -267,7 +267,9 @@ const Schedule = ({
               </IconButton>
             </Box>
             <Box className={classes.root}>
-              <Typography variant="h3">Choose Your Schedule</Typography>
+              <Typography variant="h3">
+                {t('schedule.chooseYourSchedule')}
+              </Typography>
               <TextField
                 id="outlined-select-currency"
                 select
@@ -330,7 +332,7 @@ const Schedule = ({
                 color="primary"
                 onClick={handleAddSchedulePerDay}
               >
-                Add
+                {t('miscellaneous.add')}
               </Button>
               <Box className={classes.list}>
                 <List className={classes.scheduleList}>
