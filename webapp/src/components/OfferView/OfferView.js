@@ -260,7 +260,6 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
           <ShowImages />
         </Box>
         <Box className={classes.componentContent}>
-          {console.log("tranlation", t())}
           <Typography paragraph className={classes.componentontentText} >{truncateString(selectOffer.description)}</Typography>
           {!isNaN(startDate.getMonth()) && !isNaN(endDate.getMonth()) &&
             <Typography paragraph className={classes.componentontentTextAux}>{t("offerView.available")} {t(`months.${monthKey[startDate.getMonth()]}`)} {startDate.getDay()} {t("offerView.to")} {t(`months.${monthKey[endDate.getMonth()]}`)} {endDate.getDay()}</Typography>
