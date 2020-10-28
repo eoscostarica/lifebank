@@ -10,6 +10,7 @@
       "browseWithMap": "Browse with a map",
       "filters": "Filters",
       "favorites": "Favorites",
+      "favourite": "Favourite",
       "inputPlaceholder": "Search Offers, Lifebank or Sponsors"
     },
     "rolesTitle": {
@@ -112,6 +113,7 @@
       "readMore": "Read more",
       "howLifebankWorks": "How Lifebank works",
       "hospital": "Hospital",
+      "location": "Location",
       "lifebankLocation": "Lifebank location",
       "sponsorLocation": "Sponsor location",
       "lifebankSchedule": "Lifebank Schedule",

@@ -72,12 +72,11 @@ const MapModalOneLocation = ({ isDesktop, geolocation, isSponor, account }) => {
 
   const handleClickOpen = () => {
     setOpen(true)
-  };
+  }
 
   const handleClose = () => {
     setOpen(false)
-  };
-
+  }
 
   return (
     <>
@@ -87,8 +86,8 @@ const MapModalOneLocation = ({ isDesktop, geolocation, isSponor, account }) => {
           className={classes.buttonMapDesktop}
           startIcon={<RoomIcon />}
         >
-          LOCATION
-      </Button>
+          {t('miscellaneous.location')}
+        </Button>
       }
       {!isDesktop &&
         <IconButton onClick={handleClickOpen}>

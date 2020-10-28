@@ -10,6 +10,7 @@
       "browseWithMap": "Buscar con el mapa",
       "filters": "Filtros",
       "favorites": "Favoritos",
+      "favourite": "Favorito",
       "inputPlaceholder": "Busca Ofertas, Bancos de Sangre o Comercios Afiliados"
     },
     "rolesTitle": {
@@ -112,6 +113,7 @@
       "readMore": "Leer más",
       "howLifebankWorks": "Cómo funciona Lifebank",
       "hospital": "Hospital",
+      "location": "Ubicación",
       "lifebankLocation": "Ubicacion del banco de sangre",
       "sponsorLocation": "Ubicacion del comercio local",
       "lifebankSchedule": "Horario del banco de sangre",

@@ -280,8 +280,8 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
               className={classes.buttonIconDesktop}
               startIcon={<StarBorderIcon />}
             >
-              FAVORITE
-           </Button>
+              {t('contentToolbar.favourite')}
+            </Button>
           }
           <MapModalOneLocation
             isDesktop={isDesktop}
