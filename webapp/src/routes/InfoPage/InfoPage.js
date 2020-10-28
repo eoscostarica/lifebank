@@ -10,7 +10,7 @@ import Slider from '@material-ui/core/Slider'
 import Dialog from '@material-ui/core/Dialog'
 import Toolbar from '@material-ui/core/Toolbar'
 import { useLocation, useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
@@ -22,7 +22,6 @@ import ListItem from '@material-ui/core/ListItem'
 import List from '@material-ui/core/List'
 import Slide from '@material-ui/core/Slide'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -119,19 +118,6 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1px',
     color: 'rgba(0, 0, 0, 0.6)',
     marginLeft: '34px'
-  },
-  text: {
-    width: '327px',
-    height: '234px',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    marginLeft: '16px'
   },
   carruselImage: {
     height: '90%',
@@ -329,7 +315,7 @@ const InfoPage = () => {
   })
 
   const generateSchedule = (schedules) => {
-    let scheduleFinal = []
+    const scheduleFinal = []
     var schedule;
     for (schedule of schedules) {
       if (scheduleFinal.length > 0) {
@@ -494,9 +480,9 @@ const InfoPage = () => {
                     <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
                     <Box className={classes.bloodDemand}>
                       <Box className={classes.markLabel}>
-                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Low</Typography>
-                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Medium</Typography>
-                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Urgent</Typography>
+                        <Typography variant="body1" className={classes.midLabel, classes.text}>Low</Typography>
+                        <Typography variant="body1" className={classes.midLabel, classes.text}>Medium</Typography>
+                        <Typography variant="body1" className={classes.midLabel, classes.text}>Urgent</Typography>
                       </Box>
                       <Box className={classes.slider}>
                         <Slider
@@ -599,9 +585,9 @@ const InfoPage = () => {
                     <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
                     <Box className={classes.bloodDemand}>
                       <Box className={classes.markLabel}>
-                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Low</Typography>
-                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Medium</Typography>
-                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Urgent</Typography>
+                        <Typography variant="body1" className={classes.midLabel, classes.text}>Low</Typography>
+                        <Typography variant="body1" className={classes.midLabel, classes.text}>Medium</Typography>
+                        <Typography variant="body1" className={classes.midLabel, classes.text}>Urgent</Typography>
                       </Box>
                       <Box className={classes.slider}>
                         <Slider
