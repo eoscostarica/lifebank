@@ -30,57 +30,37 @@ import { GET_LOCATION_PROFILE } from '../../gql'
 const useStyles = makeStyles((theme) => ({
   cardBody: {
     width: '100%',
-    height: '100%',
     backgroundColor: '#ffffff',
     marginBottom: '0',
-    paddingTop: '16px',
-    //borderStyle: 'groove'
+    paddingTop: '16px'
   },
   headerCardBody: {
     width: '100%',
-    height: '12%',
-  },
-  avatarSection: {
-    width: '20%',
-    height: '100%',
-    float: 'left'
+    position: "relative"
   },
   avatarRound: {
     width: '40px',
     height: '40px',
     borderRadius: '50%',
-    marginLeft: '16px',
-    marginRight: '13px',
-    marginTop: '13px'
-  },
-  tituleSection: {
-    width: '80%',
-    height: '100%',
-    float: 'left'
+    margin: '10px'
   },
   bodyCard: {
     width: '100%',
-    height: '88%'
   },
   imageSection: {
     position: "relative",
-    width: '100%',
-    height: '35%'
+    width: '100%'
   },
   detailsSection: {
-    width: '100%',
-    height: '65%'
+    width: '100%'
   },
   headerDetails: {
     width: '50%',
-    height: '10%',
-    marginTop: '2%',
-    float: 'left'
+    marginBottom: '15px',
+    float: 'left',
   },
   bodyDetails: {
-    width: '100%',
-    height: '88%',
-    float: 'left'
+    width: '100%'
   },
   fabButton: {
     position: "absolute",
@@ -96,8 +76,8 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1
   },
   title: {
-    width: '97%',
-    height: '23px',
+    width: '75%',
+    height: '25px',
     fontFamily: 'Roboto',
     fontSize: '20px',
     fontWeight: 'normal',
@@ -106,14 +86,13 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 'normal',
     letterSpacing: '0.15px',
     color: 'rgba(0, 0, 0, 0.87)',
-    marginRight: '60px',
-    marginLeft: '2%',
-    marginTop: '14px',
-    marginBottom: '4px',
+    position: 'absolute',
+    top: 10,
+    left: 65
   },
   subtitle: {
-    width: '97%',
-    height: '16px',
+    width: '75%',
+    height: '20px',
     fontFamily: 'Roboto',
     fontSize: '14px',
     fontWeight: 'normal',
@@ -122,9 +101,9 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.43',
     letterSpacing: '0.25px',
     color: 'rgba(0, 0, 0, 0.6)',
-    marginRight: '91.6px',
-    marginLeft: '2%',
-    marginTop: '4px',
+    position: 'absolute',
+    top: 35,
+    left: 65
   },
   label: {
     width: '77px',
@@ -159,7 +138,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%'
   },
   carousel: {
-    maxWidth: '100%'
+    maxWidth: '100%',
+    height: '100%'
   },
   divider: {
     width: '100%'
@@ -206,42 +186,36 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     backgroundColor: '#ffffff',
     marginBottom: '0',
-    marginTop: '2.5%',
-    //borderStyle: 'groove'
+    marginTop: '2.5%'
   },
   bodyDesktop: {
     width: '98%',
     height: '100%',
     backgroundColor: '#ffffff',
     marginLeft: '1%',
-    marginRight: '1%',
-    //borderStyle: 'groove'
+    marginRight: '1%'
   },
   contentBodySection: {
     width: '50%',
     height: '100%',
-    float: 'left',
-    //borderStyle: 'groove'
+    float: 'left'
   },
   headerContent: {
     width: '100%',
-    height: '10%',
-    //borderStyle: 'groove'
+    height: '10%'
   },
   avatarSectionDesktop: {
     width: '10%',
     height: '100%',
-    float: 'left',
-    //borderStyle: 'groove'
+    float: 'left'
   },
   tituleSectionDesktop: {
-    width: '70%',
+    width: '63%',
     height: '100%',
-    float: 'left',
-    //borderStyle: 'groove'
+    float: 'left'
   },
   titleDesktop: {
-    width: '100%',
+    width: '98%',
     height: '40px',
     fontFamily: 'Roboto',
     fontSize: '34px',
@@ -251,13 +225,14 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.18',
     letterSpacing: '0.25px',
     color: 'rgba(0, 0, 0, 0.87)',
+    marginLeft: '10px',
     marginTop: '10px',
     marginBottom: '4px',
-    textAlign: 'left'
+    textAlign: 'center'
   },
   subtitleDesktop: {
     width: '100%',
-    height: '16px',
+    height: '100%',
     fontFamily: 'Roboto',
     fontSize: '14px',
     fontWeight: 'normal',
@@ -266,24 +241,24 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.43',
     letterSpacing: '0.25px',
     color: 'rgba(0, 0, 0, 0.6)',
-    paddingTop: '4px',
+    marginLeft: '10px',
+    paddingTop: '26px'
 
   },
   subTituleSectionDesktop: {
-    width: '20%',
+    width: '27%',
     height: '100%',
-    float: 'left',
-    //borderStyle: 'groove'
+    float: 'left'
   },
   avatarRoundDesktop: {
     width: '40px',
     height: '40px',
     borderRadius: '50%',
-    marginTop: '10px'
+    marginTop: '10px',
+    marginLeft: '14%'
   },
   bodyDetailsDesktop: {
     width: '100%',
-    height: '100%',
     float: 'left'
   },
   imageSectionDesktop: {
@@ -292,6 +267,17 @@ const useStyles = makeStyles((theme) => ({
     height: '35%',
     paddingLeft: '2%'
   },
+  text: {
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    textAlign: 'left',
+    color: 'rgba(0, 0, 0, 0.6)'
+  }
 }))
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -387,13 +373,9 @@ const InfoPage = () => {
         {profile &&
           <Box className={classes.cardBody}>
             <div className={classes.headerCardBody}>
-              <div className={classes.avatarSection}>
-                <img className={classes.avatarRound} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
-              </div>
-              <div className={classes.tituleSection}>
-                <h2 className={classes.title}>{profile.info.name}</h2>
-                <h3 className={classes.subtitle}>Hospital</h3>
-              </div>
+              <img className={classes.avatarRound} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
+              <Typography className={classes.title} noWrap >{profile.info.name}</Typography>
+              <Typography className={classes.subtitle} noWrap >Hospital</Typography>
             </div>
             <div className={classes.bodyCard}>
               <div className={classes.imageSection}>
@@ -480,32 +462,32 @@ const InfoPage = () => {
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">About</Typography>
-                    <Typography variant="body1"> {profile.info.about}
+                    <Typography className={classes.text} variant="body1"> {profile.info.about}
                     </Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
-                    <Typography variant="body1">{profile.info.address}</Typography>
+                    <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
-                    <Typography variant="body1">{profile.info.email}</Typography>
+                    <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
-                    <Typography variant="body1">{profile.info.telephone}</Typography>
+                    <Typography className={classes.text} variant="body1">{profile.info.telephone}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
                     <Box className={classes.bloodDemand}>
                       <Box className={classes.markLabel}>
-                        <Typography variant="body1" className={classes.midLabel}>Low</Typography>
-                        <Typography variant="body1" className={classes.midLabel}>Medium</Typography>
-                        <Typography variant="body1" className={classes.midLabel}>Urgent</Typography>
+                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Low</Typography>
+                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Medium</Typography>
+                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Urgent</Typography>
                       </Box>
                       <Box className={classes.slider}>
                         <Slider
@@ -540,90 +522,90 @@ const InfoPage = () => {
                     <img className={classes.avatarRoundDesktop} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
                   </div>
                   <div className={classes.tituleSectionDesktop}>
-                    <h2 className={classes.titleDesktop}>{profile.info.name}</h2>
+                    <Typography className={classes.titleDesktop} noWrap>{profile.info.name}</Typography>
                   </div>
                   <div className={classes.subTituleSectionDesktop}>
-                    <h3 className={classes.subtitleDesktop}>Hospital</h3>
+                    <Typography className={classes.subtitleDesktop} noWrap>Hospital</Typography>
                   </div>
-                  <div className={classes.bodyDetailsDesktop}>
-                    <Divider className={classes.divider} />
-                    <Box className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">About</Typography>
-                      <Typography variant="body1"> {profile.info.about}
-                      </Typography>
-                    </Box>
-                    <Divider className={classes.divider} />
-                    <Box className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">Schedule</Typography>
-                      {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
-                        <Typography id={index} variant="body1">{schedule[0] + " from " + schedule[1][0] + " to " + schedule[1][1]}</Typography>
-                      ))}
-                    </Box>
-                    <Divider className={classes.divider} />
-                    <Box className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
-                      <Typography variant="body1">{profile.info.address}</Typography>
-                    </Box>
-                    <Box className={classes.midLabel}>
-                      <Button
-                        className={classes.label, classes.boldText}
-                        startIcon={<LocationOnIcon color="action" />}
-                        onClick={handleClickOpen}
-                      >
-                        Show location
-                      </Button>
-                      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-                        <div className={classes.appBar}>
-                          <Toolbar>
-                            <Typography variant="subtitle1">
-                              Lifebank Location
-                            </Typography>
-                            <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
-                              <CloseIcon color="secondary" />
-                            </IconButton>
-                          </Toolbar>
-                        </div>
-                        <MapShowOneLocation
-                          markerLocation={profile.info.geolocation}
-                          accountProp={profile.account}
-                          width="100%"
-                          height="100%"
-                          py={2}
+                </div>
+                <div className={classes.bodyDetailsDesktop}>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">About</Typography>
+                    <Typography className={classes.text} variant="body1"> {profile.info.about}
+                    </Typography>
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">Schedule</Typography>
+                    {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
+                      <Typography key={index} className={classes.text} id={index} variant="body1">{schedule[0] + " from " + schedule[1][0] + " to " + schedule[1][1]}</Typography>
+                    ))}
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
+                    <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
+                  </Box>
+                  <Box className={classes.midLabel}>
+                    <Button
+                      className={classes.label, classes.boldText}
+                      startIcon={<LocationOnIcon color="action" />}
+                      onClick={handleClickOpen}
+                    >
+                      Show location
+                    </Button>
+                    <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                      <div className={classes.appBar}>
+                        <Toolbar>
+                          <Typography variant="subtitle1">
+                            Lifebank Location
+                          </Typography>
+                          <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                            <CloseIcon color="secondary" />
+                          </IconButton>
+                        </Toolbar>
+                      </div>
+                      <MapShowOneLocation
+                        markerLocation={profile.info.geolocation}
+                        accountProp={profile.account}
+                        width="100%"
+                        height="100%"
+                        py={2}
+                      />
+                    </Dialog>
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
+                    <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
+                    <Typography className={classes.text} variant="body1">{profile.info.telephone}</Typography>
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
+                    <Box className={classes.bloodDemand}>
+                      <Box className={classes.markLabel}>
+                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Low</Typography>
+                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Medium</Typography>
+                        <Typography className={classes.text} variant="body1" className={classes.midLabel}>Urgent</Typography>
+                      </Box>
+                      <Box className={classes.slider}>
+                        <Slider
+                          valueLabelDisplay="off"
+                          color="secondary"
+                          defaultValue={profile.info.blood_urgency_level}
+                          step={null}
+                          min={1}
+                          max={3}
                         />
-                      </Dialog>
-                    </Box>
-                    <Divider className={classes.divider} />
-                    <Box className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
-                      <Typography variant="body1">{profile.info.email}</Typography>
-                    </Box>
-                    <Divider className={classes.divider} />
-                    <Box className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
-                      <Typography variant="body1">{profile.info.telephone}</Typography>
-                    </Box>
-                    <Divider className={classes.divider} />
-                    <Box className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
-                      <Box className={classes.bloodDemand}>
-                        <Box className={classes.markLabel}>
-                          <Typography variant="body1" className={classes.midLabel}>Low</Typography>
-                          <Typography variant="body1" className={classes.midLabel}>Medium</Typography>
-                          <Typography variant="body1" className={classes.midLabel}>Urgent</Typography>
-                        </Box>
-                        <Box className={classes.slider}>
-                          <Slider
-                            valueLabelDisplay="off"
-                            color="secondary"
-                            defaultValue={profile.info.blood_urgency_level}
-                            step={null}
-                            min={1}
-                            max={3}
-                          />
-                        </Box>
                       </Box>
                     </Box>
-                  </div>
+                  </Box>
                 </div>
               </div>
               <div className={classes.contentBodySection}>
@@ -682,7 +664,5 @@ const InfoPage = () => {
   )
 
 }
-
-
 
 export default InfoPage
