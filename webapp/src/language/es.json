@@ -114,6 +114,7 @@
       "hospital": "Hospital",
       "lifebankLocation": "Lifebank location",
       "lifebankSchedule": "Lifebank Schedule",
+      "showLocation": "Ver ubicación",
       "username": "Nombre de usuario",
       "invalidOrTaken": "Nombre de usuario inválido o en uso",
       "youMustEnter": "El nombre de usario debe ser de 9 caracteres (a-z 1-5)",

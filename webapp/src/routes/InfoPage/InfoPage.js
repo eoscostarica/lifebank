@@ -431,14 +431,14 @@ const InfoPage = () => {
                     startIcon={<CalendarTodayIcon color="action" />}
                     onClick={handleClickOpenSchedule}
                   >
-                    Schedule
+                    {t('common.schedule')}
                   </Button>
                   <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
                     <div className={classes.appBar}>
                       <Toolbar>
                         <Typography variant="subtitle1">
-                          Lifebank Schedule
-                      </Typography>
+                          {t('miscellaneous.lifebankSchedule')}
+                        </Typography>
                         <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
                           <CloseIcon color="secondary" />
                         </IconButton>
@@ -456,33 +456,33 @@ const InfoPage = () => {
                 <div className={classes.bodyDetails}>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">About</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
                     <Typography className={classes.text} variant="body1"> {profile.info.about}
                     </Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
                     <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
                     <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
                     <Typography className={classes.text} variant="body1">{profile.info.telephone}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
                     <Box className={classes.bloodDemand}>
                       <Box className={classes.markLabel}>
-                        <Typography variant="body1" className={classes.midLabel, classes.text}>Low</Typography>
-                        <Typography variant="body1" className={classes.midLabel, classes.text}>Medium</Typography>
-                        <Typography variant="body1" className={classes.midLabel, classes.text}>Urgent</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
                       </Box>
                       <Box className={classes.slider}>
                         <Slider
@@ -526,35 +526,35 @@ const InfoPage = () => {
                 <div className={classes.bodyDetailsDesktop}>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">About</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
                     <Typography className={classes.text} variant="body1"> {profile.info.about}
                     </Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Schedule</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
                     {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
                       <Typography key={index} className={classes.text} id={index} variant="body1">{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
                     ))}
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Address</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
                     <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
                   </Box>
                   <Box className={classes.midLabel}>
                     <Button
-                      className={classes.label, classes.boldText}
+                      className={`${classes.label} ${classes.boldText}`}
                       startIcon={<LocationOnIcon color="action" />}
                       onClick={handleClickOpen}
                     >
-                      Show location
+                      {t('miscellaneous.showLocation')}
                     </Button>
                     <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
                       <div className={classes.appBar}>
                         <Toolbar>
                           <Typography variant="subtitle1">
-                            Lifebank Location
+                            {t('miscellaneous.lifebankLocation')}
                           </Typography>
                           <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
                             <CloseIcon color="secondary" />
@@ -572,22 +572,22 @@ const InfoPage = () => {
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Email</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
                     <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Telephone</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
                     <Typography className={classes.text} variant="body1">{profile.info.telephone}</Typography>
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">Blood urgency level</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
                     <Box className={classes.bloodDemand}>
                       <Box className={classes.markLabel}>
-                        <Typography variant="body1" className={classes.midLabel, classes.text}>Low</Typography>
-                        <Typography variant="body1" className={classes.midLabel, classes.text}>Medium</Typography>
-                        <Typography variant="body1" className={classes.midLabel, classes.text}>Urgent</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
                       </Box>
                       <Box className={classes.slider}>
                         <Slider
