@@ -1,26 +1,26 @@
 import React, { useState, forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { useUser } from '../../context/user.context'
 import IconButton from '@material-ui/core/IconButton'
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Slide from '@material-ui/core/Slide';
+import Dialog from '@material-ui/core/Dialog'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Slide from '@material-ui/core/Slide'
 import Box from '@material-ui/core/Box'
 import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import MobileStepper from '@material-ui/core/MobileStepper';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Button from '@material-ui/core/Button'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import MobileStepper from '@material-ui/core/MobileStepper'
+import StarBorderIcon from '@material-ui/icons/StarBorder'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTranslation } from 'react-i18next'
 
-import MapModalOneLocation from '../MapModalOneLocation/MapModalOneLocation';
-import DonationsDashboard from '../DonationsDashboard/DonationsDashboard';
+import MapModalOneLocation from '../MapModalOneLocation/MapModalOneLocation'
+import DonationsDashboard from '../DonationsDashboard/DonationsDashboard'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -185,7 +185,7 @@ const useStyles = makeStyles((theme) => ({
 const monthKey = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Agt", "Sep", "Oct", "Nov", "Dec"]
 
 const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />
 });
 
 const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView }) => {
@@ -200,11 +200,11 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
   const { t } = useTranslation('translations')
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
   };
 
   const truncateString = (str) => {
@@ -337,7 +337,7 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
 
 OfferView.defaultProps = {
   selectOffer: { images: "[]" },
-};
+}
 
 OfferView.propTypes = {
   openOfferView: PropTypes.bool,
