@@ -208,11 +208,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const EmptyHeartSVG = ({ balance, isDesktop }) => {
+const EmptyHeartSVG = ({ balance }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
-  const textColor = isDesktop ? '#ffffff' : '#000000'
+  const textColor = balance ? '#ffffff' : '#000000'
 
   return (
     <svg viewBox="0 0 800 700" className={classes.heart}>
@@ -220,7 +220,7 @@ const EmptyHeartSVG = ({ balance, isDesktop }) => {
         fill="#B71C1C"
         d="M514.672,106.17c-45.701,0-88.395,22.526-114.661,59.024c-26.284-36.505-68.981-59.024-114.683-59.024C207.405,106.17,144,169.564,144,247.5c0,94.381,57.64,144.885,124.387,203.358c38.983,34.149,83.17,72.856,119.654,125.332l12.267,17.641l11.854-17.924c35.312-53.388,78.523-91.695,120.305-128.734C596.006,390.855,656,337.654,656,247.5C656,169.564,592.604,106.17,514.672,106.17z M513.143,425.371c-36.93,32.729-78.27,69.373-113.402,117.391c-35.717-46.873-76.089-82.242-112.148-113.834c-63.944-56.01-114.447-100.26-114.447-181.428c0-61.868,50.325-112.186,112.184-112.186c43.196,0,83.034,25.395,101.491,64.697l13.191,28.105l13.19-28.112c18.443-39.303,58.273-64.69,101.472-64.69c61.866,0,112.185,50.317,112.185,112.186C626.856,324.548,576.673,369.047,513.143,425.371z"
       />
-      {isDesktop && (
+      {balance && (
         <g transform="translate(150, 200)">
           <path
             fill="#B71C1C"
@@ -247,7 +247,6 @@ const EmptyHeartSVG = ({ balance, isDesktop }) => {
 
 EmptyHeartSVG.propTypes = {
   balance: PropTypes.number,
-  isDesktop: PropTypes.bool
 }
 
 const DonationsDashboard = ({ isDesktop }) => {
