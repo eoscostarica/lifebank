@@ -14,6 +14,7 @@ import Link from '@material-ui/core/Link'
 import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 import TextField from '@material-ui/core/TextField'
+import { useTranslation } from 'react-i18next'
 
 import FacebookIcon from '../../assets/facebook.svg'
 import InstagramIcon from '../../assets/instagram.svg'
@@ -22,7 +23,7 @@ import Logo from '../../components/Logo'
 import Schedule from '../../components/Schedule'
 import Telephones from '../../components/Telephones'
 import CarouselComponent from '../../components/Carousel'
-import MapShowLocations from '../../components/MapShowLocations'
+import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
@@ -95,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePageSponsor = ({ profile }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [pendingFields, setPendingFields] = useState()
 
@@ -209,7 +211,7 @@ const ProfilePageSponsor = ({ profile }) => {
                         root: classes.editBtn
                       }}
                     >
-                      Update
+                      {t('common.update')}
                     </Button>
                   </LinkRouter>
                 </Box>
@@ -217,7 +219,7 @@ const ProfilePageSponsor = ({ profile }) => {
               className={classes.alert}
               severity="info"
             >
-              <Typography>Your profile is not complete </Typography>
+              <Typography>{t('profile.yourProfileIsNotComplete')} </Typography>
               <Box display="flex" alignItems="center">
                 <Box width="100%" mr={1}>
                   <LinearProgress
@@ -246,7 +248,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Logo logoUrl={profile.logo_url} />
         )}
         <Box className={classes.rowBox}>
-          <Typography variant="subtitle1">Email</Typography>
+          <Typography variant="subtitle1">{t('common.email')}</Typography>
           <Typography variant="body1" className={classes.noCapitalize}>
             {profile.email}
           </Typography>
@@ -256,7 +258,7 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.account ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Account</Typography>
+          <Typography variant="subtitle1">{t('common.account')}</Typography>
           <Typography variant="body1">
             <Link
               href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
@@ -276,7 +278,9 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.name ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Organization</Typography>
+          <Typography variant="subtitle1">
+            {t('profile.organization')}
+          </Typography>
           <Typography variant="body1">{profile.name}</Typography>
         </Box>
         {profile.telephones &&
@@ -300,7 +304,7 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.website ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Website</Typography>
+          <Typography variant="subtitle1">{t('common.website')}</Typography>
           <Typography variant="body1" className={classes.noCapitalize}>
             <Link
               href={profile.account}
@@ -320,7 +324,9 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.business_type ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Type</Typography>
+          <Typography variant="subtitle1">
+            {t('offersManagement.type')}
+          </Typography>
           <Typography variant="body1">{profile.business_type}</Typography>
         </Box>
         <Divider
@@ -331,9 +337,10 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.consent ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Consent</Typography>
-          <Typography variant="body1">{`${profile.consent ? 'Approved' : 'Denied'
-            }`}</Typography>
+          <Typography variant="subtitle1">{t('profile.consent')}</Typography>
+          <Typography variant="body1">{`${
+            profile.consent ? t('profile.granted') : t('profile.revoked')
+          }`}</Typography>
         </Box>
 
         {profile.photos &&
@@ -380,7 +387,7 @@ const ProfilePageSponsor = ({ profile }) => {
                       rel="noopener"
                       color="secondary"
                     >
-                      View
+                      {t('miscellaneous.view')}
                     </Link>
                   </Typography>
                 </Box>
@@ -396,7 +403,9 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.community_asset ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Community Asset</Typography>
+          <Typography variant="subtitle1">
+            {t('profile.communityAsset')}
+          </Typography>
           <Typography variant="body1" className={classes.secondaryText}>
             {profile.community_asset}
           </Typography>
@@ -409,7 +418,7 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.schedule ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Schedule</Typography>
+          <Typography variant="subtitle1">{t('common.schedule')}</Typography>
           <Typography variant="body1" />
         </Box>
         <Schedule
@@ -426,7 +435,7 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.about ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">About</Typography>
+          <Typography variant="subtitle1">{t('signup.about')}</Typography>
           <Typography variant="body1" />
         </Box>
         <TextField
@@ -450,7 +459,7 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.address ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Address</Typography>
+          <Typography variant="subtitle1">{t('signup.address')}</Typography>
           <Typography variant="body1" />
         </Box>
         <TextField
@@ -474,7 +483,9 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.covid_impact ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Covid Impact</Typography>
+          <Typography variant="subtitle1">
+            {t('editProfile.covidImpact')}
+          </Typography>
           <Typography variant="body1" />
         </Box>
         <TextField
@@ -494,7 +505,9 @@ const ProfilePageSponsor = ({ profile }) => {
           style={{ display: !profile.benefit_description ? 'none' : '' }}
           className={classes.rowBox}
         >
-          <Typography variant="subtitle1">Benefit Description</Typography>
+          <Typography variant="subtitle1">
+            {t('profile.benefitDescription')}
+          </Typography>
           <Typography variant="body1" />
         </Box>
         <Divider className={classes.divider} />
@@ -512,8 +525,13 @@ const ProfilePageSponsor = ({ profile }) => {
           rows={3}
         />
         {profile.location && profile.location !== 'null' && (
-          <MapShowLocations
-            location={profile ? JSON.parse(profile.location || '{}') : {}}
+          <MapShowOneLocation
+            markerLocation={
+              profile && profile.location
+                ? JSON.parse(profile.location || '{}')
+                : {}
+            }
+            accountProp={profile.account}
             width="100%"
             height={400}
             py={2}
@@ -533,7 +551,7 @@ const ProfilePageSponsor = ({ profile }) => {
             className={classes.editBtn}
           >
             <Button variant="contained" color="primary">
-              Edit
+              {t('common.edit')}
             </Button>
           </LinkRouter>
         </Box>

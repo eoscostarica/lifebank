@@ -8,6 +8,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import Link from '@material-ui/core/Link'
 import { useHistory } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import {
   PROFILE_QUERY,
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ProfilePage = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const history = useHistory()
   const [snackbarState, setSnackbarState] = useState({})
@@ -116,7 +118,7 @@ const ProfilePage = () => {
       title: `Success ${lastConsentChange} consent`,
       description: (
         <>
-          Transaction{' '}
+          Transaction
           <Link
             href={`${eosConfig.BLOCK_EXPLORER_URL}transaction/${
               lastConsentChange === 'grant'
@@ -189,7 +191,7 @@ const ProfilePage = () => {
         </Alert>
       </Snackbar>
       <Typography variant="h1" className={classes.title}>
-        My Profile
+        {t('profile.myProfile')}
       </Typography>
       {loading && <CircularProgress />}
       {!loading && currentUser && profile?.role === 'donor' && (

@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { useTranslation } from 'react-i18next'
 
 import SignupWithFacebook from './socialSingup/SignupWithFacebook'
 import SignupWithGoogle from './socialSingup/SignupWithGoogle'
@@ -48,6 +49,7 @@ const DonorSignup = ({
   isEmailValid,
   children
 }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [password, setPassword] = useState()
   const [recaptchaValue, serRecaptchaValue] = useState('')
@@ -57,7 +59,7 @@ const DonorSignup = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       if (confirmPassword && confirmPassword !== password)
-        setError({ text: 'Password do not match' })
+        setError({ text: t('signup.passwordNotMatch') })
       else setError(undefined)
     }, 1500)
     return () => clearTimeout(timer)
@@ -69,10 +71,10 @@ const DonorSignup = ({
         {children}
         <TextField
           id="secret"
-          label="Password"
+          label={t('signup.password')}
           type="password"
           fullWidth
-          placeholder="Your password"
+          placeholder={t('signup.passwordPlaceholder')}
           variant="outlined"
           InputLabelProps={{
             shrink: true
@@ -85,12 +87,12 @@ const DonorSignup = ({
         />
         <TextField
           id="confirm-password"
-          label="Confirm password"
+          label={t('signup.confirmPassword')}
           type="password"
           fullWidth
           error={error}
           helperText={error && error.text}
-          placeholder="Your confirmation"
+          placeholder={t('signup.confirmPasswordPlaceholder')}
           variant="outlined"
           InputLabelProps={{
             shrink: true
@@ -99,7 +101,6 @@ const DonorSignup = ({
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
         <ReCAPTCHA
-          style={{ bac: '100%' }}
           sitekey={captchaConfig.sitekey}
           onChange={(value) => serRecaptchaValue(value)}
         />
@@ -107,13 +108,19 @@ const DonorSignup = ({
 
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={!user.secret || !isEmailValid || !recaptchaValue || loading || error !== undefined}
+          disabled={
+            !user.secret ||
+            !isEmailValid ||
+            !recaptchaValue ||
+            loading ||
+            error !== undefined
+          }
           className={classes.btnSignup}
           variant="contained"
           color="primary"
           onClick={onSubmit}
         >
-          Create Account
+          {t('signup.createAccount')}
         </Button>
         {loading && <CircularProgress />}
         <SignupWithFacebook handlerSubmit={onSubmitWithAuth} />

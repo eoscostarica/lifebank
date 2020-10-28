@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit'
   },
   languageText: {
-    color: "#121212",
+    color: '#121212',
     fontSize: '1rem',
     marginLeft: 3,
     display: 'none',
@@ -26,16 +26,16 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   languageTextTransparent: {
-    color: "#ffffff",
+    color: '#ffffff'
   },
   iconLanguage: {
-    color: "#121212",
+    color: '#121212',
     width: 24,
     height: 24
   },
   iconLanguageTransparent: {
-    color: "#ffffff",
-  },
+    color: '#ffffff'
+  }
 }))
 
 const LanguageSelector = ({ alt }) => {
@@ -68,26 +68,30 @@ const LanguageSelector = ({ alt }) => {
 
   const languages = [
     {
-      value: 'en',
-      label: 'English'
-    },
-    {
       value: 'es',
       label: 'Español'
+    },
+    {
+      value: 'en',
+      label: 'English'
     }
   ]
 
   return (
     <>
       <IconButton className={classes.wrapper} onClick={handleClick}>
-        <LanguageIcon alt={alt}
+        <LanguageIcon
+          alt={alt}
           className={clsx(classes.iconLanguage, {
             [classes.iconLanguageTransparent]: useTransparentBG
-          })} />
-        <Typography variant="h5"
+          })}
+        />
+        <Typography
+          variant="h5"
           className={clsx(classes.languageText, {
             [classes.languageTextTransparent]: useTransparentBG
-          })} >
+          })}
+        >
           {(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
         </Typography>
       </IconButton>

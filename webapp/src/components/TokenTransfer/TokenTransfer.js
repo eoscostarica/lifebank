@@ -23,6 +23,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import CameraAltIcon from '@material-ui/icons/CameraAlt'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
+import { useTranslation } from 'react-i18next'
 
 import { useUser } from '../../context/user.context'
 import { TRANSFER_MUTATION } from '../../gql'
@@ -125,6 +126,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [currentUser] = useUser()
   const [payload, setPayload] = useState({ quantity: 1 })
@@ -187,7 +189,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                 color="primary"
                 startIcon={<ShoppingCartIcon />}
               >
-                Redeem Token
+                {t('tokenTransfer.redeemToken')}
               </Button>
             ) : (
               <>
@@ -196,7 +198,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                   variant="body1"
                   className={clsx(classes.labelOption, overrideLabelClass)}
                 >
-                  Transfer
+                  {t('tokenTransfer.transfer')}
                 </Typography>
               </>
             )}
@@ -227,7 +229,9 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                 </Box>
                 <Box className={classes.bodyWrapper}>
                   <Typography variant="h1">{`${
-                    currentUser.role === 'donor' ? 'Redeem' : 'Send'
+                    currentUser.role === 'donor'
+                      ? t('tokenTransfer.redeem')
+                      : t('tokenTransfer.send')
                   } Life Token`}</Typography>
                   {errorMessage && (
                     <Alert
@@ -262,7 +266,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                         </IconButton>
                       }
                     >
-                      Done{' '}
+                      {t('miscellaneous.done')}
                       <Link
                         href={`${eosConfig}transaction/${transferResult.transaction_id}`}
                         target="_blank"
@@ -296,7 +300,9 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                       {currentUser.role !== 'lifebank' && (
                         <>
                           <Typography variant="h4">{`Tokens to ${
-                            currentUser.role === 'donor' ? 'Redeem' : 'Send'
+                            currentUser.role === 'donor'
+                              ? t('tokenTransfer.redeem')
+                              : t('tokenTransfer.send')
                           }:`}</Typography>
                           <Box className={classes.AddInput}>
                             <IconButton
@@ -338,11 +344,13 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                           </Box>
                         </>
                       )}
-                      <Typography variant="h4">Send to:</Typography>
+                      <Typography variant="h4">
+                        {t('miscellaneous.sendTo')}:
+                      </Typography>
 
                       <TextField
                         id="to"
-                        label="Account"
+                        label={t('common.account')}
                         variant="outlined"
                         InputLabelProps={{
                           shrink: true
@@ -364,7 +372,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                       />
                       <TextField
                         id="memo"
-                        label="Memo"
+                        label={t('tokenTransfer.memo')}
                         variant="outlined"
                         InputLabelProps={{
                           shrink: true
@@ -388,7 +396,9 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                         color="primary"
                         onClick={handleSubmit}
                       >
-                        {currentUser.role === 'donor' ? 'Redeem' : 'Send'}
+                        {currentUser.role === 'donor'
+                          ? t('tokenTrasfer.redeem')
+                          : t('tokenTransfer.send')}
                       </Button>
                       {loading && <CircularProgress />}
                     </Box>
@@ -398,7 +408,7 @@ const TokenTransfer = ({ overrideBoxClass, overrideLabelClass, useButton }) => {
                         color="primary"
                         onClick={handleOpen}
                       >
-                        Cancel
+                        {t('common.cancel')}
                       </Button>
                     </Box>
                   </form>

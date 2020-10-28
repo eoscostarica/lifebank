@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { useTranslation } from 'react-i18next'
 
 import { GET_CONTRACTS_QUERY } from '../../gql'
 import RicardianContract from '../../components/RicardianContract'
@@ -45,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SignupConsent = ({ onSubmit, loading }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [tab, setTab] = useState(0)
   const { data: { lifebankcoin, lifebankcode, consent2life } = {} } = useQuery(
@@ -98,7 +100,7 @@ const SignupConsent = ({ onSubmit, loading }) => {
           onClick={onSubmit}
           disabled={loading}
         >
-          I Accept
+          {t('signup.iAccept')}
         </Button>
         {loading && <CircularProgress />}
       </Box>

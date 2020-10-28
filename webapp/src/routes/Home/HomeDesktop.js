@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import SearchIcon from '@material-ui/icons/Search'
 import StarIcon from '@material-ui/icons/Star'
+import { useTranslation } from 'react-i18next'
 
 import DonationsDashboard from '../../components/DonationsDashboard'
 import MapModal from '../../components/MapModal'
@@ -89,11 +90,10 @@ const useStyles = makeStyles((theme) => ({
   registerBtn: {
     width: 180,
     height: 49,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     margin: theme.spacing(2, 0, 4, 0),
-    borderRadius: " 2px",
-    border: "solid 2px #ffffff"
-
+    borderRadius: ' 2px',
+    border: 'solid 2px #ffffff'
   },
   fabButtonDesktop: {
     borderRadius: 50,
@@ -104,70 +104,71 @@ const useStyles = makeStyles((theme) => ({
     bottom: 20,
     right: 20,
     margin: '0',
-    color: "#ffffff"
+    color: '#ffffff'
   },
   iconFab: {
-    color: "#ffffff",
+    color: '#ffffff',
     marginRight: 10
   },
   buttonIconDesktop: {
     padding: 20,
-    backgroundColor: "white",
-    color: "rgba(0, 0, 0, 0.6)"
+    backgroundColor: 'white',
+    color: 'rgba(0, 0, 0, 0.6)'
   },
   title: {
-    height: "50px",
+    height: '50px',
     [theme.breakpoints.down('md')]: {
-      marginBottom: 30,
+      marginBottom: 30
     }
   },
   boxControls: {
     padding: 20,
-    display: "flex"
+    display: 'flex'
   },
   mainGridControlsDesktop: {
-    backgroundColor: "#ffffff"
+    backgroundColor: '#ffffff'
   },
   mainGridDesktop: {
     paddingTop: 30,
     paddingLeft: 20,
     paddingRigth: 20,
-    backgroundColor: "#ffffff"
+    backgroundColor: '#ffffff'
   },
   boxIcons: {
-    marginRight: "15px"
+    marginRight: '15px'
   },
   searchBar: {
-    color: "rgba(0, 0, 0, 0.6)",
-    width: "100%",
-    fontSize: "16px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
-    lineHeight: "1.75",
-    letterSpacing: "0.44px",
-    "& .MuiInputBase-input " : {
-      paddingTop: "12px"
+    color: 'rgba(0, 0, 0, 0.6)',
+    width: '100%',
+    fontSize: '16px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.75',
+    letterSpacing: '0.44px',
+    '& .MuiInputBase-input ': {
+      paddingTop: '12px'
     }
   },
   iconSeachBar: {
-    color: "rgba(0, 0, 0, 0.6)",
+    color: 'rgba(0, 0, 0, 0.6)',
     width: 20,
     height: 20,
     marginLeft: 15,
     marginRight: 15
   },
   titleMainSection: {
-    fontSize: "24px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
+    fontSize: '24px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
     lineHeight: 1.17,
-    letterSpacing: "normal",
+    letterSpacing: 'normal'
   }
-}));
+}))
 
 const HomeDesktop = (props) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [currentUser] = useUser()
 
@@ -175,11 +176,11 @@ const HomeDesktop = (props) => {
     <>
       <Box className={classes.homeHeader}>
         <Box className={classes.boxLeft}>
-          <Typography variant="h1">Start Saving Lives</Typography>
+          <Typography variant="h1">{t('hero.title')}</Typography>
         </Box>
         <Box className={classes.boxRight}>
-          <Typography variant="body1">Give blood banks a lifeline.</Typography>
-          <Typography variant="body1">Register to donate life.</Typography>
+          <Typography variant="body1">{t('hero.subtitle1')}</Typography>
+          <Typography variant="body1">{t('hero.subtitle2')}</Typography>
           <Button
             className={classes.registerBtn}
             variant="contained"
@@ -187,7 +188,7 @@ const HomeDesktop = (props) => {
             component={CustomRouterLink}
             to={`/${currentUser ? 'donations' : 'signup'}`}
           >
-            {currentUser ? 'Donations' : 'Register'}
+            {currentUser ? t('donations.donations') : t('hero.register')}
           </Button>
         </Box>
       </Box>
@@ -204,10 +205,7 @@ const HomeDesktop = (props) => {
             <MapModal isDesktop />
           </Box>
           <Box className={classes.boxIcons}>
-            <FilterHome
-              isDesktop
-              applyFilters={props.applyFilters}
-            />
+            <FilterHome isDesktop applyFilters={props.applyFilters} />
           </Box>
           <Box className={classes.boxIcons}>
             <Button
@@ -215,15 +213,18 @@ const HomeDesktop = (props) => {
               className={classes.buttonIconDesktop}
               startIcon={<StarIcon />}
             >
-              FAVORITES
+              {t('contentToolbar.favorites')}
             </Button>
           </Box>
         </Grid>
         <Grid item md={5} lg={6} className={classes.boxControls}>
-          <TextField id="filled-basic" variant="filled" className={classes.searchBar}
+          <TextField
+            id="filled-basic"
+            variant="filled"
+            className={classes.searchBar}
             placeholder="Search Offers, Lifebanks or Sponsors"
             InputProps={{
-              startAdornment: <SearchIcon className={classes.iconSeachBar} />,
+              startAdornment: <SearchIcon className={classes.iconSeachBar} />
             }}
           />
         </Grid>
@@ -236,35 +237,40 @@ const HomeDesktop = (props) => {
         spacing={0}
         className={classes.mainGridDesktop}
       >
-        <Grid item md={12} >
-          <Typography variant="h2" className={classes.titleMainSection}>Available offers</Typography>
+        <Grid item md={12}>
+          <Typography variant="h2" className={classes.titleMainSection}>
+            {t('cardsSection.availableOffers')}
+          </Typography>
           <ShowOffers
             offers={props.offers}
             loading={props.loadingOffers}
             isDesktop
           />
         </Grid>
-        <Grid item md={12} >
-          <Typography variant="h2" className={classes.titleMainSection}>Lifebanks</Typography>
+        <Grid item md={12}>
+          <Typography variant="h2" className={classes.titleMainSection}>
+            {t('rolesTitle.plural.lifebanks')}
+          </Typography>
           <ShowLifebanks
             banks={props.lifebanks}
             loading={props.loadingLifebanks}
             isDesktop
           />
         </Grid>
-        <Grid item md={12} >
-          <Typography variant="h2" className={classes.titleMainSection}>Sponsors</Typography>
+        <Grid item md={12}>
+          <Typography variant="h2" className={classes.titleMainSection}>
+            {t('rolesTitle.plural.sponsors')}
+          </Typography>
           <ShowSponsors
             sponsors={props.sponsors}
             loading={props.loadingSponsors}
             isDesktop
           />
         </Grid>
-        {currentUser && currentUser.role === "donor" &&
+        {currentUser && currentUser.role === 'donor' && (
           <DonationsDashboard isDesktop />
-        }
+        )}
       </Grid>
-
     </>
   )
 }
@@ -276,7 +282,7 @@ HomeDesktop.propTypes = {
   loadingLifebanks: PropTypes.bool,
   sponsors: PropTypes.array,
   loadingSponsors: PropTypes.bool,
-  applyFilters: PropTypes.func,
+  applyFilters: PropTypes.func
 }
 
 export default HomeDesktop

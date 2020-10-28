@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import { useQuery } from '@apollo/react-hooks'
+import Button from '@material-ui/core/Button'
+import LocationOnIcon from '@material-ui/icons/LocationOn'
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 import Divider from '@material-ui/core/Divider'
 import Slider from '@material-ui/core/Slider'
-import Dialog from '@material-ui/core/Dialog';
-import Toolbar from '@material-ui/core/Toolbar';
-import { useLocation, useHistory } from 'react-router-dom';
+import Dialog from '@material-ui/core/Dialog'
+import Toolbar from '@material-ui/core/Toolbar'
+import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import Slide from '@material-ui/core/Slide';
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItem from '@material-ui/core/ListItem'
+import List from '@material-ui/core/List'
+import Slide from '@material-ui/core/Slide'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/styles'
+import { useTranslation } from 'react-i18next'
 
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { GET_LOCATION_PROFILE } from '../../gql'
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   imageSection: {
-    position: "relative",
+    position: 'relative',
     width: '100%'
   },
   detailsSection: {
@@ -63,16 +64,17 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   fabButton: {
-    position: "absolute",
+    position: 'absolute',
     width: '40px',
     height: '40px',
     borderRadius: '50%',
-    boxShadow: '0 2px 6px 0 rgba(0, 0, 0, 0.18), 0 2px 4px 0 rgba(0, 0, 0, 0.24)',
+    boxShadow:
+      '0 2px 6px 0 rgba(0, 0, 0, 0.18), 0 2px 4px 0 rgba(0, 0, 0, 0.24)',
     backgroundColor: '#ba0d0d',
     top: -20,
     right: 15,
     margin: '0',
-    color: "#ffffff",
+    color: '#ffffff',
     zIndex: 1
   },
   title: {
@@ -281,16 +283,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+  return <Slide direction="up" ref={ref} {...props} />
+})
 
 const InfoPage = () => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const [actualImageIndex, setActualImageIndex] = useState(0)
-  const images = '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
+  const images =
+    '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
   const numbers = JSON.parse(images)
-  const [open, setOpenModalLocation] = useState(false);
-  const [openSchedule, setOpenModalSchedule] = useState(false);
+  const [open, setOpenModalLocation] = useState(false)
+  const [openSchedule, setOpenModalSchedule] = useState(false)
   const location = useLocation()
   const history = useHistory()
   const [profile, setProfile] = useState()
@@ -300,23 +304,26 @@ const InfoPage = () => {
   })
 
   const handleClickOpen = () => {
-    setOpenModalLocation(true);
-  };
+    setOpenModalLocation(true)
+  }
 
   const handleClose = () => {
-    setOpenModalLocation(false);
-  };
+    setOpenModalLocation(false)
+  }
   const handleClickOpenSchedule = () => {
-    setOpenModalSchedule(true);
-  };
+    setOpenModalSchedule(true)
+  }
 
   const handleCloseSchedule = () => {
-    setOpenModalSchedule(false);
-  };
+    setOpenModalSchedule(false)
+  }
 
   const { refetch: getData } = useQuery(GET_LOCATION_PROFILE, {
     variables: {
-      username: window.location.pathname.slice(6, window.location.pathname.length)
+      username: window.location.pathname.slice(
+        6,
+        window.location.pathname.length
+      )
     },
     skip: true
   })
@@ -350,17 +357,19 @@ const InfoPage = () => {
   }
 
   useEffect(() => {
-    if (location.state)
-      setProfile(location.state.profile)
+    if (location.state) setProfile(location.state.profile)
     else {
       const getProfile = async () => {
         const { data } = await getData({
-          username: window.location.pathname.slice(6, window.location.pathname.length)
+          username: window.location.pathname.slice(
+            6,
+            window.location.pathname.length
+          )
         })
 
         data.location.length > 0
           ? setProfile(data.location[0])
-          : history.push("/not-found")
+          : history.push('/not-found')
       }
 
       if (!location.state) getProfile()
@@ -539,7 +548,7 @@ const InfoPage = () => {
                   <Box className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">Schedule</Typography>
                     {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
-                      <Typography key={index} className={classes.text} id={index} variant="body1">{schedule[0] + " from " + schedule[1][0] + " to " + schedule[1][1]}</Typography>
+                      <Typography key={index} className={classes.text} id={index} variant="body1">{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
                     ))}
                   </Box>
                   <Divider className={classes.divider} />
@@ -642,7 +651,7 @@ const InfoPage = () => {
       <List>
         <Divider />
         <ListItem button>
-          <ListItemText primary={schedule.schedule.day} secondary={schedule.schedule.open + " - " + schedule.schedule.close} />
+          <ListItemText primary={schedule.schedule.day} secondary={`${schedule.schedule.open} - ${schedule.schedule.close}`} />
         </ListItem>
       </List>
     )
