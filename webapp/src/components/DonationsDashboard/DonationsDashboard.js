@@ -383,7 +383,7 @@ const DonationsDashboard = ({ isDesktop }) => {
             onClick={toggleDrawer(anchor, true)}
           >
             <FavoriteIcon className={classes.iconFab} />
-            Donate
+            {t('donations.donate')}
           </Fab>
           <SwipeableDrawer
             anchor={anchor}
@@ -412,7 +412,7 @@ const DonationsDashboard = ({ isDesktop }) => {
             onClick={handleOpen}
           >
             <FavoriteIcon className={classes.iconFab} />
-            Donate
+            {t('donations.donate')}
           </Fab>
           <Dialog
             maxWidth={maxWidth}
