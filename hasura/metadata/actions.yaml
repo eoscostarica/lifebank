@@ -45,6 +45,8 @@ actions:
   definition:
     kind: ""
     handler: http://hapi:9090/api/get-valid-sponsors
+  permissions:
+  - role: guest
 - name: grant_consent
   definition:
     kind: synchronous

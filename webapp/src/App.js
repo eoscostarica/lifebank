@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import { useLazyQuery } from '@apollo/react-hooks'
@@ -7,11 +7,13 @@ import { useCookies } from 'react-cookie'
 
 import routes from './routes'
 import { MainContainer, TopBar, SideBar } from './containers'
+import LocalBusinessStructuredData from './components/LocalBusinessStructuredData'
 import SplashIntro from './components/SplashIntro'
 import { useUser } from './context/user.context'
 import { GET_VALID_SPONSORS_QUERY } from './gql'
 
 const App = ({ ual }) => {
+  const [validSponsors, setValidSponsors] = useState([])
   const [currentUser, { logout }] = useUser()
   const [cookies, setCookie] = useCookies(['splash'])
 
@@ -20,10 +22,12 @@ const App = ({ ual }) => {
   })
 
   useEffect(() => {
-    loadValidSponsors()
+    if (validSponsors.length === 0) loadValidSponsors()
   }, [loadValidSponsors])
 
-  console.log(data)
+  useEffect(() => {
+    if (data) setValidSponsors({})
+  }, [data])
 
   return (
     <BrowserRouter>
@@ -42,6 +46,7 @@ const App = ({ ual }) => {
           topbarContent={<TopBar user={currentUser} onLogout={logout} />}
           sidebarContent={<SideBar user={currentUser} onLogout={logout} />}
         >
+          <LocalBusinessStructuredData name />
           <Grid container justify="center" alignItems="center">
             <Switch>
               {routes.map(({ path, component: Component, ...args }) => (

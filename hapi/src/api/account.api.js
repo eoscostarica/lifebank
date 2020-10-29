@@ -147,6 +147,7 @@ const getValidSponsors = async () => {
     if (tx) {
       const { ...profile } = await getTransactionData(tx)
       if (
+        profile.sponsor_name.length > 0 &&
         profile.schedule.length > 0 &&
         profile.address.length > 0 &&
         profile.logo_url.length > 0 &&
@@ -155,6 +156,7 @@ const getValidSponsors = async () => {
         JSON.parse(profile.telephones).length > 0
       )
         validSponsors.push({
+          name: profile.sponsor_name,
           openingHours: profile.schedule,
           address: profile.address,
           logo: profile.logo_url,
