@@ -17,6 +17,7 @@ import CameraAltIcon from '@material-ui/icons/CameraAlt'
 import Divider from '@material-ui/core/Divider'
 import Fab from '@material-ui/core/Fab'
 import FavoriteIcon from '@material-ui/icons/Favorite'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import CloseIcon from '@material-ui/icons/Close'
 import Alert from '@material-ui/lab/Alert'
 import QRCode from 'qrcode.react'
@@ -268,8 +269,11 @@ const DonationsDashboard = ({ isDesktop, role }) => {
   const [open, setOpen] = useState(false)
   const [payload, setPayload] = useState({ quantity: 1, memo: "Token transfer" })
   const [errorMessage, setErrorMessage] = useState(null)
+  const [success, setSuccess] = useState(false)
   const [openModalQR, setOpenModalQR] = useState(false)
   const [cameraSelection] = useState("rear")
+  const [tokens, setTokens] = useState(0)
+  const [account, setAccount] = useState("account")
   const classes = useStyles()
   const [state, setState] = useState({
     bottom: false
@@ -294,13 +298,18 @@ const DonationsDashboard = ({ isDesktop, role }) => {
     setErrorMessage(error.message.replace('GraphQL error: ', ''))
   }, [error])
 
+  useEffect(() => {
+    if (!transferResult) {
+      return
+    }
+
+    setPayload({ quantity: 1 })
+    setSuccess(true)
+  }, [transferResult])
+
   const handleSetField = (field, value) => {
     setPayload({ ...payload, [field]: value })
   }
-
-  const tokens = role === "donor" && profile?.balance.length
-    ? profile.balance.join(',').split(' ')[0]
-    : 0
 
   useEffect(() => {
     if (!currentUser) {
@@ -310,8 +319,15 @@ const DonationsDashboard = ({ isDesktop, role }) => {
       return
     }
 
-    loadProfile()
-  }, [currentUser, history, client, loadProfile])
+    if (state['bottom'] === true || open === true)
+      loadProfile()
+
+  }, [currentUser, history, client, loadProfile, state, open, transferResult])
+
+  useEffect(() => {
+    setTokens(role === "donor" && profile?.balance.length ? profile.balance.join(',').split(' ')[0] : 0)
+    setAccount(profile ? profile.account : "account")
+  }, [profile])
 
   const anchor = 'bottom'
 
@@ -327,7 +343,9 @@ const DonationsDashboard = ({ isDesktop, role }) => {
     }
   }
 
-  const handleOpen = () => setOpen(!open)
+  const handleOpen = () => {
+    setOpen(!open)
+  }
 
   const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
 
@@ -340,6 +358,13 @@ const DonationsDashboard = ({ isDesktop, role }) => {
 
   const hanndlerTransferTokens = () => {
     setErrorMessage(null)
+
+    if (role === "donor") {
+      setPayload({ ...payload, ["memo"]: t("donations.memoDonor") })
+    } else {
+      setPayload({ ...payload, ["memo"]: t("donations.memoLifebank") })
+    }
+
     transfer({
       variables: {
         ...payload
@@ -429,9 +454,9 @@ const DonationsDashboard = ({ isDesktop, role }) => {
               </Typography>
             }
             <Box className={classes.boxQR}>
-              <QRCode value={profile.account || 'n/a'} size={100} />
+              <QRCode value={account} size={100} />
               <Typography className={classes.accountText}>
-                {profile.account}
+                {account}
               </Typography>
             </Box>
           </Box>
@@ -486,6 +511,24 @@ const DonationsDashboard = ({ isDesktop, role }) => {
                 }
               >
                 {errorMessage}
+              </Alert>
+            )}
+            {success && transferResult && (
+              <Alert
+                className={classes.alert}
+                severity="success"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => setSuccess(false)}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                {t('donations.succesful')}
               </Alert>
             )}
             <Box className={classes.boxButtonSendToken}>
@@ -564,15 +607,39 @@ const DonationsDashboard = ({ isDesktop, role }) => {
     <>
       {!isDesktop && (
         <>
-          <Fab
-            color="secondary"
-            variant="extended"
-            className={classes.fabButton}
-            onClick={toggleDrawer(anchor, true)}
-          >
-            <FavoriteIcon className={classes.iconFab} />
-            {t('donations.donate')}
-          </Fab>
+          { role === "donor" &&
+            <Fab
+              color="secondary"
+              variant="extended"
+              className={classes.fabButton}
+              onClick={toggleDrawer(anchor, true)}
+            >
+              <FavoriteIcon className={classes.iconFab} />
+              {t('donations.donate')}
+            </Fab>
+          }
+          { role === "lifebank" &&
+            <Fab
+              color="secondary"
+              variant="extended"
+              className={classes.fabButton}
+              onClick={toggleDrawer(anchor, true)}
+            >
+              <FavoriteIcon className={classes.iconFab} />
+              {t('donations.transferTokens')}
+            </Fab>
+          }
+          { role === "sponsor" &&
+            <Fab
+              color="secondary"
+              variant="extended"
+              className={classes.fabButton}
+              onClick={toggleDrawer(anchor, true)}
+            >
+              <ShoppingCartIcon className={classes.iconFab} />
+              {t('donations.claimReward')}
+            </Fab>
+          }
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
@@ -593,15 +660,39 @@ const DonationsDashboard = ({ isDesktop, role }) => {
       )}
       {isDesktop && (
         <>
-          <Fab
-            color="secondary"
-            variant="extended"
-            className={classes.fabButtonDesktop}
-            onClick={handleOpen}
-          >
-            <FavoriteIcon className={classes.iconFab} />
-            {t('donations.donate')}
-          </Fab>
+          { role === "donor" &&
+            <Fab
+              color="secondary"
+              variant="extended"
+              className={classes.fabButtonDesktop}
+              onClick={handleOpen}
+            >
+              <FavoriteIcon className={classes.iconFab} />
+              {t('donations.donate')}
+            </Fab>
+          }
+          { role === "lifebank" &&
+            <Fab
+              color="secondary"
+              variant="extended"
+              className={classes.fabButtonDesktop}
+              onClick={handleOpen}
+            >
+              <FavoriteIcon className={classes.iconFab} />
+              {t('donations.transferTokens')}
+            </Fab>
+          }
+          { role === "sponsor" &&
+            <Fab
+              color="secondary"
+              variant="extended"
+              className={classes.fabButtonDesktop}
+              onClick={handleOpen}
+            >
+              <ShoppingCartIcon className={classes.iconFab} />
+              {t('donations.claimReward')}
+            </Fab>
+          }
           <Dialog
             maxWidth={maxWidth}
             open={open}

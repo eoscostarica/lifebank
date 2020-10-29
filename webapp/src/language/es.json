@@ -215,8 +215,11 @@
       "sendToken": "Enviar Token",
       "enterSponsorUsername": "Ingrese el nombre de usuario del Comercio Afiliado",
       "scanQR": "Escanea el código QR",
-      "transferTokens": "Transferir tokens",
-      "claimReward": "Reclamar recompensa"
+      "transferTokens": "Transferir",
+      "claimReward": "Recompensa",
+      "memoDonor": "Gracias por canjear tu token",
+      "memoLifebank": "Gracias por tu donación",
+      "succesful": "Transacción exitosa"
     },
     "users": "Usuarios",
     "products": "Productos",

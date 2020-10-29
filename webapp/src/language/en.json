@@ -215,8 +215,11 @@
       "sendToken": "Send Token",
       "enterSponsorUsername": "Enter username here",
       "scanQR": "Scan QR code",
-      "transferTokens": "Transfer tokens",
-      "claimReward": "Claim reward"
+      "transferTokens": "Transfer",
+      "claimReward": "Reward",
+      "memoDonor": "Thank you for redeeming your token",
+      "memoLifebank": "Thanks for your donation",
+      "succesful": "Succesful transaction"
     },
     "users": "Users",
     "products": "Products",
