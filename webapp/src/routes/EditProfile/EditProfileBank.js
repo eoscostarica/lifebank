@@ -13,6 +13,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import { useTranslation } from 'react-i18next'
+import Logo from '../../components/Logo'
 
 import Schedule from '../../components/Schedule'
 import MapEditLocation from '../../components/MapEditLocation'
@@ -116,30 +118,33 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     objectFit: 'cover',
     marginBottom: '6%',
+  },
+  textField: {
+    marginTop: theme.spacing(2)
   }
 }))
 
 const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, userName }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
-  const [disableUrlInput, setDisableUrlInput] = useState(true)
-  const imgUrlValueRef = useRef(undefined)
-  const [disableUrlLogoInput, setDisableUrlLogoInput] = useState(true)
+  const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
+  const photoUrlValueRef = useRef(undefined)
   const imgUrlLogoValueRef = useRef(undefined)
-  let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
-  const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
-  const [username, setUserName] = useState()
+  const [username, setUserName] = useState(userName)
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
     telephones: profile.telephones,
     email: profile.email,
+    logo_url: profile.logo_url,
+    photos: profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
     geolocation: JSON.parse(profile.location),
     name: profile.name,
     schedule: profile.schedule,
     blood_urgency_level: profile.blood_urgency_level,
     has_immunity_test: Boolean(profile.has_immunity_test)
   })
-
+  console.log("user:", user)
   const handleOnGeolocationChange = useCallback(
     (geolocation) => handleSetField('geolocation', geolocation),
     [setField]
@@ -158,29 +163,13 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const valueLabelFormat = (value) => {
     switch (value) {
       case 1:
-        return 'Low'
+        return t('editProfile.low')
       case 2:
-        return 'Medium'
+        return t('editProfile.medium')
       case 3:
-        return 'High'
+        return t('editProfile.high')
       default:
         return 'N/A'
-    }
-  }
-
-  const validateimageTextFile = (textFileTipe) => {
-    if (textFileTipe === 1) {
-      if (imgUrlLogoValueRef.current.value !== '') {
-        logo = imgUrlLogoValueRef.current.value
-        imgUrlLogoValueRef.current.value = ''
-      }
-    }
-    else {
-      console.log("imgUrlValueRef:", imgUrlValueRef)
-      if (imgUrlValueRef.current.value !== '') {
-        arrayImage.push(imgUrlValueRef.current.value)
-        imgUrlValueRef.current.value = ''
-      }
     }
   }
 
@@ -193,49 +182,38 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     setUser({ ...user, [field]: value })
   }
 
+  const prepareDataForSubmitting = () => {
+    const userToSubmit = { ...user }
+    //userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
+    userToSubmit.photos = JSON.stringify(user.photos)
+    //userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
+    onSubmit(userToSubmit, username, profile.account)
+  }
+  console.log("isCompleting", isCompleting)
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        <Box className={classes.marginTitule}>
-          <Typography variant="h4">Logo</Typography>
-          <Typography variant="body1" />
-        </Box>
-        <div className={classes.carouselDiv}>
-          {arrayImage.length > 0 && (
-            <>{arrayImage && <Grid container justify="center">
-              <img className={classes.img} src={logo} alt={'logo image'} />
-            </Grid>} </>
+        <>
+          {!isCompleting && user.logo_url && (
+            <Logo showCaption logoUrl={user.logo_url} />
           )}
-        </div>
+        </>
         <TextField
           id="logo-url"
-          label="Logo url"
-          variant="outlined"
-          placeholder="Logo url here"
-          fullWidth
-          inputRef={imgUrlLogoValueRef}
-          onChange={(e) => setDisableUrlLogoInput(e.target.value.length < 1)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  //disabled={disableUrlLogoInput}
-                  color="secondary"
-                  aria-label="add photo url"
-                  onClick={() => {
-                    validateimageTextFile(1)
-                  }}
-                  disabled={disableUrlLogoInput}
-                >
-                  <AddIcon />
-                </IconButton>
-              </InputAdornment>
-            )
+          name="logo-input"
+          style={{
+            display: !isCompleting && user.logo_url ? 'block' : 'none'
           }}
+          label={t('editProfile.logoUrl')}
+          variant="outlined"
+          placeholder={t('editProfile.logoUrlPlaceholder')}
+          defaultValue={user.logo_url}
+          fullWidth
           InputLabelProps={{
             shrink: true
           }}
           className={classes.textField}
+          onChange={(event) => handleSetField('logo_url', event.target.value)}
         />
         <TextField
           id="username"
@@ -258,10 +236,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           id="fullname"
           name="name"
           style={{ display: isCompleting && user.name ? 'none' : '' }}
-          label="Organization"
+          label={t('profile.organization')}
           fullWidth
           variant="outlined"
-          placeholder="Your Organization Name"
+          placeholder={t('editProfile.organizationPlaceholder')}
           defaultValue={user.name}
           InputLabelProps={{
             shrink: true
@@ -273,10 +251,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           style={{
             display: isCompleting && user.phone_number ? 'none' : ''
           }}
-          label="Telephone"
+          label={t('common.telephone')}
           fullWidth
           variant="outlined"
-          placeholder="Add Telephone LifeBank"
+          placeholder={t('signup.phoneNumberPlaceholder')}
           defaultValue={user.telephones}
           InputLabelProps={{
             shrink: true
@@ -290,10 +268,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           style={{
             display: isCompleting && user.address ? 'none' : ''
           }}
-          label="Address"
+          label={t('signup.address')}
           fullWidth
           variant="outlined"
-          placeholder="Add Address Your LifeBank"
+          placeholder={t('signup.addressPlaceholder')}
           defaultValue={user.address}
           InputLabelProps={{
             shrink: true
@@ -305,10 +283,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           style={{
             display: isCompleting && user.about ? 'none' : ''
           }}
-          label="About"
+          label={t('signup.about')}
           fullWidth
           variant="outlined"
-          placeholder="About Your LifeBank"
+          laceholder={t('aboutPlaceholder')}
           defaultValue={user.about}
           InputLabelProps={{
             shrink: true
@@ -319,7 +297,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         />
         <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" className={classes.textField}>
           <Schedule
-            buttonText="Edit Schedule"
+            buttonText={t('schedule.editSchedule')}
             scheduleLoad={user.schedule}
             loading
             handleOnAddSchedule={handleOnAddSchedule}
@@ -335,18 +313,23 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           variant="outlined"
           placeholder="Image url here"
           fullWidth
-          inputRef={imgUrlValueRef}
-          onChange={(e) => setDisableUrlInput(e.target.value.length < 1)}
+          inputRef={photoUrlValueRef}
+          onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
                   color="secondary"
                   aria-label="add photo url"
+                  disabled={disablePhotoUrlInput}
                   onClick={() => {
-                    validateimageTextFile(0)
+                    setUser({
+                      ...user,
+                      photos: [...user.photos, photoUrlValueRef.current.value]
+                    })
+                    photoUrlValueRef.current.value = ''
+                    setDisablePhotoUrlInput(true)
                   }}
-                  disabled={disableUrlInput}
                 >
                   <AddIcon />
                 </IconButton>
@@ -359,8 +342,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           className={classes.textField}
         />
         <div className={classes.carouselDiv}>
-          {arrayImage.length > 0 && (
-            <>{arrayImage && <Grid container justify="center">
+          {user.photos.length > 0 && (
+            <>{user.photos && <Grid container justify="center">
               <Grid
                 item
                 xs={12}
@@ -371,20 +354,22 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               >
                 <Carousel
                   deleteItem={(url) => {
-                    arrayImage.filter((p) => p !== url)
+                    setUser({
+                      ...user,
+                      photos: user.photos.filter((p) => p !== url)
+                    })
                   }}
                   activeDeletion
-                  images={arrayImage}
+                  images={user.photos}
                 />
               </Grid>
             </Grid>} </>
           )}
         </div>
         <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} className={classes.marginTitule}>
-          <Typography variant="h4">Location</Typography>
+          <Typography variant="h4">{t('profile.location')}</Typography>
           <Typography variant="body1" />
         </Box>
-
         <MapEditLocation
           style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
           onGeolocationChange={handleOnGeolocationChange}
@@ -394,21 +379,19 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           height={400}
           mb={1}
         />
-
         <div style={{ display: isCompleting && user.blood_urgency_level ? 'none' : '' }}>
-          <Typography variant="h4">Blood Demand Level</Typography>
+          <Typography variant="h4">{t('editProfile.bloodDemandLevel')}</Typography>
           <Typography variant="body1" className={classes.text}>
-            Drag or tap to the demand level that represent your Lifebank actual
-            necesities. You can set the token rewards depending on this levels.
+            {t('editProfile.dragOrtap')}
           </Typography>
 
           <Box className={classes.bloodDemand}>
             <Box className={classes.markLabel}>
-              <Typography variant="h4">Low</Typography>
+              <Typography variant="h4">{t('editProfile.low')}</Typography>
               <Typography variant="h4" className={classes.midLabel}>
-                Medium
+                {t('editProfile.medium')}
               </Typography>
-              <Typography variant="h4">Urgent</Typography>
+              <Typography variant="h4">{t('editProfile.high')}</Typography>
             </Box>
             <Box className={classes.slider}>
               <Slider
@@ -428,7 +411,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           </Box>
 
           <Box className={classes.levelReward}>
-            <Typography variant="h4">Low Level Reward</Typography>
+            <Typography variant="h4">{t('editProfile.lowLevelReward')}</Typography>
             <TextField
               id="lowLevelReward"
               type="number"
@@ -441,7 +424,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             />
           </Box>
           <Box className={classes.levelReward}>
-            <Typography variant="h4">Medium Level Reward</Typography>
+            <Typography variant="h4">{t('editProfile.mediumLevelReward')}</Typography>
             <TextField
               id="mediumLevelReward"
               type="number"
@@ -454,7 +437,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             />
           </Box>
           <Box className={classes.levelReward}>
-            <Typography variant="h4">Urgent Level Reward</Typography>
+            <Typography variant="h4">{t('highLevelReward')}</Typography>
             <TextField
               id="urgentLevelReward"
               type="number"
@@ -473,9 +456,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Button
             variant="contained"
             color="primary"
-            onClick={() => onSubmit(user, username, profile.account)}
+            onClick={() => prepareDataForSubmitting()}
           >
-            Save
+            {t('common.save')}
           </Button>
           <Link to="/profile" className={classes.labelBtn}>
             <Button
@@ -483,7 +466,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               color="secondary"
               className={classes.labelBtn}
             >
-              cancel
+              {t('common.cancel')}
             </Button>
           </Link>
         </Box>

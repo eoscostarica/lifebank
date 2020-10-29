@@ -84,22 +84,37 @@ public:
    *
    * @param account - The user account name,
    * @param lifebank_name - The name of the life bank
-   * @param description - Life bank's description
+   * @param about - Life bank's about
    * @param address - Life bank's address
    * @param location - Life banks's location latitud,logitud
-   * @param phone_number - Life banks' phone_number
+   * @param telephones - Life banks' phone_number
    * @param has_immunity_test - TODO:
    * @param blood_urgency_level - TODO:
    * @param schedule - Life banks's schedule
    * @param community_asset - Symbol ex: 1 SYS , 1 BLOOD
    * @param email - Life bank's email
-   *
+   * @param photos - Life bank's photos
+   * @param logo_url - Life bank's logo
+   * @param social_media_links - Life bank's social media links
    * @pre community's symbol must exits
    *
+   *
    */
-  ACTION addlifebank(eosio::name account, string lifebank_name,
-                     string description, string address, string location, string phone_number,
-                     bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset, string email);
+  ACTION addlifebank(
+      eosio::name account,
+      string lifebank_name,
+      string about,
+      string address,
+      string location,
+      string telephones,
+      bool has_immunity_test,
+      uint8_t blood_urgency_level,
+      string schedule,
+      eosio::asset community_asset,
+      string email,
+      string photos,
+      string logo_url,
+      string social_media_links);
 
   /**
    *
@@ -107,15 +122,18 @@ public:
    *
    * @param account - The user account name,
    * @param lifebank_name - The name of the life bank
-   * @param description - Life bank's description
+   * @param about - Life bank's about
    * @param address - Life bank's address
    * @param location - Life banks's location latitud,logitud
-   * @param phone_number - Life banks' phone_number
+   * @param telephones - Life banks' phone_number
    * @param has_immunity_test - TODO:
    * @param blood_urgency_level - TODO:
    * @param schedule - Life banks's schedule
    * @param community_asset - Symbol ex: 1 SYS , 1 BLOOD
    * @param email - Life bank's email
+   * @param photos - Life bank's photos
+   * @param logo_url - Life bank's logo
+   * @param social_media_links - Life bank's social media links
    *
    * @pre community's symbol must exits
    *

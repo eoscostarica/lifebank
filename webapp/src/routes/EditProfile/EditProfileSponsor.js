@@ -14,11 +14,12 @@ import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import { useTranslation } from 'react-i18next'
 
 import FacebookIcon from '../../assets/facebook.svg'
 import InstagramIcon from '../../assets/instagram.svg'
 import TwitterIcon from '../../assets/twitter.svg'
-import MapSelectLocation from '../../components/MapSelectLocation'
+import MapEditLocation from '../../components/MapEditLocation'
 import Carousel from '../../components/Carousel'
 import Schedule from '../../components/Schedule'
 import Logo from '../../components/Logo'
@@ -94,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
   const phoneValueRef = useRef(undefined)
   const photoUrlValueRef = useRef(undefined)
@@ -128,6 +130,11 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       setUser({ ...user, [field]: value })
     },
     [user]
+  )
+
+  const handleOnGeolocationChange = useCallback(
+    (geolocation) => setUser({ ...user, geolocation: geolocation }),
+    [user.geolocation]
   )
 
   const handleOnAddSchedule = useMemo(
@@ -172,8 +179,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     onSubmit(userToSubmit)
   }
 
-  console.log(user)
-
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
@@ -188,9 +193,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           style={{
             display: isCompleting && !profile.logo_url ? 'block' : 'none'
           }}
-          label="Logo url"
+          label={t('editProfile.logoUrl')}
           variant="outlined"
-          placeholder="Your logo url"
+          placeholder={t('editProfile.logoUrlPlaceholder')}
           defaultValue={user.logo_url}
           fullWidth
           InputLabelProps={{
@@ -203,9 +208,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           id="name"
           name="name"
           style={{ display: isCompleting && profile.name ? 'none' : '' }}
-          label="Name"
+          label={t('signup.name')}
           variant="outlined"
-          placeholder="Your Sponsor Name"
+          placeholder={t('editProfile.sponsorNamePlaceholder')}
           value={user.name}
           fullWidth
           InputLabelProps={{
@@ -218,9 +223,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           id="address"
           name="address"
           style={{ display: isCompleting && profile.address ? 'none' : '' }}
-          label="Address"
+          label={t('signup.address')}
           variant="outlined"
-          placeholder="Your address here"
+          placeholder={t('signup.addressPlaceholder')}
           value={user.address}
           fullWidth
           InputLabelProps={{
@@ -256,9 +261,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="email"
           style={{ display: isCompleting && profile.email ? 'none' : '' }}
-          label="Email"
+          label={t('common.email')}
           variant="outlined"
-          placeholder="Your email"
+          placeholder={t('common.emailPlaceholder')}
           defaultValue={user.email}
           fullWidth
           InputLabelProps={{
@@ -270,7 +275,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="website"
           style={{ display: isCompleting && profile.website ? 'none' : '' }}
-          label="Website"
+          label={t('common.website')}
           variant="outlined"
           placeholder="Website"
           defaultValue={user.website}
@@ -284,9 +289,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="telephone"
           style={{ display: isCompleting && profile.telephones ? 'none' : '' }}
-          label="Telephone"
+          label={t('signup.phoneNumber')}
           variant="outlined"
-          placeholder="Telephone"
+          placeholder={t('signup.phoneNumberPlaceholder')}
           fullWidth
           inputRef={phoneValueRef}
           onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
@@ -348,9 +353,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           style={{
             display: isCompleting && profile.about ? 'none' : ''
           }}
-          label="About"
+          label={t('signup.about')}
           variant="outlined"
-          placeholder="Description about your business here"
+          placeholder={t('signup.aboutBusiness')}
           defaultValue={user.about}
           InputLabelProps={{
             shrink: true
@@ -367,9 +372,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           style={{
             display: isCompleting && profile.covid_impact ? 'none' : ''
           }}
-          label="Covid Impact"
+          label={t('editProfile.covidImpact')}
           variant="outlined"
-          placeholder=""
+          placeholder={t('editProfile.covidImpactPlaceholder')}
           defaultValue={user.covid_impact}
           InputLabelProps={{
             shrink: true
@@ -387,7 +392,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           style={{
             display: isCompleting && profile.benefit_description ? 'none' : ''
           }}
-          label="Benefit description"
+          label={t('profile.benefitDescription')}
           variant="outlined"
           placeholder=""
           defaultValue={user.benefit_description}
@@ -407,9 +412,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           style={{
             display: isCompleting && !profile.photos ? 'none' : ''
           }}
-          label="Photo url"
+          label={t('editProfile.photoUrl')}
           variant="outlined"
-          placeholder="Your photo url here"
+          placeholder={t('editProfile.photourlPlaceholder')}
           fullWidth
           inputRef={photoUrlValueRef}
           onChange={(e) => setDisablePhotoUrlInput(e.target.value.length === 0)}
@@ -470,8 +475,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             }}
             idText="facebook-profile-url"
             name="facebook"
-            label="Facebook profile url"
-            placeholder="Your facebook profile url here"
+            label={t('editProfile.facebookProfileUrl')}
+            placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
             icon={FacebookIcon}
             onChangeSocialMediaTextField={(url) =>
               handleOnSocialMediaTextFieldChange('facebook', url)
@@ -491,8 +496,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             textFieldClass={classes.textField}
             idText="instagram-username"
             name="instagram"
-            label="Instagram username"
-            placeholder="Your instagram username here"
+            label={t('editProfile.instagramUsername')}
+            placeholder={t('editProfile.instagramUsernamePlaceholder')}
             icon={InstagramIcon}
             onChangeSocialMediaTextField={(url) =>
               handleOnSocialMediaTextFieldChange('instragram', url)
@@ -512,8 +517,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             textFieldClass={classes.textField}
             idText="twitter-username"
             name="twitter"
-            label="Twitter username"
-            placeholder="Your twitter username here"
+            label={t('editProfile.twitterUsername')}
+            placeholder={t('editProfile.twitterUsernamePlaceholder')}
             icon={TwitterIcon}
             onChangeSocialMediaTextField={(url) =>
               handleOnSocialMediaTextFieldChange('twitter', url)
@@ -522,12 +527,17 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         </Box>
 
         <Typography variant="subtitle2" gutterBottom>
-          Choose your location
+          {t('signup.chooseYourLocation')}
         </Typography>
 
-        <MapSelectLocation
-          onGeolocationChange={(value) => handleSetField('geolocation', value)}
+        <MapEditLocation
+          onGeolocationChange={handleOnGeolocationChange}
           markerType={SPONSOR}
+          markerLocation={
+            user.geolocation
+              ? user.geolocation
+              : { longitude: -84.0556371, latitude: 9.9195872 }
+          }
           width="100%"
           height={400}
           mb={1}
@@ -540,7 +550,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             color="primary"
             onClick={() => prepareDataForSubmitting()}
           >
-            Save
+            {t('common.save')}
           </Button>
 
           <Link to="/profile" className={classes.labelBtn}>
@@ -549,7 +559,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               color="secondary"
               className={classes.labelBtn}
             >
-              cancel
+              {t('common.cancel')}
             </Button>
           </Link>
         </Box>

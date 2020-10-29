@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
 import ContactMailIcon from '@material-ui/icons/ContactMail'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
+import { useTranslation } from 'react-i18next'
 
 import LoginModal from '../components/LoginModal'
 import CredentialsRecovery from '../components/CredentialsRecovery'
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SideBar = ({ user, onLogout }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
@@ -70,7 +72,7 @@ const SideBar = ({ user, onLogout }) => {
                 <FavoriteIcon className={classes.iconDonor} />
                 <Link to="/donations">
                   <Typography variant="body1" className={classes.labelOption}>
-                    Your Donations
+                    {t('navigationDrawer.yourDonations')}
                   </Typography>
                 </Link>
               </Box>
@@ -78,7 +80,7 @@ const SideBar = ({ user, onLogout }) => {
                 <LocalOfferOutlinedIcon className={classes.iconOption} />
                 <Link to="/offers">
                   <Typography variant="body1" className={classes.labelOption}>
-                    Available offers
+                    {t('cardsSection.availableOffers')}
                   </Typography>
                 </Link>
               </Box>
@@ -88,7 +90,7 @@ const SideBar = ({ user, onLogout }) => {
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">
               <Typography variant="body1" className={classes.labelOption}>
-                {`${user.role} Profile`}
+                {`${user.role} ${t('profile.profile')}`}
               </Typography>
             </Link>
           </Box>
@@ -97,7 +99,7 @@ const SideBar = ({ user, onLogout }) => {
               <MenuBookIcon className={classes.iconOption} />
               <Link to="/offers-management">
                 <Typography variant="body1" className={classes.labelOption}>
-                  Offers Management
+                  {t('offersManagement.offersManagement')}
                 </Typography>
               </Link>
             </Box>
@@ -105,7 +107,7 @@ const SideBar = ({ user, onLogout }) => {
           <Box className={classes.optionLink} onClick={onLogout}>
             <LogoutIcon className={classes.iconOption} />
             <Typography variant="body1" className={classes.labelOption}>
-              Logout
+              {t('logout')}
             </Typography>
           </Box>
           <TokenTransfer
@@ -128,7 +130,7 @@ const SideBar = ({ user, onLogout }) => {
             <ContactMailIcon className={classes.iconOption} />
             <Link to="/signup">
               <Typography variant="body1" className={classes.labelOption}>
-                Register
+                {t('hero.register')}
               </Typography>
             </Link>
           </Box>
@@ -136,13 +138,13 @@ const SideBar = ({ user, onLogout }) => {
       )}
       <Divider />
       <Typography variant="body1" className={classes.infoLabel}>
-        INFORMATION
+        {t('navigationDrawer.information')}
       </Typography>
       <Box className={classes.optionLink}>
         <InfoIcon className={classes.iconOption} />
         <Link to="/about">
           <Typography variant="body1" className={classes.labelOption}>
-            About LifeBank
+            {t('navigationDrawer.aboutLifebank')}
           </Typography>
         </Link>
       </Box>
@@ -150,7 +152,7 @@ const SideBar = ({ user, onLogout }) => {
         <InfoIcon className={classes.iconOption} />
         <Link to="/terms-of-use">
           <Typography variant="body1" className={classes.labelOption}>
-            Terms of Use
+            {t('navigationDrawer.useTerms')}
           </Typography>
         </Link>
       </Box>
@@ -158,7 +160,7 @@ const SideBar = ({ user, onLogout }) => {
         <InfoIcon className={classes.iconOption} />
         <Link to="/help">
           <Typography variant="body1" className={classes.labelOption}>
-            Help
+            {t('navigationDrawer.help')}
           </Typography>
         </Link>
       </Box>
