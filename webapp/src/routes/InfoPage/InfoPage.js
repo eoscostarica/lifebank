@@ -367,7 +367,7 @@ const InfoPage = () => {
         {profile &&
           <Box className={classes.cardBody}>
             <div className={classes.headerCardBody}>
-              <img className={classes.avatarRound} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
+              <img className={classes.avatarRound} src={profile.info.logo_url} alt="Avatar" />
               <Typography className={classes.title} noWrap >{profile.info.name}</Typography>
               <Typography className={classes.subtitle} noWrap >Hospital</Typography>
             </div>
@@ -387,7 +387,7 @@ const InfoPage = () => {
                     }
                   ]}
                 >
-                  {numbers.map((url, key) => (
+                  {JSON.parse(profile.info.photos).map((url, key) => (
                     <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
                   ))}
                 </Carousel>
@@ -618,7 +618,7 @@ const InfoPage = () => {
                       }
                     ]}
                   >
-                    {numbers.map((url, key) => (
+                    {JSON.parse(profile.info.photos).map((url, key) => (
                       <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
                     ))}
                   </Carousel>

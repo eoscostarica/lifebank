@@ -14,12 +14,12 @@ const Home = () => {
     defaultMatches: true
   })
 
-  const [loadingOffers, setLoadingOffers] = useState(true);
-  const [offers, setOffers] = useState([]);
-  const [loadingLifebanks, setLoadingLifebanks] = useState(true);
-  const [lifebanks, setLifebanks] = useState([]);
-  const [loadingSponsors, setLoadingSponsors] = useState(true);
-  const [sponsors, setSponsors] = useState([]);
+  const [loadingOffers, setLoadingOffers] = useState(true)
+  const [offers, setOffers] = useState([])
+  const [loadingLifebanks, setLoadingLifebanks] = useState(true)
+  const [lifebanks, setLifebanks] = useState([])
+  const [loadingSponsors, setLoadingSponsors] = useState(true)
+  const [sponsors, setSponsors] = useState([])
 
   const [valueSponsorCat, setValueSponsorCat] = useState("All")
   const [valueOfferCat, setValueOfferCat] = useState("All")
