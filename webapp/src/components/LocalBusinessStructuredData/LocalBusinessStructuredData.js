@@ -11,25 +11,32 @@ const LocalBusinessStructuredData = ({
   email,
   location,
   telephone
-}) => {
-  return (
-    <JSONLD>
+}) => (
+  <JSONLD>
+    <Generic
+      type="localBusiness"
+      jsonldtype="LocalBusiness"
+      schema={{
+        name: name,
+        openingHours: getOpeningHours(openingHours),
+        addres: address,
+        logo: logo,
+        email: email,
+        location: location,
+        telephone: telephone
+      }}
+    >
       <Generic
-        type="localBusiness"
-        jsonldtype="LocalBusiness"
+        type="geoCoordinates"
+        jsonldtype="GeoCoordinates"
         schema={{
-          name: name,
-          openingHours: getOpeningHours(openingHours),
-          addres: address,
-          logo: logo,
-          email: email,
-          location: location,
-          telephone: telephone
+          latitude: JSON.parse(location).latitude,
+          longitude: JSON.parse(location).longitude
         }}
       />
-    </JSONLD>
-  )
-}
+    </Generic>
+  </JSONLD>
+)
 
 LocalBusinessStructuredData.propTypes = {
   name: PropTypes.string,
@@ -37,7 +44,7 @@ LocalBusinessStructuredData.propTypes = {
   address: PropTypes.string,
   email: PropTypes.string,
   location: PropTypes.string,
-  telephone: PropTypes.telephone
+  telephone: PropTypes.string
 }
 
 export default LocalBusinessStructuredData

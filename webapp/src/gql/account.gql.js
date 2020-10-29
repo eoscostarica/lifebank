@@ -45,6 +45,7 @@ export const PROFILE_QUERY = gql`
 export const GET_VALID_SPONSORS_QUERY = gql`
   query {
     get_valid_sponsors {
+      name
       address
       email
       location

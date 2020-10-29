@@ -26,7 +26,7 @@ const App = ({ ual }) => {
   }, [loadValidSponsors])
 
   useEffect(() => {
-    if (data) setValidSponsors({})
+    if (data) setValidSponsors(data.get_valid_sponsors)
   }, [data])
 
   return (
@@ -46,7 +46,22 @@ const App = ({ ual }) => {
           topbarContent={<TopBar user={currentUser} onLogout={logout} />}
           sidebarContent={<SideBar user={currentUser} onLogout={logout} />}
         >
-          <LocalBusinessStructuredData name />
+          {validSponsors.length > 0 && (
+            <>
+              {validSponsors.map((el, key) => (
+                <LocalBusinessStructuredData
+                  key={key}
+                  name={el.name}
+                  openingHours={el.openingHours}
+                  address={el.address}
+                  logo={el.logo}
+                  email={el.email}
+                  location={el.location}
+                  telephone={el.telephone}
+                />
+              ))}
+            </>
+          )}
           <Grid container justify="center" alignItems="center">
             <Switch>
               {routes.map(({ path, component: Component, ...args }) => (

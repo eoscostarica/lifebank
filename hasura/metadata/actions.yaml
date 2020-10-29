@@ -46,7 +46,10 @@ actions:
     kind: ""
     handler: http://hapi:9090/api/get-valid-sponsors
   permissions:
+  - role: donor
   - role: guest
+  - role: lifebank
+  - role: sponsor
 - name: grant_consent
   definition:
     kind: synchronous
