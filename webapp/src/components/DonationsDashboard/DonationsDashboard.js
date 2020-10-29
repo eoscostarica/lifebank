@@ -271,7 +271,7 @@ EmptyHeartSVG.propTypes = {
 
 const DonationsDashboard = ({ isDesktop, isOffer }) => {
   const { t } = useTranslation('translations')
-  const [maxWidth] = useState('md');
+  const [maxWidth] = useState('md')
   const [open, setOpen] = useState(false)
   const classes = useStyles()
   const [state, setState] = useState({
@@ -462,7 +462,7 @@ const DonationsDashboard = ({ isDesktop, isOffer }) => {
 
 DonationsDashboard.defaultProps = {
   isOffer: false,
-};
+}
 
 DonationsDashboard.propTypes = {
   isDesktop: PropTypes.bool,
