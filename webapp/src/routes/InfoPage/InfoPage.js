@@ -107,7 +107,6 @@ const useStyles = makeStyles((theme) => ({
     left: 65
   },
   label: {
-    width: '77px',
     height: '16px',
     fontFamily: 'Roboto',
     fontSize: '14px',
