@@ -42,6 +42,19 @@ export const PROFILE_QUERY = gql`
   }
 `
 
+export const GET_VALID_SPONSORS_QUERY = gql`
+  query {
+    get_valid_sponsors {
+      address
+      email
+      location
+      logo
+      openingHours
+      telephone
+    }
+  }
+`
+
 export const PROFILE_ID_QUERY = gql`
   query {
     profile {
@@ -120,13 +133,15 @@ export const VALIDATE_EMAIL = gql`
 
 export const GET_SECRET_BY_ACCOUNT = gql`
   query($account: String!) {
-    user(where: {
-      _or: [
-        { account: { _eq: $account } },
-        { username: { _eq: $account } },
-        { email: { _eq: $account } }
-      ]
-    }) {
+    user(
+      where: {
+        _or: [
+          { account: { _eq: $account } }
+          { username: { _eq: $account } }
+          { email: { _eq: $account } }
+        ]
+      }
+    ) {
       secret
     }
   }

@@ -4,7 +4,8 @@ const {
   jwtUtils,
   consent2lifeUtils,
   lifebankcodeUtils,
-  lifebankcoinUtils
+  lifebankcoinUtils,
+  hasuraUtils
 } = require('../utils')
 
 const historyApi = require('./history.api')
@@ -15,6 +16,14 @@ const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
+
+const GET_SPONSORS_ACCOUNTS = `
+query MyQuery {
+  user(where: {account: {_ilike: "spo%"}}) {
+    account
+  }
+}
+`
 
 const create = async ({ role, email, name, secret }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
@@ -120,6 +129,43 @@ const getLifebankData = async account => {
     name,
     consent: !!consent
   }
+}
+
+const getSponsorsAccounts = async () => {
+  const { user } = await hasuraUtils.request(GET_SPONSORS_ACCOUNTS)
+
+  return user
+}
+
+const getValidSponsors = async () => {
+  const sponsorsAccounts = await getSponsorsAccounts()
+  const validSponsors = []
+  for (let index = 0; index < sponsorsAccounts.length; index++) {
+    const { tx } =
+      (await lifebankcodeUtils.getSponsor(sponsorsAccounts[index].account)) ||
+      {}
+    if (tx) {
+      const { ...profile } = await getTransactionData(tx)
+      if (
+        profile.schedule.length > 0 &&
+        profile.address.length > 0 &&
+        profile.logo_url.length > 0 &&
+        profile.email.length > 0 &&
+        profile.location !== 'null' &&
+        JSON.parse(profile.telephones).length > 0
+      )
+        validSponsors.push({
+          openingHours: profile.schedule,
+          address: profile.address,
+          logo: profile.logo_url,
+          email: profile.email,
+          location: profile.location,
+          telephone: JSON.parse(profile.telephones)[0]
+        })
+    }
+  }
+
+  return validSponsors
 }
 
 const getSponsorData = async account => {
@@ -276,5 +322,6 @@ module.exports = {
   grantConsent,
   revokeConsent,
   transfer,
-  verifyEmail
+  verifyEmail,
+  getValidSponsors
 }

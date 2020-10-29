@@ -47,7 +47,7 @@ function MapPopup({ id, info }) {
     <Box key={id}>
       <div className={classes.title}>{info.name}</div>
       <div>
-        {this('common.telephone')}:
+        {t('common.telephone')}:
         <a
           href={`tel: ${info.telephone || info.phone_number} `}
           className={classes.link}

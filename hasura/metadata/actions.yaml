@@ -41,6 +41,10 @@ actions:
   - role: guest
   - role: lifebank
   - role: sponsor
+- name: get_valid_sponsors
+  definition:
+    kind: ""
+    handler: http://hapi:9090/api/get-valid-sponsors
 - name: grant_consent
   definition:
     kind: synchronous
@@ -119,4 +123,5 @@ custom_types:
   - name: get_contract_output
   - name: create_pre_register_lifebank_output
   - name: verify_email_output
+  - name: ValidSponsor
   scalars: []

@@ -439,11 +439,11 @@ const ProfilePageSponsor = ({ profile }) => {
           <Typography variant="body1" />
         </Box>
         <TextField
-          style={{ display: !profile.address ? 'none' : '' }}
+          style={{ display: !profile.about ? 'none' : '' }}
           id="address"
           variant="outlined"
           disabled
-          defaultValue={profile.address}
+          defaultValue={profile.about}
           InputLabelProps={{
             shrink: true
           }}
