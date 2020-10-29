@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import { useQuery } from '@apollo/react-hooks'
 import '@brainhubeu/react-carousel/lib/style.css'
+import Telephones from '../../components/Telephones'
 
 import 'date-fns'
 import { useTranslation } from 'react-i18next'
@@ -72,8 +73,6 @@ const useStyles = makeStyles((theme) => ({
 const ProfilePageLifebank = ({ profile }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  let logo = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
-  const arrayImage = ["https://www.fodors.com/wp-content/uploads/2019/03/UltimateCostaRica__HERO_shutterstock_1245999643.jpg", "https://www.guanacastealaaltura.com/media/k2/items/cache/0a7d97071828da65151775fc572477c0_XL.jpg?t=20200524_175218"]
   const [userName, setuserName] = useState()
   const [pendingFields, setPendingFields] = useState()
 
@@ -141,7 +140,7 @@ const ProfilePageLifebank = ({ profile }) => {
       checkAvailableFields()
     }
   }, [profile])
-
+  console.log("profile", JSON.parse(profile.telephones))
   return (
     <>
       <div className={classes.divProgressProfile}>
@@ -248,7 +247,9 @@ const ProfilePageLifebank = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">{t('common.telephone')}</Typography>
-        <Typography variant="body1">{profile.telephones}</Typography>
+        {JSON.parse(profile.telephones).length > 0 && JSON.parse(profile.telephones).map((phoneNumber, index) => (
+          <Typography className={classes.telephonesStyle} key={index} variant="body1">{phoneNumber}</Typography>
+        ))}
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>

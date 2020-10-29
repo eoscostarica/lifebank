@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import Logo from '../../components/Logo'
+import Telephones from '../../components/Telephones'
 
 import Schedule from '../../components/Schedule'
 import MapEditLocation from '../../components/MapEditLocation'
@@ -129,12 +130,13 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const classes = useStyles()
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
   const photoUrlValueRef = useRef(undefined)
-  const imgUrlLogoValueRef = useRef(undefined)
+  const phoneValueRef = useRef(undefined)
+  const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [username, setUserName] = useState(userName)
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
-    telephones: profile.telephones,
+    telephones: profile.telephones && profile.telephones !== '' ? JSON.parse(profile.telephones) : [],
     email: profile.email,
     logo_url: profile.logo_url,
     photos: profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
@@ -184,9 +186,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   const prepareDataForSubmitting = () => {
     const userToSubmit = { ...user }
-    //userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
+    userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
     userToSubmit.photos = JSON.stringify(user.photos)
-    //userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
     onSubmit(userToSubmit, username, profile.account)
   }
   console.log("isCompleting", isCompleting)
@@ -248,19 +249,50 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         />
         <TextField
           id="telephone"
-          style={{
-            display: isCompleting && user.phone_number ? 'none' : ''
-          }}
-          label={t('common.telephone')}
-          fullWidth
+          style={{ display: isCompleting && user.telephones ? 'none' : '' }}
+          label={t('signup.phoneNumber')}
           variant="outlined"
           placeholder={t('signup.phoneNumberPlaceholder')}
-          defaultValue={user.telephones}
+          fullWidth
+          inputRef={phoneValueRef}
+          onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  disabled={disablePhoneInput}
+                  color="secondary"
+                  aria-label="toggle password visibility"
+                  onClick={() => {
+                    setUser({
+                      ...user,
+                      telephones: [
+                        ...user.telephones,
+                        phoneValueRef.current.value
+                      ]
+                    })
+                    phoneValueRef.current.value = ''
+                    setDisablePhoneInput(true)
+                  }}
+                >
+                  <AddIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
           InputLabelProps={{
             shrink: true
           }}
-          onChange={(event) =>
-            handleSetField('telephones', event.target.value)
+          className={classes.textField}
+        />
+        <Telephones
+          phones={user.telephones}
+          showDelete
+          deletePhone={(phone) =>
+            setUser({
+              ...user,
+              telephones: user.telephones.filter((p) => p !== phone)
+            })
           }
         />
         <TextField
