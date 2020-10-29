@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { useLazyQuery } from '@apollo/react-hooks'
@@ -17,10 +18,13 @@ import Divider from '@material-ui/core/Divider'
 import Fab from '@material-ui/core/Fab'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import CloseIcon from '@material-ui/icons/Close'
+import Alert from '@material-ui/lab/Alert'
 import QRCode from 'qrcode.react'
+import QrReader from 'react-qr-scanner'
 import { useTranslation } from 'react-i18next'
 
 import { PROFILE_QUERY } from '../../gql'
+import { TRANSFER_MUTATION } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -197,7 +201,7 @@ const useStyles = makeStyles((theme) => ({
   closeIcon: {
     position: 'absolute',
     zIndex: 1,
-    top: 10,
+    top: 15,
     right: 10,
     margin: '0',
     height: '5vh',
@@ -205,13 +209,21 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 25,
       color: 'rgba(0, 0, 0, 0.6)'
     }
-  }
+  },
+  switchCamaraButton: {
+    backgroundColor: "#ba0d0d",
+  },
+  switchCamaraIcon: {
+    color: '#ffffff'
+  },
+  alert: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+  },
 }))
 
 const EmptyHeartSVG = ({ balance }) => {
-  const { t } = useTranslation('translations')
   const classes = useStyles()
-
   const textColor = balance ? '#ffffff' : '#000000'
 
   return (
@@ -249,10 +261,15 @@ EmptyHeartSVG.propTypes = {
   balance: PropTypes.number,
 }
 
-const DonationsDashboard = ({ isDesktop }) => {
+const DonationsDashboard = ({ isDesktop, role }) => {
   const { t } = useTranslation('translations')
   const [maxWidth] = useState('md')
+  const [maxWidthQr] = useState('xs')
   const [open, setOpen] = useState(false)
+  const [payload, setPayload] = useState({ quantity: 1, memo: "Token transfer" })
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [openModalQR, setOpenModalQR] = useState(false)
+  const [cameraSelection] = useState("rear")
   const classes = useStyles()
   const [state, setState] = useState({
     bottom: false
@@ -264,7 +281,24 @@ const DonationsDashboard = ({ isDesktop }) => {
     { data: { profile: { profile } = {} } = {}, client }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
-  const tokens = profile?.balance.length
+  const [
+    transfer,
+    { loading, error, data: { transfer: transferResult } = {} }
+  ] = useMutation(TRANSFER_MUTATION)
+
+  useEffect(() => {
+    if (!error) {
+      return
+    }
+
+    setErrorMessage(error.message.replace('GraphQL error: ', ''))
+  }, [error])
+
+  const handleSetField = (field, value) => {
+    setPayload({ ...payload, [field]: value })
+  }
+
+  const tokens = role === "donor" && profile?.balance.length
     ? profile.balance.join(',').split(' ')[0]
     : 0
 
@@ -295,9 +329,27 @@ const DonationsDashboard = ({ isDesktop }) => {
 
   const handleOpen = () => setOpen(!open)
 
+  const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
+
+  const succesefulScan = (value) => {
+    if (value) {
+      setOpenModalQR(false)
+      handleSetField('to', value || payload.to)
+    }
+  }
+
+  const hanndlerTransferTokens = () => {
+    setErrorMessage(null)
+    transfer({
+      variables: {
+        ...payload
+      }
+    })
+  }
+
   const DashboardContent = () => {
     return (
-      <Box>
+      <>
         {isDesktop && (
           <>
             <Box className={classes.closeIcon}>
@@ -310,65 +362,201 @@ const DonationsDashboard = ({ isDesktop }) => {
                 <CloseIcon fontSize="inherit" />
               </IconButton>
             </Box>
-            <Typography className={classes.draweTitleDesktop}>
-              {t('donations.donate')}
-            </Typography>
+            {role === "donor" &&
+              <Typography className={classes.draweTitleDesktop}>
+                {t('donations.donate')}
+              </Typography>
+            }
+            {role === "lifebank" &&
+              <Typography className={classes.draweTitleDesktop}>
+                {t('donations.transferTokens')}
+              </Typography>
+            }
+            {role === "sponsor" &&
+              <Typography className={classes.draweTitleDesktop}>
+                {t('donations.claimReward')}
+              </Typography>
+            }
           </>
         )}
         {!isDesktop && (
           <>
-            <Typography className={classes.draweTitle}>
-              {t('donations.yourDonationsAndRewards')}
-            </Typography>
+            {role === "donor" &&
+              <Typography className={classes.draweTitle}>
+                {t('donations.yourDonationsAndRewards')}
+              </Typography>
+            }
+            {role === "lifebank" &&
+              <Typography className={classes.draweTitle}>
+                {t('donations.transferTokens')}
+              </Typography>
+            }
+            {role === "sponsor" &&
+              <Typography className={classes.draweTitle}>
+                {t('donations.claimReward')}
+              </Typography>
+            }
             <Divider className={classes.dividerTitle} />
           </>
         )}
-        <Box className={classes.boxBalance}>
-          <Typography className={classes.balanceText}>
-            {t('donations.youOwn')}
-          </Typography>
-          <EmptyHeartSVG balance={parseInt(tokens)} isDesktop={isDesktop} />
-          <Typography className={classes.balanceText}>
-            {t('miscellaneous.tokens')}
-          </Typography>
-        </Box>
-        <Typography className={classes.sectionTitle}>
-          {t('donations.receiveTokens')}
-        </Typography>
-        <Divider className={classes.dividerSection} />
-        <Typography className={classes.sectionText}>
-          {t('donations.toReceiveTokens')}
-        </Typography>
-        <Box className={classes.boxQR}>
-          <QRCode value={profile.account || 'n/a'} size={100} />
-          <Typography className={classes.accountText}>
-            {profile.account}
-          </Typography>
-        </Box>
-        <Typography className={classes.sectionTitle}>
-          {t('donations.sendTokens')}
-        </Typography>
-        <Divider className={classes.dividerSection} />
-        <Typography className={classes.sectionText}>
-          {t('donations.toSendTo')}
-        </Typography>
-        <Box className={classes.boxTexfield}>
-          <TextField
-            className={classes.inputText}
-            id="filled-basic"
-            label={t('donations.enterSponsorUsername')}
-            variant="filled"
-          />
-          <IconButton aria-label="delete" className={classes.camaraButtonIcon}>
-            <CameraAltIcon className={classes.camaraIcon} />
-          </IconButton>
-        </Box>
-        <Box className={classes.boxButtonSendToken}>
-          <Button className={classes.sendTokenButton}>
-            {t('donations.sendToken')}
-          </Button>
-        </Box>
-      </Box>
+        {role === "donor" &&
+          <Box className={classes.boxBalance}>
+            <Typography className={classes.balanceText}>
+              {t('donations.youOwn')}
+            </Typography>
+            <EmptyHeartSVG balance={parseInt(tokens)} isDesktop={isDesktop} />
+            <Typography className={classes.balanceText}>
+              {t('miscellaneous.tokens')}
+            </Typography>
+          </Box>
+        }
+        { (role === "donor" || role === "sponsor") &&
+          <Box>
+            {role === "donor" &&
+              <Box>
+                <Typography className={classes.sectionTitle}>
+                  {t('donations.receiveTokens')}
+                </Typography>
+                <Divider className={classes.dividerSection} />
+                <Typography className={classes.sectionText}>
+                  {t('donations.toReceiveTokens')}
+                </Typography>
+              </Box>
+            }
+            {role === "sponsor" &&
+              <Typography className={classes.sectionText}>
+                {t('donations.toReceiveTokensDonor')}
+              </Typography>
+            }
+            <Box className={classes.boxQR}>
+              <QRCode value={profile.account || 'n/a'} size={100} />
+              <Typography className={classes.accountText}>
+                {profile.account}
+              </Typography>
+            </Box>
+          </Box>
+        }
+        { (role === "donor" || role === "lifebank") &&
+          <Box>
+            {role === "donor" &&
+              <Box>
+                <Typography className={classes.sectionTitle}>
+                  {t('donations.sendTokens')}
+                </Typography>
+                <Divider className={classes.dividerSection} />
+                <Typography className={classes.sectionText}>
+                  {t('donations.toSendTo')}
+                </Typography>
+              </Box>
+            }
+            {role === "lifebank" &&
+              <Typography className={classes.sectionText}>
+                {t('donations.toSendToDonor')}
+              </Typography>
+            }
+            <Box className={classes.boxTexfield}>
+              <form autoComplete="off">
+                <TextField
+                  autoFocus
+                  className={classes.inputText}
+                  id="filled-basic"
+                  label={t('donations.enterSponsorUsername')}
+                  variant="filled"
+                  value={payload.to || ''}
+                  onChange={(event) =>
+                    handleSetField('to', event.target.value)
+                  }
+                />
+                <QrReaderModal />
+              </form>
+            </Box>
+            {errorMessage && (
+              <Alert
+                className={classes.alert}
+                severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => setErrorMessage(null)}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                {errorMessage}
+              </Alert>
+            )}
+            <Box className={classes.boxButtonSendToken}>
+              <Button className={classes.sendTokenButton} variant="contained" color="secondary"
+                onClick={hanndlerTransferTokens}
+                disabled={
+                  !payload.to ||
+                  !payload.quantity ||
+                  !payload.memo ||
+                  loading
+                }
+              >
+                {t('donations.sendToken')}
+              </Button>
+            </Box>
+          </Box>
+        }
+      </>
+    )
+  }
+
+  const QrReaderModal = () => {
+    return (
+      <>
+        <IconButton aria-label="delete" className={classes.camaraButtonIcon} onClick={handleOpenModalQr}>
+          <CameraAltIcon className={classes.camaraIcon} />
+        </IconButton>
+        <Dialog
+          maxWidth={maxWidthQr}
+          open={openModalQR}
+          onClose={handleOpenModalQr}
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500
+          }}
+        >
+          <Box className={classes.dialog}>
+            <Box className={classes.closeIcon}>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={handleOpenModalQr}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            </Box>
+            <Typography className={classes.draweTitleDesktop}>
+              {t('donations.scanQR')}
+            </Typography>
+            {cameraSelection &&
+              <QrReader
+                delay={100}
+                onError={() => { }}
+                onScan={(value) => { succesefulScan(value) }}
+                facingMode={cameraSelection}
+                style={{
+                  height: "auto",
+                  width: "100%",
+                  marginTop: "20px",
+                  marginBottom: "20px",
+                  backgroundColor: '#ffffff',
+                }}
+              />
+            }
+          </Box>
+        </Dialog>
+      </>
     )
   }
 
@@ -437,7 +625,8 @@ const DonationsDashboard = ({ isDesktop }) => {
 }
 
 DonationsDashboard.propTypes = {
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
+  role: PropTypes.string
 }
 
 export default DonationsDashboard

@@ -208,10 +208,15 @@
       "youOwn": "You Own",
       "receiveTokens": "Receive Tokens",
       "toReceiveTokens": "To receive tokens from a Lifebank you need to provide your user name or show the following QR.",
+      "toReceiveTokensDonor": "To receive tokens from a donor you need to provide your user name or show the following QR.",
       "toSendTo": "To send tokens to a sponsor you need to enter their username or detect a QR with your camera.",
+      "toSendToDonor": "To send tokens to a donor you need to enter their username or detect a QR with your camera.",
       "sendTokens": "Send tokens",
       "sendToken": "Send Token",
-      "enterSponsorUsername": "Enter username here"
+      "enterSponsorUsername": "Enter username here",
+      "scanQR": "Scan QR code",
+      "transferTokens": "Transfer tokens",
+      "claimReward": "Claim reward"
     },
     "users": "Users",
     "products": "Products",
