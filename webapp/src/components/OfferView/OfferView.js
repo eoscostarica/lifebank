@@ -317,7 +317,7 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
       }
       {
         isDesktop &&
-        <Dialog open={openOfferView} onClose={handleCloseOfferView} TransitionComponent={Transition}>
+        <Dialog open={openOfferView} onClose={handleCloseOfferView} TransitionComponent={Transition} maxWidth={"sm"} fullWidth>
           <Box className={classes.closeIcon}>
             <IconButton
               aria-label="close"
