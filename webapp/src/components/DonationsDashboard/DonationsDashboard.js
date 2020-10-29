@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
-import { useLazyQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/core/styles'
 import { useUser } from '../../context/user.context'
 import { useHistory } from 'react-router-dom'
@@ -24,8 +23,7 @@ import QRCode from 'qrcode.react'
 import QrReader from 'react-qr-scanner'
 import { useTranslation } from 'react-i18next'
 
-import { PROFILE_QUERY } from '../../gql'
-import { TRANSFER_MUTATION } from '../../gql'
+import { PROFILE_QUERY, TRANSFER_MUTATION } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -319,7 +317,7 @@ const DonationsDashboard = ({ isDesktop, role }) => {
       return
     }
 
-    if (state['bottom'] === true || open === true)
+    if (state.bottom === true || open === true)
       loadProfile()
 
   }, [currentUser, history, client, loadProfile, state, open, transferResult])
@@ -360,9 +358,9 @@ const DonationsDashboard = ({ isDesktop, role }) => {
     setErrorMessage(null)
 
     if (role === "donor") {
-      setPayload({ ...payload, ["memo"]: t("donations.memoDonor") })
+      setPayload({ ...payload, "memo": t("donations.memoDonor") })
     } else {
-      setPayload({ ...payload, ["memo"]: t("donations.memoLifebank") })
+      setPayload({ ...payload, "memo": t("donations.memoLifebank") })
     }
 
     transfer({
