@@ -275,9 +275,6 @@ const InfoPage = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [actualImageIndex, setActualImageIndex] = useState(0)
-  const images =
-    '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
-  const numbers = JSON.parse(images)
   const [open, setOpenModalLocation] = useState(false)
   const [openSchedule, setOpenModalSchedule] = useState(false)
   const location = useLocation()
