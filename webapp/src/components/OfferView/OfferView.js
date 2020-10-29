@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { useUser } from '../../context/user.context'
 import IconButton from '@material-ui/core/IconButton'
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 import Dialog from '@material-ui/core/Dialog'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -156,7 +156,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
   },
   iconBottomAppBar: {
-    color: "rgba(0, 0, 0, 0.6);"
+    color: "rgba(0, 0, 0, 0.6)"
   },
   stepper: {
     backgroundColor: "#ffffff",
@@ -186,7 +186,7 @@ const monthKey = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Agt", "Sep",
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
-});
+})
 
 const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView }) => {
   const classes = useStyles()
@@ -201,11 +201,11 @@ const OfferView = ({ selectOffer, isDesktop, openOfferView, handleCloseOfferView
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  };
+  }
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  };
+  }
 
   const truncateString = (str) => {
     const num = 150
