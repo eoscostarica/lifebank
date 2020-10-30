@@ -225,7 +225,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
               noWrap
               variant="body2"
             >
-              {props.bank.description}
+              {props.bank.about}
             </Typography>
           }
         />
@@ -237,7 +237,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     bank: PropTypes.object,
     username: PropTypes.object,
     name: PropTypes.string,
-    description: PropTypes.string
+    about: PropTypes.string,
   }
 
   const LoadBanksDesktop = () => {
@@ -298,7 +298,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
       </Box>
       <CardContent className={classes.cardContent}>
         <Typography className={classes.cardContentText}>
-          {truncateString(props.bank.info.description)}
+          {truncateString(props.bank.info.about)}
         </Typography>
       </CardContent>
       <LinkRouter
@@ -318,7 +318,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   BankCard.propTypes = {
     bank: PropTypes.object,
     name: PropTypes.string,
-    description: PropTypes.string
+    about: PropTypes.string,
   }
 
   return (

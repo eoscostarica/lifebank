@@ -17,6 +17,7 @@ import LifeBankIcon from '../components/LifebankIcon'
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(7, 0, 0, 0),
+    backgroundColor: '#ffffff',
     display: 'flex'
   },
   paddingHome: {

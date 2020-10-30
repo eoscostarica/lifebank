@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
+import { useQuery } from '@apollo/react-hooks'
 import Button from '@material-ui/core/Button'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
@@ -10,7 +10,7 @@ import Slider from '@material-ui/core/Slider'
 import Dialog from '@material-ui/core/Dialog'
 import Toolbar from '@material-ui/core/Toolbar'
 import { useLocation, useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
@@ -21,6 +21,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItem from '@material-ui/core/ListItem'
 import List from '@material-ui/core/List'
 import Slide from '@material-ui/core/Slide'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -29,56 +30,37 @@ import { GET_LOCATION_PROFILE } from '../../gql'
 const useStyles = makeStyles((theme) => ({
   cardBody: {
     width: '100%',
-    height: '100%',
     backgroundColor: '#ffffff',
     marginBottom: '0',
     paddingTop: '16px'
   },
   headerCardBody: {
     width: '100%',
-    height: '12%'
-  },
-  avatarSection: {
-    width: '20%',
-    height: '100%',
-    float: 'left'
+    position: "relative"
   },
   avatarRound: {
     width: '40px',
     height: '40px',
     borderRadius: '50%',
-    marginLeft: '16px',
-    marginRight: '13px',
-    marginTop: '13px'
-  },
-  tituleSection: {
-    width: '80%',
-    height: '100%',
-    float: 'left'
+    margin: '10px'
   },
   bodyCard: {
     width: '100%',
-    height: '88%'
   },
   imageSection: {
     position: 'relative',
-    width: '100%',
-    height: '35%'
+    width: '100%'
   },
   detailsSection: {
-    width: '100%',
-    height: '65%'
+    width: '100%'
   },
   headerDetails: {
     width: '50%',
-    height: '10%',
-    marginTop: '2%',
-    float: 'left'
+    marginBottom: '15px',
+    float: 'left',
   },
   bodyDetails: {
-    width: '100%',
-    height: '88%',
-    float: 'left'
+    width: '100%'
   },
   fabButton: {
     position: 'absolute',
@@ -95,8 +77,8 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1
   },
   title: {
-    width: '97%',
-    height: '23px',
+    width: '75%',
+    height: '25px',
     fontFamily: 'Roboto',
     fontSize: '20px',
     fontWeight: 'normal',
@@ -105,14 +87,13 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 'normal',
     letterSpacing: '0.15px',
     color: 'rgba(0, 0, 0, 0.87)',
-    marginRight: '60px',
-    marginLeft: '2%',
-    marginTop: '14px',
-    marginBottom: '4px'
+    position: 'absolute',
+    top: 10,
+    left: 65
   },
   subtitle: {
-    width: '97%',
-    height: '16px',
+    width: '75%',
+    height: '20px',
     fontFamily: 'Roboto',
     fontSize: '14px',
     fontWeight: 'normal',
@@ -121,12 +102,11 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.43',
     letterSpacing: '0.25px',
     color: 'rgba(0, 0, 0, 0.6)',
-    marginRight: '91.6px',
-    marginLeft: '2%',
-    marginTop: '4px'
+    position: 'absolute',
+    top: 35,
+    left: 65
   },
   label: {
-    width: '77px',
     height: '16px',
     fontFamily: 'Roboto',
     fontSize: '14px',
@@ -138,19 +118,6 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgba(0, 0, 0, 0.6)',
     marginLeft: '34px'
   },
-  text: {
-    width: '327px',
-    height: '234px',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    marginLeft: '16px'
-  },
   carruselImage: {
     height: '90%',
     marginTop: '-22px',
@@ -158,7 +125,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%'
   },
   carousel: {
-    maxWidth: '100%'
+    maxWidth: '100%',
+    height: '100%'
   },
   divider: {
     width: '100%'
@@ -199,6 +167,95 @@ const useStyles = makeStyles((theme) => ({
   },
   modal: {
     margin: theme.spacing(6)
+  },
+  cardBodyDesktop: {
+    width: '100%',
+    backgroundColor: '#ffffff',
+    marginBottom: '0',
+    padding: '2%'
+  },
+  contentBodySection: {
+    width: '50%',
+    height: '100%',
+    float: 'left'
+  },
+  headerContent: {
+    width: '100%',
+    height: '10%'
+  },
+  avatarSectionDesktop: {
+    width: '10%',
+    height: '100%',
+    float: 'left'
+  },
+  tituleSectionDesktop: {
+    width: '63%',
+    height: '100%',
+    float: 'left'
+  },
+  titleDesktop: {
+    width: '98%',
+    height: '40px',
+    fontFamily: 'Roboto',
+    fontSize: '34px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.18',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.87)',
+    marginLeft: '10px',
+    marginTop: '10px',
+    marginBottom: '4px',
+    textAlign: 'center'
+  },
+  subtitleDesktop: {
+    width: '100%',
+    height: '100%',
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.6)',
+    marginLeft: '10px',
+    paddingTop: '26px'
+
+  },
+  subTituleSectionDesktop: {
+    width: '27%',
+    height: '100%',
+    float: 'left'
+  },
+  avatarRoundDesktop: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    marginTop: '10px',
+    marginLeft: '14%'
+  },
+  bodyDetailsDesktop: {
+    width: '100%',
+    float: 'left'
+  },
+  imageSectionDesktop: {
+    position: "relative",
+    width: '98%',
+    height: '35%',
+    paddingLeft: '2%'
+  },
+  text: {
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    textAlign: 'left',
+    color: 'rgba(0, 0, 0, 0.6)'
   }
 }))
 
@@ -210,14 +267,15 @@ const InfoPage = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [actualImageIndex, setActualImageIndex] = useState(0)
-  const images =
-    '["https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg", "https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg"]'
-  const numbers = JSON.parse(images)
   const [open, setOpenModalLocation] = useState(false)
   const [openSchedule, setOpenModalSchedule] = useState(false)
   const location = useLocation()
   const history = useHistory()
   const [profile, setProfile] = useState()
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'), {
+    defaultMatches: true
+  })
 
   const handleClickOpen = () => {
     setOpenModalLocation(true)
@@ -244,6 +302,34 @@ const InfoPage = () => {
     skip: true
   })
 
+  const generateSchedule = (schedules) => {
+    const scheduleFinal = []
+    var schedule;
+    for (schedule of schedules) {
+      if (scheduleFinal.length > 0) {
+        let insert = 0
+        scheduleFinal.forEach(element => {
+          if (schedule.open === element[1][0] && schedule.close === element[1][1]) {
+            element[0] = `${element[0]}, ${schedule.day}`
+            insert++
+          }
+        }
+        );
+        if (insert === 0) {
+          const tempaSchedule = [[schedule.day], [schedule.open, schedule.close]]
+          scheduleFinal.push(tempaSchedule)
+        }
+      }
+      else {
+        const tempaSchedule = [[schedule.day], [schedule.open, schedule.close]]
+        scheduleFinal.push(tempaSchedule)
+      }
+    }
+
+    return scheduleFinal
+
+  }
+
   useEffect(() => {
     if (location.state) setProfile(location.state.profile)
     else {
@@ -264,182 +350,235 @@ const InfoPage = () => {
     }
   }, [location])
 
-  return (
-    <>
-      {profile && (
-        <Box className={classes.cardBody}>
-          <div className={classes.headerCardBody}>
-            <div className={classes.avatarSection}>
-              <img
-                className={classes.avatarRound}
-                src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png"
-                alt="Avatar"
-              />
+  const MovileInfoPage = () => {
+    return (
+      <>
+        {profile &&
+          <Box className={classes.cardBody}>
+            <div className={classes.headerCardBody}>
+              <img className={classes.avatarRound} src={profile.info.logo_url} alt="Avatar" />
+              <Typography className={classes.title} noWrap >{profile.info.name}</Typography>
+              <Typography className={classes.subtitle} noWrap >Hospital</Typography>
             </div>
-            <div className={classes.tituleSection}>
-              <h2 className={classes.title}>{profile.info.name}</h2>
-              <h3 className={classes.subtitle}>
-                {t('miscellaneous.hospital')}
-              </h3>
-            </div>
-          </div>
-          <div className={classes.bodyCard}>
-            <div className={classes.imageSection}>
-              <Carousel
-                value={actualImageIndex}
-                className={classes.carousel}
-                onChange={(val) => setActualImageIndex(val)}
-                plugins={[
-                  'arrows',
-                  {
-                    resolve: slidesToShowPlugin,
-                    options: {
-                      numberOfSlides: 1
+            <div className={classes.bodyCard}>
+              <div className={classes.imageSection}>
+                <Carousel
+                  value={actualImageIndex}
+                  className={classes.carousel}
+                  onChange={(val) => setActualImageIndex(val)}
+                  plugins={[
+                    'arrows',
+                    {
+                      resolve: slidesToShowPlugin,
+                      options: {
+                        numberOfSlides: 1
+                      }
                     }
-                  }
-                ]}
-              >
-                {numbers.map((url, key) => (
-                  <img
-                    className={classes.carruselImage}
-                    src={url}
-                    key={key}
-                    alt={`${key}`}
-                  />
-                ))}
-              </Carousel>
-              <Fab className={classes.fabButton}>
-                <FavoriteIcon className={classes.iconFab} />
-              </Fab>
-            </div>
-            <div className={classes.detailsSection}>
-              <div className={classes.headerDetails}>
-                <Button
-                  className={classes.label}
-                  startIcon={<LocationOnIcon color="action" />}
-                  onClick={handleClickOpen}
+                  ]}
                 >
-                  {t('profile.location')}
-                </Button>
-                <Dialog
-                  fullScreen
-                  open={open}
-                  onClose={handleClose}
-                  TransitionComponent={Transition}
-                >
-                  <div className={classes.appBar}>
-                    <Toolbar>
-                      <Typography variant="subtitle1">
-                        {t('miscellaneous.lifebankLocation')}
-                      </Typography>
-                      <IconButton
-                        className={classes.positionXIcon}
-                        onClick={handleClose}
-                        aria-label="close"
-                      >
-                        <CloseIcon color="secondary" />
-                      </IconButton>
-                    </Toolbar>
-                  </div>
-                  <MapShowOneLocation
-                    markerLocation={profile.info.geolocation}
-                    accountProp={profile.account}
-                    width="100%"
-                    height="100%"
-                    py={2}
-                  />
-                </Dialog>
+                  {JSON.parse(profile.info.photos).map((url, key) => (
+                    <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                  ))}
+                </Carousel>
+                <Fab className={classes.fabButton}>
+                  <FavoriteIcon className={classes.iconFab} />
+                </Fab>
               </div>
-              <div className={classes.headerDetails}>
-                <Button
-                  className={classes.label}
-                  startIcon={<CalendarTodayIcon color="action" />}
-                  onClick={handleClickOpenSchedule}
-                >
-                  {t('common.schedule')}
-                </Button>
-                <Dialog
-                  fullScreen
-                  className={classes.modal}
-                  open={openSchedule}
-                  onClose={handleCloseSchedule}
-                  TransitionComponent={Transition}
-                >
-                  <div className={classes.appBar}>
-                    <Toolbar>
-                      <Typography variant="subtitle1">
-                        {t('miscellaneous.lifebankSchedule')}
+              <div className={classes.detailsSection}>
+                <div className={classes.headerDetails}>
+                  <Button
+                    className={classes.label}
+                    startIcon={<LocationOnIcon color="action" />}
+                    onClick={handleClickOpen}
+                  >
+                    Location
+                  </Button>
+                  <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                    <div className={classes.appBar}>
+                      <Toolbar>
+                        <Typography variant="subtitle1">
+                          Lifebank Location
                       </Typography>
-                      <IconButton
-                        className={classes.positionXIcon}
-                        onClick={handleCloseSchedule}
-                        aria-label="close"
-                      >
-                        <CloseIcon color="secondary" />
-                      </IconButton>
-                    </Toolbar>
-                  </div>
-                  {JSON.parse(profile.info.schedule).length > 0 &&
-                    JSON.parse(profile.info.schedule).map((schedule, index) => (
+                        <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                          <CloseIcon color="secondary" />
+                        </IconButton>
+                      </Toolbar>
+                    </div>
+                    <MapShowOneLocation
+                      markerLocation={profile.info.geolocation}
+                      accountProp={profile.account}
+                      width="100%"
+                      height="100%"
+                      py={2}
+                    />
+                  </Dialog>
+                </div>
+                <div className={classes.headerDetails}>
+                  <Button
+                    className={classes.label}
+                    startIcon={<CalendarTodayIcon color="action" />}
+                    onClick={handleClickOpenSchedule}
+                  >
+                    {t('common.schedule')}
+                  </Button>
+                  <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
+                    <div className={classes.appBar}>
+                      <Toolbar>
+                        <Typography variant="subtitle1">
+                          {t('miscellaneous.lifebankSchedule')}
+                        </Typography>
+                        <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
+                          <CloseIcon color="secondary" />
+                        </IconButton>
+                      </Toolbar>
+                    </div>
+                    {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map((schedule, index) => (
                       <ScheduleItem
                         key={index}
                         id={index}
                         schedule={schedule}
                       />
                     ))}
-                </Dialog>
+                  </Dialog>
+                </div>
+                <div className={classes.bodyDetails}>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
+                    <Typography className={classes.text} variant="body1"> {profile.info.about}
+                    </Typography>
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
+                    <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
+                    <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
+                    {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
+                      <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
+                    ))}
+                  </Box>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
+                    <Box className={classes.bloodDemand}>
+                      <Box className={classes.markLabel}>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
+                      </Box>
+                      <Box className={classes.slider}>
+                        <Slider
+                          valueLabelDisplay="off"
+                          color="secondary"
+                          defaultValue={profile.info.blood_urgency_level}
+                          step={null}
+                          min={1}
+                          max={3}
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
+                </div>
               </div>
-              <div className={classes.bodyDetails}>
+            </div>
+          </Box>
+        }
+      </>
+    )
+  }
+
+  const DesktopInfoPage = () => {
+    return (
+      <>
+        {profile &&
+          <Box className={classes.cardBodyDesktop}>
+            <div className={classes.contentBodySection}>
+              <div className={classes.headerContent}>
+                <div className={classes.avatarSectionDesktop}>
+                  <img className={classes.avatarRoundDesktop} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
+                </div>
+                <div className={classes.tituleSectionDesktop}>
+                  <Typography className={classes.titleDesktop} noWrap>{profile.info.name}</Typography>
+                </div>
+                <div className={classes.subTituleSectionDesktop}>
+                  <Typography className={classes.subtitleDesktop} noWrap>Hospital</Typography>
+                </div>
+              </div>
+              <div className={classes.bodyDetailsDesktop}>
                 <Divider className={classes.divider} />
                 <Box className={classes.midLabel}>
-                  <Typography className={classes.boldText} variant="subtitle1">
-                    {t('common.description')}
-                  </Typography>
-                  <Typography variant="body1">
-                    {profile.info.description}
+                  <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
+                  <Typography className={classes.text} variant="body1"> {profile.info.about}
                   </Typography>
                 </Box>
                 <Divider className={classes.divider} />
                 <Box className={classes.midLabel}>
-                  <Typography className={classes.boldText} variant="subtitle1">
-                    {t('signup.address')}
-                  </Typography>
-                  <Typography variant="body1">
-                    {profile.info.address}
-                  </Typography>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
+                  {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
+                    <Typography key={index} className={classes.text} id={index} variant="body1">{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
+                  ))}
                 </Box>
                 <Divider className={classes.divider} />
                 <Box className={classes.midLabel}>
-                  <Typography className={classes.boldText} variant="subtitle1">
-                    {t('common.email')}
-                  </Typography>
-                  <Typography variant="body1">{profile.info.email}</Typography>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
+                  <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
+                </Box>
+                <Box className={classes.midLabel}>
+                  <Button
+                    className={`${classes.label} ${classes.boldText}`}
+                    startIcon={<LocationOnIcon color="action" />}
+                    onClick={handleClickOpen}
+                  >
+                    {t('miscellaneous.showLocation')}
+                  </Button>
+                  <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                    <div className={classes.appBar}>
+                      <Toolbar>
+                        <Typography variant="subtitle1">
+                          {t('miscellaneous.lifebankLocation')}
+                        </Typography>
+                        <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                          <CloseIcon color="secondary" />
+                        </IconButton>
+                      </Toolbar>
+                    </div>
+                    <MapShowOneLocation
+                      markerLocation={profile.info.geolocation}
+                      accountProp={profile.account}
+                      width="100%"
+                      height="100%"
+                      py={2}
+                    />
+                  </Dialog>
                 </Box>
                 <Divider className={classes.divider} />
                 <Box className={classes.midLabel}>
-                  <Typography className={classes.boldText} variant="subtitle1">
-                    {t('common.telephone')}
-                  </Typography>
-                  <Typography variant="body1">
-                    {profile.info.phone_number}
-                  </Typography>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
+                  <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
                 </Box>
                 <Divider className={classes.divider} />
                 <Box className={classes.midLabel}>
-                  <Typography className={classes.boldText} variant="subtitle1">
-                    {t('common.bloodUrgency')}
-                  </Typography>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
+                  {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
+                    <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
+                  ))}
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
                   <Box className={classes.bloodDemand}>
                     <Box className={classes.markLabel}>
-                      <Typography variant="body1" className={classes.midLabel}>
-                        {t('editProfile.low')}
-                      </Typography>
-                      <Typography variant="body1" className={classes.midLabel}>
-                        {t('editProfile.medium')}
-                      </Typography>
-                      <Typography variant="body1" className={classes.midLabel}>
-                        {t('editProfile.high')}
-                      </Typography>
+                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
                     </Box>
                     <Box className={classes.slider}>
                       <Slider
@@ -455,29 +594,60 @@ const InfoPage = () => {
                 </Box>
               </div>
             </div>
-          </div>
-        </Box>
-      )}
+            <div className={classes.contentBodySection}>
+              <div className={classes.imageSectionDesktop}>
+                <Carousel
+                  value={actualImageIndex}
+                  className={classes.carousel}
+                  onChange={(val) => setActualImageIndex(val)}
+                  plugins={[
+                    'arrows',
+                    {
+                      resolve: slidesToShowPlugin,
+                      options: {
+                        numberOfSlides: 1
+                      }
+                    }
+                  ]}
+                >
+                  {JSON.parse(profile.info.photos).map((url, key) => (
+                    <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                  ))}
+                </Carousel>
+              </div>
+            </div>
+          </Box>
+        }
+      </>
+    )
+  }
+
+  const ScheduleItem = (schedule) => {
+    return (
+      <List>
+        <Divider />
+        <ListItem button>
+          <ListItemText primary={schedule.schedule.day} secondary={`${schedule.schedule.open} - ${schedule.schedule.close}`} />
+        </ListItem>
+      </List>
+    )
+  }
+
+  ScheduleItem.propTypes = {
+    schedule: PropTypes.object
+  }
+
+  return (
+    <>
+      {!isDesktop &&
+        <MovileInfoPage />
+      }
+      {isDesktop &&
+        <DesktopInfoPage />
+      }
     </>
   )
-}
 
-const ScheduleItem = (schedule) => {
-  return (
-    <List>
-      <Divider />
-      <ListItem button>
-        <ListItemText
-          primary={schedule.schedule.day}
-          secondary={schedule.schedule.open + ' - ' + schedule.schedule.close}
-        />
-      </ListItem>
-    </List>
-  )
-}
-
-ScheduleItem.propTypes = {
-  schedule: PropTypes.object
 }
 
 export default InfoPage
