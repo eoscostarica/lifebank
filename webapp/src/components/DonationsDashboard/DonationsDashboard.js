@@ -289,25 +289,21 @@ const DonationsDashboard = ({ isDesktop, role }) => {
   ] = useMutation(TRANSFER_MUTATION)
 
   useEffect(() => {
-    if (!error) {
+    if (!error)
       return
-    }
 
     setErrorMessage(error.message.replace('GraphQL error: ', ''))
   }, [error])
 
   useEffect(() => {
-    if (!transferResult) {
+    if (!transferResult)
       return
-    }
 
     setPayload({ quantity: 1 })
     setSuccess(true)
   }, [transferResult])
 
-  const handleSetField = (field, value) => {
-    setPayload({ ...payload, [field]: value })
-  }
+  const handleSetField = (field, value) => setPayload({ ...payload, [field]: value })
 
   useEffect(() => {
     if (!currentUser) {
@@ -341,9 +337,7 @@ const DonationsDashboard = ({ isDesktop, role }) => {
     }
   }
 
-  const handleOpen = () => {
-    setOpen(!open)
-  }
+  const handleOpen = () => setOpen(!open)
 
   const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
 
