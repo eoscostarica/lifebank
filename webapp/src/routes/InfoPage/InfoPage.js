@@ -170,17 +170,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardBodyDesktop: {
     width: '100%',
-    height: '100%',
     backgroundColor: '#ffffff',
     marginBottom: '0',
-    marginTop: '2.5%'
-  },
-  bodyDesktop: {
-    width: '98%',
-    height: '100%',
-    backgroundColor: '#ffffff',
-    marginLeft: '1%',
-    marginRight: '1%'
+    padding: '2%'
   },
   contentBodySection: {
     width: '50%',
@@ -508,122 +500,120 @@ const InfoPage = () => {
       <>
         {profile &&
           <Box className={classes.cardBodyDesktop}>
-            <div className={classes.bodyDesktop}>
-              <div className={classes.contentBodySection}>
-                <div className={classes.headerContent}>
-                  <div className={classes.avatarSectionDesktop}>
-                    <img className={classes.avatarRoundDesktop} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
-                  </div>
-                  <div className={classes.tituleSectionDesktop}>
-                    <Typography className={classes.titleDesktop} noWrap>{profile.info.name}</Typography>
-                  </div>
-                  <div className={classes.subTituleSectionDesktop}>
-                    <Typography className={classes.subtitleDesktop} noWrap>Hospital</Typography>
-                  </div>
+            <div className={classes.contentBodySection}>
+              <div className={classes.headerContent}>
+                <div className={classes.avatarSectionDesktop}>
+                  <img className={classes.avatarRoundDesktop} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
                 </div>
-                <div className={classes.bodyDetailsDesktop}>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
-                    <Typography className={classes.text} variant="body1"> {profile.info.about}
-                    </Typography>
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
-                    {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
-                      <Typography key={index} className={classes.text} id={index} variant="body1">{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
-                    ))}
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
-                    <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
-                  </Box>
-                  <Box className={classes.midLabel}>
-                    <Button
-                      className={`${classes.label} ${classes.boldText}`}
-                      startIcon={<LocationOnIcon color="action" />}
-                      onClick={handleClickOpen}
-                    >
-                      {t('miscellaneous.showLocation')}
-                    </Button>
-                    <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-                      <div className={classes.appBar}>
-                        <Toolbar>
-                          <Typography variant="subtitle1">
-                            {t('miscellaneous.lifebankLocation')}
-                          </Typography>
-                          <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
-                            <CloseIcon color="secondary" />
-                          </IconButton>
-                        </Toolbar>
-                      </div>
-                      <MapShowOneLocation
-                        markerLocation={profile.info.geolocation}
-                        accountProp={profile.account}
-                        width="100%"
-                        height="100%"
-                        py={2}
-                      />
-                    </Dialog>
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
-                    <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
-                    {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
-                      <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
-                    ))}
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
-                    <Box className={classes.bloodDemand}>
-                      <Box className={classes.markLabel}>
-                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
-                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
-                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
-                      </Box>
-                      <Box className={classes.slider}>
-                        <Slider
-                          valueLabelDisplay="off"
-                          color="secondary"
-                          defaultValue={profile.info.blood_urgency_level}
-                          step={null}
-                          min={1}
-                          max={3}
-                        />
-                      </Box>
-                    </Box>
-                  </Box>
+                <div className={classes.tituleSectionDesktop}>
+                  <Typography className={classes.titleDesktop} noWrap>{profile.info.name}</Typography>
+                </div>
+                <div className={classes.subTituleSectionDesktop}>
+                  <Typography className={classes.subtitleDesktop} noWrap>Hospital</Typography>
                 </div>
               </div>
-              <div className={classes.contentBodySection}>
-                <div className={classes.imageSectionDesktop}>
-                  <Carousel
-                    value={actualImageIndex}
-                    className={classes.carousel}
-                    onChange={(val) => setActualImageIndex(val)}
-                    plugins={[
-                      'arrows',
-                      {
-                        resolve: slidesToShowPlugin,
-                        options: {
-                          numberOfSlides: 1
-                        }
-                      }
-                    ]}
+              <div className={classes.bodyDetailsDesktop}>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
+                  <Typography className={classes.text} variant="body1"> {profile.info.about}
+                  </Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
+                  {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
+                    <Typography key={index} className={classes.text} id={index} variant="body1">{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
+                  ))}
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
+                  <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
+                </Box>
+                <Box className={classes.midLabel}>
+                  <Button
+                    className={`${classes.label} ${classes.boldText}`}
+                    startIcon={<LocationOnIcon color="action" />}
+                    onClick={handleClickOpen}
                   >
-                    {JSON.parse(profile.info.photos).map((url, key) => (
-                      <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
-                    ))}
-                  </Carousel>
-                </div>
+                    {t('miscellaneous.showLocation')}
+                  </Button>
+                  <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                    <div className={classes.appBar}>
+                      <Toolbar>
+                        <Typography variant="subtitle1">
+                          {t('miscellaneous.lifebankLocation')}
+                        </Typography>
+                        <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                          <CloseIcon color="secondary" />
+                        </IconButton>
+                      </Toolbar>
+                    </div>
+                    <MapShowOneLocation
+                      markerLocation={profile.info.geolocation}
+                      accountProp={profile.account}
+                      width="100%"
+                      height="100%"
+                      py={2}
+                    />
+                  </Dialog>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
+                  <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
+                  {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
+                    <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
+                  ))}
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
+                  <Box className={classes.bloodDemand}>
+                    <Box className={classes.markLabel}>
+                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
+                    </Box>
+                    <Box className={classes.slider}>
+                      <Slider
+                        valueLabelDisplay="off"
+                        color="secondary"
+                        defaultValue={profile.info.blood_urgency_level}
+                        step={null}
+                        min={1}
+                        max={3}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
+              </div>
+            </div>
+            <div className={classes.contentBodySection}>
+              <div className={classes.imageSectionDesktop}>
+                <Carousel
+                  value={actualImageIndex}
+                  className={classes.carousel}
+                  onChange={(val) => setActualImageIndex(val)}
+                  plugins={[
+                    'arrows',
+                    {
+                      resolve: slidesToShowPlugin,
+                      options: {
+                        numberOfSlides: 1
+                      }
+                    }
+                  ]}
+                >
+                  {JSON.parse(profile.info.photos).map((url, key) => (
+                    <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                  ))}
+                </Carousel>
               </div>
             </div>
           </Box>
