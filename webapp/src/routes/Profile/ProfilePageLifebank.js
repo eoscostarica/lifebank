@@ -203,7 +203,7 @@ const ProfilePageLifebank = ({ profile }) => {
       </div>
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">Logo</Typography>
-        <img className={classes.img} src={profile.logo_url} alt={'logo image'} />
+        <img className={classes.img} src={profile.logo_url} alt='logo image' />
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>

@@ -167,7 +167,6 @@ const getLifebank = async account => {
     lower_bound: account,
     upper_bound: account
   })
-  console.log("rows:", rows)
   return rows.length > 0 ? rows[0] : null
 }
 

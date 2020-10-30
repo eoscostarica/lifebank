@@ -160,7 +160,6 @@ const transact = async (actions, account, password) => {
   try {
     await wallet.unlock(account, password)
   } catch (error) { }
-
   const keys = await wallet.listKeys(account, password)
   const api = new Api({
     rpc,

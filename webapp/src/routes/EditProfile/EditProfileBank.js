@@ -146,7 +146,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     blood_urgency_level: profile.blood_urgency_level,
     has_immunity_test: Boolean(profile.has_immunity_test)
   })
-  console.log("user:", user)
   const handleOnGeolocationChange = useCallback(
     (geolocation) => handleSetField('geolocation', geolocation),
     [setField]
@@ -190,7 +189,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     userToSubmit.photos = JSON.stringify(user.photos)
     onSubmit(userToSubmit, username, profile.account)
   }
-  console.log("isCompleting", isCompleting)
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>

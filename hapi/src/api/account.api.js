@@ -40,7 +40,7 @@ const create = async ({ role, email, name, secret }) => {
 
   await historyApi.insert(transaction)
 
-  //mailApi.sendVerificationCode(email, verification_code)
+  mailApi.sendVerificationCode(email, verification_code)
 
   return {
     account,
@@ -61,9 +61,7 @@ const getProfile = async account => {
       data = await getDonorData(account)
       break
     case 'lifebank':
-      console.log("entra")
       data = await getLifebankData(account)
-      console.log("data", data)
       break
     case 'sponsor':
       data = await getSponsorData(account)
@@ -116,7 +114,6 @@ const getLifebankData = async account => {
     LIFEBANKCODE_CONTRACT,
     account
   )
-  console.log("tx", tx)
   return {
     ...profile,
     name,
@@ -157,7 +154,6 @@ const getTransactionData = async tx => {
     (await historyApi.getOne({
       transaction_id: { _eq: tx || '' }
     })) || {}
-  console.log("tx:", tx)
   return actionTraces.reduce(
     (result, item) => ({ ...result, ...item.act.data }),
     {}
