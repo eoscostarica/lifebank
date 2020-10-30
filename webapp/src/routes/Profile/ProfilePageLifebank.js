@@ -15,7 +15,6 @@ import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import { useQuery } from '@apollo/react-hooks'
 import '@brainhubeu/react-carousel/lib/style.css'
-import Telephones from '../../components/Telephones'
 
 import 'date-fns'
 import { useTranslation } from 'react-i18next'
@@ -67,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
   divProgressProfile: {
     width: '100%',
     marginBottom: '40px'
+  },
+  telephonesStyle: {
+    width: '100%',
+    marginBottom: '6px',
+    color: theme.palette.secondary.onSecondaryMediumEmphasizedText
   }
 }))
 
@@ -247,10 +251,13 @@ const ProfilePageLifebank = ({ profile }) => {
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">{t('common.telephone')}</Typography>
+      </Box>
+      <Box style={{ textAlign: 'right', width: '100%', paddingRight: '1%' }}>
         {JSON.parse(profile.telephones).length > 0 && JSON.parse(profile.telephones).map((phoneNumber, index) => (
           <Typography className={classes.telephonesStyle} key={index} variant="body1">{phoneNumber}</Typography>
         ))}
       </Box>
+
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">{t('profile.consent')}</Typography>
@@ -283,7 +290,7 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('common.Schedule')}</Typography>
+        <Typography variant="subtitle1">{t('common.schedule')}</Typography>
         <Typography variant="body1" />
       </Box>
       <Schedule
