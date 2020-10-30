@@ -9,9 +9,17 @@ import RicardianContract from '../../components/RicardianContract'
 import { GET_CONTRACTS_QUERY } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
+  tabsWrapper: {
+    margin: theme.spacing(4, 0, 4, 0),
+    [theme.breakpoints.down('sm')]: {
+      '& button': {
+        width: '33.3vw'
+      }
+    }
+  },
   wrapper: {
+    minHeight:'100vh',
     height: '95vh',
-    overflow: 'scroll',
     padding: theme.spacing(2, 1, 0, 1),
     '& img': {
       width: 80
@@ -46,6 +54,7 @@ const TermsOfUse = () => {
         value={tab}
         onChange={(event, newValue) => setTab(newValue)}
         aria-label="simple tabs example"
+        className={classes.tabsWrapper}
       >
         <Tab label="lifebankcoin" />
         <Tab label="lifebankcode" />

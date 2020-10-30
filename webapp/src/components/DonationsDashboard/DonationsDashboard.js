@@ -43,6 +43,26 @@ const useStyles = makeStyles((theme) => ({
     margin: '0',
     color: '#ffffff'
   },
+  fabButtonOffer: {
+    position: "absolute",
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 10,
+    paddingTop: 10,
+    bottom: 15,
+    right: 20,
+    borderRadius: "48px",
+    backgroundColor: "#ba0d0d",
+    fontFamily: "Roboto",
+    fontsize: "14px",
+    fontweight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "normal",
+    letterSpacing: "0.5",
+    textAlign: "center",
+    color: "#ffffff",
+  },
   fabButtonDesktop: {
     borderRadius: 50,
     height: 60,
@@ -260,7 +280,7 @@ EmptyHeartSVG.propTypes = {
   balance: PropTypes.number,
 }
 
-const DonationsDashboard = ({ isDesktop, role }) => {
+const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
   const { t } = useTranslation('translations')
   const [maxWidth] = useState('md')
   const [maxWidthQr] = useState('xs')
@@ -599,7 +619,7 @@ const DonationsDashboard = ({ isDesktop, role }) => {
     <>
       {!isDesktop && (
         <>
-          { role === "donor" &&
+          { role === "donor" && !isOffer &&
             <Fab
               color="secondary"
               variant="extended"
@@ -610,7 +630,7 @@ const DonationsDashboard = ({ isDesktop, role }) => {
               {t('donations.donate')}
             </Fab>
           }
-          { role === "lifebank" &&
+          { role === "lifebank" && !isOffer &&
             <Fab
               color="secondary"
               variant="extended"
@@ -621,7 +641,7 @@ const DonationsDashboard = ({ isDesktop, role }) => {
               {t('donations.transferTokens')}
             </Fab>
           }
-          { role === "sponsor" &&
+          { role === "sponsor" && !isOffer &&
             <Fab
               color="secondary"
               variant="extended"
@@ -631,6 +651,11 @@ const DonationsDashboard = ({ isDesktop, role }) => {
               <ShoppingCartIcon className={classes.iconFab} />
               {t('donations.claimReward')}
             </Fab>
+          }
+          {isOffer &&
+            <Button className={classes.fabButtonOffer} onClick={toggleDrawer(anchor, true)} >
+              {t('tokenTransfer.redeem')}
+            </Button>
           }
           <SwipeableDrawer
             anchor={anchor}
@@ -650,9 +675,10 @@ const DonationsDashboard = ({ isDesktop, role }) => {
           </SwipeableDrawer>
         </>
       )}
-      {isDesktop && (
+      {isDesktop &&
         <>
-          { role === "donor" &&
+          {
+            role === "donor" && !isOffer &&
             <Fab
               color="secondary"
               variant="extended"
@@ -663,7 +689,8 @@ const DonationsDashboard = ({ isDesktop, role }) => {
               {t('donations.donate')}
             </Fab>
           }
-          { role === "lifebank" &&
+          {
+            role === "lifebank" && !isOffer &&
             <Fab
               color="secondary"
               variant="extended"
@@ -674,7 +701,8 @@ const DonationsDashboard = ({ isDesktop, role }) => {
               {t('donations.transferTokens')}
             </Fab>
           }
-          { role === "sponsor" &&
+          {
+            role === "sponsor" && !isOffer &&
             <Fab
               color="secondary"
               variant="extended"
@@ -684,6 +712,11 @@ const DonationsDashboard = ({ isDesktop, role }) => {
               <ShoppingCartIcon className={classes.iconFab} />
               {t('donations.claimReward')}
             </Fab>
+          }
+          {isOffer &&
+            <Button variant="contained" color="secondary" className={classes.fabButtonOffer} onClick={handleOpen}>
+              {t('tokenTransfer.redeem')}
+            </Button>
           }
           <Dialog
             maxWidth={maxWidth}
@@ -702,14 +735,19 @@ const DonationsDashboard = ({ isDesktop, role }) => {
             </Box>
           </Dialog>
         </>
-      )}
+      }
     </>
   )
 }
 
+DonationsDashboard.defaultProps = {
+  isOffer: false,
+}
+
 DonationsDashboard.propTypes = {
   isDesktop: PropTypes.bool,
-  role: PropTypes.string
+  isOffer: PropTypes.bool,
+  role: PropTypes.string,
 }
 
 export default DonationsDashboard

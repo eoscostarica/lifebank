@@ -10,6 +10,7 @@
       "browseWithMap": "Browse with a map",
       "filters": "Filters",
       "favorites": "Favorites",
+      "favorite": "Favorite",
       "inputPlaceholder": "Search Offers, Lifebank or Sponsors"
     },
     "rolesTitle": {
@@ -112,7 +113,9 @@
       "readMore": "Read more",
       "howLifebankWorks": "How Lifebank works",
       "hospital": "Hospital",
+      "location": "Location",
       "lifebankLocation": "Lifebank location",
+      "sponsorLocation": "Sponsor location",
       "lifebankSchedule": "Lifebank Schedule",
       "username": "Username",
       "invalidOrTaken": "Invalid username or already taken",
@@ -343,6 +346,26 @@
       "youHaveNoAddedOffers": "You have no added offers",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it"
+    },
+    "offerView": {
+      "selectedOffer": "Selected offer",
+      "onlinePurchases": "This offer is only for online purchases.",
+      "available": "Available from",
+      "to": "to"
+    },
+    "months": {
+      "Jan": "January",
+      "Feb": "February",
+      "Mar": "March",
+      "Apr": "April",
+      "May": "May",
+      "Jun": "June",
+      "Jul": "July",
+      "Agt": "August",
+      "Sep": "September",
+      "Oct": "October",
+      "Nov": "November",
+      "Dec": "December"
     }
   }
 }
