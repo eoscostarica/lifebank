@@ -10,6 +10,7 @@
       "browseWithMap": "Buscar con el mapa",
       "filters": "Filtros",
       "favorites": "Favoritos",
+      "favorite": "Favorito",
       "inputPlaceholder": "Busca Ofertas, Bancos de Sangre o Comercios Afiliados"
     },
     "rolesTitle": {
@@ -112,8 +113,10 @@
       "readMore": "Leer más",
       "howLifebankWorks": "Cómo funciona Lifebank",
       "hospital": "Hospital",
-      "lifebankLocation": "Lifebank location",
-      "lifebankSchedule": "Lifebank Schedule",
+      "location": "Ubicación",
+      "lifebankLocation": "Ubicacion del banco de sangre",
+      "sponsorLocation": "Ubicacion del comercio local",
+      "lifebankSchedule": "Horario del banco de sangre",
       "username": "Nombre de usuario",
       "invalidOrTaken": "Nombre de usuario inválido o en uso",
       "youMustEnter": "El nombre de usario debe ser de 9 caracteres (a-z 1-5)",
@@ -335,6 +338,26 @@
       "youHaveNoAddedOffers": "No tienes ofertas agregadas",
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
       "yesDeleteIt": "Si, borrar"
+    },
+    "offerView": {
+      "selectedOffer": "Oferta seleccionada",
+      "onlinePurchases": "Esta oferta es solo para compras en línea.",
+      "available": "Disponible desde",
+      "to": "hasta"
+    },
+    "months": {
+      "Jan": "Enero",
+      "Feb": "Febrero",
+      "Mar": "Marzo",
+      "Apr": "Abril",
+      "May": "Mayo",
+      "Jun": "Junio",
+      "Jul": "Julio",
+      "Agt": "Agosto",
+      "Sep": "Septiembre",
+      "Oct": "Octubre",
+      "Nov": "Noviembre",
+      "Dec": "Diciembre"
     }
   }
 }

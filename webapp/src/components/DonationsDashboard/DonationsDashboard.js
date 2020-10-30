@@ -40,6 +40,26 @@ const useStyles = makeStyles((theme) => ({
     margin: '0',
     color: '#ffffff'
   },
+  fabButtonOffer: {
+    position: "absolute",
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 10,
+    paddingTop: 10,
+    bottom: 15,
+    right: 20,
+    borderRadius: "48px",
+    backgroundColor: "#ba0d0d",
+    fontFamily: "Roboto",
+    fontsize: "14px",
+    fontweight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "normal",
+    letterSpacing: "0.5",
+    textAlign: "center",
+    color: "#ffffff",
+  },
   fabButtonDesktop: {
     borderRadius: 50,
     height: 60,
@@ -209,7 +229,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EmptyHeartSVG = ({ balance, isDesktop }) => {
-  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   const textColor = isDesktop ? '#ffffff' : '#000000'
@@ -250,7 +269,7 @@ EmptyHeartSVG.propTypes = {
   isDesktop: PropTypes.bool
 }
 
-const DonationsDashboard = ({ isDesktop }) => {
+const DonationsDashboard = ({ isDesktop, isOffer }) => {
   const { t } = useTranslation('translations')
   const [maxWidth] = useState('md')
   const [open, setOpen] = useState(false)
@@ -377,15 +396,17 @@ const DonationsDashboard = ({ isDesktop }) => {
     <>
       {!isDesktop && (
         <>
-          <Fab
-            color="secondary"
-            variant="extended"
-            className={classes.fabButton}
-            onClick={toggleDrawer(anchor, true)}
-          >
-            <FavoriteIcon className={classes.iconFab} />
+          {!isOffer &&
+            <Fab color="secondary" variant="extended" className={classes.fabButton} onClick={toggleDrawer(anchor, true)} >
+              < FavoriteIcon className={classes.iconFab} />
             Donate
           </Fab>
+          }
+          {isOffer &&
+            <Button className={classes.fabButtonOffer} onClick={toggleDrawer(anchor, true)} >
+              Redeem
+          </Button>
+          }
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
@@ -404,17 +425,19 @@ const DonationsDashboard = ({ isDesktop }) => {
           </SwipeableDrawer>
         </>
       )}
-      {isDesktop && (
+      {isDesktop &&
         <>
-          <Fab
-            color="secondary"
-            variant="extended"
-            className={classes.fabButtonDesktop}
-            onClick={handleOpen}
-          >
-            <FavoriteIcon className={classes.iconFab} />
+          {!isOffer &&
+            <Fab color="secondary" variant="extended" className={classes.fabButtonDesktop} onClick={handleOpen}>
+              < FavoriteIcon className={classes.iconFab} />
             Donate
           </Fab>
+          }
+          {isOffer &&
+            <Button variant="contained" color="secondary" className={classes.fabButtonOffer} onClick={handleOpen}>
+              Redeem
+          </Button>
+          }
           <Dialog
             maxWidth={maxWidth}
             open={open}
@@ -432,13 +455,18 @@ const DonationsDashboard = ({ isDesktop }) => {
             </Box>
           </Dialog>
         </>
-      )}
+      }
     </>
   )
 }
 
+DonationsDashboard.defaultProps = {
+  isOffer: false,
+}
+
 DonationsDashboard.propTypes = {
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
+  isOffer: PropTypes.bool,
 }
 
 export default DonationsDashboard
