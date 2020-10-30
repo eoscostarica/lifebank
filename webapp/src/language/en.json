@@ -117,6 +117,7 @@
       "lifebankLocation": "Lifebank location",
       "sponsorLocation": "Sponsor location",
       "lifebankSchedule": "Lifebank Schedule",
+      "showLocation": "Show location",
       "username": "Username",
       "invalidOrTaken": "Invalid username or already taken",
       "youMustEnter": "You must enter 9 characters (a-z 1-5)",
@@ -273,7 +274,7 @@
       "telephone": "Telephone",
       "website": "Website",
       "benefits": "Benefits",
-      "bloodUrgency": "Blood urgency",
+      "bloodUrgency": "Blood urgency level",
       "schedule": "Schedule",
       "save": "Guardar",
       "saveChanges": "Save changes"

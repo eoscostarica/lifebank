@@ -117,6 +117,7 @@
       "lifebankLocation": "Ubicacion del banco de sangre",
       "sponsorLocation": "Ubicacion del comercio local",
       "lifebankSchedule": "Horario del banco de sangre",
+      "showLocation": "Ver ubicación",
       "username": "Nombre de usuario",
       "invalidOrTaken": "Nombre de usuario inválido o en uso",
       "youMustEnter": "El nombre de usario debe ser de 9 caracteres (a-z 1-5)",
