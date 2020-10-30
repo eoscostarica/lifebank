@@ -359,7 +359,6 @@ const InfoPage = () => {
   }, [location])
 
   const MovileInfoPage = () => {
-    console.log("profile:", profile)
     return (
       <>
         {profile &&
@@ -470,7 +469,9 @@ const InfoPage = () => {
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
-                    <Typography className={classes.text} variant="body1">{profile.info.telephones}</Typography>
+                    {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
+                      <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
+                    ))}
                   </Box>
                   <Divider className={classes.divider} />
                   <Box className={classes.midLabel}>
