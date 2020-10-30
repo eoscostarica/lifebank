@@ -116,12 +116,14 @@ const EditProfilePage = () => {
           profile: userEdited
         }
       })
-      setUsername({
-        variables: {
-          account: account,
-          username: userNameEdited
-        }
-      })
+      if (account && userNameEdited) {
+        setUsername({
+          variables: {
+            account: account,
+            username: userNameEdited
+          }
+        })
+      }
     },
     [editProfile]
   )

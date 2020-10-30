@@ -285,16 +285,18 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           }}
           className={classes.textField}
         />
-        <Telephones
-          phones={user.telephones}
-          showDelete
-          deletePhone={(phone) =>
-            setUser({
-              ...user,
-              telephones: user.telephones.filter((p) => p !== phone)
-            })
-          }
-        />
+        <div style={{ display: isCompleting && user.telephones ? 'none' : '' }}>
+          <Telephones
+            phones={user.telephones}
+            showDelete
+            deletePhone={(phone) =>
+              setUser({
+                ...user,
+                telephones: user.telephones.filter((p) => p !== phone)
+              })
+            }
+          />
+        </div>
         <TextField
           id="address"
           style={{
@@ -335,12 +337,13 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             handleOnAddSchedule={handleOnAddSchedule}
           />
         </Box>
-        <Box className={classes.marginTitule}>
+        <Box style={{ display: isCompleting && user.photos ? 'none' : '' }} className={classes.marginTitule}>
           <Typography variant="h4">Images</Typography>
           <Typography variant="body1" />
         </Box>
         <TextField
           id="image-url"
+          style={{ display: isCompleting && user.photos ? 'none' : '' }}
           label="Image url"
           variant="outlined"
           placeholder="Image url here"
@@ -373,7 +376,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           }}
           className={classes.textField}
         />
-        <div className={classes.carouselDiv}>
+        <div style={{ display: isCompleting && user.photos ? 'none' : '' }} className={classes.carouselDiv}>
           {user.photos.length > 0 && (
             <>{user.photos && <Grid container justify="center">
               <Grid
@@ -416,7 +419,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography variant="body1" className={classes.text}>
             {t('editProfile.dragOrtap')}
           </Typography>
-
           <Box className={classes.bloodDemand}>
             <Box className={classes.markLabel}>
               <Typography variant="h4">{t('editProfile.low')}</Typography>
@@ -441,7 +443,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               />
             </Box>
           </Box>
-
           <Box className={classes.levelReward}>
             <Typography variant="h4">{t('editProfile.lowLevelReward')}</Typography>
             <TextField

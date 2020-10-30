@@ -108,8 +108,8 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.name)
       pendingFieldsObject = { ...pendingFieldsObject, name: false }
 
-    if (!profile.phone_number)
-      pendingFieldsObject = { ...pendingFieldsObject, phone_number: false }
+    if (!profile.telephones)
+      pendingFieldsObject = { ...pendingFieldsObject, telephones: false }
 
     if (!profile.photos)
       pendingFieldsObject = { ...pendingFieldsObject, photos: false }
@@ -126,8 +126,8 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.address)
       pendingFieldsObject = { ...pendingFieldsObject, address: false }
 
-    if (!profile.description)
-      pendingFieldsObject = { ...pendingFieldsObject, description: false }
+    if (!profile.about)
+      pendingFieldsObject = { ...pendingFieldsObject, about: false }
 
     if (!profile.blood_urgency_level)
       pendingFieldsObject = { ...pendingFieldsObject, blood_urgency_level: false }
@@ -138,13 +138,10 @@ const ProfilePageLifebank = ({ profile }) => {
 
   useEffect(() => {
     if (profile) {
-      //if (profile.photos) profile.photos = JSON.parse(profile.photos)
-      //if (profile.telephones)
-      //profile.telephones = JSON.parse(profile.telephones)
       checkAvailableFields()
     }
   }, [profile])
-  console.log("profile", JSON.parse(profile.telephones))
+
   return (
     <>
       <div className={classes.divProgressProfile}>
