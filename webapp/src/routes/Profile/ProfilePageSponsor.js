@@ -101,7 +101,6 @@ const ProfilePageSponsor = ({ profile }) => {
   const [pendingFields, setPendingFields] = useState()
 
   const checkAvailableFields = () => {
-    console.log("profile:", profile)
     let pendingFieldsObject = {}
 
     if (!profile.email)
@@ -176,7 +175,6 @@ const ProfilePageSponsor = ({ profile }) => {
   }
 
   useEffect(() => {
-    console.log("profile puro:", profile)
     if (profile) {
       if (profile.social_media_links)
         profile.social_media_links = JSON.parse(profile.social_media_links)

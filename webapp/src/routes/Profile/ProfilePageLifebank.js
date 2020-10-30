@@ -207,9 +207,10 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">URL site</Typography>
-
-        <a variant="body1" href={'https://lifebank.io/info/' + userName}> {'lifebank.io/info/' + userName}</a>
+        <Typography noWrap variant="subtitle1">URL site</Typography>
+        <Typography noWrap variant="body1">
+          <a variant="body1" href={'https://lifebank.io/info/' + userName}> {'lifebank.io/info/' + userName}</a>
+        </Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
