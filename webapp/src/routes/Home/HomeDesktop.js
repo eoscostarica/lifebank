@@ -222,7 +222,7 @@ const HomeDesktop = (props) => {
             id="filled-basic"
             variant="filled"
             className={classes.searchBar}
-            placeholder="Search Offers, Lifebanks or Sponsors"
+            placeholder={t('contentToolbar.inputPlaceholder')}
             InputProps={{
               startAdornment: <SearchIcon className={classes.iconSeachBar} />
             }}

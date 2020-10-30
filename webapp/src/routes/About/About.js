@@ -52,12 +52,12 @@ const About = () => {
       <Typography variant="body1">{t('about.eosioBased')}</Typography>
       <Typography variant="body1">{t('about.eoscrInitiative')}</Typography>
 
-      <Typography variant="h4">{t('about.storyBehindLifebak')}:</Typography>
+      <Typography variant="h4">{t('about.storyBehindLifebank')}:</Typography>
       <Typography variant="body1">{t('about.weIdentified')}</Typography>
       <Typography variant="body1">{t('about.moreOver')}</Typography>
 
       <Typography variant="h4">{t('about.aboutLifeTokens')}:</Typography>
-      <Typography variant="body1">{t('aDonorCanEarn')}</Typography>
+      <Typography variant="body1">{t('about.aDonorCanEarn')}</Typography>
       <Typography variant="body1">{t('about.also')}</Typography>
     </Box>
   )
