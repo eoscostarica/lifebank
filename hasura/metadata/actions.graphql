@@ -175,5 +175,6 @@ type ValidSponsor {
   email : String!
   location : String!
   telephone : String!
+  social_media_links : String!
 }
 

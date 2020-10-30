@@ -153,6 +153,7 @@ const getValidSponsors = async () => {
         profile.logo_url.length > 0 &&
         profile.email.length > 0 &&
         profile.location !== 'null' &&
+        profile.social_media_links.length > 0 &&
         JSON.parse(profile.telephones).length > 0
       )
         validSponsors.push({
@@ -162,7 +163,8 @@ const getValidSponsors = async () => {
           logo: profile.logo_url,
           email: profile.email,
           location: profile.location,
-          telephone: JSON.parse(profile.telephones)[0]
+          telephone: JSON.parse(profile.telephones)[0],
+          social_media_links: social_media_links
         })
     }
   }

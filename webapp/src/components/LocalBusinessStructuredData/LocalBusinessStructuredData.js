@@ -10,7 +10,8 @@ const LocalBusinessStructuredData = ({
   logo,
   email,
   location,
-  telephone
+  telephone,
+  socialMediaLinks
 }) => (
   <JSONLD>
     <Generic
@@ -34,6 +35,16 @@ const LocalBusinessStructuredData = ({
           longitude: JSON.parse(location).longitude
         }}
       />
+      {JSON.parse(socialMediaLinks).map((el, key) => (
+        <Generic
+          key={key}
+          type="sameAs"
+          jsonldtype="sameAs"
+          schema={{
+            url: el
+          }}
+        />
+      ))}
     </Generic>
   </JSONLD>
 )
@@ -44,7 +55,8 @@ LocalBusinessStructuredData.propTypes = {
   address: PropTypes.string,
   email: PropTypes.string,
   location: PropTypes.string,
-  telephone: PropTypes.string
+  telephone: PropTypes.string,
+  socialMediaLinks: PropTypes.string
 }
 
 export default LocalBusinessStructuredData

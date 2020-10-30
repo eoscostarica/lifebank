@@ -58,6 +58,7 @@ const App = ({ ual }) => {
                   email={el.email}
                   location={el.location}
                   telephone={el.telephone}
+                  socialMediaLinks={el.social_media_links}
                 />
               ))}
             </>
