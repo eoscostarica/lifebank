@@ -267,8 +267,8 @@ const HomeDesktop = (props) => {
             isDesktop
           />
         </Grid>
-        {currentUser && currentUser.role === 'donor' && (
-          <DonationsDashboard isDesktop />
+        {currentUser && (
+          <DonationsDashboard isDesktop role={currentUser.role} />
         )}
       </Grid>
     </>

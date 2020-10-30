@@ -10,6 +10,7 @@
       "browseWithMap": "Buscar con el mapa",
       "filters": "Filtros",
       "favorites": "Favoritos",
+      "favorite": "Favorito",
       "inputPlaceholder": "Busca Ofertas, Bancos de Sangre o Comercios Afiliados"
     },
     "rolesTitle": {
@@ -112,8 +113,11 @@
       "readMore": "Leer más",
       "howLifebankWorks": "Cómo funciona Lifebank",
       "hospital": "Hospital",
-      "lifebankLocation": "Lifebank location",
-      "lifebankSchedule": "Lifebank Schedule",
+      "location": "Ubicación",
+      "lifebankLocation": "Ubicacion del banco de sangre",
+      "sponsorLocation": "Ubicacion del comercio local",
+      "lifebankSchedule": "Horario del banco de sangre",
+      "showLocation": "Ver ubicación",
       "username": "Nombre de usuario",
       "invalidOrTaken": "Nombre de usuario inválido o en uso",
       "youMustEnter": "El nombre de usario debe ser de 9 caracteres (a-z 1-5)",
@@ -208,10 +212,18 @@
       "youOwn": "Tu tienes",
       "receiveTokens": "Recibir Tokens",
       "toReceiveTokens": "Para recibir Tokens de un Lifebank necesita proporcionar su nombre de usuario o mostrar el siguiente QR.",
+      "toReceiveTokensDonor": "Para recibir Tokens de un donador necesita proporcionar su nombre de usuario o mostrar el siguiente QR.",
       "toSendTo": "Para enviar Tokens a un Comercio Afiliado debe introducir su nombre de usuario o detectar un QR con tu cámara.",
+      "toSendToDonor": "Para enviar Tokens a un donador debe introducir su nombre de usuario o detectar un QR con tu cámara.",
       "sendTokens": "Enviar Tokens",
       "sendToken": "Enviar Token",
-      "enterSponsorUsername": "Ingrese el nombre de usuario del Comercio Afiliado"
+      "enterSponsorUsername": "Ingrese el nombre de usuario del Comercio Afiliado",
+      "scanQR": "Escanea el código QR",
+      "transferTokens": "Transferir",
+      "claimReward": "Recompensa",
+      "memoDonor": "Gracias por canjear tu token",
+      "memoLifebank": "Gracias por tu donación",
+      "succesful": "Transacción exitosa"
     },
     "users": "Usuarios",
     "products": "Productos",
@@ -335,6 +347,26 @@
       "youHaveNoAddedOffers": "No tienes ofertas agregadas",
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
       "yesDeleteIt": "Si, borrar"
+    },
+    "offerView": {
+      "selectedOffer": "Oferta seleccionada",
+      "onlinePurchases": "Esta oferta es solo para compras en línea.",
+      "available": "Disponible desde",
+      "to": "hasta"
+    },
+    "months": {
+      "Jan": "Enero",
+      "Feb": "Febrero",
+      "Mar": "Marzo",
+      "Apr": "Abril",
+      "May": "Mayo",
+      "Jun": "Junio",
+      "Jul": "Julio",
+      "Agt": "Agosto",
+      "Sep": "Septiembre",
+      "Oct": "Octubre",
+      "Nov": "Noviembre",
+      "Dec": "Diciembre"
     }
   }
 }

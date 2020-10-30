@@ -237,7 +237,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     bank: PropTypes.object,
     username: PropTypes.object,
     name: PropTypes.string,
-    about: PropTypes.string
+    about: PropTypes.string,
   }
 
   const LoadBanksDesktop = () => {
@@ -318,7 +318,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   BankCard.propTypes = {
     bank: PropTypes.object,
     name: PropTypes.string,
-    about: PropTypes.string
+    about: PropTypes.string,
   }
 
   return (
