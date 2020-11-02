@@ -12,9 +12,10 @@ import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import { useQuery } from '@apollo/react-hooks'
-import '@brainhubeu/react-carousel/lib/style.css'
 
+import '@brainhubeu/react-carousel/lib/style.css'
 import 'date-fns'
+
 import { useTranslation } from 'react-i18next'
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
   telephonesStyle: {
     width: '100%',
     marginBottom: '6px',
+    paddingRight: '8px',
     color: theme.palette.secondary.onSecondaryMediumEmphasizedText
   }
 }))
@@ -79,7 +81,7 @@ const ProfilePageLifebank = ({ profile }) => {
 
   const { refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
-      account: '12letterlife'
+      account: profile.account
     },
     skip: true
   })
@@ -87,7 +89,7 @@ const ProfilePageLifebank = ({ profile }) => {
   useEffect(() => {
     const getUsername = async () => {
       const { data } = await getData({
-        account: '12letterlife'
+        account: profile.account
       })
 
       if (data) setuserName(data.user[0].username)
@@ -134,9 +136,7 @@ const ProfilePageLifebank = ({ profile }) => {
   }
 
   useEffect(() => {
-    if (profile) {
-      checkAvailableFields()
-    }
+    if (profile) checkAvailableFields()
   }, [profile])
 
   return (
@@ -181,7 +181,7 @@ const ProfilePageLifebank = ({ profile }) => {
                     color="secondary"
                     className={classes.customizedLinearProgress}
                     value={
-                      ((10 - Object.keys(pendingFields).length) * 100) / 10
+                      ((10 - Object.keys(pendingFields).length) * 100) / 11
                     }
                   />
                 </Box>
@@ -190,7 +190,7 @@ const ProfilePageLifebank = ({ profile }) => {
                     variant="body2"
                     color="textSecondary"
                   >{`${Math.round(
-                    ((10 - Object.keys(pendingFields).length) * 100) / 10
+                    ((10 - Object.keys(pendingFields).length) * 100) / 11
                   )}%`}</Typography>
                 </Box>
               </Box>
@@ -204,9 +204,9 @@ const ProfilePageLifebank = ({ profile }) => {
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography noWrap variant="subtitle1">URL site</Typography>
-        <Typography noWrap variant="body1">
-          <a variant="body1" href={'https://lifebank.io/info/' + userName}> {'lifebank.io/info/' + userName}</a>
+        <Typography style={{ marginRight: '6px' }} noWrap variant="subtitle1">URL site</Typography>
+        <Typography style={{ marginLeft: '36px' }} noWrap variant="body1">
+          <a variant="body1" href={`https://lifebank.io/info/${userName}`}> {`lifebank.io/info/${userName}`}</a>
         </Typography>
       </Box>
       <Divider className={classes.divider} />
@@ -302,7 +302,7 @@ const ProfilePageLifebank = ({ profile }) => {
         id="benefitDescription"
         variant="outlined"
         disabled
-        defaultValue={profile.description}
+        defaultValue={profile.about}
         InputLabelProps={{
           shrink: true
         }}
