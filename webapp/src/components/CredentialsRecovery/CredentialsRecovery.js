@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import PropTypes from 'prop-types'
@@ -125,12 +126,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         onClick={handleOpen}
       >
         <LockIcon className={classes.iconOption} />
-        <Typography
-          variant="body1"
-          className={clsx(classes.labelOption, overrideLabelClass)}
-        >
-          {t('credentialsRecovery.credentialsRecovery')}
-        </Typography>
+        <Link to="/">
+          <Typography
+            variant="body1"
+            className={clsx(classes.labelOption, overrideLabelClass)}
+          >
+            {t('credentialsRecovery.credentialsRecovery')}
+          </Typography>
+        </Link>
       </Box>
       <Modal
         aria-labelledby="transition-modal-title"
