@@ -189,7 +189,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         {!loading &&
           banks.length > 0 &&
           banks.map((bank) => (
-            <BankItem key={bank.id} id={bank.id} bank={bank} />
+            <BankItem key={bank.id} bank={bank} />
           ))}
       </>
     )
@@ -235,9 +235,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
 
   BankItem.propTypes = {
     bank: PropTypes.object,
-    username: PropTypes.object,
-    name: PropTypes.string,
-    about: PropTypes.string,
   }
 
   const LoadBanksDesktop = () => {
@@ -270,7 +267,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         {!loading &&
           banks.length > 0 &&
           banks.map((bank) => (
-            <BankCard key={bank.id} id={bank.id} bank={bank} />
+            <BankCard key={bank.id} bank={bank} />
           ))}
       </>
     )
@@ -317,8 +314,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
 
   BankCard.propTypes = {
     bank: PropTypes.object,
-    name: PropTypes.string,
-    about: PropTypes.string,
   }
 
   return (

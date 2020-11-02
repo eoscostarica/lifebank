@@ -230,8 +230,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   }
 
   SponsorItem.propTypes = {
-    name: PropTypes.string,
-    bussines_type: PropTypes.string
+    sponsor: PropTypes.object
   }
 
   const LoadSponsorsDesktop = () => {
@@ -307,8 +306,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   }
 
   SponsorCard.propTypes = {
-    name: PropTypes.string,
-    description: PropTypes.string
+    sponsor: PropTypes.object
   }
 
   return (
