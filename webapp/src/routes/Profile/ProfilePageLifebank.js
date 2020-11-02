@@ -1,5 +1,3 @@
-import CarouselComponent from '../../components/Carousel'
-
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
@@ -18,13 +16,12 @@ import '@brainhubeu/react-carousel/lib/style.css'
 
 import 'date-fns'
 import { useTranslation } from 'react-i18next'
-
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
+import CarouselComponent from '../../components/Carousel'
 import { GET_USERNAME } from '../../gql'
 
 const { eosConfig } = require('../../config')
-
 
 const useStyles = makeStyles((theme) => ({
   rowBox: {
@@ -255,7 +252,6 @@ const ProfilePageLifebank = ({ profile }) => {
           <Typography className={classes.telephonesStyle} key={index} variant="body1">{phoneNumber}</Typography>
         ))}
       </Box>
-
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">{t('profile.consent')}</Typography>
