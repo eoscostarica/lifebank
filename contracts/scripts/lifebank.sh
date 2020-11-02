@@ -32,8 +32,9 @@ create_lifebank_accounts() {
         "lifebankcode"
         "lifebankcoin"
         "lbacccreator"
-        "sponsprueba1"
-        "donorprueba1"
+        #"sponsprueba1"
+        #"donorprueba1"
+        "12letterlife"
     )
 
     for account in "${lifebank_accounts[@]}"; do
@@ -119,12 +120,12 @@ consent() {
     echo 'Consent to Contracts'
     cleos -u $EOS_API_URL push action consent2life consent '{"user": "lifebankcode", "contract": "lifebankcoin", "hash":""}' -p lifebankcode@active
     cleos -u $EOS_API_URL push action consent2life consent '{"user": "lifebankcoin", "contract": "lifebankcode", "hash":""}' -p lifebankcoin@active
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "lifebank", "contract": "lifebankcode", "hash":""}' -p bancoprueba1@active
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "lifebank", "contract": "lifebankcoin", "hash":""}' -p bancoprueba1@active
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcode", "hash":""}' -p sponsprueba1@active
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcoin", "hash":""}' -p sponsprueba1@active
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "donorprueba1", "contract": "lifebankcode", "hash":""}' -p donorprueba1@active
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "donorprueba1", "contract": "lifebankcoin", "hash":""}' -p donorprueba1@active
+    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "lifebank", "contract": "lifebankcode", "hash":""}' -p 12letterlife@active
+    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "lifebank", "contract": "lifebankcoin", "hash":""}' -p 12letterlife@active
+    # cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcode", "hash":""}' -p sponsprueba1@active
+    # cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcoin", "hash":""}' -p sponsprueba1@active
+    # cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "donorprueba1", "contract": "lifebankcode", "hash":""}' -p donorprueba1@active
+    # cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "donorprueba1", "contract": "lifebankcoin", "hash":""}' -p donorprueba1@active
 }
 
 create_community() {
@@ -143,17 +144,20 @@ register_lifebank() {
     echo 'Register LifeBank'
     cleos -u $EOS_API_URL push action consent2life consent push action lifebankcode addlifebank \
     '{
-        "account":"13letterliffe",
-        "lifebank_name":"Banco de sangre Siquirres",
-        "description":"Salvando vidas",
+        "about": "Salvando vidas",
+        "email":"bsSiquirres@mail.com",
+        "photos": "[\"https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg\",\"https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg\",\"https://www.ccss.sa.cr/images/hospitales/thumb/9.jpg\"]",
+        "account":"12letterliffe",
         "address":"siquirres, Limon, Costa Rica",
-        "location": "{\"latitude\":40.722387752690764,\"longitude\":-73.99595112132992}",
-        "phone_number":"(646) 665-6000",
-        "has_immunity_test":true,
-        "blood_urgency_level":2,
-        "schedule": "[{\"day\":\"Sunday\",\"open\":\"06:00\",\"close\":\"16:00\"}]",
+        "location": "{\"latitude\":10.097867627911938,\"longitude\":-83.50939652646625}",
+        "logo_url": "https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png",
+        "schedule": "[{\"day\":\"Monday\",\"open\":\"06:00am\",\"close\":\"4:00pm\"},{\"day\":\"Wednesday\",\"open\":\"06:00am\",\"close\":\"4:00pm\"},{\"day\":\"Sunday\",\"open\":\"08:00am\",\"close\":\"10:00am\"}]",
+        "telephones": "[\"800-800-100\"]",
+        "lifebank_name":"Banco de sangre Siquirres",
         "community_asset":"0 LIFE",
-        "email":"bsSiquirres@mail.com"
+        "has_immunity_test":true,
+        "social_media_links":"[]",
+        "blood_urgency_level":2,
     }' -p lifebankcode@active
 }
 
@@ -193,10 +197,10 @@ test_token_lifecycle() {
     echo 'Issue token'
     cleos -u $EOS_API_URL push action consent2life consent push action lifebankcoin issue \
     '{
-        "lifebank":"bancoprueba1",
+        "lifebank":"12letterlife",
         "to":"donorprueba1",
         "memo":"por donar sangre"
-    }' -p bancoprueba1@active
+    }' -p 12letterlife@active
 
     echo 'Donor transfers to sponsor'
     cleos -u $EOS_API_URL push action consent2life consent push action lifebankcoin transfer \
@@ -211,7 +215,7 @@ test_token_lifecycle() {
     cleos -u $EOS_API_URL push action consent2life consent push action lifebankcoin transfer \
     '{
         "from":"sponsprueba1",
-        "to":"bancoprueba1",
+        "to":"12letterlife",
         "quantity":"2 LIFE",
         "memo":"para que sigan recibiendo donaciones"
     }' -p sponsprueba1@active
@@ -237,7 +241,7 @@ run_lifebank() {
     #deploy_lifebank_contracts
     #consent
     #create_community
-    #register_lifebank
+    register_lifebank
     #register_donor
     #register_sponsor
     #test_token_lifecycle
