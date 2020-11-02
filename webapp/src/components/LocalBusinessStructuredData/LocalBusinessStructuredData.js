@@ -53,6 +53,7 @@ LocalBusinessStructuredData.propTypes = {
   name: PropTypes.string,
   openingHours: PropTypes.string,
   address: PropTypes.string,
+  logo: PropTypes.string,
   email: PropTypes.string,
   location: PropTypes.string,
   telephone: PropTypes.string,

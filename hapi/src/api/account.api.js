@@ -164,7 +164,7 @@ const getValidSponsors = async () => {
           email: profile.email,
           location: profile.location,
           telephone: JSON.parse(profile.telephones)[0],
-          social_media_links: social_media_links
+          social_media_links: profile.social_media_links
         })
     }
   }
