@@ -101,8 +101,7 @@ const EditProfilePage = () => {
   ] = useMutation(EDIT_PROFILE_MUTATION)
 
   const [
-    setUsername,
-    { loading: setUsernameLoading, data: { set_username: setUsernameResult } = {} }
+    setUsername
   ] = useMutation(SET_USERNAME)
 
   const handleConsentChange = () => {
