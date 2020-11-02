@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SideBar = ({ user, onLogout }) => {
+const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
@@ -126,7 +126,7 @@ const SideBar = ({ user, onLogout }) => {
             overrideBoxClass={classes.optionLink}
             overrideLabelClass={classes.labelOption}
           />
-          <Box className={classes.optionLink}>
+          <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
             <ContactMailIcon className={classes.iconOption} />
             <Link to="/signup">
               <Typography variant="body1" className={classes.labelOption}>
@@ -140,7 +140,7 @@ const SideBar = ({ user, onLogout }) => {
       <Typography variant="body1" className={classes.infoLabel}>
         {t('navigationDrawer.information')}
       </Typography>
-      <Box className={classes.optionLink}>
+      <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
         <InfoIcon className={classes.iconOption} />
         <Link to="/about">
           <Typography variant="body1" className={classes.labelOption}>
@@ -148,7 +148,7 @@ const SideBar = ({ user, onLogout }) => {
           </Typography>
         </Link>
       </Box>
-      <Box className={classes.optionLink}>
+      <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
         <InfoIcon className={classes.iconOption} />
         <Link to="/terms-of-use">
           <Typography variant="body1" className={classes.labelOption}>
@@ -156,7 +156,7 @@ const SideBar = ({ user, onLogout }) => {
           </Typography>
         </Link>
       </Box>
-      <Box className={classes.optionLink}>
+      <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
         <InfoIcon className={classes.iconOption} />
         <Link to="/help">
           <Typography variant="body1" className={classes.labelOption}>
