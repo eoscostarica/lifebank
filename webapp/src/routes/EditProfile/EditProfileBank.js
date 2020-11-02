@@ -337,7 +337,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           />
         </Box>
         <Box style={{ display: isCompleting && user.photos ? 'none' : '' }} className={classes.marginTitule}>
-          <Typography variant="h4">Images</Typography>
+          <Typography variant="h4">{t('profile.images')}</Typography>
           <Typography variant="body1" />
         </Box>
         <TextField

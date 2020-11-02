@@ -165,7 +165,7 @@ const ProfilePageLifebank = ({ profile }) => {
                         root: classes.editBtn
                       }}
                     >
-                      Update
+                      {t('common.update')}
                     </Button>
                   </LinkRouter>
                 </Box>
@@ -173,7 +173,7 @@ const ProfilePageLifebank = ({ profile }) => {
               className={classes.alert}
               severity="info"
             >
-              <Typography>Your profile is not complete </Typography>
+              <Typography> {t('profile.yourProfileIsNotComplete')} </Typography>
               <Box display="flex" alignItems="center">
                 <Box width="100%" mr={1}>
                   <LinearProgress
@@ -199,12 +199,12 @@ const ProfilePageLifebank = ({ profile }) => {
         )}
       </div>
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Logo</Typography>
+        <Typography variant="subtitle1">{t('profile.logo')}</Typography>
         <img className={classes.img} src={profile.logo_url} alt='logo image' />
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography style={{ marginRight: '6px' }} noWrap variant="subtitle1">URL site</Typography>
+        <Typography style={{ marginRight: '6px' }} noWrap variant="subtitle1">{t('profile.urlSite')}</Typography>
         <Typography style={{ marginLeft: '36px' }} noWrap variant="body1">
           <a variant="body1" href={`https://lifebank.io/info/${userName}`}> {`lifebank.io/info/${userName}`}</a>
         </Typography>
@@ -294,12 +294,12 @@ const ProfilePageLifebank = ({ profile }) => {
       />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">
-          {t('profile.benefitDescription')}
+          {t('signup.about')}
         </Typography>
         <Typography variant="body1" />
       </Box>
       <TextField
-        id="benefitDescription"
+        id="about"
         variant="outlined"
         disabled
         defaultValue={profile.about}
@@ -311,7 +311,7 @@ const ProfilePageLifebank = ({ profile }) => {
         rows={3}
       />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">Images</Typography>
+        <Typography variant="subtitle1">{t('profile.images')}</Typography>
         <Typography variant="body1" />
       </Box>
       <Grid
