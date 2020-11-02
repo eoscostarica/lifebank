@@ -237,7 +237,9 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
     return (
       <ListItem className={classes.listItem} button onClick={() => handleOpenOfferView(props.offer)}>
         <ListItemAvatar>
-          <Avatar src={props.offer.images} />
+          <Avatar src={JSON.parse(props.offer.images)[0] || ""} >
+            <LocalOfferIcon />
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -310,7 +312,9 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
-          <Avatar className={classes.cardAvatar} src={props.offer.images} />
+          <Avatar className={classes.cardAvatar} src={JSON.parse(props.offer.images)[0] || ""} >
+            <LocalOfferIcon />
+          </Avatar>
           <Box className={classes.cardTitleContainer}>
             <Typography className={classes.cardTitle} noWrap>
               {props.offer.offer_name}

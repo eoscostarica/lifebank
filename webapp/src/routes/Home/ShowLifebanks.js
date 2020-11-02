@@ -205,7 +205,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     >
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar src={props.bank.info.logo_url || ""}>
             <LocalHospitalIcon />
           </Avatar>
         </ListItemAvatar>
@@ -225,7 +225,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
               noWrap
               variant="body2"
             >
-              {props.bank.about}
+              {props.bank.info.about}
             </Typography>
           }
         />
@@ -287,7 +287,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   const BankCard = (props) => (
     <Card className={classes.cardRoot}>
       <Box className={classes.cardHeader}>
-        <Avatar className={classes.cardAvatar}>
+        <Avatar className={classes.cardAvatar} src={props.bank.info.logo_url || ""}>
           <LocalHospitalIcon />
         </Avatar>
         <Box className={classes.cardTitleContainer}>
