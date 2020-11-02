@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import PropTypes from 'prop-types'
@@ -17,6 +18,7 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import LockIcon from '@material-ui/icons/Lock'
 import { useTranslation } from 'react-i18next'
+
 
 import { CREDENTIALS_RECOVERY } from '../../gql'
 
@@ -125,12 +127,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         onClick={handleOpen}
       >
         <LockIcon className={classes.iconOption} />
-        <Typography
-          variant="body1"
-          className={clsx(classes.labelOption, overrideLabelClass)}
-        >
-          {t('credentialsRecovery.credentialsRecovery')}
-        </Typography>
+        <Link>
+          <Typography
+            variant="body1"
+            className={clsx(classes.labelOption, overrideLabelClass)}
+          >
+            {t('credentialsRecovery.credentialsRecovery')}
+          </Typography>
+        </Link>
       </Box>
       <Modal
         aria-labelledby="transition-modal-title"

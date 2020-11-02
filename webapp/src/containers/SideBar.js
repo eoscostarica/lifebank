@@ -122,10 +122,10 @@ const SideBar = ({ user, onLogout }) => {
             overrideBoxClass={classes.optionLink}
             overrideLabelClass={classes.labelOption}
           />
-          <CredentialsRecovery
-            overrideBoxClass={classes.optionLink}
-            overrideLabelClass={classes.labelOption}
-          />
+            <CredentialsRecovery
+              overrideBoxClass={classes.optionLink}
+              overrideLabelClass={classes.labelOption}
+            />
           <Box className={classes.optionLink}>
             <ContactMailIcon className={classes.iconOption} />
             <Link to="/signup">
