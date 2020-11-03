@@ -14,7 +14,8 @@ import {
   PROFILE_QUERY,
   GRANT_CONSENT_MUTATION,
   REVOKE_CONSENT_MUTATION,
-  EDIT_PROFILE_MUTATION
+  EDIT_PROFILE_MUTATION,
+  SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 
@@ -72,6 +73,7 @@ const EditProfilePage = () => {
   const [currentUser] = useUser()
   const [showAlert, setShowAlert] = useState({ error: false, success: false })
   const [isCompleting, setIsCompleting] = useState()
+  const [userName, setuserName] = useState()
   const [
     loadProfile,
     { loading, data: { profile: { profile } = {} } = {} }
@@ -98,17 +100,29 @@ const EditProfilePage = () => {
     { loading: editLoading, data: { edit_profile: editProfileResult } = {} }
   ] = useMutation(EDIT_PROFILE_MUTATION)
 
+  const [
+    setUsername
+  ] = useMutation(SET_USERNAME)
+
   const handleConsentChange = () => {
     profile?.consent ? revokeConsent() : grantConsent()
   }
 
   const handleUpdateUser = useCallback(
-    (userEdited) => {
+    (userEdited, userNameEdited, account) => {
       editProfile({
         variables: {
           profile: userEdited
         }
       })
+      if (account && userNameEdited) {
+        setUsername({
+          variables: {
+            account: account,
+            username: userNameEdited
+          }
+        })
+      }
     },
     [editProfile]
   )
@@ -144,6 +158,7 @@ const EditProfilePage = () => {
     location.state
       ? setIsCompleting(location.state.isCompleting)
       : setIsCompleting(false)
+    setuserName(location.state.userName)
   }, [location])
 
   return (
@@ -215,6 +230,8 @@ const EditProfilePage = () => {
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <EditProfileBank
           profile={profile}
+          userName={userName}
+          isCompleting={isCompleting}
           onSubmit={handleUpdateUser}
           loading={editLoading}
         />
