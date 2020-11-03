@@ -162,9 +162,21 @@ ACTION lifebankcode::addlifebank(
   }
 }
 
-ACTION lifebankcode::uplifebank(eosio::name account, string lifebank_name,
-                                string description, string address, string location, string phone_number,
-                                bool has_immunity_test, uint8_t blood_urgency_level, string schedule, eosio::asset community_asset, string email)
+ACTION lifebankcode::uplifebank(
+    eosio::name account,
+    string lifebank_name,
+    string about,
+    string address,
+    string location,
+    string telephones,
+    bool has_immunity_test,
+    uint8_t blood_urgency_level,
+    string schedule,
+    eosio::asset community_asset,
+    string email,
+    string photos,
+    string logo_url,
+    string social_media_links)
 {
   require_auth(account);
   check_consent(account);

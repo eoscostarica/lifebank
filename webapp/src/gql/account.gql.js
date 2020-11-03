@@ -131,3 +131,19 @@ export const GET_SECRET_BY_ACCOUNT = gql`
     }
   }
 `
+
+export const GET_USERNAME = gql`
+  query($account: String!) {
+    user(where: {account: {_eq: $account}}) {
+      username
+    }
+  }
+`
+
+export const SET_USERNAME = gql`
+  mutation ($account: String!, $username: String!) {
+    update_user(_set: { username: $username }, where: {account: {_eq: $account}}) {
+      affected_rows
+    }
+  }
+`
