@@ -318,7 +318,7 @@ const GenericOfferFormComponent = ({
             <CloseIcon />
           </IconButton>
           <Typography variant="h1" className={classes.title}>
-            t("offersManagement.addOffer")
+            {t('offersManagement.addOffer')}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -328,7 +328,7 @@ const GenericOfferFormComponent = ({
             id="offer-name"
             label={t('offersManagement.offerName')}
             variant="outlined"
-            placeholder={t('offersManagement.offerNamePlaceHolder')}
+            placeholder={t('offersManagement.offerNamePlaceholder')}
             value={offer.offer_name || undefined}
             fullWidth
             onChange={(event) =>

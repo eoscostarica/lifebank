@@ -167,6 +167,9 @@
       "hasImmunityTest": "Tiene test de inmunidad",
       "benefitDescription": "Descripción del beneficio",
       "location": "Localización",
+      "logo": "Logo",
+      "urlSite": "URL del sitio",
+      "images": "Imagenes",
       "yourProfileIsNotComplete": "Tu perfil no está completo"
     },
     "errors": {

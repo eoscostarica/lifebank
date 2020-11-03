@@ -40,7 +40,7 @@ const create = async ({ role, email, name, secret }) => {
 
   await historyApi.insert(transaction)
 
-  //mailApi.sendVerificationCode(email, verification_code)
+  mailApi.sendVerificationCode(email, verification_code)
 
   return {
     account,
@@ -114,7 +114,6 @@ const getLifebankData = async account => {
     LIFEBANKCODE_CONTRACT,
     account
   )
-
   return {
     ...profile,
     name,
@@ -155,7 +154,6 @@ const getTransactionData = async tx => {
     (await historyApi.getOne({
       transaction_id: { _eq: tx || '' }
     })) || {}
-
   return actionTraces.reduce(
     (result, item) => ({ ...result, ...item.act.data }),
     {}
