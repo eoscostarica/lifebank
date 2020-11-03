@@ -4,7 +4,8 @@ const {
   jwtUtils,
   consent2lifeUtils,
   lifebankcodeUtils,
-  lifebankcoinUtils
+  lifebankcoinUtils,
+  hasuraUtils
 } = require('../utils')
 
 const historyApi = require('./history.api')
@@ -15,6 +16,14 @@ const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
+
+const GET_LIFEBANKS_ACCOUNTS = `
+query MyQuery {
+  user(where: {account: {_ilike: "lif%"}}) {
+    account
+  }
+}
+`
 
 const create = async ({ role, email, name, secret }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
@@ -121,6 +130,51 @@ const getLifebankData = async account => {
     consent: !!consent
   }
 }
+
+
+
+const getLifebanksAccounts = async () => {
+  const { user } = await hasuraUtils.request(GET_SPONSORS_ACCOUNTS)
+
+  return user
+}
+
+const getValidLifebanks = async () => {
+  const lifebankAccounts = await getLifebanksAccounts()
+  const validLifebanks = []
+  for (let index = 0; index < lifebankAccounts.length; index++) {
+    const { tx } =
+      (await lifebankcodeUtils.getLifebank(lifebankAccounts[index].account)) ||
+      {}
+    if (tx) {
+      const { ...profile } = await getTransactionData(tx)
+      if (
+        profile.lifebank_name.length > 0 &&
+        profile.schedule.length > 0 &&
+        profile.address.length > 0 &&
+        profile.logo_url.length > 0 &&
+        profile.email.length > 0 &&
+        profile.location !== 'null' &&
+        profile.social_media_links.length > 0 &&
+        JSON.parse(profile.telephones).length > 0
+      )
+        validLifebanks.push({
+          name: profile.sponsor_name,
+          openingHours: profile.schedule,
+          address: profile.address,
+          logo: profile.logo_url,
+          email: profile.email,
+          location: profile.location,
+          telephone: JSON.parse(profile.telephones)[0],
+          social_media_links: profile.social_media_links
+        })
+    }
+  }
+
+  return validLifebanks
+}
+
+
 
 const getSponsorData = async account => {
   const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
