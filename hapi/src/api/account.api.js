@@ -131,10 +131,8 @@ const getLifebankData = async account => {
   }
 }
 
-
-
 const getLifebanksAccounts = async () => {
-  const { user } = await hasuraUtils.request(GET_SPONSORS_ACCOUNTS)
+  const { user } = await hasuraUtils.request(GET_LIFEBANKS_ACCOUNTS)
 
   return user
 }
@@ -154,8 +152,8 @@ const getValidLifebanks = async () => {
         profile.address.length > 0 &&
         profile.logo_url.length > 0 &&
         profile.email.length > 0 &&
+        profile.about.length > 0 &&
         profile.location !== 'null' &&
-        profile.social_media_links.length > 0 &&
         JSON.parse(profile.telephones).length > 0
       )
         validLifebanks.push({
@@ -163,18 +161,16 @@ const getValidLifebanks = async () => {
           openingHours: profile.schedule,
           address: profile.address,
           logo: profile.logo_url,
+          description: profile.about,
           email: profile.email,
           location: profile.location,
-          telephone: JSON.parse(profile.telephones)[0],
-          social_media_links: profile.social_media_links
+          telephone: JSON.parse(profile.telephones)[0]
         })
     }
   }
 
   return validLifebanks
 }
-
-
 
 const getSponsorData = async account => {
   const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
@@ -330,5 +326,6 @@ module.exports = {
   grantConsent,
   revokeConsent,
   transfer,
-  verifyEmail
+  verifyEmail,
+  getValidLifebanks
 }

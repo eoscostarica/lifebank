@@ -42,6 +42,21 @@ export const PROFILE_QUERY = gql`
   }
 `
 
+export const GET_VALID_LIFEBANKS_QUERY = gql`
+  query {
+    get_valid_sponsors {
+      name
+      address
+      email
+      location
+      logo
+      description
+      openingHours
+      telephone
+    }
+  }
+`
+
 export const PROFILE_ID_QUERY = gql`
   query {
     profile {
