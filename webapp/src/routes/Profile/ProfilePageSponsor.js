@@ -338,9 +338,8 @@ const ProfilePageSponsor = ({ profile }) => {
           className={classes.rowBox}
         >
           <Typography variant="subtitle1">{t('profile.consent')}</Typography>
-          <Typography variant="body1">{`${
-            profile.consent ? t('profile.granted') : t('profile.revoked')
-          }`}</Typography>
+          <Typography variant="body1">{`${profile.consent ? t('profile.granted') : t('profile.revoked')
+            }`}</Typography>
         </Box>
 
         {profile.photos &&

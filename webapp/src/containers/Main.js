@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { makeStyles, useTheme } from '@material-ui/styles'
@@ -17,6 +17,7 @@ import LifeBankIcon from '../components/LifebankIcon'
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(7, 0, 0, 0),
+    backgroundColor: '#ffffff',
     display: 'flex'
   },
   paddingHome: {
@@ -132,7 +133,7 @@ const ChangeAppBarColorOnScroll = ({
   )
 }
 
-const Main = ({ children, sidebarContent, topbarContent }) => {
+const Main = ({ children, sidebarContent, topbarContent, sideBarPosition }) => {
   const classes = useStyles()
   const theme = useTheme()
   const [openSidebar, setOpenSidebar] = useState(false)
@@ -141,6 +142,10 @@ const Main = ({ children, sidebarContent, topbarContent }) => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
+
+  useEffect(() => {
+    setOpenSidebar(false)
+  }, [sideBarPosition])
 
   return (
     <Container
@@ -177,7 +182,8 @@ const Main = ({ children, sidebarContent, topbarContent }) => {
 Main.propTypes = {
   children: PropTypes.node,
   sidebarContent: PropTypes.node,
-  topbarContent: PropTypes.node
+  topbarContent: PropTypes.node,
+  sideBarPosition: PropTypes.bool
 }
 
 ChangeAppBarColorOnScroll.propTypes = {

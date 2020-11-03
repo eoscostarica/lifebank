@@ -23,7 +23,7 @@ const createAccount = async accountName => {
 
   try {
     await wallet.unlock(eosConfig.baseAccount, eosConfig.baseAccountPassword)
-  } catch (error) {}
+  } catch (error) { }
 
   const keys = await wallet.listKeys(
     eosConfig.baseAccount,
@@ -159,8 +159,7 @@ const getTableRows = options => eosApi.getTableRows({ json: true, ...options })
 const transact = async (actions, account, password) => {
   try {
     await wallet.unlock(account, password)
-  } catch (error) {}
-
+  } catch (error) { }
   const keys = await wallet.listKeys(account, password)
   const api = new Api({
     rpc,

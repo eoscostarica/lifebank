@@ -10,6 +10,7 @@
       "browseWithMap": "Browse with a map",
       "filters": "Filters",
       "favorites": "Favorites",
+      "favorite": "Favorite",
       "inputPlaceholder": "Search Offers, Lifebank or Sponsors"
     },
     "rolesTitle": {
@@ -112,8 +113,11 @@
       "readMore": "Read more",
       "howLifebankWorks": "How Lifebank works",
       "hospital": "Hospital",
+      "location": "Location",
       "lifebankLocation": "Lifebank location",
+      "sponsorLocation": "Sponsor location",
       "lifebankSchedule": "Lifebank Schedule",
+      "showLocation": "Show location",
       "username": "Username",
       "invalidOrTaken": "Invalid username or already taken",
       "youMustEnter": "You must enter 9 characters (a-z 1-5)",
@@ -163,6 +167,9 @@
       "hasImmunityTest": "Has Immunity Test",
       "benefitDescription": "Benefit Description",
       "location": "Location",
+      "logo": "Logo",
+      "urlSite": "URL site",
+      "images": "Images",
       "yourProfileIsNotComplete": "Your profile is not complete"
     },
     "errors": {
@@ -208,10 +215,18 @@
       "youOwn": "You Own",
       "receiveTokens": "Receive Tokens",
       "toReceiveTokens": "To receive tokens from a Lifebank you need to provide your user name or show the following QR.",
+      "toReceiveTokensDonor": "To receive tokens from a donor you need to provide your user name or show the following QR.",
       "toSendTo": "To send tokens to a sponsor you need to enter their username or detect a QR with your camera.",
+      "toSendToDonor": "To send tokens to a donor you need to enter their username or detect a QR with your camera.",
       "sendTokens": "Send tokens",
       "sendToken": "Send Token",
-      "enterSponsorUsername": "Enter username here"
+      "enterSponsorUsername": "Enter username here",
+      "scanQR": "Scan QR code",
+      "transferTokens": "Transfer",
+      "claimReward": "Reward",
+      "memoDonor": "Thank you for redeeming your token",
+      "memoLifebank": "Thanks for your donation",
+      "succesful": "Succesful transaction"
     },
     "users": "Users",
     "products": "Products",
@@ -262,7 +277,7 @@
       "telephone": "Telephone",
       "website": "Website",
       "benefits": "Benefits",
-      "bloodUrgency": "Blood urgency",
+      "bloodUrgency": "Blood urgency level",
       "schedule": "Schedule",
       "save": "Guardar",
       "saveChanges": "Save changes"
@@ -335,6 +350,26 @@
       "youHaveNoAddedOffers": "You have no added offers",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it"
+    },
+    "offerView": {
+      "selectedOffer": "Selected offer",
+      "onlinePurchases": "This offer is only for online purchases.",
+      "available": "Available from",
+      "to": "to"
+    },
+    "months": {
+      "Jan": "January",
+      "Feb": "February",
+      "Mar": "March",
+      "Apr": "April",
+      "May": "May",
+      "Jun": "June",
+      "Jul": "July",
+      "Agt": "August",
+      "Sep": "September",
+      "Oct": "October",
+      "Nov": "November",
+      "Dec": "December"
     }
   }
 }

@@ -16,6 +16,11 @@ const App = ({ ual }) => {
   const [validSponsors, setValidSponsors] = useState([])
   const [currentUser, { logout }] = useUser()
   const [cookies, setCookie] = useCookies(['splash'])
+  const [sideBarPosition, setSideBarPosition] = useState(true)
+
+  const triggerSideBarPosition = () => {
+    sideBarPosition ? setSideBarPosition(false) : setSideBarPosition(true)
+  }
 
   const [loadValidSponsors, { data }] = useLazyQuery(GET_VALID_SPONSORS_QUERY, {
     fetchPolicy: 'network-only'
@@ -44,7 +49,8 @@ const App = ({ ual }) => {
       ) : (
         <MainContainer
           topbarContent={<TopBar user={currentUser} onLogout={logout} />}
-          sidebarContent={<SideBar user={currentUser} onLogout={logout} />}
+          sidebarContent={<SideBar user={currentUser} onLogout={logout} triggerSideBarPosition={triggerSideBarPosition} />}
+          sideBarPosition={sideBarPosition}
         >
           {validSponsors.length > 0 && (
             <>

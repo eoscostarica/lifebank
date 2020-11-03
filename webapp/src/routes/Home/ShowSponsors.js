@@ -190,9 +190,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
           sponsors.map((sponsor) => (
             <SponsorItem
               key={sponsor.id}
-              id={sponsor.id}
-              name={sponsor.name}
-              bussines_type={sponsor.info.bussines_type}
+              sponsor={sponsor}
             />
           ))}
       </>
@@ -203,7 +201,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     return (
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar src={props.sponsor.info.logo_url || ""}>
             <StorefrontIcon />
           </Avatar>
         </ListItemAvatar>
@@ -214,7 +212,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
               noWrap
               variant="body2"
             >
-              {props.name}
+              {props.sponsor.name}
             </Typography>
           }
           secondary={
@@ -223,7 +221,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
               noWrap
               variant="body2"
             >
-              {props.bussines_type}
+              {props.sponsor.info.business_type}
             </Typography>
           }
         />
@@ -232,8 +230,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   }
 
   SponsorItem.propTypes = {
-    name: PropTypes.string,
-    bussines_type: PropTypes.string
+    sponsor: PropTypes.object
   }
 
   const LoadSponsorsDesktop = () => {
@@ -268,9 +265,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
           sponsors.map((sponsor) => (
             <SponsorCard
               key={sponsor.id}
-              id={sponsor.id}
-              name={sponsor.name}
-              description={sponsor.info.benefit_description}
+              sponsor={sponsor}
             />
           ))}
       </>
@@ -289,18 +284,18 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
-          <Avatar className={classes.cardAvatar}>
+          <Avatar className={classes.cardAvatar} src={props.sponsor.info.logo_url || ""}>
             <StorefrontIcon />
           </Avatar>
           <Box className={classes.cardTitleContainer}>
             <Typography className={classes.cardTitle} noWrap>
-              {props.name}
+              {props.sponsor.name}
             </Typography>
           </Box>
         </Box>
         <CardContent className={classes.cardContent}>
           <Typography className={classes.cardContentText}>
-            {truncateString(props.description)}
+            {truncateString(props.sponsor.info.about)}
           </Typography>
         </CardContent>
         <Button color="primary" className={classes.cardActionButton}>
@@ -311,8 +306,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   }
 
   SponsorCard.propTypes = {
-    name: PropTypes.string,
-    description: PropTypes.string
+    sponsor: PropTypes.object
   }
 
   return (
