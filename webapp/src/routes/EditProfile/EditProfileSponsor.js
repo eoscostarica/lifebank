@@ -144,8 +144,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     [user.schedule]
   )
 
-  console.log(profile)
-
   const handleOnSocialMediaTextFieldChange = (name, url) => {
     const existingSocialMediaItem =
       user.social_media_links.find((social) => social.name === name) !==
