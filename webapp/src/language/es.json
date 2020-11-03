@@ -72,6 +72,9 @@
       "aboutPlaceholder": "Acerca del LifeBank"
     },
     "login": {
+      "letsStarted": "¡Empecemos!",
+      "subtitle": "Inicie sesión para acceder a sus marcadores y preferencias personales.",
+      "loggedIn": "Mantenme conectado",
       "login": "Iniciar sesión",
       "accountDoesntExist": "Esta cuenta no existe",
       "somethingHappenedWithAuth": "Un evento inesperado ha ocurrido",

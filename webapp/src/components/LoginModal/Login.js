@@ -267,10 +267,10 @@ const LoginModal = () => {
           </Box>
           <Box>
             <Typography className={classes.title}>
-              Let's get started
+              {t('login.letsStarted')}
             </Typography>
             <Typography className={classes.subTitle}>
-              Login to donate and have access to your benefits
+              {t('login.subtitle')}
             </Typography>
           </Box>
           {errorMessage && (
@@ -311,7 +311,7 @@ const LoginModal = () => {
               />
               <TextField
                 id="secret"
-                label={t('common.password')}
+                label={t('signup.password')}
                 type="password"
                 variant="outlined"
                 className={classes.inputStyle}
@@ -327,7 +327,7 @@ const LoginModal = () => {
                   name="checkLogin"
                 />
               }
-              label="Keep me logged in"
+              label={t('login.loggedIn')}
             />
             <Box className={classes.centerBox}>
               <Button

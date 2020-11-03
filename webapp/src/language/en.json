@@ -72,6 +72,9 @@
       "aboutPlaceholder": "About the LifeBank"
     },
     "login": {
+      "letsStarted": "Let’s get started!",
+      "subtitle": "Login to access your bookmarks and personal preferences.",
+      "loggedIn": "Keep me logged in",
       "login": "Login",
       "accountDoesntExist": "This account doesn't exist, please sign up",
       "somethingHappenedWithAuth": "Something happened with the authentication",
