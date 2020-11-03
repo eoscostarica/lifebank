@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 
@@ -13,6 +13,11 @@ import { useUser } from './context/user.context'
 const App = ({ ual }) => {
   const [currentUser, { logout }] = useUser()
   const [cookies, setCookie] = useCookies(['splash'])
+  const [sideBarPosition, setSideBarPosition] = useState(true)
+
+  const triggerSideBarPosition = () => {
+    sideBarPosition ? setSideBarPosition(false) : setSideBarPosition(true)
+  }
 
   return (
     <BrowserRouter>
@@ -29,7 +34,8 @@ const App = ({ ual }) => {
       ) : (
         <MainContainer
           topbarContent={<TopBar user={currentUser} onLogout={logout} />}
-          sidebarContent={<SideBar user={currentUser} onLogout={logout} />}
+          sidebarContent={<SideBar user={currentUser} onLogout={logout} triggerSideBarPosition={triggerSideBarPosition} />}
+          sideBarPosition={sideBarPosition}
         >
           <Grid container justify="center" alignItems="center">
             <Switch>
