@@ -54,6 +54,11 @@ type Query {
 }
 
 
+type Query {
+  get_valid_sponsors : [ValidSponsor]!
+}
+
+
 type Mutation {
   grant_consent : grant_consent_output
 }
@@ -160,5 +165,16 @@ type create_pre_register_lifebank_output {
 
 type verify_email_output {
   is_verified : Boolean!
+}
+
+type ValidSponsor {
+  name : String!
+  openingHours : String!
+  address : String!
+  logo : String!
+  email : String!
+  location : String!
+  telephone : String!
+  social_media_links : String!
 }
 
