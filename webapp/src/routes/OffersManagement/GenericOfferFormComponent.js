@@ -318,7 +318,7 @@ const GenericOfferFormComponent = ({
             <CloseIcon />
           </IconButton>
           <Typography variant="h1" className={classes.title}>
-            t("offersManagement.addOffer")
+            {t('offersManagement.addOffer')}
           </Typography>
         </Toolbar>
       </AppBar>
