@@ -12,11 +12,10 @@ import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import { useQuery } from '@apollo/react-hooks'
-
+import { useTranslation } from 'react-i18next'
 import '@brainhubeu/react-carousel/lib/style.css'
 import 'date-fns'
 
-import { useTranslation } from 'react-i18next'
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import CarouselComponent from '../../components/Carousel'
@@ -181,7 +180,7 @@ const ProfilePageLifebank = ({ profile }) => {
                     color="secondary"
                     className={classes.customizedLinearProgress}
                     value={
-                      ((10 - Object.keys(pendingFields).length) * 100) / 11
+                      ((11 - Object.keys(pendingFields).length) * 100) / 11
                     }
                   />
                 </Box>
@@ -190,7 +189,7 @@ const ProfilePageLifebank = ({ profile }) => {
                     variant="body2"
                     color="textSecondary"
                   >{`${Math.round(
-                    ((10 - Object.keys(pendingFields).length) * 100) / 11
+                    ((11 - Object.keys(pendingFields).length) * 100) / 11
                   )}%`}</Typography>
                 </Box>
               </Box>
