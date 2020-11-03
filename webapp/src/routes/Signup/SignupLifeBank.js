@@ -122,7 +122,7 @@ const SignupLifeBank = ({
         <TextField
           id="description"
           label={t('common.description')}
-          placeholder={t('common.descriptionPlaceholder')}
+          placeholder={t('signup.descriptionPlaceholder')}
           variant="outlined"
           fullWidth
           InputLabelProps={{
@@ -185,7 +185,7 @@ const SignupLifeBank = ({
               onChange={() => setField('immunity_test', !user.immunity_test)}
             />
           }
-          label="Has immunity test?"
+          label={t('profile.hasImmunityTest')}
         />
       </FormGroup>
       <div className={classes.formGroup}>

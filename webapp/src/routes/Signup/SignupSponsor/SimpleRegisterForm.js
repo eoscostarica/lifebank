@@ -58,7 +58,7 @@ const SimpleRegisterForm = ({
           fullWidth
           error={error}
           helperText={error && error.text}
-          placeholder={t('confirmPasswordPlaceholder')}
+          placeholder={t('signup.confirmPasswordPlaceholder')}
           variant="outlined"
           InputLabelProps={{
             shrink: true
