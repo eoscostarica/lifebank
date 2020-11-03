@@ -280,7 +280,7 @@ const LoginModal = () => {
                 />
                 <TextField
                   id="secret"
-                  label={t('common.password')}
+                  label={t('signup.password')}
                   type="password"
                   variant="outlined"
                   className={classes.inputStyle}
