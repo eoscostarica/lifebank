@@ -24,10 +24,12 @@ const App = ({ ual }) => {
 
   useEffect(() => {
     if (validLifebanks.length === 0) loadValidLifebanks()
+    console.log("validLifebanks", validLifebanks)
   }, [loadValidLifebanks])
 
   useEffect(() => {
     if (data) setValidLifebanks(data.get_valid_lifebanks)
+    console.log("data", data)
   }, [data])
 
   return (

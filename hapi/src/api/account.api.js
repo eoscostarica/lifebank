@@ -19,7 +19,7 @@ const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
 const GET_LIFEBANKS_ACCOUNTS = `
 query MyQuery {
-  user(where: {account: {_ilike: "lif%"}}) {
+  user(where: {account: {_ilike: "12%"}}) {
     account
   }
 }
@@ -133,7 +133,7 @@ const getLifebankData = async account => {
 
 const getLifebanksAccounts = async () => {
   const { user } = await hasuraUtils.request(GET_LIFEBANKS_ACCOUNTS)
-
+  console.log("user:", user)
   return user
 }
 
@@ -157,7 +157,7 @@ const getValidLifebanks = async () => {
         JSON.parse(profile.telephones).length > 0
       )
         validLifebanks.push({
-          name: profile.sponsor_name,
+          name: profile.lifebank_name,
           openingHours: profile.schedule,
           address: profile.address,
           logo: profile.logo_url,
@@ -168,7 +168,7 @@ const getValidLifebanks = async () => {
         })
     }
   }
-
+  console.log("validLifebanks:", validLifebanks)
   return validLifebanks
 }
 

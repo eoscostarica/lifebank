@@ -44,7 +44,7 @@ export const PROFILE_QUERY = gql`
 
 export const GET_VALID_LIFEBANKS_QUERY = gql`
   query {
-    get_valid_sponsors {
+    get_valid_lifebanks {
       name
       address
       email
