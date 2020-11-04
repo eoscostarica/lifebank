@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
-import { useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useQuery } from '@apollo/react-hooks'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
@@ -25,7 +25,7 @@ const App = ({ ual }) => {
     sideBarPosition ? setSideBarPosition(false) : setSideBarPosition(true)
   }
 
-  const [loadValidSponsors, { data1 }] = useLazyQuery(GET_VALID_SPONSORS_QUERY, {
+  const [loadValidSponsors, { data }] = useLazyQuery(GET_VALID_SPONSORS_QUERY, {
     fetchPolicy: 'network-only'
   })
 
@@ -37,19 +37,21 @@ const App = ({ ual }) => {
     if (data) setValidSponsors(data.get_valid_sponsors)
   }, [data])
 
-  const [loadValidLifebanks, { data }] = useLazyQuery(GET_VALID_LIFEBANKS_QUERY, {
-    fetchPolicy: 'network-only'
-  })
+  const { refetch: getLifebankData } = useQuery(
+    GET_VALID_LIFEBANKS_QUERY,
+    { skip: true }
+  )
+
+  const getLifebanks = async () => {
+    const { data } = await getLifebankData()
+    if (data && validSponsors.length === 0) {
+      setValidLifebanks(data.get_valid_lifebanks)
+    }
+  }
 
   useEffect(() => {
-    if (validLifebanks.length === 0) loadValidLifebanks()
-    console.log("validLifebanks", validLifebanks)
-  }, [loadValidLifebanks])
-
-  useEffect(() => {
-    if (data) setValidLifebanks(data.get_valid_lifebanks)
-    console.log("lifebanksData", data)
-  }, [data])
+    getLifebanks()
+  }, [getLifebankData])
 
   return (
     <BrowserRouter>
@@ -81,7 +83,6 @@ const App = ({ ual }) => {
                     email={el.email}
                     location={el.location}
                     telephone={el.telephone}
-                    socialMediaLinks={el.social_media_links}
                   />
                 ))}
               </>

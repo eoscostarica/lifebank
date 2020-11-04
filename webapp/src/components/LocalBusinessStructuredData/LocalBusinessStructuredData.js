@@ -10,44 +10,44 @@ const LocalBusinessStructuredData = ({
   logo,
   email,
   location,
-  telephone,
-  socialMediaLinks
+  telephone
+  //socialMediaLinks
 }) => (
-  <JSONLD>
-    <Generic
-      type="localBusiness"
-      jsonldtype="LocalBusiness"
-      schema={{
-        name: name,
-        openingHours: getOpeningHours(openingHours),
-        addres: address,
-        logo: logo,
-        email: email,
-        location: location,
-        telephone: telephone
-      }}
-    >
+    <JSONLD>
       <Generic
-        type="geoCoordinates"
-        jsonldtype="GeoCoordinates"
+        type="localBusiness"
+        jsonldtype="LocalBusiness"
         schema={{
-          latitude: JSON.parse(location).latitude,
-          longitude: JSON.parse(location).longitude
+          name: name,
+          openingHours: getOpeningHours(openingHours),
+          addres: address,
+          logo: logo,
+          email: email,
+          location: location,
+          telephone: telephone
         }}
-      />
-      {JSON.parse(socialMediaLinks).map((el, key) => (
+      >
         <Generic
-          key={key}
-          type="sameAs"
-          jsonldtype="sameAs"
+          type="geoCoordinates"
+          jsonldtype="GeoCoordinates"
           schema={{
-            url: el
+            latitude: JSON.parse(location).latitude,
+            longitude: JSON.parse(location).longitude
           }}
         />
-      ))}
-    </Generic>
-  </JSONLD>
-)
+        {/* {JSON.parse(socialMediaLinks).map((el, key) => (
+          <Generic
+            key={key}
+            type="sameAs"
+            jsonldtype="sameAs"
+            schema={{
+              url: el
+            }}
+          />
+        ))} */}
+      </Generic>
+    </JSONLD>
+  )
 
 LocalBusinessStructuredData.propTypes = {
   name: PropTypes.string,
