@@ -11,8 +11,7 @@ import LocalBusinessStructuredData from './components/LocalBusinessStructuredDat
 import MedicalClinicStructuredData from './components/MedicalClinicStructuredData'
 import SplashIntro from './components/SplashIntro'
 import { useUser } from './context/user.context'
-import { GET_VALID_SPONSORS_QUERY } from './gql'
-import { GET_VALID_LIFEBANKS_QUERY } from './gql'
+import { GET_VALID_SPONSORS_QUERY, GET_VALID_LIFEBANKS_QUERY } from './gql'
 
 const App = ({ ual }) => {
   const [validSponsors, setValidSponsors] = useState([])
