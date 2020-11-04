@@ -17,25 +17,36 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     padding: theme.spacing(0, 2)
   },
+  textField: {
+    marginBottom: 10
+  },
   textFieldWrapper: {
-    height: 320,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
     alignItems: 'center'
   },
   btnWrapper: {
-    display: 'block',
-    marginBottom: theme.spacing(2),
-    width: '100%'
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10
   },
   btnSignup: {
-    display: 'block',
-    marginBottom: theme.spacing(2),
-    width: '40%',
-    margin: 'auto',
-    '@media only screen and (max-width: 900px)': {
-      width: '100%'
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
     }
   }
 }))
@@ -44,7 +55,6 @@ const DonorSignup = ({
   onSubmit,
   onSubmitWithAuth,
   setField,
-  user,
   loading,
   isEmailValid,
   children
@@ -54,14 +64,14 @@ const DonorSignup = ({
   const [password, setPassword] = useState()
   const [recaptchaValue, serRecaptchaValue] = useState('')
   const [confirmPassword, setConfirmPassword] = useState()
-  const [error, setError] = useState()
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (confirmPassword && confirmPassword !== password)
-        setError({ text: t('signup.passwordNotMatch') })
-      else setError(undefined)
-    }, 1500)
+        setError(true)
+      else setError(false)
+    }, 100)
     return () => clearTimeout(timer)
   }, [confirmPassword])
 
@@ -74,11 +84,7 @@ const DonorSignup = ({
           label={t('signup.password')}
           type="password"
           fullWidth
-          placeholder={t('signup.passwordPlaceholder')}
           variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
           className={classes.textField}
           onChange={(event) => {
             setField('secret', event.target.value)
@@ -91,12 +97,8 @@ const DonorSignup = ({
           type="password"
           fullWidth
           error={error}
-          helperText={error && error.text}
-          placeholder={t('signup.confirmPasswordPlaceholder')}
+          helperText={error && t('signup.passwordNotMatch')}
           variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
           className={classes.textField}
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
@@ -105,19 +107,19 @@ const DonorSignup = ({
           onChange={(value) => serRecaptchaValue(value)}
         />
       </Box>
-
       <Box className={classes.btnWrapper}>
         <Button
           disabled={
-            !user.secret ||
             !isEmailValid ||
+            !password ||
+            !confirmPassword ||
             !recaptchaValue ||
             loading ||
-            error !== undefined
+            error
           }
           className={classes.btnSignup}
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={onSubmit}
         >
           {t('signup.createAccount')}
@@ -134,7 +136,6 @@ DonorSignup.propTypes = {
   onSubmit: PropTypes.func,
   onSubmitWithAuth: PropTypes.func,
   setField: PropTypes.func,
-  user: PropTypes.object,
   loading: PropTypes.bool,
   isEmailValid: PropTypes.bool,
   children: PropTypes.node
