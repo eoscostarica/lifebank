@@ -327,7 +327,6 @@ const InfoPage = () => {
     }
 
     return scheduleFinal
-
   }
 
   useEffect(() => {

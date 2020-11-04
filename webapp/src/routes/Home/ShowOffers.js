@@ -220,31 +220,51 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
             />
           </ListItem>
         )}
-        {!loading && offers.length > 0 && offers.map(offer => (
-          <OfferItem
-            key={offer.id}
-            offer={offer}
+        {!loading &&
+          offers.length > 0 &&
+          offers.map((offer) => <OfferItem key={offer.id} offer={offer} />)}
+        {selectOffer && (
+          <OfferView
+            selectOffer={selectOffer}
+            isDesktop={false}
+            openOfferView={openOfferView}
+            handleCloseOfferView={handleCloseOfferView}
           />
-        ))}
-        {selectOffer &&
-          < OfferView selectOffer={selectOffer} isDesktop={false} openOfferView={openOfferView} handleCloseOfferView={handleCloseOfferView} />
-        }
+        )}
       </>
     )
   }
 
   const OfferItem = (props) => {
     return (
-      <ListItem className={classes.listItem} button onClick={() => handleOpenOfferView(props.offer)}>
+      <ListItem
+        className={classes.listItem}
+        button
+        onClick={() => handleOpenOfferView(props.offer)}
+      >
         <ListItemAvatar>
-          <Avatar src={props.offer.images} />
+          <Avatar src={JSON.parse(props.offer.images)[0] || ""} >
+            <LocalOfferIcon />
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Typography className={classes.listItemPrimaryText} noWrap variant="body2">{props.offer.offer_name}</Typography>
+            <Typography
+              className={classes.listItemPrimaryText}
+              noWrap
+              variant="body2"
+            >
+              {props.offer.offer_name}
+            </Typography>
           }
           secondary={
-            <Typography className={classes.listItemSecondaryText} noWrap variant="body2">{props.offer.description}</Typography>
+            <Typography
+              className={classes.listItemSecondaryText}
+              noWrap
+              variant="body2"
+            >
+              {props.offer.description}
+            </Typography>
           }
         />
         <ListItemSecondaryAction>
@@ -255,7 +275,7 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
   }
 
   OfferItem.propTypes = {
-    offer: PropTypes.object,
+    offer: PropTypes.object
   }
 
   const LoadOfferDesktop = () => {
@@ -285,15 +305,17 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
             </Grid>
           </Card>
         )}
-        {!loading && offers.length > 0 && offers.map(offer => (
-          <OfferCard
-            key={offer.id}
-            offer={offer}
+        {!loading &&
+          offers.length > 0 &&
+          offers.map((offer) => <OfferCard key={offer.id} offer={offer} />)}
+        {selectOffer && (
+          <OfferView
+            selectOffer={selectOffer}
+            isDesktop
+            openOfferView={openOfferView}
+            handleCloseOfferView={handleCloseOfferView}
           />
-        ))}
-        {selectOffer &&
-          < OfferView selectOffer={selectOffer} isDesktop openOfferView={openOfferView} handleCloseOfferView={handleCloseOfferView} />
-        }
+        )}
       </>
     )
   }
@@ -310,7 +332,9 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
-          <Avatar className={classes.cardAvatar} src={props.offer.images} />
+          <Avatar className={classes.cardAvatar} src={JSON.parse(props.offer.images)[0] || ""} >
+            <LocalOfferIcon />
+          </Avatar>
           <Box className={classes.cardTitleContainer}>
             <Typography className={classes.cardTitle} noWrap>
               {props.offer.offer_name}
@@ -319,18 +343,23 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           <LocalOfferIcon className={classes.cardIconOffer} />
         </Box>
         <CardContent className={classes.cardContent}>
-          <Typography paragraph className={classes.cardContentText} >{truncateString(props.offer.description)}
+          <Typography paragraph className={classes.cardContentText}>
+            {truncateString(props.offer.description)}
           </Typography>
         </CardContent>
-        <Button color="primary" className={classes.cardActionButton} onClick={() => handleOpenOfferView(props.offer)}>
-          more info
+        <Button
+          color="primary"
+          className={classes.cardActionButton}
+          onClick={() => handleOpenOfferView(props.offer)}
+        >
+          {t('cardsSection.moreInfo')}
         </Button>
       </Card>
     )
   }
 
   OfferCard.propTypes = {
-    offer: PropTypes.object,
+    offer: PropTypes.object
   }
 
   return (

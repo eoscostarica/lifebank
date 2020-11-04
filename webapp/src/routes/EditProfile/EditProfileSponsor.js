@@ -110,7 +110,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     website: profile.website,
     benefit_description: profile.benefit_description,
     telephones:
-      profile.telephones && profile.telephones !== ''
+      profile.telephones && profile.telephones !== '[]'
         ? JSON.parse(profile.telephones)
         : [],
     business_type: profile.business_type,
@@ -288,7 +288,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="telephone"
-          style={{ display: isCompleting && profile.telephones ? 'none' : '' }}
           label={t('signup.phoneNumber')}
           variant="outlined"
           placeholder={t('signup.phoneNumberPlaceholder')}

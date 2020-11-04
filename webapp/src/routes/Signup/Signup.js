@@ -357,7 +357,7 @@ const Signup = () => {
                 {t('signup.createAnewAccount')}
               </Typography>
               <Typography variant="body1" className={classes.text}>
-                {t('signup.AllYouNeed')}
+                {t('signup.allYouNeed')}
               </Typography>
             </>
           )}

@@ -189,7 +189,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         {!loading &&
           banks.length > 0 &&
           banks.map((bank) => (
-            <BankItem key={bank.id} id={bank.id} bank={bank} />
+            <BankItem key={bank.id} bank={bank} />
           ))}
       </>
     )
@@ -205,7 +205,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     >
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar src={props.bank.info.logo_url || ""}>
             <LocalHospitalIcon />
           </Avatar>
         </ListItemAvatar>
@@ -225,7 +225,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
               noWrap
               variant="body2"
             >
-              {props.bank.about}
+              {props.bank.info.about}
             </Typography>
           }
         />
@@ -235,9 +235,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
 
   BankItem.propTypes = {
     bank: PropTypes.object,
-    username: PropTypes.object,
-    name: PropTypes.string,
-    about: PropTypes.string,
   }
 
   const LoadBanksDesktop = () => {
@@ -270,7 +267,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         {!loading &&
           banks.length > 0 &&
           banks.map((bank) => (
-            <BankCard key={bank.id} id={bank.id} bank={bank} />
+            <BankCard key={bank.id} bank={bank} />
           ))}
       </>
     )
@@ -287,7 +284,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   const BankCard = (props) => (
     <Card className={classes.cardRoot}>
       <Box className={classes.cardHeader}>
-        <Avatar className={classes.cardAvatar}>
+        <Avatar className={classes.cardAvatar} src={props.bank.info.logo_url || ""}>
           <LocalHospitalIcon />
         </Avatar>
         <Box className={classes.cardTitleContainer}>
@@ -317,8 +314,6 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
 
   BankCard.propTypes = {
     bank: PropTypes.object,
-    name: PropTypes.string,
-    about: PropTypes.string,
   }
 
   return (

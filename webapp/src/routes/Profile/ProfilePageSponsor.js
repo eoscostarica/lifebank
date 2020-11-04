@@ -338,9 +338,8 @@ const ProfilePageSponsor = ({ profile }) => {
           className={classes.rowBox}
         >
           <Typography variant="subtitle1">{t('profile.consent')}</Typography>
-          <Typography variant="body1">{`${
-            profile.consent ? t('profile.granted') : t('profile.revoked')
-          }`}</Typography>
+          <Typography variant="body1">{`${profile.consent ? t('profile.granted') : t('profile.revoked')
+            }`}</Typography>
         </Box>
 
         {profile.photos &&
@@ -439,11 +438,11 @@ const ProfilePageSponsor = ({ profile }) => {
           <Typography variant="body1" />
         </Box>
         <TextField
-          style={{ display: !profile.address ? 'none' : '' }}
+          style={{ display: !profile.about ? 'none' : '' }}
           id="address"
           variant="outlined"
           disabled
-          defaultValue={profile.address}
+          defaultValue={profile.about}
           InputLabelProps={{
             shrink: true
           }}

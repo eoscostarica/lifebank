@@ -167,6 +167,9 @@
       "hasImmunityTest": "Has Immunity Test",
       "benefitDescription": "Benefit Description",
       "location": "Location",
+      "logo": "Logo",
+      "urlSite": "URL site",
+      "images": "Images",
       "yourProfileIsNotComplete": "Your profile is not complete"
     },
     "errors": {

@@ -25,6 +25,14 @@ query MyQuery {
 }
 `
 
+const GET_SPONSORS_ACCOUNTS = `
+query MyQuery {
+  user(where: {account: {_ilike: "spo%"}}) {
+    account
+  }
+}
+`
+
 const create = async ({ role, email, name, secret }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
@@ -49,7 +57,7 @@ const create = async ({ role, email, name, secret }) => {
 
   await historyApi.insert(transaction)
 
-  //mailApi.sendVerificationCode(email, verification_code)
+  mailApi.sendVerificationCode(email, verification_code)
 
   return {
     account,
@@ -123,7 +131,6 @@ const getLifebankData = async account => {
     LIFEBANKCODE_CONTRACT,
     account
   )
-
   return {
     ...profile,
     name,
@@ -131,10 +138,51 @@ const getLifebankData = async account => {
   }
 }
 
+const getSponsorsAccounts = async () => {
+  const { user } = await hasuraUtils.request(GET_SPONSORS_ACCOUNTS)
+
+  return user
+}
+
 const getLifebanksAccounts = async () => {
   const { user } = await hasuraUtils.request(GET_LIFEBANKS_ACCOUNTS)
-  console.log("user:", user)
+
   return user
+}
+
+const getValidSponsors = async () => {
+  const sponsorsAccounts = await getSponsorsAccounts()
+  const validSponsors = []
+  for (let index = 0; index < sponsorsAccounts.length; index++) {
+    const { tx } =
+      (await lifebankcodeUtils.getSponsor(sponsorsAccounts[index].account)) ||
+      {}
+    if (tx) {
+      const { ...profile } = await getTransactionData(tx)
+      if (
+        profile.sponsor_name.length > 0 &&
+        profile.schedule.length > 0 &&
+        profile.address.length > 0 &&
+        profile.logo_url.length > 0 &&
+        profile.email.length > 0 &&
+        profile.location !== 'null' &&
+        profile.social_media_links.length > 0 &&
+        JSON.parse(profile.telephones).length > 0
+      )
+        validSponsors.push({
+          name: profile.sponsor_name,
+          openingHours: profile.schedule,
+          address: profile.address,
+          logo: profile.logo_url,
+          email: profile.email,
+          location: profile.location,
+          telephone: JSON.parse(profile.telephones)[0],
+          social_media_links: profile.social_media_links
+        })
+    }
+  }
+
+  return validSponsors
 }
 
 const getValidLifebanks = async () => {
@@ -205,7 +253,6 @@ const getTransactionData = async tx => {
     (await historyApi.getOne({
       transaction_id: { _eq: tx || '' }
     })) || {}
-
   return actionTraces.reduce(
     (result, item) => ({ ...result, ...item.act.data }),
     {}
@@ -327,5 +374,6 @@ module.exports = {
   revokeConsent,
   transfer,
   verifyEmail,
+  getValidSponsors,
   getValidLifebanks
 }
