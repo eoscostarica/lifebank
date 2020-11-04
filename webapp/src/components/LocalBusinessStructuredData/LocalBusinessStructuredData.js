@@ -11,8 +11,7 @@ const LocalBusinessStructuredData = ({
   email,
   location,
   telephone
-  //socialMediaLinks
-
+  //socialMediaLinks  
 }) => (
     <JSONLD>
       <Generic
@@ -58,8 +57,7 @@ LocalBusinessStructuredData.propTypes = {
   email: PropTypes.string,
   location: PropTypes.string,
   telephone: PropTypes.string
-  //socialMediaLinks: PropTypes.string
-
+  //socialMediaLinks: PropTypes.string  
 }
 
 export default LocalBusinessStructuredData
