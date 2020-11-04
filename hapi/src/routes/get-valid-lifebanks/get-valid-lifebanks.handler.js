@@ -6,7 +6,7 @@ const { accountApi } = require('../../api')
 module.exports = async () => {
   try {
     const validLifebanks = await accountApi.getValidLifebanks()
-    console.log("handler:", validLifebanks)
+
     return validLifebanks
   } catch (error) {
     console.error(error)

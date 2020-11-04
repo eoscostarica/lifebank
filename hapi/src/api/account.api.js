@@ -19,7 +19,7 @@ const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 
 const GET_LIFEBANKS_ACCOUNTS = `
 query MyQuery {
-  user(where: {account: {_ilike: "12%"}}) {
+  user(where: {account: {_ilike: "lif%"}}) {
     account
   }
 }
@@ -216,7 +216,7 @@ const getValidLifebanks = async () => {
         })
     }
   }
-  console.log("validLifebanks:", validLifebanks)
+
   return validLifebanks
 }
 
