@@ -7,5 +7,6 @@ module.exports = {
   lifebankCodeContractName: process.env.LIFEBANKCODE_CONTRACTNAME,
   lifebankCoinContractName: process.env.LIFEBANKCOIN_CONTRACTNAME,
   consent2LifeContractName: process.env.CONSENT2LIFE_CONTRACTNAME,
+  mailApproveLifebank: process.env.MAIL_APPROVE_LIFEBANK,
   communityAsset: process.env.COMMUNITY_ASSET
 }
