@@ -16,6 +16,7 @@ import { useTheme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import Backdrop from '@material-ui/core/Backdrop'
+import Snackbar from '@material-ui/core/Snackbar';
 
 import {
   CREATE_ACCOUNT_MUTATION,
@@ -191,6 +192,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
   const [open, setOpen] = useState(false)
+  const [openAlert, setOpenAlert] = useState(false)
   const [maxWidth] = useState('sm')
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -201,6 +203,10 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   const handleOpen = () => {
     setOpen(!open)
+  }
+
+  const handleOpenAlert = () => {
+    setOpenAlert(!openAlert)
   }
 
   const [
@@ -351,8 +357,9 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   useEffect(() => {
     if (preRegisterLifebankResult) {
-      alert(t('signup.sucessfulPreregistration'))
-      history.replace('/')
+      handleOpen()
+      handleOpenAlert()
+
     }
   }, [preRegisterLifebankResult])
 
@@ -554,6 +561,11 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
           </Box>
         </Box>
       </Dialog>
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
+        <Alert onClose={handleOpenAlert} severity="success">
+          {t('signup.sucessfulPreregistration')}
+        </Alert>
+      </Snackbar>
     </>
   )
 }
