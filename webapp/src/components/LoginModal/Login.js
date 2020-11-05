@@ -26,7 +26,7 @@ import {
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
-import Signup from '../../routes/Signup/Signup'
+import Signup from '../Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
   alert: {

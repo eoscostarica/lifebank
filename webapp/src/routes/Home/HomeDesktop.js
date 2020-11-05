@@ -20,7 +20,7 @@ import ShowSponsors from './ShowSponsors'
 import mobileBgImage from '../../assets/the-world.png'
 import bgImage from '../../assets/lifebank-hero-bg.png'
 import FilterHome from '../../components/FilterHome'
-import Signup from '../Signup/Signup'
+import Signup from '../../components/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
   homeHeader: {
