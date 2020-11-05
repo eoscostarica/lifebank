@@ -82,6 +82,7 @@ const App = ({ ual }) => {
                     email={el.email}
                     location={el.location}
                     telephone={el.telephone}
+                    socialMediaLinks={JSON.parse(el.social_media_links)}
                   />
                 ))}
               </>

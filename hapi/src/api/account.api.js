@@ -57,7 +57,7 @@ const create = async ({ role, email, name, secret }) => {
 
   await historyApi.insert(transaction)
 
-  mailApi.sendVerificationCode(email, verification_code)
+  //mailApi.sendVerificationCode(email, verification_code)
 
   return {
     account,
