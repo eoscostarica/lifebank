@@ -3,9 +3,6 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import AddBoxIcon from '@material-ui/icons/AddBox'
-import FavoriteIcon from '@material-ui/icons/Favorite'
 import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({

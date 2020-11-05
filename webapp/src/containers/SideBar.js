@@ -10,7 +10,6 @@ import InfoIcon from '@material-ui/icons/Info'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
-import ContactMailIcon from '@material-ui/icons/ContactMail'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import { useTranslation } from 'react-i18next'
 
