@@ -59,6 +59,11 @@ type Query {
 }
 
 
+type Query {
+  get_valid_lifebanks : [ValidLifebank]!
+}
+
+
 type Mutation {
   grant_consent : grant_consent_output
 }
@@ -178,3 +183,13 @@ type ValidSponsor {
   social_media_links : String!
 }
 
+type ValidLifebank {
+  name : String!
+  openingHours : String!
+  address : String!
+  logo : String!
+  description: String!
+  email : String!
+  location : String!
+  telephone : String!
+}

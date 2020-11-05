@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getOpeningHours } from '../../utils/getOpeningHours'
 import { JSONLD, Generic } from 'react-structured-data'
@@ -12,42 +12,73 @@ const LocalBusinessStructuredData = ({
   location,
   telephone,
   socialMediaLinks
-}) => (
-  <JSONLD>
-    <Generic
-      type="localBusiness"
-      jsonldtype="LocalBusiness"
-      schema={{
-        name: name,
-        openingHours: getOpeningHours(openingHours),
-        addres: address,
-        logo: logo,
-        email: email,
-        location: location,
-        telephone: telephone
-      }}
-    >
+}) => {
+  const [facebook, setFacebook] = useState()
+  const [instagram, setInstagram] = useState()
+  const [twitter, setTwitter] = useState()
+
+  useEffect(() => {
+    if (socialMediaLinks.length > 0) {
+      setFacebook(socialMediaLinks.find((el) => el.url === 'facebook'))
+      setInstagram(socialMediaLinks.find((el) => el.url === 'instagram'))
+      setTwitter(socialMediaLinks.find((el) => el.url === 'twitter'))
+    }
+  }, [socialMediaLinks])
+
+  return (
+    <JSONLD>
       <Generic
-        type="geoCoordinates"
-        jsonldtype="GeoCoordinates"
+        type="localBusiness"
+        jsonldtype="LocalBusiness"
         schema={{
-          latitude: JSON.parse(location).latitude,
-          longitude: JSON.parse(location).longitude
+          name: name,
+          openingHours: getOpeningHours(openingHours),
+          addres: address,
+          logo: logo,
+          email: email,
+          location: location,
+          telephone: telephone
         }}
-      />
-      {JSON.parse(socialMediaLinks).map((el, key) => (
+      >
         <Generic
-          key={key}
-          type="sameAs"
-          jsonldtype="sameAs"
+          type="geoCoordinates"
+          jsonldtype="GeoCoordinates"
           schema={{
-            url: el
+            latitude: JSON.parse(location).latitude,
+            longitude: JSON.parse(location).longitude
           }}
         />
-      ))}
-    </Generic>
-  </JSONLD>
-)
+        {facebook && (
+          <Generic
+            type="sameAs"
+            jsonldtype="sameAs"
+            schema={{
+              url: facebook.url
+            }}
+          />
+        )}
+        {instagram && (
+          <Generic
+            type="sameAs"
+            jsonldtype="sameAs"
+            schema={{
+              url: instagram.url
+            }}
+          />
+        )}
+        {twitter && (
+          <Generic
+            type="sameAs"
+            jsonldtype="sameAs"
+            schema={{
+              url: twitter.url
+            }}
+          />
+        )}
+      </Generic>
+    </JSONLD>
+  )
+}
 
 LocalBusinessStructuredData.propTypes = {
   name: PropTypes.string,
@@ -57,7 +88,7 @@ LocalBusinessStructuredData.propTypes = {
   email: PropTypes.string,
   location: PropTypes.string,
   telephone: PropTypes.string,
-  socialMediaLinks: PropTypes.string
+  socialMediaLinks: PropTypes.array
 }
 
 export default LocalBusinessStructuredData
