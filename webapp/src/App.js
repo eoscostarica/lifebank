@@ -49,7 +49,13 @@ const App = ({ ual }) => {
       ) : (
         <MainContainer
           topbarContent={<TopBar user={currentUser} onLogout={logout} />}
-          sidebarContent={<SideBar user={currentUser} onLogout={logout} triggerSideBarPosition={triggerSideBarPosition} />}
+          sidebarContent={
+            <SideBar
+              user={currentUser}
+              onLogout={logout}
+              triggerSideBarPosition={triggerSideBarPosition}
+            />
+          }
           sideBarPosition={sideBarPosition}
         >
           {validSponsors.length > 0 && (
@@ -64,7 +70,7 @@ const App = ({ ual }) => {
                   email={el.email}
                   location={el.location}
                   telephone={el.telephone}
-                  socialMediaLinks={el.social_media_links}
+                  socialMediaLinks={JSON.parse(el.social_media_links)}
                 />
               ))}
             </>

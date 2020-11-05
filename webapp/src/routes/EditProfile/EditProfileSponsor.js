@@ -499,7 +499,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             placeholder={t('editProfile.instagramUsernamePlaceholder')}
             icon={InstagramIcon}
             onChangeSocialMediaTextField={(url) =>
-              handleOnSocialMediaTextFieldChange('instragram', url)
+              handleOnSocialMediaTextFieldChange('instagram', url)
             }
           />
           <SocialMediaTextField
