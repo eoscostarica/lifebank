@@ -76,7 +76,8 @@
       "invalidAccountOrPassword": "Cuenta o contraseña incorrecta",
       "loginWithFacebook": "Iniciar sesión con Facebook",
       "loginWithGoogle": "Iniciar sesión con Google",
-      "logout": "Cerrar sesión"
+      "logout": "Cerrar sesión",
+      "notAccount": "¿No tienes cuenta aún? Registrarse aquí."
     },
     "map": {
       "findLifebank": "Encontrar Bancos de Sangre o Comercios Afiliados cerca de ti",

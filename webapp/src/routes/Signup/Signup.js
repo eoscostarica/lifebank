@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useReducer, useCallback } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import Grid from '@material-ui/core/Grid'
+import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import IconButton from '@material-ui/core/IconButton'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
+import { Link } from 'react-router-dom'
+import ContactMailIcon from '@material-ui/icons/ContactMail'
 import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -15,7 +17,6 @@ import { useTheme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import Backdrop from '@material-ui/core/Backdrop'
-
 
 import {
   CREATE_ACCOUNT_MUTATION,
@@ -137,10 +138,49 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     width: '100%'
-  }
+  },
+  registerBtn: {
+    width: 180,
+    height: 49,
+    color: "#ffffff",
+    backgroundColor: 'transparent',
+    margin: theme.spacing(2, 0, 4, 0),
+    borderRadius: ' 2px',
+    border: 'solid 2px #ffffff'
+  },
+  registerBoxModal: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  registerTextModal: {
+    fontSize: '12px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.33,
+    letterSpacing: '0.4px',
+    color: '#000000',
+  },
+  labelOption: {
+    color: `${theme.palette.primary.main} !important`,
+    marginLeft: theme.spacing(3),
+    fontSize: 14,
+    textTransform: 'capitalize'
+  },
+  iconOption: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    fontSize: 20
+  },
+  registerBtnSideBar: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: theme.spacing(2),
+  },
 }))
 
-const Signup = () => {
+const Signup = ({ isHome, isModal, isSideBar }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const history = useHistory()
@@ -374,9 +414,34 @@ const Signup = () => {
 
   return (
     <>
-      <Button className={classes.btnLoginModal} onClick={handleOpen}>
-        {t('login.login')}
-      </Button>
+      {isHome &&
+        <Button color="secondary" className={classes.registerBtn} onClick={handleOpen}>
+          {t('signup.register')}
+        </Button>
+      }
+      {isModal &&
+        <Box className={classes.registerBoxModal}>
+          <Button color="secondary" className={classes.registerTextModal} onClick={handleOpen}>
+            {t('login.notAccount')}
+          </Button>
+        </Box>
+      }
+      {isSideBar &&
+        <Box
+          className={classes.registerBtnSideBar}
+          onClick={handleOpen}
+        >
+          <ContactMailIcon className={classes.iconOption} />
+          <Link to="/">
+            <Typography
+              variant="body1"
+              className={classes.labelOption}
+            >
+              {t('signup.register')}
+            </Typography>
+          </Link>
+        </Box>
+      }
       <Dialog
         fullScreen={fullScreen}
         maxWidth={maxWidth}
@@ -426,7 +491,6 @@ const Signup = () => {
                     onSubmitWithAuth={handleCreateAccountWithAuth}
                     loading={createAccountLoading}
                     setField={handleSetField}
-                    user={user}
                     isEmailValid={isEmailValid}
                   >
                     <ErrorMessage />
@@ -434,6 +498,7 @@ const Signup = () => {
                       isValid={isEmailValid}
                       loading={checkEmailLoading}
                       setField={handleSetField}
+                      user={user}
                     />
                   </SignupDonor>
                 </>
@@ -494,8 +559,16 @@ const Signup = () => {
   )
 }
 
-Signup.propTypes = {}
+Signup.propTypes = {
+  isHome: PropTypes.bool,
+  isModal: PropTypes.bool,
+  isSideBar: PropTypes.bool,
+}
 
-Signup.defaultProps = {}
+Signup.defaultProps = {
+  isHome: false,
+  isModal: false,
+  isSideBar: false
+}
 
 export default Signup

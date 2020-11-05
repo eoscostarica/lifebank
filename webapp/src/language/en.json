@@ -76,7 +76,8 @@
       "invalidAccountOrPassword": "Invalid account or password",
       "loginWithFacebook": "Login with Facebook",
       "loginWithGoogle": "Login with Google",
-      "logout": "Logout"
+      "logout": "Logout",
+      "notAccount": "No account yet? Register here."
     },
     "map": {
       "findLifebank": "Find Lifebanks or Sponsors near you",

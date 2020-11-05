@@ -20,6 +20,7 @@ import ShowSponsors from './ShowSponsors'
 import mobileBgImage from '../../assets/the-world.png'
 import bgImage from '../../assets/lifebank-hero-bg.png'
 import FilterHome from '../../components/FilterHome'
+import Signup from '../Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
   homeHeader: {
@@ -181,15 +182,9 @@ const HomeDesktop = (props) => {
         <Box className={classes.boxRight}>
           <Typography variant="body1">{t('hero.subtitle1')}</Typography>
           <Typography variant="body1">{t('hero.subtitle2')}</Typography>
-          <Button
-            className={classes.registerBtn}
-            variant="contained"
-            color="primary"
-            component={CustomRouterLink}
-            to={`/${currentUser ? 'donations' : 'signup'}`}
-          >
-            {currentUser ? t('donations.donations') : t('hero.register')}
-          </Button>
+          {!currentUser &&
+            <Signup isHome />
+          }
         </Box>
       </Box>
       <Grid

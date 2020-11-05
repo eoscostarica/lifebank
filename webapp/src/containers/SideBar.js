@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 import LoginModal from '../components/LoginModal'
 import CredentialsRecovery from '../components/CredentialsRecovery'
 import TokenTransfer from '../components/TokenTransfer'
+import Signup from '../routes/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -126,13 +127,8 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
             overrideBoxClass={classes.optionLink}
             overrideLabelClass={classes.labelOption}
           />
-          <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
-            <ContactMailIcon className={classes.iconOption} />
-            <Link to="/signup">
-              <Typography variant="body1" className={classes.labelOption}>
-                {t('hero.register')}
-              </Typography>
-            </Link>
+          <Box className={classes.optionLink}>
+            <Signup isSideBar />
           </Box>
         </>
       )}
