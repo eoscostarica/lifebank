@@ -36,7 +36,7 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
       variant="outlined"
       type="email"
       fullWidth
-      value={user?.email}
+      value={user?.email || ""}
       onChange={(event) => setField('email', event.target.value)}
       InputProps={{
         endAdornment: (
