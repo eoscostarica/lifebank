@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/styles'
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
@@ -9,25 +10,65 @@ import { useTranslation } from 'react-i18next'
 
 import { captchaConfig } from '../../../config'
 
+const useStyles = makeStyles((theme) => ({
+  form: {
+    width: '100%',
+    padding: theme.spacing(0, 2)
+  },
+  textFieldWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  textField: {
+    marginBottom: 10
+  },
+  btnWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10
+  },
+  btnSignup: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
+  }
+}))
+
 const SimpleRegisterForm = ({
   onSubmit,
   setField,
   loading,
-  classes,
-  children
+  children,
+  isEmailValid,
 }) => {
   const { t } = useTranslation('translations')
+  const classes = useStyles()
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
   const [recaptchaValue, setRecaptchaValue] = useState('')
-  const [error, setError] = useState()
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (confirmPassword && confirmPassword !== password)
-        setError({ text: t('signup.passwordNotMatch') })
-      else setError(undefined)
-    }, 1500)
+        setError(true)
+      else setError(false)
+    }, 100)
     return () => clearTimeout(timer)
   }, [confirmPassword])
 
@@ -37,14 +78,10 @@ const SimpleRegisterForm = ({
         {children}
         <TextField
           id="secret"
-          label={t('signup.Password')}
+          label={t('signup.password')}
           type="password"
           fullWidth
-          placeholder={t('signup.passwordPlaceholder')}
           variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
           className={classes.textField}
           onChange={(event) => {
             setField('secret', event.target.value)
@@ -57,16 +94,11 @@ const SimpleRegisterForm = ({
           type="password"
           fullWidth
           error={error}
-          helperText={error && error.text}
-          placeholder={t('signup.confirmPasswordPlaceholder')}
+          helperText={error && t('signup.passwordNotMatch')}
           variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
           className={classes.textField}
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
-        <br />
         <ReCAPTCHA
           sitekey={captchaConfig.sitekey}
           onChange={(value) => setRecaptchaValue(value)}
@@ -74,7 +106,15 @@ const SimpleRegisterForm = ({
       </Box>
       <Box className={classes.btnWrapper}>
         <Button
-          disabled={!recaptchaValue || error !== undefined || loading}
+          className={classes.btnSignup}
+          disabled={
+            !isEmailValid ||
+            !password ||
+            !confirmPassword ||
+            !recaptchaValue ||
+            loading ||
+            error
+          }
           variant="contained"
           color="primary"
           onClick={onSubmit}
@@ -91,7 +131,7 @@ SimpleRegisterForm.propTypes = {
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
   loading: PropTypes.bool,
-  classes: PropTypes.object,
+  isEmailValid: PropTypes.bool,
   children: PropTypes.node
 }
 

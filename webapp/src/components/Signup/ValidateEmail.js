@@ -9,7 +9,10 @@ import { useTranslation } from 'react-i18next'
 const useStyles = makeStyles((theme) => ({
   success: {
     color: theme.palette.success.main
-  }
+  },
+  textField: {
+    marginBottom: 10
+  },
 }))
 
 const ValidateEmail = ({ isValid, loading, user, setField }) => {
@@ -27,16 +30,13 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
 
   return (
     <TextField
+      className={classes.textField}
       id="email"
       label={t('common.email')}
       variant="outlined"
-      placeholder={t('common.emailPlaceholder')}
       type="email"
       fullWidth
-      InputLabelProps={{
-        shrink: true
-      }}
-      value={user?.email || ''}
+      value={user?.email || ""}
       onChange={(event) => setField('email', event.target.value)}
       InputProps={{
         endAdornment: (
@@ -49,8 +49,8 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
         validateFormatEmail(user.email) && !isValid && loading
           ? t('miscellaneous.alreadyAssociated')
           : !isValid
-          ? ''
-          : ''
+            ? ''
+            : ''
       }
       error={!isValid && loading && validateFormatEmail(user.email)}
     />

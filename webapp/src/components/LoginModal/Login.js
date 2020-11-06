@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
 import Box from '@material-ui/core/Box'
-import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -14,12 +13,10 @@ import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Backdrop from '@material-ui/core/Backdrop'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 
 import {
   LOGIN_MUTATION,
@@ -29,22 +26,7 @@ import {
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
-import { Grid } from '@material-ui/core'
-
-const rows = [
-  {
-    email: 'lifebank@lifebank.io',
-    secrect: 'plasma2020'
-  },
-  {
-    email: 'donor@lifebank.io',
-    secrect: 'plasma2020'
-  },
-  {
-    email: 'sponsor@lifebank.io',
-    secrect: 'plasma2020'
-  }
-]
+import Signup from '../Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -54,32 +36,86 @@ const useStyles = makeStyles((theme) => ({
   closeIcon: {
     position: 'absolute',
     zIndex: 1,
-    top: 5,
-    right: 1,
+    top: 14,
+    right: 14,
     margin: '0',
     height: '5vh',
     '& svg': {
       fontSize: 25,
-      color: theme.palette.secondary.main
+      color: "rgba(0, 0, 0, 0.6)"
     }
   },
-  grid: {
-    marginTop: 20,
-    marginBottom: 20
-  },
-  btnWrapper: {
-    display: 'flex',
-    marginBottom: theme.spacing(1),
-    width: '100%'
+  dialog: {
+    paddingTop: "48px",
+    paddingLeft: "48px",
+    paddingRight: "48px",
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: "21px",
+      paddingRight: "21px",
+    }
   },
   title: {
-    marginBottom: 30
-  },
-  demo: {
-    marginTop: 20,
+    fontFamily: "Roboto",
+    fontSize: "34px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.18",
+    letterSpacing: "0.25px",
+    textAlign: "left",
+    color: "rgba(0, 0, 0, 0.87)",
     marginBottom: 15
   },
+  subTitle: {
+    fontFamily: "Roboto",
+    fontSize: "14px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.43",
+    letterSpacing: "0.25px",
+    textAlign: "left",
+    color: "rgba(0, 0, 0, 0.6)",
+    marginBottom: 30
+  },
+  inputStyle: {
+    color: "rgba(0, 0, 0, 0.6)",
+    width: '100%',
+    marginBottom: 15
+  },
+  formCheckBox: {
+    marginBottom: 20
+  },
+  centerBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   btnLogin: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
+  },
+  registerBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+    marginBottom: 10
+  },
+  btnLoginModal: {
     borderRadius: '4px',
     boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24)',
     backgroundColor: '#ffffff',
@@ -91,10 +127,6 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1px',
     color: '#121212',
     padding: '10px'
-  },
-  inputStyle: {
-    width: '100%',
-    marginBottom: 15
   }
 }))
 
@@ -208,12 +240,11 @@ const LoginModal = () => {
 
   return (
     <>
-      <Button className={classes.btnLogin} onClick={handleOpen}>
+      <Button className={classes.btnLoginModal} onClick={handleOpen}>
         {t('login.login')}
       </Button>
       <Dialog
         maxWidth={maxWidth}
-        className={classes.dialog}
         open={open}
         onClose={handleOpen}
         aria-labelledby="transition-modal-title"
@@ -224,114 +255,106 @@ const LoginModal = () => {
           timeout: 500
         }}
       >
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="flex-start"
-          spacing={0}
-          className={classes.grid}
-        >
-          <Grid item xs={10}>
-            <Box className={classes.closeIcon}>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={handleOpen}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            </Box>
-            <Typography variant="h3" className={classes.title}>
-              Sign In
+        <Box className={classes.dialog}>
+          <Box className={classes.closeIcon}>
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleOpen}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
+          <Box>
+            <Typography className={classes.title}>
+              {t('login.letsStarted')}
             </Typography>
-            {errorMessage && (
-              <Alert
-                className={classes.alert}
-                severity="error"
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => setErrorMessage(null)}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-              >
-                {errorMessage}
-              </Alert>
-            )}
-            <form autoComplete="off">
-              <Box>
-                <TextField
-                  id="account"
-                  label={t('common.email')}
-                  variant="outlined"
-                  className={classes.inputStyle}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={(event) =>
-                    handleSetField('account', event.target.value)
-                  }
-                />
-                <TextField
-                  id="secret"
-                  label={t('signup.password')}
-                  type="password"
-                  variant="outlined"
-                  className={classes.inputStyle}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={(event) =>
-                    handleSetField('secret', event.target.value)
-                  }
-                />
-              </Box>
-              <Box>
-                <Button
-                  className={classes.btnWrapper}
-                  disabled={!user.account || !user.secret || loading}
-                  variant="contained"
-                  color="primary"
-                  onClick={handleLogin}
+            <Typography className={classes.subTitle}>
+              {t('login.subtitle')}
+            </Typography>
+          </Box>
+          {errorMessage && (
+            <Alert
+              className={classes.alert}
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => setErrorMessage(null)}
                 >
-                  {t('login.login')}
-                </Button>
-                {loading && <CircularProgress />}
-                <LoginWithFacebook onSubmit={handleLoginWithAuth} />
-                <LoginWithGoogle onSubmit={handleLoginWithAuth} />
-              </Box>
-            </form>
-            <Typography variant="h3" className={classes.demo}>
-              {t('login.demoCredentials')}
-            </Typography>
-            <TableContainer component={Paper}>
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>{t('common.email')}</TableCell>
-                    <TableCell>{t('signup.password')}</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row, i) => (
-                    <TableRow key={`row-${i}`}>
-                      <TableCell component="th" scope="row">
-                        {row.email}
-                      </TableCell>
-                      <TableCell>{row.secrect}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Grid>
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              {errorMessage}
+            </Alert>
+          )}
+          <form autoComplete="off">
+            <Box>
+              <TextField
+                id="account"
+                label={t('common.email')}
+                variant="outlined"
+                className={classes.inputStyle}
+                onChange={(event) =>
+                  handleSetField('account', event.target.value)
+                }
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <AccountCircle />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                id="secret"
+                label={t('signup.password')}
+                type="password"
+                variant="outlined"
+                className={classes.inputStyle}
+                onChange={(event) =>
+                  handleSetField('secret', event.target.value)
+                }
+              />
+            </Box>
+            <FormControlLabel
+              className={classes.formCheckBox}
+              control={
+                <Checkbox
+                  name="checkLogin"
+                />
+              }
+              label={t('login.loggedIn')}
+            />
+            <Box className={classes.centerBox}>
+              <Button
+                className={classes.btnLogin}
+                disabled={!user.account || !user.secret || loading}
+                variant="contained"
+                color="secondary"
+                onClick={handleLogin}
+              >
+                {t('login.login')}
+              </Button>
+            </Box>
+            <Box className={classes.centerBox}>
+              {loading && <CircularProgress />}
+            </Box>
+            <Box className={classes.centerBox}>
+              <LoginWithFacebook onSubmit={handleLoginWithAuth} />
+            </Box>
+            <Box className={classes.centerBox}>
+              <LoginWithGoogle onSubmit={handleLoginWithAuth} />
+            </Box>
+          </form>
+          <Box className={classes.registerBox}>
+            <Signup isModal />
+          </Box>
+        </Box>
       </Dialog>
     </>
   )
