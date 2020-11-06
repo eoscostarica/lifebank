@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
@@ -103,6 +103,10 @@ const SeachComponent = (props) => {
     props.handleChangeSearch(transcript)
     setRecording(false)
   }
+
+  useEffect(() => {
+    props.handleChangeSearch(transcript)
+  }, [transcript]);
 
   return (
     <>
