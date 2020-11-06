@@ -10843,6 +10843,11 @@ react-sortable-tree@^2.7.1:
     react-lifecycles-compat "^3.0.4"
     react-virtualized "^9.21.2"
 
+react-speech-recognition@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/react-speech-recognition/-/react-speech-recognition-3.2.3.tgz#974fa44c3460e5c5199aaaf601b0f3c1c34f76ec"
+  integrity sha512-xt6vVrJXZvXIp6W7dCAJTAVwNO1L0rN6BHvM3J5NkILYuhY403AkQsRb0NWSjkR6ZpaRhv7otFjD1r7x7h4HQA==
+
 react-spinner-children@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/react-spinner-children/-/react-spinner-children-1.0.8.tgz#6fdd6a89593c5f233bb56f4deccb812382e6ca74"

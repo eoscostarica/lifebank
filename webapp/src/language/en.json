@@ -280,7 +280,8 @@
       "bloodUrgency": "Blood urgency level",
       "schedule": "Schedule",
       "save": "Guardar",
-      "saveChanges": "Save changes"
+      "saveChanges": "Save changes",
+      "currentLanguage": "en-US"
     },
     "claimReward": {
       "claimReward": "Claim Reward",

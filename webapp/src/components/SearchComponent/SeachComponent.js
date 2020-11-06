@@ -13,6 +13,7 @@ import Slide from '@material-ui/core/Slide'
 import InputBase from '@material-ui/core/InputBase'
 import MicIcon from '@material-ui/icons/Mic'
 import { useTranslation } from 'react-i18next'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 import ShowOffers from './../../routes/Home/ShowOffers'
 import ShowLifebanks from './../../routes/Home/ShowLifebanks'
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
   backIcon: {
     color: 'rgba(0, 0, 0, 0.6)'
+  },
+  recordingIcon: {
+    color: '#ba0d0d'
   },
   title: {
     marginLeft: theme.spacing(2),
@@ -77,6 +81,8 @@ const SeachComponent = (props) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
+  const [recording, setRecording] = React.useState(false)
+  const { transcript, resetTranscript } = useSpeechRecognition()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -84,6 +90,18 @@ const SeachComponent = (props) => {
 
   const handleClose = () => {
     setOpen(false)
+    props.handleChangeSearch("")
+  }
+
+  const handleStarRecording = () => {
+    SpeechRecognition.startListening({ language: t('common.currentLanguage') })
+    setRecording(true)
+  }
+
+  const handleEndRecording = () => {
+    SpeechRecognition.stopListening()
+    props.handleChangeSearch(transcript)
+    setRecording(false)
   }
 
   return (
@@ -112,11 +130,22 @@ const SeachComponent = (props) => {
               value={props.searchValue}
               onChange={(event) => props.handleChangeSearch(event.target.value)}
             />
-            <IconButton
-              className={classes.backIcon}
-            >
-              <MicIcon />
-            </IconButton>
+            {!recording &&
+              <IconButton
+                className={classes.backIcon}
+                onClick={handleStarRecording}
+              >
+                <MicIcon />
+              </IconButton>
+            }
+            {recording &&
+              <IconButton
+                className={classes.recordingIcon}
+                onClick={handleEndRecording}
+              >
+                <MicIcon />
+              </IconButton>
+            }
           </Toolbar>
         </AppBar>
         <Box className={classes.contentBox}>
