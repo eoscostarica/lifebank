@@ -172,7 +172,7 @@ const HomeMobile = (props) => {
             sponsors={props.sponsors}
             loadingSponsors={props.loadingSponsors}
             searchValue={props.searchValue}
-            onHandleChangeSearch={props.onHandleChangeSearch}
+            handleChangeSearch={props.handleChangeSearch}
           />
           <MapModal isDesktop={false} />
           <FilterHome isDesktop={false} applyFilters={props.applyFilters} />
@@ -197,7 +197,7 @@ HomeMobile.propTypes = {
   loadingSponsors: PropTypes.bool,
   applyFilters: PropTypes.func,
   searchValue: PropTypes.string,
-  onHandleChangeSearch: PropTypes.func
+  handleChangeSearch: PropTypes.func
 }
 
 export default HomeMobile

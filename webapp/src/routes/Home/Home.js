@@ -128,7 +128,7 @@ const Home = () => {
           loadingSponsors={loadingSponsors}
           applyFilters={applyFilters}
           searchValue={searchValue}
-          onHandleChangeSearch={setSearchValue}
+          handleChangeSearch={setSearchValue}
         />
       }
       {!isDesktop &&
@@ -141,7 +141,7 @@ const Home = () => {
           loadingSponsors={loadingSponsors}
           applyFilters={applyFilters}
           searchValue={searchValue}
-          onHandleChangeSearch={setSearchValue}
+          handleChangeSearch={setSearchValue}
         />}
     </>
   )

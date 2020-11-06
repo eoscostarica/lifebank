@@ -188,13 +188,13 @@ const HomeDesktop = (props) => {
     }
     else {
       SpeechRecognition.stopListening()
-      props.onHandleChangeSearch(transcript)
+      props.handleChangeSearch(transcript)
       setRecording(false)
     }
   }
 
   useEffect(() => {
-    props.onHandleChangeSearch(transcript)
+    props.handleChangeSearch(transcript)
   }, [transcript]);
 
   return (

@@ -90,7 +90,7 @@ const SeachComponent = (props) => {
 
   const handleClose = () => {
     setOpen(false)
-    props.onHandleChangeSearch("")
+    props.handleChangeSearch("")
   }
 
   const handleStarRecording = () => {
@@ -100,12 +100,12 @@ const SeachComponent = (props) => {
 
   const handleEndRecording = () => {
     SpeechRecognition.stopListening()
-    props.onHandleChangeSearch(transcript)
+    props.handleChangeSearch(transcript)
     setRecording(false)
   }
 
   useEffect(() => {
-    props.onHandleChangeSearch(transcript)
+    props.handleChangeSearch(transcript)
   }, [transcript]);
 
   return (
