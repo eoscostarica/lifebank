@@ -128,7 +128,7 @@ const Home = () => {
           loadingSponsors={loadingSponsors}
           applyFilters={applyFilters}
           searchValue={searchValue}
-          handleChangeSeacrch={setSearchValue}
+          handleChangeSearch={setSearchValue}
         />
       }
       {!isDesktop &&
@@ -140,6 +140,8 @@ const Home = () => {
           sponsors={sponsors}
           loadingSponsors={loadingSponsors}
           applyFilters={applyFilters}
+          searchValue={searchValue}
+          handleChangeSearch={setSearchValue}
         />}
     </>
   )

@@ -227,7 +227,7 @@ const HomeDesktop = (props) => {
               startAdornment: <SearchIcon className={classes.iconSeachBar} />
             }}
             value={props.searchValue}
-            onChange={(event) => props.handleChangeSeacrch(event.target.value)}
+            onChange={(event) => props.handleChangeSearch(event.target.value)}
           />
         </Grid>
       </Grid>
@@ -286,7 +286,7 @@ HomeDesktop.propTypes = {
   loadingSponsors: PropTypes.bool,
   applyFilters: PropTypes.func,
   searchValue: PropTypes.string,
-  handleChangeSeacrch: PropTypes.func
+  handleChangeSearch: PropTypes.func
 }
 
 export default HomeDesktop

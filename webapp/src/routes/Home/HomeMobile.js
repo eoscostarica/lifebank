@@ -164,7 +164,16 @@ const HomeMobile = (props) => {
       </AppBar>
       <AppBar position="fixed" className={classes.bottomAppBar}>
         <Toolbar>
-          <SearchComponent />
+          <SearchComponent
+            offers={props.offers}
+            loadingOffers={props.loadingOffers}
+            lifebanks={props.lifebanks}
+            loadingLifebanks={props.loadingLifebanks}
+            sponsors={props.sponsors}
+            loadingSponsors={props.loadingSponsors}
+            searchValue={props.searchValue}
+            handleChangeSearch={props.handleChangeSearch}
+          />
           <MapModal isDesktop={false} />
           <FilterHome isDesktop={false} applyFilters={props.applyFilters} />
           <IconButton disabled>
@@ -186,7 +195,9 @@ HomeMobile.propTypes = {
   loadingLifebanks: PropTypes.bool,
   sponsors: PropTypes.array,
   loadingSponsors: PropTypes.bool,
-  applyFilters: PropTypes.func
+  applyFilters: PropTypes.func,
+  searchValue: PropTypes.string,
+  handleChangeSearch: PropTypes.func
 }
 
 export default HomeMobile
