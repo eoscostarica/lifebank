@@ -82,7 +82,7 @@ const SeachComponent = (props) => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const [recording, setRecording] = React.useState(false)
-  const { transcript, resetTranscript } = useSpeechRecognition()
+  const { transcript } = useSpeechRecognition()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -90,7 +90,7 @@ const SeachComponent = (props) => {
 
   const handleClose = () => {
     setOpen(false)
-    props.handleChangeSearch("")
+    props.onHandleChangeSearch("")
   }
 
   const handleStarRecording = () => {
@@ -100,12 +100,12 @@ const SeachComponent = (props) => {
 
   const handleEndRecording = () => {
     SpeechRecognition.stopListening()
-    props.handleChangeSearch(transcript)
+    props.onHandleChangeSearch(transcript)
     setRecording(false)
   }
 
   useEffect(() => {
-    props.handleChangeSearch(transcript)
+    props.onHandleChangeSearch(transcript)
   }, [transcript]);
 
   return (
@@ -132,7 +132,7 @@ const SeachComponent = (props) => {
               className={classes.input}
               placeholder="Search"
               value={props.searchValue}
-              onChange={(event) => props.handleChangeSearch(event.target.value)}
+              onChange={(event) => props.onHandleChangeSearch(event.target.value)}
             />
             {!recording &&
               <IconButton
@@ -191,7 +191,7 @@ SeachComponent.propTypes = {
   sponsors: PropTypes.array,
   loadingSponsors: PropTypes.bool,
   searchValue: PropTypes.string,
-  handleChangeSearch: PropTypes.func
+  onHandleChangeSearch: PropTypes.func
 }
 
 export default SeachComponent

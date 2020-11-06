@@ -179,7 +179,7 @@ const HomeDesktop = (props) => {
   const classes = useStyles()
   const [currentUser] = useUser()
   const [recording, setRecording] = React.useState(false)
-  const { transcript, resetTranscript } = useSpeechRecognition()
+  const { transcript } = useSpeechRecognition()
 
   const handleRecording = () => {
     if (!recording) {
@@ -188,13 +188,13 @@ const HomeDesktop = (props) => {
     }
     else {
       SpeechRecognition.stopListening()
-      props.handleChangeSearch(transcript)
+      props.onHandleChangeSearch(transcript)
       setRecording(false)
     }
   }
 
   useEffect(() => {
-    props.handleChangeSearch(transcript)
+    props.onHandleChangeSearch(transcript)
   }, [transcript]);
 
   return (
@@ -261,7 +261,7 @@ const HomeDesktop = (props) => {
 
             }}
             value={props.searchValue}
-            onChange={(event) => props.handleChangeSearch(event.target.value)}
+            onChange={(event) => props.onHandleChangeSearch(event.target.value)}
           />
         </Grid>
       </Grid>
@@ -320,7 +320,7 @@ HomeDesktop.propTypes = {
   loadingSponsors: PropTypes.bool,
   applyFilters: PropTypes.func,
   searchValue: PropTypes.string,
-  handleChangeSearch: PropTypes.func
+  onHandleChangeSearch: PropTypes.func
 }
 
 export default HomeDesktop
