@@ -261,7 +261,7 @@ const HomeDesktop = (props) => {
 
             }}
             value={props.searchValue}
-            onChange={(event) => props.onHandleChangeSearch(event.target.value)}
+            onChange={(event) => props.handleChangeSearch(event.target.value)}
           />
         </Grid>
       </Grid>
@@ -320,7 +320,7 @@ HomeDesktop.propTypes = {
   loadingSponsors: PropTypes.bool,
   applyFilters: PropTypes.func,
   searchValue: PropTypes.string,
-  onHandleChangeSearch: PropTypes.func
+  handleChangeSearch: PropTypes.func
 }
 
 export default HomeDesktop

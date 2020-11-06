@@ -132,7 +132,7 @@ const SeachComponent = (props) => {
               className={classes.input}
               placeholder="Search"
               value={props.searchValue}
-              onChange={(event) => props.onHandleChangeSearch(event.target.value)}
+              onChange={(event) => props.handleChangeSearch(event.target.value)}
             />
             {!recording &&
               <IconButton
@@ -191,7 +191,7 @@ SeachComponent.propTypes = {
   sponsors: PropTypes.array,
   loadingSponsors: PropTypes.bool,
   searchValue: PropTypes.string,
-  onHandleChangeSearch: PropTypes.func
+  handleChangeSearch: PropTypes.func
 }
 
 export default SeachComponent
