@@ -8,11 +8,11 @@ import Tab from '@material-ui/core/Tab'
 import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import Toolbar from '@material-ui/core/Toolbar'
-import SearchIcon from '@material-ui/icons/Search'
 import StarIcon from '@material-ui/icons/Star'
 import { useTranslation } from 'react-i18next'
 
 import DonationsDashboard from '../../components/DonationsDashboard'
+import SearchComponent from '../../components/SearchComponent'
 import MapModal from '../../components/MapModal'
 import ShowOffers from './ShowOffers'
 import ShowLifebanks from './ShowLifebanks'
@@ -164,9 +164,7 @@ const HomeMobile = (props) => {
       </AppBar>
       <AppBar position="fixed" className={classes.bottomAppBar}>
         <Toolbar>
-          <IconButton>
-            <SearchIcon className={classes.iconBottomAppBar} />
-          </IconButton>
+          <SearchComponent />
           <MapModal isDesktop={false} />
           <FilterHome isDesktop={false} applyFilters={props.applyFilters} />
           <IconButton disabled>
