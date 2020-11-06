@@ -42,3 +42,24 @@ export const VALIDATION_EMAIL = gql`
     }
   }
 `
+
+export const UPDATE_STATE_LIFEBANK = gql`
+  mutation ($verification_code: String!) {
+    update_preregister_lifebank( where: { verification_code: { _eq: $verification_code },_and: { state: { _eq: "pending" }}}, _set: { state: "approved" }) {
+      returning {
+        address
+        coordinates
+        description
+        email
+        immunity_test
+        invitation_code
+        name
+        password
+        phone
+        schedule
+        urgency_level
+        verification_code
+      }
+    }
+  }
+`

@@ -12,6 +12,7 @@ import OfferPage from './OfferPage'
 import InfoPage from './InfoPage'
 import Home from './Home'
 import EmailVerification from './EmailVerification'
+import RegisterLifebank from './RegisterLifebank'
 
 
 export default [
@@ -85,5 +86,10 @@ export default [
     name: 'info',
     path: '/info/:lifebank',
     component: InfoPage
+  },
+  {
+    name: 'register-lifebank',
+    path: '/register-lifebank/:code',
+    component: RegisterLifebank
   }
 ]

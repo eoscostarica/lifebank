@@ -33,6 +33,7 @@ const SET_EMAIL_VERIFIED = `
         phone
         schedule
         urgency_level
+        verification_code
       }
       affected_rows
     }

@@ -67,6 +67,36 @@ const create = async ({ role, email, name, secret }) => {
   }
 }
 
+const createLifebank = async ({ email, name, secret, verification_code }) => {
+  const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
+  const { password, transaction } = await eosUtils.createAccount(account)
+  const username = account
+  const token = jwtUtils.create({ role, username, account })
+
+  await userApi.insert({
+    role,
+    username,
+    account,
+    email,
+    secret,
+    name,
+    verification_code
+  })
+
+  await vaultApi.insert({
+    account,
+    password
+  })
+
+  await historyApi.insert(transaction)
+
+  return {
+    account,
+    token,
+    transaction_id: transaction.transaction_id
+  }
+}
+
 const getProfile = async account => {
   const user = await userApi.getOne({
     account: { _eq: account }
@@ -284,6 +314,21 @@ const formatSchedule = (schedule) => {
   return scheduleFormat.replace(",", " ")
 }
 
+const formatLifebankData = (lifebankData) => {
+  lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
+  lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
+  if (lifebankData.immunity_test)
+    lifebankData.immunity_test = 'Yes'
+  else lifebankData.immunity_test = 'No'
+  if (lifebankData.urgency_level === 1)
+    lifebankData.urgency_level = 'Low'
+  else if (lifebankData.urgency_level === 2)
+    lifebankData.urgency_level = 'Medium'
+  else lifebankData.urgency_level = 'High'
+
+  return lifebankData
+}
+
 const verifyEmail = async ({ code }) => {
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
@@ -292,15 +337,13 @@ const verifyEmail = async ({ code }) => {
     verification_code: { _eq: code }
   })
   let result = false
-  console.log("resLifebank", resLifebank.update_preregister_lifebank.returning[0].schedule)
+
   if (
     resUser.update_user.affected_rows !== 0 ||
     resLifebank.update_preregister_lifebank.affected_rows !== 0
   ) {
     if (resLifebank.update_preregister_lifebank.affected_rows !== 0) {
-      const scheduleJson = JSON.parse(resLifebank.update_preregister_lifebank.returning[0].schedule)
-      resLifebank.update_preregister_lifebank.returning[0].schedule = formatSchedule(scheduleJson)
-
+      resLifebank.update_preregister_lifebank.returning[0] = formatLifebankData(resLifebank.update_preregister_lifebank.returning[0])
       mailApi.sendRegistrationRequest(MAIL_APPROVE_LIFEBANNK, resLifebank.update_preregister_lifebank.returning[0])
     }
     result = true

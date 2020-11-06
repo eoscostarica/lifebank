@@ -335,7 +335,13 @@ const sendRegistrationRequest = async (to, lifebankData) => {
                       <h4>Description</h4>
                       <p style="margin: 0;">${lifebankData.description}</p>
                       <h4>Location</h4>
-                      <p style="margin: 0;">${lifebankData.coordinates}</p>
+                      <a 
+                        href= "https://maps.google.com/maps?q=${lifebankData.coordinates.latitude},${lifebankData.coordinates.longitude}" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        >
+                        Go to
+                      </a>
                       <h4>Phone</h4>
                       <p style="margin: 0;">${lifebankData.phone}</p>
                       <h4>Schedule</h4>
@@ -352,7 +358,7 @@ const sendRegistrationRequest = async (to, lifebankData) => {
                       <td align="center" bgcolor="#ffffff" 
                         style="padding: 24px; font-family: 'Source Sans Pro', 
                         Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                        <a href="https://www.lifebank.io/verification/" target="_blank"
+                        <a href="https://www.lifebank.io/register-lifebank/${lifebankData.verification_code}" target="_blank"
                           style="padding: 8px 12px; 
                           border: 1px solid #ED2939;border-radius: 5px;
                           font-family: Helvetica, Arial, sans-serif;font-size: 14px; 
