@@ -307,12 +307,12 @@ const grantConsent = async account => {
 const formatSchedule = (schedule) => {
   let scheduleFormat = ''
 
-  var hours;
+  var hours
   for (hours of schedule) {
     scheduleFormat += `, ${hours.day} ${hours.open} - ${hours.close}`
   }
 
-  return scheduleFormat.replace(",", " ")
+  return scheduleFormat.replace(',', ' ')
 }
 
 const formatLifebankData = (lifebankData) => {
@@ -320,8 +320,10 @@ const formatLifebankData = (lifebankData) => {
   lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
   if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'
   else lifebankData.immunity_test = 'No'
-  if (lifebankData.urgency_level === 1) lifebankData.urgency_level = 'Low'
-  else if (lifebankData.urgency_level === 2) lifebankData.urgency_level = 'Medium'
+  if (lifebankData.urgency_level === 1)
+    lifebankData.urgency_level = 'Low'
+  else if (lifebankData.urgency_level === 2)
+    lifebankData.urgency_level = 'Medium'
   else lifebankData.urgency_level = 'High'
 
   return lifebankData
