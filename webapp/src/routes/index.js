@@ -1,6 +1,5 @@
 import Dashboard from './Dashboard'
 import NotFound from './NotFound'
-import Signup from './Signup'
 import Donation from './Donation'
 import Profile from './Profile'
 import EditProfile from './EditProfile'
@@ -30,11 +29,6 @@ export default [
     name: 'offersManagement',
     path: '/offers-management',
     component: OffersManagement
-  },
-  {
-    name: 'signup',
-    path: '/signup',
-    component: Signup
   },
   {
     name: 'home',

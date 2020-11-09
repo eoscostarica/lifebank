@@ -10,13 +10,13 @@ import InfoIcon from '@material-ui/icons/Info'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
-import ContactMailIcon from '@material-ui/icons/ContactMail'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import { useTranslation } from 'react-i18next'
 
 import LoginModal from '../components/LoginModal'
 import CredentialsRecovery from '../components/CredentialsRecovery'
 import TokenTransfer from '../components/TokenTransfer'
+import Signup from '../components/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -126,13 +126,8 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
             overrideBoxClass={classes.optionLink}
             overrideLabelClass={classes.labelOption}
           />
-          <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
-            <ContactMailIcon className={classes.iconOption} />
-            <Link to="/signup">
-              <Typography variant="body1" className={classes.labelOption}>
-                {t('hero.register')}
-              </Typography>
-            </Link>
+          <Box className={classes.optionLink}>
+            <Signup isSideBar />
           </Box>
         </>
       )}

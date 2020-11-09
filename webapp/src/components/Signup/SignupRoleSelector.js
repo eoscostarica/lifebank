@@ -3,18 +3,32 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import AddBoxIcon from '@material-ui/icons/AddBox'
-import FavoriteIcon from '@material-ui/icons/Favorite'
 import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   btn: {
-    margin: theme.spacing(1.5, 1)
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "60%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '15px',
+    marginBottom: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
   }
 }))
 
@@ -27,8 +41,7 @@ const SignupRoleSelector = ({ onSubmit }) => {
       <Button
         className={classes.btn}
         variant="contained"
-        color="primary"
-        startIcon={<FavoriteIcon />}
+        color="secondary"
         onClick={() => {
           onSubmit('donor')
         }}
@@ -38,8 +51,7 @@ const SignupRoleSelector = ({ onSubmit }) => {
       <Button
         className={classes.btn}
         variant="contained"
-        color="primary"
-        startIcon={<ShoppingCartIcon />}
+        color="secondary"
         onClick={() => {
           onSubmit('sponsor')
         }}
@@ -49,8 +61,7 @@ const SignupRoleSelector = ({ onSubmit }) => {
       <Button
         className={classes.btn}
         variant="contained"
-        color="primary"
-        startIcon={<AddBoxIcon />}
+        color="secondary"
         onClick={() => {
           onSubmit('lifebank')
         }}

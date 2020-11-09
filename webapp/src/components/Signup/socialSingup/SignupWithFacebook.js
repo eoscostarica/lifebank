@@ -12,14 +12,20 @@ const useStyles = makeStyles((theme) => ({
   btnFacebook: {
     display: 'flex',
     backgroundColor: '#1778f2',
-    color: 'White',
-    marginBottom: theme.spacing(2),
-    width: '40%',
-    margin: 'auto',
-    '@media only screen and (max-width: 900px)': {
-      width: '100%'
-    },
-    textTransform: 'none'
+    borderRadius: '50px',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '10px',
+    marginBottom: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
   },
   facebookIcon: {
     marginRight: 5

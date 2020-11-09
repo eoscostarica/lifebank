@@ -10,17 +10,23 @@ import { oAuthConfig } from '../../../config'
 
 const useStyles = makeStyles((theme) => ({
   btnGoogle: {
-    display: 'flex',
-    marginBottom: theme.spacing(2),
-    width: '40%',
-    backgroundColor: 'white',
-    color: '#757575',
     border: 'solid 1px #e0e0e0',
-    margin: 'auto',
-    '@media only screen and (max-width: 900px)': {
-      width: '100%'
-    },
-    textTransform: 'none'
+    display: 'flex',
+    backgroundColor: 'white',
+    borderRadius: '50px',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#757575',
+    padding: '10px',
+    marginBottom: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
   },
   googleIcon: {
     marginRight: 5

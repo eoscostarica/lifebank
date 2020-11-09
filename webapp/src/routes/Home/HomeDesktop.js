@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
-import CustomRouterLink from '../../components/CustomRouterLink'
 import { useUser } from '../../context/user.context'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -20,6 +19,7 @@ import ShowSponsors from './ShowSponsors'
 import mobileBgImage from '../../assets/the-world.png'
 import bgImage from '../../assets/lifebank-hero-bg.png'
 import FilterHome from '../../components/FilterHome'
+import Signup from '../../components/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
   homeHeader: {
@@ -181,15 +181,9 @@ const HomeDesktop = (props) => {
         <Box className={classes.boxRight}>
           <Typography variant="body1">{t('hero.subtitle1')}</Typography>
           <Typography variant="body1">{t('hero.subtitle2')}</Typography>
-          <Button
-            className={classes.registerBtn}
-            variant="contained"
-            color="primary"
-            component={CustomRouterLink}
-            to={`/${currentUser ? 'donations' : 'signup'}`}
-          >
-            {currentUser ? t('donations.donations') : t('hero.register')}
-          </Button>
+          {!currentUser &&
+            <Signup isHome />
+          }
         </Box>
       </Box>
       <Grid
