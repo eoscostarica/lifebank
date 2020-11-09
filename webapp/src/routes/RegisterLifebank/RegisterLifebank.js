@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
 
 import CustomRouterLink from '../../components/CustomRouterLink'
-import { UPDATE_STATE_LIFEBANK, CREATE_ACCOUNT_LIFEBANK_MUTATION, SIGNUP_MUTATION } from '../../gql'
+import { UPDATE_STATE_LIFEBANK, CREATE_ACCOUNT_LIFEBANK_MUTATION } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,41 +39,22 @@ const RegisterLifebank = (props) => {
   const [lifebank, setLifebank] = useState()
   const { code } = useParams()
 
-
-  const [
-    createAccountLifebank,
-    {
-      loading: createAccountLoading,
-      data: { create_account: createAccountResult } = {}
-    }
-  ] = useMutation(CREATE_ACCOUNT_LIFEBANK_MUTATION)
+  const [createAccountLifebank,] = useMutation(CREATE_ACCOUNT_LIFEBANK_MUTATION)
 
   const handleCreateAccountLifebank = () => {
-    const { name, email, password, verification_code } = lifebank
+    if (lifebank) {
+      const { name, email, verification_code } = lifebank
+      const secret = lifebank.password
 
-    createAccountLifebank({
-      variables: {
-        email,
-        name,
-        password,
-        verification_code
-      }
-    })
-  }
-
-  const [
-    signup,
-    { loading: signupLoading, data: { signup: signupResult } = {} }
-  ] = useMutation(SIGNUP_MUTATION)
-
-  const handleSingup = () => {
-    const { username, secret, ...profile } = lifebank
-
-    signup({
-      variables: {
-        profile
-      }
-    })
+      createAccountLifebank({
+        variables: {
+          email,
+          name,
+          secret,
+          verification_code
+        }
+      })
+    }
   }
 
   const [
@@ -82,7 +63,6 @@ const RegisterLifebank = (props) => {
   ] = useMutation(UPDATE_STATE_LIFEBANK)
 
   useEffect(() => {
-    console.log("code", code)
     verifyEmail({
       variables: {
         verification_code: code
@@ -91,15 +71,16 @@ const RegisterLifebank = (props) => {
   }, [code])
 
   useEffect(() => {
-    console.log("lifebankData", lifebankData)
     if (lifebankData) {
       setLoading(false)
-
-      //setLifebank(verifyEmailResult.is_verified)
-      //handleSingup()
-      //handleCreateAccountLifebank
+      setLifebank(lifebankData.returning[0])
     }
   }, [lifebankData])
+
+  useEffect(() => {
+    if (lifebank)
+      handleCreateAccountLifebank()
+  }, [lifebank])
 
   return (
     <div className={classes.root}>
@@ -109,12 +90,12 @@ const RegisterLifebank = (props) => {
             {loading && <CircularProgress />}
             {!loading && lifebank && (
               <Typography variant="h1">
-                {t('emailVerification.emailVerified')}
+                {t('approveAccount.accountapprove')}
               </Typography>
             )}
             {!loading && !lifebank && (
               <Typography variant="h1">
-                {t('emailVerification.somethingHappened')}
+                {t('approveAccount.somethingHappened')}
               </Typography>
             )}
             {!loading && (

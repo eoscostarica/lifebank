@@ -68,6 +68,7 @@ const create = async ({ role, email, name, secret }) => {
 }
 
 const createLifebank = async ({ email, name, secret, verification_code }) => {
+  const role = 'lifebank'
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
@@ -429,6 +430,7 @@ const transfer = async (from, details) => {
 
 module.exports = {
   create,
+  createLifebank,
   getProfile,
   login,
   grantConsent,

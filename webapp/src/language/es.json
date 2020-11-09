@@ -299,6 +299,10 @@
       "somethingHappened": "Ha ocurrido un evento inesperado al tratar de verificar tu email",
       "takeHome": "Ir al inicio"
     },
+    "approveAccount": {
+      "accountapprove": "Esta cuenta ha sido aprobada",
+      "somethingHappened": "Algo sucedió al intentar aprobar esta cuenta"
+    },
     "offersManagement": {
       "offersManagement": "Manejo de ofertas",
       "addOffer": "Añadir oferta",

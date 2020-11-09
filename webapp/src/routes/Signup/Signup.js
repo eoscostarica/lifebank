@@ -217,19 +217,25 @@ const Signup = () => {
 
     if (urgency_level === undefined) urgency_level = 1
 
-    preRegisterLifebank({
-      variables: {
-        email,
-        password,
-        name,
-        address,
-        schedule,
-        phone,
-        description,
-        urgency_level,
-        coordinates,
-        immunity_test,
-        invitation_code
+    const bcrypt = require('bcryptjs')
+    const saltRounds = 10
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+      if (!err) {
+        preRegisterLifebank({
+          variables: {
+            email,
+            password: hash,
+            name,
+            address,
+            schedule,
+            phone,
+            description,
+            urgency_level,
+            coordinates,
+            immunity_test,
+            invitation_code
+          }
+        })
       }
     })
   }

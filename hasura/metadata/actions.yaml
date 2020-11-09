@@ -14,7 +14,7 @@ actions:
 - name: create_account_lifebank
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/create-account-Lifebank
+    handler: http://hapi:9090/api/create-account-lifebank
   permissions:
   - role: guest
 - name: create_pre_register_lifebank
