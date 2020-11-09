@@ -64,6 +64,12 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
 
   return (
     <Box className={classes.wrapper}>
+      <Box className={classes.optionLink}>
+        <LoginModal isSideBar />
+      </Box>
+      <Box className={classes.optionLink}>
+        <Signup isSideBar />
+      </Box>
       {user && (
         <>
           {user.role === 'donor' && (
@@ -118,17 +124,10 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       )}
       {!user && (
         <>
-          <LoginModal
-            overrideBoxClass={classes.optionLink}
-            overrideLabelClass={classes.labelOption}
-          />
           <CredentialsRecovery
             overrideBoxClass={classes.optionLink}
             overrideLabelClass={classes.labelOption}
           />
-          <Box className={classes.optionLink}>
-            <Signup isSideBar />
-          </Box>
         </>
       )}
       <Divider />
