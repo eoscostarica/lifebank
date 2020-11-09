@@ -179,10 +179,6 @@ const sendVerificationCode = async (to, verficationCode) => {
   })
 }
 
-
-
-
-
 const sendRegistrationRequest = async (to, lifebankData) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
@@ -384,8 +380,6 @@ const sendRegistrationRequest = async (to, lifebankData) => {
     `
   })
 }
-
-
 
 const sendCredentialsRecovery = async (to, { username, secret }) => {
   const transporter = nodemailer.createTransport({

@@ -318,13 +318,10 @@ const formatSchedule = (schedule) => {
 const formatLifebankData = (lifebankData) => {
   lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
   lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
-  if (lifebankData.immunity_test)
-    lifebankData.immunity_test = 'Yes'
+  if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'
   else lifebankData.immunity_test = 'No'
-  if (lifebankData.urgency_level === 1)
-    lifebankData.urgency_level = 'Low'
-  else if (lifebankData.urgency_level === 2)
-    lifebankData.urgency_level = 'Medium'
+  if (lifebankData.urgency_level === 1) lifebankData.urgency_level = 'Low'
+  else if (lifebankData.urgency_level === 2) lifebankData.urgency_level = 'Medium'
   else lifebankData.urgency_level = 'High'
 
   return lifebankData
@@ -344,8 +341,13 @@ const verifyEmail = async ({ code }) => {
     resLifebank.update_preregister_lifebank.affected_rows !== 0
   ) {
     if (resLifebank.update_preregister_lifebank.affected_rows !== 0) {
-      resLifebank.update_preregister_lifebank.returning[0] = formatLifebankData(resLifebank.update_preregister_lifebank.returning[0])
-      mailApi.sendRegistrationRequest(MAIL_APPROVE_LIFEBANNK, resLifebank.update_preregister_lifebank.returning[0])
+      resLifebank.update_preregister_lifebank.returning[0] = formatLifebankData(
+        resLifebank.update_preregister_lifebank.returning[0]
+      )
+      mailApi.sendRegistrationRequest(
+        MAIL_APPROVE_LIFEBANNK,
+        resLifebank.update_preregister_lifebank.returning[0]
+      )
     }
     result = true
   }

@@ -1,5 +1,4 @@
 const Joi = require('@hapi/joi')
-const { join } = require('..')
 
 module.exports = {
   payload: Joi.object({
