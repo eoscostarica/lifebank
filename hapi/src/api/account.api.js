@@ -307,10 +307,9 @@ const grantConsent = async account => {
 const formatSchedule = (schedule) => {
   let scheduleFormat = ''
 
-  var hours
-  for (hours of schedule) {
+  let hours
+  for (hours of schedule)
     scheduleFormat += `, ${hours.day} ${hours.open} - ${hours.close}`
-  }
 
   return scheduleFormat.replace(',', ' ')
 }
