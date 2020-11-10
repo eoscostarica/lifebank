@@ -73,11 +73,11 @@ const Home = () => {
     let dataTemp = data.location
     dataTemp = dataTemp.filter(bank => bank.type === "LIFE_BANK")
 
-    if (searchValue !== "") {
+    if (searchValue !== "")
       dataTemp = dataTemp.filter(
         (banks) => banks.name.toLowerCase().includes(searchValue.toLowerCase())
       )
-    }
+
 
     setLifebanks(dataTemp)
     setLoadingLifebanks(false)
@@ -94,11 +94,11 @@ const Home = () => {
       dataTemp = dataTemp.filter(bank => bank.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
     }
 
-    if (searchValue !== "") {
+    if (searchValue !== "")
       dataTemp = dataTemp.filter(
         (bank) => bank.info.name.toLowerCase().includes(searchValue.toLowerCase())
       )
-    }
+
 
     setSponsors(dataTemp)
     setLoadingSponsors(false)
