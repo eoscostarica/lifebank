@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useTheme } from '@material-ui/core/styles'
 import Dialog from '@material-ui/core/Dialog'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -17,16 +20,21 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import FingerprintIcon from '@material-ui/icons/Fingerprint'
 
 import {
   LOGIN_MUTATION,
   VALIDATE_EMAIL,
-  GET_SECRET_BY_ACCOUNT
+  GET_SECRET_BY_ACCOUNT,
+  PROFILE_QUERY,
+  SIGNUP_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
+import SignupAccount from '../Signup/SignupAccount'
+import SignupConsent from '../Signup/SignupConsent'
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -49,6 +57,13 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "48px",
     paddingLeft: "48px",
     paddingRight: "48px",
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: "21px",
+      paddingRight: "21px",
+    }
+  },
+  dialogConset: {
+    padding: "48px",
     [theme.breakpoints.down('md')]: {
       paddingLeft: "21px",
       paddingRight: "21px",
@@ -127,22 +142,77 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1px',
     color: '#121212',
     padding: '10px'
+  },
+  labelOption: {
+    color: `${theme.palette.primary.main} !important`,
+    marginLeft: theme.spacing(3),
+    fontSize: 14,
+    textTransform: 'capitalize'
+  },
+  iconOption: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    fontSize: 20
+  },
+  registerBtnSideBar: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  stepperContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: theme.spacing(2)
+  },
+  titleConsent: {
+    fontSize: '34px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.18,
+    letterSpacing: '0.25px',
+    color: '#rgba(0, 0, 0, 0.87)',
+    marginBottom: 15
+  },
+  textConsent: {
+    fontSize: '12px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.33,
+    letterSpacing: '0.4px',
+    color: '#000000',
+    marginBottom: 30
   }
 }))
 
-const LoginModal = () => {
+const LoginModal = ({ isNavBar, isSideBar }) => {
   const { t } = useTranslation('translations')
   const [maxWidth] = useState('md')
+  const [maxWidthConset] = useState('sm')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const classes = useStyles()
   const history = useHistory()
+  const [open, setOpen] = useState(false)
+  const [openConsent, setOpenConsent] = useState(false)
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [currentUser, { login }] = useUser()
   const [
     loginMutation,
     { loading, error, data: { login: loginResult } = {} }
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
-  const [open, setOpen] = useState(false)
+
+  const [
+    signup,
+    { loading: signupLoading, data: { signup: signupResult } = {} }
+  ] = useMutation(SIGNUP_MUTATION)
+
+  const [
+    loadProfile,
+    { client, loadingProfile, data: { profile: { profile } = {} } = {} }
+  ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
     variables: {
@@ -160,6 +230,10 @@ const LoginModal = () => {
 
   const handleOpen = () => {
     setOpen(!open)
+  }
+
+  const handleOpenConsent = () => {
+    setOpenConsent(!openConsent)
   }
 
   const handleSetField = (field, value) => {
@@ -229,20 +303,51 @@ const LoginModal = () => {
   useEffect(() => {
     if (loginResult) {
       login(loginResult.token)
+      setOpen(false)
+      loadProfile()
     }
-  }, [loginResult, login])
+
+  }, [loginResult])
+
 
   useEffect(() => {
-    if (currentUser) {
-      history.replace('/profile')
-    }
-  }, [currentUser, history])
+    if (currentUser && profile && !profile.consent) handleOpenConsent()
+
+  }, [profile])
+
+  const handleSingup = () => {
+    const { username, secret, ...profile } = user
+
+    signup({
+      variables: {
+        profile
+      }
+    })
+  }
 
   return (
     <>
-      <Button className={classes.btnLoginModal} onClick={handleOpen}>
-        {t('login.login')}
-      </Button>
+      {isNavBar && !currentUser &&
+        <Button className={classes.btnLoginModal} onClick={handleOpen}>
+          {t('login.login')}
+        </Button>
+      }
+      {isSideBar && !currentUser &&
+        <Box
+          className={classes.registerBtnSideBar}
+          onClick={handleOpen}
+        >
+          <FingerprintIcon className={classes.iconOption} />
+          <Link to="/">
+            <Typography
+              variant="body1"
+              className={classes.labelOption}
+            >
+              {t('login.login')}
+            </Typography>
+          </Link>
+        </Box>
+      }
       <Dialog
         maxWidth={maxWidth}
         open={open}
@@ -356,8 +461,52 @@ const LoginModal = () => {
           </Box>
         </Box>
       </Dialog>
+      <Dialog
+        fullScreen={fullScreen}
+        maxWidth={maxWidthConset}
+        open={openConsent}
+        onClose={handleOpenConsent}
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
+      >
+        <Box className={classes.dialogConset}>
+          <Box className={classes.closeIcon}>
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleOpenConsent}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
+          <Box>
+            <Box className={classes.stepperContent}>
+              <Typography className={classes.titleConsent}> {t('signup.termsAndConditions')}</Typography>
+              <Typography variant="body1" className={classes.textConsent}>{t('signup.termsAndConditionsInfo')}</Typography>
+            </Box>
+            <SignupAccount account={profile ? profile.account : ""} />
+            <SignupConsent onSubmit={handleSingup} loading={signupLoading} />
+          </Box>
+        </Box>
+      </Dialog>
     </>
   )
+}
+
+LoginModal.propTypes = {
+  isNavBar: PropTypes.bool,
+  isSideBar: PropTypes.bool,
+}
+
+LoginModal.defaultProps = {
+  isNavBar: false,
+  isSideBar: false
 }
 
 export default LoginModal

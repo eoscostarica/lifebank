@@ -181,9 +181,7 @@ const HomeDesktop = (props) => {
         <Box className={classes.boxRight}>
           <Typography variant="body1">{t('hero.subtitle1')}</Typography>
           <Typography variant="body1">{t('hero.subtitle2')}</Typography>
-          {!currentUser &&
-            <Signup isHome />
-          }
+          <Signup isHome />
         </Box>
       </Box>
       <Grid

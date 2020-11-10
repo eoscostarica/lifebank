@@ -14,8 +14,8 @@ import RicardianContract from '../../components/RicardianContract'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    maxHeight: 400,
-    overflow: 'scroll',
+    height: "40vh",
+    overflowY: 'scroll',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     '& img': {
@@ -35,13 +35,33 @@ const useStyles = makeStyles((theme) => ({
     },
     '& p a': {
       wordBreak: 'break-all'
+    },
+    [theme.breakpoints.down('md')]: {
+      height: "35vh",
     }
   },
   btnWrapper: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  btnAccept: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginTop: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
   }
 }))
 
@@ -96,9 +116,10 @@ const SignupConsent = ({ onSubmit, loading }) => {
       <Box className={classes.btnWrapper}>
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={onSubmit}
           disabled={loading}
+          className={classes.btnAccept}
         >
           {t('signup.iAccept')}
         </Button>

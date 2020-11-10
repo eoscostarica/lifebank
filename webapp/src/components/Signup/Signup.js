@@ -9,7 +9,7 @@ import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import ContactMailIcon from '@material-ui/icons/ContactMail'
 import { makeStyles } from '@material-ui/styles'
-import { useHistory, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
@@ -20,7 +20,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import {
   CREATE_ACCOUNT_MUTATION,
-  SIGNUP_MUTATION,
   CREATE_PRE_REGITER_LIFEBANK_MUTATION,
   VALIDATION_EMAIL
 } from '../../gql'
@@ -30,8 +29,6 @@ import SignupRoleSelector from './SignupRoleSelector'
 import ValidateEmail from './ValidateEmail'
 import SignupDonor from './SignupDonor'
 import SignupLifeBank from './SignupLifeBank'
-import SignupAccount from './SignupAccount'
-import SignupConsent from './SignupConsent'
 import SimpleRegisterForm from './SignupSponsor/SimpleRegisterForm'
 
 const useStyles = makeStyles((theme) => ({
@@ -176,14 +173,12 @@ const useStyles = makeStyles((theme) => ({
   registerBtnSideBar: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: theme.spacing(2),
   },
 }))
 
 const Signup = ({ isHome, isModal, isSideBar }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const history = useHistory()
   const [user, setUser] = useReducer(
     (user, newUser) => ({ ...user, ...newUser }),
     {}
@@ -193,6 +188,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [currentUser, { login }] = useUser()
   const [open, setOpen] = useState(false)
   const [openAlert, setOpenAlert] = useState(false)
+  const [messegaAlert, setMessegaAlert] = useState("false")
   const [maxWidth] = useState('sm')
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -223,10 +219,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       data: { create_pre_register_lifebank: preRegisterLifebankResult } = {}
     }
   ] = useMutation(CREATE_PRE_REGITER_LIFEBANK_MUTATION)
-  const [
-    signup,
-    { loading: signupLoading, data: { signup: signupResult } = {} }
-  ] = useMutation(SIGNUP_MUTATION)
 
   const handleRoleChange = (role) => {
     setRole(role)
@@ -358,40 +350,22 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   useEffect(() => {
     if (preRegisterLifebankResult) {
       handleOpen()
+      setMessegaAlert(t('signup.sucessfulPreregistration'))
       handleOpenAlert()
 
     }
   }, [preRegisterLifebankResult])
 
-  const handleSingup = () => {
-    const { username, secret, ...profile } = user
-
-    signup({
-      variables: {
-        profile
-      }
-    })
-  }
-
   useEffect(() => {
-    if (createAccountResult) login(createAccountResult.token)
-  }, [createAccountResult])
-
-  useEffect(() => {
-    if (!currentUser) return
-
-    if (!createAccountResult) {
-      history.replace('/profile')
-
+    if (createAccountResult) {
+      handleOpen()
+      setMessegaAlert(t('signup.sucessfulRegistration'))
+      handleOpenAlert()
+      login(createAccountResult.token)
       return
     }
 
-    setActiveStep(2)
-  }, [currentUser, createAccountResult])
-
-  useEffect(() => {
-    if (signupResult) history.replace('/profile')
-  }, [signupResult])
+  }, [createAccountResult])
 
   const ErrorMessage = () => {
     return (
@@ -420,19 +394,19 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   return (
     <>
-      {isHome &&
+      {isHome && !currentUser &&
         <Button color="secondary" className={classes.registerBtn} onClick={handleOpen}>
           {t('signup.register')}
         </Button>
       }
-      {isModal &&
+      {isModal && !currentUser &&
         <Box className={classes.registerBoxModal}>
           <Button color="secondary" className={classes.registerTextModal} onClick={handleOpen}>
             {t('login.notAccount')}
           </Button>
         </Box>
       }
-      {isSideBar &&
+      {isSideBar && !currentUser &&
         <Box
           className={classes.registerBtnSideBar}
           onClick={handleOpen}
@@ -548,22 +522,13 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
                   </SignupLifeBank>
                 </>
               )}
-              {activeStep === 2 && (
-                <>
-                  <Typography variant="h4">
-                    {t('readOurTermsAndConditions')}
-                  </Typography>
-                  <SignupAccount data={createAccountResult} />
-                  <SignupConsent onSubmit={handleSingup} loading={signupLoading} />
-                </>
-              )}
             </Box>
           </Box>
         </Box>
       </Dialog>
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
         <Alert onClose={handleOpenAlert} severity="success">
-          {t('signup.sucessfulPreregistration')}
+          {messegaAlert}
         </Alert>
       </Snackbar>
     </>
