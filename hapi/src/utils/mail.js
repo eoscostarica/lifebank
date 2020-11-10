@@ -298,7 +298,7 @@ const sendRegistrationRequest = async (to, lifebankData) => {
               <!-- start logo -->
               <tr>
                 <td align="center" bgcolor="#f6f6f6">
-                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                       <td align="center" valign="top" style="padding: 36px 24px;">
                         <a href="" target="_blank" style="display: inline-block;">

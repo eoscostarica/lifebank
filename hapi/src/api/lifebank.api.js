@@ -110,7 +110,6 @@ const signup = async (account, profile) => {
     type: LOCATION_TYPES.LIFE_BANK,
     info: profile
   })
-
 }
 
 const formatSchedule = (schedule) => {
