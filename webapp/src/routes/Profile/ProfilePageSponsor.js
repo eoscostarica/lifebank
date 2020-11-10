@@ -100,6 +100,8 @@ const ProfilePageSponsor = ({ profile }) => {
   const classes = useStyles()
   const [pendingFields, setPendingFields] = useState()
 
+  console.log(profile)
+
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
 
@@ -115,17 +117,8 @@ const ProfilePageSponsor = ({ profile }) => {
     if (!profile.logo_url)
       pendingFieldsObject = { ...pendingFieldsObject, logo_url: false }
 
-    if (!profile.benefit_description)
-      pendingFieldsObject = {
-        ...pendingFieldsObject,
-        benefit_description: false
-      }
-
     if (!profile.name)
       pendingFieldsObject = { ...pendingFieldsObject, name: false }
-
-    if (!profile.about)
-      pendingFieldsObject = { ...pendingFieldsObject, about: false }
 
     if (!profile.telephones)
       pendingFieldsObject = { ...pendingFieldsObject, telephones: false }
