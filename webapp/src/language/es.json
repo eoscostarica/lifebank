@@ -65,7 +65,9 @@
       "asAbank": "Como centro de donaciones",
       "about": "Acerca de",
       "aboutBusiness": "La descripción de su negocio aquí",
-      "aboutPlaceholder": "Acerca del LifeBank"
+      "aboutPlaceholder": "Acerca del LifeBank",
+      "consentGranted": "Consentimiento otorgado",
+      "consentError": "Error al otorgar consentimiento"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
