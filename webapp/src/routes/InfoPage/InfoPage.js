@@ -17,6 +17,9 @@ import Fab from '@material-ui/core/Fab'
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import InstagramIcon from '@material-ui/icons/Instagram';
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItem from '@material-ui/core/ListItem'
 import List from '@material-ui/core/List'
@@ -357,7 +360,13 @@ const InfoPage = () => {
             <div className={classes.headerCardBody}>
               <img className={classes.avatarRound} src={profile.info.logo_url} alt="Avatar" />
               <Typography className={classes.title} noWrap >{profile.info.name}</Typography>
-              <Typography className={classes.subtitle} noWrap >Hospital</Typography>
+              {console.log("profile:", profile)}
+              <Typography style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.subtitle} noWrap >
+                {profile.info.business_type}
+              </Typography>
+              <Typography style={{ display: profile.type === 'LIFE_BANK' ? 'block' : 'none' }} className={classes.subtitle} noWrap >
+                Donation Center
+              </Typography>
             </div>
             <div className={classes.bodyCard}>
               <div className={classes.imageSection}>
@@ -465,7 +474,19 @@ const InfoPage = () => {
                     ))}
                   </Box>
                   <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
+                  <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{'Social media'}</Typography>
+                    <IconButton aria-label="close">
+                      <FacebookIcon />
+                    </IconButton>
+                    <IconButton aria-label="close">
+                      <TwitterIcon />
+                    </IconButton>
+                    <IconButton aria-label="close">
+                      <InstagramIcon />
+                    </IconButton>
+                  </Box>
+                  <Box style={{ display: profile.type === 'LIFE_BANK' ? 'block' : 'none' }} className={classes.midLabel}>
                     <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
                     <Box className={classes.bloodDemand}>
                       <Box className={classes.markLabel}>

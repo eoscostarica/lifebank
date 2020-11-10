@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
-import { Link as LinkRouter } from 'react-router-dom'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -236,14 +235,8 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
     )
   }
 
-  const OfferItem = (props) => (
-    <LinkRouter
-      style={{ textDecoration: 'none' }}
-      to={{
-        pathname: `info/${props.bank.user.username.replaceAll(' ', '-')}`,
-        state: { profile: props.bank }
-      }}
-    >
+  const OfferItem = (props) => {
+    return (
       <ListItem
         className={classes.listItem}
         button
@@ -278,8 +271,8 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           <LocalOfferIcon className={classes.secondaryIconList} />
         </ListItemSecondaryAction>
       </ListItem>
-    </LinkRouter>
-  )
+    )
+  }
 
   OfferItem.propTypes = {
     offer: PropTypes.object
