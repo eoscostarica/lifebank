@@ -100,8 +100,6 @@ const ProfilePageSponsor = ({ profile }) => {
   const classes = useStyles()
   const [pendingFields, setPendingFields] = useState()
 
-  console.log(profile)
-
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
 
