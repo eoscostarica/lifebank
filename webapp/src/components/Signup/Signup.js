@@ -362,7 +362,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       setMessegaAlert(t('signup.sucessfulRegistration'))
       handleOpenAlert()
       login(createAccountResult.token)
-      return
     }
 
   }, [createAccountResult])

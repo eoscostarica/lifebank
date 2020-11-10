@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ConsetComponent = () => {
-  const [currentUser, { login }] = useUser()
+  const [currentUser] = useUser()
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [openConsent, setOpenConsent] = useState(false)
@@ -83,7 +83,7 @@ const ConsetComponent = () => {
 
   const [
     loadProfile,
-    { client, loadingProfile, data: { profile: { profile } = {} } = {} }
+    { data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const handleOpenConsent = () => {
