@@ -311,8 +311,7 @@ const sendRegistrationRequest = async (to, lifebankData) => {
               </tr>
               <tr>
                 <td align="center" bgcolor="#f6f6f6">
-              
-                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
                         <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;">Registration Request</h1>

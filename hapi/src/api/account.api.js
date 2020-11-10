@@ -15,6 +15,7 @@ const vaultApi = require('./vault.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+const lifebankApi = require('./lifebank.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
@@ -58,7 +59,11 @@ const create = async ({ role, email, name, secret }) => {
 
   await historyApi.insert(transaction)
 
-  mailApi.sendVerificationCode(email, verification_code)
+  try {
+    mailApi.sendVerificationCode(email, verification_code)
+  } catch (error) {
+    console.log(error)
+  }
 
   return {
     account,
@@ -304,29 +309,6 @@ const grantConsent = async account => {
   return consentTransaction
 }
 
-const formatSchedule = (schedule) => {
-  let scheduleFormat = ''
-
-  let hours
-  for (hours of schedule)
-    scheduleFormat += `, ${hours.day} ${hours.open} - ${hours.close}`
-
-  return scheduleFormat.replace(',', ' ')
-}
-
-const formatLifebankData = (lifebankData) => {
-  lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
-  lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
-  if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'
-  else lifebankData.immunity_test = 'No'
-  if (lifebankData.urgency_level === 1) lifebankData.urgency_level = 'Low'
-  else if (lifebankData.urgency_level === 2)
-    lifebankData.urgency_level = 'Medium'
-  else lifebankData.urgency_level = 'High'
-
-  return lifebankData
-}
-
 const verifyEmail = async ({ code }) => {
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
@@ -341,13 +323,17 @@ const verifyEmail = async ({ code }) => {
     resLifebank.update_preregister_lifebank.affected_rows !== 0
   ) {
     if (resLifebank.update_preregister_lifebank.affected_rows !== 0) {
-      resLifebank.update_preregister_lifebank.returning[0] = formatLifebankData(
+      resLifebank.update_preregister_lifebank.returning[0] = lifebankApi.formatLifebankData(
         resLifebank.update_preregister_lifebank.returning[0]
       )
-      mailApi.sendRegistrationRequest(
-        MAIL_APPROVE_LIFEBANNK,
-        resLifebank.update_preregister_lifebank.returning[0]
-      )
+      try {
+        mailApi.sendRegistrationRequest(
+          MAIL_APPROVE_LIFEBANNK,
+          resLifebank.update_preregister_lifebank.returning[0]
+        )
+      } catch (error) {
+        console.log(error)
+      }
     }
     result = true
   }

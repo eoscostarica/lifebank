@@ -110,10 +110,35 @@ const signup = async (account, profile) => {
     type: LOCATION_TYPES.LIFE_BANK,
     info: profile
   })
+
+}
+
+const formatSchedule = (schedule) => {
+  let scheduleFormat = ''
+
+  let hours
+  for (hours of schedule)
+    scheduleFormat += `, ${hours.day} ${hours.open} - ${hours.close}`
+
+  return scheduleFormat.replace(',', ' ')
+}
+
+const formatLifebankData = (lifebankData) => {
+  lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
+  lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
+  if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'
+  else lifebankData.immunity_test = 'No'
+  if (lifebankData.urgency_level === 1) lifebankData.urgency_level = 'Low'
+  else if (lifebankData.urgency_level === 2)
+    lifebankData.urgency_level = 'Medium'
+  else lifebankData.urgency_level = 'High'
+
+  return lifebankData
 }
 
 module.exports = {
   preRegister,
   editProfile,
-  signup
+  signup,
+  formatLifebankData
 }
