@@ -188,7 +188,7 @@ const LoginModal = () => {
         }
       })
     } else {
-      setErrorMessage(t('invalidAccountOrPassword'))
+      setErrorMessage(t('login.invalidAccountOrPassword'))
     }
   }
 
@@ -210,7 +210,10 @@ const LoginModal = () => {
                 secret: hash
               }
             })
+          } else {
+            setErrorMessage(t('login.invalidAccountOrPassword'))
           }
+
         })
       } else {
         setErrorMessage(t('login.accountDoesntExist'))
