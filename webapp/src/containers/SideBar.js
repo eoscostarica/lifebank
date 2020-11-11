@@ -72,26 +72,6 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       </Box>
       {user && (
         <>
-          {user.role === 'donor' && (
-            <>
-              <Box className={classes.optionLink}>
-                <FavoriteIcon className={classes.iconDonor} />
-                <Link to="/donations">
-                  <Typography variant="body1" className={classes.labelOption}>
-                    {t('navigationDrawer.yourDonations')}
-                  </Typography>
-                </Link>
-              </Box>
-              <Box className={classes.optionLink}>
-                <LocalOfferOutlinedIcon className={classes.iconOption} />
-                <Link to="/offers">
-                  <Typography variant="body1" className={classes.labelOption}>
-                    {t('cardsSection.availableOffers')}
-                  </Typography>
-                </Link>
-              </Box>
-            </>
-          )}
           <Box className={classes.optionLink}>
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">
