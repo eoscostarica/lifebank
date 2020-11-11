@@ -15,11 +15,12 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
+import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import InstagramIcon from '@material-ui/icons/Instagram';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import Avatar from '@material-ui/core/Avatar'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItem from '@material-ui/core/ListItem'
 import List from '@material-ui/core/List'
@@ -28,6 +29,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 
 import MapShowOneLocation from '../../components/MapShowOneLocation'
+import FacebookIcon from '../../assets/facebook.svg'
+import InstagramIcon from '../../assets/instagram.svg'
+import TwitterIcon from '../../assets/twitter.svg'
+import StoreFront from '../../assets/storefront.svg'
+import LifebankIcon from '../../assets/local-hospital.svg'
 import { GET_LOCATION_PROFILE } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   imageSection: {
     position: 'relative',
+    marginTop: '30px',
     width: '100%'
   },
   detailsSection: {
@@ -241,6 +248,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bodyDetailsDesktop: {
     width: '100%',
+    marginTop: '15px',
     float: 'left'
   },
   imageSectionDesktop: {
@@ -259,6 +267,10 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.25px',
     textAlign: 'left',
     color: 'rgba(0, 0, 0, 0.6)'
+  },
+  desktopImageDefailt: {
+    width: '98%',
+    height: '380px'
   }
 }))
 
@@ -307,7 +319,7 @@ const InfoPage = () => {
 
   const generateSchedule = (schedules) => {
     const scheduleFinal = []
-    var schedule;
+    let schedule;
     for (schedule of schedules) {
       if (scheduleFinal.length > 0) {
         let insert = 0
@@ -332,6 +344,19 @@ const InfoPage = () => {
     return scheduleFinal
   }
 
+  const getSocialMediaIcon = (name) => {
+    switch (name) {
+      case 'facebook':
+        return FacebookIcon
+      case 'instagram':
+        return InstagramIcon
+      case 'twitter':
+        return TwitterIcon
+      default:
+        break
+    }
+  }
+
   useEffect(() => {
     if (location.state) setProfile(location.state.profile)
     else {
@@ -350,6 +375,7 @@ const InfoPage = () => {
 
       if (!location.state) getProfile()
     }
+    if (profile && profile.type === 'SPONSOR') profile.info.social_media_links = JSON.parse(profile.info.social_media_links)
   }, [location])
 
   const MovileInfoPage = () => {
@@ -358,36 +384,44 @@ const InfoPage = () => {
         {profile &&
           <Box className={classes.cardBody}>
             <div className={classes.headerCardBody}>
-              <img className={classes.avatarRound} src={profile.info.logo_url} alt="Avatar" />
+              <Avatar className={classes.avatarRound} src={profile.info.logo_url || ""} alt="Avatar">
+                {profile.type === 'SPONSOR' && <StorefrontIcon />}
+                {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
+              </Avatar>
               <Typography className={classes.title} noWrap >{profile.info.name}</Typography>
-              {console.log("profile:", profile)}
-              <Typography style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.subtitle} noWrap >
-                {profile.info.business_type}
-              </Typography>
-              <Typography style={{ display: profile.type === 'LIFE_BANK' ? 'block' : 'none' }} className={classes.subtitle} noWrap >
-                Donation Center
+              <Typography className={classes.subtitle} noWrap >
+                {profile.type === 'SPONSOR' && profile.info.business_type}
+                {profile.type === 'LIFE_BANK' && 'Donation Center'}
               </Typography>
             </div>
             <div className={classes.bodyCard}>
               <div className={classes.imageSection}>
-                <Carousel
-                  value={actualImageIndex}
-                  className={classes.carousel}
-                  onChange={(val) => setActualImageIndex(val)}
-                  plugins={[
-                    'arrows',
-                    {
-                      resolve: slidesToShowPlugin,
-                      options: {
-                        numberOfSlides: 1
+                {JSON.parse(profile.info.photos).length > 0 &&
+                  <Carousel
+                    value={actualImageIndex}
+                    className={classes.carousel}
+                    onChange={(val) => setActualImageIndex(val)}
+                    plugins={[
+                      'arrows',
+                      {
+                        resolve: slidesToShowPlugin,
+                        options: {
+                          numberOfSlides: 1
+                        }
                       }
-                    }
-                  ]}
-                >
-                  {JSON.parse(profile.info.photos).map((url, key) => (
-                    <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
-                  ))}
-                </Carousel>
+                    ]}
+                  >
+                    {JSON.parse(profile.info.photos).map((url, key) => (
+                      <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                    ))}
+                  </Carousel>
+                }
+                {profile.type === 'SPONSOR' && JSON.parse(profile.info.photos).length === 0 &&
+                  <img className={classes.carruselImage} src={StoreFront} />
+                }
+                {profile.type === 'LIFE_BANK' && JSON.parse(profile.info.photos).length === 0 &&
+                  <img className={classes.carruselImage} src={LifebankIcon} />
+                }
                 <Fab className={classes.fabButton}>
                   <FavoriteIcon className={classes.iconFab} />
                 </Fab>
@@ -405,8 +439,8 @@ const InfoPage = () => {
                     <div className={classes.appBar}>
                       <Toolbar>
                         <Typography variant="subtitle1">
-                          Lifebank Location
-                      </Typography>
+                          Location
+                        </Typography>
                         <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
                           <CloseIcon color="secondary" />
                         </IconButton>
@@ -433,7 +467,7 @@ const InfoPage = () => {
                     <div className={classes.appBar}>
                       <Toolbar>
                         <Typography variant="subtitle1">
-                          {t('miscellaneous.lifebankSchedule')}
+                          {t('common.schedule')}
                         </Typography>
                         <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
                           <CloseIcon color="secondary" />
@@ -474,38 +508,54 @@ const InfoPage = () => {
                     ))}
                   </Box>
                   <Divider className={classes.divider} />
-                  <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{'Social media'}</Typography>
-                    <IconButton aria-label="close">
-                      <FacebookIcon />
-                    </IconButton>
-                    <IconButton aria-label="close">
-                      <TwitterIcon />
-                    </IconButton>
-                    <IconButton aria-label="close">
-                      <InstagramIcon />
-                    </IconButton>
-                  </Box>
-                  <Box style={{ display: profile.type === 'LIFE_BANK' ? 'block' : 'none' }} className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
-                    <Box className={classes.bloodDemand}>
-                      <Box className={classes.markLabel}>
-                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
-                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
-                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
-                      </Box>
-                      <Box className={classes.slider}>
-                        <Slider
-                          valueLabelDisplay="off"
-                          color="secondary"
-                          defaultValue={profile.info.blood_urgency_level}
-                          step={null}
-                          min={1}
-                          max={3}
-                        />
+                  {profile.type === 'SPONSOR' &&
+                    <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
+                      <Typography className={classes.boldText} variant="subtitle1">{'Social media'}</Typography>
+                      {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
+                        JSON.parse(profile.info.social_media_links).map((item, index) => (
+                          <>
+                            <IconButton
+                              key={index}
+                              aria-label={`${item.name}-icon-button`}
+                              href={item.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Icon>
+                                <img
+                                  src={getSocialMediaIcon(item.name)}
+                                  alt={`${item.name}-icon`}
+                                  height={25}
+                                  width={25}
+                                />
+                              </Icon>
+                            </IconButton>
+                          </>
+                        ))}
+                    </Box>
+                  }
+                  {profile.type === 'LIFE_BANK' &&
+                    <Box className={classes.midLabel}>
+                      <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
+                      <Box className={classes.bloodDemand}>
+                        <Box className={classes.markLabel}>
+                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
+                        </Box>
+                        <Box className={classes.slider}>
+                          <Slider
+                            valueLabelDisplay="off"
+                            color="secondary"
+                            defaultValue={profile.info.blood_urgency_level}
+                            step={null}
+                            min={1}
+                            max={3}
+                          />
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
+                  }
                 </div>
               </div>
             </div>
@@ -523,13 +573,19 @@ const InfoPage = () => {
             <div className={classes.contentBodySection}>
               <div className={classes.headerContent}>
                 <div className={classes.avatarSectionDesktop}>
-                  <img className={classes.avatarRoundDesktop} src="https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png" alt="Avatar" />
+                  <Avatar className={classes.avatarRoundDesktop} src={profile.info.logo_url || ""} alt="Avatar">
+                    {profile.type === 'SPONSOR' && <StorefrontIcon />}
+                    {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
+                  </Avatar>
                 </div>
                 <div className={classes.tituleSectionDesktop}>
                   <Typography className={classes.titleDesktop} noWrap>{profile.info.name}</Typography>
                 </div>
                 <div className={classes.subTituleSectionDesktop}>
-                  <Typography className={classes.subtitleDesktop} noWrap>Hospital</Typography>
+                  <Typography className={classes.subtitleDesktop} noWrap >
+                    {profile.type === 'SPONSOR' && profile.info.business_type}
+                    {profile.type === 'LIFE_BANK' && 'Donation Center'}
+                  </Typography>
                 </div>
               </div>
               <div className={classes.bodyDetailsDesktop}>
@@ -592,48 +648,88 @@ const InfoPage = () => {
                   ))}
                 </Box>
                 <Divider className={classes.divider} />
-                <Box className={classes.midLabel}>
-                  <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
-                  <Box className={classes.bloodDemand}>
-                    <Box className={classes.markLabel}>
-                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
-                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
-                      <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
-                    </Box>
-                    <Box className={classes.slider}>
-                      <Slider
-                        valueLabelDisplay="off"
-                        color="secondary"
-                        defaultValue={profile.info.blood_urgency_level}
-                        step={null}
-                        min={1}
-                        max={3}
-                      />
+                {profile.type === 'SPONSOR' &&
+                  <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{'Social media'}</Typography>
+                    {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
+                      JSON.parse(profile.info.social_media_links).map((item, index) => (
+                        <>
+                          <IconButton
+                            key={index}
+                            aria-label={`${item.name}-icon-button`}
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Icon>
+                              <img
+                                src={getSocialMediaIcon(item.name)}
+                                alt={`${item.name}-icon`}
+                                height={25}
+                                width={25}
+                              />
+                            </Icon>
+                          </IconButton>
+                        </>
+                      ))}
+                  </Box>
+                }
+                {profile.type === 'LIFE_BANK' &&
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
+                    <Box className={classes.bloodDemand}>
+                      <Box className={classes.markLabel}>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
+                      </Box>
+                      <Box className={classes.slider}>
+                        <Slider
+                          valueLabelDisplay="off"
+                          color="secondary"
+                          defaultValue={profile.info.blood_urgency_level}
+                          step={null}
+                          min={1}
+                          max={3}
+                        />
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
+                }
               </div>
             </div>
             <div className={classes.contentBodySection}>
               <div className={classes.imageSectionDesktop}>
-                <Carousel
-                  value={actualImageIndex}
-                  className={classes.carousel}
-                  onChange={(val) => setActualImageIndex(val)}
-                  plugins={[
-                    'arrows',
-                    {
-                      resolve: slidesToShowPlugin,
-                      options: {
-                        numberOfSlides: 1
+                {JSON.parse(profile.info.photos).length > 0 &&
+                  <Carousel
+                    value={actualImageIndex}
+                    className={classes.carousel}
+                    onChange={(val) => setActualImageIndex(val)}
+                    plugins={[
+                      'arrows',
+                      {
+                        resolve: slidesToShowPlugin,
+                        options: {
+                          numberOfSlides: 1
+                        }
                       }
-                    }
-                  ]}
-                >
-                  {JSON.parse(profile.info.photos).map((url, key) => (
-                    <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
-                  ))}
-                </Carousel>
+                    ]}
+                  >
+                    {JSON.parse(profile.info.photos).map((url, key) => (
+                      <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                    ))}
+                  </Carousel>
+                }
+                {profile.type === 'SPONSOR' && JSON.parse(profile.info.photos).length === 0 &&
+                  <div className={classes.desktopImageDefailt}>
+                    <img className={classes.desktopImageDefailt} src={StoreFront} />
+                  </div>
+                }
+                {profile.type === 'LIFE_BANK' && JSON.parse(profile.info.photos).length === 0 &&
+                  <div className={classes.desktopImageDefailt}>
+                    <img className={classes.carruselImage} src={LifebankIcon} />
+                  </div>
+                }
               </div>
             </div>
           </Box>
