@@ -105,9 +105,7 @@ const ConsetComponent = () => {
   }
 
   useEffect(() => {
-    if (currentUser) {
-      loadProfile()
-    }
+    if (currentUser) loadProfile()
 
   }, [currentUser])
 
@@ -176,12 +174,6 @@ const ConsetComponent = () => {
       </Snackbar>
     </>
   )
-}
-
-ConsetComponent.propTypes = {
-}
-
-ConsetComponent.defaultProps = {
 }
 
 export default ConsetComponent
