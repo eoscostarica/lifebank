@@ -33,9 +33,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SignupAccount = ({
-  data: { transaction_id: transactionId, account } = {}
-}) => {
+const SignupAccount = ({ account }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
@@ -55,29 +53,12 @@ const SignupAccount = ({
         </Typography>
       </Box>
       <Divider className={classes.divider} />
-
-      <Box className={classes.rowBox}>
-        <Typography variant="h6">{t('signup.transactionId')}</Typography>
-        <Typography variant="body1">
-          <Link
-            href={`${eosConfig.BLOCK_EXPLORER_URL}transaction/${transactionId}`}
-            target="_blank"
-            rel="noopener"
-            color="secondary"
-          >
-            {(transactionId || '').length
-              ? `${transactionId.substring(0, 9)}...`
-              : ''}
-          </Link>
-        </Typography>
-      </Box>
-      <Divider className={classes.divider} />
     </Box>
   )
 }
 
 SignupAccount.propTypes = {
-  data: PropTypes.object
+  account: PropTypes.string
 }
 
 SignupAccount.defaultProps = {}

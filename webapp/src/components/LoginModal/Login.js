@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -17,16 +18,18 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import FingerprintIcon from '@material-ui/icons/Fingerprint'
 
 import {
   LOGIN_MUTATION,
   VALIDATE_EMAIL,
-  GET_SECRET_BY_ACCOUNT
+  GET_SECRET_BY_ACCOUNT,
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
+
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -127,22 +130,37 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1px',
     color: '#121212',
     padding: '10px'
+  },
+  labelOption: {
+    color: `${theme.palette.primary.main} !important`,
+    marginLeft: theme.spacing(3),
+    fontSize: 14,
+    textTransform: 'capitalize'
+  },
+  iconOption: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    fontSize: 20
+  },
+  registerBtnSideBar: {
+    display: 'flex',
+    alignItems: 'center',
   }
 }))
 
-const LoginModal = () => {
+const LoginModal = ({ isNavBar, isSideBar }) => {
   const { t } = useTranslation('translations')
   const [maxWidth] = useState('md')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const classes = useStyles()
-  const history = useHistory()
+  const [open, setOpen] = useState(false)
+
   const [currentUser, { login }] = useUser()
   const [
     loginMutation,
     { loading, error, data: { login: loginResult } = {} }
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
-  const [open, setOpen] = useState(false)
+
 
   const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
     variables: {
@@ -229,20 +247,41 @@ const LoginModal = () => {
   useEffect(() => {
     if (loginResult) {
       login(loginResult.token)
+      setOpen(false)
     }
-  }, [loginResult, login])
+
+  }, [loginResult])
 
   useEffect(() => {
     if (currentUser) {
-      history.replace('/profile')
+      setOpen(false)
     }
-  }, [currentUser, history])
+
+  }, [currentUser])
 
   return (
     <>
-      <Button className={classes.btnLoginModal} onClick={handleOpen}>
-        {t('login.login')}
-      </Button>
+      {isNavBar && !currentUser &&
+        <Button className={classes.btnLoginModal} onClick={handleOpen}>
+          {t('login.login')}
+        </Button>
+      }
+      {isSideBar && !currentUser &&
+        <Box
+          className={classes.registerBtnSideBar}
+          onClick={handleOpen}
+        >
+          <FingerprintIcon className={classes.iconOption} />
+          <Link to="/">
+            <Typography
+              variant="body1"
+              className={classes.labelOption}
+            >
+              {t('login.login')}
+            </Typography>
+          </Link>
+        </Box>
+      }
       <Dialog
         maxWidth={maxWidth}
         open={open}
@@ -358,6 +397,16 @@ const LoginModal = () => {
       </Dialog>
     </>
   )
+}
+
+LoginModal.propTypes = {
+  isNavBar: PropTypes.bool,
+  isSideBar: PropTypes.bool,
+}
+
+LoginModal.defaultProps = {
+  isNavBar: false,
+  isSideBar: false
 }
 
 export default LoginModal

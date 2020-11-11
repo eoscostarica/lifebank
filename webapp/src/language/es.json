@@ -40,11 +40,13 @@
       "register": "Registro",
       "registerText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula lacinia lectus luctus dictum. Suspendisse finibus nisi sed aliquam semper. ",
       "sucessfulPreregistration": "Pre-registro exitoso",
+      "sucessfulRegistration": "Registro exitoso",
       "createAnewAccount": "Crear una nueva cuenta",
       "allYouNeed": "Para registrarte, lo único que tienes que poner es tu email y contraseña",
       "preRegisterAnewAccount": "Pre-registrar una nueva cuenta",
       "preRegistrationRequirement": "Para poder realizar el pre-registro, necesitas indicar la siguiente información, necesaria para la aprobación del banco de sangre",
-      "readOurTermsAndConditions": "Lee nuestros términos y condiciones",
+      "termsAndConditions": "Términos y condiciones",
+      "termsAndConditionsInfo": "Esta cuenta debe aceptar nuestros términos y condiciones para los contratos inteligentes. Puede revocar el consentimiento en cualquier momento.",
       "transactionId": "Id transacción",
       "password": "Contraseña",
       "confirmPassword": "Confirmar contraseña",
@@ -63,7 +65,9 @@
       "asAbank": "Como centro de donaciones",
       "about": "Acerca de",
       "aboutBusiness": "La descripción de su negocio aquí",
-      "aboutPlaceholder": "Acerca del LifeBank"
+      "aboutPlaceholder": "Acerca del LifeBank",
+      "consentGranted": "Consentimiento otorgado",
+      "consentError": "Error al otorgar consentimiento"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
@@ -277,7 +281,8 @@
       "bloodUrgency": "Urgencia de sangre",
       "schedule": "Horario",
       "save": "Guardar",
-      "saveChanges": "Guardar cambios"
+      "saveChanges": "Guardar cambios",
+      "currentLanguage": "es-CR"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",
