@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Transition = forwardRef(function Transition(props, ref) {
+const Transition = forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />
 })
 
