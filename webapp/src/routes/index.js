@@ -1,4 +1,3 @@
-import Dashboard from './Dashboard'
 import NotFound from './NotFound'
 import Donation from './Donation'
 import Profile from './Profile'
@@ -12,13 +11,7 @@ import InfoPage from './InfoPage'
 import Home from './Home'
 import EmailVerification from './EmailVerification'
 
-
 export default [
-  {
-    name: 'dashboard',
-    path: '/dashboard',
-    component: Dashboard
-  },
   {
     name: 'notFound',
     path: '/not-found',
