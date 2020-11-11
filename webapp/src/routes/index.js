@@ -1,5 +1,4 @@
 import NotFound from './NotFound'
-import Donation from './Donation'
 import Profile from './Profile'
 import EditProfile from './EditProfile'
 import About from './About'
@@ -27,11 +26,6 @@ export default [
     path: '/',
     component: Home,
     exact: true
-  },
-  {
-    name: 'donation',
-    path: '/donations',
-    component: Donation
   },
   {
     name: 'offer-page',
