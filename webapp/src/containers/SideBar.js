@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next'
 
 import LoginModal from '../components/LoginModal'
 import CredentialsRecovery from '../components/CredentialsRecovery'
-//import TokenTransfer from '../components/TokenTransfer'
 import Signup from '../components/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
