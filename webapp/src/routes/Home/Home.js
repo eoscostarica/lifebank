@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+
 import HomeMobile from './HomeMobile'
 import HomeDesktop from './HomeDesktop'
-
 import { GET_OFFERS_QUERY, GET_LOCATIONS_QUERY } from '../../gql'
+import ConsetComponent from '../../components/ConsetComponent/ConsentComponent'
 
 const Home = () => {
 
@@ -120,6 +121,7 @@ const Home = () => {
           loadingSponsors={loadingSponsors}
           applyFilters={applyFilters}
         />}
+      <ConsetComponent />
     </>
   )
 }

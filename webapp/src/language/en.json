@@ -40,11 +40,13 @@
       "register": "Register",
       "registerText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula lacinia lectus luctus dictum. Suspendisse finibus nisi sed aliquam semper. ",
       "sucessfulPreregistration": "Succesful preregistration",
+      "sucessfulRegistration": "Succesful registration",
       "createAnewAccount": "Create a new account",
       "allYouNeed": "To register, all you need to do is add your email and password.",
       "preRegisterAnewAccount": "Pre-register a new account",
       "preRegistrationRequirement": "To carry out the pre-registration, you must indicate the following data, necessary for the approval of the blood blank",
-      "readOurTermsAndConditions": "Read our Terms and Conditions",
+      "termsAndConditions": "Terms and Conditions",
+      "termsAndConditionsInfo": "This account needs to accept our terms and conditions for smart contracts. You can revoke consent at any time.",
       "transactionId": "Transaction Id",
       "password": "Password",
       "confirmPassword": "Confirm password",
@@ -63,7 +65,9 @@
       "asAbank": "As a donation center",
       "about": "About",
       "aboutBusiness": "Description about your business here",
-      "aboutPlaceholder": "About the LifeBank"
+      "aboutPlaceholder": "About the LifeBank",
+      "consentGranted": "Consent granted",
+      "consentError": "Error granting consent"
     },
     "login": {
       "letsStarted": "Let’s get started!",
