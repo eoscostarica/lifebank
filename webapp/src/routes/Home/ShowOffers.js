@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   list: {
     width: '100vw'
@@ -79,13 +79,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4)
   },
   offersGridContainer: {
+    overflowX: 'auto',
     overflow: 'auto',
     whiteSpace: 'nowrap',
     width: '100%',
+    height: '165px',
     marginTop: 15,
     marginBottom: 15,
-    paddingBottom: 5,
-    paddingLeft: 5,
+    padding: 5,
     '&::-webkit-scrollbar': {
       height: '0.5em'
     },

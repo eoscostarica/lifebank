@@ -281,7 +281,8 @@
       "bloodUrgency": "Urgencia de sangre",
       "schedule": "Horario",
       "save": "Guardar",
-      "saveChanges": "Guardar cambios"
+      "saveChanges": "Guardar cambios",
+      "currentLanguage": "es-CR"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",

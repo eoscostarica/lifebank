@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import { makeStyles } from '@material-ui/styles'
 import { useUser } from '../../context/user.context'
 import Grid from '@material-ui/core/Grid'
@@ -10,6 +11,9 @@ import Box from '@material-ui/core/Box'
 import SearchIcon from '@material-ui/icons/Search'
 import StarIcon from '@material-ui/icons/Star'
 import { useTranslation } from 'react-i18next'
+import IconButton from '@material-ui/core/IconButton'
+import MicIcon from '@material-ui/icons/Mic'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 import DonationsDashboard from '../../components/DonationsDashboard'
 import MapModal from '../../components/MapModal'
@@ -157,6 +161,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 15,
     marginRight: 15
   },
+  recordingIcon: {
+    color: '#ba0d0d'
+  },
   titleMainSection: {
     fontSize: '24px',
     fontWeight: 'normal',
@@ -171,6 +178,24 @@ const HomeDesktop = (props) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [currentUser] = useUser()
+  const [recording, setRecording] = React.useState(false)
+  const { transcript } = useSpeechRecognition()
+
+  const handleRecording = () => {
+    if (!recording) {
+      SpeechRecognition.startListening({ language: t('common.currentLanguage') })
+      setRecording(true)
+    }
+    else {
+      SpeechRecognition.stopListening()
+      props.handleChangeSearch(transcript)
+      setRecording(false)
+    }
+  }
+
+  useEffect(() => {
+    props.handleChangeSearch(transcript)
+  }, [transcript]);
 
   return (
     <>
@@ -216,8 +241,19 @@ const HomeDesktop = (props) => {
             className={classes.searchBar}
             placeholder={t('contentToolbar.inputPlaceholder')}
             InputProps={{
-              startAdornment: <SearchIcon className={classes.iconSeachBar} />
+              startAdornment: <SearchIcon className={classes.iconSeachBar} />,
+              endAdornment: <IconButton
+                className={clsx(classes.iconSeachBar, {
+                  [classes.recordingIcon]: recording
+                })}
+                onClick={handleRecording}
+              >
+                <MicIcon />
+              </IconButton>
+
             }}
+            value={props.searchValue}
+            onChange={(event) => props.handleChangeSearch(event.target.value)}
           />
         </Grid>
       </Grid>
@@ -274,7 +310,9 @@ HomeDesktop.propTypes = {
   loadingLifebanks: PropTypes.bool,
   sponsors: PropTypes.array,
   loadingSponsors: PropTypes.bool,
-  applyFilters: PropTypes.func
+  applyFilters: PropTypes.func,
+  searchValue: PropTypes.string,
+  handleChangeSearch: PropTypes.func
 }
 
 export default HomeDesktop
