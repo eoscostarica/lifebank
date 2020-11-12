@@ -433,13 +433,13 @@ const InfoPage = () => {
                     startIcon={<LocationOnIcon color="action" />}
                     onClick={handleClickOpen}
                   >
-                    Location
+                    {t('miscellaneous.location')}
                   </Button>
                   <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
                     <div className={classes.appBar}>
                       <Toolbar>
                         <Typography variant="subtitle1">
-                          Location
+                          {t('miscellaneous.location')}
                         </Typography>
                         <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
                           <CloseIcon color="secondary" />
