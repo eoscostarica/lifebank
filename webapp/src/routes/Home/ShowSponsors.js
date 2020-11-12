@@ -57,13 +57,13 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.25px'
   },
   sponsorsGridContainer: {
-    overflow: 'auto',
+    overflowX: 'auto',
     whiteSpace: 'nowrap',
     width: '100%',
+    height: '165px',
     marginTop: 15,
     marginBottom: 15,
-    paddingBottom: 5,
-    paddingLeft: 5,
+    padding: 5,
     '&::-webkit-scrollbar': {
       height: '0.5em'
     },

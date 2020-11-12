@@ -43,7 +43,7 @@ const App = ({ ual }) => {
 
   const getLifebanks = async () => {
     const { data } = await getLifebankData()
-    if (data && validSponsors.length === 0) setValidLifebanks(data.get_valid_lifebanks)
+    if (data && validLifebanks.length === 0) setValidLifebanks(data.get_valid_lifebanks)
   }
 
   useEffect(() => {
