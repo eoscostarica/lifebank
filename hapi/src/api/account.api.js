@@ -15,7 +15,9 @@ const vaultApi = require('./vault.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+const lifebankApi = require('./lifebank.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
+const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
 const GET_LIFEBANKS_ACCOUNTS = `
 query MyQuery {
@@ -57,7 +59,42 @@ const create = async ({ role, email, name, secret }) => {
 
   await historyApi.insert(transaction)
 
-  //mailApi.sendVerificationCode(email, verification_code)
+  try {
+    mailApi.sendVerificationCode(email, verification_code)
+  } catch (error) {
+    console.log(error)
+  }
+
+  return {
+    account,
+    token,
+    transaction_id: transaction.transaction_id
+  }
+}
+
+const createLifebank = async ({ email, name, secret, verification_code }) => {
+  const role = 'lifebank'
+  const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
+  const { password, transaction } = await eosUtils.createAccount(account)
+  const username = account
+  const token = jwtUtils.create({ role, username, account })
+
+  await userApi.insert({
+    role,
+    username,
+    account,
+    email,
+    secret,
+    name,
+    verification_code
+  })
+
+  await vaultApi.insert({
+    account,
+    password
+  })
+
+  await historyApi.insert(transaction)
 
   return {
     account,
@@ -284,9 +321,22 @@ const verifyEmail = async ({ code }) => {
   if (
     resUser.update_user.affected_rows !== 0 ||
     resLifebank.update_preregister_lifebank.affected_rows !== 0
-  )
+  ) {
+    if (resLifebank.update_preregister_lifebank.affected_rows !== 0) {
+      resLifebank.update_preregister_lifebank.returning[0] = lifebankApi.formatLifebankData(
+        resLifebank.update_preregister_lifebank.returning[0]
+      )
+      try {
+        mailApi.sendRegistrationRequest(
+          MAIL_APPROVE_LIFEBANNK,
+          resLifebank.update_preregister_lifebank.returning[0]
+        )
+      } catch (error) {
+        console.log(error)
+      }
+    }
     result = true
-
+  }
   return {
     is_verified: result
   }
@@ -368,6 +418,7 @@ const transfer = async (from, details) => {
 
 module.exports = {
   create,
+  createLifebank,
   getProfile,
   login,
   grantConsent,

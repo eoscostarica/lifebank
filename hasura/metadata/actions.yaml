@@ -11,6 +11,12 @@ actions:
     handler: http://hapi:9090/api/accounts
   permissions:
   - role: guest
+- name: create_account_lifebank
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/create-account-lifebank
+  permissions:
+  - role: guest
 - name: create_pre_register_lifebank
   definition:
     kind: synchronous
@@ -139,4 +145,5 @@ custom_types:
   - name: verify_email_output
   - name: ValidSponsor
   - name: ValidLifebank
+  - name: create_account_lifebank_output
   scalars: []

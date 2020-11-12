@@ -258,22 +258,31 @@
   - role: guest
     permission:
       columns:
-      - immunity_test
-      - id
-      - urgency_level
-      - created_at
-      - updated_at
       - address
       - coordinates
+      - created_at
       - description
       - email
+      - id
+      - immunity_test
       - invitation_code
       - name
       - password
       - phone
       - schedule
       - state
+      - updated_at
+      - urgency_level
+      - verification_code
       filter: {}
+  update_permissions:
+  - role: guest
+    permission:
+      columns:
+      - state
+      - verification_code
+      filter: {}
+      check: null
 - table:
     schema: public
     name: raster_columns

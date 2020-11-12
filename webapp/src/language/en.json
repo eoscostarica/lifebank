@@ -301,6 +301,10 @@
       "somethingHappened": "Something happened when trying to verify your email",
       "takeHome": "Take me home"
     },
+    "approveAccount": {
+      "accountapprove": "This account has been approved",
+      "somethingHappened": "Something happened when trying approve this account"
+    },
     "offersManagement": {
       "offersManagement": "Offers Management",
       "addOffer": "Add Offer",
