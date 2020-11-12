@@ -131,7 +131,8 @@
       "offers": "Ofertas",
       "banks": "Bancos",
       "sponsors": "Comercios",
-      "all": "All"
+      "all": "All",
+      "donationCenter": "Centro de donación"
     },
     "notFound": {
       "404Error": "404: La página que buscas no existe",
@@ -172,7 +173,8 @@
       "logo": "Logo",
       "urlSite": "URL del sitio",
       "images": "Imagenes",
-      "yourProfileIsNotComplete": "Tu perfil no está completo"
+      "yourProfileIsNotComplete": "Tu perfil no está completo",
+      "socialMedia": "Redes sociales"
     },
     "errors": {
       "authError": "Ha ocurrido un error con la autenticación"

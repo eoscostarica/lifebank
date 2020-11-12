@@ -131,7 +131,8 @@
       "offers": "Offers",
       "banks": "Banks",
       "sponsors": "Sponsors",
-      "all": "All"
+      "all": "All",
+      "donationCenter": "Donation center"
     },
     "notFound": {
       "404Error": "404: The page you are looking for isn’t here",
@@ -172,7 +173,8 @@
       "logo": "Logo",
       "urlSite": "URL site",
       "images": "Images",
-      "yourProfileIsNotComplete": "Your profile is not complete"
+      "yourProfileIsNotComplete": "Your profile is not complete",
+      "socialMedia": "Social medias"
     },
     "errors": {
       "authError": "Something happened with the authentication"

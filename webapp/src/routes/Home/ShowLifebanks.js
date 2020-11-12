@@ -200,7 +200,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
       style={{ textDecoration: 'none' }}
       to={{
         pathname: `info/${props.bank.user.username.replaceAll(' ', '-')}`,
-        state: { profile: props.bank }
+        state: { profile: props.bank, isLifebank: true }
       }}
     >
       <ListItem className={classes.listItem} button>
@@ -302,7 +302,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         style={{ textDecoration: 'none' }}
         to={{
           pathname: `info/${props.bank.user.username.replaceAll(' ', '-')}`,
-          state: { profile: props.bank }
+          state: { profile: props.bank, isLifebank: true }
         }}
       >
         <Button color="primary" className={classes.cardActionButton}>
