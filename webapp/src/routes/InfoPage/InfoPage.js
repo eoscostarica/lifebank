@@ -564,7 +564,6 @@ const InfoPage = () => {
       </>
     )
   }
-
   const DesktopInfoPage = () => {
     return (
       <>
