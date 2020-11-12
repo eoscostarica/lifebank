@@ -391,7 +391,7 @@ const InfoPage = () => {
               <Typography className={classes.title} noWrap >{profile.info.name}</Typography>
               <Typography className={classes.subtitle} noWrap >
                 {profile.type === 'SPONSOR' && profile.info.business_type}
-                {profile.type === 'LIFE_BANK' && 'Donation Center'}
+                {profile.type === 'LIFE_BANK' && t('miscellaneous.donationCenter')}
               </Typography>
             </div>
             <div className={classes.bodyCard}>
@@ -510,7 +510,7 @@ const InfoPage = () => {
                   <Divider className={classes.divider} />
                   {profile.type === 'SPONSOR' &&
                     <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">{'Social media'}</Typography>
+                      <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
                       {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
                         JSON.parse(profile.info.social_media_links).map((item, index) => (
                           <>
@@ -584,7 +584,7 @@ const InfoPage = () => {
                 <div className={classes.subTituleSectionDesktop}>
                   <Typography className={classes.subtitleDesktop} noWrap >
                     {profile.type === 'SPONSOR' && profile.info.business_type}
-                    {profile.type === 'LIFE_BANK' && 'Donation Center'}
+                    {profile.type === 'LIFE_BANK' && t('miscellaneous.donationCenter')}
                   </Typography>
                 </div>
               </div>
@@ -619,7 +619,7 @@ const InfoPage = () => {
                     <div className={classes.appBar}>
                       <Toolbar>
                         <Typography variant="subtitle1">
-                          {t('miscellaneous.lifebankLocation')}
+                          {t('miscellaneous.location')}
                         </Typography>
                         <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
                           <CloseIcon color="secondary" />
@@ -650,7 +650,7 @@ const InfoPage = () => {
                 <Divider className={classes.divider} />
                 {profile.type === 'SPONSOR' &&
                   <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{'Social media'}</Typography>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
                     {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
                       JSON.parse(profile.info.social_media_links).map((item, index) => (
                         <>
