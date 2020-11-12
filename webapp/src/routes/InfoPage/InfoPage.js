@@ -513,24 +513,22 @@ const InfoPage = () => {
                       <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
                       {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
                         JSON.parse(profile.info.social_media_links).map((item, index) => (
-                          <>
-                            <IconButton
-                              key={index}
-                              aria-label={`${item.name}-icon-button`}
-                              href={item.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <Icon>
-                                <img
-                                  src={getSocialMediaIcon(item.name)}
-                                  alt={`${item.name}-icon`}
-                                  height={25}
-                                  width={25}
-                                />
-                              </Icon>
-                            </IconButton>
-                          </>
+                          <IconButton
+                            key={index}
+                            aria-label={`${item.name}-icon-button`}
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Icon>
+                              <img
+                                src={getSocialMediaIcon(item.name)}
+                                alt={`${item.name}-icon`}
+                                height={25}
+                                width={25}
+                              />
+                            </Icon>
+                          </IconButton>
                         ))}
                     </Box>
                   }
