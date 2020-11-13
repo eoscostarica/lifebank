@@ -1,5 +1,5 @@
-const { eosConfig } = require('../config')
 const { lifebankcodeUtils } = require('../utils')
+const { eosConfig } = require('../config')
 
 const accountApi = require('./account.api')
 const historyApi = require('./history.api')
@@ -9,6 +9,7 @@ const locationApi = require('./location.api')
 const preregisterApi = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+
 const {
   constants: {
     ENUM_DATA: { LOCATION_TYPES }
@@ -91,13 +92,13 @@ const signup = async (account, profile) => {
   await accountApi.grantConsent(account)
 
   const password = await vaultApi.getPassword(LIFE_BANK_CODE)
-  const addSponsorTransaction = await lifebankcodeUtils.addLifebank(
+  const addLifebankTransaction = await lifebankcodeUtils.addLifebank(
     LIFE_BANK_CODE,
     password,
     profile
   )
 
-  await historyApi.insert(addSponsorTransaction)
+  await historyApi.insert(addLifebankTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
 
   await locationApi.insert({
@@ -112,33 +113,8 @@ const signup = async (account, profile) => {
   })
 }
 
-const formatSchedule = (schedule) => {
-  let scheduleFormat = ''
-
-  let hours
-  for (hours of schedule)
-    scheduleFormat += `, ${hours.day} ${hours.open} - ${hours.close}`
-
-  return scheduleFormat.replace(',', ' ')
-}
-
-const formatLifebankData = (lifebankData) => {
-  lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
-  lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
-  if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'
-  else lifebankData.immunity_test = 'No'
-
-  if (lifebankData.urgency_level === 1) lifebankData.urgency_level = 'Low'
-  else if (lifebankData.urgency_level === 2)
-    lifebankData.urgency_level = 'Medium'
-  else lifebankData.urgency_level = 'High'
-
-  return lifebankData
-}
-
 module.exports = {
   preRegister,
   editProfile,
-  signup,
-  formatLifebankData
+  signup
 }

@@ -48,11 +48,15 @@ const addLifebank = (
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
-          about: profile.about || '',
-          telephones: profile.telephones || '',
-          photos: profile.photos || '',
-          logo_url: profile.logo_url || '',
-          social_media_links: profile.social_media_links || '',
+          about: profile.about || ' ',
+          address: profile.address || 'prueba',
+          telephones: profile.telephones || ' ',
+          photos: profile.photos || ' ',
+          logo_url: profile.logo_url || ' ',
+          blood_urgency_level: profile.blood_urgency_level || 1,
+          schedule: profile.schedule,
+          email: profile.email,
+          social_media_links: profile.social_media_links || ' ',
           ...profile
         }
       }
@@ -84,11 +88,15 @@ const upLifebank = (
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
-          about: profile.about || '',
-          telephones: profile.telephones || '',
-          photos: profile.photos || '',
-          logo_url: profile.logo_url || '',
-          social_media_links: profile.social_media_links || '',
+          about: profile.about || ' ',
+          address: profile.address || 'prueba',
+          telephones: profile.telephones || ' ',
+          photos: profile.photos || ' ',
+          logo_url: profile.logo_url || ' ',
+          blood_urgency_level: profile.blood_urgency_level || 1,
+          schedule: profile.schedule,
+          email: profile.email,
+          social_media_links: profile.social_media_links || ' ',
           ...profile
         }
       }
