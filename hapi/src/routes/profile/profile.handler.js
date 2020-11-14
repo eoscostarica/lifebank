@@ -6,7 +6,7 @@ const { accountApi } = require('../../api')
 module.exports = async ({ auth: { credentials } }) => {
   try {
     const profile = await accountApi.getProfile(credentials.sub)
-
+    console.log("profile.handler", profile)
     return {
       profile
     }

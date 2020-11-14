@@ -72,6 +72,7 @@ const ConsetComponent = () => {
   const classes = useStyles()
   const [openConsent, setOpenConsent] = useState(false)
   const [openAlert, setOpenAlert] = useState(false)
+  const [profileData, setprofile] = useState()
   const [messegaAlert, setMessegaAlert] = useState("false")
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -91,8 +92,9 @@ const ConsetComponent = () => {
   }
 
   const handleSingup = () => {
-    const { username, secret, ...profile } = currentUser
-
+    console.log("profile 3: ", profile)
+    //const { username, secret, ...profile } = currentUser
+    //console.log("profile 3: ", profile)
     signup({
       variables: {
         profile
@@ -110,8 +112,11 @@ const ConsetComponent = () => {
   }, [currentUser])
 
   useEffect(() => {
-    if (currentUser && profile && !profile.consent) handleOpenConsent()
-
+    if (currentUser && profile && !profile.consent) {
+      setprofile(profile)
+      handleOpenConsent()
+    }
+    console.log("Profile:", profile)
   }, [profile])
 
   useEffect(() => {
