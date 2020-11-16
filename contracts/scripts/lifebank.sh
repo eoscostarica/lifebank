@@ -51,17 +51,17 @@ create_lifebank_accounts() {
         cleos -u $EOS_API_URL system newaccount eosio \
             --transfer $account \
             $EOS_PUB_KEY \
-            --stake-net "10000.0000 EOS" \
-            --stake-cpu "10000.0000 EOS" \
+            --stake-net "10000 EOS" \
+            --stake-cpu "10000 EOS" \
             --buy-ram-kbytes 8192
     done
 }
 
 assign_resources() {
     cleos -u $EOS_API_URL get account lbacccreator 
-    cleos -u $EOS_API_URL system buyram eosio lbacccreator "10000.0000 EOS"
+    cleos -u $EOS_API_URL system buyram eosio lbacccreator "10000 EOS"
     cleos -u $EOS_API_URL get account lbacccreator 
-    cleos -u $EOS_API_URL transfer eosio lbacccreator "10000000.0000 EOS" "Lifebank initial funding"
+    cleos -u $EOS_API_URL transfer eosio lbacccreator "10000000 EOS" "Lifebank initial funding"
 }
 
 deploy_lifebank_contracts() {
@@ -136,7 +136,7 @@ create_community() {
         "community_asset":"0 LIFE",
         "description":"LifeBank development Instance",
         "logo":"https://raw.githubusercontent.com/eoscostarica/lifebank/master/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg",
-        "maximum_supply":"1000000.0000 LIFE"
+        "maximum_supply":"1000000 EOS"
     }' -p lifebankcode@active
 }
 
@@ -154,7 +154,7 @@ register_lifebank() {
         "schedule": "[{\"day\":\"Monday\",\"open\":\"06:00am\",\"close\":\"4:00pm\"},{\"day\":\"Wednesday\",\"open\":\"06:00am\",\"close\":\"4:00pm\"},{\"day\":\"Sunday\",\"open\":\"08:00am\",\"close\":\"10:00am\"}]",
         "telephones": "[\"800-800-100\"]",
         "lifebank_name":"Banco de sangre Siquirres",
-        "community_asset":"0 LIFE",
+        "community_asset":"0 EOS",
         "has_immunity_test":true,
         "social_media_links":"[]",
         "blood_urgency_level":2,
@@ -166,7 +166,7 @@ register_donor() {
     cleos -u $EOS_API_URL push action consent2life consent push action lifebankcode adddonor \
     '{
         "account":"donorprueba1",
-        "community_asset":"0 LIFE"
+        "community_asset":"0 EOS"
     }' -p donorprueba1@active
 }
 
@@ -183,7 +183,7 @@ register_sponsor() {
         "business_type":"Construction",
         "schedule":"[{\"day\":\"Sunday\",\"open\":\"06:00\",\"close\":\"16:00\"},{\"day\":\"Friday\",\"open\":\"06:00\",\"close\":\"16:00\"},{\"day\":\"Saturday\",\"open\":\"06:00\",\"close\":\"16:00\"}]",
         "email":"garber@lifebank.io",
-        "community_asset":"0 LIFE",
+        "community_asset":"0 EOS",
         "location":"{\"latitude\":40.746434642148586,\"longitude\":-74.00169825211302}",
         "address": "CQ San Carlos",
         "logo_url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
@@ -207,7 +207,7 @@ test_token_lifecycle() {
     '{
         "from":"donorprueba1",
         "to":"sponsprueba1",
-        "quantity":"2 LIFE",
+        "quantity":"2 EOS",
         "memo":"por darme un descuento"
     }' -p donorprueba1@active
 
@@ -216,7 +216,7 @@ test_token_lifecycle() {
     '{
         "from":"sponsprueba1",
         "to":"12letterlife",
-        "quantity":"2 LIFE",
+        "quantity":"2 EOS",
         "memo":"para que sigan recibiendo donaciones"
     }' -p sponsprueba1@active
 
