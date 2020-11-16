@@ -14,7 +14,6 @@ import Link from '@material-ui/core/Link'
 import { useQuery } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 import '@brainhubeu/react-carousel/lib/style.css'
-import 'date-fns'
 
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -128,7 +127,10 @@ const ProfilePageLifebank = ({ profile }) => {
       pendingFieldsObject = { ...pendingFieldsObject, about: false }
 
     if (!profile.blood_urgency_level)
-      pendingFieldsObject = { ...pendingFieldsObject, blood_urgency_level: false }
+      pendingFieldsObject = {
+        ...pendingFieldsObject,
+        blood_urgency_level: false
+      }
 
     if (Object.keys(pendingFieldsObject).length > 0)
       setPendingFields(pendingFieldsObject)
@@ -199,13 +201,18 @@ const ProfilePageLifebank = ({ profile }) => {
       </div>
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">{t('profile.logo')}</Typography>
-        <img className={classes.img} src={profile.logo_url} alt='logo image' />
+        <img className={classes.img} src={profile.logo_url} alt="logo image" />
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
-        <Typography style={{ marginRight: '6px' }} noWrap variant="subtitle1">{t('profile.urlSite')}</Typography>
+        <Typography style={{ marginRight: '6px' }} noWrap variant="subtitle1">
+          {t('profile.urlSite')}
+        </Typography>
         <Typography style={{ marginLeft: '36px' }} noWrap variant="body1">
-          <a variant="body1" href={`https://lifebank.io/info/${userName}`}> {`lifebank.io/info/${userName}`}</a>
+          <a variant="body1" href={`https://lifebank.io/info/${userName}`}>
+            {' '}
+            {`lifebank.io/info/${userName}`}
+          </a>
         </Typography>
       </Box>
       <Divider className={classes.divider} />
@@ -247,9 +254,16 @@ const ProfilePageLifebank = ({ profile }) => {
         <Typography variant="subtitle1">{t('common.telephone')}</Typography>
       </Box>
       <Box style={{ textAlign: 'right', width: '100%', paddingRight: '1%' }}>
-        {JSON.parse(profile.telephones).length > 0 && JSON.parse(profile.telephones).map((phoneNumber, index) => (
-          <Typography className={classes.telephonesStyle} key={index} variant="body1">{phoneNumber}</Typography>
-        ))}
+        {JSON.parse(profile.telephones).length > 0 &&
+          JSON.parse(profile.telephones).map((phoneNumber, index) => (
+            <Typography
+              className={classes.telephonesStyle}
+              key={index}
+              variant="body1"
+            >
+              {phoneNumber}
+            </Typography>
+          ))}
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
@@ -292,9 +306,7 @@ const ProfilePageLifebank = ({ profile }) => {
         showButton={false}
       />
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">
-          {t('signup.about')}
-        </Typography>
+        <Typography variant="subtitle1">{t('signup.about')}</Typography>
         <Typography variant="body1" />
       </Box>
       <TextField
@@ -335,7 +347,13 @@ const ProfilePageLifebank = ({ profile }) => {
         py={2}
       />
       <Divider className={classes.divider} />
-      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false, userName: userName } }} className={classes.editBtn}>
+      <LinkRouter
+        to={{
+          pathname: '/edit-profile',
+          state: { isCompleting: false, userName: userName }
+        }}
+        className={classes.editBtn}
+      >
         <Button variant="contained" color="primary">
           {t('common.edit')}
         </Button>

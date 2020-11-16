@@ -42,6 +42,7 @@ export const CREATE_OFFER_MUTATION = gql`
       start_date
       end_date
       offer_name
+      cost_in_tokens
       active
     }
   }

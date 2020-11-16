@@ -362,7 +362,8 @@
       "noProvidedDate": "Sin fecha",
       "youHaveNoAddedOffers": "No tienes ofertas agregadas",
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
-      "yesDeleteIt": "Si, borrar"
+      "yesDeleteIt": "Si, borrar",
+      "selectDateRange": "Seleccione el rango de fecha"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",

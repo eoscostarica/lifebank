@@ -137,31 +137,35 @@ const OfferDetails = ({ offer, open, setOpen }) => {
                 {offer.offer_type}
               </ListItemText>
             </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <StyleIcon color="secondary" />
-              </ListItemIcon>
-              <ListItemText>
-                <strong>{t('offersManagement.costInTokens')}: </strong>{' '}
-                {offer.cost_in_tokens}
-              </ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <BallotIcon color="secondary" />
-              </ListItemIcon>
-              <ListItemText>
-                <strong>{t('offersManagement.quantity')}: </strong>{' '}
-                {offer.quantity}
-              </ListItemText>
-            </ListItem>
+            {offer.cost_in_tokens && (
+              <ListItem>
+                <ListItemIcon>
+                  <StyleIcon color="secondary" />
+                </ListItemIcon>
+                <ListItemText>
+                  <strong>{t('offersManagement.costInTokens')}: </strong>{' '}
+                  {offer.cost_in_tokens}
+                </ListItemText>
+              </ListItem>
+            )}
+            {offer.quantity && (
+              <ListItem>
+                <ListItemIcon>
+                  <BallotIcon color="secondary" />
+                </ListItemIcon>
+                <ListItemText>
+                  <strong>{t('offersManagement.quantity')}: </strong>{' '}
+                  {offer.quantity}
+                </ListItemText>
+              </ListItem>
+            )}
             <ListItem>
               <ListItemIcon>
                 {offer.online_only ? (
                   <LocationOffIcon color="secondary" />
                 ) : (
-                    <LocationOnIcon color="secondary" />
-                  )}
+                  <LocationOnIcon color="secondary" />
+                )}
               </ListItemIcon>
               <ListItemText>
                 {offer.online_only

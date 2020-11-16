@@ -362,7 +362,8 @@
       "noProvidedDate": "No provided date",
       "youHaveNoAddedOffers": "You have no added offers",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
-      "yesDeleteIt": "Yes, delete it"
+      "yesDeleteIt": "Yes, delete it",
+      "selectDateRange": "Select date range"
     },
     "offerView": {
       "selectedOffer": "Selected offer",
