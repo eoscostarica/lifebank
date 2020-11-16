@@ -5,7 +5,6 @@ import About from './About'
 import TermsOfUse from './TermsOfUse'
 import Help from './Help'
 import OffersManagement from './OffersManagement'
-import OfferPage from './OfferPage'
 import InfoPage from './InfoPage'
 import Home from './Home'
 import EmailVerification from './EmailVerification'
@@ -26,11 +25,6 @@ export default [
     path: '/',
     component: Home,
     exact: true
-  },
-  {
-    name: 'offer-page',
-    path: '/offer/:id',
-    component: OfferPage
   },
   {
     name: 'email-verificatio',
