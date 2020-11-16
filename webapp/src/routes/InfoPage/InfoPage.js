@@ -40,32 +40,72 @@ import Nearby from '../../components/Nearby/Nerby'
 
 
 const useStyles = makeStyles((theme) => ({
-  cardBody: {
+  contentBodyMobile: {
     width: '100%',
     backgroundColor: '#ffffff',
-    marginBottom: '0',
-    paddingTop: '16px'
   },
-  headerCardBody: {
+  headerBodyMobile: {
+    marginTop: '20px',
+    marginBottom: '20px',
+    position: 'relative',
     width: '100%',
-    position: "relative"
+    height: 'auto',
   },
   avatarRound: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    margin: '10px'
+    width: '45px',
+    height: '45px',
+    marginLeft: 20,
   },
-  bodyCard: {
-    width: '100%',
+  title: {
+    width: '75%',
+    height: '25px',
+    fontFamily: 'Roboto',
+    fontSize: '20px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '0.15px',
+    color: 'rgba(0, 0, 0, 0.87)',
+    position: 'absolute',
+    top: 3,
+    left: 80
+  },
+  subtitle: {
+    width: '75%',
+    height: '20px',
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.6)',
+    position: 'absolute',
+    top: 28,
+    left: 80
   },
   imageSection: {
     position: 'relative',
-    marginTop: '30px',
     width: '100%'
   },
+  carousel: {
+    maxWidth: '100%',
+    height: '100%',
+    height: '200px',
+  },
+  containerImageDefault: {
+    width: '100%',
+    height: '200px',
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
   detailsSection: {
-    width: '100%'
+    width: '100%',
+    marginTop: '20px',
   },
   headerDetails: {
     width: '50%',
@@ -89,36 +129,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff',
     zIndex: 1
   },
-  title: {
-    width: '75%',
-    height: '25px',
-    fontFamily: 'Roboto',
-    fontSize: '20px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 'normal',
-    letterSpacing: '0.15px',
-    color: 'rgba(0, 0, 0, 0.87)',
-    position: 'absolute',
-    top: 10,
-    left: 65
-  },
-  subtitle: {
-    width: '75%',
-    height: '20px',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    position: 'absolute',
-    top: 35,
-    left: 65
-  },
   label: {
     height: '16px',
     fontFamily: 'Roboto',
@@ -134,11 +144,6 @@ const useStyles = makeStyles((theme) => ({
   carruselImage: {
     height: '100%',
     width: '100%',
-  },
-  carousel: {
-    backgroundColor: "green",
-    maxWidth: '100%',
-    height: '100%'
   },
   divider: {
     width: '100%'
@@ -165,7 +170,10 @@ const useStyles = makeStyles((theme) => ({
   midLabel: {
     marginRight: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      marginLeft: theme.spacing(1),
+    }
   },
   appBar: {
     position: 'sticky',
@@ -395,12 +403,12 @@ const InfoPage = () => {
     if (profile && profile.type === 'SPONSOR') profile.info.social_media_links = JSON.parse(profile.info.social_media_links)
   }, [location])
 
-  const MovileInfoPage = () => {
+  const MobileInfoPage = () => {
     return (
       <>
         {profile &&
-          <Box className={classes.cardBody}>
-            <div className={classes.headerCardBody}>
+          <Box className={classes.contentBodyMobile}>
+            <Box className={classes.headerBodyMobile}>
               <Avatar className={classes.avatarRound} src={profile.info.logo_url || ""} alt="Avatar">
                 {profile.type === 'SPONSOR' && <StorefrontIcon />}
                 {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
@@ -410,170 +418,167 @@ const InfoPage = () => {
                 {profile.type === 'SPONSOR' && profile.info.business_type}
                 {profile.type === 'LIFE_BANK' && t('miscellaneous.donationCenter')}
               </Typography>
-            </div>
-            <div className={classes.bodyCard}>
-              <div className={classes.imageSection}>
-                {JSON.parse(profile.info.photos).length > 0 &&
-                  <Carousel
-                    value={actualImageIndex}
-                    className={classes.carousel}
-                    onChange={(val) => setActualImageIndex(val)}
-                    plugins={[
-                      'arrows',
-                      {
-                        resolve: slidesToShowPlugin,
-                        options: {
-                          numberOfSlides: 1
-                        }
+            </Box>
+            <Box className={classes.imageSection}>
+              {JSON.parse(profile.info.photos).length > 0 &&
+                <Carousel
+                  value={actualImageIndex}
+                  className={classes.carousel}
+                  onChange={(val) => setActualImageIndex(val)}
+                  plugins={[
+                    'arrows',
+                    {
+                      resolve: slidesToShowPlugin,
+                      options: {
+                        numberOfSlides: 1
                       }
-                    ]}
-                  >
-                    {JSON.parse(profile.info.photos).map((url, key) => (
-                      <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
-                    ))}
-                  </Carousel>
-                }
-                {profile.type === 'SPONSOR' && JSON.parse(profile.info.photos).length === 0 &&
-                  <img className={classes.carruselImage} src={StoreFront} />
-                }
-                {profile.type === 'LIFE_BANK' && JSON.parse(profile.info.photos).length === 0 &&
-                  <img className={classes.carruselImage} src={LifebankIcon} />
-                }
-                <Fab className={classes.fabButton}>
-                  <FavoriteIcon className={classes.iconFab} />
-                </Fab>
-              </div>
-              <div className={classes.detailsSection}>
-                <div className={classes.headerDetails}>
-                  <Button
-                    className={classes.label}
-                    startIcon={<LocationOnIcon color="action" />}
-                    onClick={handleClickOpen}
-                  >
-                    {t('miscellaneous.location')}
-                  </Button>
-                  <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-                    <div className={classes.appBar}>
-                      <Toolbar>
-                        <Typography variant="subtitle1">
-                          {t('miscellaneous.location')}
-                        </Typography>
-                        <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
-                          <CloseIcon color="secondary" />
-                        </IconButton>
-                      </Toolbar>
-                    </div>
-                    <MapShowOneLocation
-                      markerLocation={profile.info.geolocation}
-                      accountProp={profile.account}
-                      width="100%"
-                      height="100%"
-                      py={2}
+                    }
+                  ]}
+                >
+                  {JSON.parse(profile.info.photos).map((url, key) => (
+                    <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                  ))}
+                </Carousel>
+              }
+              {profile.type === 'SPONSOR' && JSON.parse(profile.info.photos).length === 0 &&
+                <Box className={classes.containerImageDefault}>
+                  <StorefrontIcon className={classes.desktopImageDefault} />
+                </Box>
+              }
+              {profile.type === 'LIFE_BANK' && JSON.parse(profile.info.photos).length === 0 &&
+                <Box className={classes.containerImageDefault}>
+                  <LocalHospitalIcon className={classes.desktopImageDefault} />
+                </Box>
+              }
+              <Fab className={classes.fabButton}>
+                <FavoriteIcon className={classes.iconFab} />
+              </Fab>
+            </Box>
+            <Box className={classes.detailsSection}>
+              <Box className={classes.headerDetails}>
+                <Button
+                  className={classes.label}
+                  startIcon={<LocationOnIcon color="action" />}
+                  onClick={handleClickOpen}
+                >
+                  {t('miscellaneous.location')}
+                </Button>
+                <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                  <Box className={classes.appBar}>
+                    <Toolbar>
+                      <Typography variant="subtitle1">
+                        {t('miscellaneous.location')}
+                      </Typography>
+                      <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                        <CloseIcon color="secondary" />
+                      </IconButton>
+                    </Toolbar>
+                  </Box>
+                  <MapShowOneLocation
+                    markerLocation={profile.info.geolocation}
+                    accountProp={profile.account}
+                    width="100%"
+                    height="100%"
+                    py={2}
+                  />
+                </Dialog>
+              </Box>
+              <Box className={classes.headerDetails}>
+                <Button
+                  className={classes.label}
+                  startIcon={<CalendarTodayIcon color="action" />}
+                  onClick={handleClickOpenSchedule}
+                >
+                  {t('common.schedule')}
+                </Button>
+                <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
+                  <Box className={classes.appBar}>
+                    <Toolbar>
+                      <Typography variant="subtitle1">
+                        {t('common.schedule')}
+                      </Typography>
+                      <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
+                        <CloseIcon color="secondary" />
+                      </IconButton>
+                    </Toolbar>
+                  </Box>
+                  {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map((schedule, index) => (
+                    <ScheduleItem
+                      key={index}
+                      id={index}
+                      schedule={schedule}
                     />
-                  </Dialog>
-                </div>
-                <div className={classes.headerDetails}>
-                  <Button
-                    className={classes.label}
-                    startIcon={<CalendarTodayIcon color="action" />}
-                    onClick={handleClickOpenSchedule}
-                  >
-                    {t('common.schedule')}
-                  </Button>
-                  <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
-                    <div className={classes.appBar}>
-                      <Toolbar>
-                        <Typography variant="subtitle1">
-                          {t('common.schedule')}
-                        </Typography>
-                        <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
-                          <CloseIcon color="secondary" />
+                  ))}
+                </Dialog>
+              </Box>
+              <Box className={classes.bodyDetails}>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
+                  <Typography className={classes.text} variant="body1"> {profile.info.about}
+                  </Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
+                  <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
+                  <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
+                  {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
+                    <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
+                  ))}
+                </Box>
+                <Divider className={classes.divider} />
+                {profile.type === 'SPONSOR' &&
+                  <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
+                    {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
+                      JSON.parse(profile.info.social_media_links).map((item, index) => (
+                        <IconButton
+                          key={index}
+                          aria-label={`${item.name}-icon-button`}
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {item.name === "facebook" && <FacebookIcon className={classes.socialIcon} />}
+                          {item.name === "twitter" && <TwitterIcon className={classes.socialIcon} />}
+                          {item.name === "instagram" && <InstagramIcon className={classes.socialIcon} />}
                         </IconButton>
-                      </Toolbar>
-                    </div>
-                    {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map((schedule, index) => (
-                      <ScheduleItem
-                        key={index}
-                        id={index}
-                        schedule={schedule}
-                      />
-                    ))}
-                  </Dialog>
-                </div>
-                <div className={classes.bodyDetails}>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
-                    <Typography className={classes.text} variant="body1"> {profile.info.about}
-                    </Typography>
+                      ))}
                   </Box>
-                  <Divider className={classes.divider} />
+                }
+                {profile.type === 'LIFE_BANK' &&
                   <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
-                    <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
-                    <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
-                    {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
-                      <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
-                    ))}
-                  </Box>
-                  <Divider className={classes.divider} />
-                  {profile.type === 'SPONSOR' &&
-                    <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
-                      {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
-                        JSON.parse(profile.info.social_media_links).map((item, index) => (
-                          <IconButton
-                            key={index}
-                            aria-label={`${item.name}-icon-button`}
-                            href={item.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Icon>
-                              <img
-                                src={getSocialMediaIcon(item.name)}
-                                alt={`${item.name}-icon`}
-                                height={25}
-                                width={25}
-                              />
-                            </Icon>
-                          </IconButton>
-                        ))}
-                    </Box>
-                  }
-                  {profile.type === 'LIFE_BANK' &&
-                    <Box className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
-                      <Box className={classes.bloodDemand}>
-                        <Box className={classes.markLabel}>
-                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
-                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
-                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
-                        </Box>
-                        <Box className={classes.slider}>
-                          <Slider
-                            valueLabelDisplay="off"
-                            color="secondary"
-                            defaultValue={profile.info.blood_urgency_level}
-                            step={null}
-                            min={1}
-                            max={3}
-                          />
-                        </Box>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
+                    <Box className={classes.bloodDemand}>
+                      <Box className={classes.markLabel}>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
+                      </Box>
+                      <Box className={classes.slider}>
+                        <Slider
+                          valueLabelDisplay="off"
+                          color="secondary"
+                          defaultValue={profile.info.blood_urgency_level}
+                          step={null}
+                          min={1}
+                          max={3}
+                        />
                       </Box>
                     </Box>
-                  }
-                </div>
-              </div>
-            </div>
+                  </Box>
+                }
+              </Box>
+            </Box>
           </Box>
         }
       </>
@@ -746,7 +751,7 @@ const InfoPage = () => {
   return (
     <>
       {!isDesktop &&
-        <MovileInfoPage />
+        <MobileInfoPage />
       }
       {isDesktop &&
         <DesktopInfoPage />
