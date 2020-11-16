@@ -116,7 +116,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         : [],
     business_type: profile.business_type,
     covid_impact: profile.covid_impact,
-    geolocation: profile.location ? JSON.parse(profile.location) : null,
+    geolocation: profile.geolocation ? JSON.parse(profile.geolocation) : null,
     schedule: profile.schedule,
     photos:
       profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
@@ -134,7 +134,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   )
 
   const handleOnGeolocationChange = useCallback(
-    (geolocation) => setUser({ ...user, geolocation: geolocation }),
+    (geolocation) => setUser((prev) => ({ ...prev, geolocation: geolocation })),
     [user.geolocation]
   )
 
@@ -179,8 +179,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
     onSubmit(userToSubmit)
   }
-
-  console.log(profile)
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -305,21 +303,25 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           }}
           className={classes.textField}
         />
-        <Telephones
-          phones={user.telephones}
-          showDelete
-          deletePhone={(phone) =>
-            setUser({
-              ...user,
-              telephones: user.telephones.filter((p) => p !== phone)
-            })
-          }
-        />
-
+        {user.telephones.length > 0 && (
+          <Telephones
+            phones={user.telephones}
+            showDelete
+            deletePhone={(phone) =>
+              setUser({
+                ...user,
+                telephones: user.telephones.filter((p) => p !== phone)
+              })
+            }
+          />
+        )}
+        <br />
         <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
           style={{ display: isCompleting && profile.schedule ? 'none' : '' }}
-          width="100%"
-          className={classes.textField}
+          width="60%"
         >
           <Schedule
             handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
@@ -328,7 +330,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             showSchedule
           />
         </Box>
-
         <TextField
           id="about"
           style={{
@@ -395,7 +396,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           }}
           label={t('editProfile.photoUrl')}
           variant="outlined"
-          placeholder={t('editProfile.photourlPlaceholder')}
+          placeholder={t('editProfile.photoUrlPlaceholder')}
           fullWidth
           inputRef={photoUrlValueRef}
           onChange={(e) => setDisablePhotoUrlInput(e.target.value.length === 0)}
