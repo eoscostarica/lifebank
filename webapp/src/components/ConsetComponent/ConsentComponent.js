@@ -92,9 +92,6 @@ const ConsetComponent = () => {
   }
 
   const handleSingup = () => {
-    console.log("profile 3: ", profile)
-    //const { username, secret, ...profile } = currentUser
-    //console.log("profile 3: ", profile)
     signup({
       variables: {
         profile
@@ -116,7 +113,6 @@ const ConsetComponent = () => {
       setprofile(profile)
       handleOpenConsent()
     }
-    console.log("Profile:", profile)
   }, [profile])
 
   useEffect(() => {

@@ -97,7 +97,6 @@ const signup = async (account, profile) => {
     password,
     profile
   )
-  console.log("profile.signup: ", profile)
   await historyApi.insert(addLifebankTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
 

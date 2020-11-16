@@ -48,15 +48,15 @@ const addLifebank = (
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
-          about: profile.about || ' ',
-          address: profile.address || 'prueba',
-          telephones: JSON.stringify(profile.phone) || ' ',
-          photos: JSON.stringify(profile.photos) || ' ',
-          logo_url: profile.logo_url || ' ',
+          about: profile.about || '',
+          address: profile.address || '',
+          telephones: JSON.stringify(profile.phone) || '[]',
+          photos: JSON.stringify(profile.photos) || '[]',
+          logo_url: profile.logo_url || '',
           blood_urgency_level: profile.blood_urgency_level || 1,
           schedule: JSON.stringify(profile.schedule),
           email: profile.email,
-          social_media_links: profile.social_media_links || ' ',
+          social_media_links: profile.social_media_links || '[]',
           ...profile
         }
       }
@@ -88,15 +88,15 @@ const upLifebank = (
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
-          about: profile.about || ' ',
-          address: profile.address || 'prueba',
-          telephones: profile.telephones || ' ',
-          photos: profile.photos || ' ',
-          logo_url: profile.logo_url || ' ',
+          about: profile.about || '',
+          address: profile.address || '',
+          telephones: profile.telephones || '[]',
+          photos: profile.photos || '[]',
+          logo_url: profile.logo_url || '',
           blood_urgency_level: profile.blood_urgency_level || 1,
           schedule: profile.schedule,
           email: profile.email,
-          social_media_links: profile.social_media_links || ' ',
+          social_media_links: profile.social_media_links || '[]',
           ...profile
         }
       }

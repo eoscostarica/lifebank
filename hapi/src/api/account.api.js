@@ -122,7 +122,7 @@ const getProfile = async account => {
     default:
       break
   }
-  console.log("data profile:", data)
+
   return {
     account,
     role: user.role,
@@ -175,18 +175,16 @@ const getLifebankData = async account => {
     email: { _eq: email }
   })
 
-  console.log("daata:", data.preregister_lifebank[0])
-
   return {
     ...profile,
     address: data.preregister_lifebank[0].address,
     geolocation: JSON.parse(data.preregister_lifebank[0].coordinates),
-    description: data.preregister_lifebank[0].description,
+    about: data.preregister_lifebank[0].description,
     email,
     immunity_test: data.preregister_lifebank[0].immunity_test,
     name: data.preregister_lifebank[0].name,
     phone: [data.preregister_lifebank[0].phone],
-    schedule: JSON.parse(data.preregister_lifebank[0].schedule),
+    schedule: data.preregister_lifebank[0].schedule,
     urgency_level: data.preregister_lifebank[0].urgency_level,
     consent: !!consent
   }
