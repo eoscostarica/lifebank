@@ -421,12 +421,19 @@ const ProfilePageSponsor = ({ profile }) => {
           <Typography variant="subtitle1">{t('common.schedule')}</Typography>
           <Typography variant="body1" />
         </Box>
-        <Schedule
-          style={{ display: !profile.schedule ? 'none' : '' }}
-          data={profile ? JSON.parse(profile.schedule || '[]') : []}
-          showSchedule
-          showButton={false}
-        />
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Schedule
+            style={{ display: !profile.schedule ? 'none' : '' }}
+            data={profile ? JSON.parse(profile.schedule || '[]') : []}
+            showSchedule
+            showButton={false}
+          />
+        </Box>
         <Divider
           style={{ display: !profile.about ? 'none' : '' }}
           className={classes.divider}
