@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/react-hooks'
 import Button from '@material-ui/core/Button'
@@ -15,7 +15,6 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
-import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
@@ -33,8 +32,6 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import { useParams } from "react-router";
 
 import MapShowOneLocation from '../../components/MapShowOneLocation'
-import StoreFront from '../../assets/storefront.svg'
-import LifebankIcon from '../../assets/local-hospital.svg'
 import { GET_LOCATION_PROFILE } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
 
@@ -92,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
   },
   carousel: {
     maxWidth: '100%',
-    height: '100%',
     height: '200px',
   },
   containerImageDefault: {
@@ -187,7 +183,6 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     margin: theme.spacing(6)
   },
-  // desktop
   contentBodyDesktop: {
     width: '100%',
     backgroundColor: '#FFFFFF',
@@ -303,8 +298,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   }
 }))
-
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />
 })
 
@@ -370,19 +364,6 @@ const InfoPage = () => {
     }
 
     return scheduleFinal
-  }
-
-  const getSocialMediaIcon = (name) => {
-    switch (name) {
-      case 'facebook':
-        return FacebookIcon
-      case 'instagram':
-        return InstagramIcon
-      case 'twitter':
-        return TwitterIcon
-      default:
-        break
-    }
   }
 
   useEffect(() => {
