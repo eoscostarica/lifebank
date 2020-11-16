@@ -22,7 +22,8 @@ import TwitterIcon from '../../assets/twitter.svg'
 import MapEditLocation from '../../components/MapEditLocation'
 import Carousel from '../../components/Carousel'
 import Schedule from '../../components/Schedule'
-import Logo from '../../components/Logo'
+//import Logo from '../../components/Logo'
+import LogoUrlInput from '../../components/LogoUrlInput'
 import Telephones from '../../components/Telephones'
 import SocialMediaTextField from '../../components/SocialMediaTextField'
 import { constants } from '../../config'
@@ -179,31 +180,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     onSubmit(userToSubmit)
   }
 
+  console.log(profile)
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        <>
-          {isCompleting && !profile.logo_url && (
-            <Logo showCaption logoUrl={user.logo_url} />
-          )}
-        </>
-        <TextField
-          id="logo-url"
-          name="logo-input"
-          style={{
-            display: isCompleting && !profile.logo_url ? 'block' : 'none'
-          }}
-          label={t('editProfile.logoUrl')}
-          variant="outlined"
-          placeholder={t('editProfile.logoUrlPlaceholder')}
-          defaultValue={user.logo_url}
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => handleSetField('logo_url', event.target.value)}
-        />
+        <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} />
         <TextField
           id="name"
           name="name"

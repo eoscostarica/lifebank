@@ -9,8 +9,10 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import PhoneIcon from '@material-ui/icons/Phone'
 import DeleteIcon from '@material-ui/icons/Delete'
+import Paper from '@material-ui/core/Paper'
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: theme.spacing(2),
     width: '100%',
     margin: 'auto',
     maxWidth: 360,
@@ -23,7 +25,7 @@ const Telephones = ({ phones, showDelete, deletePhone }) => {
   return (
     <>
       {phones && (
-        <div className={classes.root}>
+        <Paper className={classes.root}>
           <List component="nav">
             {phones.map((phone, key) => (
               <ListItem key={key} button>
@@ -45,7 +47,7 @@ const Telephones = ({ phones, showDelete, deletePhone }) => {
               </ListItem>
             ))}
           </List>
-        </div>
+        </Paper>
       )}
     </>
   )

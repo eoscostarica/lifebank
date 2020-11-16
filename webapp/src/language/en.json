@@ -57,7 +57,9 @@
       "createAccount": "Create account",
       "name": "Name",
       "address": "Address",
+      "addressPlaceholder": "Type your address here",
       "phoneNumber": "Phone Number",
+      "phoneNumberPlaceholder": "Type your phone number here",
       "invitationCode": "Invitation Code",
       "chooseYourLocation": "Choose your location",
       "asAdonor": "As a Donor",
@@ -132,7 +134,9 @@
       "banks": "Banks",
       "sponsors": "Sponsors",
       "all": "All",
-      "donationCenter": "Donation center"
+      "donationCenter": "Donation center",
+      "change": "Change",
+      "addTransparentIfPossible": "Add image with transparent background if possible."
     },
     "notFound": {
       "404Error": "404: The page you are looking for isn’t here",
@@ -276,6 +280,7 @@
       "prev": "Prev",
       "next": "Next",
       "email": "Email",
+      "emailPlaceholder": "Type your email here",
       "account": "Account",
       "telephone": "Telephone",
       "website": "Website",
