@@ -108,10 +108,7 @@ const ConsetComponent = () => {
   }, [currentUser])
 
   useEffect(() => {
-    if (currentUser && profile && !profile.consent) {
-      setprofile(profile)
-      handleOpenConsent()
-    }
+    if (currentUser && profile && !profile.consent) handleOpenConsent()
   }, [profile])
 
   useEffect(() => {
@@ -127,9 +124,7 @@ const ConsetComponent = () => {
       }
 
     }
-
   }, [signupResult])
-
 
   return (
     <>
