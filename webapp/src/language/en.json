@@ -284,7 +284,8 @@
       "schedule": "Schedule",
       "save": "Guardar",
       "saveChanges": "Save changes",
-      "currentLanguage": "en-US"
+      "currentLanguage": "en-US",
+      "near": "Near"
     },
     "claimReward": {
       "claimReward": "Claim Reward",
