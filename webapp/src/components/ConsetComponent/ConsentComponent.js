@@ -72,7 +72,6 @@ const ConsetComponent = () => {
   const classes = useStyles()
   const [openConsent, setOpenConsent] = useState(false)
   const [openAlert, setOpenAlert] = useState(false)
-  const [profileData, setprofile] = useState()
   const [messegaAlert, setMessegaAlert] = useState("false")
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))

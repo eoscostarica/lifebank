@@ -75,7 +75,6 @@ const verifyEmail = (where) => {
   return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
 }
 
-
 const getOne = (where) => {
   return hasuraUtils.request(GET_LIFEBANK_DATA, { where })
 }
