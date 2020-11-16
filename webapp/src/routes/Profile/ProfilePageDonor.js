@@ -141,7 +141,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
       </Box>
       <Divider className={classes.divider} />
       <QRCode value={profile.account || 'n/a'} size={200} />
-      <LinkRouter to="/edit-profile" className={classes.editBtn}>
+      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: true, userName: '' } }} className={classes.editBtn}>
         <Button variant="contained" color="primary">
           {t('common.edit')}
         </Button>
