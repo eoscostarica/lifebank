@@ -63,9 +63,9 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
       <Box className={classes.textFieldWrapper}>
         <TextField
           id="email"
-          label={t('sigup.name')}
+          label={t('signup.name')}
           fullWidth
-          placeholder={t('sigup.namePlaceholder')}
+          placeholder={t('signup.namePlaceholder')}
           defaultValue={user.email}
           variant="outlined"
           InputLabelProps={{

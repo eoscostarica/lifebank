@@ -62,7 +62,8 @@ const GET_LIFEBANK_DATA = `
       password
       phone
       schedule
-      urgency_level
+      urgency_level,
+      state
     }
   }
 `
