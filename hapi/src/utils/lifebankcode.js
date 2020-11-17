@@ -49,10 +49,14 @@ const addLifebank = (
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
           about: profile.about || '',
-          telephones: profile.telephones || '',
-          photos: profile.photos || '',
+          address: profile.address || '',
+          telephones: JSON.stringify(profile.phone) || '[]',
+          photos: JSON.stringify(profile.photos) || '[]',
           logo_url: profile.logo_url || '',
-          social_media_links: profile.social_media_links || '',
+          blood_urgency_level: profile.blood_urgency_level || 1,
+          schedule: JSON.stringify(profile.schedule),
+          email: profile.email,
+          social_media_links: profile.social_media_links || '[]',
           ...profile
         }
       }
@@ -85,10 +89,14 @@ const upLifebank = (
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
           about: profile.about || '',
-          telephones: profile.telephones || '',
-          photos: profile.photos || '',
+          address: profile.address || '',
+          telephones: profile.telephones || '[]',
+          photos: profile.photos || '[]',
           logo_url: profile.logo_url || '',
-          social_media_links: profile.social_media_links || '',
+          blood_urgency_level: profile.blood_urgency_level || 1,
+          schedule: profile.schedule,
+          email: profile.email,
+          social_media_links: profile.social_media_links || '[]',
           ...profile
         }
       }

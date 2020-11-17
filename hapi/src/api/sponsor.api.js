@@ -57,7 +57,6 @@ const signup = async (account, profile) => {
 
   await historyApi.insert(addSponsorTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
-
   if (profile.geolocation)
     await locationApi.insert({
       account,
