@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import { Box } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
 
@@ -15,9 +16,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(4),
     display: 'flex',
-    height: '100vh',
-    width: '100vw',
-    backgroundColor: '#ffffff'
+    height: 'calc(100vh - 60px)'
   },
   content: {
     justifyContent: 'center',
@@ -25,11 +24,49 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   centerText: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  button: {
-    marginTop: 10
-  }
+  tittle: {
+    fontFamily: "Roboto",
+    fontSize: "34px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.18",
+    letterSpacing: "0.25px",
+    textAlign: "center",
+    color: "rgba(0, 0, 0, 0.87)",
+    marginBottom: 15
+  },
+  subTitle: {
+    fontFamily: "Roboto",
+    fontSize: "14px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.43",
+    letterSpacing: "0.25px",
+    textAlign: "justify",
+    color: "rgba(0, 0, 0, 0.6)",
+    marginBottom: 30
+  },
+  btnHome: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "50%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
+  },
 }))
 
 const RegisterLifebank = (props) => {
@@ -83,37 +120,36 @@ const RegisterLifebank = (props) => {
   }, [lifebank])
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Grid container spacing={4}>
         <Grid item xs={12} className={classes.content}>
-          <div className={classes.centerText}>
+          <Box className={classes.centerText}>
             {loading && <CircularProgress />}
             {!loading && lifebank && (
-              <Typography variant="h1">
+              <Typography className={classes.tittle}>
                 {t('approveAccount.accountapprove')}
               </Typography>
             )}
             {!loading && !lifebank && (
-              <Typography variant="h1">
+              <Typography className={classes.tittle}>
                 {t('approveAccount.somethingHappened')}
               </Typography>
             )}
             {!loading && (
               <Button
                 variant="contained"
-                color="primary"
-                activeClassName={classes.active}
+                color="secondary"
                 component={CustomRouterLink}
                 to="/"
-                className={classes.button}
+                className={classes.btnHome}
               >
                 {t('emailVerification.takeHome')}
               </Button>
             )}
-          </div>
+          </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   )
 }
 

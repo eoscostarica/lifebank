@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
+import { Box } from '@material-ui/core'
 
 import CustomRouterLink from '../../components/CustomRouterLink'
 
@@ -69,10 +70,10 @@ const NotFound = () => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Grid container spacing={4}>
         <Grid item xs={12} className={classes.content}>
-          <div className={classes.centerText}>
+          <Box className={classes.centerText}>
             <Typography className={classes.tittle}>{t('notFound.404Error')}</Typography>
             <Typography className={classes.subTitle}>{t('notFound.notFoundMessage')}</Typography>
             <Button
@@ -84,10 +85,10 @@ const NotFound = () => {
             >
               {t('notFound.takeMeHome')}
             </Button>
-          </div>
+          </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   )
 }
 
