@@ -20,7 +20,6 @@ import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import CarouselComponent from '../../components/Carousel'
 import { GET_USERNAME } from '../../gql'
-import { ContactMail } from '@material-ui/icons'
 
 const { eosConfig } = require('../../config')
 
