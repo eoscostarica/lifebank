@@ -20,6 +20,7 @@ import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import CarouselComponent from '../../components/Carousel'
 import { GET_USERNAME } from '../../gql'
+import { ContactMail } from '@material-ui/icons'
 
 const { eosConfig } = require('../../config')
 
@@ -109,10 +110,10 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.telephones)
       pendingFieldsObject = { ...pendingFieldsObject, telephones: false }
 
-    if (!profile.photos)
+    if (!JSON.parse(profile.photos).length > 0)
       pendingFieldsObject = { ...pendingFieldsObject, photos: false }
 
-    if (!profile.logo_url)
+    if (!profile.logo_url.length > 0)
       pendingFieldsObject = { ...pendingFieldsObject, logo_url: false }
 
     if (!profile.schedule)

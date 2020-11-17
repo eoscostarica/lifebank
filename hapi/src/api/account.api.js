@@ -167,28 +167,38 @@ const getLifebankData = async account => {
     LIFEBANKCODE_CONTRACT,
     account
   )
-  const { email } = await userApi.getOne({
-    account: { _eq: account }
-  })
 
-  const data = await preRegLifebank.getOne({
-    email: { _eq: email }
-  })
+  if (!profile.address) {
 
-  return {
-    ...profile,
-    address: data.preregister_lifebank[0].address,
-    geolocation: JSON.parse(data.preregister_lifebank[0].coordinates),
-    about: data.preregister_lifebank[0].description,
-    email,
-    photos: data.preregister_lifebank[0].photos || '[]',
-    logo_url: data.preregister_lifebank[0].logo_url || '',
-    immunity_test: data.preregister_lifebank[0].immunity_test,
-    name: data.preregister_lifebank[0].name,
-    telephones: JSON.stringify([data.preregister_lifebank[0].phone]),
-    schedule: data.preregister_lifebank[0].schedule,
-    urgency_level: data.preregister_lifebank[0].urgency_level,
-    consent: !!consent
+    const { email } = await userApi.getOne({
+      account: { _eq: account }
+    })
+    const data = await preRegLifebank.getOne({
+      email: { _eq: email }
+    })
+
+    return {
+      ...profile,
+      address: data.preregister_lifebank[0].address,
+      geolocation: JSON.parse(data.preregister_lifebank[0].coordinates),
+      about: data.preregister_lifebank[0].description,
+      email,
+      photos: data.preregister_lifebank[0].photos || '[]',
+      logo_url: data.preregister_lifebank[0].logo_url || '',
+      immunity_test: data.preregister_lifebank[0].immunity_test,
+      name: data.preregister_lifebank[0].name,
+      telephones: JSON.stringify([data.preregister_lifebank[0].phone]),
+      schedule: data.preregister_lifebank[0].schedule,
+      blood_urgency_level: data.preregister_lifebank[0].urgency_level,
+      consent: !!consent
+    }
+  }
+  else {
+    return {
+      ...profile,
+      name,
+      consent: !!consent
+    }
   }
 }
 
