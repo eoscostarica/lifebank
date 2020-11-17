@@ -91,8 +91,6 @@ const ConsetComponent = () => {
   }
 
   const handleSingup = () => {
-    const { username, secret, ...profile } = currentUser
-
     signup({
       variables: {
         profile
@@ -111,7 +109,6 @@ const ConsetComponent = () => {
 
   useEffect(() => {
     if (currentUser && profile && !profile.consent) handleOpenConsent()
-
   }, [profile])
 
   useEffect(() => {
@@ -127,9 +124,7 @@ const ConsetComponent = () => {
       }
 
     }
-
   }, [signupResult])
-
 
   return (
     <>
