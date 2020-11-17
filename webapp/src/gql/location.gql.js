@@ -13,6 +13,9 @@ export const GET_NEARBY_LOCATIONS_QUERY = gql`
       name
       type
       info
+      user {
+        username
+      }
     }
   }
 `
@@ -41,6 +44,9 @@ export const GET_LOCATION_PROFILE = gql`
       geolocation
       id
       account
+      user {
+        username
+      }
     }
   }
 `
