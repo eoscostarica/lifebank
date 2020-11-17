@@ -51,12 +51,32 @@ const VALIDATION_VERIFICATION_CODE = `
   }
 `
 
+const GET_LIFEBANK_DATA = `
+  query($where: preregister_lifebank_bool_exp!) {
+    preregister_lifebank(where: $where, limit: 1) {
+      address
+      coordinates
+      description
+      immunity_test
+      name
+      password
+      phone
+      schedule
+      urgency_level
+    }
+  }
+`
+
 const insertLifebank = (preregister_lifebank) => {
   return hasuraUtils.request(INSERT_LIFEBANK, { preregister_lifebank })
 }
 
 const verifyEmail = (where) => {
   return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+}
+
+const getOne = (where) => {
+  return hasuraUtils.request(GET_LIFEBANK_DATA, { where })
 }
 
 const validationVerificationCode = (verification_code) => {
@@ -68,5 +88,6 @@ const validationVerificationCode = (verification_code) => {
 module.exports = {
   insertLifebank,
   verifyEmail,
-  validationVerificationCode
+  validationVerificationCode,
+  getOne
 }

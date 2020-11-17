@@ -197,10 +197,13 @@ const ProfilePageLifebank = ({ profile }) => {
           </Grid>
         )}
       </div>
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('profile.logo')}</Typography>
-        <img className={classes.img} src={profile.logo_url} alt='logo image' />
-      </Box>
+      {profile.logo_url.length > 0 &&
+        <Box className={classes.rowBox}>
+          <Typography variant="subtitle1">{t('profile.logo')}</Typography>
+          <img className={classes.img} src={profile.logo_url} alt='logo image' />
+        </Box>
+      }
+
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography style={{ marginRight: '6px' }} noWrap variant="subtitle1">{t('profile.urlSite')}</Typography>
@@ -309,20 +312,24 @@ const ProfilePageLifebank = ({ profile }) => {
         fullWidth
         rows={3}
       />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('profile.images')}</Typography>
-        <Typography variant="body1" />
-      </Box>
-      <Grid
-        item
-        xs={12}
-        sm={8}
-        md={6}
-        lg={4}
-        className={classes.carouselComponent}
-      >
-        <CarouselComponent images={JSON.parse(profile.photos)} />
-      </Grid>
+      {JSON.parse(profile.photos).length > 0 &&
+        <div>
+          <Box className={classes.rowBox}>
+            <Typography variant="subtitle1">{t('profile.images')}</Typography>
+            <Typography variant="body1" />
+          </Box>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={6}
+            lg={4}
+            className={classes.carouselComponent}
+          >
+            <CarouselComponent images={JSON.parse(profile.photos)} />
+          </Grid>
+        </div>
+      }
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">{t('profile.location')}</Typography>
         <Typography variant="body1" />
