@@ -181,9 +181,11 @@ const getLifebankData = async account => {
     geolocation: JSON.parse(data.preregister_lifebank[0].coordinates),
     about: data.preregister_lifebank[0].description,
     email,
+    photos: data.preregister_lifebank[0].photos || '[]',
+    logo_url: data.preregister_lifebank[0].logo_url || '',
     immunity_test: data.preregister_lifebank[0].immunity_test,
     name: data.preregister_lifebank[0].name,
-    phone: [data.preregister_lifebank[0].phone],
+    telephones: JSON.stringify([data.preregister_lifebank[0].phone]),
     schedule: data.preregister_lifebank[0].schedule,
     urgency_level: data.preregister_lifebank[0].urgency_level,
     consent: !!consent
