@@ -103,9 +103,6 @@ const ProfilePageSponsor = ({ profile }) => {
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
 
-    if (!profile.email)
-      pendingFieldsObject = { ...pendingFieldsObject, email: false }
-
     if (!profile.address)
       pendingFieldsObject = { ...pendingFieldsObject, address: false }
 

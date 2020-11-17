@@ -106,7 +106,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     name: profile.name,
     about: profile.about,
     address: profile.address,
-    email: profile.email,
     website: profile.website,
     benefit_description: profile.benefit_description,
     telephones:
@@ -115,7 +114,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         : [],
     business_type: profile.business_type,
     covid_impact: profile.covid_impact,
-    geolocation: profile.geolocation ? JSON.parse(profile.geolocation) : null,
+    geolocation: profile.location ? JSON.parse(profile.location) : null,
     schedule: profile.schedule,
     photos:
       profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
@@ -179,6 +178,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     onSubmit(userToSubmit)
   }
 
+  console.log(profile)
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
@@ -237,20 +238,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             ))}
           </Select>
         </FormControl>
-        <TextField
-          id="email"
-          style={{ display: isCompleting && profile.email ? 'none' : '' }}
-          label={t('common.email')}
-          variant="outlined"
-          placeholder={t('common.emailPlaceholder')}
-          defaultValue={user.email}
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => handleSetField('email', event.target.value)}
-        />
         <TextField
           id="website"
           style={{ display: isCompleting && profile.website ? 'none' : '' }}
@@ -506,23 +493,25 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             }
           />
         </Box>
-
-        <Typography variant="subtitle2" gutterBottom>
-          {t('signup.chooseYourLocation')}
-        </Typography>
-
-        <MapEditLocation
-          onGeolocationChange={handleOnGeolocationChange}
-          markerType={SPONSOR}
-          markerLocation={
-            user.geolocation
-              ? user.geolocation
-              : { longitude: -84.0556371, latitude: 9.9195872 }
-          }
-          width="100%"
-          height={400}
-          mb={1}
-        />
+        {!profile.location && (
+          <>
+            <Typography variant="subtitle2" gutterBottom>
+              {t('signup.chooseYourLocation')}
+            </Typography>
+            <MapEditLocation
+              onGeolocationChange={handleOnGeolocationChange}
+              markerType={SPONSOR}
+              markerLocation={
+                user.geolocation
+                  ? user.geolocation
+                  : { longitude: -84.0556371, latitude: 9.9195872 }
+              }
+              width="100%"
+              height={400}
+              mb={1}
+            />
+          </>
+        )}
       </Box>
       <Box className={classes.btnWrapper}>
         <Box className={classes.boxBtn}>
