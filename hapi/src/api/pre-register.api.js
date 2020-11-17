@@ -22,6 +22,19 @@ const INSERT_LIFEBANK = `
 const SET_EMAIL_VERIFIED = `
   mutation ($where: preregister_lifebank_bool_exp!) {
     update_preregister_lifebank(where: $where, _set: { email_verified: true }) {
+      returning {
+        address
+        description
+        email
+        coordinates
+        immunity_test
+        invitation_code
+        name
+        phone
+        schedule
+        urgency_level
+        verification_code
+      }
       affected_rows
     }
   }

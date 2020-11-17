@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
   loginBtn: {
     display: 'flex',
     alignItems: 'center',
-    marginTop: "16px"
   },
   labelOption: {
     color: theme.palette.primary.main,

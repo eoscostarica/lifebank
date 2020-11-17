@@ -10,6 +10,16 @@ export const CREATE_ACCOUNT_MUTATION = gql`
   }
 `
 
+export const CREATE_ACCOUNT_LIFEBANK_MUTATION = gql`
+  mutation($email: String!, $name: String!, $secret: String!, $verification_code: String!) {
+    create_account_lifebank (email: $email, name: $name, secret: $secret, verification_code: $verification_code){
+      account
+      token
+      transaction_id
+    }
+  }
+`
+
 export const SIGNUP_MUTATION = gql`
   mutation($profile: jsonb!) {
     signup(profile: $profile) {

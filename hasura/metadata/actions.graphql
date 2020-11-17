@@ -17,6 +17,16 @@ type Mutation {
 
 
 type Mutation {
+  create_account_lifebank (
+    email: String!
+    name: String!
+    secret: String!
+    verification_code: String!
+  ): create_account_lifebank_output
+}
+
+
+type Mutation {
   create_pre_register_lifebank (
     email: String!
     password: String!
@@ -55,12 +65,12 @@ type Query {
 
 
 type Query {
-  get_valid_sponsors : [ValidSponsor]!
+  get_valid_lifebanks : [ValidLifebank]!
 }
 
 
 type Query {
-  get_valid_lifebanks : [ValidLifebank]!
+  get_valid_sponsors : [ValidSponsor]!
 }
 
 
@@ -188,8 +198,15 @@ type ValidLifebank {
   openingHours : String!
   address : String!
   logo : String!
-  description: String!
+  description : String!
   email : String!
   location : String!
   telephone : String!
 }
+
+type create_account_lifebank_output {
+  account : String!
+  transaction_id : String!
+  token : String!
+}
+

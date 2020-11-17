@@ -127,7 +127,7 @@ const Topbar = ({ user, onLogout }) => {
           </Menu>
         </>
       )}
-      {!user && <LoginModal />}
+      <LoginModal isNavBar />
     </Box>
   )
 }

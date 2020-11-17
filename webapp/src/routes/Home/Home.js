@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+
 import HomeMobile from './HomeMobile'
 import HomeDesktop from './HomeDesktop'
-
 import { GET_OFFERS_QUERY, GET_LOCATIONS_QUERY } from '../../gql'
+import ConsetComponent from '../../components/ConsetComponent/ConsentComponent'
 
 const Home = () => {
 
@@ -21,6 +22,7 @@ const Home = () => {
   const [loadingSponsors, setLoadingSponsors] = useState(true)
   const [sponsors, setSponsors] = useState([])
 
+  const [searchValue, setSearchValue] = useState("")
   const [valueSponsorCat, setValueSponsorCat] = useState("All")
   const [valueOfferCat, setValueOfferCat] = useState("All")
   const [valueTokenPrice, setValueTokenPrice] = useState("All")
@@ -56,6 +58,12 @@ const Home = () => {
       )
     }
 
+    if (searchValue !== "") {
+      dataOffers = dataOffers.filter(
+        (offer) => offer.offer_name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    }
+
     setOffers(dataOffers)
     setLoadingOffers(false)
   }
@@ -65,6 +73,12 @@ const Home = () => {
     const { data } = await getAllBanks({})
     let dataTemp = data.location
     dataTemp = dataTemp.filter(bank => bank.type === "LIFE_BANK")
+
+    if (searchValue !== "")
+      dataTemp = dataTemp.filter(
+        (banks) => banks.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+
 
     setLifebanks(dataTemp)
     setLoadingLifebanks(false)
@@ -81,6 +95,12 @@ const Home = () => {
       dataTemp = dataTemp.filter(bank => bank.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
     }
 
+    if (searchValue !== "")
+      dataTemp = dataTemp.filter(
+        (bank) => bank.info.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+
+
     setSponsors(dataTemp)
     setLoadingSponsors(false)
   }
@@ -95,7 +115,7 @@ const Home = () => {
     getOffers()
     getSponsors()
     getLifebanks()
-  }, [valueSponsorCat, valueOfferCat, valueTokenPrice])
+  }, [valueSponsorCat, valueOfferCat, valueTokenPrice, searchValue])
 
   return (
     <>
@@ -108,6 +128,8 @@ const Home = () => {
           sponsors={sponsors}
           loadingSponsors={loadingSponsors}
           applyFilters={applyFilters}
+          searchValue={searchValue}
+          handleChangeSearch={setSearchValue}
         />
       }
       {!isDesktop &&
@@ -119,7 +141,10 @@ const Home = () => {
           sponsors={sponsors}
           loadingSponsors={loadingSponsors}
           applyFilters={applyFilters}
+          searchValue={searchValue}
+          handleChangeSearch={setSearchValue}
         />}
+      <ConsetComponent />
     </>
   )
 }

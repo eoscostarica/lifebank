@@ -11,6 +11,7 @@ const revokeConsentRoute = require('./revoke-consent/revoke-consent.route')
 const signupRoute = require('./signup/signup.route')
 const transferRoute = require('./transfer/transfer.route')
 const preregisterLifebank = require('./pre-register/pre-register-lifebank.route')
+const registerLifebank = require('./create-account-lifebank/create-account-lifebank.route')
 const verifyEmail = require('./verify-email/verify-email.route')
 const getValidLifebanksRoute = require('./get-valid-lifebanks/get-valid-lifebanks.route')
 
@@ -28,6 +29,7 @@ module.exports = [
   signupRoute,
   transferRoute,
   preregisterLifebank,
+  registerLifebank,
   verifyEmail,
   getValidLifebanksRoute
 ]

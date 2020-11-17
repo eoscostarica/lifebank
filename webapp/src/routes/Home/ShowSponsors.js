@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import { Link as LinkRouter } from 'react-router-dom'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -56,13 +57,13 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.25px'
   },
   sponsorsGridContainer: {
-    overflow: 'auto',
+    overflowX: 'auto',
     whiteSpace: 'nowrap',
     width: '100%',
+    height: '165px',
     marginTop: 15,
     marginBottom: 15,
-    paddingBottom: 5,
-    paddingLeft: 5,
+    padding: 5,
     '&::-webkit-scrollbar': {
       height: '0.5em'
     },
@@ -197,8 +198,14 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     )
   }
 
-  const SponsorItem = (props) => {
-    return (
+  const SponsorItem = (props) => (
+    <LinkRouter
+      style={{ textDecoration: 'none' }}
+      to={{
+        pathname: `info/${props.sponsor.user.username.replaceAll(' ', '-')}`,
+        state: { profile: props.sponsor }
+      }}
+    >
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
           <Avatar src={props.sponsor.info.logo_url || ""}>
@@ -226,8 +233,8 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
           }
         />
       </ListItem>
-    )
-  }
+    </LinkRouter>
+  )
 
   SponsorItem.propTypes = {
     sponsor: PropTypes.object
@@ -280,30 +287,36 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     return str.slice(0, num) + '...'
   }
 
-  const SponsorCard = (props) => {
-    return (
-      <Card className={classes.cardRoot}>
-        <Box className={classes.cardHeader}>
-          <Avatar className={classes.cardAvatar} src={props.sponsor.info.logo_url || ""}>
-            <StorefrontIcon />
-          </Avatar>
-          <Box className={classes.cardTitleContainer}>
-            <Typography className={classes.cardTitle} noWrap>
-              {props.sponsor.name}
-            </Typography>
-          </Box>
-        </Box>
-        <CardContent className={classes.cardContent}>
-          <Typography className={classes.cardContentText}>
-            {truncateString(props.sponsor.info.about)}
+  const SponsorCard = (props) => (
+    <Card className={classes.cardRoot}>
+      <Box className={classes.cardHeader}>
+        <Avatar className={classes.cardAvatar} src={props.sponsor.info.logo_url || ""}>
+          <StorefrontIcon />
+        </Avatar>
+        <Box className={classes.cardTitleContainer}>
+          <Typography className={classes.cardTitle} noWrap>
+            {props.sponsor.name}
           </Typography>
-        </CardContent>
+        </Box>
+      </Box>
+      <CardContent className={classes.cardContent}>
+        <Typography className={classes.cardContentText}>
+          {truncateString(props.sponsor.info.about)}
+        </Typography>
+      </CardContent>
+      <LinkRouter
+        style={{ textDecoration: 'none' }}
+        to={{
+          pathname: `info/${props.sponsor.user.username.replaceAll(' ', '-')}`,
+          state: { profile: props.sponsor }
+        }}
+      >
         <Button color="primary" className={classes.cardActionButton}>
           {t('cardsSection.moreInfo')}
         </Button>
-      </Card>
-    )
-  }
+      </LinkRouter>
+    </Card>
+  )
 
   SponsorCard.propTypes = {
     sponsor: PropTypes.object
