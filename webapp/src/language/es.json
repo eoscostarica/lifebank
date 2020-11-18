@@ -139,6 +139,11 @@
       "notFoundMessage": "O intentaste una ruta dudosa o viniste aquí por error. Sea lo que sea, intenta usar la navegación",
       "takeMeHome": "Llévame al inicio"
     },
+    "internalError": {
+      "500Error": "500: ¡Oh ... error interno del servidor!",
+      "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
+      "takeMeHome": "Llévame al inicio"
+    },
     "schedule": {
       "sunday": "Domingo",
       "monday": "Lunes",
