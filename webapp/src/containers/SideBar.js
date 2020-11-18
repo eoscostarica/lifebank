@@ -4,8 +4,6 @@ import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined'
 import InfoIcon from '@material-ui/icons/Info'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
@@ -15,7 +13,6 @@ import { useTranslation } from 'react-i18next'
 
 import LoginModal from '../components/LoginModal'
 import CredentialsRecovery from '../components/CredentialsRecovery'
-import TokenTransfer from '../components/TokenTransfer'
 import Signup from '../components/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
@@ -72,26 +69,6 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       </Box>
       {user && (
         <>
-          {user.role === 'donor' && (
-            <>
-              <Box className={classes.optionLink}>
-                <FavoriteIcon className={classes.iconDonor} />
-                <Link to="/donations">
-                  <Typography variant="body1" className={classes.labelOption}>
-                    {t('navigationDrawer.yourDonations')}
-                  </Typography>
-                </Link>
-              </Box>
-              <Box className={classes.optionLink}>
-                <LocalOfferOutlinedIcon className={classes.iconOption} />
-                <Link to="/offers">
-                  <Typography variant="body1" className={classes.labelOption}>
-                    {t('cardsSection.availableOffers')}
-                  </Typography>
-                </Link>
-              </Box>
-            </>
-          )}
           <Box className={classes.optionLink}>
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">
@@ -116,10 +93,6 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
               {t('logout')}
             </Typography>
           </Box>
-          <TokenTransfer
-            overrideBoxClass={classes.optionLink}
-            overrideLabelClass={classes.labelOption}
-          />
         </>
       )}
       {!user && (
