@@ -1,25 +1,16 @@
-import Dashboard from './Dashboard'
 import NotFound from './NotFound'
-import Donation from './Donation'
 import Profile from './Profile'
 import EditProfile from './EditProfile'
 import About from './About'
 import TermsOfUse from './TermsOfUse'
 import Help from './Help'
 import OffersManagement from './OffersManagement'
-import OfferPage from './OfferPage'
 import InfoPage from './InfoPage'
 import Home from './Home'
 import EmailVerification from './EmailVerification'
 import RegisterLifebank from './RegisterLifebank'
 
-
 export default [
-  {
-    name: 'dashboard',
-    path: '/dashboard',
-    component: Dashboard
-  },
   {
     name: 'notFound',
     path: '/not-found',
@@ -35,16 +26,6 @@ export default [
     path: '/',
     component: Home,
     exact: true
-  },
-  {
-    name: 'donation',
-    path: '/donations',
-    component: Donation
-  },
-  {
-    name: 'offer-page',
-    path: '/offer/:id',
-    component: OfferPage
   },
   {
     name: 'email-verificatio',

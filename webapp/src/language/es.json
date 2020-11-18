@@ -289,7 +289,8 @@
       "schedule": "Horario",
       "save": "Guardar",
       "saveChanges": "Guardar cambios",
-      "currentLanguage": "es-CR"
+      "currentLanguage": "es-CR",
+      "near": "Cerca de"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",

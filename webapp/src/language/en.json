@@ -1,17 +1,17 @@
 {
   "translations": {
     "hero": {
-      "title": "Start saving lifes!",
+      "title": "Start Saving Lives",
       "subtitle1": "Give blood banks a lifeline.",
-      "subtitle2": "Register to donate life.",
-      "register": "Register"
+      "subtitle2": "Register and start saving lives!",
+      "register": "Get Started"
     },
     "contentToolbar": {
-      "browseWithMap": "Browse with a map",
-      "filters": "Filters",
+      "browseWithMap": "Explore near you",
+      "filters": "Filter search",
       "favorites": "Favorites",
       "favorite": "Favorite",
-      "inputPlaceholder": "Search Offers, Lifebank or Sponsors"
+      "inputPlaceholder": "Search Offers, Lifebanks or Sponsors"
     },
     "rolesTitle": {
       "singular": {
@@ -26,35 +26,35 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Available offers",
+      "availableOffers": "Available Offers",
       "moreInfo": "More info"
     },
     "navigationDrawer": {
-      "yourDonations": "Your donations",
+      "yourDonations": "Your Donations",
       "information": "Information",
       "aboutLifebank": "About Lifebank",
       "useTerms": "Terms of Use",
       "help": "Help"
     },
     "signup": {
-      "register": "Register",
-      "registerText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula lacinia lectus luctus dictum. Suspendisse finibus nisi sed aliquam semper. ",
-      "sucessfulPreregistration": "Succesful preregistration",
-      "sucessfulRegistration": "Succesful registration",
+      "register": "Let's Start!",
+      "registerText": "Choose the option that suits you best. To learn more, go here. ",
+      "sucessfulPreregistration": "Thank you. Your information is now being validated.",
+      "sucessfulRegistration": "You're in! Thanks for your support.",
       "createAnewAccount": "Create a new account",
-      "allYouNeed": "To register, all you need to do is add your email and password.",
-      "preRegisterAnewAccount": "Pre-register a new account",
-      "preRegistrationRequirement": "To carry out the pre-registration, you must indicate the following data, necessary for the approval of the blood blank",
+      "allYouNeed": "Please, type a valid email address and password to create an account.",
+      "preRegisterAnewAccount": "We're almost there! Pre-register a new account",
+      "preRegistrationRequirement": "Please, fill the following spaces. This will allow you to pre-register your lifebank into the app.",
       "termsAndConditions": "Terms and Conditions",
-      "termsAndConditionsInfo": "This account needs to accept our terms and conditions for smart contracts. You can revoke consent at any time.",
+      "termsAndConditionsInfo": "Please, accept our terms and conditions to create an account. You can change this at any time.",
       "transactionId": "Transaction Id",
       "password": "Password",
       "confirmPassword": "Confirm password",
-      "passwordNotMatch": "Password do not match",
-      "iAccept": "I Accept",
-      "signupWithFacebook": "Signup with Facebook",
-      "signupWithGoogle": "Signup with Google",
-      "createAccount": "Create account",
+      "passwordNotMatch": "Password doesn't match",
+      "iAccept": "Accept",
+      "signupWithFacebook": "Sign up using Facebook",
+      "signupWithGoogle": "Sign up using Google",
+      "createAccount": "Create an account",
       "name": "Name",
       "address": "Address",
       "addressPlaceholder": "Type your address here",
@@ -64,20 +64,20 @@
       "chooseYourLocation": "Choose your location",
       "asAdonor": "As a Donor",
       "asAsponsor": "As a Business Sponsor",
-      "asAbank": "As a donation center",
+      "asAbank": "As a Lifebank",
       "about": "About",
-      "aboutBusiness": "Description about your business here",
+      "aboutBusiness": "Add a description about your business here",
       "aboutPlaceholder": "About the LifeBank",
-      "consentGranted": "Consent granted",
-      "consentError": "Error granting consent"
+      "consentGranted": "Ready! You can start using Lifebank",
+      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. "
     },
     "login": {
-      "letsStarted": "Let’s get started!",
+      "letsStarted": "Let's get started!",
       "subtitle": "Login to access your bookmarks and personal preferences.",
       "loggedIn": "Keep me logged in",
       "login": "Login",
-      "accountDoesntExist": "This account doesn't exist, please sign up",
-      "somethingHappenedWithAuth": "Something happened with the authentication",
+      "accountDoesntExist": "This account doesn't exist. Please, sign up.",
+      "somethingHappenedWithAuth": "Oops! Something happened with the authentication. Please, check again.",
       "demoCredentials": "Demo credentials",
       "invalidAccountOrPassword": "Invalid account or password",
       "loginWithFacebook": "Login with Facebook",
@@ -97,10 +97,10 @@
       "openSite": "Open site",
       "goTo": "Go to",
       "help": "Help",
-      "thankYouForUsingLifebank": "Thank you for using Lifebank. Lifebank is still in progress. If you are experiencing any issues, please contact us using the following links:",
+      "thankYouForUsingLifebank": "Thank you for using Lifebank. Please, be aware that Lifebank is still in progress. If you are experiencing any issues, please contact us using the following links:",
       "telegram": "Telegram Channel",
-      "websiteEoscr": "Website EOS Costa Rica",
-      "noBloodBank": "No blood bank available",
+      "websiteEoscr": "Website of EOS Costa Rica",
+      "noBloodBank": "No lifebank available",
       "noOffersAvailable": "No offers available",
       "noOfferAvailable": "No offer available",
       "noSponsorsAvailable": "No Sponsors available",
@@ -123,7 +123,7 @@
       "lifebankSchedule": "Lifebank Schedule",
       "showLocation": "Show location",
       "username": "Username",
-      "invalidOrTaken": "Invalid username or already taken",
+      "invalidOrTaken": "Invalid username or already taken. Please, choose another.",
       "youMustEnter": "You must enter 9 characters (a-z 1-5)",
       "continue": "Continue",
       "step": "Step",
@@ -139,9 +139,9 @@
       "addTransparentIfPossible": "Add image with transparent background if possible."
     },
     "notFound": {
-      "404Error": "404: The page you are looking for isn’t here",
-      "notFoundMessage": "You either tried some shady route or you came here by mistake. Whichever it is, try using the navigation",
-      "takeMeHome": "Take me home"
+      "404Error": "404: Oh... this isn't the page you're looking for. Please, try again!",
+      "notFoundMessage": "It seems like there is an error. Please, try using the navigation to find the page you're looking for. ",
+      "takeMeHome": "Take me to the home page"
     },
     "schedule": {
       "sunday": "Sunday",
@@ -178,7 +178,7 @@
       "urlSite": "URL site",
       "images": "Images",
       "yourProfileIsNotComplete": "Your profile is not complete",
-      "socialMedia": "Social medias"
+      "socialMedia": "Social media"
     },
     "errors": {
       "authError": "Something happened with the authentication"
@@ -289,7 +289,8 @@
       "schedule": "Schedule",
       "save": "Guardar",
       "saveChanges": "Save changes",
-      "currentLanguage": "en-US"
+      "currentLanguage": "en-US",
+      "near": "Near"
     },
     "claimReward": {
       "claimReward": "Claim Reward",

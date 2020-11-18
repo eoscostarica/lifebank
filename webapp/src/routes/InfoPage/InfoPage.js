@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/react-hooks'
 import Button from '@material-ui/core/Button'
@@ -15,7 +15,6 @@ import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
 import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
-import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
@@ -27,42 +26,82 @@ import List from '@material-ui/core/List'
 import Slide from '@material-ui/core/Slide'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
+import FacebookIcon from '@material-ui/icons/Facebook'
+import TwitterIcon from '@material-ui/icons/Twitter'
+import InstagramIcon from '@material-ui/icons/Instagram';
+import { useParams } from "react-router";
 
 import MapShowOneLocation from '../../components/MapShowOneLocation'
-import FacebookIcon from '../../assets/facebook.svg'
-import InstagramIcon from '../../assets/instagram.svg'
-import TwitterIcon from '../../assets/twitter.svg'
-import StoreFront from '../../assets/storefront.svg'
-import LifebankIcon from '../../assets/local-hospital.svg'
 import { GET_LOCATION_PROFILE } from '../../gql'
+import Nearby from '../../components/Nearby/Nerby'
+
 
 const useStyles = makeStyles((theme) => ({
-  cardBody: {
+  contentBodyMobile: {
     width: '100%',
     backgroundColor: '#ffffff',
-    marginBottom: '0',
-    paddingTop: '16px'
   },
-  headerCardBody: {
+  headerBodyMobile: {
+    marginTop: '20px',
+    marginBottom: '20px',
+    position: 'relative',
     width: '100%',
-    position: "relative"
+    height: 'auto',
   },
   avatarRound: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    margin: '10px'
+    width: '45px',
+    height: '45px',
+    marginLeft: 20,
   },
-  bodyCard: {
-    width: '100%',
+  title: {
+    width: '75%',
+    height: '25px',
+    fontFamily: 'Roboto',
+    fontSize: '20px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '0.15px',
+    color: 'rgba(0, 0, 0, 0.87)',
+    position: 'absolute',
+    top: 3,
+    left: 80
+  },
+  subtitle: {
+    width: '75%',
+    height: '20px',
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.6)',
+    position: 'absolute',
+    top: 28,
+    left: 80
   },
   imageSection: {
     position: 'relative',
-    marginTop: '30px',
     width: '100%'
   },
+  carousel: {
+    maxWidth: '100%',
+    height: '200px',
+  },
+  containerImageDefault: {
+    width: '100%',
+    height: '200px',
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
   detailsSection: {
-    width: '100%'
+    width: '100%',
+    marginTop: '20px',
   },
   headerDetails: {
     width: '50%',
@@ -86,36 +125,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff',
     zIndex: 1
   },
-  title: {
-    width: '75%',
-    height: '25px',
-    fontFamily: 'Roboto',
-    fontSize: '20px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 'normal',
-    letterSpacing: '0.15px',
-    color: 'rgba(0, 0, 0, 0.87)',
-    position: 'absolute',
-    top: 10,
-    left: 65
-  },
-  subtitle: {
-    width: '75%',
-    height: '20px',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    position: 'absolute',
-    top: 35,
-    left: 65
-  },
   label: {
     height: '16px',
     fontFamily: 'Roboto',
@@ -129,14 +138,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '34px'
   },
   carruselImage: {
-    height: '90%',
-    marginTop: '-22px',
+    height: '100%',
     width: '100%',
-    maxWidth: '100%'
-  },
-  carousel: {
-    maxWidth: '100%',
-    height: '100%'
   },
   divider: {
     width: '100%'
@@ -161,10 +164,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 2)
   },
   midLabel: {
-    marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      marginLeft: theme.spacing(1),
+    }
   },
   appBar: {
     position: 'sticky',
@@ -178,37 +183,55 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     margin: theme.spacing(6)
   },
-  cardBodyDesktop: {
+  contentBodyDesktop: {
     width: '100%',
-    backgroundColor: '#ffffff',
-    marginBottom: '0',
-    padding: '2%'
+    backgroundColor: '#FFFFFF',
+    paddingTop: '50px',
+    paddingLeft: '20%',
+    paddingRight: '20%',
+    height: 'auto'
   },
-  contentBodySection: {
-    width: '50%',
-    height: '100%',
-    float: 'left'
-  },
-  headerContent: {
+  imageSectionDesktop: {
     width: '100%',
-    height: '10%'
+    height: '380px',
   },
-  avatarSectionDesktop: {
-    width: '10%',
-    height: '100%',
-    float: 'left'
+  carouselDesktop: {
+    height: '380px',
+    borderRadius: "10px"
   },
-  tituleSectionDesktop: {
-    width: '63%',
-    height: '100%',
-    float: 'left'
+  desktopContainerImageDefault: {
+    width: '100%',
+    height: '380px',
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  desktopImageDefault: {
+    width: "50%",
+    height: "50%",
+    color: "rgba(0, 0, 0, 0.87)",
+    borderRadius: "10px"
+  },
+  headerContentDesktop: {
+    position: 'relative',
+    width: '100%',
+    paddingTop: "30px",
+    paddingBottom: "25px",
+  },
+  avatarRoundDesktop: {
+    width: '60px',
+    height: '60px',
+    position: 'absolute',
+    top: 25,
+    left: 10,
   },
   titleDesktop: {
     width: '98%',
     height: '40px',
     fontFamily: 'Roboto',
     fontSize: '34px',
-    fontWeight: 'normal',
+    fontWeight: 'bold',
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: '1.18',
@@ -220,8 +243,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center'
   },
   subtitleDesktop: {
-    width: '100%',
-    height: '100%',
+    position: 'absolute',
+    top: 20,
+    right: 10,
     fontFamily: 'Roboto',
     fontSize: '14px',
     fontWeight: 'normal',
@@ -232,30 +256,23 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgba(0, 0, 0, 0.6)',
     marginLeft: '10px',
     paddingTop: '26px'
-
   },
-  subTituleSectionDesktop: {
-    width: '27%',
-    height: '100%',
-    float: 'left'
-  },
-  avatarRoundDesktop: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    marginTop: '10px',
-    marginLeft: '14%'
-  },
-  bodyDetailsDesktop: {
+  bodyContentDesktop: {
+    display: "flex",
     width: '100%',
-    marginTop: '15px',
-    float: 'left'
+    paddingTop: "25px",
+    paddingBottom: "15px",
   },
-  imageSectionDesktop: {
-    position: "relative",
-    width: '98%',
-    height: '35%',
-    paddingLeft: '2%'
+  bodyContentMidLeft: {
+    width: '50%',
+    paddingRight: "20px"
+  },
+  bodyContentMidRigth: {
+    width: '50%',
+    paddingLeft: "20px",
+  },
+  mapStyle: {
+    borderRadius: "50px"
   },
   text: {
     fontFamily: 'Roboto',
@@ -268,13 +285,20 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     color: 'rgba(0, 0, 0, 0.6)'
   },
-  desktopImageDefailt: {
-    width: '98%',
-    height: '380px'
+  socialIcon: {
+    color: "rgba(0, 0, 0, 0.87)",
+  },
+  bodyContentDesktopCards: {
+    width: '100%',
+    paddingTop: "25px",
+    paddingBottom: "15px",
+  },
+  contentCards: {
+    marginTop: "50px",
+    width: '100%',
   }
 }))
-
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />
 })
 
@@ -288,9 +312,10 @@ const InfoPage = () => {
   const history = useHistory()
   const [profile, setProfile] = useState()
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'), {
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
+  const { url } = useParams();
 
   const handleClickOpen = () => {
     setOpenModalLocation(true)
@@ -309,10 +334,7 @@ const InfoPage = () => {
 
   const { refetch: getData } = useQuery(GET_LOCATION_PROFILE, {
     variables: {
-      username: window.location.pathname.slice(
-        6,
-        window.location.pathname.length
-      )
+      username: url
     },
     skip: true
   })
@@ -344,28 +366,12 @@ const InfoPage = () => {
     return scheduleFinal
   }
 
-  const getSocialMediaIcon = (name) => {
-    switch (name) {
-      case 'facebook':
-        return FacebookIcon
-      case 'instagram':
-        return InstagramIcon
-      case 'twitter':
-        return TwitterIcon
-      default:
-        break
-    }
-  }
-
   useEffect(() => {
     if (location.state) setProfile(location.state.profile)
     else {
       const getProfile = async () => {
         const { data } = await getData({
-          username: window.location.pathname.slice(
-            6,
-            window.location.pathname.length
-          )
+          username: url
         })
 
         data.location.length > 0
@@ -378,12 +384,12 @@ const InfoPage = () => {
     if (profile && profile.type === 'SPONSOR') profile.info.social_media_links = JSON.parse(profile.info.social_media_links)
   }, [location])
 
-  const MovileInfoPage = () => {
+  const MobileInfoPage = () => {
     return (
       <>
         {profile &&
-          <Box className={classes.cardBody}>
-            <div className={classes.headerCardBody}>
+          <Box className={classes.contentBodyMobile}>
+            <Box className={classes.headerBodyMobile}>
               <Avatar className={classes.avatarRound} src={profile.info.logo_url || ""} alt="Avatar">
                 {profile.type === 'SPONSOR' && <StorefrontIcon />}
                 {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
@@ -393,199 +399,100 @@ const InfoPage = () => {
                 {profile.type === 'SPONSOR' && profile.info.business_type}
                 {profile.type === 'LIFE_BANK' && t('miscellaneous.donationCenter')}
               </Typography>
-            </div>
-            <div className={classes.bodyCard}>
-              <div className={classes.imageSection}>
-                {JSON.parse(profile.info.photos).length > 0 &&
-                  <Carousel
-                    value={actualImageIndex}
-                    className={classes.carousel}
-                    onChange={(val) => setActualImageIndex(val)}
-                    plugins={[
-                      'arrows',
-                      {
-                        resolve: slidesToShowPlugin,
-                        options: {
-                          numberOfSlides: 1
-                        }
+            </Box>
+            <Box className={classes.imageSection}>
+              {JSON.parse(profile.info.photos).length > 0 &&
+                <Carousel
+                  value={actualImageIndex}
+                  className={classes.carousel}
+                  onChange={(val) => setActualImageIndex(val)}
+                  plugins={[
+                    'arrows',
+                    {
+                      resolve: slidesToShowPlugin,
+                      options: {
+                        numberOfSlides: 1
                       }
-                    ]}
-                  >
-                    {JSON.parse(profile.info.photos).map((url, key) => (
-                      <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
-                    ))}
-                  </Carousel>
-                }
-                {profile.type === 'SPONSOR' && JSON.parse(profile.info.photos).length === 0 &&
-                  <img className={classes.carruselImage} src={StoreFront} />
-                }
-                {profile.type === 'LIFE_BANK' && JSON.parse(profile.info.photos).length === 0 &&
-                  <img className={classes.carruselImage} src={LifebankIcon} />
-                }
-                <Fab className={classes.fabButton}>
-                  <FavoriteIcon className={classes.iconFab} />
-                </Fab>
-              </div>
-              <div className={classes.detailsSection}>
-                <div className={classes.headerDetails}>
-                  <Button
-                    className={classes.label}
-                    startIcon={<LocationOnIcon color="action" />}
-                    onClick={handleClickOpen}
-                  >
-                    {t('miscellaneous.location')}
-                  </Button>
-                  <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-                    <div className={classes.appBar}>
-                      <Toolbar>
-                        <Typography variant="subtitle1">
-                          {t('miscellaneous.location')}
-                        </Typography>
-                        <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
-                          <CloseIcon color="secondary" />
-                        </IconButton>
-                      </Toolbar>
-                    </div>
-                    <MapShowOneLocation
-                      markerLocation={profile.info.geolocation}
-                      accountProp={profile.account}
-                      width="100%"
-                      height="100%"
-                      py={2}
+                    }
+                  ]}
+                >
+                  {JSON.parse(profile.info.photos).map((url, key) => (
+                    <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                  ))}
+                </Carousel>
+              }
+              {profile.type === 'SPONSOR' && JSON.parse(profile.info.photos).length === 0 &&
+                <Box className={classes.containerImageDefault}>
+                  <StorefrontIcon className={classes.desktopImageDefault} />
+                </Box>
+              }
+              {profile.type === 'LIFE_BANK' && JSON.parse(profile.info.photos).length === 0 &&
+                <Box className={classes.containerImageDefault}>
+                  <LocalHospitalIcon className={classes.desktopImageDefault} />
+                </Box>
+              }
+              <Fab className={classes.fabButton}>
+                <FavoriteIcon className={classes.iconFab} />
+              </Fab>
+            </Box>
+            <Box className={classes.detailsSection}>
+              <Box className={classes.headerDetails}>
+                <Button
+                  className={classes.label}
+                  startIcon={<LocationOnIcon color="action" />}
+                  onClick={handleClickOpen}
+                >
+                  {t('miscellaneous.location')}
+                </Button>
+                <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+                  <Box className={classes.appBar}>
+                    <Toolbar>
+                      <Typography variant="subtitle1">
+                        {t('miscellaneous.location')}
+                      </Typography>
+                      <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
+                        <CloseIcon color="secondary" />
+                      </IconButton>
+                    </Toolbar>
+                  </Box>
+                  <MapShowOneLocation
+                    markerLocation={profile.info.geolocation}
+                    accountProp={profile.account}
+                    width="100%"
+                    height="100%"
+                    py={2}
+                  />
+                </Dialog>
+              </Box>
+              <Box className={classes.headerDetails}>
+                <Button
+                  className={classes.label}
+                  startIcon={<CalendarTodayIcon color="action" />}
+                  onClick={handleClickOpenSchedule}
+                >
+                  {t('common.schedule')}
+                </Button>
+                <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
+                  <Box className={classes.appBar}>
+                    <Toolbar>
+                      <Typography variant="subtitle1">
+                        {t('common.schedule')}
+                      </Typography>
+                      <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
+                        <CloseIcon color="secondary" />
+                      </IconButton>
+                    </Toolbar>
+                  </Box>
+                  {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map((schedule, index) => (
+                    <ScheduleItem
+                      key={index}
+                      id={index}
+                      schedule={schedule}
                     />
-                  </Dialog>
-                </div>
-                <div className={classes.headerDetails}>
-                  <Button
-                    className={classes.label}
-                    startIcon={<CalendarTodayIcon color="action" />}
-                    onClick={handleClickOpenSchedule}
-                  >
-                    {t('common.schedule')}
-                  </Button>
-                  <Dialog fullScreen className={classes.modal} open={openSchedule} onClose={handleCloseSchedule} TransitionComponent={Transition}>
-                    <div className={classes.appBar}>
-                      <Toolbar>
-                        <Typography variant="subtitle1">
-                          {t('common.schedule')}
-                        </Typography>
-                        <IconButton className={classes.positionXIcon} onClick={handleCloseSchedule} aria-label="close">
-                          <CloseIcon color="secondary" />
-                        </IconButton>
-                      </Toolbar>
-                    </div>
-                    {JSON.parse(profile.info.schedule).length > 0 && JSON.parse(profile.info.schedule).map((schedule, index) => (
-                      <ScheduleItem
-                        key={index}
-                        id={index}
-                        schedule={schedule}
-                      />
-                    ))}
-                  </Dialog>
-                </div>
-                <div className={classes.bodyDetails}>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
-                    <Typography className={classes.text} variant="body1"> {profile.info.about}
-                    </Typography>
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
-                    <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
-                    <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
-                  </Box>
-                  <Divider className={classes.divider} />
-                  <Box className={classes.midLabel}>
-                    <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
-                    {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
-                      <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
-                    ))}
-                  </Box>
-                  <Divider className={classes.divider} />
-                  {profile.type === 'SPONSOR' &&
-                    <Box style={{ display: profile.type === 'SPONSOR' ? 'block' : 'none' }} className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
-                      {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
-                        JSON.parse(profile.info.social_media_links).map((item, index) => (
-                          <IconButton
-                            key={index}
-                            aria-label={`${item.name}-icon-button`}
-                            href={item.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Icon>
-                              <img
-                                src={getSocialMediaIcon(item.name)}
-                                alt={`${item.name}-icon`}
-                                height={25}
-                                width={25}
-                              />
-                            </Icon>
-                          </IconButton>
-                        ))}
-                    </Box>
-                  }
-                  {profile.type === 'LIFE_BANK' &&
-                    <Box className={classes.midLabel}>
-                      <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
-                      <Box className={classes.bloodDemand}>
-                        <Box className={classes.markLabel}>
-                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
-                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
-                          <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
-                        </Box>
-                        <Box className={classes.slider}>
-                          <Slider
-                            valueLabelDisplay="off"
-                            color="secondary"
-                            defaultValue={profile.info.blood_urgency_level}
-                            step={null}
-                            min={1}
-                            max={3}
-                          />
-                        </Box>
-                      </Box>
-                    </Box>
-                  }
-                </div>
-              </div>
-            </div>
-          </Box>
-        }
-      </>
-    )
-  }
-  const DesktopInfoPage = () => {
-    return (
-      <>
-        {profile &&
-          <Box className={classes.cardBodyDesktop}>
-            <div className={classes.contentBodySection}>
-              <div className={classes.headerContent}>
-                <div className={classes.avatarSectionDesktop}>
-                  <Avatar className={classes.avatarRoundDesktop} src={profile.info.logo_url || ""} alt="Avatar">
-                    {profile.type === 'SPONSOR' && <StorefrontIcon />}
-                    {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
-                  </Avatar>
-                </div>
-                <div className={classes.tituleSectionDesktop}>
-                  <Typography className={classes.titleDesktop} noWrap>{profile.info.name}</Typography>
-                </div>
-                <div className={classes.subTituleSectionDesktop}>
-                  <Typography className={classes.subtitleDesktop} noWrap >
-                    {profile.type === 'SPONSOR' && profile.info.business_type}
-                    {profile.type === 'LIFE_BANK' && t('miscellaneous.donationCenter')}
-                  </Typography>
-                </div>
-              </div>
-              <div className={classes.bodyDetailsDesktop}>
+                  ))}
+                </Dialog>
+              </Box>
+              <Box className={classes.bodyDetails}>
                 <Divider className={classes.divider} />
                 <Box className={classes.midLabel}>
                   <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
@@ -594,43 +501,8 @@ const InfoPage = () => {
                 </Box>
                 <Divider className={classes.divider} />
                 <Box className={classes.midLabel}>
-                  <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
-                  {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
-                    <Typography key={index} className={classes.text} id={index} variant="body1">{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
-                  ))}
-                </Box>
-                <Divider className={classes.divider} />
-                <Box className={classes.midLabel}>
                   <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
                   <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
-                </Box>
-                <Box className={classes.midLabel}>
-                  <Button
-                    className={`${classes.label} ${classes.boldText}`}
-                    startIcon={<LocationOnIcon color="action" />}
-                    onClick={handleClickOpen}
-                  >
-                    {t('miscellaneous.showLocation')}
-                  </Button>
-                  <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-                    <div className={classes.appBar}>
-                      <Toolbar>
-                        <Typography variant="subtitle1">
-                          {t('miscellaneous.location')}
-                        </Typography>
-                        <IconButton className={classes.positionXIcon} onClick={handleClose} aria-label="close">
-                          <CloseIcon color="secondary" />
-                        </IconButton>
-                      </Toolbar>
-                    </div>
-                    <MapShowOneLocation
-                      markerLocation={profile.info.geolocation}
-                      accountProp={profile.account}
-                      width="100%"
-                      height="100%"
-                      py={2}
-                    />
-                  </Dialog>
                 </Box>
                 <Divider className={classes.divider} />
                 <Box className={classes.midLabel}>
@@ -650,24 +522,17 @@ const InfoPage = () => {
                     <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
                     {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
                       JSON.parse(profile.info.social_media_links).map((item, index) => (
-                        <>
-                          <IconButton
-                            key={index}
-                            aria-label={`${item.name}-icon-button`}
-                            href={item.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Icon>
-                              <img
-                                src={getSocialMediaIcon(item.name)}
-                                alt={`${item.name}-icon`}
-                                height={25}
-                                width={25}
-                              />
-                            </Icon>
-                          </IconButton>
-                        </>
+                        <IconButton
+                          key={index}
+                          aria-label={`${item.name}-icon-button`}
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {item.name === "facebook" && <FacebookIcon className={classes.socialIcon} />}
+                          {item.name === "twitter" && <TwitterIcon className={classes.socialIcon} />}
+                          {item.name === "instagram" && <InstagramIcon className={classes.socialIcon} />}
+                        </IconButton>
                       ))}
                   </Box>
                 }
@@ -693,42 +558,156 @@ const InfoPage = () => {
                     </Box>
                   </Box>
                 }
-              </div>
-            </div>
-            <div className={classes.contentBodySection}>
-              <div className={classes.imageSectionDesktop}>
-                {JSON.parse(profile.info.photos).length > 0 &&
-                  <Carousel
-                    value={actualImageIndex}
-                    className={classes.carousel}
-                    onChange={(val) => setActualImageIndex(val)}
-                    plugins={[
-                      'arrows',
-                      {
-                        resolve: slidesToShowPlugin,
-                        options: {
-                          numberOfSlides: 1
-                        }
+              </Box>
+            </Box>
+          </Box>
+        }
+      </>
+    )
+  }
+  const DesktopInfoPage = () => {
+    return (
+      <>
+        {profile &&
+          <Box className={classes.contentBodyDesktop}>
+            <Box className={classes.imageSectionDesktop}>
+              {JSON.parse(profile.info.photos).length > 0 &&
+                <Carousel
+                  value={actualImageIndex}
+                  className={classes.carouselDesktop}
+                  onChange={(val) => setActualImageIndex(val)}
+                  plugins={[
+                    'arrows',
+                    {
+                      resolve: slidesToShowPlugin,
+                      options: {
+                        numberOfSlides: 1
                       }
-                    ]}
-                  >
-                    {JSON.parse(profile.info.photos).map((url, key) => (
-                      <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
-                    ))}
-                  </Carousel>
+                    }
+                  ]}
+                >
+                  {JSON.parse(profile.info.photos).map((url, key) => (
+                    <img className={classes.carruselImage} src={url} key={key} alt={`${key}`} />
+                  ))}
+                </Carousel>
+              }
+              {profile.type === 'SPONSOR' && JSON.parse(profile.info.photos).length === 0 &&
+                <Box className={classes.desktopContainerImageDefault}>
+                  <StorefrontIcon className={classes.desktopImageDefault} />
+                </Box>
+              }
+              {profile.type === 'LIFE_BANK' && JSON.parse(profile.info.photos).length === 0 &&
+                <Box className={classes.desktopContainerImageDefault}>
+                  <LocalHospitalIcon className={classes.desktopImageDefault} />
+                </Box>
+              }
+            </Box>
+            <Box className={classes.headerContentDesktop}>
+              <Avatar className={classes.avatarRoundDesktop} src={profile.info.logo_url || ""} alt="Avatar">
+                {profile.type === 'SPONSOR' && <StorefrontIcon />}
+                {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
+              </Avatar>
+              <Typography className={classes.titleDesktop} noWrap>{profile.info.name}</Typography>
+              <Typography className={classes.subtitleDesktop} noWrap >
+                {profile.type === 'SPONSOR' && profile.info.business_type}
+                {profile.type === 'LIFE_BANK' && t('miscellaneous.donationCenter')}
+              </Typography>
+            </Box>
+            <Divider className={classes.divider} />
+            <Box className={classes.bodyContentDesktop}>
+              <Box className={classes.bodyContentMidLeft}>
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('signup.about')}</Typography>
+                  <Typography className={classes.text} variant="body1"> {profile.info.about}
+                  </Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
+                  {JSON.parse(profile.info.schedule).length > 0 && generateSchedule(JSON.parse(profile.info.schedule)).map((schedule, index) => (
+                    <Typography key={index} className={classes.text} id={index} variant="body1">{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
+                  ))}
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('signup.address')}</Typography>
+                  <Typography className={classes.text} variant="body1">{profile.info.address}</Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.email')}</Typography>
+                  <Typography className={classes.text} variant="body1">{profile.info.email}</Typography>
+                </Box>
+                <Divider className={classes.divider} />
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
+                  {JSON.parse(profile.info.telephones).length > 0 && JSON.parse(profile.info.telephones).map((phoneNumber, index) => (
+                    <Typography style={{ marginTop: '4px' }} key={index} className={classes.text} variant="body1">{phoneNumber}</Typography>
+                  ))}
+                </Box>
+                <Divider className={classes.divider} />
+                {profile.type === 'LIFE_BANK' &&
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
+                    <Box className={classes.bloodDemand}>
+                      <Box className={classes.markLabel}>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.low')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.medium')}</Typography>
+                        <Typography variant="body1" className={`${classes.midLabel} ${classes.text}`}>{t('editProfile.high')}</Typography>
+                      </Box>
+                      <Box className={classes.slider}>
+                        <Slider
+                          valueLabelDisplay="off"
+                          color="secondary"
+                          defaultValue={profile.info.blood_urgency_level}
+                          step={null}
+                          min={1}
+                          max={3}
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
                 }
-                {profile.type === 'SPONSOR' && JSON.parse(profile.info.photos).length === 0 &&
-                  <div className={classes.desktopImageDefailt}>
-                    <img className={classes.desktopImageDefailt} src={StoreFront} />
-                  </div>
+                {profile.type === 'SPONSOR' &&
+                  <Box className={classes.midLabel}>
+                    <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
+                    {Array.isArray(JSON.parse(profile.info.social_media_links)) &&
+                      JSON.parse(profile.info.social_media_links).map((item, index) => (
+                        <IconButton
+                          key={index}
+                          aria-label={`${item.name}-icon-button`}
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {item.name === "facebook" && <FacebookIcon className={classes.socialIcon} />}
+                          {item.name === "twitter" && <TwitterIcon className={classes.socialIcon} />}
+                          {item.name === "instagram" && <InstagramIcon className={classes.socialIcon} />}
+                        </IconButton>
+                      ))}
+                  </Box>
                 }
-                {profile.type === 'LIFE_BANK' && JSON.parse(profile.info.photos).length === 0 &&
-                  <div className={classes.desktopImageDefailt}>
-                    <img className={classes.carruselImage} src={LifebankIcon} />
-                  </div>
-                }
-              </div>
-            </div>
+              </Box>
+              <Box className={classes.bodyContentMidRigth}>
+                <MapShowOneLocation
+                  markerLocation={profile.info.geolocation}
+                  accountProp={profile.account}
+                  width="100%"
+                  height="70%"
+                />
+              </Box>
+            </Box>
+            <Divider className={classes.divider} />
+            <Box className={classes.bodyContentDesktopCards}>
+              <Typography className={classes.boldText} variant="subtitle1">{`${t('common.near')}  ${profile.info.name}`}</Typography>
+              <Box className={classes.contentCards}>
+                <Nearby
+                  location={profile.info.geolocation}
+                  searchDistance={1000}
+                  account={profile.account}
+                />
+              </Box>
+            </Box>
           </Box>
         }
       </>
@@ -753,7 +732,7 @@ const InfoPage = () => {
   return (
     <>
       {!isDesktop &&
-        <MovileInfoPage />
+        <MobileInfoPage />
       }
       {isDesktop &&
         <DesktopInfoPage />
