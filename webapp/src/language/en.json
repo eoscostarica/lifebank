@@ -1,17 +1,17 @@
 {
   "translations": {
     "hero": {
-      "title": "Start saving lifes!",
+      "title": "Start Saving Lives",
       "subtitle1": "Give blood banks a lifeline.",
-      "subtitle2": "Register to donate life.",
-      "register": "Register"
+      "subtitle2": "Register and start saving lives!",
+      "register": "Get Started"
     },
     "contentToolbar": {
-      "browseWithMap": "Browse with a map",
-      "filters": "Filters",
+      "browseWithMap": "Explore near you",
+      "filters": "Filter search",
       "favorites": "Favorites",
       "favorite": "Favorite",
-      "inputPlaceholder": "Search Offers, Lifebank or Sponsors"
+      "inputPlaceholder": "Search Offers, Lifebanks or Sponsors"
     },
     "rolesTitle": {
       "singular": {
