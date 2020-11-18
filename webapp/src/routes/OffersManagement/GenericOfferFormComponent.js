@@ -129,7 +129,11 @@ const LimitationHandling = ({
           {t('offersManagement.selectDateRange')}
         </Typography>
         <br />
-        <DateRangePicker value={dates} onChange={onChange} />
+        <DateRangePicker
+          minDate={new Date()}
+          value={dates}
+          onChange={onChange}
+        />
       </Grid>
     </Paper>
   )
@@ -503,8 +507,8 @@ const GenericOfferFormComponent = ({
 LimitationHandling.propTypes = {
   classes: PropTypes.object,
   setQuantity: PropTypes.func,
-  setStartDate: PropTypes.func,
-  setEndDate: PropTypes.func
+  initialDates: PropTypes.array,
+  setDates: PropTypes.func
 }
 
 GenericOfferFormComponent.propTypes = {
