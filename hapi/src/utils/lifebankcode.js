@@ -47,7 +47,7 @@ const addLifebank = (
           lifebank_name: name,
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
-          location: JSON.stringify(geolocation),
+          location: JSON.parse(geolocation),
           about: profile.about || '',
           address: profile.address || '',
           telephones: JSON.stringify(profile.phone) || '[]',
