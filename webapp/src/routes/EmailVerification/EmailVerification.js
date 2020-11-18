@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "normal",
     lineHeight: "1.43",
     letterSpacing: "0.25px",
-    textAlign: "justify",
+    textAlign: "center",
     color: "rgba(0, 0, 0, 0.6)",
     marginBottom: 30
   },
