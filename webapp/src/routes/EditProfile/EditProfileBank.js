@@ -194,7 +194,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <>
-          {!isCompleting && user.logo_url && (
+          {isCompleting && profile.logo_url.length === 0 && (
             <Logo showCaption logoUrl={user.logo_url} />
           )}
         </>
@@ -202,7 +202,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           id="logo-url"
           name="logo-input"
           style={{
-            display: !isCompleting && user.logo_url ? 'block' : 'none'
+            display: isCompleting && profile.logo_url.length === 0 ? 'block' : 'none'
           }}
           label={t('editProfile.logoUrl')}
           variant="outlined"
@@ -336,13 +336,13 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             handleOnAddSchedule={handleOnAddSchedule}
           />
         </Box>
-        <Box style={{ display: isCompleting && user.photos ? 'none' : '' }} className={classes.marginTitule}>
+        <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.marginTitule}>
           <Typography variant="h4">{t('profile.images')}</Typography>
           <Typography variant="body1" />
         </Box>
         <TextField
           id="image-url"
-          style={{ display: isCompleting && user.photos ? 'none' : '' }}
+          style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
           label="Image url"
           variant="outlined"
           placeholder="Image url here"
@@ -375,7 +375,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           }}
           className={classes.textField}
         />
-        <div style={{ display: isCompleting && user.photos ? 'none' : '' }} className={classes.carouselDiv}>
+        <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
           {user.photos.length > 0 && (
             <>{user.photos && <Grid container justify="center">
               <Grid
