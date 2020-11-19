@@ -24,14 +24,14 @@ const Home = () => {
   const [sponsors, setSponsors] = useState([])
 
   const [searchValue, setSearchValue] = useState("")
-  const [currentUser, { logout }] = useUser()
+  const [, { logout }] = useUser()
   const [valueSponsorCat, setValueSponsorCat] = useState("All")
   const [valueOfferCat, setValueOfferCat] = useState("All")
   const [valueTokenPrice, setValueTokenPrice] = useState("All")
 
   const { error: getAllOffersError, refetch: getAllOffers } = useQuery(GET_OFFERS_QUERY, { active: true }, { fetchPolicy: 'cache-and-network' })
-  const { error: getAllBanksError, refetch: getAllBanks } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true }, { fetchPolicy: 'cache-and-network' })
-  const { error: getAllSponsorsError, refetch: getAllSponsors } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true }, { fetchPolicy: 'cache-and-network' })
+  const { refetch: getAllBanks } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true }, { fetchPolicy: 'cache-and-network' })
+  const { refetch: getAllSponsors } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true }, { fetchPolicy: 'cache-and-network' })
 
   useEffect(() => {
     if (getAllOffersError) {
