@@ -103,9 +103,6 @@ const ProfilePageSponsor = ({ profile }) => {
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
 
-    if (!profile.email)
-      pendingFieldsObject = { ...pendingFieldsObject, email: false }
-
     if (!profile.address)
       pendingFieldsObject = { ...pendingFieldsObject, address: false }
 
@@ -238,13 +235,6 @@ const ProfilePageSponsor = ({ profile }) => {
         {profile.logo_url && profile.logo_url !== '' && (
           <Logo logoUrl={profile.logo_url} />
         )}
-        <Box className={classes.rowBox}>
-          <Typography variant="subtitle1">{t('common.email')}</Typography>
-          <Typography variant="body1" className={classes.noCapitalize}>
-            {profile.email}
-          </Typography>
-        </Box>
-        <Divider className={classes.divider} />
         <Box
           style={{ display: !profile.account ? 'none' : '' }}
           className={classes.rowBox}
