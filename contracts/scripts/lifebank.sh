@@ -51,17 +51,17 @@ create_lifebank_accounts() {
         cleos -u $EOS_API_URL system newaccount eosio \
             --transfer $account \
             $EOS_PUB_KEY \
-            --stake-net "10000.0000 EOS" \
-            --stake-cpu "10000.0000 EOS" \
+            --stake-net "10000 EOS" \
+            --stake-cpu "10000 EOS" \
             --buy-ram-kbytes 8192
     done
 }
 
 assign_resources() {
     cleos -u $EOS_API_URL get account lbacccreator 
-    cleos -u $EOS_API_URL system buyram eosio lbacccreator "10000.0000 EOS"
+    cleos -u $EOS_API_URL system buyram eosio lbacccreator "10000 EOS"
     cleos -u $EOS_API_URL get account lbacccreator 
-    cleos -u $EOS_API_URL transfer eosio lbacccreator "10000000.0000 EOS" "Lifebank initial funding"
+    cleos -u $EOS_API_URL transfer eosio lbacccreator "10000000 EOS" "Lifebank initial funding"
 }
 
 deploy_lifebank_contracts() {
@@ -136,7 +136,7 @@ create_community() {
         "community_asset":"0 LIFE",
         "description":"LifeBank development Instance",
         "logo":"https://raw.githubusercontent.com/eoscostarica/lifebank/master/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg",
-        "maximum_supply":"1000000.0000 LIFE"
+        "maximum_supply":"1000000 LIFE"
     }' -p lifebankcode@active
 }
 
