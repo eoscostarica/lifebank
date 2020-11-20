@@ -538,7 +538,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             />
           </Box>
         </Box>
-        {!profile.location && (
+        {profile.location === 'null' && (
           <>
             <Typography variant="subtitle2" gutterBottom>
               {t('signup.chooseYourLocation')}
