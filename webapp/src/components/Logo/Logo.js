@@ -4,10 +4,13 @@ import { makeStyles } from '@material-ui/styles'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
-    maxHeight: 300,
+    maxHeight: 370,
     margin: 'auto',
     justifyContent: 'center',
     display: 'flex',
@@ -20,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     maxWidth: '100%',
-    maxHeight: 340,
+    maxHeight: 300,
     margin: 'auto'
   }
 }))
 
-const Logo = ({ logoUrl, showCaption }) => {
+const Logo = ({ logoUrl, showCaption, showDeleteButton, deleteActualLogo }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
@@ -42,8 +46,15 @@ const Logo = ({ logoUrl, showCaption }) => {
         <br />
         {showCaption && (
           <Typography variant="caption" style={{ textAlign: 'right' }}>
-            *Add image with transparent background if possible
+            {t('miscellaneous.addTransparentIfPossible')}
           </Typography>
+        )}
+        {showDeleteButton && (
+          <Box display="flex" flexDirection="row" justifyContent="flex-end">
+            <Button onClick={() => deleteActualLogo(true)}>
+              {t('miscellaneous.change')}
+            </Button>
+          </Box>
         )}
       </Card>
     </Grid>
@@ -52,7 +63,9 @@ const Logo = ({ logoUrl, showCaption }) => {
 
 Logo.propTypes = {
   logoUrl: PropTypes.string,
-  showCaption: PropTypes.bool
+  showCaption: PropTypes.bool,
+  showDeleteButton: PropTypes.bool,
+  deleteActualLogo: PropTypes.func
 }
 
 export default Logo

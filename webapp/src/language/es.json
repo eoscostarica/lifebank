@@ -57,7 +57,9 @@
       "createAccount": "Crear cuenta",
       "name": "Nombre",
       "address": "Dirección",
+      "addressPlaceholder": "Escribe tu dirección aquí",
       "phoneNumber": "Número de teléfono",
+      "phoneNumberPlaceholder": "Escribe tu número aquí",
       "invitationCode": "Código de invitación",
       "chooseYourLocation": "Escoge tu ubicación",
       "asAdonor": "Como Donador",
@@ -132,7 +134,9 @@
       "banks": "Bancos",
       "sponsors": "Comercios",
       "all": "All",
-      "donationCenter": "Centro de donación"
+      "donationCenter": "Centro de donación",
+      "change": "Cambiar",
+      "addTransparentIfPossible": "Añade una imagen con fondo transparente, de ser posible."
     },
     "notFound": {
       "404Error": "404: La página que buscas no existe",
@@ -281,6 +285,7 @@
       "prev": "Anterior",
       "next": "Siguiente",
       "email": "Correo",
+      "emailPlaceholder": "Escribe tu correo aquí",
       "account": "Cuenta",
       "telephone": "Teléfono",
       "website": "Sitio web",
@@ -363,7 +368,8 @@
       "noProvidedDate": "Sin fecha",
       "youHaveNoAddedOffers": "No tienes ofertas agregadas",
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
-      "yesDeleteIt": "Si, borrar"
+      "yesDeleteIt": "Si, borrar",
+      "selectDateRange": "Seleccione el rango de fecha"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",

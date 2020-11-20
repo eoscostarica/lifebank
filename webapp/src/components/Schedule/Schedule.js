@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   resultList: {
-    width: 350,
+    width: '100%',
     '& li': {
       padding: 0,
       display: 'flex',

@@ -12,6 +12,7 @@ const SocialMediaTextField = ({
   placeholder,
   icon,
   textFieldClass,
+  defaultValue,
   onChangeSocialMediaTextField
 }) => (
   <TextField
@@ -19,6 +20,7 @@ const SocialMediaTextField = ({
     label={label}
     variant="outlined"
     placeholder={placeholder}
+    value={defaultValue}
     fullWidth
     onChange={(e) => onChangeSocialMediaTextField(e.target.value)}
     InputProps={{
@@ -46,6 +48,7 @@ SocialMediaTextField.propTypes = {
   placeholder: PropTypes.string,
   icon: PropTypes.node,
   textFieldClass: PropTypes.string,
+  defaultValue: PropTypes.string,
   onChangeSocialMediaTextField: PropTypes.func
 }
 

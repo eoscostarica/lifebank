@@ -57,7 +57,9 @@
       "createAccount": "Create an account",
       "name": "Name",
       "address": "Address",
+      "addressPlaceholder": "Type your address here",
       "phoneNumber": "Phone Number",
+      "phoneNumberPlaceholder": "Type your phone number here",
       "invitationCode": "Invitation Code",
       "chooseYourLocation": "Choose your location",
       "asAdonor": "As a Donor",
@@ -132,7 +134,9 @@
       "banks": "Banks",
       "sponsors": "Sponsors",
       "all": "All",
-      "donationCenter": "Donation center"
+      "donationCenter": "Donation center",
+      "change": "Change",
+      "addTransparentIfPossible": "Add image with transparent background if possible."
     },
     "notFound": {
       "404Error": "404: Oh... this isn't the page you're looking for. Please, try again!",
@@ -146,7 +150,7 @@
     },
     "schedule": {
       "sunday": "Sunday",
-      "monday": "Monady",
+      "monday": "Monday",
       "tuesday": "Tuesday",
       "wednesday": "Wednesday",
       "thursday": "Thursday",
@@ -281,6 +285,7 @@
       "prev": "Prev",
       "next": "Next",
       "email": "Email",
+      "emailPlaceholder": "Type your email here",
       "account": "Account",
       "telephone": "Telephone",
       "website": "Website",
@@ -363,7 +368,8 @@
       "noProvidedDate": "No provided date",
       "youHaveNoAddedOffers": "You have no added offers",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
-      "yesDeleteIt": "Yes, delete it"
+      "yesDeleteIt": "Yes, delete it",
+      "selectDateRange": "Select date range"
     },
     "offerView": {
       "selectedOffer": "Selected offer",

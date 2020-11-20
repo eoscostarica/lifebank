@@ -27,12 +27,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import AddIcon from '@material-ui/icons/Add'
 import { useTranslation } from 'react-i18next'
 import '@brainhubeu/react-carousel/lib/style.css'
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers'
-import 'date-fns'
-import DateFnsUtils from '@date-io/date-fns'
+import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 
 import { CREATE_OFFER_MUTATION, UPDATE_OFFER_MUTATION } from '../../gql'
 
@@ -82,18 +77,29 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     color: 'white',
     flex: 1
+  },
+  dateContainer: {
+    padding: theme.spacing(3)
   }
 }))
 
 const LimitationHandling = ({
   classes,
   setQuantity,
-  setStartDate,
-  setEndDate
+  initialDates,
+  setDates
 }) => {
   const { t } = useTranslation('translations')
-  const [selectedStartDate, setSelectedStartDate] = useState(new Date())
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date())
+  const [dates, onChange] = useState([
+    initialDates[0] || undefined,
+    initialDates[1] || undefined
+  ])
+
+  useEffect(() => {
+    if (dates && dates[0] !== undefined && dates[1] !== undefined) {
+      setDates(dates)
+    }
+  }, [dates])
 
   return (
     <Paper className={classes.limitationHandlingPaper}>
@@ -113,40 +119,22 @@ const LimitationHandling = ({
         className={classes.textField}
         onChange={(event) => setQuantity(Number(event.target.value))}
       />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid container justify="space-around">
-          <KeyboardDatePicker
-            inputVariant="outlined"
-            margin="normal"
-            id="start-date-picker-dialog"
-            label={t('offersManagement.selectStartOfferDate')}
-            format="MM/dd/yyyy"
-            value={selectedStartDate}
-            onChange={(date) => {
-              setStartDate(date)
-              setSelectedStartDate(date)
-            }}
-            KeyboardButtonProps={{
-              'aria-label': t('offersManagement.startDate')
-            }}
-          />
-          <KeyboardDatePicker
-            inputVariant="outlined"
-            margin="normal"
-            id="end-date-picker-dialog"
-            label={t('offersManagement.selectEndOfferDate')}
-            format="MM/dd/yyyy"
-            value={selectedEndDate}
-            onChange={(date) => {
-              setEndDate(date)
-              setSelectedEndDate(date)
-            }}
-            KeyboardButtonProps={{
-              'aria-label': t('offersManagement.endDate')
-            }}
-          />
-        </Grid>
-      </MuiPickersUtilsProvider>
+      <Grid
+        className={classes.dateContainer}
+        container
+        justify="space-evenly"
+        direction="column"
+      >
+        <Typography variant="h5" style={{ textAlign: 'center' }}>
+          {t('offersManagement.selectDateRange')}
+        </Typography>
+        <br />
+        <DateRangePicker
+          minDate={new Date()}
+          value={dates}
+          onChange={onChange}
+        />
+      </Grid>
     </Paper>
   )
 }
@@ -415,8 +403,14 @@ const GenericOfferFormComponent = ({
             {(offer.limited === true || offer.limited === 'true') && (
               <LimitationHandling
                 setQuantity={(val) => setOffer({ ...offer, quantity: val })}
-                setStartDate={(val) => setOffer({ ...offer, start_date: val })}
-                setEndDate={(val) => setOffer({ ...offer, end_date: val })}
+                initialDates={[offer.start_date, offer.end_date]}
+                setDates={(dates) =>
+                  setOffer({
+                    ...offer,
+                    start_date: dates[0],
+                    end_date: dates[1]
+                  })
+                }
                 classes={classes}
               />
             )}
@@ -426,6 +420,7 @@ const GenericOfferFormComponent = ({
             label={t('offersManagement.costInTokens')}
             variant="outlined"
             type="number"
+            onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
             placeholder={t('offersManagement.costInTokensPlaceholder')}
             value={offer.cost_in_tokens || undefined}
             fullWidth
@@ -501,7 +496,7 @@ const GenericOfferFormComponent = ({
       )}
       <Snackbar
         open={openSnackbar.show}
-        autoHideDuration={5000}
+        autoHideDuration={3000}
         onClose={handleClose}
       >
         <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
@@ -513,8 +508,8 @@ const GenericOfferFormComponent = ({
 LimitationHandling.propTypes = {
   classes: PropTypes.object,
   setQuantity: PropTypes.func,
-  setStartDate: PropTypes.func,
-  setEndDate: PropTypes.func
+  initialDates: PropTypes.array,
+  setDates: PropTypes.func
 }
 
 GenericOfferFormComponent.propTypes = {
