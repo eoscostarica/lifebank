@@ -31,7 +31,6 @@ const addLifebank = (
   password,
   { name, has_immunity_test, geolocation, ...profile }
 ) => {
-
   return eosUtil.transact(
     [
       {
