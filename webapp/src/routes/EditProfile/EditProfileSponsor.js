@@ -106,7 +106,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     name: profile.name,
     about: profile.about,
     address: profile.address,
-    email: profile.email,
     website: profile.website,
     benefit_description: profile.benefit_description,
     telephones:
@@ -115,12 +114,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         : [],
     business_type: profile.business_type,
     covid_impact: profile.covid_impact,
-    geolocation: profile.geolocation ? JSON.parse(profile.geolocation) : null,
+    geolocation: profile.location ? JSON.parse(profile.location) : null,
     schedule: profile.schedule,
     photos:
       profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
     social_media_links:
-      profile.social_media_links && profile.social_media_links !== ''
+      profile.social_media_links && profile.social_media_links !== '[]'
         ? JSON.parse(profile.social_media_links)
         : []
   })
@@ -139,7 +138,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   const handleOnAddSchedule = useMemo(
     () => (value) => {
-      if (value) setUser({ ...user, schedule: JSON.stringify(value) })
+      if (value)
+        setUser((prev) => ({ ...prev, schedule: JSON.stringify(value) }))
     },
     [user.schedule]
   )
@@ -179,14 +179,30 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     onSubmit(userToSubmit)
   }
 
+  const showOrHide = (value) => {
+    return isCompleting && value ? 'none' : ''
+  }
+
+  const showOrHideSocialMedia = (platform) => {
+    return isCompleting &&
+      profile.social_media_links &&
+      JSON.parse(profile.social_media_links).find(
+        (social) => social.name === platform
+      )
+      ? 'none'
+      : ''
+  }
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} />
+        <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
+          <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} />
+        </Box>
         <TextField
           id="name"
           name="name"
-          style={{ display: isCompleting && profile.name ? 'none' : '' }}
+          style={{ display: showOrHide(profile.name) }}
           label={t('signup.name')}
           variant="outlined"
           placeholder={t('editProfile.sponsorNamePlaceholder')}
@@ -201,7 +217,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <TextField
           id="address"
           name="address"
-          style={{ display: isCompleting && profile.address ? 'none' : '' }}
+          style={{ display: showOrHide(profile.address) }}
           label={t('signup.address')}
           variant="outlined"
           placeholder={t('signup.addressPlaceholder')}
@@ -214,9 +230,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           onChange={(event) => handleSetField('address', event.target.value)}
         />
         <FormControl
-          style={{
-            display: isCompleting && profile.business_type ? 'none' : ''
-          }}
+          style={{ display: showOrHide(profile.business_type) }}
           variant="outlined"
           className={classes.textField}
         >
@@ -238,22 +252,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           </Select>
         </FormControl>
         <TextField
-          id="email"
-          style={{ display: isCompleting && profile.email ? 'none' : '' }}
-          label={t('common.email')}
-          variant="outlined"
-          placeholder={t('common.emailPlaceholder')}
-          defaultValue={user.email}
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => handleSetField('email', event.target.value)}
-        />
-        <TextField
           id="website"
-          style={{ display: isCompleting && profile.website ? 'none' : '' }}
+          style={{ display: showOrHide(profile.website) }}
           label={t('common.website')}
           variant="outlined"
           placeholder="Website"
@@ -265,75 +265,82 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           className={classes.textField}
           onChange={(event) => handleSetField('website', event.target.value)}
         />
-        <TextField
-          id="telephone"
-          label={t('signup.phoneNumber')}
-          variant="outlined"
-          placeholder={t('signup.phoneNumberPlaceholder')}
-          fullWidth
-          inputRef={phoneValueRef}
-          onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  disabled={disablePhoneInput}
-                  color="secondary"
-                  aria-label="toggle password visibility"
-                  onClick={() => {
-                    setUser({
-                      ...user,
-                      telephones: [
-                        ...user.telephones,
-                        phoneValueRef.current.value
-                      ]
-                    })
-                    phoneValueRef.current.value = ''
-                    setDisablePhoneInput(true)
-                  }}
-                >
-                  <AddIcon />
-                </IconButton>
-              </InputAdornment>
-            )
+        <Box
+          width="100%"
+          style={{
+            display:
+              isCompleting && profile.telephones && profile.telephones !== '[]'
+                ? 'none'
+                : ''
           }}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-        />
-        {user.telephones.length > 0 && (
-          <Telephones
-            phones={user.telephones}
-            showDelete
-            deletePhone={(phone) =>
-              setUser({
-                ...user,
-                telephones: user.telephones.filter((p) => p !== phone)
-              })
-            }
+        >
+          <TextField
+            id="telephone"
+            label={t('signup.phoneNumber')}
+            variant="outlined"
+            placeholder={t('signup.phoneNumberPlaceholder')}
+            fullWidth
+            inputRef={phoneValueRef}
+            onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    disabled={disablePhoneInput}
+                    color="secondary"
+                    aria-label="toggle password visibility"
+                    onClick={() => {
+                      setUser({
+                        ...user,
+                        telephones: [
+                          ...user.telephones,
+                          phoneValueRef.current.value
+                        ]
+                      })
+                      phoneValueRef.current.value = ''
+                      setDisablePhoneInput(true)
+                    }}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            InputLabelProps={{
+              shrink: true
+            }}
+            className={classes.textField}
           />
-        )}
+          {user.telephones.length > 0 && (
+            <Telephones
+              phones={user.telephones}
+              showDelete
+              deletePhone={(phone) =>
+                setUser({
+                  ...user,
+                  telephones: user.telephones.filter((p) => p !== phone)
+                })
+              }
+            />
+          )}
+        </Box>
         <br />
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="center"
-          style={{ display: isCompleting && profile.schedule ? 'none' : '' }}
+          style={{ display: showOrHide(profile.schedule) }}
           width="60%"
         >
           <Schedule
             handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
-            style={{ display: !profile.schedule ? 'none' : '' }}
             data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
             showSchedule
           />
         </Box>
         <TextField
           id="about"
-          style={{
-            display: isCompleting && profile.about ? 'none' : ''
-          }}
+          style={{ display: showOrHide(profile.about) }}
           label={t('signup.about')}
           variant="outlined"
           placeholder={t('signup.aboutBusiness')}
@@ -350,9 +357,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
         <TextField
           id="covidImpact"
-          style={{
-            display: isCompleting && profile.covid_impact ? 'none' : ''
-          }}
+          style={{ display: showOrHide(profile.covid_impact) }}
           label={t('editProfile.covidImpact')}
           variant="outlined"
           placeholder={t('editProfile.covidImpactPlaceholder')}
@@ -370,9 +375,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         />
         <TextField
           id="benefitDescription"
-          style={{
-            display: isCompleting && profile.benefit_description ? 'none' : ''
-          }}
+          style={{ display: showOrHide(profile.benefit_description) }}
           label={t('profile.benefitDescription')}
           variant="outlined"
           placeholder=""
@@ -388,141 +391,172 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             handleSetField('benefit_description', event.target.value)
           }
         />
-        <TextField
-          id="photo-url"
+        <Box
+          width="100%"
           style={{
-            display: isCompleting && !profile.photos ? 'none' : ''
+            display:
+              isCompleting && profile.photos && profile.photos !== '[]'
+                ? 'none'
+                : ''
           }}
-          label={t('editProfile.photoUrl')}
-          variant="outlined"
-          placeholder={t('editProfile.photoUrlPlaceholder')}
-          fullWidth
-          inputRef={photoUrlValueRef}
-          onChange={(e) => setDisablePhotoUrlInput(e.target.value.length === 0)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  disabled={disablePhotoUrlInput}
-                  color="secondary"
-                  aria-label="add photo url"
-                  onClick={() => {
+        >
+          <TextField
+            id="photo-url"
+            label={t('editProfile.photoUrl')}
+            variant="outlined"
+            placeholder={t('editProfile.photoUrlPlaceholder')}
+            fullWidth
+            inputRef={photoUrlValueRef}
+            onChange={(e) =>
+              setDisablePhotoUrlInput(e.target.value.length === 0)
+            }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    disabled={disablePhotoUrlInput}
+                    color="secondary"
+                    aria-label="add photo url"
+                    onClick={() => {
+                      setUser({
+                        ...user,
+                        photos: [...user.photos, photoUrlValueRef.current.value]
+                      })
+                      photoUrlValueRef.current.value = ''
+                      setDisablePhotoUrlInput(true)
+                    }}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            InputLabelProps={{
+              shrink: true
+            }}
+            className={classes.textField}
+          />
+          {user.photos && (
+            <Box className={classes.carouselContainer}>
+              {user.photos.length > 0 && (
+                <Carousel
+                  deleteItem={(url) => {
                     setUser({
                       ...user,
-                      photos: [...user.photos, photoUrlValueRef.current.value]
+                      photos: user.photos.filter((p) => p !== url)
                     })
-                    photoUrlValueRef.current.value = ''
-                    setDisablePhotoUrlInput(true)
                   }}
-                >
-                  <AddIcon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-        />
-        {user.photos && (
-          <Box className={classes.carouselContainer}>
-            {user.photos.length > 0 && (
-              <Carousel
-                deleteItem={(url) => {
-                  setUser({
-                    ...user,
-                    photos: user.photos.filter((p) => p !== url)
-                  })
-                }}
-                activeDeletion
-                images={user.photos}
-              />
-            )}
-          </Box>
-        )}
-
-        <Box className={classes.socialMediaLinksContainer}>
-          <SocialMediaTextField
-            style={{
-              display:
-                isCompleting &&
-                user.social_media_links &&
-                user.social_media_links.find(
-                  (social) => social.name === 'facebook'
-                )
-                  ? 'none'
-                  : ''
-            }}
-            idText="facebook-profile-url"
-            name="facebook"
-            label={t('editProfile.facebookProfileUrl')}
-            placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
-            icon={FacebookIcon}
-            onChangeSocialMediaTextField={(url) =>
-              handleOnSocialMediaTextFieldChange('facebook', url)
-            }
-          />
-          <SocialMediaTextField
-            style={{
-              display:
-                isCompleting &&
-                user.social_media_links &&
-                user.social_media_links.find(
-                  (social) => social.name === 'instagram'
-                )
-                  ? 'none'
-                  : ''
-            }}
-            textFieldClass={classes.textField}
-            idText="instagram-username"
-            name="instagram"
-            label={t('editProfile.instagramUsername')}
-            placeholder={t('editProfile.instagramUsernamePlaceholder')}
-            icon={InstagramIcon}
-            onChangeSocialMediaTextField={(url) =>
-              handleOnSocialMediaTextFieldChange('instagram', url)
-            }
-          />
-          <SocialMediaTextField
-            style={{
-              display:
-                isCompleting &&
-                user.social_media_links &&
-                user.social_media_links.find(
-                  (social) => social.name === 'twitter'
-                )
-                  ? 'none'
-                  : ''
-            }}
-            textFieldClass={classes.textField}
-            idText="twitter-username"
-            name="twitter"
-            label={t('editProfile.twitterUsername')}
-            placeholder={t('editProfile.twitterUsernamePlaceholder')}
-            icon={TwitterIcon}
-            onChangeSocialMediaTextField={(url) =>
-              handleOnSocialMediaTextFieldChange('twitter', url)
-            }
-          />
+                  activeDeletion
+                  images={user.photos}
+                />
+              )}
+            </Box>
+          )}
         </Box>
 
-        <Typography variant="subtitle2" gutterBottom>
-          {t('signup.chooseYourLocation')}
-        </Typography>
-
-        <MapEditLocation
-          onGeolocationChange={handleOnGeolocationChange}
-          markerType={SPONSOR}
-          markerLocation={
-            user.geolocation
-              ? user.geolocation
-              : { longitude: -84.0556371, latitude: 9.9195872 }
-          }
+        <Box
           width="100%"
-          height={400}
-          mb={1}
-        />
+          style={{
+            display:
+              isCompleting &&
+              profile.social_media_links &&
+              user.social_media_links.length === 3
+                ? 'none'
+                : ''
+          }}
+          className={classes.socialMediaLinksContainer}
+        >
+          <Box
+            width="100%"
+            style={{ display: showOrHideSocialMedia('facebook') }}
+          >
+            <SocialMediaTextField
+              idText="facebook-profile-url"
+              name="facebook"
+              label={t('editProfile.facebookProfileUrl')}
+              defaultValue={
+                profile.social_media_links &&
+                JSON.parse(profile.social_media_links).length > 0
+                  ? JSON.parse(profile.social_media_links).find(
+                      (social) => social.name === 'facebook'
+                    ).url
+                  : ''
+              }
+              placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
+              icon={FacebookIcon}
+              onChangeSocialMediaTextField={(url) =>
+                handleOnSocialMediaTextFieldChange('facebook', url)
+              }
+            />
+          </Box>
+          <Box
+            width="100%"
+            style={{ display: showOrHideSocialMedia('instagram') }}
+          >
+            <SocialMediaTextField
+              textFieldClass={classes.textField}
+              idText="instagram-username"
+              name="instagram"
+              label={t('editProfile.instagramUsername')}
+              defaultValue={
+                profile.social_media_links &&
+                JSON.parse(profile.social_media_links).length > 0
+                  ? JSON.parse(profile.social_media_links).find(
+                      (social) => social.name === 'instagram'
+                    ).url
+                  : ''
+              }
+              placeholder={t('editProfile.instagramUsernamePlaceholder')}
+              icon={InstagramIcon}
+              onChangeSocialMediaTextField={(url) =>
+                handleOnSocialMediaTextFieldChange('instagram', url)
+              }
+            />
+          </Box>
+          <Box
+            width="100%"
+            style={{ display: showOrHideSocialMedia('twitter') }}
+          >
+            <SocialMediaTextField
+              textFieldClass={classes.textField}
+              idText="twitter-username"
+              name="twitter"
+              label={t('editProfile.twitterUsername')}
+              defaultValue={
+                profile.social_media_links &&
+                JSON.parse(profile.social_media_links).length > 0
+                  ? JSON.parse(profile.social_media_links).find(
+                      (social) => social.name === 'twitter'
+                    ).url
+                  : ''
+              }
+              placeholder={t('editProfile.twitterUsernamePlaceholder')}
+              icon={TwitterIcon}
+              onChangeSocialMediaTextField={(url) =>
+                handleOnSocialMediaTextFieldChange('twitter', url)
+              }
+            />
+          </Box>
+        </Box>
+        {profile.location === 'null' && (
+          <>
+            <Typography variant="subtitle2" gutterBottom>
+              {t('signup.chooseYourLocation')}
+            </Typography>
+            <MapEditLocation
+              onGeolocationChange={handleOnGeolocationChange}
+              markerType={SPONSOR}
+              markerLocation={
+                user.geolocation
+                  ? user.geolocation
+                  : { longitude: -84.0556371, latitude: 9.9195872 }
+              }
+              width="100%"
+              height={400}
+              mb={1}
+            />
+          </>
+        )}
       </Box>
       <Box className={classes.btnWrapper}>
         <Box className={classes.boxBtn}>
