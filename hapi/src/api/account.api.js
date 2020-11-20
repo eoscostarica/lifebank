@@ -208,12 +208,6 @@ const getSponsorsAccounts = async () => {
   return user
 }
 
-const getLifebanksAccounts = async () => {
-  const { user } = await hasuraUtils.request(GET_LIFEBANKS_ACCOUNTS)
-
-  return user
-}
-
 const getValidSponsors = async () => {
   const sponsorsAccounts = await getSponsorsAccounts()
   const validSponsors = []
@@ -247,6 +241,12 @@ const getValidSponsors = async () => {
   }
 
   return validSponsors
+}
+
+const getLifebanksAccounts = async () => {
+  const { user } = await hasuraUtils.request(GET_LIFEBANKS_ACCOUNTS)
+
+  return user
 }
 
 const getValidLifebanks = async () => {
