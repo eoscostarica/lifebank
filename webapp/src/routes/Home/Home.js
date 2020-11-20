@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useUser } from '../../context/user.context'
 
 import HomeMobile from './HomeMobile'
 import HomeDesktop from './HomeDesktop'
@@ -9,7 +10,6 @@ import { GET_OFFERS_QUERY, GET_LOCATIONS_QUERY } from '../../gql'
 import ConsetComponent from '../../components/ConsetComponent/ConsentComponent'
 
 const Home = () => {
-
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
@@ -21,89 +21,145 @@ const Home = () => {
   const [lifebanks, setLifebanks] = useState([])
   const [loadingSponsors, setLoadingSponsors] = useState(true)
   const [sponsors, setSponsors] = useState([])
+  const [fetchError, setFetchError] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
+  const [, { logout }] = useUser()
+  const [valueSponsorCat, setValueSponsorCat] = useState('All')
+  const [valueOfferCat, setValueOfferCat] = useState('All')
+  const [valueTokenPrice, setValueTokenPrice] = useState('All')
 
-  const [searchValue, setSearchValue] = useState("")
-  const [valueSponsorCat, setValueSponsorCat] = useState("All")
-  const [valueOfferCat, setValueOfferCat] = useState("All")
-  const [valueTokenPrice, setValueTokenPrice] = useState("All")
+  const {
+    loading: loadingDataOffer,
+    error: allOffersError,
+    data: allOffers,
+    refetch: getAllOffers
+  } = useQuery(GET_OFFERS_QUERY, {
+    variables: { active: true },
+    fetchPolicy: 'cache-and-network'
+  })
+  const {
+    loading: loadingDataBanks,
+    error: allBanksError,
+    data: allBanks,
+    refetch: getAllBanks
+  } = useQuery(GET_LOCATIONS_QUERY, { fetchPolicy: 'cache-and-network' })
+  const {
+    loading: loadingDataSpons,
+    error: allSponsorsError,
+    data: allSponsors,
+    refetch: getAllSponsors
+  } = useQuery(GET_LOCATIONS_QUERY, { fetchPolicy: 'cache-and-network' })
 
-  const { refetch: getAllOffers } = useQuery(GET_OFFERS_QUERY, { active: true }, { skip: true })
-  const { refetch: getAllBanks } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true })
-  const { refetch: getAllSponsors } = useQuery(GET_LOCATIONS_QUERY, {}, { skip: true })
+  const typeError = async (errorMessege) => {
+    setFetchError(true)
+    if (errorMessege === 'GraphQL error: Could not verify JWT: JWTExpired') {
+      if (allOffersError && allBanksError && allSponsorsError) {
+        logout()
+        await getOffers()
+        await getSponsors()
+        await getLifebanks()
+      }
+      setFetchError(false)
+    }
+  }
+
+  useEffect(() => {
+    if (!fetchError) {
+      if (allOffersError) typeError(allOffersError.message)
+      else if (allBanksError) typeError(allBanksError.message)
+      else if (allSponsorsError) typeError(allSponsorsError.message)
+    }
+  }, [allOffersError, allBanksError, allSponsorsError])
 
   const getOffers = async () => {
     setLoadingOffers(true)
-    const { data } = await getAllOffers({
-      active: true
-    })
-    let dataOffers = data.offer
-
-    if (valueOfferCat !== 'All') {
-      dataOffers = dataOffers.filter(
-        (offer) =>
-          offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase()
-      )
-    }
-
-    if (valueSponsorCat !== 'All') {
-      dataOffers = dataOffers.filter(
-        (offer) =>
-          offer.user.location.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase()
-      )
-    }
-
-    if (valueTokenPrice !== 'All') {
-      dataOffers = dataOffers.filter(
-        (offer) => offer.cost_in_tokens === parseInt(valueTokenPrice)
-      )
-    }
-
-    if (searchValue !== "") {
-      dataOffers = dataOffers.filter(
-        (offer) => offer.offer_name.toLowerCase().includes(searchValue.toLowerCase())
-      )
-    }
-
-    setOffers(dataOffers)
-    setLoadingOffers(false)
+    await getAllOffers({ active: true })
   }
+
+  useEffect(() => {
+    if (!loadingDataOffer) {
+      let dataOffers = allOffers.offer
+
+      if (valueOfferCat !== 'All') {
+        dataOffers = dataOffers.filter(
+          (offer) =>
+            offer.offer_type.toLowerCase() === valueOfferCat.toLowerCase()
+        )
+      }
+
+      if (valueSponsorCat !== 'All') {
+        dataOffers = dataOffers.filter(
+          (offer) =>
+            offer.user.location.info.bussines_type.toLowerCase() ===
+            valueSponsorCat.toLowerCase()
+        )
+      }
+
+      if (valueTokenPrice !== 'All') {
+        dataOffers = dataOffers.filter(
+          (offer) => offer.cost_in_tokens === parseInt(valueTokenPrice)
+        )
+      }
+
+      if (searchValue !== '') {
+        dataOffers = dataOffers.filter((offer) =>
+          offer.offer_name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      }
+
+      setOffers(dataOffers)
+      setLoadingOffers(false)
+    }
+  }, [allOffers])
 
   const getLifebanks = async () => {
     setLoadingLifebanks(true)
-    const { data } = await getAllBanks({})
-    let dataTemp = data.location
-    dataTemp = dataTemp.filter(bank => bank.type === "LIFE_BANK")
-
-    if (searchValue !== "")
-      dataTemp = dataTemp.filter(
-        (banks) => banks.name.toLowerCase().includes(searchValue.toLowerCase())
-      )
-
-
-    setLifebanks(dataTemp)
-    setLoadingLifebanks(false)
+    await getAllBanks({})
   }
+
+  useEffect(() => {
+    if (!loadingDataBanks) {
+      let dataTemp = allBanks.location
+      dataTemp = dataTemp.filter((bank) => bank.type === 'LIFE_BANK')
+
+      if (searchValue !== '')
+        dataTemp = dataTemp.filter((banks) =>
+          banks.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+
+      setLifebanks(dataTemp)
+      setLoadingLifebanks(false)
+    }
+  }, [allBanks])
 
   const getSponsors = async () => {
     setLoadingSponsors(true)
-    const { data } = await getAllSponsors({})
-    let dataTemp = data.location
-
-    dataTemp = dataTemp.filter(bank => bank.type === "SPONSOR")
-
-    if (valueSponsorCat !== 'All') {
-      dataTemp = dataTemp.filter(bank => bank.info.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase())
-    }
-
-    if (searchValue !== "")
-      dataTemp = dataTemp.filter(
-        (bank) => bank.info.name.toLowerCase().includes(searchValue.toLowerCase())
-      )
-
-
-    setSponsors(dataTemp)
-    setLoadingSponsors(false)
+    await getAllSponsors({})
   }
+
+  useEffect(() => {
+    if (!loadingDataSpons) {
+      let dataTemp = allSponsors.location
+
+      dataTemp = dataTemp.filter((bank) => bank.type === 'SPONSOR')
+
+      if (valueSponsorCat !== 'All') {
+        dataTemp = dataTemp.filter(
+          (bank) =>
+            bank.info.bussines_type.toLowerCase() ===
+            valueSponsorCat.toLowerCase()
+        )
+      }
+
+      if (searchValue !== '')
+        dataTemp = dataTemp.filter((bank) =>
+          bank.info.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+
+      setSponsors(dataTemp)
+      setLoadingSponsors(false)
+    }
+  }, [allSponsors])
 
   const applyFilters = (p_sponsor_cat, p_offer_cat, p_tokenPrice) => {
     setValueSponsorCat(p_sponsor_cat)
@@ -119,7 +175,7 @@ const Home = () => {
 
   return (
     <>
-      {isDesktop &&
+      {isDesktop && (
         <HomeDesktop
           offers={offers}
           loadingOffers={loadingOffers}
@@ -131,8 +187,8 @@ const Home = () => {
           searchValue={searchValue}
           handleChangeSearch={setSearchValue}
         />
-      }
-      {!isDesktop &&
+      )}
+      {!isDesktop && (
         <HomeMobile
           offers={offers}
           loadingOffers={loadingOffers}
@@ -143,7 +199,8 @@ const Home = () => {
           applyFilters={applyFilters}
           searchValue={searchValue}
           handleChangeSearch={setSearchValue}
-        />}
+        />
+      )}
       <ConsetComponent />
     </>
   )

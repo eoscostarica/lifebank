@@ -10,6 +10,7 @@ module.exports = async () => {
     return validLifebanks
   } catch (error) {
     console.error(error)
+
     return Boom.boomify(error, { statusCode: BAD_REQUEST })
   }
 }
