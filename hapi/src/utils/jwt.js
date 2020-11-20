@@ -17,7 +17,7 @@ const create = ({ account, role, ...args }) => {
     jwtConfig.secret,
     'HS256'
   )
-  jwt.setExpiration(new Date().getTime() + 60 * 60 * 24)
+  jwt.setExpiration(new Date().getTime() + 8 * 60* 60* 1000)
 
   return jwt.compact()
 }

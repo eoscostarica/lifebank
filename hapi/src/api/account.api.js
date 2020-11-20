@@ -58,11 +58,11 @@ const create = async ({ role, email, name, secret }) => {
 
   await historyApi.insert(transaction)
 
-  // try {
-  //   mailApi.sendVerificationCode(email, verification_code)
-  // } catch (error) {
-  //   console.log(error)
-  // }
+  try {
+    mailApi.sendVerificationCode(email, verification_code)
+  } catch (error) {
+    console.log(error)
+  }
 
   return {
     account,
@@ -168,14 +168,15 @@ const getLifebankData = async account => {
     account
   )
 
-  if (!profile.address) {
+  if (Object.entries(profile).length === 0) {
+
     const { email } = await userApi.getOne({
       account: { _eq: account }
     })
     const data = await preRegLifebank.getOne({
       email: { _eq: email }
     })
-
+    
     return {
       ...profile,
       address: data.preregister_lifebank[0].address,
@@ -192,6 +193,7 @@ const getLifebankData = async account => {
       consent: !!consent
     }
   } else {
+
     return {
       ...profile,
       name,

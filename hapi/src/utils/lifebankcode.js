@@ -31,6 +31,7 @@ const addLifebank = (
   password,
   { name, has_immunity_test, geolocation, ...profile }
 ) => {
+
   return eosUtil.transact(
     [
       {
@@ -47,7 +48,7 @@ const addLifebank = (
           lifebank_name: name,
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
-          location: JSON.parse(geolocation),
+          location: JSON.stringify(geolocation),
           about: profile.about || '',
           address: profile.address || '',
           telephones: JSON.stringify(profile.phone) || '[]',
@@ -175,6 +176,7 @@ const getLifebank = async account => {
     lower_bound: account,
     upper_bound: account
   })
+
   return rows.length > 0 ? rows[0] : null
 }
 
