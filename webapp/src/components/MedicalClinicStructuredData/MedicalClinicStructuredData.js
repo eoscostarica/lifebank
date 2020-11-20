@@ -21,11 +21,11 @@ const MedicalClinicStructuredData = ({
           name: name,
           openingHours: getOpeningHours(openingHours),
           addres: address,
-          logo: logo,
+          logo: logo.length === 0 ? 'https://raw.githubusercontent.com/eoscostarica/lifebank/6ec27b8c7832ba6ccb4adebfe1ba8d1d94eb0544/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg': logo,
           email: email,
           description: description,
           location: location,
-          telephone: telephone
+          telephone: JSON.parse(telephone)[0]
         }}
       >
         <Generic

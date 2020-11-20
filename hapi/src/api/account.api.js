@@ -244,45 +244,43 @@ const getValidSponsors = async () => {
 }
 
 const getLifebanksAccounts = async () => {
-  const { user } = await hasuraUtils.request(GET_LIFEBANKS_ACCOUNTS)
+  const { location } = await hasuraUtils.request(GET_LIFEBANKS_ACCOUNTS)
 
-  return user
+  return location
 }
 
 const getValidLifebanks = async () => {
   const lifebankAccounts = await getLifebanksAccounts()
   const validLifebanks = []
-  for (let index = 0; index < lifebankAccounts.length; index++) {
-    const { tx } =
-      (await lifebankcodeUtils.getLifebank(lifebankAccounts[index].account)) ||
-      {}
-    if (tx) {
-      const { ...profile } = await getTransactionData(tx)
-      if (
-        profile.lifebank_name.length > 0 &&
-        profile.schedule.length > 0 &&
-        profile.address.length > 0 &&
-        profile.logo_url.length > 0 &&
-        profile.email.length > 0 &&
-        profile.about.length > 0 &&
-        profile.location !== 'null' &&
-        JSON.parse(profile.telephones).length > 0
-      )
-        validLifebanks.push({
-          name: profile.lifebank_name,
-          openingHours: profile.schedule,
-          address: profile.address,
-          logo: profile.logo_url,
-          description: profile.about,
-          email: profile.email,
-          location: profile.location,
-          telephone: JSON.parse(profile.telephones)[0]
-        })
-    }
-  }
 
+  for (let index = 0; index < lifebankAccounts.length; index++) {    
+    if (
+      lifebankAccounts[index].info.name.length > 0 &&
+      lifebankAccounts[index].info.schedule.length > 0 &&
+      lifebankAccounts[index].info.address.length > 0 &&
+      lifebankAccounts[index].info.email.length > 0 &&
+      lifebankAccounts[index].info.about.length > 0 &&
+      lifebankAccounts[index].info.geolocation !== 'null' &&
+      JSON.parse(lifebankAccounts[index].info.telephones).length > 0
+    )
+      validLifebanks.push({
+        name: lifebankAccounts[index].info.name,
+        openingHours: lifebankAccounts[index].info.schedule,
+        address: lifebankAccounts[index].info.address,
+        logo: lifebankAccounts[index].info.logo_url,
+        description: lifebankAccounts[index].info.about,
+        email: lifebankAccounts[index].info.email,
+        location: JSON.stringify(lifebankAccounts[index].info.geolocation),
+        telephone: JSON.stringify(lifebankAccounts[index].info.telephones),
+        photos: lifebankAccounts[index].info.photos,
+        urgencyLevel: lifebankAccounts[index].info.urgency_level,
+        role: lifebankAccounts[index].info.role,
+        userName: lifebankAccounts[index].user.username
+      })
+  }
   return validLifebanks
 }
+
 
 const getSponsorData = async account => {
   const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
