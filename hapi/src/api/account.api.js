@@ -169,7 +169,6 @@ const getLifebankData = async account => {
   )
 
   if (!profile.address) {
-
     const { email } = await userApi.getOne({
       account: { _eq: account }
     })
@@ -192,8 +191,7 @@ const getLifebankData = async account => {
       blood_urgency_level: data.preregister_lifebank[0].urgency_level,
       consent: !!consent
     }
-  }
-  else {
+  } else {
     return {
       ...profile,
       name,
@@ -336,7 +334,7 @@ const grantConsent = async account => {
   return consentTransaction
 }
 
-const formatSchedule = (schedule) => {
+const formatSchedule = schedule => {
   let scheduleFormat = ''
 
   let hours
@@ -346,7 +344,7 @@ const formatSchedule = (schedule) => {
   return scheduleFormat.replace(',', ' ')
 }
 
-const formatLifebankData = (lifebankData) => {
+const formatLifebankData = lifebankData => {
   lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
   lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
   if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'

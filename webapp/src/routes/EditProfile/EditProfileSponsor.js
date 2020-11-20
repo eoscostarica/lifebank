@@ -22,7 +22,7 @@ import TwitterIcon from '../../assets/twitter.svg'
 import MapEditLocation from '../../components/MapEditLocation'
 import Carousel from '../../components/Carousel'
 import Schedule from '../../components/Schedule'
-import Logo from '../../components/Logo'
+import LogoUrlInput from '../../components/LogoUrlInput'
 import Telephones from '../../components/Telephones'
 import SocialMediaTextField from '../../components/SocialMediaTextField'
 import { constants } from '../../config'
@@ -115,7 +115,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         : [],
     business_type: profile.business_type,
     covid_impact: profile.covid_impact,
-    geolocation: profile.location ? JSON.parse(profile.location) : null,
+    geolocation: profile.geolocation ? JSON.parse(profile.geolocation) : null,
     schedule: profile.schedule,
     photos:
       profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
@@ -133,7 +133,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   )
 
   const handleOnGeolocationChange = useCallback(
-    (geolocation) => setUser({ ...user, geolocation: geolocation }),
+    (geolocation) => setUser((prev) => ({ ...prev, geolocation: geolocation })),
     [user.geolocation]
   )
 
@@ -182,28 +182,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        <>
-          {isCompleting && !profile.logo_url && (
-            <Logo showCaption logoUrl={user.logo_url} />
-          )}
-        </>
-        <TextField
-          id="logo-url"
-          name="logo-input"
-          style={{
-            display: isCompleting && !profile.logo_url ? 'block' : 'none'
-          }}
-          label={t('editProfile.logoUrl')}
-          variant="outlined"
-          placeholder={t('editProfile.logoUrlPlaceholder')}
-          defaultValue={user.logo_url}
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => handleSetField('logo_url', event.target.value)}
-        />
+        <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} />
         <TextField
           id="name"
           name="name"
@@ -323,21 +302,25 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           }}
           className={classes.textField}
         />
-        <Telephones
-          phones={user.telephones}
-          showDelete
-          deletePhone={(phone) =>
-            setUser({
-              ...user,
-              telephones: user.telephones.filter((p) => p !== phone)
-            })
-          }
-        />
-
+        {user.telephones.length > 0 && (
+          <Telephones
+            phones={user.telephones}
+            showDelete
+            deletePhone={(phone) =>
+              setUser({
+                ...user,
+                telephones: user.telephones.filter((p) => p !== phone)
+              })
+            }
+          />
+        )}
+        <br />
         <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
           style={{ display: isCompleting && profile.schedule ? 'none' : '' }}
-          width="100%"
-          className={classes.textField}
+          width="60%"
         >
           <Schedule
             handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
@@ -346,7 +329,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             showSchedule
           />
         </Box>
-
         <TextField
           id="about"
           style={{
@@ -413,7 +395,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           }}
           label={t('editProfile.photoUrl')}
           variant="outlined"
-          placeholder={t('editProfile.photourlPlaceholder')}
+          placeholder={t('editProfile.photoUrlPlaceholder')}
           fullWidth
           inputRef={photoUrlValueRef}
           onChange={(e) => setDisablePhotoUrlInput(e.target.value.length === 0)}
