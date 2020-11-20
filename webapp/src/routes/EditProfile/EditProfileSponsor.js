@@ -475,9 +475,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               name="facebook"
               label={t('editProfile.facebookProfileUrl')}
               defaultValue={
-                JSON.parse(profile.social_media_links).find(
-                  (social) => social.name === 'facebook'
-                ).url
+                profile.social_media_links &&
+                JSON.parse(profile.social_media_links).length > 0
+                  ? JSON.parse(profile.social_media_links).find(
+                      (social) => social.name === 'facebook'
+                    ).url
+                  : ''
               }
               placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
               icon={FacebookIcon}
@@ -496,9 +499,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               name="instagram"
               label={t('editProfile.instagramUsername')}
               defaultValue={
-                JSON.parse(profile.social_media_links).find(
-                  (social) => social.name === 'instagram'
-                ).url
+                profile.social_media_links &&
+                JSON.parse(profile.social_media_links).length > 0
+                  ? JSON.parse(profile.social_media_links).find(
+                      (social) => social.name === 'instagram'
+                    ).url
+                  : ''
               }
               placeholder={t('editProfile.instagramUsernamePlaceholder')}
               icon={InstagramIcon}
@@ -517,9 +523,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               name="twitter"
               label={t('editProfile.twitterUsername')}
               defaultValue={
-                JSON.parse(profile.social_media_links).find(
-                  (social) => social.name === 'twitter'
-                ).url
+                profile.social_media_links &&
+                JSON.parse(profile.social_media_links).length > 0
+                  ? JSON.parse(profile.social_media_links).find(
+                      (social) => social.name === 'twitter'
+                    ).url
+                  : ''
               }
               placeholder={t('editProfile.twitterUsernamePlaceholder')}
               icon={TwitterIcon}
