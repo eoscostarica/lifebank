@@ -420,6 +420,7 @@ const GenericOfferFormComponent = ({
             label={t('offersManagement.costInTokens')}
             variant="outlined"
             type="number"
+            onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
             placeholder={t('offersManagement.costInTokensPlaceholder')}
             value={offer.cost_in_tokens || undefined}
             fullWidth
