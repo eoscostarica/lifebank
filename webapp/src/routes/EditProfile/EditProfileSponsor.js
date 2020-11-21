@@ -101,7 +101,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   const photoUrlValueRef = useRef(undefined)
   const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
-  const [socialMedia, setSocialMedia] = useState(
+  const [socialMedia] = useState(
     profile.social_media_links && profile.social_media_links !== '[]'
       ? JSON.parse(profile.social_media_links)
       : []
@@ -520,7 +520,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               defaultValue={
                 socialMedia.find((social) => social.name === 'twitter')
                   ? socialMedia.find((social) => social.name === 'twitter').url
-                  : ''
+                  : undefined
               }
               placeholder={t('editProfile.twitterUsernamePlaceholder')}
               icon={TwitterIcon}
