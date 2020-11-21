@@ -58,11 +58,11 @@ const create = async ({ role, email, name, secret }) => {
 
   await historyApi.insert(transaction)
 
-  // try {
-  //   mailApi.sendVerificationCode(email, verification_code)
-  // } catch (error) {
-  //   console.log(error)
-  // }
+  try {
+    mailApi.sendVerificationCode(email, verification_code)
+  } catch (error) {
+    console.log(error)
+  }
 
   return {
     account,
@@ -301,8 +301,16 @@ const getSponsorData = async account => {
   )
   const balance = await lifebankcoinUtils.getbalance(account)
 
-  return {
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  const profileAndEmail = {
     ...profile,
+    email: user.email
+  }
+  return {
+    ...profileAndEmail,
     communities,
     balance,
     name,
