@@ -27,6 +27,11 @@ const editProfile = async (account, profile) => {
   await historyApi.insert(addSponsorTransaction)
   await userApi.setEmail({ account: { _eq: account } }, user.email)
 
+  const profileAndEmail = {
+    ...profile,
+    email: user.email
+  }
+
   if (profile.geolocation) {
     const { location } = await locationApi.verifyExistence(account)
 
@@ -40,7 +45,7 @@ const editProfile = async (account, profile) => {
         ]
       },
       type: LOCATION_TYPES.SPONSOR,
-      info: profile
+      info: profileAndEmail
     }
 
     location[0]
