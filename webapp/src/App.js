@@ -24,17 +24,20 @@ const App = ({ ual }) => {
     sideBarPosition ? setSideBarPosition(false) : setSideBarPosition(true)
   }
 
-  const [loadValidSponsors, { data }] = useLazyQuery(GET_VALID_SPONSORS_QUERY, {
-    fetchPolicy: 'network-only'
+  const{ refetch: getSponsorData } = useQuery(GET_VALID_SPONSORS_QUERY, {
+    skip: true
   })
 
-  useEffect(() => {
-    if (validSponsors.length === 0) loadValidSponsors()
-  }, [loadValidSponsors])
+  const getSponsors = async () => {
+    const { data } = await getSponsorData()
+
+    if (data && validSponsors.length === 0)
+      setValidSponsors(data.get_valid_sponsors)
+  }
 
   useEffect(() => {
-    if (data) setValidSponsors(data.get_valid_sponsors)
-  }, [data])
+    getSponsors()
+  }, [getSponsorData])
 
   const { refetch: getLifebankData } = useQuery(GET_VALID_LIFEBANKS_QUERY, {
     skip: true
@@ -42,7 +45,7 @@ const App = ({ ual }) => {
 
   const getLifebanks = async () => {
     const { data } = await getLifebankData()
-    console.log(data)
+
     if (data && validLifebanks.length === 0)
       setValidLifebanks(data.get_valid_lifebanks)
   }
@@ -92,7 +95,6 @@ const App = ({ ual }) => {
               ))}
             </>
           )}
-          {console.log("validLifebanks home", validLifebanks)}
           {validLifebanks.length > 0 && (
             <>
               {validLifebanks.map((element, key) => (

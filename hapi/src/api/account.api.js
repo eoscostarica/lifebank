@@ -215,25 +215,31 @@ const getSponsorsAccounts = async () => {
 const getValidSponsors = async () => {
   const sponsorsAccounts = await getSponsorsAccounts()
   const validSponsors = []
-  console.log("sponsorsAccounts:", sponsorsAccounts)
+
   for (let index = 0; index < sponsorsAccounts.length; index++) {
       if (
-        lifebankAccounts[index].info.sponsor_name.length > 0 &&
-        profile.schedule.length > 0 &&
-        profile.address.length > 0 &&
-        profile.email.length > 0 &&
-        profile.location !== 'null' &&
-        JSON.parse(profile.telephones).length > 0
+        sponsorsAccounts[index].info.name.length > 0 &&
+        sponsorsAccounts[index].info.schedule.length > 0 &&
+        sponsorsAccounts[index].info.address.length > 0 &&
+        sponsorsAccounts[index].info.email.length > 0 &&
+        sponsorsAccounts[index].info.location !== 'null' &&
+        JSON.parse(sponsorsAccounts[index].info.telephones).length > 0
       )
         validSponsors.push({
-          name: profile.sponsor_name,
-          openingHours: profile.schedule,
-          address: profile.address,
-          logo: profile.logo_url,
-          email: profile.email,
-          location: profile.location,
-          telephone: JSON.parse(profile.telephones)[0],
-          social_media_links: profile.social_media_links
+          name: sponsorsAccounts[index].info.name,
+          openingHours: sponsorsAccounts[index].info.schedule,
+          address: sponsorsAccounts[index].info.address,
+          logo: sponsorsAccounts[index].info.logo_url,
+          email: sponsorsAccounts[index].info.email,
+          location: JSON.stringify(sponsorsAccounts[index].info.geolocation),
+          telephone: sponsorsAccounts[index].info.telephones,
+          social_media_links: sponsorsAccounts[index].info.social_media_links,
+          photos: sponsorsAccounts[index].info.photos,
+          website: sponsorsAccounts[index].info.website,
+          covidImpact: sponsorsAccounts[index].info.covid_impact,
+          businessType: sponsorsAccounts[index].info.business_type,
+          benefitDescription: sponsorsAccounts[index].info.benefit_description,
+          userName: sponsorsAccounts[index].user.username
         })
     }
 
@@ -298,8 +304,17 @@ const getSponsorData = async account => {
   )
   const balance = await lifebankcoinUtils.getbalance(account)
 
-  return {
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  const profileAndEmail = {
     ...profile,
+    email: user.email
+  }
+
+  return {
+    ...profileAndEmail,
     communities,
     balance,
     name,

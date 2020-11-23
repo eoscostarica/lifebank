@@ -191,6 +191,12 @@ type ValidSponsor {
   location : String!
   telephone : String!
   social_media_links : String!
+  photos : String!
+  website : String!
+  covidImpact : String!
+  businessType : String!
+  benefitDescription : String!
+  userName : String!
 }
 
 type ValidLifebank {
