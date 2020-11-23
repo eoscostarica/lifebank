@@ -42,7 +42,11 @@ const Logo = ({ logoUrl, showCaption, showDeleteButton, deleteActualLogo }) => {
       lg={12}
     >
       <Card style={{ textAlign: 'center' }} elevation={0}>
-        <img className={classes.logo} src={logoUrl} alt="user-logo" />
+        <img
+          className={classes.logo}
+          src={`//images.weserv.nl?url=${logoUrl}&h=300&dpr=2`}
+          alt="user-logo"
+        />
         <br />
         {showCaption && (
           <Typography variant="caption" style={{ textAlign: 'right' }}>
