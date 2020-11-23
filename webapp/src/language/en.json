@@ -186,7 +186,8 @@
       "socialMedia": "Social media"
     },
     "errors": {
-      "authError": "Something happened with the authentication"
+      "authError": "Something happened with the authentication",
+      "tokenExpiration": "The session has expired"
     },
     "editProfile": {
       "editProfile": "Edit Profile",

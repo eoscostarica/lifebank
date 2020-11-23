@@ -186,7 +186,8 @@
       "socialMedia": "Redes sociales"
     },
     "errors": {
-      "authError": "Ha ocurrido un error con la autenticación"
+      "authError": "Ha ocurrido un error con la autenticación",
+      "tokenExpiration": "La sesión ha expirado"
     },
     "editProfile": {
       "editProfile": "Editar Perfil",

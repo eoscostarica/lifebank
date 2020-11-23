@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useHistory } from 'react-router-dom'
 import { useUser } from '../../context/user.context'
+import LocalBusinessStructuredData from '../../components/LocalBusinessStructuredData'
+import MedicalClinicStructuredData from '../../components/MedicalClinicStructuredData'
+import Alert from '@material-ui/lab/Alert'
+import Snackbar from '@material-ui/core/Snackbar'
+import { useTranslation } from 'react-i18next'
 
 import HomeMobile from './HomeMobile'
 import HomeDesktop from './HomeDesktop'
-import { GET_OFFERS_QUERY, GET_LOCATIONS_QUERY } from '../../gql'
+import { GET_OFFERS_QUERY, GET_VALID_SPONSORS_QUERY, GET_VALID_LIFEBANKS_QUERY } from '../../gql'
 import ConsetComponent from '../../components/ConsetComponent/ConsentComponent'
 
 const Home = () => {
@@ -14,7 +20,7 @@ const Home = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
-
+  const { t } = useTranslation('translations')
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
   const [loadingLifebanks, setLoadingLifebanks] = useState(true)
@@ -27,6 +33,9 @@ const Home = () => {
   const [valueSponsorCat, setValueSponsorCat] = useState('All')
   const [valueOfferCat, setValueOfferCat] = useState('All')
   const [valueTokenPrice, setValueTokenPrice] = useState('All')
+  const [openAlert, setOpenAlert] = useState(false)
+  const [messegaAlert, setMessegaAlert] = useState("")
+  const history = useHistory()
 
   const {
     loading: loadingDataOffer,
@@ -42,25 +51,32 @@ const Home = () => {
     error: allBanksError,
     data: allBanks,
     refetch: getAllBanks
-  } = useQuery(GET_LOCATIONS_QUERY, { fetchPolicy: 'cache-and-network' })
+  } = useQuery(GET_VALID_LIFEBANKS_QUERY, { fetchPolicy: 'cache-and-network' })
   const {
     loading: loadingDataSpons,
     error: allSponsorsError,
     data: allSponsors,
     refetch: getAllSponsors
-  } = useQuery(GET_LOCATIONS_QUERY, { fetchPolicy: 'cache-and-network' })
+  } = useQuery(GET_VALID_SPONSORS_QUERY, { fetchPolicy: 'cache-and-network' })
+
+  const handleOpenAlert = () => {
+    setOpenAlert(!openAlert)
+  }
 
   const typeError = async (errorMessege) => {
     setFetchError(true)
     if (errorMessege === 'GraphQL error: Could not verify JWT: JWTExpired') {
       if (allOffersError && allBanksError && allSponsorsError) {
         logout()
+        handleOpenAlert()
+        setMessegaAlert(t('errors.tokenExpiration'))
         await getOffers()
         await getSponsors()
         await getLifebanks()
       }
       setFetchError(false)
-    }
+    } else history.push('/internal-error')
+
   }
 
   useEffect(() => {
@@ -119,7 +135,9 @@ const Home = () => {
 
   useEffect(() => {
     if (!loadingDataBanks) {
-      let dataTemp = allBanks.location
+      console.log("data allBanks", allBanks)
+
+      /*let dataTemp = allBanks.location
       dataTemp = dataTemp.filter((bank) => bank.type === 'LIFE_BANK')
 
       if (searchValue !== '')
@@ -128,6 +146,7 @@ const Home = () => {
         )
 
       setLifebanks(dataTemp)
+      */
       setLoadingLifebanks(false)
     }
   }, [allBanks])
@@ -139,9 +158,10 @@ const Home = () => {
 
   useEffect(() => {
     if (!loadingDataSpons) {
-      let dataTemp = allSponsors.location
+      console.log("data sponsor", allSponsors)
+      /*let dataTemp = allSponsors.get_valid_sponsors
 
-      dataTemp = dataTemp.filter((bank) => bank.type === 'SPONSOR')
+      //dataTemp = dataTemp.filter((bank) => bank.type === 'SPONSOR')
 
       if (valueSponsorCat !== 'All') {
         dataTemp = dataTemp.filter(
@@ -157,6 +177,7 @@ const Home = () => {
         )
 
       setSponsors(dataTemp)
+      */
       setLoadingSponsors(false)
     }
   }, [allSponsors])
@@ -202,6 +223,45 @@ const Home = () => {
         />
       )}
       <ConsetComponent />
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
+        <Alert onClose={handleOpenAlert} severity="error">
+          {messegaAlert}
+        </Alert>
+      </Snackbar>
+      {sponsors.length > 0 && (
+        <>
+          {sponsors.map((el, key) => (
+            <LocalBusinessStructuredData
+              key={key}
+              name={el.name}
+              openingHours={el.openingHours}
+              address={el.address}
+              logo={el.logo}
+              email={el.email}
+              location={el.location}
+              telephone={el.telephone}
+              socialMediaLinks={JSON.parse(el.social_media_links)}
+            />
+          ))}
+        </>
+      )}
+      {lifebanks.length > 0 && (
+        <>
+          {lifebanks.map((element, key) => (
+            <MedicalClinicStructuredData
+              key={key}
+              name={element.name}
+              openingHours={element.openingHours}
+              address={element.address}
+              logo={element.logo}
+              email={element.email}
+              description={element.description}
+              location={element.location}
+              telephone={element.telephone}
+            />
+          ))}
+        </>
+      )}
     </>
   )
 }
