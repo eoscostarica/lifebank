@@ -225,23 +225,23 @@ const getValidSponsors = async () => {
       sponsorsAccounts[index].info.location !== 'null' &&
       JSON.parse(sponsorsAccounts[index].info.telephones).length > 0
     )
-    validSponsors.push({
-      name: sponsorsAccounts[index].info.name,
-      openingHours: sponsorsAccounts[index].info.schedule,
-      address: sponsorsAccounts[index].info.address,
-      logo: sponsorsAccounts[index].info.logo_url,
-      email: sponsorsAccounts[index].info.email,
-      location: JSON.stringify(sponsorsAccounts[index].info.geolocation),
-      telephone: sponsorsAccounts[index].info.telephones,
-      social_media_links: sponsorsAccounts[index].info.social_media_links,
-      photos: sponsorsAccounts[index].info.photos,
-      website: sponsorsAccounts[index].info.website,
-      covidImpact: sponsorsAccounts[index].info.covid_impact,
-      businessType: sponsorsAccounts[index].info.business_type,
-      benefitDescription: sponsorsAccounts[index].info.benefit_description,
-      userName: sponsorsAccounts[index].user.username
-    })
-    }
+      validSponsors.push({
+        name: sponsorsAccounts[index].info.name,
+        openingHours: sponsorsAccounts[index].info.schedule,
+        address: sponsorsAccounts[index].info.address,
+        logo: sponsorsAccounts[index].info.logo_url,
+        email: sponsorsAccounts[index].info.email,
+        location: JSON.stringify(sponsorsAccounts[index].info.geolocation),
+        telephone: sponsorsAccounts[index].info.telephones,
+        social_media_links: sponsorsAccounts[index].info.social_media_links,
+        photos: sponsorsAccounts[index].info.photos,
+        website: sponsorsAccounts[index].info.website,
+        covidImpact: sponsorsAccounts[index].info.covid_impact,
+        businessType: sponsorsAccounts[index].info.business_type,
+        benefitDescription: sponsorsAccounts[index].info.benefit_description,
+        userName: sponsorsAccounts[index].user.username
+      })
+  }
 
   return validSponsors
 }
@@ -281,7 +281,7 @@ const getValidLifebanks = async () => {
         userName: lifebankAccounts[index].user.username
       })
   }
-  
+
   return validLifebanks
 }
 
@@ -346,7 +346,7 @@ const grantConsent = async account => {
   return consentTransaction
 }
 
-const formatSchedule = schedule => {
+const formatSchedule = (schedule) => {
   let scheduleFormat = ''
 
   let hours
