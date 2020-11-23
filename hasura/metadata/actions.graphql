@@ -202,6 +202,9 @@ type ValidLifebank {
   email : String!
   location : String!
   telephone : String!
+  userName : String!
+  photos : String!
+  urgencyLevel : Int!
 }
 
 type create_account_lifebank_output {

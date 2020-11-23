@@ -20,16 +20,22 @@ const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
 const GET_LIFEBANKS_ACCOUNTS = `
 query MyQuery {
-  user(where: {account: {_ilike: "lif%"}}) {
-    account
+  location(where: {user: {role: {_eq: "lifebank"}}}) {
+    info
+    user {
+      username
+    }
   }
 }
 `
 
 const GET_SPONSORS_ACCOUNTS = `
 query MyQuery {
-  user(where: {account: {_ilike: "spo%"}}) {
-    account
+  location(where: {user: {role: {_eq: "sponsor"}}}) {
+    info
+    user {
+      username
+    }
   }
 }
 `
@@ -252,7 +258,7 @@ const getLifebanksAccounts = async () => {
 const getValidLifebanks = async () => {
   const lifebankAccounts = await getLifebanksAccounts()
   const validLifebanks = []
-
+  console.log("lifebankAccounts",lifebankAccounts)
   for (let index = 0; index < lifebankAccounts.length; index++) {    
     if (
       lifebankAccounts[index].info.name.length > 0 &&
@@ -273,8 +279,7 @@ const getValidLifebanks = async () => {
         location: JSON.stringify(lifebankAccounts[index].info.geolocation),
         telephone: JSON.stringify(lifebankAccounts[index].info.telephones),
         photos: lifebankAccounts[index].info.photos,
-        urgencyLevel: lifebankAccounts[index].info.urgency_level,
-        role: lifebankAccounts[index].info.role,
+        urgencyLevel: lifebankAccounts[index].info.blood_urgency_level,
         userName: lifebankAccounts[index].user.username
       })
   }
