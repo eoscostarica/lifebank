@@ -42,6 +42,7 @@ const App = ({ ual }) => {
 
   const getLifebanks = async () => {
     const { data } = await getLifebankData()
+    console.log(data)
     if (data && validLifebanks.length === 0)
       setValidLifebanks(data.get_valid_lifebanks)
   }
@@ -91,6 +92,7 @@ const App = ({ ual }) => {
               ))}
             </>
           )}
+          {console.log("validLifebanks home", validLifebanks)}
           {validLifebanks.length > 0 && (
             <>
               {validLifebanks.map((element, key) => (

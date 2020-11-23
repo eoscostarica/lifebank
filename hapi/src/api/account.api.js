@@ -207,28 +207,22 @@ const getLifebankData = async account => {
 }
 
 const getSponsorsAccounts = async () => {
-  const { user } = await hasuraUtils.request(GET_SPONSORS_ACCOUNTS)
+  const { location } = await hasuraUtils.request(GET_SPONSORS_ACCOUNTS)
 
-  return user
+  return location
 }
 
 const getValidSponsors = async () => {
   const sponsorsAccounts = await getSponsorsAccounts()
   const validSponsors = []
+  console.log("sponsorsAccounts:", sponsorsAccounts)
   for (let index = 0; index < sponsorsAccounts.length; index++) {
-    const { tx } =
-      (await lifebankcodeUtils.getSponsor(sponsorsAccounts[index].account)) ||
-      {}
-    if (tx) {
-      const { ...profile } = await getTransactionData(tx)
       if (
-        profile.sponsor_name.length > 0 &&
+        lifebankAccounts[index].info.sponsor_name.length > 0 &&
         profile.schedule.length > 0 &&
         profile.address.length > 0 &&
-        profile.logo_url.length > 0 &&
         profile.email.length > 0 &&
         profile.location !== 'null' &&
-        profile.social_media_links.length > 0 &&
         JSON.parse(profile.telephones).length > 0
       )
         validSponsors.push({
@@ -242,7 +236,6 @@ const getValidSponsors = async () => {
           social_media_links: profile.social_media_links
         })
     }
-  }
 
   return validSponsors
 }
@@ -256,7 +249,7 @@ const getLifebanksAccounts = async () => {
 const getValidLifebanks = async () => {
   const lifebankAccounts = await getLifebanksAccounts()
   const validLifebanks = []
-  console.log("lifebankAccounts",lifebankAccounts)
+
   for (let index = 0; index < lifebankAccounts.length; index++) {    
     if (
       lifebankAccounts[index].info.name.length > 0 &&
@@ -275,15 +268,16 @@ const getValidLifebanks = async () => {
         description: lifebankAccounts[index].info.about,
         email: lifebankAccounts[index].info.email,
         location: JSON.stringify(lifebankAccounts[index].info.geolocation),
-        telephone: JSON.stringify(lifebankAccounts[index].info.telephones),
+        telephone: lifebankAccounts[index].info.telephones,
         photos: lifebankAccounts[index].info.photos,
+        role: lifebankAccounts[index].info.role,
         urgencyLevel: lifebankAccounts[index].info.blood_urgency_level,
         userName: lifebankAccounts[index].user.username
       })
   }
+  
   return validLifebanks
 }
-
 
 const getSponsorData = async account => {
   const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
