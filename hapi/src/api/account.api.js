@@ -301,8 +301,17 @@ const getSponsorData = async account => {
   )
   const balance = await lifebankcoinUtils.getbalance(account)
 
-  return {
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  const profileAndEmail = {
     ...profile,
+    email: user.email
+  }
+
+  return {
+    ...profileAndEmail,
     communities,
     balance,
     name,
