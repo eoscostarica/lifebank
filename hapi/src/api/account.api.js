@@ -217,30 +217,30 @@ const getValidSponsors = async () => {
   const validSponsors = []
 
   for (let index = 0; index < sponsorsAccounts.length; index++) {
-      if (
-        sponsorsAccounts[index].info.name.length > 0 &&
-        sponsorsAccounts[index].info.schedule.length > 0 &&
-        sponsorsAccounts[index].info.address.length > 0 &&
-        sponsorsAccounts[index].info.email.length > 0 &&
-        sponsorsAccounts[index].info.location !== 'null' &&
-        JSON.parse(sponsorsAccounts[index].info.telephones).length > 0
-      )
-        validSponsors.push({
-          name: sponsorsAccounts[index].info.name,
-          openingHours: sponsorsAccounts[index].info.schedule,
-          address: sponsorsAccounts[index].info.address,
-          logo: sponsorsAccounts[index].info.logo_url,
-          email: sponsorsAccounts[index].info.email,
-          location: JSON.stringify(sponsorsAccounts[index].info.geolocation),
-          telephone: sponsorsAccounts[index].info.telephones,
-          social_media_links: sponsorsAccounts[index].info.social_media_links,
-          photos: sponsorsAccounts[index].info.photos,
-          website: sponsorsAccounts[index].info.website,
-          covidImpact: sponsorsAccounts[index].info.covid_impact,
-          businessType: sponsorsAccounts[index].info.business_type,
-          benefitDescription: sponsorsAccounts[index].info.benefit_description,
-          userName: sponsorsAccounts[index].user.username
-        })
+    if (
+      sponsorsAccounts[index].info.name.length > 0 &&
+      sponsorsAccounts[index].info.schedule.length > 0 &&
+      sponsorsAccounts[index].info.address.length > 0 &&
+      sponsorsAccounts[index].info.email.length > 0 &&
+      sponsorsAccounts[index].info.location !== 'null' &&
+      JSON.parse(sponsorsAccounts[index].info.telephones).length > 0
+    )
+    validSponsors.push({
+      name: sponsorsAccounts[index].info.name,
+      openingHours: sponsorsAccounts[index].info.schedule,
+      address: sponsorsAccounts[index].info.address,
+      logo: sponsorsAccounts[index].info.logo_url,
+      email: sponsorsAccounts[index].info.email,
+      location: JSON.stringify(sponsorsAccounts[index].info.geolocation),
+      telephone: sponsorsAccounts[index].info.telephones,
+      social_media_links: sponsorsAccounts[index].info.social_media_links,
+      photos: sponsorsAccounts[index].info.photos,
+      website: sponsorsAccounts[index].info.website,
+      covidImpact: sponsorsAccounts[index].info.covid_impact,
+      businessType: sponsorsAccounts[index].info.business_type,
+      benefitDescription: sponsorsAccounts[index].info.benefit_description,
+      userName: sponsorsAccounts[index].user.username
+    })
     }
 
   return validSponsors
@@ -256,7 +256,7 @@ const getValidLifebanks = async () => {
   const lifebankAccounts = await getLifebanksAccounts()
   const validLifebanks = []
 
-  for (let index = 0; index < lifebankAccounts.length; index++) {    
+  for (let index = 0; index < lifebankAccounts.length; index++) {
     if (
       lifebankAccounts[index].info.name.length > 0 &&
       lifebankAccounts[index].info.schedule.length > 0 &&
@@ -356,7 +356,7 @@ const formatSchedule = schedule => {
   return scheduleFormat.replace(',', ' ')
 }
 
-const formatLifebankData = lifebankData => {
+const formatLifebankData = (lifebankData) => {
   lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
   lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
   if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'
