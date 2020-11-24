@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
-import { useLazyQuery, useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
@@ -24,17 +24,20 @@ const App = ({ ual }) => {
     sideBarPosition ? setSideBarPosition(false) : setSideBarPosition(true)
   }
 
-  const [loadValidSponsors, { data }] = useLazyQuery(GET_VALID_SPONSORS_QUERY, {
-    fetchPolicy: 'network-only'
+  const{ refetch: getSponsorData } = useQuery(GET_VALID_SPONSORS_QUERY, {
+    skip: true
   })
 
-  useEffect(() => {
-    if (validSponsors.length === 0) loadValidSponsors()
-  }, [loadValidSponsors])
+  const getSponsors = async () => {
+    const { data } = await getSponsorData()
+
+    if (data && validSponsors.length === 0)
+      setValidSponsors(data.get_valid_sponsors)
+  }
 
   useEffect(() => {
-    if (data) setValidSponsors(data.get_valid_sponsors)
-  }, [data])
+    getSponsors()
+  }, [getSponsorData])
 
   const { refetch: getLifebankData } = useQuery(GET_VALID_LIFEBANKS_QUERY, {
     skip: true
@@ -42,6 +45,7 @@ const App = ({ ual }) => {
 
   const getLifebanks = async () => {
     const { data } = await getLifebankData()
+
     if (data && validLifebanks.length === 0)
       setValidLifebanks(data.get_valid_lifebanks)
   }

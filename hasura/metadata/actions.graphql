@@ -191,6 +191,13 @@ type ValidSponsor {
   location : String!
   telephone : String!
   social_media_links : String!
+  photos : String!
+  website : String!
+  covidImpact : String!
+  businessType : String!
+  benefitDescription : String!
+  userName : String!
+  role : String!
 }
 
 type ValidLifebank {
@@ -202,6 +209,10 @@ type ValidLifebank {
   email : String!
   location : String!
   telephone : String!
+  role : String!
+  userName : String!
+  photos : String!
+  urgencyLevel : Int!
 }
 
 type create_account_lifebank_output {
