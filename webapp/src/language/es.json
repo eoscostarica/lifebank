@@ -69,6 +69,7 @@
       "aboutBusiness": "La descripción de su negocio aquí",
       "aboutPlaceholder": "Acerca del LifeBank",
       "consentGranted": "Consentimiento otorgado",
+      "consentRevoked": "Consentimiento revocado",
       "consentError": "Error al otorgar consentimiento"
     },
     "login": {

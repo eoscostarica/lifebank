@@ -69,6 +69,7 @@
       "aboutBusiness": "Add a description about your business here",
       "aboutPlaceholder": "About the LifeBank",
       "consentGranted": "Ready! You can start using Lifebank",
+      "consentRevoked": "Consent revoked",
       "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. "
     },
     "login": {
