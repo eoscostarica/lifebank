@@ -31,6 +31,7 @@ import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram';
 import { useParams } from "react-router";
 
+import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { GET_LOCATION_PROFILE } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
@@ -309,6 +310,7 @@ const InfoPage = () => {
   const [open, setOpenModalLocation] = useState(false)
   const [openSchedule, setOpenModalSchedule] = useState(false)
   const location = useLocation()
+  const [, { logout }] = useUser()
   const history = useHistory()
   const [profile, setProfile] = useState()
   const theme = useTheme()
@@ -332,11 +334,11 @@ const InfoPage = () => {
     setOpenModalSchedule(false)
   }
 
-  const { refetch: getData } = useQuery(GET_LOCATION_PROFILE, {
+  const { error: errorInfoProfile, data: dataInfoProfile, refetch: getInfoProfile } = useQuery(GET_LOCATION_PROFILE, {
     variables: {
       username: url
     },
-    skip: true
+    fetchPolicy: 'cache-and-network'
   })
 
   const generateSchedule = (schedules) => {
@@ -367,22 +369,39 @@ const InfoPage = () => {
   }
 
   useEffect(() => {
+    getInfo()
+
+  }, [location])
+
+  const getInfo = async () => {
     if (location.state) setProfile(location.state.profile)
     else {
-      const getProfile = async () => {
-        const { data } = await getData({
-          username: url
-        })
-
-        data.location.length > 0
-          ? setProfile(data.location[0])
-          : history.push('/not-found')
-      }
-
-      if (!location.state) getProfile()
+      await getInfoProfile({
+        username: url
+      })
     }
-    if (profile && profile.type === 'SPONSOR') profile.info.social_media_links = JSON.parse(profile.info.social_media_links)
-  }, [location])
+  }
+
+  useEffect(() => {
+    if (dataInfoProfile) {
+      dataInfoProfile.location.length > 0
+        ? setProfile(dataInfoProfile.location[0])
+        : history.push('/not-found')
+    }
+
+  }, [dataInfoProfile])
+
+  useEffect(() => {
+    if (errorInfoProfile) {
+      if (errorInfoProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        getInfo()
+      } else {
+        history.push('/internal-error')
+      }
+    }
+  }, [errorInfoProfile])
+
 
   const MobileInfoPage = () => {
     return (
