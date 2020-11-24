@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
-import { Alert, AlertTitle } from '@material-ui/lab'
-import Link from '@material-ui/core/Link'
+import { Alert } from '@material-ui/lab'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -20,7 +19,6 @@ import ProfilePageDonor from './ProfilePageDonor'
 import ProfilePageGuest from './ProfilePageGuest'
 import ProfilePageLifebank from './ProfilePageLifebank'
 import ProfilePageSponsor from './ProfilePageSponsor'
-import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
