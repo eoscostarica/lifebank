@@ -69,6 +69,7 @@ export const GET_VALID_SPONSORS_QUERY = gql`
       businessType
       benefitDescription
       userName
+      role
     }
   }
 `

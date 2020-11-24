@@ -35,6 +35,7 @@ query MyQuery {
     info
     user {
       username
+      role
     }
   }
 }
@@ -239,7 +240,8 @@ const getValidSponsors = async () => {
         covidImpact: sponsorsAccounts[index].info.covid_impact,
         businessType: sponsorsAccounts[index].info.business_type,
         benefitDescription: sponsorsAccounts[index].info.benefit_description,
-        userName: sponsorsAccounts[index].user.username
+        userName: sponsorsAccounts[index].user.username,
+        role: sponsorsAccounts[index].user.role
       })
   }
 

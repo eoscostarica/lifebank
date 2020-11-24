@@ -197,6 +197,7 @@ type ValidSponsor {
   businessType : String!
   benefitDescription : String!
   userName : String!
+  role : String!
 }
 
 type ValidLifebank {
