@@ -8,7 +8,9 @@ import Grid from '@material-ui/core/Grid'
 import { Box } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router-dom'
 
+import { useUser } from '../../context/user.context'
 import CustomRouterLink from '../../components/CustomRouterLink'
 import { UPDATE_STATE_LIFEBANK, CREATE_ACCOUNT_LIFEBANK_MUTATION } from '../../gql'
 
@@ -72,11 +74,18 @@ const useStyles = makeStyles((theme) => ({
 const RegisterLifebank = (props) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const [loading, setLoading] = useState(true)
   const [lifebank, setLifebank] = useState()
+  const [, { logout }] = useUser()
   const { code } = useParams()
+  const history = useHistory()
 
-  const [createAccountLifebank,] = useMutation(CREATE_ACCOUNT_LIFEBANK_MUTATION)
+  const [createAccountLifebank, { error: errorCreateAccount }] = useMutation(CREATE_ACCOUNT_LIFEBANK_MUTATION)
+
+  const [
+    verifyEmail,
+    { loading: loadingVerifyEmail, error: errorVerifyEmail, data: { update_preregister_lifebank: lifebankData } = {} }
+  ] = useMutation(UPDATE_STATE_LIFEBANK)
+
 
   const handleCreateAccountLifebank = () => {
     if (lifebank) {
@@ -94,11 +103,6 @@ const RegisterLifebank = (props) => {
     }
   }
 
-  const [
-    verifyEmail,
-    { data: { update_preregister_lifebank: lifebankData } = {} }
-  ] = useMutation(UPDATE_STATE_LIFEBANK)
-
   useEffect(() => {
     verifyEmail({
       variables: {
@@ -109,33 +113,63 @@ const RegisterLifebank = (props) => {
 
   useEffect(() => {
     if (lifebankData) {
-      setLoading(false)
       setLifebank(lifebankData.returning[0])
+      handleCreateAccountLifebank()
     }
+
   }, [lifebankData])
 
   useEffect(() => {
-    if (lifebank)
-      handleCreateAccountLifebank()
-  }, [lifebank])
+    if (errorVerifyEmail) {
+      if (errorVerifyEmail.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        verifyEmail({
+          variables: {
+            verification_code: code
+          }
+        })
+      } else {
+        setLifebank(null)
+        history.push('/internal-error')
+      }
+    }
+
+  }, [errorVerifyEmail])
+
+  useEffect(() => {
+    if (errorCreateAccount) {
+      if (errorCreateAccount.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        verifyEmail({
+          variables: {
+            verification_code: code
+          }
+        })
+      } else {
+        setLifebank(null)
+        history.push('/internal-error')
+      }
+    }
+
+  }, [errorCreateAccount])
 
   return (
     <Box className={classes.root}>
       <Grid container spacing={4}>
         <Grid item xs={12} className={classes.content}>
           <Box className={classes.centerText}>
-            {loading && <CircularProgress />}
-            {!loading && lifebank && (
+            {loadingVerifyEmail && <CircularProgress />}
+            {!loadingVerifyEmail && lifebank && (
               <Typography className={classes.tittle}>
                 {t('approveAccount.accountapprove')}
               </Typography>
             )}
-            {!loading && !lifebank && (
+            {!loadingVerifyEmail && !lifebank && (
               <Typography className={classes.tittle}>
                 {t('approveAccount.somethingHappened')}
               </Typography>
             )}
-            {!loading && (
+            {!loadingVerifyEmail && (
               <Button
                 variant="contained"
                 color="secondary"

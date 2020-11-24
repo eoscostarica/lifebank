@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { Box } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router-dom'
 
 import { useUser } from '../../context/user.context'
 import CustomRouterLink from '../../components/CustomRouterLink'
@@ -76,6 +77,7 @@ const EmailVerification = (props) => {
   const [, { logout }] = useUser()
   const [validate, setValidate] = useState(true)
   const { code } = useParams()
+  const history = useHistory()
 
   const [
     verifyEmail,
@@ -104,7 +106,10 @@ const EmailVerification = (props) => {
             code: code
           }
         })
-      } else setValidate(false)
+      } else {
+        setValidate(false)
+        history.push('/internal-error')
+      }
     }
 
   }, [errorVerifyEmail])
