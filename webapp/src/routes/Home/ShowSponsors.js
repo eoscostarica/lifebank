@@ -189,10 +189,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
         {!loading &&
           sponsors.length > 0 &&
           sponsors.map((sponsor) => (
-            <SponsorItem
-              key={sponsor.id}
-              sponsor={sponsor}
-            />
+            <SponsorItem key={sponsor.id} sponsor={sponsor} />
           ))}
       </>
     )
@@ -208,7 +205,11 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     >
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
-          <Avatar src={props.sponsor.info.logo_url || ""}>
+          <Avatar
+            src={`//images.weserv.nl?url=${
+              props.sponsor.info.logo_url || ''
+            }&h=300&dpr=2`}
+          >
             <StorefrontIcon />
           </Avatar>
         </ListItemAvatar>
@@ -270,10 +271,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
         {!loading &&
           sponsors.length > 0 &&
           sponsors.map((sponsor) => (
-            <SponsorCard
-              key={sponsor.id}
-              sponsor={sponsor}
-            />
+            <SponsorCard key={sponsor.id} sponsor={sponsor} />
           ))}
       </>
     )
@@ -290,7 +288,12 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
   const SponsorCard = (props) => (
     <Card className={classes.cardRoot}>
       <Box className={classes.cardHeader}>
-        <Avatar className={classes.cardAvatar} src={props.sponsor.info.logo_url || ""}>
+        <Avatar
+          className={classes.cardAvatar}
+          src={`//images.weserv.nl?url=${
+            props.sponsor.info.logo_url || ''
+          }&h=300&dpr=2`}
+        >
           <StorefrontIcon />
         </Avatar>
         <Box className={classes.cardTitleContainer}>
