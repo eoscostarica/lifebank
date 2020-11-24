@@ -88,6 +88,7 @@ const RegisterLifebank = (props) => {
 
 
   const handleCreateAccountLifebank = () => {
+    console.log(lifebank)
     if (lifebank) {
       const { name, email, verification_code } = lifebank
       const secret = lifebank.password
@@ -112,12 +113,14 @@ const RegisterLifebank = (props) => {
   }, [code])
 
   useEffect(() => {
-    if (lifebankData) {
-      setLifebank(lifebankData.returning[0])
-      handleCreateAccountLifebank()
-    }
+    if (lifebankData) setLifebank(lifebankData.returning[0])
 
   }, [lifebankData])
+
+  useEffect(() => {
+    if(lifebank) handleCreateAccountLifebank()
+
+  }, [lifebank])
 
   useEffect(() => {
     if (errorVerifyEmail) {
