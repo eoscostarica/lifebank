@@ -240,7 +240,9 @@
       "claimReward": "Reward",
       "memoDonor": "Thank you for redeeming your token",
       "memoLifebank": "Thanks for your donation",
-      "succesful": "Succesful transaction"
+      "succesful": "Succesful transaction",
+      "donationsError": "Uh-oh! There was an error. Please check if the account is correct and try",
+      "donationsProfileError": "Uh oh! There was an error trying to get your donations"
     },
     "users": "Users",
     "products": "Products",

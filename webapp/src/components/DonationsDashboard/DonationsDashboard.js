@@ -22,6 +22,7 @@ import Alert from '@material-ui/lab/Alert'
 import QRCode from 'qrcode.react'
 import QrReader from 'react-qr-scanner'
 import { useTranslation } from 'react-i18next'
+import Snackbar from '@material-ui/core/Snackbar'
 
 import { PROFILE_QUERY, TRANSFER_MUTATION } from '../../gql'
 
@@ -293,6 +294,9 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
   const [tokens, setTokens] = useState(0)
   const [account, setAccount] = useState("account")
   const classes = useStyles()
+  const [openAlert, setOpenAlert] = useState(false)
+  const [messegaAlert, setMessegaAlert] = useState("false")
+  const [severity] = useState("error")
   const [state, setState] = useState({
     bottom: false
   })
@@ -300,7 +304,7 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
   const history = useHistory()
   const [
     loadProfile,
-    { data: { profile: { profile } = {} } = {}, client }
+    { error: errroLoadProfile, data: { profile: { profile } = {} } = {}, client }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const [
@@ -308,12 +312,25 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
     { loading, error, data: { transfer: transferResult } = {} }
   ] = useMutation(TRANSFER_MUTATION)
 
+  const handleOpenAlert = () => {
+    setOpenAlert(!openAlert)
+  }
+
   useEffect(() => {
     if (!error)
       return
 
-    setErrorMessage(error.message.replace('GraphQL error: ', ''))
+    setErrorMessage(t('donations.donationsError'))
   }, [error])
+
+  useEffect(() => {
+    if (errroLoadProfile) {
+      handleOpen()
+      setMessegaAlert(t('donations.donationsProfileError'))
+      handleOpenAlert()
+    }
+
+  }, [errroLoadProfile])
 
   useEffect(() => {
     if (!transferResult)
@@ -736,6 +753,11 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
           </Dialog>
         </>
       }
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
+        <Alert onClose={handleOpenAlert} severity={severity}>
+          {messegaAlert}
+        </Alert>
+      </Snackbar>
     </>
   )
 }

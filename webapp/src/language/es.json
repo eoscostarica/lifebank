@@ -240,7 +240,9 @@
       "claimReward": "Recompensa",
       "memoDonor": "Gracias por canjear tu token",
       "memoLifebank": "Gracias por tu donación",
-      "succesful": "Transacción exitosa"
+      "succesful": "Transacción exitosa",
+      "donationsError": "¡Oh! Hubo un error. Comprueba si la cuenta es correcta e inténtalo de nuevo.",
+      "donationsProfileError": "¡Oh! Se produjo un error al intentar obtener tus donaciones."
     },
     "users": "Usuarios",
     "products": "Productos",
