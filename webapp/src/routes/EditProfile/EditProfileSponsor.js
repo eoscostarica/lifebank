@@ -530,7 +530,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             />
           </Box>
         </Box>
-        {profile.location === 'null' && (
+        {(isCompleting && profile.location === '') ||
+        (!isCompleting && profile.location !== '') ? (
           <>
             <Typography variant="subtitle2" gutterBottom>
               {t('signup.chooseYourLocation')}
@@ -548,7 +549,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               mb={1}
             />
           </>
-        )}
+        ) : null}
       </Box>
       <Box className={classes.btnWrapper}>
         <Box className={classes.boxBtn}>

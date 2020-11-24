@@ -199,12 +199,16 @@ const ProfilePageLifebank = ({ profile }) => {
           </Grid>
         )}
       </div>
-      {profile.logo_url.length > 0 &&
+      {profile.logo_url.length > 0 && (
         <Box className={classes.rowBox}>
           <Typography variant="subtitle1">{t('profile.logo')}</Typography>
-          <img className={classes.img} src={profile.logo_url} alt='logo image' />
+          <img
+            className={classes.img}
+            src={`//images.weserv.nl?url=${profile.logo_url}&h=300&dpr=2`}
+            alt="logo image"
+          />
         </Box>
-      }
+      )}
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography style={{ marginRight: '6px' }} noWrap variant="subtitle1">
@@ -323,7 +327,7 @@ const ProfilePageLifebank = ({ profile }) => {
         fullWidth
         rows={3}
       />
-      {JSON.parse(profile.photos).length > 0 &&
+      {JSON.parse(profile.photos).length > 0 && (
         <div>
           <Box className={classes.rowBox}>
             <Typography variant="subtitle1">{t('profile.images')}</Typography>
@@ -340,7 +344,7 @@ const ProfilePageLifebank = ({ profile }) => {
             <CarouselComponent images={JSON.parse(profile.photos)} />
           </Grid>
         </div>
-      }
+      )}
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">{t('profile.location')}</Typography>
         <Typography variant="body1" />
