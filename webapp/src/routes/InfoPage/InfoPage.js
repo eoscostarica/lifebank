@@ -400,8 +400,8 @@ const InfoPage = () => {
         history.push('/internal-error')
       }
     }
-  }, [errorInfoProfile])
 
+  }, [errorInfoProfile])
 
   const MobileInfoPage = () => {
     return (
