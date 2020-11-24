@@ -247,7 +247,7 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           <Avatar
             src={`//images.weserv.nl?url=${
               JSON.parse(props.offer.images)[0] || ''
-            }&h=300&dpr=2`}
+            }&h=100&dpr=1`}
           >
             <LocalOfferIcon />
           </Avatar>
