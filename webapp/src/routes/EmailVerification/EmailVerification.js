@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { Box } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 
+import { useUser } from '../../context/user.context'
 import CustomRouterLink from '../../components/CustomRouterLink'
 import { VERIFY_EMAIL } from '../../gql'
 
@@ -72,13 +73,13 @@ const useStyles = makeStyles((theme) => ({
 const EmailVerification = (props) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const [loading, setLoading] = useState(true)
+  const [, { logout }] = useUser()
   const [validate, setValidate] = useState(true)
   const { code } = useParams()
 
   const [
     verifyEmail,
-    { data: { verify_email: verifyEmailResult } = {} }
+    { loading: loadingVerifyEmail, error: errorVerifyEmail, data: { verify_email: verifyEmailResult } = {} }
   ] = useMutation(VERIFY_EMAIL)
 
   useEffect(() => {
@@ -90,29 +91,41 @@ const EmailVerification = (props) => {
   }, [code])
 
   useEffect(() => {
-    if (verifyEmailResult) {
-      setLoading(false)
-      setValidate(verifyEmailResult.is_verified)
-    }
+    if (verifyEmailResult) setValidate(verifyEmailResult.is_verified)
+
   }, [verifyEmailResult])
+
+  useEffect(() => {
+    if (errorVerifyEmail) {
+      if (errorVerifyEmail.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        verifyEmail({
+          variables: {
+            code: code
+          }
+        })
+      } else setValidate(false)
+    }
+
+  }, [errorVerifyEmail])
 
   return (
     <Box className={classes.root}>
       <Grid container spacing={4}>
         <Grid item xs={12} className={classes.content}>
           <Box className={classes.centerText}>
-            {loading && <CircularProgress />}
-            {!loading && validate && (
+            {loadingVerifyEmail && <CircularProgress />}
+            {!loadingVerifyEmail && validate && (
               <Typography className={classes.tittle}>
                 {t('emailVerification.emailVerified')}
               </Typography>
             )}
-            {!loading && !validate && (
+            {!loadingVerifyEmail && !validate && (
               <Typography className={classes.tittle}>
                 {t('emailVerification.somethingHappened')}
               </Typography>
             )}
-            {!loading && (
+            {!loadingVerifyEmail && (
               <Button
                 variant="contained"
                 color="secondary"
