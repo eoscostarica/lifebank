@@ -381,7 +381,7 @@ const InfoPage = () => {
     else {
       const getProfile = async () => {
         const { data } = await getInfoProfile({
-          username: url
+          username: url.replaceAll("-", " ")
         })
 
         if (data.location.length > 0) {
