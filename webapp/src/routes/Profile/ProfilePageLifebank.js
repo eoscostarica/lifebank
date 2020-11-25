@@ -88,15 +88,16 @@ const ProfilePageLifebank = ({ profile }) => {
   })
 
   useEffect(() => {
-    if (!dataUsername) {
-      const getUsername = async () => {
-        await getData({ account: profile.account })
-      }
-      getUsername()
-    }
-    else setuserName(dataUsername.user[0].username)
+    const getUsername = async () => {
+      const { data } = await getData({
+        account: profile.account
+      })
 
-  }, [dataUsername])
+      if (data) setuserName(data.user[0].username.replaceAll(' ', '-'))
+    }
+
+    if (!userName) getUsername()
+  })
 
   useEffect(() => {
     if (errorUsername) {

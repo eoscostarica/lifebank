@@ -1,6 +1,7 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
@@ -16,6 +17,8 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import Logo from '../../components/Logo'
 import Telephones from '../../components/Telephones'
+
+import { VERIFY_USERNAME} from '../../gql'
 
 import Schedule from '../../components/Schedule'
 import MapEditLocation from '../../components/MapEditLocation'
@@ -131,8 +134,12 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
   const photoUrlValueRef = useRef(undefined)
   const phoneValueRef = useRef(undefined)
+  const history = useHistory()
   const [disablePhoneInput, setDisablePhoneInput] = useState(true)
-  const [username, setUserName] = useState(userName)
+  const [username, setUserName] = useState(userName.replaceAll('-', ' '))
+  const [isValid, setIsvalid] = useState(true)
+  const [isUnique, setIsUnique] = useState(true)
+  const [firstRun, setFirstRun] = useState(true)
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
@@ -174,6 +181,37 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     }
   }
 
+  const { refetch: checkUserName } = useQuery(VERIFY_USERNAME, {
+    variables: {
+      username: username,
+      account: profile.account
+    },
+    skip: true
+  })
+
+  const isUsernameUnique = async ( ) =>{
+    const { data } = await checkUserName({
+      username: username,
+      account: profile.account
+    })
+
+    if (data) {
+      if (data.user.length !== 0) setIsUnique(false)
+      else setIsUnique(true)
+    }
+    setFirstRun(false)
+  }
+
+  const validUserName = (newUserName) => {
+    const regularExpresion = /^[a-zA-Z0-9\s]*$/
+
+    if(regularExpresion.test(newUserName)) {
+      setIsvalid(true)
+      setUserName(newUserName)
+    }
+    else setIsvalid(false)
+  }
+
   const handleOnAddSchedule = useCallback(
     (data) => handleSetField('schedule', JSON.stringify(data)),
     [setField]
@@ -183,12 +221,19 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     setUser({ ...user, [field]: value })
   }
 
-  const prepareDataForSubmitting = () => {
-    const userToSubmit = { ...user }
-    userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
-    userToSubmit.photos = JSON.stringify(user.photos)
-    onSubmit(userToSubmit, username, profile.account)
-  }
+  useEffect(() => {
+    if (!firstRun){
+      if(isValid && isUnique){
+        const userToSubmit = { ...user }
+        userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
+        userToSubmit.photos = JSON.stringify(user.photos)
+        onSubmit(userToSubmit, username, profile.account)
+        history.push('/profile')
+      }
+      else document.getElementById("username").focus();
+    }
+
+  }, [isUnique, firstRun])
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -223,14 +268,22 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           fullWidth
           variant="outlined"
           placeholder="URL website"
-          defaultValue={userName}
+          defaultValue={username}
           InputLabelProps={{
             shrink: true
           }}
           InputProps={{
             startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
           }}
-          onChange={(event) => setUserName(event.target.value)}
+          helperText={
+             !isValid
+              ? 'La direccion no debe tener caracteres especiales'
+              : !isUnique
+                ? 'Esta direccion esta asociada a otra cuenta'
+                : ''
+          }
+          onChange={(event) => validUserName(event.target.value)}
+          error={!isValid || !isUnique}
         />
         <TextField
           id="fullname"
@@ -284,7 +337,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           }}
           className={classes.textField}
         />
-        <div style={{ display: isCompleting && user.telephones ? 'none' : '' }}>
+        <div style={{ display: isCompleting && user.telephones ? 'none' : '', marginBottom:'22px' }}>
           <Telephones
             phones={user.telephones}
             showDelete
@@ -488,7 +541,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Button
             variant="contained"
             color="primary"
-            onClick={() => prepareDataForSubmitting()}
+            onClick={() => isUsernameUnique()}
           >
             {t('common.save')}
           </Button>
