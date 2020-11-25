@@ -233,7 +233,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
       else document.getElementById("username").focus();
     }
 
-  }, [isUnique])
+  }, [isUnique, firstRun])
 
   return (
     <form autoComplete="off" className={classes.form}>
