@@ -142,7 +142,7 @@ const Nearby = ({ location, searchDistance, account }) => {
           className={classes.cardAvatar}
           src={`//images.weserv.nl?url=${
             props.item.info.logo_url || ''
-          }&h=300&dpr=2`}
+          }&h=60&dpr=1`}
         >
           <LocalHospitalIcon />
         </Avatar>

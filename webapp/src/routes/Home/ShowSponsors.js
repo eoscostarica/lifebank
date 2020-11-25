@@ -208,7 +208,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
           <Avatar
             src={`//images.weserv.nl?url=${
               props.sponsor.info.logo_url || ''
-            }&h=300&dpr=2`}
+            }&h=60&dpr=1`}
           >
             <StorefrontIcon />
           </Avatar>
@@ -292,7 +292,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
           className={classes.cardAvatar}
           src={`//images.weserv.nl?url=${
             props.sponsor.info.logo_url || ''
-          }&h=300&dpr=2`}
+          }&h=60&dpr=1`}
         >
           <StorefrontIcon />
         </Avatar>
