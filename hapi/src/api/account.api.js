@@ -24,6 +24,7 @@ query MyQuery {
     info
     user {
       username
+      role
     }
   }
 }
@@ -278,7 +279,7 @@ const getValidLifebanks = async () => {
         location: JSON.stringify(lifebankAccounts[index].info.geolocation),
         telephone: lifebankAccounts[index].info.telephones,
         photos: lifebankAccounts[index].info.photos,
-        role: lifebankAccounts[index].info.role,
+        role: lifebankAccounts[index].user.role,
         urgencyLevel: lifebankAccounts[index].info.blood_urgency_level,
         userName: lifebankAccounts[index].user.username
       })
