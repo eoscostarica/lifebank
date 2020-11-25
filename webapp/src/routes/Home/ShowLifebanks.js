@@ -188,7 +188,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         )}
         {!loading &&
           banks.length > 0 &&
-          banks.map((bank) => <BankItem key={bank.id} bank={bank} />)}
+          banks.map((bank) => <BankItem key={bank.userName} bank={bank} />)}
       </>
     )
   }
@@ -197,16 +197,15 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     <LinkRouter
       style={{ textDecoration: 'none' }}
       to={{
-        pathname: `info/${props.bank.user.username.replaceAll(' ', '-')}`,
+        pathname: `info/${props.bank.userName.replaceAll(' ', '-')}`,
         state: { profile: props.bank, isLifebank: true }
       }}
     >
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
           <Avatar
-            src={`//images.weserv.nl?url=${
-              props.bank.info.logo_url || ''
-            }&h=300&dpr=2`}
+            src={`//images.weserv.nl?url=${props.bank.logo || ''
+              }&h=300&dpr=2`}
           >
             <LocalHospitalIcon />
           </Avatar>
@@ -227,7 +226,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
               noWrap
               variant="body2"
             >
-              {props.bank.info.about}
+              {props.bank.description}
             </Typography>
           }
         />
@@ -268,7 +267,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         )}
         {!loading &&
           banks.length > 0 &&
-          banks.map((bank) => <BankCard key={bank.id} bank={bank} />)}
+          banks.map((bank) => <BankCard key={bank.userName} bank={bank} />)}
       </>
     )
   }
@@ -286,27 +285,26 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${
-            props.bank.info.logo_url || ''
-          }&h=300&dpr=2`}
+          src={`//images.weserv.nl?url=${props.bank.logo || ''
+            }&h=300&dpr=2`}
         >
           <LocalHospitalIcon />
         </Avatar>
         <Box className={classes.cardTitleContainer}>
           <Typography className={classes.cardTitle} noWrap>
-            {props.bank.info.name}
+            {props.bank.name}
           </Typography>
         </Box>
       </Box>
       <CardContent className={classes.cardContent}>
         <Typography className={classes.cardContentText}>
-          {truncateString(props.bank.info.about)}
+          {truncateString(props.bank.description)}
         </Typography>
       </CardContent>
       <LinkRouter
         style={{ textDecoration: 'none' }}
         to={{
-          pathname: `info/${props.bank.user.username.replaceAll(' ', '-')}`,
+          pathname: `info/${props.bank.userName.replaceAll(' ', '-')}`,
           state: { profile: props.bank, isLifebank: true }
         }}
       >

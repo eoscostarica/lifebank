@@ -135,10 +135,8 @@ const Home = () => {
 
   useEffect(() => {
     if (!loadingDataBanks) {
-      console.log("data allBanks", allBanks)
 
-      /*let dataTemp = allBanks.location
-      dataTemp = dataTemp.filter((bank) => bank.type === 'LIFE_BANK')
+      let dataTemp = allBanks.get_valid_lifebanks
 
       if (searchValue !== '')
         dataTemp = dataTemp.filter((banks) =>
@@ -146,7 +144,6 @@ const Home = () => {
         )
 
       setLifebanks(dataTemp)
-      */
       setLoadingLifebanks(false)
     }
   }, [allBanks])
@@ -158,26 +155,23 @@ const Home = () => {
 
   useEffect(() => {
     if (!loadingDataSpons) {
-      console.log("data sponsor", allSponsors)
-      /*let dataTemp = allSponsors.get_valid_sponsors
-
-      //dataTemp = dataTemp.filter((bank) => bank.type === 'SPONSOR')
+      let dataTemp = allSponsors.get_valid_sponsors
 
       if (valueSponsorCat !== 'All') {
         dataTemp = dataTemp.filter(
           (bank) =>
-            bank.info.bussines_type.toLowerCase() ===
+            bank.bussines_type.toLowerCase() ===
             valueSponsorCat.toLowerCase()
         )
       }
 
       if (searchValue !== '')
         dataTemp = dataTemp.filter((bank) =>
-          bank.info.name.toLowerCase().includes(searchValue.toLowerCase())
+          bank.name.toLowerCase().includes(searchValue.toLowerCase())
         )
 
       setSponsors(dataTemp)
-      */
+
       setLoadingSponsors(false)
     }
   }, [allSponsors])

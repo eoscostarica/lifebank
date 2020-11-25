@@ -183,8 +183,10 @@ type verify_email_output {
 }
 
 type ValidSponsor {
+  account : String!
   name : String!
   openingHours : String!
+  description : String!
   address : String!
   logo : String!
   email : String!
@@ -201,6 +203,7 @@ type ValidSponsor {
 }
 
 type ValidLifebank {
+  account : String!
   name : String!
   openingHours : String!
   address : String!
