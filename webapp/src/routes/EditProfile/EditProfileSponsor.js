@@ -101,6 +101,11 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   const photoUrlValueRef = useRef(undefined)
   const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
+  const [socialMedia] = useState(
+    profile.social_media_links && profile.social_media_links !== '[]'
+      ? JSON.parse(profile.social_media_links)
+      : []
+  )
   const [user, setUser] = useState({
     logo_url: profile.logo_url,
     name: profile.name,
@@ -457,12 +462,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         <Box
           width="100%"
           style={{
-            display:
-              isCompleting &&
-              profile.social_media_links &&
-              user.social_media_links.length === 3
-                ? 'none'
-                : ''
+            display: isCompleting && socialMedia.length === 3 ? 'none' : ''
           }}
           className={classes.socialMediaLinksContainer}
         >
@@ -475,12 +475,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               name="facebook"
               label={t('editProfile.facebookProfileUrl')}
               defaultValue={
-                profile.social_media_links &&
-                JSON.parse(profile.social_media_links).length > 0
-                  ? JSON.parse(profile.social_media_links).find(
-                      (social) => social.name === 'facebook'
-                    ).url
-                  : ''
+                socialMedia.find((social) => social.name === 'facebook')
+                  ? socialMedia.find((social) => social.name === 'facebook').url
+                  : undefined
               }
               placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
               icon={FacebookIcon}
@@ -499,12 +496,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               name="instagram"
               label={t('editProfile.instagramUsername')}
               defaultValue={
-                profile.social_media_links &&
-                JSON.parse(profile.social_media_links).length > 0
-                  ? JSON.parse(profile.social_media_links).find(
-                      (social) => social.name === 'instagram'
-                    ).url
-                  : ''
+                socialMedia.find((social) => social.name === 'instagram')
+                  ? socialMedia.find((social) => social.name === 'instagram')
+                      .url
+                  : undefined
               }
               placeholder={t('editProfile.instagramUsernamePlaceholder')}
               icon={InstagramIcon}
@@ -523,12 +518,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               name="twitter"
               label={t('editProfile.twitterUsername')}
               defaultValue={
-                profile.social_media_links &&
-                JSON.parse(profile.social_media_links).length > 0
-                  ? JSON.parse(profile.social_media_links).find(
-                      (social) => social.name === 'twitter'
-                    ).url
-                  : ''
+                socialMedia.find((social) => social.name === 'twitter')
+                  ? socialMedia.find((social) => social.name === 'twitter').url
+                  : undefined
               }
               placeholder={t('editProfile.twitterUsernamePlaceholder')}
               icon={TwitterIcon}
@@ -538,7 +530,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             />
           </Box>
         </Box>
-        {profile.location === 'null' && (
+        {(isCompleting && profile.location === '') ||
+        (!isCompleting && profile.location !== '') ? (
           <>
             <Typography variant="subtitle2" gutterBottom>
               {t('signup.chooseYourLocation')}
@@ -556,7 +549,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               mb={1}
             />
           </>
-        )}
+        ) : null}
       </Box>
       <Box className={classes.btnWrapper}>
         <Box className={classes.boxBtn}>

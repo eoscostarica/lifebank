@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '100%',
+    width: '100%'
   },
   list: {
     width: '100vw'
@@ -244,7 +244,11 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
         onClick={() => handleOpenOfferView(props.offer)}
       >
         <ListItemAvatar>
-          <Avatar src={JSON.parse(props.offer.images)[0] || ""} >
+          <Avatar
+            src={`//images.weserv.nl?url=${
+              JSON.parse(props.offer.images)[0] || ''
+            }&h=300&dpr=2`}
+          >
             <LocalOfferIcon />
           </Avatar>
         </ListItemAvatar>
@@ -333,7 +337,12 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
     return (
       <Card className={classes.cardRoot}>
         <Box className={classes.cardHeader}>
-          <Avatar className={classes.cardAvatar} src={JSON.parse(props.offer.images)[0] || ""} >
+          <Avatar
+            className={classes.cardAvatar}
+            src={`//images.weserv.nl?url=${
+              JSON.parse(props.offer.images)[0] || ''
+            }&h=300&dpr=2`}
+          >
             <LocalOfferIcon />
           </Avatar>
           <Box className={classes.cardTitleContainer}>

@@ -56,13 +56,20 @@ export const GET_VALID_SPONSORS_QUERY = gql`
   query {
     get_valid_sponsors {
       name
+      openingHours
       address
+      logo
       email
       location
-      logo
-      openingHours
       telephone
       social_media_links
+      photos
+      website
+      covidImpact
+      businessType
+      benefitDescription
+      userName
+      role
     }
   }
 `
@@ -71,13 +78,17 @@ export const GET_VALID_LIFEBANKS_QUERY = gql`
   query {
     get_valid_lifebanks {
       name
+      openingHours
       address
-      email
-      location
       logo
       description
-      openingHours
+      email
+      location
       telephone
+      role
+      userName
+      photos
+      urgencyLevel
     }
   }
 `

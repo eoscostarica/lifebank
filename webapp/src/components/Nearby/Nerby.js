@@ -125,10 +125,7 @@ const Nearby = ({ location, searchDistance, account }) => {
 
     let dataOffers = data.locations
 
-    dataOffers = dataOffers.filter(
-      (item) =>
-        item.account !== account
-    )
+    dataOffers = dataOffers.filter((item) => item.account !== account)
 
     setNearbyLocations(dataOffers)
     setLoadingLocations(false)
@@ -136,13 +133,17 @@ const Nearby = ({ location, searchDistance, account }) => {
 
   useEffect(() => {
     getNerbyLocations()
-
   }, [location, searchDistance])
 
   const ItemCard = (props) => (
     <Card className={classes.cardRoot}>
       <Box className={classes.cardHeader}>
-        <Avatar className={classes.cardAvatar} src={props.item.info.logo_url || ""}>
+        <Avatar
+          className={classes.cardAvatar}
+          src={`//images.weserv.nl?url=${
+            props.item.info.logo_url || ''
+          }&h=300&dpr=2`}
+        >
           <LocalHospitalIcon />
         </Avatar>
         <Box className={classes.cardTitleContainer}>
@@ -168,7 +169,7 @@ const Nearby = ({ location, searchDistance, account }) => {
   )
 
   ItemCard.propTypes = {
-    item: PropTypes.object,
+    item: PropTypes.object
   }
 
   return (
@@ -197,12 +198,10 @@ const Nearby = ({ location, searchDistance, account }) => {
           </Grid>
         </Card>
       )}
-      {!loadingLocations && nearbyLocations &&
+      {!loadingLocations &&
+        nearbyLocations &&
         nearbyLocations.length > 0 &&
-        nearbyLocations.map((item) => (
-          <ItemCard key={item.id} item={item} />
-        ))
-      }
+        nearbyLocations.map((item) => <ItemCard key={item.id} item={item} />)}
     </>
   )
 }
@@ -218,7 +217,7 @@ const truncateString = (str) => {
 Nearby.propTypes = {
   location: PropTypes.object,
   searchDistance: PropTypes.number,
-  account: PropTypes.string,
+  account: PropTypes.string
 }
 
 export default Nearby

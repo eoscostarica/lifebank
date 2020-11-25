@@ -188,9 +188,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         )}
         {!loading &&
           banks.length > 0 &&
-          banks.map((bank) => (
-            <BankItem key={bank.id} bank={bank} />
-          ))}
+          banks.map((bank) => <BankItem key={bank.id} bank={bank} />)}
       </>
     )
   }
@@ -205,7 +203,11 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
     >
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
-          <Avatar src={props.bank.info.logo_url || ""}>
+          <Avatar
+            src={`//images.weserv.nl?url=${
+              props.bank.info.logo_url || ''
+            }&h=300&dpr=2`}
+          >
             <LocalHospitalIcon />
           </Avatar>
         </ListItemAvatar>
@@ -234,7 +236,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   )
 
   BankItem.propTypes = {
-    bank: PropTypes.object,
+    bank: PropTypes.object
   }
 
   const LoadBanksDesktop = () => {
@@ -266,9 +268,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
         )}
         {!loading &&
           banks.length > 0 &&
-          banks.map((bank) => (
-            <BankCard key={bank.id} bank={bank} />
-          ))}
+          banks.map((bank) => <BankCard key={bank.id} bank={bank} />)}
       </>
     )
   }
@@ -284,7 +284,12 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   const BankCard = (props) => (
     <Card className={classes.cardRoot}>
       <Box className={classes.cardHeader}>
-        <Avatar className={classes.cardAvatar} src={props.bank.info.logo_url || ""}>
+        <Avatar
+          className={classes.cardAvatar}
+          src={`//images.weserv.nl?url=${
+            props.bank.info.logo_url || ''
+          }&h=300&dpr=2`}
+        >
           <LocalHospitalIcon />
         </Avatar>
         <Box className={classes.cardTitleContainer}>
@@ -313,7 +318,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   )
 
   BankCard.propTypes = {
-    bank: PropTypes.object,
+    bank: PropTypes.object
   }
 
   return (
