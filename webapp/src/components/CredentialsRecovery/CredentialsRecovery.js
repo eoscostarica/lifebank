@@ -200,6 +200,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
               )}
               <form autoComplete="off">
                 <Box className={classes.textFieldWrapper}>
+                  <Typography>
+                    {t('credentialsRecovery.instructionCredentialsRecovery')}
+                  </Typography>
                   <TextField
                     id="account"
                     label={t('common.email')}

@@ -301,6 +301,7 @@
     },
     "credentialsRecovery": {
       "credentialsRecovery": "Recuperación de credenciales",
+      "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
       "checkYourEmail": "Revisa tu correo",
       "recovery": "Recuperar"
     },

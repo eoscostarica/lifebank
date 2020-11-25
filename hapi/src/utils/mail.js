@@ -380,7 +380,7 @@ const sendRegistrationRequest = async (to, lifebankData) => {
   })
 }
 
-const sendCredentialsRecovery = async (to, { username, secret }) => {
+const sendCredentialsRecovery = async (to, account, tempSecret) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -392,8 +392,10 @@ const sendCredentialsRecovery = async (to, { username, secret }) => {
     tls: { rejectUnauthorized: false }
   })
 
+  const from = 'Lifebank <webmaster@lifebank.io>'
+
   await transporter.sendMail({
-    from: 'webmaster@lifebank.io',
+    from,
     to,
     subject: 'Lifebank Credentials Recovery',
     html: `<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="" valign="top" width="100%">
@@ -466,7 +468,7 @@ const sendCredentialsRecovery = async (to, { username, secret }) => {
                           margin: 0;
                         ">
                         <span style="font-size: 16px;">
-                          <strong>Username</strong>
+                          <strong>Account</strong>
                         </span>
                       </p>
                     </div>
@@ -487,7 +489,7 @@ const sendCredentialsRecovery = async (to, { username, secret }) => {
                             mso-line-height-alt: 18px;
                             margin: 0;
                           ">
-                          <span style="font-size: 12px;">${username}</span>
+                          <span style="font-size: 12px;">${account}</span>
                         </p>
                       </div>
                     </div>
@@ -525,7 +527,7 @@ const sendCredentialsRecovery = async (to, { username, secret }) => {
                           margin: 0;
                         ">
                         <span style="font-size: 16px;">
-                          <strong>Secret</strong>
+                          <strong>Password</strong>
                         </span>
                       </p>
                     </div>
@@ -546,7 +548,7 @@ const sendCredentialsRecovery = async (to, { username, secret }) => {
                             mso-line-height-alt: 18px;
                             margin: 0;
                           ">
-                          <span style="font-size: 12px;">${secret}</span>
+                          <span style="font-size: 12px;">${tempSecret}</span>
                         </p>
                       </div>
                     </div>
