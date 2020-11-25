@@ -87,8 +87,13 @@ const ProfilePageLifebank = ({ profile }) => {
     skip: true
   })
 
-  useEffect(async () => {
-    if (!dataUsername) await getData({ account: profile.account })
+  useEffect(() => {
+    if (!dataUsername) {
+      const getUsername = async () => {
+        await getData({ account: profile.account })
+      }
+      getUsername()
+    }
     else setuserName(dataUsername.user[0].username)
 
   }, [dataUsername])
