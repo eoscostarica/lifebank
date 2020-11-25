@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
@@ -18,7 +18,6 @@ import {
   SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
-
 import EditProfileDonor from './EditProfileDonor'
 import EditProfileBank from './EditProfileBank'
 import EditProfileSponsor from './EditProfileSponsor'
@@ -70,18 +69,21 @@ const EditProfilePage = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const location = useLocation()
+  const history = useHistory()
+  const [, { logout }] = useUser()
   const [currentUser] = useUser()
   const [showAlert, setShowAlert] = useState({ error: false, success: false })
   const [isCompleting, setIsCompleting] = useState()
   const [userName, setuserName] = useState()
   const [
     loadProfile,
-    { loading, data: { profile: { profile } = {} } = {} }
+    { error: errorProfile, loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const [
     revokeConsent,
     {
+      error: errorRevokeConsent,
       loading: revokeConsentLoading,
       data: { revoke_consent: revokeConsentResult } = {}
     }
@@ -90,6 +92,7 @@ const EditProfilePage = () => {
   const [
     grantConsent,
     {
+      error: errorGrantConsent,
       loading: grantConsentLoading,
       data: { grant_consent: grantConsentResult } = {}
     }
@@ -97,7 +100,7 @@ const EditProfilePage = () => {
 
   const [
     editProfile,
-    { loading: editLoading, data: { edit_profile: editProfileResult } = {} }
+    { error: errorEditResults, loading: editLoading, data: { edit_profile: editProfileResult } = {} }
   ] = useMutation(EDIT_PROFILE_MUTATION)
 
   const [setUsername] = useMutation(SET_USERNAME)
@@ -153,11 +156,33 @@ const EditProfilePage = () => {
   }, [editProfileResult, loadProfile])
 
   useEffect(() => {
-    location.state
-      ? setIsCompleting(location.state.isCompleting)
-      : setIsCompleting(false)
-    setuserName(location.state.userName)
+    if (location.state) {
+      location.state
+        ? setIsCompleting(location.state.isCompleting)
+        : setIsCompleting(false)
+      setuserName(location.state.userName)
+    } else history.push('/profile')
+
   }, [location])
+
+  useEffect(() => {
+    if (errorProfile) {
+      if (errorProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+
+      } else {
+        history.push('/internal-error')
+      }
+    }
+
+  }, [errorProfile])
+
+  useEffect(() => {
+    if (errorRevokeConsent || errorGrantConsent || errorEditResults) setShowAlert({ error: true, success: false })
+
+  }, [errorRevokeConsent, errorGrantConsent, errorEditResults])
+
 
   return (
     <Box className={classes.wrapper}>
