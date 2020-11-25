@@ -90,7 +90,7 @@ const ProfilePageLifebank = ({ profile }) => {
         account: profile.account
       })
 
-      if (data) setuserName(data.user[0].username)
+      if (data) setuserName(data.user[0].username.replaceAll(' ', '-'))
     }
 
     if (!userName) getUsername()

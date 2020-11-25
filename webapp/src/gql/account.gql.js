@@ -203,3 +203,11 @@ export const SET_USERNAME = gql`
     }
   }
 `
+
+export const VERIFY_USERNAME = gql`
+  query($account: String!, $username: String!) {
+    user(where: {username: {_eq: $username}, account: {_neq: $account}}) {
+      username
+    }
+  }
+`
