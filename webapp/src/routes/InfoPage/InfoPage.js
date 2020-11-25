@@ -433,10 +433,6 @@ const InfoPage = () => {
       if (!location.state) getProfile()
 
     }
-    /*if (profile && profile.role === 'sponsor')
-      profile.social_media_links = JSON.parse(
-        profile.social_media_links
-      )*/
   }
 
   useEffect(() => {
