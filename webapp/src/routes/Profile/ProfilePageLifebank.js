@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import Alert from '@material-ui/lab/Alert'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import { Link as LinkRouter } from 'react-router-dom'
+import { Link as LinkRouter, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -15,6 +15,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 import '@brainhubeu/react-carousel/lib/style.css'
 
+import { useUser } from '../../context/user.context'
 import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import CarouselComponent from '../../components/Carousel'
@@ -76,25 +77,34 @@ const ProfilePageLifebank = ({ profile }) => {
   const classes = useStyles()
   const [userName, setuserName] = useState()
   const [pendingFields, setPendingFields] = useState()
+  const history = useHistory()
+  const [, { logout }] = useUser()
 
-  const { refetch: getData } = useQuery(GET_USERNAME, {
+  const { error: errorUsername, data: dataUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
       account: profile.account
     },
     skip: true
   })
 
-  useEffect(() => {
-    const getUsername = async () => {
-      const { data } = await getData({
-        account: profile.account
-      })
+  useEffect(async () => {
+    if (!dataUsername) await getData({ account: profile.account })
+    else setuserName(dataUsername.user[0].username)
 
-      if (data) setuserName(data.user[0].username)
+  }, [dataUsername])
+
+  useEffect(() => {
+    if (errorUsername) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+
+      } else {
+        history.push('/internal-error')
+      }
     }
 
-    if (!userName) getUsername()
-  })
+  }, [errorUsername])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
