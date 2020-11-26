@@ -1,4 +1,13 @@
 actions:
+- name: change_password
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/change-password
+  permissions:
+  - role: donor
+  - role: guest
+  - role: lifebank
+  - role: sponsor
 - name: check_username
   definition:
     kind: synchronous
@@ -146,4 +155,5 @@ custom_types:
   - name: ValidSponsor
   - name: ValidLifebank
   - name: create_account_lifebank_output
+  - name: change_password_output
   scalars: []

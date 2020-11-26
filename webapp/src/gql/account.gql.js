@@ -125,6 +125,14 @@ export const CREDENTIALS_RECOVERY = gql`
   }
 `
 
+export const CHANGE_PASSWORD = gql`
+  mutation($email: String!, $currentPassword: String!, $newPassword: String!) {
+    change_password(email: $email, currentPassword: $currentPassword, newPassword: $newPassword) {
+      success
+    }
+  }
+`
+
 export const TRANSFER_MUTATION = gql`
   mutation transfer($to: String!, $memo: String!, $quantity: Int) {
     transfer(to: $to, memo: $memo, quantity: $quantity) {

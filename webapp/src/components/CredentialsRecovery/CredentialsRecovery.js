@@ -19,7 +19,7 @@ import Fade from '@material-ui/core/Fade'
 import LockIcon from '@material-ui/icons/Lock'
 import { useTranslation } from 'react-i18next'
 
-import { CREDENTIALS_RECOVERY } from '../../gql'
+import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -93,11 +93,16 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
+  const [errorPassword, setErrorPassword] = useState(true)
   const classes = useStyles()
   const [
     credentialsRecovery,
     { loading, error, data: { credentials_recovery: response } = {} }
   ] = useMutation(CREDENTIALS_RECOVERY)
+  const [
+    changePassword,
+    { loading: loadingChangePassword, error: errorChangePassword, data: { change_password: responseChangePassword } = {} }
+  ] = useMutation(CHANGE_PASSWORD)
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
@@ -108,10 +113,18 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const 
-  handleSubmit = () => {
+  const handleSubmit = () => {
     setErrorMessage(null)
     credentialsRecovery({
+      variables: {
+        ...user
+      }
+    })
+  }
+
+  const handleSubmitChangePassword = () => {
+    setErrorMessage(null)
+    changePassword({
       variables: {
         ...user
       }
@@ -125,11 +138,26 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }, [error])
 
   useEffect(() => {
+    if (errorChangePassword) {
+      setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
+    }
+  }, [errorChangePassword])
+
+
+  useEffect(() => {
     if (response) {
       setUser({})
       setSuccess(response.success)
     }
   }, [response])
+
+  useEffect(() => {
+    if (responseChangePassword) {
+      setUser({})
+      setSuccess(responseChangePassword.success)
+      setErrorPassword(responseChangePassword.success)
+    }
+  }, [responseChangePassword])
 
   return (
     <>
@@ -193,6 +221,25 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   {errorMessage}
                 </Alert>
               )}
+              {console.log(loadingChangePassword)}
+              {!errorPassword && (
+                <Alert
+                  className={classes.alert}
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => setErrorPassword(true)}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                >
+                  'La contraseña actual no coinside con su correo'
+                </Alert>
+              )}
               {success && (
                 <Alert
                   className={classes.alert}
@@ -242,7 +289,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 </Box>
                 <Box className={clsx(classes.textFieldWrapper, classes.marginTopBox)}>
                   <Typography >
-                    Para cambiar su contraseña ingrese la actual y la nueva contraseña
+                    Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva.
                   </Typography>
                   <TextField
                     id="currentPassword"
@@ -271,15 +318,15 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                     className={classes.marginTop}
                   />
                   <Button
-                    disabled={(!user.newPassword || !user.currentPassword) || loading}
+                    disabled={(!user.newPassword || !user.currentPassword || !user.email) || loadingChangePassword}
                     variant="contained"
                     color="primary"
-                    onClick={handleSubmit}
+                    onClick={handleSubmitChangePassword}
                     className={classes.centerButton}
                   >
                     Change Password
                   </Button>
-                  {loading && <CircularProgress />}
+                  {loadingChangePassword && <CircularProgress />}
                 </Box>
               </form>
             </Box>
