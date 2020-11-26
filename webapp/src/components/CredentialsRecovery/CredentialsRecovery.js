@@ -54,7 +54,8 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   btnWrapper: {
-    display: 'flex'
+    display: 'flex',
+    backgroundColor: 'blue'
   },
   loginBtn: {
     display: 'flex',
@@ -73,6 +74,17 @@ const useStyles = makeStyles((theme) => ({
   iconOption: {
     color: 'rgba(0, 0, 0, 0.54)',
     fontSize: 20
+  },
+  marginTop: {
+    marginTop: '6%'
+  },
+  marginTopBox: {
+    marginTop: '20%'
+  },
+  centerButton: {
+    marginTop: '6%',
+    marginLeft:'34%',
+    marginRight: '34%'
   }
 }))
 
@@ -96,7 +108,8 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const handleSubmit = () => {
+  const 
+  handleSubmit = () => {
     setErrorMessage(null)
     credentialsRecovery({
       variables: {
@@ -199,12 +212,12 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 </Alert>
               )}
               <form autoComplete="off">
-                <Box className={classes.textFieldWrapper}>
-                  <Typography>
+                <Box className={clsx(classes.textFieldWrapper, classes.marginTop)}>
+                  <Typography >
                     {t('credentialsRecovery.instructionCredentialsRecovery')}
                   </Typography>
                   <TextField
-                    id="account"
+                    id="email"
                     label={t('common.email')}
                     variant="outlined"
                     InputLabelProps={{
@@ -214,16 +227,57 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                     onChange={(event) =>
                       handleSetField('email', event.target.value)
                     }
+                    className={classes.marginTop}
                   />
-                </Box>
-                <Box className={classes.btnWrapper}>
                   <Button
                     disabled={!user.email || loading}
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
+                    className={classes.centerButton}
                   >
                     {t('credentialsRecovery.recovery')}
+                  </Button>
+                  {loading && <CircularProgress />}
+                </Box>
+                <Box className={clsx(classes.textFieldWrapper, classes.marginTopBox)}>
+                  <Typography >
+                    Para cambiar su contraseña ingrese la actual y la nueva contraseña
+                  </Typography>
+                  <TextField
+                    id="currentPassword"
+                    label= 'Current password'
+                    variant="outlined"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    value={user.currentPassword || ''}
+                    onChange={(event) =>
+                      handleSetField('currentPassword', event.target.value)
+                    }
+                    className={classes.marginTop}
+                  />
+                  <TextField
+                    id="newPassword"
+                    label= 'New password'
+                    variant="outlined"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    value={user.newPassword || ''}
+                    onChange={(event) =>
+                      handleSetField('newPassword', event.target.value)
+                    }
+                    className={classes.marginTop}
+                  />
+                  <Button
+                    disabled={(!user.newPassword || !user.currentPassword) || loading}
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                    className={classes.centerButton}
+                  >
+                    Change Password
                   </Button>
                   {loading && <CircularProgress />}
                 </Box>
