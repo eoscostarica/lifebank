@@ -215,7 +215,7 @@ function MapShowLocations({ location, ...props }) {
         const popupNode = document.createElement('div')
 
         ReactDOM.render(
-          <MapPopup id={id} info={info} username = {user.username.replaceAll(' ','-')} account={account} />,
+          <MapPopup id={id} info={info} username={user.username.replaceAll(' ', '-')} account={account} />,
           popupNode
         )
 

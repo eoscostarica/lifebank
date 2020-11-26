@@ -59,9 +59,7 @@ const Home = () => {
     refetch: getAllSponsors
   } = useQuery(GET_VALID_SPONSORS_QUERY, { fetchPolicy: 'cache-and-network' })
 
-  const handleOpenAlert = () => {
-    setOpenAlert(!openAlert)
-  }
+  const handleOpenAlert = () => setOpenAlert(!openAlert)
 
   const typeError = async (errorMessege) => {
     setFetchError(true)

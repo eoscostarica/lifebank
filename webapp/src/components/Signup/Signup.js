@@ -377,17 +377,13 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
 
   useEffect(() => {
-    if (errorcreateAccount) {
-      setErrorMessage(t('errors.authError'))
-    }
+    if (errorcreateAccount) setErrorMessage(t('errors.authError'))
 
   }, [errorcreateAccount])
 
 
   useEffect(() => {
-    if (errorpreRegisterLifebank) {
-      setErrorMessage(t('errors.authError'))
-    }
+    if (errorpreRegisterLifebank) setErrorMessage(t('errors.authError'))
 
   }, [errorpreRegisterLifebank])
 

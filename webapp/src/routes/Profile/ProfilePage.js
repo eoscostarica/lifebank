@@ -138,10 +138,7 @@ const ProfilePage = () => {
       if (errorProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
         logout()
         history.push('/')
-
-      } else {
-        history.push('/internal-error')
-      }
+      } else history.push('/internal-error')
     }
 
   }, [errorProfile])

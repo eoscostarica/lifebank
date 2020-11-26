@@ -27,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
   centerText: {
     textAlign: 'center',
   },
-  tittle: {
-    fontFamily: "Roboto",
+  title: {
     fontSize: "34px",
     fontWeight: "normal",
     fontStretch: "normal",
@@ -40,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15
   },
   subTitle: {
-    fontFamily: "Roboto",
     fontSize: "14px",
     fontWeight: "normal",
     fontStretch: "normal",
@@ -120,12 +118,12 @@ const EmailVerification = (props) => {
           <Box className={classes.centerText}>
             {loadingVerifyEmail && <CircularProgress />}
             {!loadingVerifyEmail && validate && (
-              <Typography className={classes.tittle}>
+              <Typography className={classes.title}>
                 {t('emailVerification.emailVerified')}
               </Typography>
             )}
             {!loadingVerifyEmail && !validate && (
-              <Typography className={classes.tittle}>
+              <Typography className={classes.title}>
                 {t('emailVerification.somethingHappened')}
               </Typography>
             )}

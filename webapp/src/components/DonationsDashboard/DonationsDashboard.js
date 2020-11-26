@@ -312,9 +312,7 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
     { loading, error, data: { transfer: transferResult } = {} }
   ] = useMutation(TRANSFER_MUTATION)
 
-  const handleOpenAlert = () => {
-    setOpenAlert(!openAlert)
-  }
+  const handleOpenAlert = () => setOpenAlert(!openAlert)
 
   useEffect(() => {
     if (!error)

@@ -104,10 +104,7 @@ const ProfilePageLifebank = ({ profile }) => {
       if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
         logout()
         history.push('/')
-
-      } else {
-        history.push('/internal-error')
-      }
+      } else history.push('/internal-error')
     }
 
   }, [errorUsername])
