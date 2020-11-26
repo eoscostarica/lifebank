@@ -202,7 +202,8 @@ function MapShowLocations({ location, ...props }) {
           account,
           type,
           geolocation: { coordinates },
-          info
+          info,
+          user
         } = location
 
         loadPointData(info.name, type, coordinates)
@@ -214,7 +215,7 @@ function MapShowLocations({ location, ...props }) {
         const popupNode = document.createElement('div')
 
         ReactDOM.render(
-          <MapPopup id={id} info={info} account={account} />,
+          <MapPopup id={id} info={info} username = {user.username.replaceAll(' ','-')} account={account} />,
           popupNode
         )
 

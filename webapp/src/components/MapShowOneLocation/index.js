@@ -45,7 +45,8 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
           account,
           type,
           geolocation: { coordinates },
-          info
+          info,
+          user
         } = location
 
         const markerNode = document.createElement('div')
@@ -55,7 +56,7 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
         const popupNode = document.createElement('div')
 
         ReactDOM.render(
-          <MapPopup id={id} info={info} account={account} />,
+          <MapPopup id={id} info={info} username = {user.username.replaceAll(' ','-')} account={account} />,
           popupNode
         )
         if (accountProp === account) {
