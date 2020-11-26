@@ -954,9 +954,9 @@ const InfoPage = () => {
               >{`${t('common.near')}  ${profile.name}`}</Typography>
               <Box className={classes.contentCards}>
                 <Nearby
-                  location={profile.location}
+                  location={JSON.parse(profile.location)}
                   searchDistance={1000}
-                  account={profile.username}
+                  account={profile.account}
                 />
               </Box>
             </Box>
