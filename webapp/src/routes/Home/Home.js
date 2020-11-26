@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useUser } from '../../context/user.context'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
-import HomeMobile from './HomeMobile'
-import HomeDesktop from './HomeDesktop'
 import { GET_OFFERS_QUERY, GET_LOCATIONS_QUERY } from '../../gql'
 import ConsetComponent from '../../components/ConsetComponent/ConsentComponent'
 
+const HomeMobile = lazy(() => import('./HomeMobile'));
+const HomeDesktop = lazy(() => import('./HomeDesktop'));
+
 const Home = () => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
-    defaultMatches: true
-  })
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
 
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
@@ -176,30 +176,34 @@ const Home = () => {
   return (
     <>
       {isDesktop && (
-        <HomeDesktop
-          offers={offers}
-          loadingOffers={loadingOffers}
-          lifebanks={lifebanks}
-          loadingLifebanks={loadingLifebanks}
-          sponsors={sponsors}
-          loadingSponsors={loadingSponsors}
-          applyFilters={applyFilters}
-          searchValue={searchValue}
-          handleChangeSearch={setSearchValue}
-        />
+        <Suspense fallback={<CircularProgress />}>
+          <HomeDesktop
+            offers={offers}
+            loadingOffers={loadingOffers}
+            lifebanks={lifebanks}
+            loadingLifebanks={loadingLifebanks}
+            sponsors={sponsors}
+            loadingSponsors={loadingSponsors}
+            applyFilters={applyFilters}
+            searchValue={searchValue}
+            handleChangeSearch={setSearchValue}
+          />
+        </Suspense>
       )}
       {!isDesktop && (
-        <HomeMobile
-          offers={offers}
-          loadingOffers={loadingOffers}
-          lifebanks={lifebanks}
-          loadingLifebanks={loadingLifebanks}
-          sponsors={sponsors}
-          loadingSponsors={loadingSponsors}
-          applyFilters={applyFilters}
-          searchValue={searchValue}
-          handleChangeSearch={setSearchValue}
-        />
+        <Suspense fallback={<CircularProgress />}>
+          <HomeMobile
+            offers={offers}
+            loadingOffers={loadingOffers}
+            lifebanks={lifebanks}
+            loadingLifebanks={loadingLifebanks}
+            sponsors={sponsors}
+            loadingSponsors={loadingSponsors}
+            applyFilters={applyFilters}
+            searchValue={searchValue}
+            handleChangeSearch={setSearchValue}
+          />
+        </Suspense>
       )}
       <ConsetComponent />
     </>
