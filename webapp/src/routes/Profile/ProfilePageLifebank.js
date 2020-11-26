@@ -80,7 +80,7 @@ const ProfilePageLifebank = ({ profile }) => {
   const history = useHistory()
   const [, { logout }] = useUser()
 
-  const { error: errorUsername, data: dataUsername, refetch: getData } = useQuery(GET_USERNAME, {
+  const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
       account: profile.account
     },

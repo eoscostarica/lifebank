@@ -130,13 +130,13 @@ const ConsetComponent = () => {
   }, [signupResult])
 
   useEffect(() => {
-    if (errorSignup || errorSignup) {
+    if (errorSignup || errorProfile) {
       setSeverity("error")
       setMessegaAlert(t('signup.consentError'))
       handleOpenAlert()
     }
 
-  }, [errorSignup, errorSignup])
+  }, [errorSignup, errorProfile])
 
   return (
     <>
