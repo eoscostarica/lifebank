@@ -283,7 +283,7 @@ const OfferView = ({
         <Box className={classes.componentHeader}>
           <Avatar
             className={classes.componentAvatar}
-            src={`//images.weserv.nl?url=${selectOffer.user.location.info.logo_url}&h=300&dpr=2`}
+            src={`//images.weserv.nl?url=${selectOffer.user.location.info.logo_url}&h=60&dpr=1`}
           />
           <Box className={classes.componentTitleContainer}>
             <Typography className={classes.componentTitle} noWrap>
