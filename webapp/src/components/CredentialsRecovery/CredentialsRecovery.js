@@ -144,7 +144,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   useEffect(() => {
     if (error) {
       if(error.message === `GraphQL error: Cannot read property 'account' of undefined`)
-        setErrorMessage('El correo ingresado no esta asociado a ninguna cuenta')
+        setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(error.message.replace('GraphQL error: ', ''))
     }
   }, [error])
@@ -152,7 +152,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   useEffect(() => {
     if (errorChangePassword) {
       if(errorChangePassword.message === `GraphQL error: Cannot read property 'secret' of null`)
-        setErrorMessage('El correo ingresado no esta asociado a ninguna cuenta')
+        setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
     }
   }, [errorChangePassword])
@@ -247,11 +247,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
               </Box>
               <Box className={clsx(classes.textFieldWrapper, classes.marginTopBox)}>
                 <Typography >
-                  Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva.
+                  {t('credentialsRecovery.changePasswordInstructions')}
                 </Typography>
                 <TextField
                   id="currentPassword"
-                  label= 'Current password'
+                  label= {t('credentialsRecovery.currentPassword')}
                   variant="outlined"
                   InputLabelProps={{
                     shrink: true
@@ -264,7 +264,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 />
                 <TextField
                   id="newPassword"
-                  label= 'New password'
+                  label= {t('credentialsRecovery.newPassword')}
                   variant="outlined"
                   InputLabelProps={{
                     shrink: true
@@ -282,7 +282,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   onClick={handleSubmitChangePassword}
                   className={classes.button}
                 >
-                  Change Password
+                  {t('credentialsRecovery.changePassword')}
                 </Button>
                 {loadingChangePassword && <CircularProgress />}
               </Box>
