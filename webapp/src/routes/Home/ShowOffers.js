@@ -247,7 +247,7 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
           <Avatar
             src={`//images.weserv.nl?url=${
               JSON.parse(props.offer.images)[0] || ''
-            }&h=300&dpr=2`}
+            }&h=60&dpr=1`}
           >
             <LocalOfferIcon />
           </Avatar>
@@ -341,7 +341,7 @@ const ShowOffers = ({ offers, loading, isDesktop }) => {
             className={classes.cardAvatar}
             src={`//images.weserv.nl?url=${
               JSON.parse(props.offer.images)[0] || ''
-            }&h=300&dpr=2`}
+            }&h=60&dpr=1`}
           >
             <LocalOfferIcon />
           </Avatar>
