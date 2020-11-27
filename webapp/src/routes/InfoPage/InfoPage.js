@@ -400,7 +400,7 @@ const InfoPage = () => {
                 className={classes.avatarRound}
                 src={`//images.weserv.nl?url=${
                   profile.info.logo_url || ''
-                }&h=300&dpr=2`}
+                }&h=60&dpr=1`}
                 alt="Avatar"
               >
                 {profile.type === 'SPONSOR' && <StorefrontIcon />}
@@ -724,8 +724,7 @@ const InfoPage = () => {
                 className={classes.avatarRoundDesktop}
                 src={`//images.weserv.nl?url=${
                   profile.info.logo_url || ''
-                }&h=300&dpr=2`}
-                alt="Avatar"
+                }&h=60&dpr=1`}
               >
                 {profile.type === 'SPONSOR' && <StorefrontIcon />}
                 {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}

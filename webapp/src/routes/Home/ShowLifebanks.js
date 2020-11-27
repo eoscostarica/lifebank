@@ -206,7 +206,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
           <Avatar
             src={`//images.weserv.nl?url=${
               props.bank.info.logo_url || ''
-            }&h=300&dpr=2`}
+            }&h=60&dpr=1`}
           >
             <LocalHospitalIcon />
           </Avatar>
