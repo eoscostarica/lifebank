@@ -204,9 +204,11 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
           <Avatar
-            src={`//images.weserv.nl?url=${
-              props.bank.info.logo_url || ''
-            }&h=60&dpr=1`}
+            src={
+              props.bank.info.logo_url !== ''
+                ? `//images.weserv.nl?url=${props.bank.info.logo_url}&h=60&dpr=1`
+                : ''
+            }
           >
             <LocalHospitalIcon />
           </Avatar>
@@ -286,9 +288,11 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${
-            props.bank.info.logo_url || ''
-          }&h=300&dpr=2`}
+          src={
+            props.bank.info.logo_url !== ''
+              ? `//images.weserv.nl?url=${props.bank.info.logo_url}&h=60&dpr=1`
+              : ''
+          }
         >
           <LocalHospitalIcon />
         </Avatar>
