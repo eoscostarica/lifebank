@@ -305,6 +305,7 @@
       "changePasswordInstructions": "Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva",
       "changePassword": "Cambiar contraseña",
       "currentPassword": "Contraseña actual",
+      "errorPassword": "La contraseña actual no coinside con su correo",
       "newPassword": "Nueva contraseña",
       "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
       "checkYourEmail": "Revisa tu correo",

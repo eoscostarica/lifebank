@@ -100,6 +100,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
   const [errorPassword, setErrorPassword] = useState(true)
+  const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
@@ -120,6 +121,13 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }
 
   const handleSetField = (field, value) => {
+    setUser({ ...user, [field]: value })
+  }
+
+  const handleSetFieldEmail = (field, value) => {
+    const regularExpresion = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    if(regularExpresion.test(value)) setValidEmailFormat(true)
+    else setValidEmailFormat(false)
     setUser({ ...user, [field]: value })
   }
 
@@ -230,12 +238,12 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   }}
                   value={user.email || ''}
                   onChange={(event) =>
-                    handleSetField('email', event.target.value)
+                    handleSetFieldEmail('email', event.target.value)
                   }
                   className={classes.marginTop}
                 />
                 <Button
-                  disabled={!user.email || loading}
+                  disabled={!validEmailFormat || loading}
                   variant="contained"
                   color="secondary"
                   onClick={handleSubmit}
@@ -276,7 +284,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   className={classes.marginTop}
                 />
                 <Button
-                  disabled={(!user.newPassword || !user.currentPassword || !user.email) || loadingChangePassword}
+                  disabled={(!user.newPassword || !user.currentPassword || !validEmailFormat) || loadingChangePassword}
                   variant="contained"
                   color="secondary"
                   onClick={handleSubmitChangePassword}
@@ -319,7 +327,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                     </IconButton>
                   }
                 >
-                  'La contraseña actual no coinside con su correo'
+                  {t('credentialsRecovery.errorPassword')}
                 </Alert>
               )}
               {success && (
