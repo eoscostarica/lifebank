@@ -13,7 +13,7 @@ import SplashIntro from './components/SplashIntro'
 import { useUser } from './context/user.context'
 import { GET_VALID_SPONSORS_QUERY, GET_VALID_LIFEBANKS_QUERY } from './gql'
 
-const App = ({ ual }) => {
+const App = () => {
   const [validSponsors, setValidSponsors] = useState([])
   const [validLifebanks, setValidLifebanks] = useState([])
   const [currentUser, { logout }] = useUser()
@@ -112,7 +112,7 @@ const App = ({ ual }) => {
             <Switch>
               {routes.map(({ path, component: Component, ...args }) => (
                 <Route key={`path-${path}`} path={path} {...args}>
-                  <Component ual={ual} />
+                  <Component />
                 </Route>
               ))}
               <Redirect to="/not-found" />
@@ -124,8 +124,6 @@ const App = ({ ual }) => {
   )
 }
 
-App.propTypes = {
-  ual: PropTypes.object
-}
+App.propTypes = {}
 
 export default App
