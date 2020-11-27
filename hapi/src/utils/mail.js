@@ -546,7 +546,7 @@ const sendCredentialsRecovery = async (to, account, tempSecret) => {
   })
 }
 
-const sendConfirmChangePassword = async (to) => {
+const sendConfirmMessage = async (to, subject, titulo, message) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -563,12 +563,12 @@ const sendConfirmChangePassword = async (to) => {
   await transporter.sendMail({
     from,
     to,
-    subject: 'Lifebank Change Password',
+    subject: subject,
     html: `
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>Change Password</title>
+            <title>${titulo}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -657,7 +657,7 @@ const sendConfirmChangePassword = async (to) => {
           <body style="background-color: #f6f6f6;">
             <!-- start preheader -->
             <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-              Lifebank change password.
+              ${subject}
             </div>
             <!-- end preheader -->
             <!-- start body -->
@@ -681,14 +681,14 @@ const sendConfirmChangePassword = async (to) => {
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> Change Password</h1>
+                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${titulo}</h1>
                       </td>
                     </tr>
                     <tr>
                   </tr>
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                      <p style="margin: 0;">Your password has been successfully changed, thank you for donating life.</p>
+                      <p style="margin: 0;">${message}</p>
                       </td>
                     </tr>
                     <tr>
@@ -712,5 +712,5 @@ module.exports = {
   sendCredentialsRecovery,
   sendVerificationCode,
   sendRegistrationRequest,
-  sendConfirmChangePassword
+  sendConfirmMessage
 }

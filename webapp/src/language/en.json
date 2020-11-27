@@ -316,6 +316,14 @@
       "somethingHappened": "Something happened when trying to verify your email",
       "takeHome": "Take me home"
     },
+    "emailMessage": {
+      "subjectAproveAccount": "Lifebank Approve Account",
+      "tituleAproveAccount": "Approve Account",
+      "messageAproveAccount": "Your application for registration in Lifebank has been approved, thank you for being part of this beautiful project",
+      "subjectChangePassword": "Lifebank Change Password",
+      "tituleChangePassword": "Change Password",
+      "messageChangePassword": "Your password has been successfully changed, thank you for donating life"
+    },
     "approveAccount": {
       "accountapprove": "This account has been approved",
       "somethingHappened": "Something happened when trying approve this account"

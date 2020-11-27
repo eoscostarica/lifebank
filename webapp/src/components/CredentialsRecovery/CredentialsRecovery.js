@@ -138,6 +138,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         email: user.email
       }
     })
+    setValidEmailFormat(false)
   }
 
   const handleSubmitChangePassword = () => {
@@ -147,6 +148,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         ...user
       }
     })
+    setValidEmailFormat(false)
   }
 
   useEffect(() => {

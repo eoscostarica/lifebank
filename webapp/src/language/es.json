@@ -316,6 +316,14 @@
       "somethingHappened": "Ha ocurrido un evento inesperado al tratar de verificar tu email",
       "takeHome": "Ir al inicio"
     },
+    "emailMessage": {
+      "subjectAproveAccount": "Lifebank Cuenta Aprobada",
+      "tituleAproveAccount": "Cuenta Aprobada",
+      "messageAproveAccount": "Su solicitud de registro en Lifebank ha sido aprobada, gracias por ser parte de este hermoso proyecto",
+      "subjectChangePassword": "Lifebank Cambio de Contraseña",
+      "tituleChangePassword": "Cambio de Contraseña",
+      "messageChangePassword": "Su contraseña ha sido cambiada con éxito, gracias por donar vida"
+    },
     "approveAccount": {
       "accountapprove": "Esta cuenta ha sido aprobada",
       "somethingHappened": "Algo sucedió al intentar aprobar esta cuenta"
