@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import { UALProvider, withUAL } from 'ual-reactjs-renderer'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { CookiesProvider } from 'react-cookie'
-import 'fontsource-roboto'
+import 'fontsource-'
 
 import { ualConfig } from './config'
 import { client } from './graphql'

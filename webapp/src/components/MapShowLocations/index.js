@@ -284,7 +284,7 @@ function MapShowLocations({ location, ...props }) {
 
     map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/mapbox/streets-v11?optimize=true',
       center: [location.longitude, location.latitude],
       zoom: initialZoom
     })

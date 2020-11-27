@@ -10,12 +10,12 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-  <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
-  <link rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-    type="text/css" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" async />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" async />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="preload" media="all" async />
+  <link rel="preload"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css"
+    media="all" async />
 
   <style>
     .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
@@ -72,7 +72,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script defer src="https://www.google.com/recaptcha/api.js" async></script>
 </body>
 
 </html>
