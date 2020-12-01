@@ -130,6 +130,10 @@ const ShowSponsorsMobile = ({ sponsors, loading }) => {
     </LinkRouter>
   )
 
+  SponsorItem.propTypes = {
+    sponsor: PropTypes.object
+  }
+
   return (
     <List className={classes.list}>
       <LoadSponsors />

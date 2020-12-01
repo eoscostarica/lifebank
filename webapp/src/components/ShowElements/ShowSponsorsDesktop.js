@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
+const ShowSponsors = ({ sponsors, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
