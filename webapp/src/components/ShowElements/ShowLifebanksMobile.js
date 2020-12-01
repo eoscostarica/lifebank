@@ -92,15 +92,14 @@ const ShowLifebanksMobile = ({ banks, loading }) => {
     <LinkRouter
       style={{ textDecoration: 'none' }}
       to={{
-        pathname: `info/${props.bank.user.username.replaceAll(' ', '-')}`,
+        pathname: `info/${props.bank.userName.replaceAll(' ', '-')}`,
         state: { profile: props.bank, isLifebank: true }
       }}
     >
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
           <Avatar
-            src={`//images.weserv.nl?url=${props.bank.info.logo_url || ''
-              }&h=60&dpr=1`}
+            src={props.bank.logo !== '' ? `//images.weserv.nl?url=${props.bank.logo}` : ''}
           >
             <LocalHospitalIcon />
           </Avatar>
@@ -121,7 +120,7 @@ const ShowLifebanksMobile = ({ banks, loading }) => {
               noWrap
               variant="body2"
             >
-              {props.bank.info.about}
+              {props.bank.description}
             </Typography>
           }
         />

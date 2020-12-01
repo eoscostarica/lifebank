@@ -94,15 +94,14 @@ const ShowSponsorsMobile = ({ sponsors, loading }) => {
     <LinkRouter
       style={{ textDecoration: 'none' }}
       to={{
-        pathname: `info/${props.sponsor.user.username.replaceAll(' ', '-')}`,
+        pathname: `info/${props.sponsor.userName.replaceAll(' ', '-')}`,
         state: { profile: props.sponsor }
       }}
     >
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
           <Avatar
-            src={`//images.weserv.nl?url=${props.sponsor.info.logo_url || ''
-              }&h=60&dpr=1`}
+            src={props.sponsor.logo !== '' ? `//images.weserv.nl?url=${props.sponsor.logo}` : ''}
           >
             <StorefrontIcon />
           </Avatar>
@@ -123,7 +122,7 @@ const ShowSponsorsMobile = ({ sponsors, loading }) => {
               noWrap
               variant="body2"
             >
-              {props.sponsor.info.business_type}
+              {props.sponsor.businessType}
             </Typography>
           }
         />

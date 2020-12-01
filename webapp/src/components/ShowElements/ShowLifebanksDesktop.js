@@ -174,8 +174,7 @@ const ShowLifebanks = ({ banks, loading }) => {
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${props.bank.logo || ''
-            }&h=300&dpr=2`}
+          src={props.bank.logo !== '' ? `//images.weserv.nl?url=${props.bank.logo}` : ''}
         >
           <LocalHospitalIcon />
         </Avatar>

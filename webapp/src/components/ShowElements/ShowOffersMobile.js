@@ -119,8 +119,12 @@ const ShowOffersMobile = ({ offers, loading }) => {
       >
         <ListItemAvatar>
           <Avatar
-            src={`//images.weserv.nl?url=${JSON.parse(props.offer.images)[0] || ''
-              }&h=60&dpr=1`}
+            src={
+              props.offer.images[0] !== ''
+                ? `//images.weserv.nl?url=${JSON.parse(props.offer.images)[0]
+                }&h=60&dpr=1`
+                : ''
+            }
           >
             <LocalOfferIcon />
           </Avatar>

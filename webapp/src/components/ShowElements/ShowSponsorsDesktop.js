@@ -176,8 +176,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${props.sponsor.logo || ''
-            }&h=60&dpr=1`}
+          src={props.sponsor.logo !== '' ? `//images.weserv.nl?url=${props.sponsor.logo}` : ''}
         >
           <StorefrontIcon />
         </Avatar>

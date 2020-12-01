@@ -12,8 +12,6 @@ import Alert from '@material-ui/lab/Alert'
 import Snackbar from '@material-ui/core/Snackbar'
 import { useTranslation } from 'react-i18next'
 
-import HomeMobile from './HomeMobile'
-import HomeDesktop from './HomeDesktop'
 import { GET_OFFERS_QUERY, GET_VALID_SPONSORS_QUERY, GET_VALID_LIFEBANKS_QUERY } from '../../gql'
 import ConsetComponent from '../../components/ConsetComponent/ConsentComponent'
 
