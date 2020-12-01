@@ -455,7 +455,7 @@ const InfoPage = () => {
             <Box className={classes.headerBodyMobile}>
               <Avatar
                 className={classes.avatarRound}
-                src={`//images.weserv.nl?url=${profile.info.logo_url || ''
+                src={`//images.weserv.nl?url=${profile.logo || ''
                   }&h=60&dpr=1`}
                 alt="Avatar"
               >
@@ -775,7 +775,7 @@ const InfoPage = () => {
             <Box className={classes.headerContentDesktop}>
               <Avatar
                 className={classes.avatarRoundDesktop}
-                src={`//images.weserv.nl?url=${profile.info.logo_url || ''
+                src={`//images.weserv.nl?url=${profile.logo || ''
                   }&h=60&dpr=1`}
               >
                 {profile.role === 'sponsor' && <StorefrontIcon />}

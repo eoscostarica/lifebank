@@ -204,7 +204,7 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
           <Avatar
-            src={`//images.weserv.nl?url=${props.bank.info.logo_url || ''
+            src={`//images.weserv.nl?url=${props.bank.logo || ''
               }&h=60&dpr=1`}
           >
             <LocalHospitalIcon />
