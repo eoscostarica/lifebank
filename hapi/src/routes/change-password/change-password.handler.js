@@ -30,7 +30,7 @@ module.exports = async ({ payload: { input } }) => {
         encripnewPassword
       )
 
-      if (user) 
+      if (user)
         await mailUtils.sendConfirmMessage(
           input.email,
           'Lifebank Change Password',
