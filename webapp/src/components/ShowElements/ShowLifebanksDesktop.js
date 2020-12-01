@@ -6,10 +6,6 @@ import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
 import Button from '@material-ui/core/Button'
@@ -23,38 +19,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%'
-  },
-  list: {
-    width: '100vw'
-  },
-  listItem: {
-    width: '100%',
-    backgroundColor: 'white'
-  },
-  secondaryIconList: {
-    color: 'rgba(0, 0, 0, 0.6)',
-    width: 20,
-    height: 20
-  },
-  listItemPrimaryText: {
-    color: 'rgba(0, 0, 0, 0.87)',
-    fontFamily: 'Roboto',
-    fontSize: '16px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.5,
-    letterSpacing: '0.15px'
-  },
-  listItemSecondaryText: {
-    color: 'color: rgba(0, 0, 0, 0.6)',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.43,
-    letterSpacing: '0.25px'
   },
   lifebanksGridContainer: {
     overflowX: 'auto',
@@ -159,85 +123,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ShowLifebanks = ({ banks, loading, isDesktop }) => {
+const ShowLifebanks = ({ banks, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-
-  const LoadBanks = () => {
-    return (
-      <>
-        {loading && (
-          <Box className={classes.wrapper}>
-            <CircularProgress />
-          </Box>
-        )}
-        {!loading && banks.length <= 0 && (
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={
-                <Typography
-                  className={classes.listItemPrimaryText}
-                  noWrap
-                  variant="body2"
-                >
-                  {t('miscellaneous.noBloodBank')}
-                </Typography>
-              }
-            />
-          </ListItem>
-        )}
-        {!loading &&
-          banks.length > 0 &&
-          banks.map((bank) => <BankItem key={bank.id} bank={bank} />)}
-      </>
-    )
-  }
-
-  const BankItem = (props) => (
-    <LinkRouter
-      style={{ textDecoration: 'none' }}
-      to={{
-        pathname: `info/${props.bank.user.username.replaceAll(' ', '-')}`,
-        state: { profile: props.bank, isLifebank: true }
-      }}
-    >
-      <ListItem className={classes.listItem} button>
-        <ListItemAvatar>
-          <Avatar
-            src={`//images.weserv.nl?url=${
-              props.bank.info.logo_url || ''
-            }&h=60&dpr=1`}
-          >
-            <LocalHospitalIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography
-              className={classes.listItemPrimaryText}
-              noWrap
-              variant="body2"
-            >
-              {props.bank.name}
-            </Typography>
-          }
-          secondary={
-            <Typography
-              className={classes.listItemSecondaryText}
-              noWrap
-              variant="body2"
-            >
-              {props.bank.info.about}
-            </Typography>
-          }
-        />
-      </ListItem>
-    </LinkRouter>
-  )
-
-  BankItem.propTypes = {
-    bank: PropTypes.object
-  }
 
   const LoadBanksDesktop = () => {
     return (
@@ -286,9 +174,8 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${
-            props.bank.info.logo_url || ''
-          }&h=300&dpr=2`}
+          src={`//images.weserv.nl?url=${props.bank.info.logo_url || ''
+            }&h=300&dpr=2`}
         >
           <LocalHospitalIcon />
         </Avatar>
@@ -322,25 +209,15 @@ const ShowLifebanks = ({ banks, loading, isDesktop }) => {
   }
 
   return (
-    <>
-      {!isDesktop && (
-        <List className={classes.list}>
-          <LoadBanks />
-        </List>
-      )}
-      {isDesktop && (
-        <Box className={classes.lifebanksGridContainer}>
-          <LoadBanksDesktop />
-        </Box>
-      )}
-    </>
+    <Box className={classes.lifebanksGridContainer}>
+      <LoadBanksDesktop />
+    </Box>
   )
 }
 
 ShowLifebanks.propTypes = {
   banks: PropTypes.array,
-  loading: PropTypes.bool,
-  isDesktop: PropTypes.bool
+  loading: PropTypes.bool
 }
 
 export default ShowLifebanks
