@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import { useLazyQuery, useQuery } from '@apollo/react-hooks'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
@@ -123,7 +122,5 @@ const App = () => {
     </BrowserRouter>
   )
 }
-
-App.propTypes = {}
 
 export default App
