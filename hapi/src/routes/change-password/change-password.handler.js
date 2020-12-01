@@ -26,7 +26,7 @@ module.exports = async ({ payload: { input } }) => {
       })
 
       const user = await userApi.setSecret(
-        { email: { _eq: input.email } }, 
+        { email: { _eq: input.email } },
         encripnewPassword
       )
 
