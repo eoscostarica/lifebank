@@ -140,9 +140,11 @@ const Nearby = ({ location, searchDistance, account }) => {
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${
-            props.item.info.logo_url || ''
-          }&h=60&dpr=1`}
+          src={
+            props.item.info.logo_url !== ''
+              ? `//images.weserv.nl?url=${props.item.info.logo_url}&h=60&dpr=1`
+              : ''
+          }
         >
           <LocalHospitalIcon />
         </Avatar>

@@ -206,7 +206,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
         }
       })
     } else {
-      setErrorMessage(t('invalidAccountOrPassword'))
+      setErrorMessage(t('login.invalidAccountOrPassword'))
     }
   }
 
@@ -228,14 +228,11 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                 secret: hash
               }
             })
-          }
+          } else setErrorMessage(t('login.invalidAccountOrPassword'))
+
         })
-      } else {
-        setErrorMessage(t('login.accountDoesntExist'))
-      }
-    } else {
-      setErrorMessage(t('login.somethingHappenedWithAuth'))
-    }
+      } else setErrorMessage(t('login.accountDoesntExist'))
+    } else setErrorMessage(t('login.somethingHappenedWithAuth'))
   }
 
   useEffect(() => {

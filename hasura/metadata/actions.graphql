@@ -1,4 +1,13 @@
 type Mutation {
+  change_password (
+    email: String!
+    currentPassword: String!
+    newPassword: String!
+  ): change_password_output
+}
+
+
+type Mutation {
   check_username (
     role: String!
     username: String!
@@ -183,8 +192,10 @@ type verify_email_output {
 }
 
 type ValidSponsor {
+  account : String!
   name : String!
   openingHours : String!
+  description : String!
   address : String!
   logo : String!
   email : String!
@@ -201,6 +212,7 @@ type ValidSponsor {
 }
 
 type ValidLifebank {
+  account : String!
   name : String!
   openingHours : String!
   address : String!
@@ -219,5 +231,9 @@ type create_account_lifebank_output {
   account : String!
   transaction_id : String!
   token : String!
+}
+
+type change_password_output {
+  success : Boolean!
 }
 

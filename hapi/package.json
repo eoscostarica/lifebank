@@ -21,6 +21,7 @@
     "@hapi/hapi": "^19.1.1",
     "@hapi/inert": "^6.0.1",
     "@hapi/joi": "^17.1.0",
+    "bcryptjs": "^2.4.3",
     "eosjs": "^20.0.3",
     "eosjs-api": "^7.0.4",
     "graphql-request": "^1.8.2",

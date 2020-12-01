@@ -23,6 +23,7 @@ query MyQuery {
   location(where: {user: {role: {_eq: "lifebank"}}}) {
     info
     user {
+      account
       username
       role
     }
@@ -35,6 +36,7 @@ query MyQuery {
   location(where: {user: {role: {_eq: "sponsor"}}}) {
     info
     user {
+      account
       username
       role
     }
@@ -102,6 +104,17 @@ const createLifebank = async ({ email, name, secret, verification_code }) => {
   })
 
   await historyApi.insert(transaction)
+
+  try {
+    mailApi.sendConfirmMessage(
+      email,
+      'Lifebank Approve Account',
+      'Approve Account',
+      'Your application for registration in Lifebank has been approved, thank you for being part of this beautiful project'
+    )
+  } catch (error) {
+    console.log(error)
+  }
 
   return {
     account,
@@ -228,9 +241,11 @@ const getValidSponsors = async () => {
       JSON.parse(sponsorsAccounts[index].info.telephones).length > 0
     )
       validSponsors.push({
+        account: sponsorsAccounts[index].user.account,
         name: sponsorsAccounts[index].info.name,
         openingHours: sponsorsAccounts[index].info.schedule,
         address: sponsorsAccounts[index].info.address,
+        description: sponsorsAccounts[index].info.about,
         logo: sponsorsAccounts[index].info.logo_url,
         email: sponsorsAccounts[index].info.email,
         location: JSON.stringify(sponsorsAccounts[index].info.geolocation),
@@ -270,6 +285,7 @@ const getValidLifebanks = async () => {
       JSON.parse(lifebankAccounts[index].info.telephones).length > 0
     )
       validLifebanks.push({
+        account: lifebankAccounts[index].user.account,
         name: lifebankAccounts[index].info.name,
         openingHours: lifebankAccounts[index].info.schedule,
         address: lifebankAccounts[index].info.address,

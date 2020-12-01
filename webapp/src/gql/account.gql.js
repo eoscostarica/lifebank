@@ -55,9 +55,11 @@ export const PROFILE_QUERY = gql`
 export const GET_VALID_SPONSORS_QUERY = gql`
   query {
     get_valid_sponsors {
+      account
       name
       openingHours
       address
+      description
       logo
       email
       location
@@ -77,6 +79,7 @@ export const GET_VALID_SPONSORS_QUERY = gql`
 export const GET_VALID_LIFEBANKS_QUERY = gql`
   query {
     get_valid_lifebanks {
+      account
       name
       openingHours
       address
@@ -120,6 +123,14 @@ export const REVOKE_CONSENT_MUTATION = gql`
 export const CREDENTIALS_RECOVERY = gql`
   mutation($email: String!) {
     credentials_recovery(email: $email) {
+      success
+    }
+  }
+`
+
+export const CHANGE_PASSWORD = gql`
+  mutation($email: String!, $currentPassword: String!, $newPassword: String!) {
+    change_password(email: $email, currentPassword: $currentPassword, newPassword: $newPassword) {
       success
     }
   }

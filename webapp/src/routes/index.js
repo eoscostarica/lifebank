@@ -1,4 +1,5 @@
 import NotFound from './NotFound'
+import InternalError from './InternalError'
 import Profile from './Profile'
 import EditProfile from './EditProfile'
 import About from './About'
@@ -15,6 +16,11 @@ export default [
     name: 'notFound',
     path: '/not-found',
     component: NotFound
+  },
+  {
+    name: 'internalError',
+    path: '/internal-error',
+    component: InternalError
   },
   {
     name: 'offersManagement',
