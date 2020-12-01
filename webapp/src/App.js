@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { MainContainer, TopBar, SideBar } from './containers'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
@@ -9,7 +8,9 @@ import routes from './routes'
 import SplashIntro from './components/SplashIntro'
 import { useUser } from './context/user.context'
 
-const App = ({ ual }) => {
+const App = () => {
+  const [validSponsors, setValidSponsors] = useState([])
+  const [validLifebanks, setValidLifebanks] = useState([])
   const [currentUser, { logout }] = useUser()
   const [cookies, setCookie] = useCookies(['splash'])
   const [sideBarPosition, setSideBarPosition] = useState(true)
@@ -40,7 +41,7 @@ const App = ({ ual }) => {
               <Switch>
                 {routes.map(({ path, component: Component, ...args }) => (
                   <Route key={`path-${path}`} path={path} {...args}>
-                    <Component ual={ual} />
+                    <Component />
                   </Route>
                 ))}
                 <Redirect to="/not-found" />
@@ -50,10 +51,6 @@ const App = ({ ual }) => {
         )}
     </BrowserRouter>
   )
-}
-
-App.propTypes = {
-  ual: PropTypes.object
 }
 
 export default App
