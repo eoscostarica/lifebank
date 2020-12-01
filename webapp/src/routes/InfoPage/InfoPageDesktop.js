@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/react-hooks'
 import Divider from '@material-ui/core/Divider'
 import Slider from '@material-ui/core/Slider'
@@ -12,9 +11,6 @@ import IconButton from '@material-ui/core/IconButton'
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
 import StorefrontIcon from '@material-ui/icons/Storefront'
 import Avatar from '@material-ui/core/Avatar'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItem from '@material-ui/core/ListItem'
-import List from '@material-ui/core/List'
 import { useTranslation } from 'react-i18next'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
@@ -301,20 +297,6 @@ const InfoPage = () => {
     }
 
   }, [errorInfoProfile])
-
-  const ScheduleItem = (schedule) => {
-    return (
-      <List>
-        <Divider />
-        <ListItem button>
-          <ListItemText
-            primary={schedule.schedule.day}
-            secondary={`${schedule.schedule.open} - ${schedule.schedule.close}`}
-          />
-        </ListItem>
-      </List>
-    )
-  }
 
   return (
     <>

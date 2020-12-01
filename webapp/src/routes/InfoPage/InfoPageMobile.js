@@ -1,5 +1,4 @@
 import React, { useEffect, useState, forwardRef } from 'react'
-import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/react-hooks'
 import Button from '@material-ui/core/Button'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
