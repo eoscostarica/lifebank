@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { MainContainer, TopBar, SideBar } from './containers'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
@@ -9,8 +9,6 @@ import SplashIntro from './components/SplashIntro'
 import { useUser } from './context/user.context'
 
 const App = () => {
-  const [validSponsors, setValidSponsors] = useState([])
-  const [validLifebanks, setValidLifebanks] = useState([])
   const [currentUser, { logout }] = useUser()
   const [cookies, setCookie] = useCookies(['splash'])
   const [sideBarPosition, setSideBarPosition] = useState(true)
