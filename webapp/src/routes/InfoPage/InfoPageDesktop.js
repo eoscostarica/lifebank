@@ -316,10 +316,6 @@ const InfoPage = () => {
     )
   }
 
-  ScheduleItem.propTypes = {
-    schedule: PropTypes.object
-  }
-
   return (
     <>
       {profile && (

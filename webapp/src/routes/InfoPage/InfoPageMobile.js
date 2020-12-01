@@ -10,7 +10,7 @@ import Slider from '@material-ui/core/Slider'
 import Dialog from '@material-ui/core/Dialog'
 import Toolbar from '@material-ui/core/Toolbar'
 import { useLocation, useHistory } from 'react-router-dom'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
@@ -311,10 +311,6 @@ const InfoPageMobile = () => {
         </ListItem>
       </List>
     )
-  }
-
-  ScheduleItem.propTypes = {
-    schedule: PropTypes.object
   }
 
   return (
