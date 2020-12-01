@@ -44,7 +44,8 @@
     "react-speech-recognition": "^3.2.3",
     "react-structured-data": "^0.0.14",
     "react-swipeable-views": "^0.13.9",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "^0.9.16",
+    "typeface-roboto": "^1.1.13"
   },
   "optionalDependencies": {
     "@types/react": "^16.8.0",

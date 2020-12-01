@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { CookiesProvider } from 'react-cookie'
+import 'typeface-roboto'
 
 import { client } from './graphql'
 import { UserProvider } from './context/user.context'
