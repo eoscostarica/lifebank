@@ -69,6 +69,7 @@
       "aboutBusiness": "Add a description about your business here",
       "aboutPlaceholder": "About the LifeBank",
       "consentGranted": "Ready! You can start using Lifebank",
+      "consentRevoked": "Consent revoked",
       "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. "
     },
     "login": {
@@ -143,6 +144,11 @@
       "notFoundMessage": "It seems like there is an error. Please, try using the navigation to find the page you're looking for. ",
       "takeMeHome": "Take me to the home page"
     },
+    "internalError": {
+      "500Error": "500: Oh... internal server error!",
+      "errorMessage": "An error occurred and your request couldn't be completed",
+      "takeMeHome": "Take me to the home page"
+    },
     "schedule": {
       "sunday": "Sunday",
       "monday": "Monday",
@@ -181,7 +187,8 @@
       "socialMedia": "Social media"
     },
     "errors": {
-      "authError": "Something happened with the authentication"
+      "authError": "Something happened with the authentication",
+      "tokenExpiration": "The session has expired"
     },
     "editProfile": {
       "editProfile": "Edit Profile",
@@ -234,7 +241,9 @@
       "claimReward": "Reward",
       "memoDonor": "Thank you for redeeming your token",
       "memoLifebank": "Thanks for your donation",
-      "succesful": "Succesful transaction"
+      "succesful": "Succesful transaction",
+      "donationsError": "Uh-oh! There was an error. Please check if the account is correct and try",
+      "donationsProfileError": "Uh oh! There was an error trying to get your donations"
     },
     "users": "Users",
     "products": "Products",
@@ -301,6 +310,13 @@
     },
     "credentialsRecovery": {
       "credentialsRecovery": "Credentials Recovery",
+      "emailError": "The email entered is not associated with any accoun",
+      "changePasswordInstructions": "To change your password, enter the email associated with your account, the current password and the new one",
+      "changePassword": "Change Password",
+      "currentPassword": "Current password",
+      "errorPassword": "The current password does not match your email",
+      "newPassword": "New password",
+      "instructionCredentialsRecovery": "Enter the email associated with your account to be able to recover it",
       "checkYourEmail": "Check your email",
       "recovery": "Recover"
     },
@@ -308,6 +324,14 @@
       "emailVerified": "Your email has been verified",
       "somethingHappened": "Something happened when trying to verify your email",
       "takeHome": "Take me home"
+    },
+    "emailMessage": {
+      "subjectAproveAccount": "Lifebank Approve Account",
+      "tituleAproveAccount": "Approve Account",
+      "messageAproveAccount": "Your application for registration in Lifebank has been approved, thank you for being part of this beautiful project",
+      "subjectChangePassword": "Lifebank Change Password",
+      "tituleChangePassword": "Change Password",
+      "messageChangePassword": "Your password has been successfully changed, thank you for donating life"
     },
     "approveAccount": {
       "accountapprove": "This account has been approved",

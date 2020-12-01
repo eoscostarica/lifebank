@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
   centerText: {
     textAlign: 'center',
   },
-  tittle: {
-    fontFamily: "Roboto",
+  title: {
     fontSize: "34px",
     fontWeight: "normal",
     fontStretch: "normal",
@@ -35,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15
   },
   subTitle: {
-    fontFamily: "Roboto",
     fontSize: "14px",
     fontWeight: "normal",
     fontStretch: "normal",
@@ -65,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const NotFound = () => {
+const InternalError = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
@@ -74,8 +72,8 @@ const NotFound = () => {
       <Grid container spacing={4}>
         <Grid item xs={12} className={classes.content}>
           <Box className={classes.centerText}>
-            <Typography className={classes.tittle}>{t('notFound.404Error')}</Typography>
-            <Typography className={classes.subTitle}>{t('notFound.notFoundMessage')}</Typography>
+            <Typography className={classes.title}>{t('internalError.500Error')}</Typography>
+            <Typography className={classes.subTitle}>{t('internalError.errorMessage')}</Typography>
             <Button
               variant="contained"
               color="secondary"
@@ -83,7 +81,7 @@ const NotFound = () => {
               component={CustomRouterLink}
               to="/"
             >
-              {t('notFound.takeMeHome')}
+              {t('internalError.takeMeHome')}
             </Button>
           </Box>
         </Grid>
@@ -92,4 +90,4 @@ const NotFound = () => {
   )
 }
 
-export default NotFound
+export default InternalError

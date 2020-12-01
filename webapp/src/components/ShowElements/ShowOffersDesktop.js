@@ -217,8 +217,12 @@ const ShowOffers = ({ offers, loading }) => {
         <Box className={classes.cardHeader}>
           <Avatar
             className={classes.cardAvatar}
-            src={`//images.weserv.nl?url=${JSON.parse(props.offer.images)[0] || ''
-              }&h=60&dpr=1`}
+            src={
+              props.offer.images[0] !== ''
+                ? `//images.weserv.nl?url=${JSON.parse(props.offer.images)[0]
+                }&h=60&dpr=1`
+                : ''
+            }
           >
             <LocalOfferIcon />
           </Avatar>

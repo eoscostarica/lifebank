@@ -208,6 +208,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [
     createAccount,
     {
+      error: errorcreateAccount,
       loading: createAccountLoading,
       data: { create_account: createAccountResult } = {}
     }
@@ -215,6 +216,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [
     preRegisterLifebank,
     {
+      error: errorpreRegisterLifebank,
       loading: preRegisterLifebankLoading,
       data: { create_pre_register_lifebank: preRegisterLifebankResult } = {}
     }
@@ -372,6 +374,18 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
     }
 
   }, [createAccountResult])
+
+
+  useEffect(() => {
+    if (errorcreateAccount) setErrorMessage(t('errors.authError'))
+
+  }, [errorcreateAccount])
+
+
+  useEffect(() => {
+    if (errorpreRegisterLifebank) setErrorMessage(t('errors.authError'))
+
+  }, [errorpreRegisterLifebank])
 
   const ErrorMessage = () => {
     return (

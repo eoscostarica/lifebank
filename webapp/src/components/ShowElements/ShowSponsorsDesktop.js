@@ -157,7 +157,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
         {!loading &&
           sponsors.length > 0 &&
           sponsors.map((sponsor) => (
-            <SponsorCard key={sponsor.id} sponsor={sponsor} />
+            <SponsorCard key={sponsor.userName} sponsor={sponsor} />
           ))}
       </>
     )
@@ -176,7 +176,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${props.sponsor.info.logo_url || ''
+          src={`//images.weserv.nl?url=${props.sponsor.logo || ''
             }&h=60&dpr=1`}
         >
           <StorefrontIcon />
@@ -189,13 +189,13 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
       </Box>
       <CardContent className={classes.cardContent}>
         <Typography className={classes.cardContentText}>
-          {truncateString(props.sponsor.info.about)}
+          {truncateString(props.sponsor.description)}
         </Typography>
       </CardContent>
       <LinkRouter
         style={{ textDecoration: 'none' }}
         to={{
-          pathname: `info/${props.sponsor.user.username.replaceAll(' ', '-')}`,
+          pathname: `info/${props.sponsor.userName.replaceAll(' ', '-')}`,
           state: { profile: props.sponsor }
         }}
       >

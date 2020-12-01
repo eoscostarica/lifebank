@@ -69,6 +69,7 @@
       "aboutBusiness": "La descripción de su negocio aquí",
       "aboutPlaceholder": "Acerca del LifeBank",
       "consentGranted": "Consentimiento otorgado",
+      "consentRevoked": "Consentimiento revocado",
       "consentError": "Error al otorgar consentimiento"
     },
     "login": {
@@ -143,6 +144,11 @@
       "notFoundMessage": "O intentaste una ruta dudosa o viniste aquí por error. Sea lo que sea, intenta usar la navegación",
       "takeMeHome": "Llévame al inicio"
     },
+    "internalError": {
+      "500Error": "500: ¡Oh ... error interno del servidor!",
+      "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
+      "takeMeHome": "Llévame al inicio"
+    },
     "schedule": {
       "sunday": "Domingo",
       "monday": "Lunes",
@@ -181,7 +187,8 @@
       "socialMedia": "Redes sociales"
     },
     "errors": {
-      "authError": "Ha ocurrido un error con la autenticación"
+      "authError": "Ha ocurrido un error con la autenticación",
+      "tokenExpiration": "La sesión ha expirado"
     },
     "editProfile": {
       "editProfile": "Editar Perfil",
@@ -234,7 +241,9 @@
       "claimReward": "Recompensa",
       "memoDonor": "Gracias por canjear tu token",
       "memoLifebank": "Gracias por tu donación",
-      "succesful": "Transacción exitosa"
+      "succesful": "Transacción exitosa",
+      "donationsError": "¡Oh! Hubo un error. Comprueba si la cuenta es correcta e inténtalo de nuevo.",
+      "donationsProfileError": "¡Oh! Se produjo un error al intentar obtener tus donaciones."
     },
     "users": "Usuarios",
     "products": "Productos",
@@ -301,6 +310,13 @@
     },
     "credentialsRecovery": {
       "credentialsRecovery": "Recuperación de credenciales",
+      "emailError": "El correo ingresado no esta asociado a ninguna cuenta",
+      "changePasswordInstructions": "Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva",
+      "changePassword": "Cambiar contraseña",
+      "currentPassword": "Contraseña actual",
+      "errorPassword": "La contraseña actual no coinside con su correo",
+      "newPassword": "Nueva contraseña",
+      "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
       "checkYourEmail": "Revisa tu correo",
       "recovery": "Recuperar"
     },
@@ -308,6 +324,14 @@
       "emailVerified": "Tu correo ha sido verificado",
       "somethingHappened": "Ha ocurrido un evento inesperado al tratar de verificar tu email",
       "takeHome": "Ir al inicio"
+    },
+    "emailMessage": {
+      "subjectAproveAccount": "Lifebank Cuenta Aprobada",
+      "tituleAproveAccount": "Cuenta Aprobada",
+      "messageAproveAccount": "Su solicitud de registro en Lifebank ha sido aprobada, gracias por ser parte de este hermoso proyecto",
+      "subjectChangePassword": "Lifebank Cambio de Contraseña",
+      "tituleChangePassword": "Cambio de Contraseña",
+      "messageChangePassword": "Su contraseña ha sido cambiada con éxito, gracias por donar vida"
     },
     "approveAccount": {
       "accountapprove": "Esta cuenta ha sido aprobada",

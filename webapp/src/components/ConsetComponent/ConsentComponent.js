@@ -73,17 +73,18 @@ const ConsetComponent = () => {
   const [openConsent, setOpenConsent] = useState(false)
   const [openAlert, setOpenAlert] = useState(false)
   const [messegaAlert, setMessegaAlert] = useState("false")
+  const [severity, setSeverity] = useState("success")
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [maxWidthConset] = useState('sm')
   const [
     signup,
-    { loading: signupLoading, data: { signup: signupResult } = {} }
+    { error: errorSignup, loading: signupLoading, data: { signup: signupResult } = {} }
   ] = useMutation(SIGNUP_MUTATION)
 
   const [
     loadProfile,
-    { data: { profile: { profile } = {} } = {} }
+    { error: errorProfile, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const handleOpenConsent = () => {
@@ -115,16 +116,27 @@ const ConsetComponent = () => {
     if (signupResult) {
 
       if (signupResult.success) {
+        setSeverity("success")
         setMessegaAlert(t('signup.consentGranted'))
         handleOpenAlert()
         handleOpenConsent()
       } else {
+        setSeverity("error")
         setMessegaAlert(t('signup.consentError'))
         handleOpenAlert()
       }
 
     }
   }, [signupResult])
+
+  useEffect(() => {
+    if (errorSignup || errorProfile) {
+      setSeverity("error")
+      setMessegaAlert(t('signup.consentError'))
+      handleOpenAlert()
+    }
+
+  }, [errorSignup, errorProfile])
 
   return (
     <>
@@ -163,7 +175,7 @@ const ConsetComponent = () => {
         </Box>
       </Dialog>
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
-        <Alert onClose={handleOpenAlert} severity="success">
+        <Alert onClose={handleOpenAlert} severity={severity}>
           {messegaAlert}
         </Alert>
       </Snackbar>

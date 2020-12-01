@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
-import { Alert, AlertTitle } from '@material-ui/lab'
-import Link from '@material-ui/core/Link'
+import { Alert } from '@material-ui/lab'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import {
   PROFILE_QUERY,
   GRANT_CONSENT_MUTATION,
-  REVOKE_CONSENT_MUTATION,
-  NOTIFICATION_SUBSCRIPTION
+  REVOKE_CONSENT_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 import ProfilePageDonor from './ProfilePageDonor'
 import ProfilePageGuest from './ProfilePageGuest'
 import ProfilePageLifebank from './ProfilePageLifebank'
 import ProfilePageSponsor from './ProfilePageSponsor'
-import { eosConfig } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -62,17 +59,23 @@ const ProfilePage = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const history = useHistory()
-  const [snackbarState, setSnackbarState] = useState({})
-  const [lastNotification, setLastNotification] = useState()
+  const [, { logout }] = useUser()
+  const [openAlert, setOpenAlert] = useState(false)
+  const [messegaAlert, setMessegaAlert] = useState("")
+  const [severity, setSeverity] = useState("success")
   const [lastConsentChange, setLastConsentChange] = useState()
   const [currentUser] = useUser()
+  const handleOpenAlert = () => {
+    setOpenAlert(!openAlert)
+  }
   const [
     loadProfile,
-    { client, loading, data: { profile: { profile } = {} } = {} }
+    { client, error: errorProfile, loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
   const [
     revokeConsent,
     {
+      error: errorRevokeConsent,
       loading: revokeConsentLoading,
       data: { revoke_consent: revokeConsentResult } = {}
     }
@@ -80,13 +83,11 @@ const ProfilePage = () => {
   const [
     grantConsent,
     {
+      error: errorGrantConsent,
       loading: grantConsentLoading,
       data: { grant_consent: grantConsentResult } = {}
     }
   ] = useMutation(GRANT_CONSENT_MUTATION)
-  const { data: { notification } = {} } = useSubscription(
-    NOTIFICATION_SUBSCRIPTION
-  )
 
   const handleConsentChange = () => {
     setLastConsentChange(profile?.consent ? 'revoke' : 'grant')
@@ -113,30 +114,16 @@ const ProfilePage = () => {
       return
     }
 
-    setSnackbarState({
-      open: true,
-      title: `Success ${lastConsentChange} consent`,
-      description: (
-        <>
-          Transaction
-          <Link
-            href={`${eosConfig.BLOCK_EXPLORER_URL}transaction/${
-              lastConsentChange === 'grant'
-                ? grantConsentResult.transaction_id
-                : revokeConsentResult.transaction_id
-            }`}
-            target="_blank"
-            rel="noopener"
-            color="secondary"
-            className={classes.transactionLink}
-          >
-            {lastConsentChange === 'grant'
-              ? grantConsentResult.transaction_id
-              : revokeConsentResult.transaction_id}
-          </Link>
-        </>
-      )
-    })
+    if (lastConsentChange === 'grant') {
+      setSeverity("success")
+      setMessegaAlert(t('signup.consentGranted'))
+      handleOpenAlert()
+    } else {
+      setSeverity("success")
+      setMessegaAlert(t('signup.consentRevoked'))
+      handleOpenAlert()
+    }
+
     loadProfile()
   }, [
     grantConsentResult,
@@ -147,47 +134,48 @@ const ProfilePage = () => {
   ])
 
   useEffect(() => {
-    if (
-      !profile ||
-      !notification?.length ||
-      notification[0]?.id === lastNotification?.id
-    ) {
-      return
+    if (errorProfile) {
+      if (errorProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+      } else history.push('/internal-error')
     }
 
-    if (
-      notification[0]?.payload.newBalance.join() === profile?.balance.join()
-    ) {
-      return
-    }
-
-    setLastNotification(notification[0])
-    loadProfile()
-  }, [notification, profile, lastNotification, loadProfile])
+  }, [errorProfile])
 
   useEffect(() => {
-    if (!lastNotification) {
-      return
+    if (errorRevokeConsent) {
+      if (errorRevokeConsent.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+      } else {
+        setSeverity("error")
+        setMessegaAlert(t('signup.consentError'))
+        handleOpenAlert()
+      }
     }
 
-    setSnackbarState({
-      open: true,
-      title: lastNotification.title,
-      description: lastNotification.description
-    })
-  }, [lastNotification])
+  }, [errorRevokeConsent])
+
+  useEffect(() => {
+    if (errorGrantConsent) {
+      if (errorGrantConsent.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+      } else {
+        setSeverity("error")
+        setMessegaAlert(t('signup.consentError'))
+        handleOpenAlert()
+      }
+    }
+
+  }, [errorGrantConsent])
 
   return (
     <Box className={classes.wrapper}>
-      <Snackbar
-        open={snackbarState.open}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarState({})}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert onClose={() => setSnackbarState({})} severity="success">
-          <AlertTitle>{snackbarState.title}</AlertTitle>
-          {snackbarState.description}
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
+        <Alert onClose={handleOpenAlert} severity={severity}>
+          {messegaAlert}
         </Alert>
       </Snackbar>
       <Typography variant="h1" className={classes.title}>

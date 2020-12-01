@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 // TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
-function MapPopup({ id, info }) {
+function MapPopup({ id, info, username }) {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
@@ -49,16 +49,16 @@ function MapPopup({ id, info }) {
       <div>
         {t('common.telephone')}:
         <a
-          href={`tel: ${info.telephone || info.phone_number} `}
+          href={`tel: ${info.telephones}`}
           className={classes.link}
         >
-          {info.telephone || info.phone_number}
+          {JSON.parse(info.telephones)[0]}
         </a>
       </div>
       <div>
         {t('common.website')}:
         <a
-          href={window.location.href}
+          href={`https://lifebank.io/info/${username}`}
           target="_blank"
           rel="noopener noreferrer"
           className={classes.link}
