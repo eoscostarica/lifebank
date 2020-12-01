@@ -24,8 +24,8 @@ module.exports = async ({ payload: { input } }) => {
 
     if (user) {
       await mailUtils.sendCredentialsRecovery(
-        input.email, 
-        user.update_user.returning[0].account, 
+        input.email,
+        user.update_user.returning[0].account,
         tempSecret
       )
     }
