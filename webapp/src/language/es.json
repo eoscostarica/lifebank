@@ -69,6 +69,7 @@
       "aboutBusiness": "La descripción de su negocio aquí",
       "aboutPlaceholder": "Acerca del LifeBank",
       "consentGranted": "Consentimiento otorgado",
+      "consentRevoked": "Consentimiento revocado",
       "consentError": "Error al otorgar consentimiento"
     },
     "login": {
@@ -143,6 +144,11 @@
       "notFoundMessage": "O intentaste una ruta dudosa o viniste aquí por error. Sea lo que sea, intenta usar la navegación",
       "takeMeHome": "Llévame al inicio"
     },
+    "internalError": {
+      "500Error": "500: ¡Oh ... error interno del servidor!",
+      "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
+      "takeMeHome": "Llévame al inicio"
+    },
     "schedule": {
       "sunday": "Domingo",
       "monday": "Lunes",
@@ -181,7 +187,8 @@
       "socialMedia": "Redes sociales"
     },
     "errors": {
-      "authError": "Ha ocurrido un error con la autenticación"
+      "authError": "Ha ocurrido un error con la autenticación",
+      "tokenExpiration": "La sesión ha expirado"
     },
     "editProfile": {
       "editProfile": "Editar Perfil",
@@ -234,7 +241,9 @@
       "claimReward": "Recompensa",
       "memoDonor": "Gracias por canjear tu token",
       "memoLifebank": "Gracias por tu donación",
-      "succesful": "Transacción exitosa"
+      "succesful": "Transacción exitosa",
+      "donationsError": "¡Oh! Hubo un error. Comprueba si la cuenta es correcta e inténtalo de nuevo.",
+      "donationsProfileError": "¡Oh! Se produjo un error al intentar obtener tus donaciones."
     },
     "users": "Usuarios",
     "products": "Productos",

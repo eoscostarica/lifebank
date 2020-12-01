@@ -55,9 +55,11 @@ export const PROFILE_QUERY = gql`
 export const GET_VALID_SPONSORS_QUERY = gql`
   query {
     get_valid_sponsors {
+      account
       name
       openingHours
       address
+      description
       logo
       email
       location
@@ -77,6 +79,7 @@ export const GET_VALID_SPONSORS_QUERY = gql`
 export const GET_VALID_LIFEBANKS_QUERY = gql`
   query {
     get_valid_lifebanks {
+      account
       name
       openingHours
       address

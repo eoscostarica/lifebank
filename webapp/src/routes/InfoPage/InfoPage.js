@@ -31,6 +31,7 @@ import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
 import { useParams } from 'react-router'
 
+import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { GET_LOCATION_PROFILE } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
@@ -308,6 +309,7 @@ const InfoPage = () => {
   const [open, setOpenModalLocation] = useState(false)
   const [openSchedule, setOpenModalSchedule] = useState(false)
   const location = useLocation()
+  const [, { logout }] = useUser()
   const history = useHistory()
   const [profile, setProfile] = useState()
   const theme = useTheme()
@@ -331,7 +333,7 @@ const InfoPage = () => {
     setOpenModalSchedule(false)
   }
 
-  const { refetch: getData } = useQuery(GET_LOCATION_PROFILE, {
+  const { error: errorInfoProfile, refetch: getInfoProfile } = useQuery(GET_LOCATION_PROFILE, {
     variables: {
       username: url
     },
@@ -370,25 +372,80 @@ const InfoPage = () => {
   }
 
   useEffect(() => {
+    getInfo()
+
+  }, [location])
+
+  const getInfo = async () => {
     if (location.state) setProfile(location.state.profile)
     else {
       const getProfile = async () => {
-        const { data } = await getData({
-          username: url
+        const { data } = await getInfoProfile({
+          username: url.replaceAll("-", " ")
         })
 
-        data.location.length > 0
-          ? setProfile(data.location[0])
-          : history.push('/not-found')
+        if (data.location.length > 0) {
+          const objectTemp = data.location[0]
+          if (objectTemp.type === "SPONSOR") {
+            setProfile(
+              {
+                "account": objectTemp.account,
+                "address": objectTemp.info.address,
+                "benefitDescription": objectTemp.info.benefit_description,
+                "businessType": objectTemp.info.business_type,
+                "covidImpact": objectTemp.info.covid_impact,
+                "description": objectTemp.info.about,
+                "email": objectTemp.info.email,
+                "location": JSON.stringify(objectTemp.info.geolocation),
+                "logo": objectTemp.info.logo_url,
+                "name": objectTemp.info.name,
+                "openingHours": objectTemp.info.schedule,
+                "photos": objectTemp.info.photos,
+                "role": "sponsor",
+                "social_media_links": objectTemp.info.social_media_links,
+                "telephone": objectTemp.info.telephones,
+                "userName": objectTemp.user.username,
+                "website": objectTemp.info.website
+              })
+          } else {
+            setProfile(
+              {
+                "account": objectTemp.account,
+                "address": objectTemp.info.address,
+                "description": objectTemp.info.about,
+                "email": objectTemp.info.email,
+                "location": JSON.stringify(objectTemp.info.geolocation),
+                "logo": objectTemp.info.logo_url,
+                "name": objectTemp.info.name,
+                "openingHours": objectTemp.info.schedule,
+                "photos": objectTemp.info.photos,
+                "role": "lifebank",
+                "urgencyLevel": objectTemp.info.blood_urgency_level,
+                "telephone": objectTemp.info.telephones,
+                "userName": objectTemp.user.username,
+              })
+          }
+
+        } else history.push('/not-found')
+
       }
 
       if (!location.state) getProfile()
+
     }
-    if (profile && profile.type === 'SPONSOR')
-      profile.info.social_media_links = JSON.parse(
-        profile.info.social_media_links
-      )
-  }, [location])
+  }
+
+  useEffect(() => {
+    if (errorInfoProfile) {
+      if (errorInfoProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        getInfo()
+      } else {
+        history.push('/internal-error')
+      }
+    }
+
+  }, [errorInfoProfile])
 
   const MobileInfoPage = () => {
     return (
@@ -398,27 +455,24 @@ const InfoPage = () => {
             <Box className={classes.headerBodyMobile}>
               <Avatar
                 className={classes.avatarRound}
-                src={
-                  profile.info.logo_url !== ''
-                    ? `//images.weserv.nl?url=${profile.info.logo_url}&h=60&dpr=1`
-                    : ''
-                }
+                src={`//images.weserv.nl?url=${profile.logo || ''
+                  }&h=60&dpr=1`}
                 alt="Avatar"
               >
-                {profile.type === 'SPONSOR' && <StorefrontIcon />}
-                {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
+                {profile.role === 'sponsor' && <StorefrontIcon />}
+                {profile.role === 'lifebank' && <LocalHospitalIcon />}
               </Avatar>
               <Typography className={classes.title} noWrap>
-                {profile.info.name}
+                {profile.name}
               </Typography>
               <Typography className={classes.subtitle} noWrap>
-                {profile.type === 'SPONSOR' && profile.info.business_type}
-                {profile.type === 'LIFE_BANK' &&
+                {profile.role === 'sponsor' && profile.businessType}
+                {profile.role === 'lifebank' &&
                   t('miscellaneous.donationCenter')}
               </Typography>
             </Box>
             <Box className={classes.imageSection}>
-              {JSON.parse(profile.info.photos).length > 0 && (
+              {JSON.parse(profile.photos).length > 0 && (
                 <Carousel
                   value={actualImageIndex}
                   className={classes.carousel}
@@ -433,7 +487,7 @@ const InfoPage = () => {
                     }
                   ]}
                 >
-                  {JSON.parse(profile.info.photos).map((url, key) => (
+                  {JSON.parse(profile.photos).map((url, key) => (
                     <img
                       className={classes.carruselImage}
                       src={url}
@@ -443,14 +497,14 @@ const InfoPage = () => {
                   ))}
                 </Carousel>
               )}
-              {profile.type === 'SPONSOR' &&
-                JSON.parse(profile.info.photos).length === 0 && (
+              {profile.role === 'sponsor' &&
+                JSON.parse(profile.photos).length === 0 && (
                   <Box className={classes.containerImageDefault}>
                     <StorefrontIcon className={classes.desktopImageDefault} />
                   </Box>
                 )}
-              {profile.type === 'LIFE_BANK' &&
-                JSON.parse(profile.info.photos).length === 0 && (
+              {profile.role === 'lifebank' &&
+                JSON.parse(profile.photos).length === 0 && (
                   <Box className={classes.containerImageDefault}>
                     <LocalHospitalIcon
                       className={classes.desktopImageDefault}
@@ -491,7 +545,7 @@ const InfoPage = () => {
                     </Toolbar>
                   </Box>
                   <MapShowOneLocation
-                    markerLocation={profile.info.geolocation}
+                    markerLocation={JSON.parse(profile.location)}
                     accountProp={profile.account}
                     width="100%"
                     height="100%"
@@ -528,8 +582,8 @@ const InfoPage = () => {
                       </IconButton>
                     </Toolbar>
                   </Box>
-                  {JSON.parse(profile.info.schedule).length > 0 &&
-                    JSON.parse(profile.info.schedule).map((schedule, index) => (
+                  {JSON.parse(profile.openingHours).length > 0 &&
+                    JSON.parse(profile.openingHours).map((schedule, index) => (
                       <ScheduleItem
                         key={index}
                         id={index}
@@ -546,7 +600,7 @@ const InfoPage = () => {
                   </Typography>
                   <Typography className={classes.text} variant="body1">
                     {' '}
-                    {profile.info.about}
+                    {profile.description}
                   </Typography>
                 </Box>
                 <Divider className={classes.divider} />
@@ -555,7 +609,7 @@ const InfoPage = () => {
                     {t('signup.address')}
                   </Typography>
                   <Typography className={classes.text} variant="body1">
-                    {profile.info.address}
+                    {profile.address}
                   </Typography>
                 </Box>
                 <Divider className={classes.divider} />
@@ -564,7 +618,7 @@ const InfoPage = () => {
                     {t('common.email')}
                   </Typography>
                   <Typography className={classes.text} variant="body1">
-                    {profile.info.email}
+                    {profile.email}
                   </Typography>
                 </Box>
                 <Divider className={classes.divider} />
@@ -572,8 +626,8 @@ const InfoPage = () => {
                   <Typography className={classes.boldText} variant="subtitle1">
                     {t('common.telephone')}
                   </Typography>
-                  {JSON.parse(profile.info.telephones).length > 0 &&
-                    JSON.parse(profile.info.telephones).map(
+                  {JSON.parse(profile.telephone).length > 0 &&
+                    JSON.parse(profile.telephone).map(
                       (phoneNumber, index) => (
                         <Typography
                           style={{ marginTop: '4px' }}
@@ -587,11 +641,8 @@ const InfoPage = () => {
                     )}
                 </Box>
                 <Divider className={classes.divider} />
-                {profile.type === 'SPONSOR' && (
+                {profile.role === 'sponsor' && JSON.parse(profile.social_media_links).length > 0 && (
                   <Box
-                    style={{
-                      display: profile.type === 'SPONSOR' ? 'block' : 'none'
-                    }}
                     className={classes.midLabel}
                   >
                     <Typography
@@ -601,9 +652,9 @@ const InfoPage = () => {
                       {t('profile.socialMedia')}
                     </Typography>
                     {Array.isArray(
-                      JSON.parse(profile.info.social_media_links)
+                      JSON.parse(profile.social_media_links)
                     ) &&
-                      JSON.parse(profile.info.social_media_links).map(
+                      JSON.parse(profile.social_media_links).map(
                         (item, index) => (
                           <IconButton
                             key={index}
@@ -626,7 +677,7 @@ const InfoPage = () => {
                       )}
                   </Box>
                 )}
-                {profile.type === 'LIFE_BANK' && (
+                {profile.role === 'lifebank' && (
                   <Box className={classes.midLabel}>
                     <Typography
                       className={classes.boldText}
@@ -659,7 +710,7 @@ const InfoPage = () => {
                         <Slider
                           valueLabelDisplay="off"
                           color="secondary"
-                          defaultValue={profile.info.blood_urgency_level}
+                          defaultValue={profile.urgencyLevel}
                           step={null}
                           min={1}
                           max={3}
@@ -681,7 +732,7 @@ const InfoPage = () => {
         {profile && (
           <Box className={classes.contentBodyDesktop}>
             <Box className={classes.imageSectionDesktop}>
-              {JSON.parse(profile.info.photos).length > 0 && (
+              {JSON.parse(profile.photos).length > 0 && (
                 <Carousel
                   value={actualImageIndex}
                   className={classes.carouselDesktop}
@@ -696,7 +747,7 @@ const InfoPage = () => {
                     }
                   ]}
                 >
-                  {JSON.parse(profile.info.photos).map((url, key) => (
+                  {JSON.parse(profile.photos).map((url, key) => (
                     <img
                       className={classes.carruselImage}
                       src={`//images.weserv.nl?url=${url}&h=300&dpr=2`}
@@ -706,14 +757,14 @@ const InfoPage = () => {
                   ))}
                 </Carousel>
               )}
-              {profile.type === 'SPONSOR' &&
-                JSON.parse(profile.info.photos).length === 0 && (
+              {profile.role === 'sponsor' &&
+                JSON.parse(profile.photos).length === 0 && (
                   <Box className={classes.desktopContainerImageDefault}>
                     <StorefrontIcon className={classes.desktopImageDefault} />
                   </Box>
                 )}
-              {profile.type === 'LIFE_BANK' &&
-                JSON.parse(profile.info.photos).length === 0 && (
+              {profile.role === 'lifebank' &&
+                JSON.parse(profile.photos).length === 0 && (
                   <Box className={classes.desktopContainerImageDefault}>
                     <LocalHospitalIcon
                       className={classes.desktopImageDefault}
@@ -724,21 +775,18 @@ const InfoPage = () => {
             <Box className={classes.headerContentDesktop}>
               <Avatar
                 className={classes.avatarRoundDesktop}
-                src={
-                  profile.info.logo_url !== ''
-                    ? `//images.weserv.nl?url=${profile.info.logo_url}&h=60&dpr=1`
-                    : ''
-                }
+                src={`//images.weserv.nl?url=${profile.logo || ''
+                  }&h=60&dpr=1`}
               >
-                {profile.type === 'SPONSOR' && <StorefrontIcon />}
-                {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
+                {profile.role === 'sponsor' && <StorefrontIcon />}
+                {profile.role === 'lifebank' && <LocalHospitalIcon />}
               </Avatar>
               <Typography className={classes.titleDesktop} noWrap>
-                {profile.info.name}
+                {profile.name}
               </Typography>
               <Typography className={classes.subtitleDesktop} noWrap>
-                {profile.type === 'SPONSOR' && profile.info.business_type}
-                {profile.type === 'LIFE_BANK' &&
+                {profile.role === 'sponsor' && profile.businessType}
+                {profile.role === 'lifebank' &&
                   t('miscellaneous.donationCenter')}
               </Typography>
             </Box>
@@ -751,7 +799,7 @@ const InfoPage = () => {
                   </Typography>
                   <Typography className={classes.text} variant="body1">
                     {' '}
-                    {profile.info.about}
+                    {profile.about}
                   </Typography>
                 </Box>
                 <Divider className={classes.divider} />
@@ -759,9 +807,9 @@ const InfoPage = () => {
                   <Typography className={classes.boldText} variant="subtitle1">
                     {t('common.schedule')}
                   </Typography>
-                  {JSON.parse(profile.info.schedule).length > 0 &&
+                  {JSON.parse(profile.openingHours).length > 0 &&
                     generateSchedule(
-                      JSON.parse(profile.info.schedule)
+                      JSON.parse(profile.openingHours)
                     ).map((schedule, index) => (
                       <Typography
                         key={index}
@@ -777,7 +825,7 @@ const InfoPage = () => {
                     {t('signup.address')}
                   </Typography>
                   <Typography className={classes.text} variant="body1">
-                    {profile.info.address}
+                    {profile.address}
                   </Typography>
                 </Box>
                 <Divider className={classes.divider} />
@@ -786,7 +834,7 @@ const InfoPage = () => {
                     {t('common.email')}
                   </Typography>
                   <Typography className={classes.text} variant="body1">
-                    {profile.info.email}
+                    {profile.email}
                   </Typography>
                 </Box>
                 <Divider className={classes.divider} />
@@ -794,8 +842,8 @@ const InfoPage = () => {
                   <Typography className={classes.boldText} variant="subtitle1">
                     {t('common.telephone')}
                   </Typography>
-                  {JSON.parse(profile.info.telephones).length > 0 &&
-                    JSON.parse(profile.info.telephones).map(
+                  {JSON.parse(profile.telephone).length > 0 &&
+                    JSON.parse(profile.telephone).map(
                       (phoneNumber, index) => (
                         <Typography
                           style={{ marginTop: '4px' }}
@@ -808,9 +856,10 @@ const InfoPage = () => {
                       )
                     )}
                 </Box>
-                <Divider className={classes.divider} />
-                {profile.type === 'LIFE_BANK' && (
+
+                {profile.role === 'lifebank' && (
                   <Box className={classes.midLabel}>
+                    <Divider className={classes.divider} />
                     <Typography
                       className={classes.boldText}
                       variant="subtitle1"
@@ -842,7 +891,7 @@ const InfoPage = () => {
                         <Slider
                           valueLabelDisplay="off"
                           color="secondary"
-                          defaultValue={profile.info.blood_urgency_level}
+                          defaultValue={profile.urgencyLevel}
                           step={null}
                           min={1}
                           max={3}
@@ -851,8 +900,9 @@ const InfoPage = () => {
                     </Box>
                   </Box>
                 )}
-                {profile.type === 'SPONSOR' && (
+                {profile.role === 'sponsor' && JSON.parse(profile.social_media_links).length > 0 && (
                   <Box className={classes.midLabel}>
+                    <Divider className={classes.divider} />
                     <Typography
                       className={classes.boldText}
                       variant="subtitle1"
@@ -860,9 +910,9 @@ const InfoPage = () => {
                       {t('profile.socialMedia')}
                     </Typography>
                     {Array.isArray(
-                      JSON.parse(profile.info.social_media_links)
+                      JSON.parse(profile.social_media_links)
                     ) &&
-                      JSON.parse(profile.info.social_media_links).map(
+                      JSON.parse(profile.social_media_links).map(
                         (item, index) => (
                           <IconButton
                             key={index}
@@ -888,7 +938,7 @@ const InfoPage = () => {
               </Box>
               <Box className={classes.bodyContentMidRigth}>
                 <MapShowOneLocation
-                  markerLocation={profile.info.geolocation}
+                  markerLocation={JSON.parse(profile.location)}
                   accountProp={profile.account}
                   width="100%"
                   height="70%"
@@ -900,10 +950,10 @@ const InfoPage = () => {
               <Typography
                 className={classes.boldText}
                 variant="subtitle1"
-              >{`${t('common.near')}  ${profile.info.name}`}</Typography>
+              >{`${t('common.near')}  ${profile.name}`}</Typography>
               <Box className={classes.contentCards}>
                 <Nearby
-                  location={profile.info.geolocation}
+                  location={JSON.parse(profile.location)}
                   searchDistance={1000}
                   account={profile.account}
                 />
