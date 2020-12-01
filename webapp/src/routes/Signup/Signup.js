@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useCallback } from 'react'
+import React, { useState, useEffect, useReducer, useCallback, lazy, Suspense } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
@@ -7,6 +7,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import IconButton from '@material-ui/core/IconButton'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -21,11 +22,20 @@ import { useUser } from '../../context/user.context'
 
 import SignupRoleSelector from './SignupRoleSelector'
 import ValidateEmail from './ValidateEmail'
-import SignupDonor from './SignupDonor'
+
+
+/*import SignupDonor from './SignupDonor'
 import SignupLifeBank from './SignupLifeBank'
 import SignupAccount from './SignupAccount'
 import SignupConsent from './SignupConsent'
-import SimpleRegisterForm from './SignupSponsor/SimpleRegisterForm'
+import SimpleRegisterForm from './SignupSponsor/SimpleRegisterForm'*/
+
+const SignupDonor = lazy(() => import('./SignupDonor'));
+const SignupLifeBank = lazy(() => import('./SignupLifeBank'));
+const SignupAccount = lazy(() => import('./SignupAccount'));
+const SignupConsent = lazy(() => import('./SignupConsent'));
+const SimpleRegisterForm = lazy(() => import('./SimpleRegisterForm'));
+
 
 const useStyles = makeStyles((theme) => ({
   register: {
@@ -350,6 +360,9 @@ const Signup = () => {
               <Typography variant="h4">
                 {t('signup.howDoYouWantToHelp')}
               </Typography>
+              <Suspense fallback={<CircularProgress />}>
+
+              </Suspense>
               <SignupRoleSelector onSubmit={handleRoleChange} />
             </>
           )}
@@ -375,61 +388,70 @@ const Signup = () => {
             </>
           )}
           {activeStep === 1 && role === 'donor' && (
-            <SignupDonor
-              onSubmit={handleCreateAccount}
-              onSubmitWithAuth={handleCreateAccountWithAuth}
-              loading={createAccountLoading}
-              setField={handleSetField}
-              user={user}
-              isEmailValid={isEmailValid}
-            >
-              <ErrorMessage />
-              <ValidateEmail
-                isValid={isEmailValid}
-                loading={checkEmailLoading}
-                user={user}
+            <Suspense fallback={<CircularProgress />}>
+              <SignupDonor
+                onSubmit={handleCreateAccount}
+                onSubmitWithAuth={handleCreateAccountWithAuth}
+                loading={createAccountLoading}
                 setField={handleSetField}
-              />
-            </SignupDonor>
+                user={user}
+                isEmailValid={isEmailValid}
+              >
+                <ErrorMessage />
+                <ValidateEmail
+                  isValid={isEmailValid}
+                  loading={checkEmailLoading}
+                  user={user}
+                  setField={handleSetField}
+                />
+              </SignupDonor>
+            </Suspense>
           )}
           {activeStep === 1 && role === 'sponsor' && (
-            <SimpleRegisterForm
-              onSubmit={handleCreateAccount}
-              loading={createAccountLoading}
-              setField={handleSetField}
-              classes={classes}
-            >
-              <ValidateEmail
-                isValid={isEmailValid}
-                loading={checkEmailLoading}
-                user={user}
+            <Suspense fallback={<CircularProgress />}>
+              <SimpleRegisterForm
+                onSubmit={handleCreateAccount}
+                loading={createAccountLoading}
                 setField={handleSetField}
-              />
-            </SimpleRegisterForm>
+                classes={classes}
+              >
+                <ValidateEmail
+                  isValid={isEmailValid}
+                  loading={checkEmailLoading}
+                  user={user}
+                  setField={handleSetField}
+                />
+              </SimpleRegisterForm>
+            </Suspense>
           )}
           {activeStep === 1 && role === 'lifebank' && (
-            <SignupLifeBank
-              onSubmit={handlePreRegisterLifebank}
-              loading={preRegisterLifebankLoading}
-              setField={handleSetField}
-              user={user}
-              isEmailValid={isEmailValid}
-            >
-              <ValidateEmail
-                isValid={isEmailValid}
-                loading={checkEmailLoading}
-                user={user}
+            <Suspense fallback={<CircularProgress />}>
+              <SignupLifeBank
+                onSubmit={handlePreRegisterLifebank}
+                loading={preRegisterLifebankLoading}
                 setField={handleSetField}
-              />
-            </SignupLifeBank>
+                user={user}
+                isEmailValid={isEmailValid}
+              >
+                <ValidateEmail
+                  isValid={isEmailValid}
+                  loading={checkEmailLoading}
+                  user={user}
+                  setField={handleSetField}
+                />
+              </SignupLifeBank>
+            </Suspense>
           )}
           {activeStep === 2 && (
             <>
               <Typography variant="h4">
                 {t('readOurTermsAndConditions')}
               </Typography>
-              <SignupAccount data={createAccountResult} />
-              <SignupConsent onSubmit={handleSingup} loading={signupLoading} />
+              <Suspense fallback={<CircularProgress />}>
+                <SignupAccount data={createAccountResult} />
+                <SignupConsent onSubmit={handleSingup} loading={signupLoading} />
+              </Suspense>
+
             </>
           )}
         </Box>
