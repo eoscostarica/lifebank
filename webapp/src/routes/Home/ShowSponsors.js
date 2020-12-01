@@ -206,9 +206,11 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
       <ListItem className={classes.listItem} button>
         <ListItemAvatar>
           <Avatar
-            src={`//images.weserv.nl?url=${
-              props.sponsor.info.logo_url || ''
-            }&h=60&dpr=1`}
+            src={
+              props.sponsor.info.logo_url !== ''
+                ? `//images.weserv.nl?url=${props.sponsor.info.logo_url}&h=60&dpr=1`
+                : ''
+            }
           >
             <StorefrontIcon />
           </Avatar>
@@ -290,9 +292,11 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${
-            props.sponsor.info.logo_url || ''
-          }&h=60&dpr=1`}
+          src={
+            props.sponsor.info.logo_url !== ''
+              ? `//images.weserv.nl?url=${props.sponsor.info.logo_url}&h=60&dpr=1`
+              : ''
+          }
         >
           <StorefrontIcon />
         </Avatar>

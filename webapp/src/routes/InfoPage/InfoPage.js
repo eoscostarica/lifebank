@@ -398,9 +398,11 @@ const InfoPage = () => {
             <Box className={classes.headerBodyMobile}>
               <Avatar
                 className={classes.avatarRound}
-                src={`//images.weserv.nl?url=${
-                  profile.info.logo_url || ''
-                }&h=60&dpr=1`}
+                src={
+                  profile.info.logo_url !== ''
+                    ? `//images.weserv.nl?url=${profile.info.logo_url}&h=60&dpr=1`
+                    : ''
+                }
                 alt="Avatar"
               >
                 {profile.type === 'SPONSOR' && <StorefrontIcon />}
@@ -722,9 +724,11 @@ const InfoPage = () => {
             <Box className={classes.headerContentDesktop}>
               <Avatar
                 className={classes.avatarRoundDesktop}
-                src={`//images.weserv.nl?url=${
-                  profile.info.logo_url || ''
-                }&h=60&dpr=1`}
+                src={
+                  profile.info.logo_url !== ''
+                    ? `//images.weserv.nl?url=${profile.info.logo_url}&h=60&dpr=1`
+                    : ''
+                }
               >
                 {profile.type === 'SPONSOR' && <StorefrontIcon />}
                 {profile.type === 'LIFE_BANK' && <LocalHospitalIcon />}
