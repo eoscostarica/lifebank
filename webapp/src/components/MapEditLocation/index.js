@@ -30,7 +30,7 @@ function MapEditLocation({
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11?optimize=true',
+      style: 'mapbox://styles/mapbox/streets-v11',
       center: [markerLocation.longitude, markerLocation.latitude],
       zoom: initialZoom
     })
