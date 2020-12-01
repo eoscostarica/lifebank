@@ -25,9 +25,13 @@ module.exports = async ({ payload: { input } }) => {
         })
       })
 
-      const user = await userApi.setSecret({ email: {_eq: input.email} }, encripnewPassword)
+      const user = await userApi.setSecret(
+        { email: {_eq: input.email} }, 
+        encripnewPassword
+      )
 
-      if (user) await mailUtils.sendConfirmMessage(
+      if (user) 
+      await mailUtils.sendConfirmMessage(
         input.email,
         'Lifebank Change Password',
         'Change Password',
@@ -38,7 +42,6 @@ module.exports = async ({ payload: { input } }) => {
         success: true
       }
     } else {
-
       return {
         success: false
       }
