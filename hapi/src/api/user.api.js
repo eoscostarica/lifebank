@@ -52,6 +52,16 @@ const SET_EMAIL_VERIFIED = `
   }
 `
 
+const SET_SECRET = `
+  mutation ($where: user_bool_exp!, $secret: String!) {
+    update_user(where: $where, _set: {secret: $secret}) {
+      returning {
+        account
+      }
+    }
+  }
+`
+
 const getOne = async (where = {}) => {
   const { user } = await hasuraUtils.request(GET_ONE, { where })
 
@@ -72,6 +82,10 @@ const setName = (where, name) => {
   return hasuraUtils.request(SET_NAME, { where, name })
 }
 
+const setSecret = (where, secret) => {
+  return hasuraUtils.request(SET_SECRET, { where, secret })
+}
+
 const verifyEmail = (where) => {
   return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
 }
@@ -81,5 +95,6 @@ module.exports = {
   insert,
   setEmail,
   setName,
-  verifyEmail
+  verifyEmail,
+  setSecret
 }

@@ -310,6 +310,13 @@
     },
     "credentialsRecovery": {
       "credentialsRecovery": "Recuperación de credenciales",
+      "emailError": "El correo ingresado no esta asociado a ninguna cuenta",
+      "changePasswordInstructions": "Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva",
+      "changePassword": "Cambiar contraseña",
+      "currentPassword": "Contraseña actual",
+      "errorPassword": "La contraseña actual no coinside con su correo",
+      "newPassword": "Nueva contraseña",
+      "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
       "checkYourEmail": "Revisa tu correo",
       "recovery": "Recuperar"
     },
@@ -317,6 +324,14 @@
       "emailVerified": "Tu correo ha sido verificado",
       "somethingHappened": "Ha ocurrido un evento inesperado al tratar de verificar tu email",
       "takeHome": "Ir al inicio"
+    },
+    "emailMessage": {
+      "subjectAproveAccount": "Lifebank Cuenta Aprobada",
+      "tituleAproveAccount": "Cuenta Aprobada",
+      "messageAproveAccount": "Su solicitud de registro en Lifebank ha sido aprobada, gracias por ser parte de este hermoso proyecto",
+      "subjectChangePassword": "Lifebank Cambio de Contraseña",
+      "tituleChangePassword": "Cambio de Contraseña",
+      "messageChangePassword": "Su contraseña ha sido cambiada con éxito, gracias por donar vida"
     },
     "approveAccount": {
       "accountapprove": "Esta cuenta ha sido aprobada",
