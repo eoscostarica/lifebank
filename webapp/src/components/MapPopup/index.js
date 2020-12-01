@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
+import { Typography } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
   popup: {},
@@ -19,6 +20,7 @@ const useStyles = makeStyles(() => ({
 
 // TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
 function MapPopup({ id, info }) {
+  console.log(info)
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
@@ -46,6 +48,11 @@ function MapPopup({ id, info }) {
   return (
     <Box key={id}>
       <div className={classes.title}>{info.name}</div>
+      { info.business_type &&
+        <Typography>
+        {info.business_type}
+      </Typography>
+      }
       <div>
         {t('common.telephone')}:
         <a
