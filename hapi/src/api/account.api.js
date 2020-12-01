@@ -104,7 +104,12 @@ const createLifebank = async ({ email, name, secret, verification_code }) => {
   await historyApi.insert(transaction)
 
   try {
-    mailApi.sendConfirmMessage(email,'Lifebank Approve Account','Approve Account','Your application for registration in Lifebank has been approved, thank you for being part of this beautiful project')
+    mailApi.sendConfirmMessage(
+      email,
+      'Lifebank Approve Account',
+      'Approve Account',
+      'Your application for registration in Lifebank has been approved, thank you for being part of this beautiful project'
+    )
   } catch (error) {
     console.log(error)
   }

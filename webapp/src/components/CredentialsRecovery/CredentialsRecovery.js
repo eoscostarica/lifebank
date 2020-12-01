@@ -205,7 +205,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         open={open}
         onClose={handleOpen}
         fullScreen = {!isDesktop}
-        maxWidth={'xs'}
+        maxWidth= 'xs'
         closeAfterTransition
         BackdropProps={{
           timeout: 500

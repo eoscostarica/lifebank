@@ -3,7 +3,6 @@ const { BAD_REQUEST } = require('http-status-codes')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 
-
 const { mailUtils } = require('../../utils')
 const { userApi } = require('../../api')
 
@@ -18,10 +17,17 @@ module.exports = async ({ payload: { input } }) => {
       })
     })
 
-    const user = await userApi.setSecret({ email: { _eq: input.email } }, encripTempSecret)
+    const user = await userApi.setSecret(
+      { email: { _eq: input.email } }, 
+      encripTempSecret
+    )
 
     if (user) {
-      await mailUtils.sendCredentialsRecovery(input.email, user.update_user.returning[0].account, tempSecret)
+      await mailUtils.sendCredentialsRecovery(
+        input.email, 
+        user.update_user.returning[0].account, 
+        tempSecret
+      )
     }
 
     return {

@@ -496,7 +496,7 @@ const sendCredentialsRecovery = async (to, account, tempSecret) => {
             <!-- end preheader -->
             <!-- start body -->
             <table border="0" cellpadding="0" cellspacing="0" width="100%">​
-              <!-- start logo -->
+            <!-- start logo -->
               <tr>
                 <td align="center" bgcolor="#f6f6f6">
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
