@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@material-ui/core'
 import clsx from 'clsx'
-import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
   popup: {},
@@ -50,14 +49,14 @@ const useStyles = makeStyles(() => ({
     color: '#000000'
   },
   openingHourseText: {
-    width: '35%',
+    width: '32%',
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 2,
     letterSpacing: '0.4px',
-    textAlign: 'right',
+    textAlign: 'left',
     float: 'left'
     },
     closeColor: {
@@ -68,16 +67,16 @@ const useStyles = makeStyles(() => ({
     },
     mediumDiv:{
       height: "100%",
-      width: '65%',
+      width: '68%',
       float: 'left'
     },
     button: {
       marginTop: '6%',
-      marginLeft: '15%',
-      marginRight: '15%',
+      marginLeft: '8%',
+      marginRight: '8%',
       borderRadius: '50px',
       backgroundColor: '#ba0d0d',
-      width: "70%",
+      width: "84%",
       height: '25px',
       fontSize: '14px',
       fontWeight: 500,
@@ -91,10 +90,46 @@ const useStyles = makeStyles(() => ({
 
 // TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
 function MapPopup({ id, info, username }) {
+  console.log(JSON.parse(info.schedule))
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const open = useState(true)
-  const history = useHistory()
+  const [open, setOpen] = useState()
+  const toDay = new Date();
+  let dd = toDay.getDay();
+  const hour = toDay.getHours()
+
+  useEffect(() => {
+    if (!open) {
+      switch(dd) {
+        case 0:
+          dd = 'Sunday'
+          break;
+        case 1:
+          dd = 'Monday'
+          break;
+        case 2:
+          dd = 'Tuesday'
+          break;
+        case 3:
+          dd = 'Wednesday'
+          break;
+        case 4:
+          dd = 'Thursday'
+          break;
+        case 5:
+          dd = 'Friday'
+          break;
+        default:
+          dd = 'Saturday'
+      }
+      JSON.parse(info.schedule).forEach(element => {
+        if (dd === element.day) {
+          if (hour >= parseInt(element.open, 10) && hour < parseInt(element.close, 10))
+            setOpen(true)
+        }
+      });
+    }
+  }, )
 
   var isMobile = {
     platform: function () {
@@ -117,10 +152,6 @@ function MapPopup({ id, info, username }) {
     }
   }
 
-  const moreInfo = () =>{
-    history.push('/internal-error')
-  }
-
   return (
     <Box key={id}>
       <Typography className={classes.title}>{info.name} </Typography>
@@ -128,9 +159,12 @@ function MapPopup({ id, info, username }) {
         <div className={classes.mediumDiv}>
           <Typography className={classes.subTitule}> {info.business_type || t('miscellaneous.donationCenter')} </Typography>
         </div>
-        
-          <Typography className={clsx(classes.openingHourseText,classes.openColor)}> Open now </Typography>
-        
+          {open && 
+            <Typography className={clsx(classes.openingHourseText,classes.openColor)}> {t('miscellaneous.openNow')} </Typography>
+          }
+          {!open && 
+            <Typography className={clsx(classes.openingHourseText,classes.closeColor)}> {t('miscellaneous.closeNow')} </Typography>
+          }
       </div>
       <div className={classes.bodytext}>
       <Typography className={classes.bodytext}>

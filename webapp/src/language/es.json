@@ -95,8 +95,8 @@
     },
     "miscellaneous": {
       "recentActivity": "Actividad reciente",
-      "openSite": "Abrir sitio",
-      "goTo": " ir a",
+      "openNow": "Abierto",
+      "closeNow": "Cerrado",
       "help": "Ayuda",
       "thankYouForUsingLifebank": "Gracias por usar Lifebank. Lifebank sigue en progreso. Si estás teniendo algún problema, por favor contáctanos en cualquiera de los siguientes vínculos:",
       "telegram": "Canal de Telegram",
