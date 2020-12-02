@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useHistory } from 'react-router-dom'
 import { useUser } from '../../context/user.context'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
 import LocalBusinessStructuredData from '../../components/LocalBusinessStructuredData'
 import MedicalClinicStructuredData from '../../components/MedicalClinicStructuredData'
 import Alert from '@material-ui/lab/Alert'
 import Snackbar from '@material-ui/core/Snackbar'
 import { useTranslation } from 'react-i18next'
 
-import HomeMobile from './HomeMobile'
-import HomeDesktop from './HomeDesktop'
 import { GET_OFFERS_QUERY, GET_VALID_SPONSORS_QUERY, GET_VALID_LIFEBANKS_QUERY } from '../../gql'
 import ConsetComponent from '../../components/ConsetComponent/ConsentComponent'
+
+const HomeMobile = lazy(() => import('./HomeMobile'));
+const HomeDesktop = lazy(() => import('./HomeDesktop'));
 
 const Home = () => {
   const theme = useTheme()
@@ -189,30 +192,34 @@ const Home = () => {
   return (
     <>
       {isDesktop && (
-        <HomeDesktop
-          offers={offers}
-          loadingOffers={loadingOffers}
-          lifebanks={lifebanks}
-          loadingLifebanks={loadingLifebanks}
-          sponsors={sponsors}
-          loadingSponsors={loadingSponsors}
-          applyFilters={applyFilters}
-          searchValue={searchValue}
-          handleChangeSearch={setSearchValue}
-        />
+        <Suspense fallback={<CircularProgress />}>
+          <HomeDesktop
+            offers={offers}
+            loadingOffers={loadingOffers}
+            lifebanks={lifebanks}
+            loadingLifebanks={loadingLifebanks}
+            sponsors={sponsors}
+            loadingSponsors={loadingSponsors}
+            applyFilters={applyFilters}
+            searchValue={searchValue}
+            handleChangeSearch={setSearchValue}
+          />
+        </Suspense>
       )}
       {!isDesktop && (
-        <HomeMobile
-          offers={offers}
-          loadingOffers={loadingOffers}
-          lifebanks={lifebanks}
-          loadingLifebanks={loadingLifebanks}
-          sponsors={sponsors}
-          loadingSponsors={loadingSponsors}
-          applyFilters={applyFilters}
-          searchValue={searchValue}
-          handleChangeSearch={setSearchValue}
-        />
+        <Suspense fallback={<CircularProgress />}>
+          <HomeMobile
+            offers={offers}
+            loadingOffers={loadingOffers}
+            lifebanks={lifebanks}
+            loadingLifebanks={loadingLifebanks}
+            sponsors={sponsors}
+            loadingSponsors={loadingSponsors}
+            applyFilters={applyFilters}
+            searchValue={searchValue}
+            handleChangeSearch={setSearchValue}
+          />
+        </Suspense>
       )}
       <ConsetComponent />
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
