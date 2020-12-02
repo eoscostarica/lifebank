@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
     color: '#000000'
   },
   openingHourseText: {
-    width: '32%',
+    width: '34%',
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
@@ -67,7 +67,7 @@ const useStyles = makeStyles(() => ({
     },
     mediumDiv:{
       height: "100%",
-      width: '68%',
+      width: '66%',
       float: 'left'
     },
     button: {
@@ -122,10 +122,9 @@ function MapPopup({ id, info, username }) {
           dd = 'Saturday'
       }
       JSON.parse(info.schedule).forEach(element => {
-        if (dd === element.day) {
+        if (dd === element.day)
           if (hour >= parseInt(element.open, 10) && hour < parseInt(element.close, 10))
             setOpen(true)
-        }
       });
     }
   }, )
