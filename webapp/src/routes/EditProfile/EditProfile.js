@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import { Link, useLocation, useHistory } from 'react-router-dom'
@@ -18,9 +18,11 @@ import {
   SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
-import EditProfileDonor from './EditProfileDonor'
-import EditProfileBank from './EditProfileBank'
-import EditProfileSponsor from './EditProfileSponsor'
+
+const EditProfileDonor = lazy(() => import('./EditProfileDonor'));
+const EditProfileBank = lazy(() => import('./EditProfileBank'));
+const EditProfileSponsor = lazy(() => import('./EditProfileSponsor'));
+
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -232,29 +234,35 @@ const EditProfilePage = () => {
       </Typography>
       {loading && <CircularProgress />}
       {!loading && currentUser && profile?.role === 'donor' && (
-        <EditProfileDonor
-          profile={profile}
-          onConsentChange={handleConsentChange}
-          loading={grantConsentLoading || revokeConsentLoading || editLoading}
-          onSubmit={handleUpdateUser}
-        />
+        <Suspense fallback={<CircularProgress />}>
+          <EditProfileDonor
+            profile={profile}
+            onConsentChange={handleConsentChange}
+            loading={grantConsentLoading || revokeConsentLoading || editLoading}
+            onSubmit={handleUpdateUser}
+          />
+        </Suspense>
       )}
       {!loading && currentUser && profile?.role === 'sponsor' && (
-        <EditProfileSponsor
-          profile={profile}
-          isCompleting={isCompleting}
-          onSubmit={handleUpdateUser}
-          loading={editLoading}
-        />
+        <Suspense fallback={<CircularProgress />}>
+          <EditProfileSponsor
+            profile={profile}
+            isCompleting={isCompleting}
+            onSubmit={handleUpdateUser}
+            loading={editLoading}
+          />
+        </Suspense>
       )}
       {!loading && currentUser && profile?.role === 'lifebank' && (
-        <EditProfileBank
-          profile={profile}
-          userName={userName}
-          isCompleting={isCompleting}
-          onSubmit={handleUpdateUser}
-          loading={editLoading}
-        />
+        <Suspense fallback={<CircularProgress />}>
+          <EditProfileBank
+            profile={profile}
+            userName={userName}
+            isCompleting={isCompleting}
+            onSubmit={handleUpdateUser}
+            loading={editLoading}
+          />
+        </Suspense>
       )}
     </Box>
   )

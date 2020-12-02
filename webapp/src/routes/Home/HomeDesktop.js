@@ -15,11 +15,11 @@ import IconButton from '@material-ui/core/IconButton'
 import MicIcon from '@material-ui/icons/Mic'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
+import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
+import ShowLifebanksDesktop from '../../components/ShowElements/ShowLifebanksDesktop'
+import ShowSponsorsDesktop from '../../components/ShowElements/ShowSponsorsDesktop'
 import DonationsDashboard from '../../components/DonationsDashboard'
 import MapModal from '../../components/MapModal'
-import ShowOffers from './ShowOffers'
-import ShowLifebanks from './ShowLifebanks'
-import ShowSponsors from './ShowSponsors'
 import mobileBgImage from '../../assets/the-world.png'
 import bgImage from '../../assets/lifebank-hero-bg.png'
 import FilterHome from '../../components/FilterHome'
@@ -269,30 +269,27 @@ const HomeDesktop = (props) => {
           <Typography variant="h2" className={classes.titleMainSection}>
             {t('cardsSection.availableOffers')}
           </Typography>
-          <ShowOffers
+          <ShowOffersDesktop
             offers={props.offers}
             loading={props.loadingOffers}
-            isDesktop
           />
         </Grid>
         <Grid item md={12}>
           <Typography variant="h2" className={classes.titleMainSection}>
             {t('rolesTitle.plural.lifebanks')}
           </Typography>
-          <ShowLifebanks
+          <ShowLifebanksDesktop
             banks={props.lifebanks}
             loading={props.loadingLifebanks}
-            isDesktop
           />
         </Grid>
         <Grid item md={12}>
           <Typography variant="h2" className={classes.titleMainSection}>
             {t('rolesTitle.plural.sponsors')}
           </Typography>
-          <ShowSponsors
+          <ShowSponsorsDesktop
             sponsors={props.sponsors}
             loading={props.loadingSponsors}
-            isDesktop
           />
         </Grid>
         {currentUser && (

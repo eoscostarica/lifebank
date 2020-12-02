@@ -11,12 +11,12 @@ import Toolbar from '@material-ui/core/Toolbar'
 import StarIcon from '@material-ui/icons/Star'
 import { useTranslation } from 'react-i18next'
 
+import ShowOffersMobile from '../../components/ShowElements/ShowOffersMobile'
+import ShowLifebanksMobile from '../../components/ShowElements/ShowLifebanksMobile'
+import ShowSponsorsMobile from '../../components/ShowElements/ShowSponsorsMobile'
 import DonationsDashboard from '../../components/DonationsDashboard'
 import SearchComponent from '../../components/SearchComponent'
 import MapModal from '../../components/MapModal'
-import ShowOffers from './ShowOffers'
-import ShowLifebanks from './ShowLifebanks'
-import ShowSponsors from './ShowSponsors'
 import FilterHome from '../../components/FilterHome'
 
 const useStyles = makeStyles((theme) => ({
@@ -124,10 +124,9 @@ const HomeMobile = (props) => {
               border: 'none'
             }}
           >
-            <ShowOffers
+            <ShowOffersMobile
               offers={props.offers}
               loading={props.loadingOffers}
-              isDesktop={false}
             />
           </Paper>
         </TabPanel>
@@ -139,10 +138,9 @@ const HomeMobile = (props) => {
               border: 'none'
             }}
           >
-            <ShowLifebanks
+            <ShowLifebanksMobile
               banks={props.lifebanks}
               loading={props.loadingLifebanks}
-              isDesktop={false}
             />
           </Paper>
         </TabPanel>
@@ -154,10 +152,9 @@ const HomeMobile = (props) => {
               border: 'none'
             }}
           >
-            <ShowSponsors
+            <ShowSponsorsMobile
               sponsors={props.sponsors}
               loading={props.loadingSponsors}
-              isDesktop={false}
             />
           </Paper>
         </TabPanel>

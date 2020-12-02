@@ -15,9 +15,9 @@ import MicIcon from '@material-ui/icons/Mic'
 import { useTranslation } from 'react-i18next'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
-import ShowOffers from './../../routes/Home/ShowOffers'
-import ShowLifebanks from './../../routes/Home/ShowLifebanks'
-import ShowSponsors from './../../routes/Home/ShowSponsors'
+import ShowOffersMobile from '../ShowElements/ShowOffersMobile'
+import ShowLifebanksMobile from '../ShowElements/ShowLifebanksMobile'
+import ShowSponsorsMobile from '../ShowElements/ShowSponsorsMobile'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -156,7 +156,7 @@ const SeachComponent = (props) => {
           <Typography variant="h2" className={classes.titleMainSection}>
             {t('cardsSection.availableOffers')}
           </Typography>
-          <ShowOffers
+          <ShowOffersMobile
             offers={props.offers}
             loading={props.loadingOffers}
             isDesktop={false}
@@ -164,7 +164,7 @@ const SeachComponent = (props) => {
           <Typography variant="h2" className={classes.titleMainSection}>
             {t('rolesTitle.plural.lifebanks')}
           </Typography>
-          <ShowLifebanks
+          <ShowLifebanksMobile
             banks={props.lifebanks}
             loading={props.loadingLifebanks}
             isDesktop={false}
@@ -172,7 +172,7 @@ const SeachComponent = (props) => {
           <Typography variant="h2" className={classes.titleMainSection}>
             {t('rolesTitle.plural.sponsors')}
           </Typography>
-          <ShowSponsors
+          <ShowSponsorsMobile
             sponsors={props.sponsors}
             loading={props.loadingSponsors}
             isDesktop={false}

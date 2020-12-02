@@ -2,16 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import { Link as LinkRouter } from 'react-router-dom'
+import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
-import StorefrontIcon from '@material-ui/icons/Storefront'
-import Grid from '@material-ui/core/Grid'
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -24,39 +20,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     width: '100%'
   },
-  list: {
-    width: '100vw'
-  },
-  listItem: {
-    width: '100%',
-    backgroundColor: 'white'
-  },
-  secondaryIconList: {
-    color: 'rgba(0, 0, 0, 0.6)',
-    width: 20,
-    height: 20
-  },
-  listItemPrimaryText: {
-    color: 'rgba(0, 0, 0, 0.87)',
-    fontFamily: 'Roboto',
-    fontSize: '16px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.5,
-    letterSpacing: '0.15px'
-  },
-  listItemSecondaryText: {
-    color: 'color: rgba(0, 0, 0, 0.6)',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.43,
-    letterSpacing: '0.25px'
-  },
-  sponsorsGridContainer: {
+  lifebanksGridContainer: {
     overflowX: 'auto',
     whiteSpace: 'nowrap',
     width: '100%',
@@ -159,11 +123,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
+const ShowLifebanks = ({ banks, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
-  const LoadSponsors = () => {
+  const LoadBanksDesktop = () => {
     return (
       <>
         {loading && (
@@ -171,84 +135,7 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
             <CircularProgress />
           </Box>
         )}
-        {!loading && sponsors.length <= 0 && (
-          <ListItem className={classes.listItem}>
-            <ListItemText
-              primary={
-                <Typography
-                  className={classes.listItemPrimaryText}
-                  noWrap
-                  variant="body2"
-                >
-                  {t('miscellaneous.noSponsorsAvailable')}
-                </Typography>
-              }
-            />
-          </ListItem>
-        )}
-        {!loading &&
-          sponsors.length > 0 &&
-          sponsors.map((sponsor) => (
-            <SponsorItem key={sponsor.userName} sponsor={sponsor} />
-          ))}
-      </>
-    )
-  }
-
-  const SponsorItem = (props) => (
-    <LinkRouter
-      style={{ textDecoration: 'none' }}
-      to={{
-        pathname: `info/${props.sponsor.userName.replaceAll(' ', '-')}`,
-        state: { profile: props.sponsor }
-      }}
-    >
-      <ListItem className={classes.listItem} button>
-        <ListItemAvatar>
-          <Avatar
-            src={`//images.weserv.nl?url=${props.sponsor.logo || ''
-              }&h=60&dpr=1`}
-          >
-            <StorefrontIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography
-              className={classes.listItemPrimaryText}
-              noWrap
-              variant="body2"
-            >
-              {props.sponsor.name}
-            </Typography>
-          }
-          secondary={
-            <Typography
-              className={classes.listItemSecondaryText}
-              noWrap
-              variant="body2"
-            >
-              {props.sponsor.businessType}
-            </Typography>
-          }
-        />
-      </ListItem>
-    </LinkRouter>
-  )
-
-  SponsorItem.propTypes = {
-    sponsor: PropTypes.object
-  }
-
-  const LoadSponsorsDesktop = () => {
-    return (
-      <>
-        {loading && (
-          <Box className={classes.wrapper}>
-            <CircularProgress />
-          </Box>
-        )}
-        {!loading && sponsors.length <= 0 && (
+        {!loading && banks.length <= 0 && (
           <Card className={classes.cardRoot}>
             <Grid
               container
@@ -262,16 +149,14 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
                 color="textSecondary"
                 gutterBottom
               >
-                {t('miscellaneous.noSponsorsAvailable')}
+                {t('miscellaneous.noBloodBank')}
               </Typography>
             </Grid>
           </Card>
         )}
         {!loading &&
-          sponsors.length > 0 &&
-          sponsors.map((sponsor) => (
-            <SponsorCard key={sponsor.userName} sponsor={sponsor} />
-          ))}
+          banks.length > 0 &&
+          banks.map((bank) => <BankCard key={bank.userName} bank={bank} />)}
       </>
     )
   }
@@ -284,32 +169,31 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     return str.slice(0, num) + '...'
   }
 
-  const SponsorCard = (props) => (
+  const BankCard = (props) => (
     <Card className={classes.cardRoot}>
       <Box className={classes.cardHeader}>
         <Avatar
           className={classes.cardAvatar}
-          src={`//images.weserv.nl?url=${props.sponsor.logo || ''
-            }&h=60&dpr=1`}
+          src={props.bank.logo !== '' ? `//images.weserv.nl?url=${props.bank.logo}` : ''}
         >
-          <StorefrontIcon />
+          <LocalHospitalIcon />
         </Avatar>
         <Box className={classes.cardTitleContainer}>
           <Typography className={classes.cardTitle} noWrap>
-            {props.sponsor.name}
+            {props.bank.name}
           </Typography>
         </Box>
       </Box>
       <CardContent className={classes.cardContent}>
         <Typography className={classes.cardContentText}>
-          {truncateString(props.sponsor.description)}
+          {truncateString(props.bank.description)}
         </Typography>
       </CardContent>
       <LinkRouter
         style={{ textDecoration: 'none' }}
         to={{
-          pathname: `info/${props.sponsor.userName.replaceAll(' ', '-')}`,
-          state: { profile: props.sponsor }
+          pathname: `info/${props.bank.userName.replaceAll(' ', '-')}`,
+          state: { profile: props.bank, isLifebank: true }
         }}
       >
         <Button color="primary" className={classes.cardActionButton}>
@@ -319,30 +203,20 @@ const ShowSponsors = ({ sponsors, loading, isDesktop }) => {
     </Card>
   )
 
-  SponsorCard.propTypes = {
-    sponsor: PropTypes.object
+  BankCard.propTypes = {
+    bank: PropTypes.object
   }
 
   return (
-    <>
-      {!isDesktop && (
-        <List className={classes.list}>
-          <LoadSponsors />
-        </List>
-      )}
-      {isDesktop && (
-        <Box className={classes.sponsorsGridContainer}>
-          <LoadSponsorsDesktop />
-        </Box>
-      )}
-    </>
+    <Box className={classes.lifebanksGridContainer}>
+      <LoadBanksDesktop />
+    </Box>
   )
 }
 
-ShowSponsors.propTypes = {
-  sponsors: PropTypes.array,
-  loading: PropTypes.bool,
-  isDesktop: PropTypes.bool
+ShowLifebanks.propTypes = {
+  banks: PropTypes.array,
+  loading: PropTypes.bool
 }
 
-export default ShowSponsors
+export default ShowLifebanks

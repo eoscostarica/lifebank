@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -15,10 +15,11 @@ import {
   REVOKE_CONSENT_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
-import ProfilePageDonor from './ProfilePageDonor'
-import ProfilePageGuest from './ProfilePageGuest'
-import ProfilePageLifebank from './ProfilePageLifebank'
-import ProfilePageSponsor from './ProfilePageSponsor'
+
+const ProfilePageDonor = lazy(() => import('./ProfilePageDonor'));
+const ProfilePageGuest = lazy(() => import('./ProfilePageGuest'));
+const ProfilePageLifebank = lazy(() => import('./ProfilePageLifebank'));
+const ProfilePageSponsor = lazy(() => import('./ProfilePageSponsor'));
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -183,19 +184,28 @@ const ProfilePage = () => {
       </Typography>
       {loading && <CircularProgress />}
       {!loading && currentUser && profile?.role === 'donor' && (
-        <ProfilePageDonor
-          profile={profile}
-          onConsentChange={handleConsentChange}
-          loading={grantConsentLoading || revokeConsentLoading}
-        />
+        <Suspense fallback={<CircularProgress />}>
+          <ProfilePageDonor
+            profile={profile}
+            onConsentChange={handleConsentChange}
+            loading={grantConsentLoading || revokeConsentLoading}
+          />
+        </Suspense>
       )}
       {!loading && currentUser && profile?.role === 'sponsor' && (
-        <ProfilePageSponsor profile={profile} />
+        <Suspense fallback={<CircularProgress />}>
+          <ProfilePageSponsor profile={profile} />
+        </Suspense>
       )}
       {!loading && currentUser && profile?.role === 'lifebank' && (
-        <ProfilePageLifebank profile={profile} />
+        <Suspense fallback={<CircularProgress />}>
+          <ProfilePageLifebank profile={profile} />
+        </Suspense>
       )}
-      {!currentUser && <ProfilePageGuest />}
+      {!currentUser &&
+        <Suspense fallback={<CircularProgress />}>
+          <ProfilePageGuest />
+        </Suspense>}
     </Box>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useCallback } from 'react'
+import React, { useState, useEffect, useReducer, useCallback, lazy, Suspense } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
@@ -16,7 +16,8 @@ import { useTheme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import Backdrop from '@material-ui/core/Backdrop'
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import {
   CREATE_ACCOUNT_MUTATION,
@@ -27,9 +28,10 @@ import { useUser } from '../../context/user.context'
 
 import SignupRoleSelector from './SignupRoleSelector'
 import ValidateEmail from './ValidateEmail'
-import SignupDonor from './SignupDonor'
-import SignupLifeBank from './SignupLifeBank'
-import SimpleRegisterForm from './SignupSponsor/SimpleRegisterForm'
+
+const SignupDonor = lazy(() => import('./SignupDonor'));
+const SignupLifeBank = lazy(() => import('./SignupLifeBank'));
+const SimpleRegisterForm = lazy(() => import('./SignupSponsor/SimpleRegisterForm'));
 
 const useStyles = makeStyles((theme) => ({
   closeIcon: {
@@ -486,60 +488,66 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
                 <>
                   <Typography className={classes.titleRegister}>{t('signup.asAdonor')}</Typography>
                   <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
-                  <SignupDonor
-                    onSubmit={handleCreateAccount}
-                    onSubmitWithAuth={handleCreateAccountWithAuth}
-                    loading={createAccountLoading}
-                    setField={handleSetField}
-                    isEmailValid={isEmailValid}
-                  >
-                    <ErrorMessage />
-                    <ValidateEmail
-                      isValid={isEmailValid}
-                      loading={checkEmailLoading}
+                  <Suspense fallback={<CircularProgress />}>
+                    <SignupDonor
+                      onSubmit={handleCreateAccount}
+                      onSubmitWithAuth={handleCreateAccountWithAuth}
+                      loading={createAccountLoading}
                       setField={handleSetField}
-                      user={user}
-                    />
-                  </SignupDonor>
+                      isEmailValid={isEmailValid}
+                    >
+                      <ErrorMessage />
+                      <ValidateEmail
+                        isValid={isEmailValid}
+                        loading={checkEmailLoading}
+                        setField={handleSetField}
+                        user={user}
+                      />
+                    </SignupDonor>
+                  </Suspense>
                 </>
               )}
               {activeStep === 1 && role === 'sponsor' && (
                 <>
                   <Typography className={classes.titleRegister}>{t('signup.asAsponsor')}</Typography>
                   <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
-                  <SimpleRegisterForm
-                    onSubmit={handleCreateAccount}
-                    loading={createAccountLoading}
-                    setField={handleSetField}
-                    isEmailValid={isEmailValid}
-                  >
-                    <ValidateEmail
-                      isValid={isEmailValid}
-                      loading={checkEmailLoading}
-                      user={user}
+                  <Suspense fallback={<CircularProgress />}>
+                    <SimpleRegisterForm
+                      onSubmit={handleCreateAccount}
+                      loading={createAccountLoading}
                       setField={handleSetField}
-                    />
-                  </SimpleRegisterForm>
+                      isEmailValid={isEmailValid}
+                    >
+                      <ValidateEmail
+                        isValid={isEmailValid}
+                        loading={checkEmailLoading}
+                        user={user}
+                        setField={handleSetField}
+                      />
+                    </SimpleRegisterForm>
+                  </Suspense>
                 </>
               )}
               {activeStep === 1 && role === 'lifebank' && (
                 <>
                   <Typography className={classes.titleRegister}>{t('signup.asAbank')}</Typography>
                   <Typography variant="body1" className={classes.text}>{t('signup.preRegistrationRequirement')}</Typography>
-                  <SignupLifeBank
-                    onSubmit={handlePreRegisterLifebank}
-                    loading={preRegisterLifebankLoading}
-                    setField={handleSetField}
-                    user={user}
-                    isEmailValid={isEmailValid}
-                  >
-                    <ValidateEmail
-                      isValid={isEmailValid}
-                      loading={checkEmailLoading}
-                      user={user}
+                  <Suspense fallback={<CircularProgress />}>
+                    <SignupLifeBank
+                      onSubmit={handlePreRegisterLifebank}
+                      loading={preRegisterLifebankLoading}
                       setField={handleSetField}
-                    />
-                  </SignupLifeBank>
+                      user={user}
+                      isEmailValid={isEmailValid}
+                    >
+                      <ValidateEmail
+                        isValid={isEmailValid}
+                        loading={checkEmailLoading}
+                        user={user}
+                        setField={handleSetField}
+                      />
+                    </SignupLifeBank>
+                  </Suspense>
                 </>
               )}
             </Box>
