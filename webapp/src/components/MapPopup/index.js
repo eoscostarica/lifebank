@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@material-ui/core'
 import clsx from 'clsx'
-import { blue } from '@material-ui/core/colors'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
   popup: {},
@@ -69,7 +70,23 @@ const useStyles = makeStyles(() => ({
       height: "100%",
       width: '65%',
       float: 'left'
-    }
+    },
+    button: {
+      marginTop: '6%',
+      marginLeft: '15%',
+      marginRight: '15%',
+      borderRadius: '50px',
+      backgroundColor: '#ba0d0d',
+      width: "70%",
+      height: '25px',
+      fontSize: '14px',
+      fontWeight: 500,
+      fontStretch: 'normal',
+      fontStyle: 'normal',
+      lineHeight: 1.14,
+      letterSpacing: '1px',
+      color: '#ffffff'
+    },
 }))
 
 // TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
@@ -77,6 +94,7 @@ function MapPopup({ id, info, username }) {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const open = useState(true)
+  const history = useHistory()
 
   var isMobile = {
     platform: function () {
@@ -97,6 +115,10 @@ function MapPopup({ id, info, username }) {
     } else {
       return `https://maps.google.com/maps?q=${info.geolocation.latitude},${info.geolocation.longitude}`
     }
+  }
+
+  const moreInfo = () =>{
+    history.push('/internal-error')
   }
 
   return (
@@ -134,6 +156,14 @@ function MapPopup({ id, info, username }) {
           </a>
         </Typography>
       </div>
+        <Button
+          variant="contained"
+          color="secondary"
+          href={`https://lifebank.io/info/${username}`}
+          className={classes.button}
+        >
+          {t('cardsSection.moreInfo')}
+        </Button>
     </Box>
   )
 }
