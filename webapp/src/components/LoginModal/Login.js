@@ -29,6 +29,7 @@ import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
+import { execute } from 'graphql'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -256,6 +257,15 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 
   }, [currentUser])
 
+  function executeLogin(e) {
+    console.log(e.key)
+    if (e.key === 'Enter' && (user.account && user.secret && !loading)) {
+        console.log('entra 2')
+        e.preventDefault();
+        handleLogin()
+    }
+  }
+
   return (
     <>
       {isNavBar && !currentUser &&
@@ -338,6 +348,9 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                 onChange={(event) =>
                   handleSetField('account', event.target.value)
                 }
+                onKeyPress={(event) =>
+                  executeLogin(event)
+                }
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -355,6 +368,9 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                 onChange={(event) =>
                   handleSetField('secret', event.target.value)
                 }
+                onKeyPress={(event) =>
+                  executeLogin(event)
+                }
               />
             </Box>
             <FormControlLabel
@@ -368,6 +384,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
             />
             <Box className={classes.centerBox}>
               <Button
+                id="buttonLogin"
                 className={classes.btnLogin}
                 disabled={!user.account || !user.secret || loading}
                 variant="contained"
