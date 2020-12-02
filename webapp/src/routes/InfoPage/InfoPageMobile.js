@@ -290,9 +290,8 @@ const InfoPageMobile = () => {
       if (errorInfoProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
         logout()
         getInfo()
-      } else {
-        history.push('/internal-error')
-      }
+      } else history.push('/internal-error')
+
     }
 
   }, [errorInfoProfile])
