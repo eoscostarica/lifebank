@@ -767,7 +767,7 @@ DonationsDashboard.defaultProps = {
 DonationsDashboard.propTypes = {
   isDesktop: PropTypes.bool,
   isOffer: PropTypes.bool,
-  role: PropTypes.string,
+  role: PropTypes.string
 }
 
 export default DonationsDashboard

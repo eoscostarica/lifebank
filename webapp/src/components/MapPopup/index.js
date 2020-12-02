@@ -90,7 +90,6 @@ const useStyles = makeStyles(() => ({
 
 // TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
 function MapPopup({ id, info, username }) {
-  console.log(JSON.parse(info.schedule))
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState()
@@ -204,7 +203,8 @@ function MapPopup({ id, info, username }) {
 
 MapPopup.propTypes = {
   id: PropTypes.number.isRequired,
-  info: PropTypes.object.isRequired
+  info: PropTypes.object.isRequired,
+  username: PropTypes.string.isRequired
 }
 
 export default MapPopup
