@@ -19,34 +19,38 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      {!cookies.splash ? (
-        <SplashIntro
-          skipHandling={(cookie) => {
-            const d = new Date()
-            d.setMonth(d.getMonth() + 3)
-            setCookie(cookie, undefined, {
-              expires: d
-            })
-          }}
-        />
-      ) : (
-          <MainContainer
-            topbarContent={<TopBar user={currentUser} onLogout={logout} />}
-            sidebarContent={<SideBar user={currentUser} onLogout={logout} triggerSideBarPosition={triggerSideBarPosition} />}
-            sideBarPosition={sideBarPosition}
-          >
-            <Grid container justify="center" alignItems="center">
-              <Switch>
-                {routes.map(({ path, component: Component, ...args }) => (
-                  <Route key={`path-${path}`} path={path} {...args}>
-                    <Component />
-                  </Route>
-                ))}
-                <Redirect to="/not-found" />
-              </Switch>
-            </Grid>
-          </MainContainer>
-        )}
+      <MainContainer
+        topbarContent={<TopBar user={currentUser} onLogout={logout} />}
+        sidebarContent={
+          <SideBar
+            user={currentUser}
+            onLogout={logout}
+            triggerSideBarPosition={triggerSideBarPosition}
+          />
+        }
+        sideBarPosition={sideBarPosition}
+      >
+        <Grid container justify="center" alignItems="center">
+          <SplashIntro
+            skipHandling={(cookie) => {
+              const d = new Date()
+              d.setMonth(d.getMonth() + 3)
+              setCookie(cookie, undefined, {
+                expires: d
+              })
+            }}
+            cookie={cookies.splash}
+          />
+          <Switch>
+            {routes.map(({ path, component: Component, ...args }) => (
+              <Route key={`path-${path}`} path={path} {...args}>
+                <Component />
+              </Route>
+            ))}
+            <Redirect to="/not-found" />
+          </Switch>
+        </Grid>
+      </MainContainer>
     </BrowserRouter>
   )
 }
