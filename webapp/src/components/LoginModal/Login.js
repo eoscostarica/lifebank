@@ -29,8 +29,6 @@ import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
-import { execute } from 'graphql'
-
 
 const useStyles = makeStyles((theme) => ({
   alert: {
