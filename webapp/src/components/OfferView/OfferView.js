@@ -254,8 +254,8 @@ const OfferView = ({
               {theme.direction === 'rtl' ? (
                 <KeyboardArrowLeft />
               ) : (
-                <KeyboardArrowRight />
-              )}
+                  <KeyboardArrowRight />
+                )}
             </Button>
           }
           backButton={
@@ -267,8 +267,8 @@ const OfferView = ({
               {theme.direction === 'rtl' ? (
                 <KeyboardArrowRight />
               ) : (
-                <KeyboardArrowLeft />
-              )}
+                  <KeyboardArrowLeft />
+                )}
               {t('common.prev')}
             </Button>
           }
@@ -341,7 +341,7 @@ const OfferView = ({
             account={selectOffer.user.account}
           />
           {currentUser && currentUser.role === 'donor' && (
-            <DonationsDashboard isDesktop={isDesktop} isOffer />
+            <DonationsDashboard isDesktop={isDesktop} currentUser={currentUser} isOffer />
           )}
         </Box>
       </Box>

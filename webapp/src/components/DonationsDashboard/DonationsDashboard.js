@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
 import Backdrop from '@material-ui/core/Backdrop'
 import Box from '@material-ui/core/Box'
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -287,7 +286,7 @@ EmptyHeartSVG.propTypes = {
   balance: PropTypes.number,
 }
 
-const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
+const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const { t } = useTranslation('translations')
   const [maxWidth] = useState('md')
   const [maxWidthQr] = useState('xs')
@@ -298,7 +297,8 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
   const [openModalQR, setOpenModalQR] = useState(false)
   const [cameraSelection] = useState("rear")
   const [tokens, setTokens] = useState(0)
-  const [account, setAccount] = useState("account")
+  const [role] = useState(currentUser.role)
+  const [account] = useState(currentUser.account)
   const classes = useStyles()
   const [openAlert, setOpenAlert] = useState(false)
   const [messegaAlert, setMessegaAlert] = useState("false")
@@ -306,7 +306,6 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
   const [state, setState] = useState({
     bottom: false
   })
-  const [currentUser] = useUser()
   const history = useHistory()
   const [
     loadProfile,
@@ -361,7 +360,6 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
 
   useEffect(() => {
     setTokens(role === "donor" && profile?.balance.length ? profile.balance.join(',').split(' ')[0] : 0)
-    setAccount(profile ? profile.account : "account")
   }, [profile])
 
   const anchor = 'bottom'
@@ -784,7 +782,7 @@ DonationsDashboard.defaultProps = {
 DonationsDashboard.propTypes = {
   isDesktop: PropTypes.bool,
   isOffer: PropTypes.bool,
-  role: PropTypes.string,
+  currentUser: PropTypes.object,
 }
 
 export default DonationsDashboard
