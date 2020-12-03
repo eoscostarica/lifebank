@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, forwardRef } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import { useUser } from '../../context/user.context'
 import { useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
 import Backdrop from '@material-ui/core/Backdrop'
 import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import Slide from '@material-ui/core/Slide'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import CameraAltIcon from '@material-ui/icons/CameraAlt'
 import Divider from '@material-ui/core/Divider'
@@ -22,6 +24,9 @@ import QRCode from 'qrcode.react'
 import QrReader from 'react-qr-scanner'
 import { useTranslation } from 'react-i18next'
 import Snackbar from '@material-ui/core/Snackbar'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useTheme } from '@material-ui/core/styles'
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 
 import { PROFILE_QUERY, TRANSFER_MUTATION } from '../../gql'
 import { Drawer } from '@material-ui/core'
@@ -81,6 +86,12 @@ const useStyles = makeStyles((theme) => ({
   iconFab: {
     color: '#ffffff',
     marginRight: 10
+  },
+  appBar: {
+    position: 'relative',
+    backgroundColor: '#ffffff',
+    boxShadow:
+      '0 2px 4px 0 rgba(0, 0, 0, 0.24), 0 4px 8px 0 rgba(0, 0, 0, 0.18)'
   },
   dashboardContent: {
     [theme.breakpoints.down('md')]: {
@@ -163,6 +174,19 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.43,
     letterSpacing: '0.25px',
     marginBottom: 10
+  },
+  titleScanQR: {
+    color: 'rgba(0, 0, 0, 0.87)',
+    fontFamily: 'Roboto',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '0.15px',
+  },
+  backIcon: {
+    color: '#121212'
   },
   boxQR: {
     display: 'flex',
@@ -295,6 +319,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
   const [openModalQR, setOpenModalQR] = useState(false)
+  const [scanValue, setScanValue] = useState()
   const [cameraSelection] = useState("rear")
   const [tokens, setTokens] = useState(0)
   const [role] = useState(currentUser.role)
@@ -380,14 +405,8 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
 
   const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
 
-  const succesefulScan = (value) => {
-    if (value) {
-      setOpenModalQR(false)
-      handleSetField('to', value || payload.to)
-    }
-  }
-
-  const hanndlerTransferTokens = () => {
+  const hanndlerTransferTokens = (account) => {
+    handleSetField('to', account)
     setErrorMessage(null)
 
     if (role === "donor") {
@@ -404,6 +423,18 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   }
 
   const DashboardContent = () => {
+    const [accountInput, setAccountInput] = useState("")
+
+    const handleChangeAccountInput = (event) => {
+      setAccountInput(event.target.value)
+    }
+
+    useEffect(() => {
+      if (scanValue) {
+        setAccountInput(scanValue)
+      }
+    }, [scanValue])
+
     return (
       <Box className={classes.dashboardContent}>
         {isDesktop && (
@@ -523,17 +554,14 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
             <Box className={classes.boxTexfield}>
               <form autoComplete="off">
                 <TextField
-                  autoFocus
                   className={classes.inputText}
-                  id="filled-basic"
+                  id="paylod-account"
                   label={t('donations.enterSponsorUsername')}
                   variant="filled"
-                  value={payload.to || ''}
-                  onChange={(event) =>
-                    handleSetField('to', event.target.value)
-                  }
+                  value={accountInput}
+                  onChange={handleChangeAccountInput}
                 />
-                <QrReaderModal />
+                <QrReaderModal setAccountInput={setAccountInput} />
               </form>
             </Box>
             {errorMessage && (
@@ -574,9 +602,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
             )}
             <Box className={classes.boxButtonSendToken}>
               <Button className={classes.sendTokenButton} variant="contained" color="secondary"
-                onClick={hanndlerTransferTokens}
+                onClick={() => hanndlerTransferTokens(accountInput)}
                 disabled={
-                  !payload.to ||
+                  !accountInput ||
                   !payload.quantity ||
                   !payload.memo ||
                   loading
@@ -591,13 +619,33 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     )
   }
 
+  const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />
+  })
+
   const QrReaderModal = () => {
+    const theme = useTheme()
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+    const succesefulScan = (value) => {
+      if (value) {
+        setOpenModalQR(false)
+        setScanValue(value)
+      }
+    }
+
+    useEffect(() => {
+      if (openModalQR) {
+        setScanValue("")
+      }
+    }, [openModalQR])
+
     return (
       <>
         <IconButton aria-label="delete" className={classes.camaraButtonIcon} onClick={handleOpenModalQr}>
           <CameraAltIcon className={classes.camaraIcon} />
         </IconButton>
         <Dialog
+          fullScreen={fullScreen}
           maxWidth={maxWidthQr}
           open={openModalQR}
           onClose={handleOpenModalQr}
@@ -608,37 +656,55 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
           BackdropProps={{
             timeout: 500
           }}
+          TransitionComponent={Transition}
         >
-          <Box className={classes.dialog}>
-            <Box className={classes.closeIcon}>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={handleOpenModalQr}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
+          {fullScreen &&
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+                <IconButton
+                  className={classes.backIcon}
+                  onClick={handleOpenModalQr}
+                  aria-label="close"
+                >
+                  <KeyboardBackspaceIcon />
+                </IconButton>
+                <Typography variant="h6" className={classes.titleScanQR}>
+                  {t('donations.scanQR')}
+                </Typography>
+              </Toolbar>
+            </AppBar>
+          }
+          {!fullScreen &&
+            <Box className={classes.dialog}>
+              <Box className={classes.closeIcon}>
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={handleOpenModalQr}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              </Box>
+              <Typography className={classes.titleScanQR}>
+                {t('donations.scanQR')}
+              </Typography>
             </Box>
-            <Typography className={classes.draweTitleDesktop}>
-              {t('donations.scanQR')}
-            </Typography>
-            {cameraSelection &&
-              <QrReader
-                delay={100}
-                onError={() => { }}
-                onScan={(value) => { succesefulScan(value) }}
-                facingMode={cameraSelection}
-                style={{
-                  height: "auto",
-                  width: "100%",
-                  marginTop: "20px",
-                  marginBottom: "20px",
-                  backgroundColor: '#ffffff',
-                }}
-              />
-            }
-          </Box>
+
+          }
+          {cameraSelection &&
+            <QrReader
+              delay={100}
+              onError={() => { }}
+              onScan={(value) => { succesefulScan(value) }}
+              facingMode={cameraSelection}
+              style={{
+                height: "auto",
+                width: "100%",
+                backgroundColor: '#ffffff',
+              }}
+            />
+          }
         </Dialog>
       </>
     )
@@ -690,8 +756,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
-            //onOpen={toggleDrawer(anchor, true)}
-            //disableDiscovery={true}
             PaperProps={{
               elevation: 0,
               style: {
