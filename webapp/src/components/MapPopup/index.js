@@ -28,8 +28,8 @@ const useStyles = makeStyles(() => ({
     textDecoration: 'none'
   },
   subTitule: {
-    width: '100%',
-    height: '16px',
+    width: '90%',
+    height: '20px',
     fontSize: '14px',
     fontStretch: 'normal',
     fontStyle: 'normal',
@@ -49,14 +49,14 @@ const useStyles = makeStyles(() => ({
     color: '#000000'
   },
   openingHourseText: {
-    width: '34%',
+    width: '37.5%',
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 2,
     letterSpacing: '0.4px',
-    textAlign: 'left',
+    textAlign: 'center',
     float: 'left'
     },
     closeColor: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles(() => ({
     },
     mediumDiv:{
       height: "100%",
-      width: '66%',
+      width: '62.5%',
       float: 'left'
     },
     button: {
@@ -155,7 +155,7 @@ function MapPopup({ id, info, username }) {
       <Typography className={classes.title}>{info.name} </Typography>
       <div style={{width:'100%', marginBottom: '22px'}}>
         <div className={classes.mediumDiv}>
-          <Typography className={classes.subTitule}> {info.business_type || t('miscellaneous.donationCenter')} </Typography>
+          <Typography noWrap className={classes.subTitule}> {info.business_type || t('miscellaneous.donationCenter')} </Typography>
         </div>
           {open && 
             <Typography className={clsx(classes.openingHourseText,classes.openColor)}> {t('miscellaneous.openNow')} </Typography>
