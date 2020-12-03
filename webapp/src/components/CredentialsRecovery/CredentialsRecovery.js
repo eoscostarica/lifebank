@@ -183,6 +183,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     }
   }, [responseChangePassword])
 
+  function executeCredentialsRecovery(e) {
+    if (e.key === 'Enter' && (validEmailFormat || !loading)) {
+        e.preventDefault();
+        handleSubmit()
+    }
+    else if (e.key === 'Enter' && (validEmailFormat || !loading)) {}
+  }
+
   return (
     <>
       <Box
@@ -242,6 +250,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   onChange={(event) =>
                     handleSetFieldEmail('email', event.target.value)
                   }
+                  onKeyPress={(event) =>
+                    executeCredentialsRecovery(event)
+                  }
                   className={classes.marginTop}
                 />
                 <Button
@@ -282,6 +293,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   value={user.newPassword || ''}
                   onChange={(event) =>
                     handleSetField('newPassword', event.target.value)
+                  }
+                  onKeyPress={(event) =>
+                    executeCredentialsRecovery(event)
                   }
                   className={classes.marginTop}
                 />
