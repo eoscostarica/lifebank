@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next'
 import Snackbar from '@material-ui/core/Snackbar'
 
 import { PROFILE_QUERY, TRANSFER_MUTATION } from '../../gql'
+import { Drawer } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -81,6 +82,11 @@ const useStyles = makeStyles((theme) => ({
   iconFab: {
     color: '#ffffff',
     marginRight: 10
+  },
+  dashboardContent: {
+    [theme.breakpoints.down('md')]: {
+      maxHeight: "80vh"
+    }
   },
   draweTitle: {
     color: 'rgba(0, 0, 0, 0.87)',
@@ -221,7 +227,7 @@ const useStyles = makeStyles((theme) => ({
   closeIcon: {
     position: 'absolute',
     zIndex: 1,
-    top: 15,
+    top: 10,
     right: 10,
     margin: '0',
     height: '5vh',
@@ -401,7 +407,7 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
 
   const DashboardContent = () => {
     return (
-      <>
+      <Box className={classes.dashboardContent}>
         {isDesktop && (
           <>
             <Box className={classes.closeIcon}>
@@ -433,6 +439,16 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
         )}
         {!isDesktop && (
           <>
+            <Box className={classes.closeIcon}>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={toggleDrawer(anchor, false)}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            </Box>
             {role === "donor" &&
               <Typography className={classes.draweTitle}>
                 {t('donations.yourDonationsAndRewards')}
@@ -573,7 +589,7 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
             </Box>
           </Box>
         }
-      </>
+      </Box>
     )
   }
 
@@ -672,11 +688,12 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
               {t('tokenTransfer.redeem')}
             </Button>
           }
-          <SwipeableDrawer
+          <Drawer
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
-            onOpen={toggleDrawer(anchor, true)}
+            //onOpen={toggleDrawer(anchor, true)}
+            //disableDiscovery={true}
             PaperProps={{
               elevation: 0,
               style: {
@@ -687,7 +704,7 @@ const DonationsDashboard = ({ isDesktop, role, isOffer }) => {
             }}
           >
             <DashboardContent />
-          </SwipeableDrawer>
+          </Drawer >
         </>
       )}
       {isDesktop &&
