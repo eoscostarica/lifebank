@@ -235,6 +235,33 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   }, [isUnique, firstRun])
 
+  function executeAddImage(e) {
+    if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
+        e.preventDefault();
+        setUser({
+          ...user,
+          photos: [...user.photos, photoUrlValueRef.current.value]
+        })
+        photoUrlValueRef.current.value = ''
+        setDisablePhotoUrlInput(true)
+    }
+  }
+
+  function executeAddTelephone(e) {
+    if (e.key === 'Enter' && (!disablePhoneInput)) {
+        e.preventDefault();
+        setUser({
+          ...user,
+          telephones: [
+            ...user.telephones,
+            phoneValueRef.current.value
+          ]
+        })
+        phoneValueRef.current.value = ''
+        setDisablePhoneInput(true)
+    }
+  }
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
@@ -277,9 +304,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           }}
           helperText={
              !isValid
-              ? 'La direccion no debe tener caracteres especiales'
+              ? t('editProfile.noValidUrl')
               : !isUnique
-                ? 'Esta direccion esta asociada a otra cuenta'
+                ? t('editProfile.noUniqueUrl')
                 : ''
           }
           onChange={(event) => validUserName(event.target.value)}
@@ -308,6 +335,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           fullWidth
           inputRef={phoneValueRef}
           onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
+          onKeyPress={(event) =>
+            executeAddTelephone(event)
+          }
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -402,6 +432,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           fullWidth
           inputRef={photoUrlValueRef}
           onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
+          onKeyPress={(event) =>
+            executeAddImage(event)
+          }
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

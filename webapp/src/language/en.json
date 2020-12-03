@@ -218,7 +218,9 @@
       "instagramUsername": "Instagram username",
       "instagramUsernamePlaceholder": "Your Instagram username here",
       "twitterUsername": "Twitter username",
-      "twitterUsernamePlaceholder": "Your Twitter username here"
+      "twitterUsernamePlaceholder": "Your Twitter username here",
+      "noValidUrl": "The link must not have special characters",
+      "noUniqueUrl": "This link is associated with another account"
     },
     "donations": {
       "donations": "Donations",

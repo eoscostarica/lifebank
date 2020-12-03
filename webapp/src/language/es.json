@@ -218,7 +218,9 @@
       "instagramUsername": "Usuario de Instagram",
       "instagramUsernamePlaceholder": "El usuario de Instagram aquí",
       "twitterUsername": "Usuario de Twitter",
-      "twitterUsernamePlaceholder": "El usuario de Twitter aquí"
+      "twitterUsernamePlaceholder": "El usuario de Twitter aquí",
+      "noValidUrl": "La direccion no debe tener caracteres especiales",
+      "noUniqueUrl": "Esta direccion esta asociada a otra cuenta"
     },
     "donations": {
       "donations": "Donaciones",
