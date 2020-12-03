@@ -288,6 +288,18 @@ const GenericOfferFormComponent = ({
     }
   }, [createOfferResult])
 
+  function executeAddImage(e) {
+    if (e.key === 'Enter' && (!disableUrlInput)) {
+        e.preventDefault();
+        setOffer({
+          ...offer,
+          images: offer.images.concat(imgUrlValueRef.current.value)
+        })
+        imgUrlValueRef.current.value = ''
+        setDisableUrlInput(true)
+    }
+  }
+
   return (
     <Dialog
       fullScreen
@@ -444,6 +456,9 @@ const GenericOfferFormComponent = ({
             }}
             onChange={(e) => setDisableUrlInput(e.target.value.length < 1)}
             className={classes.textField}
+            onKeyPress={(event) =>
+              executeAddImage(event)
+            }
           />
           <Box className={classes.addButtonContainer}>
             <div>

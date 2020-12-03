@@ -184,11 +184,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }, [responseChangePassword])
 
   function executeCredentialsRecovery(e) {
-    if (e.key === 'Enter' && (validEmailFormat || !loading)) {
+    if (e.key === 'Enter' && ((user.newPassword && user.currentPassword && validEmailFormat) && !loadingChangePassword)) {
+      e.preventDefault();
+      handleSubmitChangePassword()
+    }
+    else if (e.key === 'Enter' && (validEmailFormat && !loading)) {
         e.preventDefault();
         handleSubmit()
     }
-    else if (e.key === 'Enter' && (validEmailFormat || !loading)) {}
   }
 
   return (
@@ -280,6 +283,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   value={user.currentPassword || ''}
                   onChange={(event) =>
                     handleSetField('currentPassword', event.target.value)
+                  }
+                  onKeyPress={(event) =>
+                    executeCredentialsRecovery(event)
                   }
                   className={classes.marginTop}
                 />
