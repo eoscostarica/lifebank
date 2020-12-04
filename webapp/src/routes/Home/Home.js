@@ -12,11 +12,15 @@ import Alert from '@material-ui/lab/Alert'
 import Snackbar from '@material-ui/core/Snackbar'
 import { useTranslation } from 'react-i18next'
 
-import { GET_OFFERS_QUERY, GET_VALID_SPONSORS_QUERY, GET_VALID_LIFEBANKS_QUERY } from '../../gql'
+import {
+  GET_OFFERS_QUERY,
+  GET_VALID_SPONSORS_QUERY,
+  GET_VALID_LIFEBANKS_QUERY
+} from '../../gql'
 import ConsetComponent from '../../components/ConsetComponent/ConsentComponent'
 
-const HomeMobile = lazy(() => import('./HomeMobile'));
-const HomeDesktop = lazy(() => import('./HomeDesktop'));
+const HomeMobile = lazy(() => import('./HomeMobile'))
+const HomeDesktop = lazy(() => import('./HomeDesktop'))
 
 const Home = () => {
   const theme = useTheme()
@@ -37,7 +41,7 @@ const Home = () => {
   const [valueOfferCat, setValueOfferCat] = useState('All')
   const [valueTokenPrice, setValueTokenPrice] = useState('All')
   const [openAlert, setOpenAlert] = useState(false)
-  const [messegaAlert, setMessegaAlert] = useState("")
+  const [messegaAlert, setMessegaAlert] = useState('')
   const history = useHistory()
 
   const {
@@ -77,7 +81,6 @@ const Home = () => {
       }
       setFetchError(false)
     } else history.push('/internal-error')
-
   }
 
   useEffect(() => {
@@ -136,7 +139,6 @@ const Home = () => {
 
   useEffect(() => {
     if (!loadingDataBanks) {
-
       let dataTemp = allBanks.get_valid_lifebanks
 
       if (searchValue !== '')
@@ -161,8 +163,7 @@ const Home = () => {
       if (valueSponsorCat !== 'All') {
         dataTemp = dataTemp.filter(
           (bank) =>
-            bank.bussines_type.toLowerCase() ===
-            valueSponsorCat.toLowerCase()
+            bank.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase()
         )
       }
 
@@ -222,7 +223,11 @@ const Home = () => {
         </Suspense>
       )}
       <ConsetComponent />
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={6000}
+        onClose={handleOpenAlert}
+      >
         <Alert onClose={handleOpenAlert} severity="error">
           {messegaAlert}
         </Alert>
@@ -236,6 +241,7 @@ const Home = () => {
               openingHours={el.openingHours}
               address={el.address}
               logo={el.logo}
+              photos={el.photos}
               email={el.email}
               location={el.location}
               telephone={el.telephone}
@@ -253,6 +259,7 @@ const Home = () => {
               openingHours={element.openingHours}
               address={element.address}
               logo={element.logo}
+              photos={element.photos}
               email={element.email}
               description={element.description}
               location={element.location}
