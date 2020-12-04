@@ -177,7 +177,7 @@ const HomeMobile = (props) => {
             <StarIcon className={classes.iconBottomAppBar} />
           </IconButton>
           {currentUser && (
-            <DonationsDashboard isDesktop={false} role={currentUser.role} />
+            <DonationsDashboard isDesktop={false} currentUser={currentUser} />
           )}
         </Toolbar>
       </AppBar>
