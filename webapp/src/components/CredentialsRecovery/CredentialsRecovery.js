@@ -185,11 +185,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   function executeCredentialsRecovery(e) {
     if (e.key === 'Enter' && ((user.newPassword && user.currentPassword && validEmailFormat) && !loadingChangePassword)) {
-      e.preventDefault();
+      e.preventDefault()
       handleSubmitChangePassword()
     }
     else if (e.key === 'Enter' && (validEmailFormat && !loading)) {
-        e.preventDefault();
+        e.preventDefault()
         handleSubmit()
     }
   }

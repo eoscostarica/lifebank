@@ -290,7 +290,7 @@ const GenericOfferFormComponent = ({
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disableUrlInput)) {
-        e.preventDefault();
+        e.preventDefault()
         setOffer({
           ...offer,
           images: offer.images.concat(imgUrlValueRef.current.value)

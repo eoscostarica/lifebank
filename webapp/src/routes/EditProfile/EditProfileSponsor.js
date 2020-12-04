@@ -200,7 +200,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
-        e.preventDefault();
+        e.preventDefault()
         setUser({
           ...user,
           photos: [...user.photos, photoUrlValueRef.current.value]
@@ -212,7 +212,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   function executeAddTelephone(e) {
     if (e.key === 'Enter' && (!disablePhoneInput)) {
-        e.preventDefault();
+        e.preventDefault()
         setUser({
           ...user,
           telephones: [

@@ -230,14 +230,14 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         onSubmit(userToSubmit, username, profile.account)
         history.push('/profile')
       }
-      else document.getElementById("username").focus();
+      else document.getElementById("username").focus()
     }
 
   }, [isUnique, firstRun])
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
-        e.preventDefault();
+        e.preventDefault()
         setUser({
           ...user,
           photos: [...user.photos, photoUrlValueRef.current.value]
@@ -249,7 +249,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   function executeAddTelephone(e) {
     if (e.key === 'Enter' && (!disablePhoneInput)) {
-        e.preventDefault();
+        e.preventDefault()
         setUser({
           ...user,
           telephones: [

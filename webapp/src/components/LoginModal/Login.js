@@ -257,7 +257,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 
   function executeLogin(e) {
     if (e.key === 'Enter' && (user.account && user.secret && !loading)) {
-        e.preventDefault();
+        e.preventDefault()
         handleLogin()
     }
   }
