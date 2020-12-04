@@ -95,8 +95,8 @@
     },
     "miscellaneous": {
       "recentActivity": "Actividad reciente",
-      "openSite": "Abrir sitio",
-      "goTo": "Ir a",
+      "openNow": "Abierto",
+      "closeNow": "Cerrado",
       "help": "Ayuda",
       "thankYouForUsingLifebank": "Gracias por usar Lifebank. Lifebank sigue en progreso. Si estás teniendo algún problema, por favor contáctanos en cualquiera de los siguientes vínculos:",
       "telegram": "Canal de Telegram",
@@ -218,7 +218,9 @@
       "instagramUsername": "Usuario de Instagram",
       "instagramUsernamePlaceholder": "El usuario de Instagram aquí",
       "twitterUsername": "Usuario de Twitter",
-      "twitterUsernamePlaceholder": "El usuario de Twitter aquí"
+      "twitterUsernamePlaceholder": "El usuario de Twitter aquí",
+      "noValidUrl": "La direccion no debe tener caracteres especiales",
+      "noUniqueUrl": "Esta direccion esta asociada a otra cuenta"
     },
     "donations": {
       "donations": "Donaciones",

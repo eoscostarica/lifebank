@@ -84,7 +84,7 @@ const ShowSponsorsMobile = ({ sponsors, loading }) => {
         {!loading &&
           sponsors.length > 0 &&
           sponsors.map((sponsor) => (
-            <SponsorItem key={sponsor.id} sponsor={sponsor} />
+            <SponsorItem key={sponsor.userName} sponsor={sponsor} />
           ))}
       </>
     )

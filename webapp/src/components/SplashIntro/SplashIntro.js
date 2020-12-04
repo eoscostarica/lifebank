@@ -49,7 +49,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    maxHeight: 640
+    [theme.breakpoints.between('xs', 'sm')]: {
+      maxHeight: 440
+    },
+    [theme.breakpoints.up('sm')]: {
+      maxHeight: 640
+    }
   },
   capitalize: {
     textTransform: 'uppercase',
@@ -92,7 +97,13 @@ const useStyles = makeStyles((theme) => ({
   stepper: {
     backgroundColor: 'transparent',
     width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    [theme.breakpoints.down('md')]: {
+      marginBottom: 0
+    },
+    [theme.breakpoints.up('sm')]: {
+      marginBottom: 50
+    }
   },
   mainHeading: {
     fontSize: '18px',
@@ -109,17 +120,14 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'normal',
     fontStretch: 'normal',
     lineHeight: 'normal'
-  },
-  dialog: {
-    padding: 100
   }
 }))
 
-const SplashIntro = ({ skipHandling }) => {
+const SplashIntro = ({ skipHandling, cookie }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const dotsRef = createRef()
-  const matches = useMediaQuery('(min-width:600px)')
+  const matches = useMediaQuery('(max-width:600px)')
   const [activeStep, setActiveStep] = useState(0)
 
   const handleStepChange = (step) => {
@@ -258,78 +266,38 @@ const SplashIntro = ({ skipHandling }) => {
 
   return (
     <>
-      {matches ? (
-        <Dialog style={{ padding: 10 }} open={matches} maxWidth="md">
-          <Box className={classes.slideHeader}>
-            <IconButton onClick={() => skipHandling('splash')}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-          <Grid container direction="row" justify="center" alignItems="center">
-            <SwipeableViews
-              index={activeStep}
-              onChangeIndex={handleStepChange}
-              enableMouseEvents
-            >
-              {slides.map((slide, index) => (
-                <Fragment key={index}>{slide}</Fragment>
-              ))}
-            </SwipeableViews>
-          </Grid>
-          <Box className={classes.nextBtnContainer}>
-            <Button
-              className={classes.nextBtn}
-              onClick={() =>
-                activeStep === slides.length - 1
-                  ? skipHandling('splash')
-                  : setActiveStep(activeStep + 1)
-              }
+      {!cookie ? (
+        <>
+          <Dialog
+            className={classes.dialog}
+            fullScreen={matches}
+            maxWidth="md"
+            open={!cookie}
+          >
+            <Box className={classes.slideHeader}>
+              <IconButton onClick={() => skipHandling('splash')}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <Grid
               style={{
-                backgroundColor: '#B71C1C'
+                marginTop: 50
               }}
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
             >
-              {activeStep === slides.length - 1 ? 'Start' : 'Next'}
-            </Button>
-          </Box>
-          <MobileStepper
-            ref={dotsRef}
-            variant="dots"
-            steps={4}
-            position="static"
-            activeStep={activeStep}
-            className={classes.stepper}
-          />
-          <br />
-          <br />
-          <br />
-        </Dialog>
-      ) : (
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={classes.carouselContainer}
-        >
-          <Box className={classes.slideHeader}>
-            <Button onClick={() => skipHandling('splash')}>
-              <Typography className={classes.caption}>
-                {t('splash.skip')}
-              </Typography>
-            </Button>
-          </Box>
-          <Grid container direction="row" justify="center" alignItems="center">
-            <SwipeableViews
-              index={activeStep}
-              onChangeIndex={handleStepChange}
-              enableMouseEvents
-            >
-              {slides.map((slide, index) => (
-                <Fragment key={index}>{slide}</Fragment>
-              ))}
-            </SwipeableViews>
-          </Grid>
-          <Box style={{ zIndex: 9999, position: 'absolute', bottom: 20 }}>
+              <SwipeableViews
+                index={activeStep}
+                onChangeIndex={handleStepChange}
+                enableMouseEvents
+              >
+                {slides.map((slide, index) => (
+                  <Fragment key={index}>{slide}</Fragment>
+                ))}
+              </SwipeableViews>
+            </Grid>
             <Box className={classes.nextBtnContainer}>
               <Button
                 className={classes.nextBtn}
@@ -353,15 +321,16 @@ const SplashIntro = ({ skipHandling }) => {
               activeStep={activeStep}
               className={classes.stepper}
             />
-          </Box>
-        </Grid>
-      )}
+          </Dialog>
+        </>
+      ) : null}
     </>
   )
 }
 
 SplashIntro.propTypes = {
-  skipHandling: PropTypes.func
+  skipHandling: PropTypes.func,
+  cookie: PropTypes.string
 }
 
 export default SplashIntro

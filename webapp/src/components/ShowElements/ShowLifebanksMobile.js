@@ -83,7 +83,7 @@ const ShowLifebanksMobile = ({ banks, loading }) => {
         )}
         {!loading &&
           banks.length > 0 &&
-          banks.map((bank) => <BankItem key={bank.id} bank={bank} />)}
+          banks.map((bank) => <BankItem key={bank.userName} bank={bank} />)}
       </>
     )
   }
