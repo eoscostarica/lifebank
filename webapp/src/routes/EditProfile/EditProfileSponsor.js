@@ -198,6 +198,33 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       : ''
   }
 
+  function executeAddImage(e) {
+    if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
+        e.preventDefault()
+        setUser({
+          ...user,
+          photos: [...user.photos, photoUrlValueRef.current.value]
+        })
+        photoUrlValueRef.current.value = ''
+        setDisablePhotoUrlInput(true)
+    }
+  }
+
+  function executeAddTelephone(e) {
+    if (e.key === 'Enter' && (!disablePhoneInput)) {
+        e.preventDefault()
+        setUser({
+          ...user,
+          telephones: [
+            ...user.telephones,
+            phoneValueRef.current.value
+          ]
+        })
+        phoneValueRef.current.value = ''
+        setDisablePhoneInput(true)
+    }
+  }
+
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
@@ -287,6 +314,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             fullWidth
             inputRef={phoneValueRef}
             onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
+            onKeyPress={(event) =>
+              executeAddTelephone(event)
+            }
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -414,6 +444,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             inputRef={photoUrlValueRef}
             onChange={(e) =>
               setDisablePhotoUrlInput(e.target.value.length === 0)
+            }
+            onKeyPress={(event) =>
+              executeAddImage(event)
             }
             InputProps={{
               endAdornment: (
