@@ -18,6 +18,7 @@ import Fab from '@material-ui/core/Fab'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import CloseIcon from '@material-ui/icons/Close'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Alert from '@material-ui/lab/Alert'
 import QRCode from 'qrcode.react'
 import QrReader from 'react-qr-scanner'
@@ -29,6 +30,7 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 import Drawer from '@material-ui/core/Drawer'
 
 import { PROFILE_QUERY, TRANSFER_MUTATION } from '../../gql'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -601,14 +603,19 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               </Alert>
             )}
             <Box className={classes.boxButtonSendToken}>
+              {loading &&
+                <>
+                  <CircularProgress />
+                  <br />
+                  <br />
+                </>
+              }
               <Button className={classes.sendTokenButton} variant="contained" color="secondary"
                 onClick={() => {
                   hanndlerTransferTokens(accountInput)
                 }}
                 disabled={
                   !accountInput ||
-                  //!payload.quantity ||
-                  //!payload.memo ||
                   loading
                 }
               >
