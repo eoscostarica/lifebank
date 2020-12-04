@@ -5,16 +5,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lifebank.io/not-found</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lifebank.io/not-found</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://lifebank.io/about</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
@@ -27,11 +17,6 @@
   <url>
     <loc>https://lifebank.io/help</loc>
     <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://lifebank.io/internal-error</loc>
-    <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
 </urlset>
