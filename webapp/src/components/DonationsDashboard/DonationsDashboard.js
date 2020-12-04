@@ -27,11 +27,10 @@ import Snackbar from '@material-ui/core/Snackbar'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme, makeStyles } from '@material-ui/core/styles'
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
+import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos'
 import Drawer from '@material-ui/core/Drawer'
 
 import { PROFILE_QUERY, TRANSFER_MUTATION } from '../../gql'
-
-
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -265,12 +264,21 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#ba0d0d",
   },
   switchCamaraIcon: {
-    color: '#ffffff'
+    position: 'absolute',
+    zIndex: 1,
+    top: 10,
+    right: 5,
+    margin: '0',
+    height: '5vh',
+    '& svg': {
+      fontSize: 25,
+      color: "#121212"
+    }
   },
   alert: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)
-  },
+  }
 }))
 
 const EmptyHeartSVG = ({ balance }) => {
@@ -322,7 +330,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const [success, setSuccess] = useState(false)
   const [openModalQR, setOpenModalQR] = useState(false)
   const [scanValue, setScanValue] = useState()
-  const [cameraSelection] = useState("rear")
   const [tokens, setTokens] = useState(0)
   const [role] = useState(currentUser.role)
   const [account] = useState(currentUser.account)
@@ -416,7 +423,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
       if (role === "donor") tempMemo = t("donations.memoDonor")
       else tempMemo = t("donations.memoLifebank")
 
-      const payload = { to: accountTo, memo: tempMemo, quantity: 1 }
+      const payload = { to: accountTo.toLowerCase(), memo: tempMemo, quantity: 1 }
       transfer({
         variables: {
           ...payload
@@ -635,6 +642,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const QrReaderModal = () => {
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+    const [cameraSelection, setCameraSelction] = useState("rear")
     const succesefulScan = (value) => {
       if (value) {
         setOpenModalQR(false)
@@ -647,6 +655,11 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
         setScanValue("")
       }
     }, [openModalQR])
+
+    const handleChangeCamera = () => {
+      if (cameraSelection === "rear") setCameraSelction("front")
+      else setCameraSelction("rear")
+    }
 
     return (
       <>
@@ -680,6 +693,13 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
                 <Typography variant="h6" className={classes.titleScanQR}>
                   {t('donations.scanQR')}
                 </Typography>
+                <IconButton
+                  className={classes.switchCamaraIcon}
+                  onClick={handleChangeCamera}
+                  aria-label="close"
+                >
+                  <FlipCameraIosIcon />
+                </IconButton>
               </Toolbar>
             </AppBar>
           }
@@ -699,7 +719,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
                 {t('donations.scanQR')}
               </Typography>
             </Box>
-
           }
           {cameraSelection &&
             <QrReader
