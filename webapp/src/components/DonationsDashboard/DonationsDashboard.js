@@ -26,9 +26,10 @@ import Snackbar from '@material-ui/core/Snackbar'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme, makeStyles } from '@material-ui/core/styles'
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
+import Drawer from '@material-ui/core/Drawer'
 
 import { PROFILE_QUERY, TRANSFER_MUTATION } from '../../gql'
-import { Drawer } from '@material-ui/core'
+
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -314,7 +315,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const [maxWidth] = useState('md')
   const [maxWidthQr] = useState('xs')
   const [open, setOpen] = useState(false)
-  const [payload, setPayload] = useState({ quantity: 1, memo: "Token transfer" })
+  const [accountTo, setAccountTo] = useState()
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
   const [openModalQR, setOpenModalQR] = useState(false)
@@ -363,11 +364,8 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     if (!transferResult)
       return
 
-    setPayload({ quantity: 1 })
     setSuccess(true)
   }, [transferResult])
-
-  const handleSetField = (field, value) => setPayload({ ...payload, [field]: value })
 
   useEffect(() => {
     if (!currentUser) {
@@ -405,21 +403,26 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
 
   const hanndlerTransferTokens = (account) => {
-    handleSetField('to', account)
     setErrorMessage(null)
+    setAccountTo(account)
 
-    if (role === "donor") {
-      setPayload({ ...payload, "memo": t("donations.memoDonor") })
-    } else {
-      setPayload({ ...payload, "memo": t("donations.memoLifebank") })
-    }
-
-    transfer({
-      variables: {
-        ...payload
-      }
-    })
   }
+
+  useEffect(() => {
+    if (accountTo) {
+      let tempMemo
+      if (role === "donor") tempMemo = t("donations.memoDonor")
+      else tempMemo = t("donations.memoLifebank")
+
+      const payload = { to: accountTo, memo: tempMemo, quantity: 1 }
+      transfer({
+        variables: {
+          ...payload
+        }
+      })
+    }
+  }, [accountTo])
+
 
   const DashboardContent = () => {
     const [accountInput, setAccountInput] = useState("")
@@ -427,11 +430,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     const handleChangeAccountInput = (event) => {
       setAccountInput(event.target.value)
     }
-
     useEffect(() => {
-      if (scanValue) {
-        setAccountInput(scanValue)
-      }
+      if (scanValue) setAccountInput(scanValue)
+
     }, [scanValue])
 
     return (
@@ -601,11 +602,13 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
             )}
             <Box className={classes.boxButtonSendToken}>
               <Button className={classes.sendTokenButton} variant="contained" color="secondary"
-                onClick={() => hanndlerTransferTokens(accountInput)}
+                onClick={() => {
+                  hanndlerTransferTokens(accountInput)
+                }}
                 disabled={
                   !accountInput ||
-                  !payload.quantity ||
-                  !payload.memo ||
+                  //!payload.quantity ||
+                  //!payload.memo ||
                   loading
                 }
               >
