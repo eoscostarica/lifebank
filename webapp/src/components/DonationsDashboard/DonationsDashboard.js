@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
   dashboardContent: {
     [theme.breakpoints.down('md')]: {
       maxHeight: "80vh"
-    }
+    },
   },
   draweTitle: {
     color: 'rgba(0, 0, 0, 0.87)',
@@ -224,7 +224,8 @@ const useStyles = makeStyles((theme) => ({
     height: 40,
     width: 140,
     padding: 10,
-    color: '#ffffff'
+    color: '#ffffff',
+    marginBottom: "20px"
   },
   boxButtonSendToken: {
     display: 'flex',
@@ -232,7 +233,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     alignItems: 'center',
     marginTop: 30,
-    marginBottom: 20
   },
   boxTexfield: {
     width: '100%',
@@ -760,7 +760,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               style: {
                 borderTopLeftRadius: '20px',
                 borderTopRightRadius: '20px',
-                padding: '16px'
+                padding: '16px',
               }
             }}
           >
