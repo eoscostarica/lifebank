@@ -63,15 +63,39 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     height: 250,
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    marginBottom: '5px'
   },
   saveBtn: {
-    marginTop: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    '& button': {
-      width: '50%'
-    }
+    marginTop: '4%',
+    marginLeft: '15%',
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    height: '40px',
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '15px',
+  },
+  addBtn: {
+    marginTop: '4%',
+    borderRadius: '50px',
+    backgroundColor: '#000000',
+    width: "100%",
+    height: '40px',
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '15px',
   },
   resultList: {
     width: '100%',
@@ -330,6 +354,7 @@ const Schedule = ({
               </TextField>
             </Box>
             <Button
+              className={classes.addBtn}
               variant="contained"
               color="primary"
               onClick={handleAddSchedulePerDay}
@@ -364,15 +389,14 @@ const Schedule = ({
               </List>
             </Box>
             {Boolean(schedule.length) && (
-              <Box className={classes.saveBtn}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={onHandleOnAddSchedule}
-                >
-                  {t('common.save')}
-                </Button>
-              </Box>
+              <Button
+                className={classes.saveBtn}
+                variant="contained"
+                color="primary"
+                onClick={onHandleOnAddSchedule}
+              >
+                {t('common.save')}
+              </Button>
             )}
           </Box>
         </Box>
