@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next'
 const AMPM = ['am', 'pm']
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 350,
+    width: "100%",
     display: 'flex',
     flexDirection: 'column',
     paddingRight: theme.spacing(4),
@@ -48,30 +48,28 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "20px",
     paddingLeft: "30px",
     paddingBottom: "20px",
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: "21px",
-      paddingRight: "21px"
-    }
   },
   closeIcon: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    position: 'absolute',
+    zIndex: 1,
+    top: 14,
+    right: 14,
+    margin: '0',
+    height: '5vh',
     '& svg': {
       fontSize: 25,
-      color: theme.palette.secondary.main
+      color: "rgba(0, 0, 0, 0.6)"
     }
   },
   list: {
-    height: 250,
-    overflowY: 'scroll',
+    overflowY: 'auto',
     marginBottom: '5px'
   },
   saveBtn: {
     marginTop: '4%',
-    marginLeft: '15%',
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
-    width: "70%",
+    width: "100%",
     height: '40px',
     fontSize: '14px',
     fontWeight: 500,
@@ -273,9 +271,10 @@ const Schedule = ({
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={openModal}
-        onClose={() => {}}
-        fullScreen = {!isDesktop}
-        maxWidth= 'xs'
+        onClose={() => { }}
+        fullScreen={!isDesktop}
+        maxWidth='xs'
+        fullWidth={true}
         closeAfterTransition
         BackdropProps={{
           timeout: 500
@@ -337,7 +336,7 @@ const Schedule = ({
                   </MenuItem>
                 ))}
               </TextField>
-                <Typography>{t('offerView.to')}</Typography>
+              <Typography>{t('offerView.to')}</Typography>
               <TextField
                 id="outlined-select-currency"
                 select
@@ -415,7 +414,7 @@ Schedule.propTypes = {
 }
 
 Schedule.defaultProps = {
-  handleOnAddSchedule: () => {},
+  handleOnAddSchedule: () => { },
   scheduleLoad: '',
   data: null,
   loading: false,
