@@ -22,17 +22,17 @@ const ProfilePageLifebank = lazy(() => import('./ProfilePageLifebank'));
 const ProfilePageSponsor = lazy(() => import('./ProfilePageSponsor'));
 
 const useStyles = makeStyles((theme) => ({
-  wrapper: {
+  contentBody: {
     display: 'flex',
     flexDirection: 'column',
-    height: 'auto',
+    alignItems: 'center',
+    minHeight: 'calc(100vh - 60px)',
     width: '100%',
-    padding: theme.spacing(6, 1, 0, 1),
-    alignItems: 'center'
-  },
-  title: {
-    fontSize: 48,
-    marginBottom: theme.spacing(4)
+    paddingTop: '60px',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '35%',
+      paddingRight: '35%',
+    },
   },
   rowBox: {
     display: 'flex',
@@ -173,15 +173,12 @@ const ProfilePage = () => {
   }, [errorGrantConsent])
 
   return (
-    <Box className={classes.wrapper}>
+    <Box className={classes.contentBody}>
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
         <Alert onClose={handleOpenAlert} severity={severity}>
           {messegaAlert}
         </Alert>
       </Snackbar>
-      <Typography variant="h1" className={classes.title}>
-        {t('profile.myProfile')}
-      </Typography>
       {loading && <CircularProgress />}
       {!loading && currentUser && profile?.role === 'donor' && (
         <Suspense fallback={<CircularProgress />}>
@@ -207,6 +204,8 @@ const ProfilePage = () => {
           <ProfilePageGuest />
         </Suspense>}
     </Box>
+
+
   )
 }
 
