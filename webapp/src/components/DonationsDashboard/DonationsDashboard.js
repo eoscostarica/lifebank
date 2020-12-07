@@ -423,7 +423,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
       if (role === "donor") tempMemo = t("donations.memoDonor")
       else tempMemo = t("donations.memoLifebank")
 
-      const payload = { to: accountTo.toLowerCase(), memo: tempMemo, quantity: 1 }
+      const payload = { to: accountTo.toLowerCase().replace(/\s/g, ''), memo: tempMemo, quantity: 1 }
       transfer({
         variables: {
           ...payload
