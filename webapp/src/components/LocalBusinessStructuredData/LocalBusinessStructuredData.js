@@ -26,7 +26,6 @@ const LocalBusinessStructuredData = ({
     }
   }, [socialMediaLinks])
 
-  console.log(photos[0])
   return (
     <JSONLD>
       <Generic
