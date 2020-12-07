@@ -274,7 +274,7 @@ const Schedule = ({
         onClose={() => { }}
         fullScreen={!isDesktop}
         maxWidth='xs'
-        fullWidth={true}
+        fullWidth
         closeAfterTransition
         BackdropProps={{
           timeout: 500
