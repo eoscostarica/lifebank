@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
 import Typography from '@material-ui/core/Typography'
@@ -14,21 +15,18 @@ import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Divider from '@material-ui/core/Divider'
 import DeleteIcon from '@material-ui/icons/Delete'
-import Paper from '@material-ui/core/Paper'
 import ScheduleIcon from '@material-ui/icons/Schedule'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import Fade from '@material-ui/core/Fade'
+import Dialog from '@material-ui/core/Dialog'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTranslation } from 'react-i18next'
 
 const AMPM = ['am', 'pm']
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 350,
+    width: "100%",
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(4, 2),
+    paddingRight: theme.spacing(4),
     '& h3': {
       marginBottom: theme.spacing(3)
     }
@@ -46,36 +44,56 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backgroundColor: theme.palette.background.paper
   },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+  dialog: {
+    paddingTop: "20px",
+    paddingLeft: "30px",
+    paddingBottom: "20px",
   },
   closeIcon: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    position: 'absolute',
+    zIndex: 1,
+    top: 14,
+    right: 14,
+    margin: '0',
+    height: '5vh',
     '& svg': {
       fontSize: 25,
-      color: theme.palette.secondary.main
+      color: "rgba(0, 0, 0, 0.6)"
     }
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    height: '80%',
-    width: 350,
-    outlineWidth: 0
   },
   list: {
-    height: 250,
-    overflowY: 'scroll'
+    overflowY: 'auto',
+    marginBottom: '5px'
   },
   saveBtn: {
-    display: 'flex',
-    justifyContent: 'center',
-    '& button': {
-      width: '50%'
-    }
+    marginTop: '4%',
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "100%",
+    height: '40px',
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '15px',
+  },
+  addBtn: {
+    marginTop: '4%',
+    borderRadius: '50px',
+    backgroundColor: '#000000',
+    width: "100%",
+    height: '40px',
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '15px',
   },
   resultList: {
     width: '100%',
@@ -90,6 +108,8 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   scheduleListResult: {
+    marginTop: '10px',
+    marginBottom: '10px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -152,6 +172,7 @@ const Schedule = ({
   const [open, setOpen] = useState('06:00')
   const [close, setClose] = useState('16:00')
   const [day, setDay] = useState('Sunday')
+  const theme = useTheme()
   const [scheduleList, setscheduleList] = useState([])
   const [schedule, setSchedule] = useState([])
   const [openModal, setOpenModal] = useState(false)
@@ -169,6 +190,10 @@ const Schedule = ({
   const handleChangeOpen = (event) => {
     setOpen(event.target.value)
   }
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true
+  })
 
   const handleChangeClose = (event) => {
     setClose(event.target.value)
@@ -242,140 +267,139 @@ const Schedule = ({
             </List>
           </Box>
         ))}
-      <Modal
+      <Dialog
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        className={classes.modal}
         open={openModal}
-        onClose={() => {}}
+        onClose={() => { }}
+        fullScreen={!isDesktop}
+        maxWidth='xs'
+        fullWidth
         closeAfterTransition
-        BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500
         }}
       >
-        <Fade in={openModal}>
-          <Paper className={classes.paper}>
-            <Box className={classes.closeIcon}>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={handleOpen}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            </Box>
-            <Box className={classes.root}>
-              <Typography variant="h3">
-                {t('schedule.chooseYourSchedule')}
-              </Typography>
+        <Box className={classes.dialog}>
+          <Box className={classes.closeIcon}>
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleOpen}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
+          <Box className={classes.root}>
+            <Typography variant="h3">
+              {t('schedule.chooseYourSchedule')}
+            </Typography>
+            <TextField
+              id="outlined-select-currency"
+              select
+              fullWidth
+              label={t('schedule.day')}
+              value={day}
+              onChange={handleChangeDay}
+              variant="outlined"
+            >
+              {days.map((option) => {
+                const isSelected = schedule.some(
+                  ({ day }) => day === option.value
+                )
+
+                return (
+                  <MenuItem
+                    key={option.value}
+                    value={option.value}
+                    disabled={isSelected}
+                    selected={isSelected}
+                  >
+                    {option.label}
+                  </MenuItem>
+                )
+              })}
+            </TextField>
+            <Box className={classes.scheduleBox}>
               <TextField
                 id="outlined-select-currency"
                 select
-                fullWidth
-                label={t('schedule.day')}
-                value={day}
-                onChange={handleChangeDay}
+                label={t('schedule.open')}
+                value={open}
+                onChange={handleChangeOpen}
                 variant="outlined"
               >
-                {days.map((option) => {
-                  const isSelected = schedule.some(
-                    ({ day }) => day === option.value
-                  )
-
-                  return (
-                    <MenuItem
-                      key={option.value}
-                      value={option.value}
-                      disabled={isSelected}
-                      selected={isSelected}
-                    >
-                      {option.label}
-                    </MenuItem>
-                  )
-                })}
+                {hours.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </TextField>
-              <Box className={classes.scheduleBox}>
-                <TextField
-                  id="outlined-select-currency"
-                  select
-                  label={t('schedule.open')}
-                  value={open}
-                  onChange={handleChangeOpen}
-                  variant="outlined"
-                >
-                  {hours.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <Typography>to</Typography>
-                <TextField
-                  id="outlined-select-currency"
-                  select
-                  label={t('schedule.close')}
-                  value={close}
-                  onChange={handleChangeClose}
-                  variant="outlined"
-                >
-                  {hours.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Box>
+              <Typography>{t('offerView.to')}</Typography>
+              <TextField
+                id="outlined-select-currency"
+                select
+                label={t('schedule.close')}
+                value={close}
+                onChange={handleChangeClose}
+                variant="outlined"
+              >
+                {hours.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Box>
+            <Button
+              className={classes.addBtn}
+              variant="contained"
+              color="primary"
+              onClick={handleAddSchedulePerDay}
+            >
+              {t('miscellaneous.add')}
+            </Button>
+            <Box className={classes.list}>
+              <List className={classes.scheduleList}>
+                {schedule.map((item) => (
+                  <div key={item.day}>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <ScheduleIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={item.day}
+                        secondary={`${convertHour(
+                          item.open.split(':')[0]
+                        )} to ${convertHour(item.close.split(':')[0])}`}
+                      />
+                      <IconButton
+                        onClick={() => handleDeleteSchedulePerDay(item.day)}
+                      >
+                        <DeleteIcon color="secondary" />
+                      </IconButton>
+                    </ListItem>
+                    <Divider />
+                  </div>
+                ))}
+              </List>
+            </Box>
+            {Boolean(schedule.length) && (
               <Button
+                className={classes.saveBtn}
                 variant="contained"
                 color="primary"
-                onClick={handleAddSchedulePerDay}
+                onClick={onHandleOnAddSchedule}
               >
-                {t('miscellaneous.add')}
+                {t('common.save')}
               </Button>
-              <Box className={classes.list}>
-                <List className={classes.scheduleList}>
-                  {schedule.map((item) => (
-                    <div key={item.day}>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <ScheduleIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={item.day}
-                          secondary={`${convertHour(
-                            item.open.split(':')[0]
-                          )} to ${convertHour(item.close.split(':')[0])}`}
-                        />
-                        <IconButton
-                          onClick={() => handleDeleteSchedulePerDay(item.day)}
-                        >
-                          <DeleteIcon color="secondary" />
-                        </IconButton>
-                      </ListItem>
-                      <Divider />
-                    </div>
-                  ))}
-                </List>
-              </Box>
-              {Boolean(schedule.length) && (
-                <Box className={classes.saveBtn}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onHandleOnAddSchedule}
-                  >
-                    {t('common.save')}
-                  </Button>
-                </Box>
-              )}
-            </Box>
-          </Paper>
-        </Fade>
-      </Modal>
+            )}
+          </Box>
+        </Box>
+      </Dialog>
     </>
   )
 }
@@ -390,7 +414,7 @@ Schedule.propTypes = {
 }
 
 Schedule.defaultProps = {
-  handleOnAddSchedule: () => {},
+  handleOnAddSchedule: () => { },
   scheduleLoad: '',
   data: null,
   loading: false,

@@ -555,7 +555,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             />
           </Box>
           <Box className={classes.levelReward}>
-            <Typography variant="h4">{t('highLevelReward')}</Typography>
+            <Typography variant="h4">{t('editProfile.highLevelReward')}</Typography>
             <TextField
               id="urgentLevelReward"
               type="number"
