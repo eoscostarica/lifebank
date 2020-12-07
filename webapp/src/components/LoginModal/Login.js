@@ -160,7 +160,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     { loading, error, data: { login: loginResult } = {} }
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
 
-
   const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
     variables: {
       email: user.email
@@ -342,7 +341,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                 variant="outlined"
                 className={classes.inputStyle}
                 onChange={(event) =>
-                  handleSetField('account', event.target.value)
+                  handleSetField('account', event.target.value.toLowerCase().replace(/\s/g, ''))
                 }
                 onKeyPress={(event) =>
                   executeLogin(event)
