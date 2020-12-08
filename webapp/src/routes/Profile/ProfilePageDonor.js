@@ -15,18 +15,14 @@ import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   contentHeader: {
-    //display: 'flex',
-    //flexDirection: 'column',
     position: 'relative',
     height: 'auto',
     width: '100%',
-    //alignItems: 'center',
     marginBottom: '40px'
   },
   titleProfile: {
     padding: theme.spacing(0, 2),
-    width: '100%',
-    height: '40px',
+    width: '65%',
     fontFamily: 'Roboto',
     fontSize: '34px',
     fontWeight: 'bold',
@@ -37,7 +33,10 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgba(0, 0, 0, 0.87)',
     marginTop: '10px',
     marginBottom: '4px',
-    textAlign: 'left'
+    textAlign: 'left',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '24px',
+    }
   },
   subtitleProfile: {
     padding: theme.spacing(0, 2),
@@ -80,8 +79,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
     justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(2, 2),
     alignItems: 'center',
     '& p': {
       color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
@@ -181,7 +179,6 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         <Typography variant="subtitle1">{t('common.email')}</Typography>
         <Typography >{profile.email.toLowerCase() || 'N/A'}</Typography>
       </Box>
-      <Divider className={classes.divider} />
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">
