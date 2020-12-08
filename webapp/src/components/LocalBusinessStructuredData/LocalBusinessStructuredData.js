@@ -40,7 +40,10 @@ const LocalBusinessStructuredData = ({
               ? 'https://raw.githubusercontent.com/eoscostarica/lifebank/6ec27b8c7832ba6ccb4adebfe1ba8d1d94eb0544/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg'
               : logo,
           email: email,
-          image: photos[0],
+          image:
+            photos.length === 0
+              ? 'https://dummyimage.com/640x360/fff/aaa'
+              : photos[0],
           location: location,
           telephone: JSON.parse(telephone)[0]
         }}
