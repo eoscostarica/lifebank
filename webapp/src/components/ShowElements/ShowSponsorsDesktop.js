@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'auto',
     whiteSpace: 'nowrap',
     width: '100%',
-    height: '165px',
+    height: '170px',
     marginTop: 15,
     marginBottom: 15,
     padding: 5,
