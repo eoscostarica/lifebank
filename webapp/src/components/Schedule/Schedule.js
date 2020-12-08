@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   dialog: {
     paddingTop: "20px",
     paddingLeft: "30px",
-    paddingBottom: "20px",
+    paddingBottom: "20px"
   },
   closeIcon: {
     position: 'absolute',
@@ -78,22 +78,25 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.14,
     letterSpacing: '1px',
     color: '#ffffff',
-    padding: '15px',
+    padding: '15px'
   },
   addBtn: {
     marginTop: '4%',
     borderRadius: '50px',
-    backgroundColor: '#000000',
     width: "100%",
     height: '40px',
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
     fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
+    lineHeight: 'normal',
+    letterSpacing: '0.5px',
+    textAlign: 'center',
     padding: '15px',
+    objectFit: 'contain',
+    boxShadow: 'inset 0 100px 0 0 rgba(255, 255, 255, 0.08)',
+    border: 'solid 1px rgba(0, 0, 0, 0.54)',
+    backgroundColor: '#ffffff'
   },
   resultList: {
     width: '100%',
@@ -355,7 +358,7 @@ const Schedule = ({
             <Button
               className={classes.addBtn}
               variant="contained"
-              color="primary"
+              color="default"
               onClick={handleAddSchedulePerDay}
             >
               {t('miscellaneous.add')}

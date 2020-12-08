@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   list: {
-    width: '100vw'
+    width: '100vw',
+    marginBottom: '25px',
+    backgroundColor: 'white'
   },
   listItem: {
     width: '100%',
