@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
@@ -50,11 +51,7 @@ const useStyles = makeStyles((theme) => ({
   dialog: {
     paddingTop: "48px",
     paddingLeft: "48px",
-    paddingRight: "48px",
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: "21px",
-      paddingRight: "21px",
-    }
+    paddingRight: "48px"
   },
   title: {
     fontFamily: "Roboto",
@@ -148,18 +145,20 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginModal = ({ isNavBar, isSideBar }) => {
   const { t } = useTranslation('translations')
-  const [maxWidth] = useState('md')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const classes = useStyles()
+  const theme = useTheme()
   const [open, setOpen] = useState(false)
-
   const [currentUser, { login }] = useUser()
   const [
     loginMutation,
     { loading, error, data: { login: loginResult } = {} }
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
 
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true
+  })
 
   const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
     variables: {
@@ -286,11 +285,11 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
         </Box>
       }
       <Dialog
-        maxWidth={maxWidth}
         open={open}
         onClose={handleOpen}
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
+        fullScreen={!isDesktop}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
