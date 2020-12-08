@@ -1,4 +1,4 @@
-FROM node:12.16.2 as build-stage
+FROM node:12.16.2-slim as build-stage
 
 ENV WORK_DIR /app
 ENV PATH $WORK_DIR/node_modules/.bin:$PATH

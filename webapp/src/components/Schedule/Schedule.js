@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   dialog: {
     paddingTop: "20px",
     paddingLeft: "30px",
-    paddingBottom: "20px",
+    paddingBottom: "20px"
   },
   closeIcon: {
     position: 'absolute',
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.14,
     letterSpacing: '1px',
     color: '#ffffff',
-    padding: '15px',
+    padding: '15px'
   },
   addBtn: {
     marginTop: '4%',

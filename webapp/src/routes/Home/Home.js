@@ -241,7 +241,7 @@ const Home = () => {
               openingHours={el.openingHours}
               address={el.address}
               logo={el.logo}
-              photos={el.photos}
+              photos={JSON.parse(el.photos)}
               email={el.email}
               location={el.location}
               telephone={el.telephone}
@@ -259,7 +259,7 @@ const Home = () => {
               openingHours={element.openingHours}
               address={element.address}
               logo={element.logo}
-              photos={element.photos}
+              photos={JSON.parse(element.photos)}
               email={element.email}
               description={element.description}
               location={element.location}
