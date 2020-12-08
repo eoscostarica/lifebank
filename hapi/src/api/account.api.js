@@ -238,7 +238,6 @@ const getValidSponsors = async () => {
       sponsorsAccounts[index].info.address.length > 0 &&
       sponsorsAccounts[index].info.email.length > 0 &&
       sponsorsAccounts[index].info.location !== 'null' &&
-      JSON.parse(sponsorsAccounts[index].info.photos).length > 0 &&
       JSON.parse(sponsorsAccounts[index].info.telephones).length > 0
     )
       validSponsors.push({
@@ -283,7 +282,6 @@ const getValidLifebanks = async () => {
       lifebankAccounts[index].info.email.length > 0 &&
       lifebankAccounts[index].info.about.length > 0 &&
       lifebankAccounts[index].info.geolocation !== 'null' &&
-      JSON.parse(lifebankAccounts[index].info.photos).length > 0 &&
       JSON.parse(lifebankAccounts[index].info.telephones).length > 0
     )
       validLifebanks.push({
