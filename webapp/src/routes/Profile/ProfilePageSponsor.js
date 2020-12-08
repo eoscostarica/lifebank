@@ -341,7 +341,6 @@ const ProfilePageSponsor = ({ profile }) => {
             </Box>
           </Alert>
         </Box>
-
       )}
       <Box className={classes.contentHeader}>
         <Typography className={classes.titleProfile} noWrap>{profile.name}</Typography>
