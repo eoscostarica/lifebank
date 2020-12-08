@@ -365,7 +365,7 @@ const grantConsent = async account => {
   return consentTransaction
 }
 
-const formatSchedule = (schedule) => {
+const formatSchedule = schedule => {
   let scheduleFormat = ''
 
   let hours
@@ -375,7 +375,7 @@ const formatSchedule = (schedule) => {
   return scheduleFormat.replace(',', ' ')
 }
 
-const formatLifebankData = (lifebankData) => {
+const formatLifebankData = lifebankData => {
   lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
   lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
   if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'
