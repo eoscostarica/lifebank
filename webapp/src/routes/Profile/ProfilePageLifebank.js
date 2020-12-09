@@ -370,7 +370,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <Box className={classes.contentHeader}>
         <Typography className={classes.titleProfile} noWrap>{profile.name}</Typography>
         <Typography className={classes.subtitleProfile} noWrap>{profile.account}</Typography>
-        <Typography className={classes.subtitleProfile} noWrap>{t('miscellaneous.miscellaneous')}</Typography>
+        <Typography className={classes.subtitleProfile} noWrap>{t('miscellaneous.donationCenter')}</Typography>
         <Avatar
           className={classes.avatarRoundDesktop}
           src={profile.logo_url ? profile.logo_url : ''}
@@ -378,7 +378,7 @@ const ProfilePageLifebank = ({ profile }) => {
           <LocalHospitalIcon />
         </Avatar>
       </Box>
-      {profile.userName &&
+      {userName &&
         <>
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
