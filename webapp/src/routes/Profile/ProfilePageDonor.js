@@ -92,7 +92,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     textDecoration: "none",
     display: 'flex',
-    width: '100%',
     flexDirection: 'column',
     alignItems: 'center',
   },
