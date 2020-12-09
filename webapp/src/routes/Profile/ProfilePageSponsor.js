@@ -1,39 +1,101 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/styles'
-import { Link as LinkRouter } from 'react-router-dom'
+import { makeStyles, useTheme } from '@material-ui/styles'
+import { Link as LinkRouter, useHistory } from 'react-router-dom'
+import { useQuery } from '@apollo/react-hooks'
 import Alert from '@material-ui/lab/Alert'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import QRCode from 'qrcode.react'
 import Link from '@material-ui/core/Link'
 import IconButton from '@material-ui/core/IconButton'
-import Icon from '@material-ui/core/Icon'
-import TextField from '@material-ui/core/TextField'
 import { useTranslation } from 'react-i18next'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import Avatar from '@material-ui/core/Avatar'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import MobileStepper from '@material-ui/core/MobileStepper'
+import FacebookIcon from '@material-ui/icons/Facebook'
+import TwitterIcon from '@material-ui/icons/Twitter'
+import InstagramIcon from '@material-ui/icons/Instagram'
 
-import FacebookIcon from '../../assets/facebook.svg'
-import InstagramIcon from '../../assets/instagram.svg'
-import TwitterIcon from '../../assets/twitter.svg'
-import Logo from '../../components/Logo'
-import Schedule from '../../components/Schedule'
-import Telephones from '../../components/Telephones'
-import CarouselComponent from '../../components/Carousel'
+import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
-import { eosConfig } from '../../config'
+import { GET_USERNAME } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
+  contentHeader: {
+    position: 'relative',
+    height: 'auto',
+    width: '100%',
+    padding: theme.spacing(0, 2),
+    marginBottom: '40px'
+  },
+  titleProfile: {
+    width: '65%',
+    fontFamily: 'Roboto',
+    fontSize: '34px',
+    fontWeight: 'bold',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.18',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.87)',
+    marginTop: '10px',
+    marginBottom: '4px',
+    textAlign: 'left',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '24px',
+    }
+  },
+  subtitleProfile: {
+    width: '100%',
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.6)',
+    textAlign: 'left'
+  },
+  avatarRoundDesktop: {
+    position: 'absolute',
+    width: '90px',
+    height: '90px',
+    right: 10,
+    top: 0,
+    border: 'solid 2px rgba(0, 0, 0, 0.04)',
+    [theme.breakpoints.down('md')]: {
+      width: '70px',
+      height: '70px',
+    }
+  },
   rowBox: {
     display: 'flex',
     width: '100%',
     justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(2, 2),
     alignItems: 'center',
+    '& p': {
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+      textTransform: 'capitalize'
+    }
+  },
+  rowTitle: {
+    fontWeight: 'bold',
+    marginRight: '10px'
+  },
+  rowBoxLeft: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    padding: theme.spacing(2, 2),
+    alignItems: 'flex-start',
     '& p': {
       color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
       textTransform: 'capitalize'
@@ -59,16 +121,48 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     flex: 1
   },
-  textFieldWrapper: {
-    height: '100%',
-    width: '100%',
+  img: {
+    marginTop: theme.spacing(1),
+    height: '30vh',
+    objectFit: 'cover',
+    overflow: 'hidden',
+    display: 'block',
+    width: '100%'
+  },
+  stepper: {
+    backgroundColor: '#ffffff'
+  },
+  socialIcon: {
+    color: 'rgba(0, 0, 0, 0.87)'
+  },
+  routerLink: {
+    width: "100%",
+    textDecoration: "none",
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  routerLinkUpdate: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  updateButton: {
+    maxWidth: '50%',
   },
   editBtn: {
-    margin: theme.spacing(2, 0)
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 20,
   },
   secondaryText: {
     color: `${theme.palette.secondary.main} !important`
@@ -80,7 +174,14 @@ const useStyles = makeStyles((theme) => ({
     height: 10,
     borderRadius: 5
   },
+  alertBox: {
+    width: "100%",
+    padding: theme.spacing(0, 2),
+    marginBottom: theme.spacing(2)
+  },
   alert: {
+    width: "100%",
+
     '& > div.MuiAlert-message': {
       padding: 0,
       margin: 0
@@ -88,9 +189,9 @@ const useStyles = makeStyles((theme) => ({
     '& > div.MuiAlert-action': {
       maxHeight: 50
     },
-    paddingBottom: 0
   },
   buttonContainer: {
+    width: "100%",
     margin: theme.spacing(2, 0)
   }
 }))
@@ -98,7 +199,48 @@ const useStyles = makeStyles((theme) => ({
 const ProfilePageSponsor = ({ profile }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
+  const [userName, setuserName] = useState()
   const [pendingFields, setPendingFields] = useState()
+  const [activeStep, setActiveStep] = useState(0)
+  const theme = useTheme()
+  const history = useHistory()
+  const [, { logout }] = useUser()
+  const images = JSON.parse(profile.photos)
+  const socialMedia = JSON.parse(profile.social_media_links)
+  const phones = JSON.parse(profile.telephones)
+
+  const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
+    variables: {
+      account: profile.account
+    },
+    skip: true
+  })
+
+  const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
+
+  const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
+
+  useEffect(() => {
+    const getUsername = async () => {
+      const { data } = await getData({
+        account: profile.account
+      })
+
+      if (data) setuserName(data.user[0].username.replaceAll(' ', '-'))
+    }
+
+    if (!userName) getUsername()
+  })
+
+  useEffect(() => {
+    if (errorUsername) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+      } else history.push('/internal-error')
+    }
+
+  }, [errorUsername])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -149,402 +291,363 @@ const ProfilePageSponsor = ({ profile }) => {
       setPendingFields(pendingFieldsObject)
   }
 
-  const getSocialMediaIcon = (name) => {
-    switch (name) {
-      case 'facebook':
-        return FacebookIcon
-      case 'instagram':
-        return InstagramIcon
-      case 'twitter':
-        return TwitterIcon
-      default:
-        break
-    }
-  }
-
   useEffect(() => {
     if (profile) {
-      if (profile.social_media_links)
-        profile.social_media_links = JSON.parse(profile.social_media_links)
-      if (profile.photos) profile.photos = JSON.parse(profile.photos)
-      if (profile.telephones)
-        profile.telephones = JSON.parse(profile.telephones)
       checkAvailableFields()
     }
   }, [profile])
 
+  const generateSchedule = (schedules) => {
+    const scheduleFinal = []
+    let schedule
+    for (schedule of schedules) {
+      if (scheduleFinal.length > 0) {
+        let insert = 0
+        scheduleFinal.forEach((element) => {
+          if (
+            schedule.open === element[1][0] &&
+            schedule.close === element[1][1]
+          ) {
+            element[0] = `${element[0]}, ${schedule.day}`
+            insert++
+          }
+        })
+        if (insert === 0) {
+          const tempaSchedule = [
+            [schedule.day],
+            [schedule.open, schedule.close]
+          ]
+          scheduleFinal.push(tempaSchedule)
+        }
+      } else {
+        const tempaSchedule = [[schedule.day], [schedule.open, schedule.close]]
+        scheduleFinal.push(tempaSchedule)
+      }
+    }
+
+    return scheduleFinal
+  }
+
   return (
-    <Grid container justify="center">
-      <Grid item xs={12} sm={6} mdß={4} lg={4}>
-        {pendingFields && (
-          <Grid style={{ maxWidth: 500, margin: 'auto' }} item>
-            <Alert
-              action={
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
+    <>
+      {pendingFields && (
+        <Box className={classes.alertBox}>
+          <Alert
+            action={
+              <Box>
+                <LinkRouter
+                  className={classes.routerLinkUpdate}
+                  style={{ textDecoration: 'none' }}
+                  to={{
+                    pathname: '/edit-profile',
+                    state: { isCompleting: true }
+                  }}
                 >
-                  <LinkRouter
-                    style={{ textDecoration: 'none' }}
-                    to={{
-                      pathname: '/edit-profile',
-                      state: { isCompleting: true }
-                    }}
-                  >
-                    <Button
-                      color="secondary"
-                      className={classes.noCapitalize}
-                      classes={{
-                        root: classes.editBtn
-                      }}
-                    >
-                      {t('common.update')}
-                    </Button>
-                  </LinkRouter>
-                </Box>
-              }
-              className={classes.alert}
-              severity="info"
-            >
-              <Typography>{t('profile.yourProfileIsNotComplete')} </Typography>
-              <Box display="flex" alignItems="center">
-                <Box width="100%" mr={1}>
-                  <LinearProgress
-                    variant="determinate"
+                  <Button
                     color="secondary"
-                    className={classes.customizedLinearProgress}
-                    value={
-                      ((15 - Object.keys(pendingFields).length) * 100) / 15
-                    }
-                  />
-                </Box>
-                <Box minWidth={35}>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                  >{`${Math.round(
-                    ((15 - Object.keys(pendingFields).length) * 100) / 15
-                  )}%`}</Typography>
-                </Box>
-              </Box>
-            </Alert>
-          </Grid>
-        )}
-        <br />
-        {profile.logo_url && profile.logo_url !== '' && (
-          <Logo logoUrl={profile.logo_url} />
-        )}
-        <Box
-          style={{ display: !profile.account ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">{t('common.account')}</Typography>
-          <Typography variant="body1">
-            <Link
-              href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
-              target="_blank"
-              rel="noopener"
-              color="secondary"
-            >
-              {profile.account}
-            </Link>
-          </Typography>
-        </Box>
-        <Divider
-          style={{ display: !profile.name ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.name ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">
-            {t('profile.organization')}
-          </Typography>
-          <Typography variant="body1">{profile.name}</Typography>
-        </Box>
-        {profile.telephones &&
-          Array.isArray(profile.telephones) &&
-          profile.telephones.length > 0 && (
-            <Box
-              flexDirection="column"
-              justifySelf="center"
-              justifyContent="center"
-              display="flex"
-            >
-              <Divider className={classes.divider} />
-              <Telephones phones={profile.telephones} />
-            </Box>
-          )}
-        <Divider
-          style={{ display: !profile.website ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.website ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">{t('common.website')}</Typography>
-          <Typography variant="body1" className={classes.noCapitalize}>
-            <Link
-              href={profile.account}
-              target="_blank"
-              rel="noopener"
-              color="secondary"
-            >
-              {profile.website}
-            </Link>
-          </Typography>
-        </Box>
-        <Divider
-          style={{ display: !profile.business_type ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.business_type ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">
-            {t('offersManagement.type')}
-          </Typography>
-          <Typography variant="body1">{profile.business_type}</Typography>
-        </Box>
-        <Divider
-          style={{ display: !profile.consent ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.consent ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">{t('profile.consent')}</Typography>
-          <Typography variant="body1">{`${
-            profile.consent ? t('profile.granted') : t('profile.revoked')
-          }`}</Typography>
-        </Box>
-
-        {profile.photos &&
-          Array.isArray(profile.photos) &&
-          profile.photos.length > 0 && (
-            <Box
-              flexDirection="column"
-              justifySelf="center"
-              justifyContent="center"
-              display="flex"
-            >
-              <Divider
-                style={{ display: !profile.photos ? 'none' : '' }}
-                className={classes.divider}
-              />
-              <CarouselComponent images={profile.photos} />
-            </Box>
-          )}
-
-        {profile.social_media_links &&
-          Array.isArray(profile.social_media_links) &&
-          profile.social_media_links.map((item, key) => (
-            <>
-              <Box key={key}>
-                <Divider className={classes.divider} />
-                <Box className={classes.rowBox}>
-                  <IconButton
-                    color="secondary"
-                    aria-label={`${item.name}-icon-button`}
+                    className={classes.updateButton}
                   >
-                    <Icon>
-                      <img
-                        src={getSocialMediaIcon(item.name)}
-                        alt={`${item.name}-icon`}
-                        height={25}
-                        width={25}
-                      />
-                    </Icon>
-                  </IconButton>
-                  <Typography variant="body1">
-                    <Link
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener"
-                      color="secondary"
-                    >
-                      {t('miscellaneous.view')}
-                    </Link>
-                  </Typography>
-                </Box>
+                    {t('common.update')}
+                  </Button>
+                </LinkRouter>
               </Box>
-            </>
-          ))}
-
-        <Divider
-          style={{ display: !profile.community_asset ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.community_asset ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">
-            {t('profile.communityAsset')}
-          </Typography>
-          <Typography variant="body1" className={classes.secondaryText}>
-            {profile.community_asset}
-          </Typography>
-        </Box>
-        <Divider
-          style={{ display: !profile.schedule ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.schedule ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">{t('common.schedule')}</Typography>
-          <Typography variant="body1" />
-        </Box>
-        <Box
-          width="100%"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Schedule
-            style={{ display: !profile.schedule ? 'none' : '' }}
-            data={profile ? JSON.parse(profile.schedule || '[]') : []}
-            showSchedule
-            showButton={false}
-          />
-        </Box>
-        <Divider
-          style={{ display: !profile.about ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.about ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">{t('signup.about')}</Typography>
-          <Typography variant="body1" />
-        </Box>
-        <TextField
-          style={{ display: !profile.about ? 'none' : '' }}
-          id="address"
-          variant="outlined"
-          disabled
-          defaultValue={profile.about}
-          InputLabelProps={{
-            shrink: true
-          }}
-          multiline
-          fullWidth
-          rows={3}
-        />
-        <Divider
-          style={{ display: !profile.address ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.address ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">{t('signup.address')}</Typography>
-          <Typography variant="body1" />
-        </Box>
-        <TextField
-          style={{ display: !profile.address ? 'none' : '' }}
-          id="address"
-          variant="outlined"
-          disabled
-          defaultValue={profile.address}
-          InputLabelProps={{
-            shrink: true
-          }}
-          multiline
-          fullWidth
-          rows={3}
-        />
-        <Divider
-          style={{ display: !profile.covid_impact ? 'none' : '' }}
-          className={classes.divider}
-        />
-        <Box
-          style={{ display: !profile.covid_impact ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">
-            {t('editProfile.covidImpact')}
-          </Typography>
-          <Typography variant="body1" />
-        </Box>
-        <TextField
-          style={{ display: !profile.covid_impact ? 'none' : '' }}
-          id="covidImpact"
-          variant="outlined"
-          disabled
-          defaultValue={profile.covid_impact}
-          InputLabelProps={{
-            shrink: true
-          }}
-          multiline
-          fullWidth
-          rows={3}
-        />
-        <Box
-          style={{ display: !profile.benefit_description ? 'none' : '' }}
-          className={classes.rowBox}
-        >
-          <Typography variant="subtitle1">
-            {t('profile.benefitDescription')}
-          </Typography>
-          <Typography variant="body1" />
-        </Box>
-        <Divider className={classes.divider} />
-        <TextField
-          style={{ display: !profile.benefit_description ? 'none' : '' }}
-          id="benefitDescription"
-          variant="outlined"
-          disabled
-          defaultValue={profile.benefit_description}
-          InputLabelProps={{
-            shrink: true
-          }}
-          multiline
-          fullWidth
-          rows={3}
-        />
-        {profile.location && profile.location !== 'null' && (
-          <MapShowOneLocation
-            markerLocation={
-              profile && profile.location
-                ? JSON.parse(profile.location || '{}')
-                : {}
             }
-            accountProp={profile.account}
-            width="100%"
-            height={400}
-            py={2}
-          />
-        )}
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          justifySelf="center"
-          className={classes.buttonContainer}
-        >
-          <QRCode value={profile.account} size={200} />
-          <LinkRouter
-            to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
-            className={classes.editBtn}
+            className={classes.alert}
+            severity="info"
           >
-            <Button variant="contained" color="primary">
-              {t('common.edit')}
-            </Button>
-          </LinkRouter>
+            <Typography>{t('profile.yourProfileIsNotComplete')} </Typography>
+            <Box display="flex" alignItems="center">
+              <Box width="100%" mr={1}>
+                <LinearProgress
+                  variant="determinate"
+                  color="secondary"
+                  className={classes.customizedLinearProgress}
+                  value={
+                    ((15 - Object.keys(pendingFields).length) * 100) / 15
+                  }
+                />
+              </Box>
+              <Box minWidth={35}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                >{`${Math.round(
+                  ((15 - Object.keys(pendingFields).length) * 100) / 15
+                )}%`}</Typography>
+              </Box>
+            </Box>
+          </Alert>
         </Box>
-      </Grid>
-    </Grid>
+      )}
+      <Box className={classes.contentHeader}>
+        <Typography className={classes.titleProfile} noWrap>{profile.name}</Typography>
+        <Typography className={classes.subtitleProfile} noWrap>{profile.account}</Typography>
+        <Typography className={classes.subtitleProfile} noWrap>{t('rolesTitle.singular.sponsor')}</Typography>
+        <Avatar
+          className={classes.avatarRoundDesktop}
+          src={profile.logo_url ? profile.logo_url : ''}
+        >
+          <StorefrontIcon />
+        </Avatar>
+      </Box>
+      {profile.website &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.website')}</Typography>
+            <Typography variant="body1" className={classes.noCapitalize}>
+              <Link
+                href={profile.account}
+                target="_blank"
+                rel="noopener"
+                color="secondary"
+              >
+                {profile.website}
+              </Link>
+            </Typography>
+          </Box>
+        </>
+      }
+      {userName &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography noWrap className={classes.rowTitle} variant="subtitle1">{t('profile.urlSite')}</Typography>
+            <Typography noWrap variant="body1" className={classes.noCapitalize}>
+              <Link
+                href={`https://lifebank.io/info/${userName}`}
+                target="_blank"
+                rel="noopener"
+                color="secondary"
+              >
+                {`https://lifebank.io/info/${userName}`}
+              </Link>
+            </Typography>
+          </Box>
+        </>
+      }
+      {profile.business_type &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('offersManagement.type')}</Typography>
+            <Typography variant="body1">{profile.business_type}</Typography>
+          </Box>
+        </>
+      }
+      {profile.consent &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.consent')}</Typography>
+            <Typography variant="body1">{`${profile.consent ? t('profile.granted') : t('profile.revoked')
+              }`}</Typography>
+          </Box>
+        </>
+      }
+      { profile.community_asset &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.communityAsset')}</Typography>
+            <Typography variant="body1" className={classes.secondaryText}>{profile.community_asset}</Typography>
+          </Box>
+        </>
+      }
+      {profile.address &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.address')}</Typography>
+            <Typography variant="body1">{profile.address}</Typography>
+          </Box>
+        </>
+      }
+      {phones.length > 0 &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.telephone')}</Typography>
+            <Box
+              flexDirection="column"
+              justifySelf="center"
+              justifyContent="center"
+              display="flex"
+            >
+              {phones.map(
+                (item, index) => (
+                  <Typography variant="body1" key={index}>{item}</Typography>
+                ))
+              }
+            </Box>
+          </Box>
+        </>
+      }
+      { socialMedia.length > 0 &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.socialMedia')}</Typography>
+            <Box>
+              {socialMedia.map(
+                (item, index) => (
+                  <IconButton
+                    key={index}
+                    aria-label={`${item.name}-icon-button`}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.name === 'facebook' && (
+                      <FacebookIcon className={classes.socialIcon} />
+                    )}
+                    {item.name === 'twitter' && (
+                      <TwitterIcon className={classes.socialIcon} />
+                    )}
+                    {item.name === 'instagram' && (
+                      <InstagramIcon className={classes.socialIcon} />
+                    )}
+                  </IconButton>
+                )
+              )}
+            </Box>
+          </Box>
+        </>
+      }
+      {profile.schedule &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
+            {generateSchedule(
+              JSON.parse(profile.schedule)
+            ).map((schedule, index) => (
+              <Typography
+                key={index}
+                id={index}
+              >{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
+            ))}
+          </Box>
+        </>
+      }
+      {profile.about &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
+            <Typography >{profile.about}</Typography>
+          </Box>
+        </>
+      }
+      {profile.covid_impact &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('editProfile.covidImpact')}</Typography>
+            <Typography >{profile.covid_impact}</Typography>
+          </Box>
+        </>
+      }
+      {profile.benefit_description &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.benefitDescription')}</Typography>
+            <Typography >{profile.benefit_description}</Typography>
+          </Box>
+        </>
+      }
+      {images.length > 0 &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.benefitDescription')}</Typography>
+            <Box>
+              <img className={classes.img} src={images[activeStep]} />
+              <MobileStepper
+                className={classes.stepper}
+                steps={images.length}
+                position="static"
+                variant="text"
+                activeStep={activeStep}
+                nextButton={
+                  <Button
+                    size="small"
+                    onClick={handleNext}
+                    disabled={activeStep === images.length - 1}
+                  >
+                    {t('common.next')}
+                    {theme.direction === 'rtl' ? (
+                      <KeyboardArrowLeft />
+                    ) : (
+                        <KeyboardArrowRight />
+                      )}
+                  </Button>
+                }
+                backButton={
+                  <Button
+                    size="small"
+                    onClick={handleBack}
+                    disabled={activeStep === 0}
+                  >
+                    {theme.direction === 'rtl' ? (
+                      <KeyboardArrowRight />
+                    ) : (
+                        <KeyboardArrowLeft />
+                      )}
+                    {t('common.prev')}
+                  </Button>
+                }
+              />
+            </Box>
+          </Box>
+        </>
+
+      }
+      { profile.location && profile.location !== 'null' && (
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('miscellaneous.location')}</Typography>
+            <MapShowOneLocation
+              markerLocation={
+                profile && profile.location
+                  ? JSON.parse(profile.location || '{}')
+                  : {}
+              }
+              accountProp={profile.account}
+              width="100%"
+              height={250}
+              py={2}
+            />
+          </Box>
+        </>
+      )
+      }
+      {
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              justifySelf="center"
+              className={classes.buttonContainer}
+            >
+              <QRCode value={profile.account} size={200} />
+
+            </Box>
+          </Box>
+        </>
+      }
+      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
+        className={classes.routerLink}
+      >
+        <Button variant="contained" color="primary" className={classes.editBtn}>{t('common.edit')}</Button>
+      </LinkRouter>
+    </>
   )
 }
 

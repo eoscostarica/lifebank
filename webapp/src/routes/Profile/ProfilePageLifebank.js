@@ -1,74 +1,195 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import Grid from '@material-ui/core/Grid'
 import Alert from '@material-ui/lab/Alert'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { Link as LinkRouter, useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
+import Avatar from '@material-ui/core/Avatar'
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
 import { useQuery } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import MobileStepper from '@material-ui/core/MobileStepper'
+import QRCode from 'qrcode.react'
 import '@brainhubeu/react-carousel/lib/style.css'
 
 import { useUser } from '../../context/user.context'
-import Schedule from '../../components/Schedule'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
-import CarouselComponent from '../../components/Carousel'
 import { GET_USERNAME } from '../../gql'
 
-const { eosConfig } = require('../../config')
-
 const useStyles = makeStyles((theme) => ({
+  contentHeader: {
+    position: 'relative',
+    height: 'auto',
+    width: '100%',
+    padding: theme.spacing(0, 2),
+    marginBottom: '40px'
+  },
+  titleProfile: {
+    width: '65%',
+    fontFamily: 'Roboto',
+    fontSize: '34px',
+    fontWeight: 'bold',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.18',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.87)',
+    marginTop: '10px',
+    marginBottom: '4px',
+    textAlign: 'left',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '24px',
+    }
+  },
+  subtitleProfile: {
+    width: '100%',
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.6)',
+    textAlign: 'left'
+  },
+  avatarRoundDesktop: {
+    position: 'absolute',
+    width: '90px',
+    height: '90px',
+    right: 10,
+    top: 0,
+    border: 'solid 2px rgba(0, 0, 0, 0.04)',
+    [theme.breakpoints.down('md')]: {
+      width: '70px',
+      height: '70px',
+    }
+  },
   rowBox: {
     display: 'flex',
     width: '100%',
     justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(2, 2),
     alignItems: 'center',
     '& p': {
       color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
       textTransform: 'capitalize'
     }
   },
-  carouselComponent: {
-    justifyContent: 'center',
-    justifySelf: 'center'
+  rowTitle: {
+    fontWeight: 'bold',
+    marginRight: '10px'
+  },
+  rowBoxLeft: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    padding: theme.spacing(2, 2),
+    alignItems: 'flex-start',
+    '& p': {
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+      textTransform: 'capitalize'
+    }
+  },
+  element: {
+    height: '100%',
+    minWidth: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
   },
   divider: {
     width: '100%'
   },
+  dialogContent: {
+    padding: theme.spacing(5, 2),
+    marginTop: theme.spacing(10)
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    color: 'white',
+    flex: 1
+  },
+  img: {
+    marginTop: theme.spacing(1),
+    height: '30vh',
+    objectFit: 'cover',
+    overflow: 'hidden',
+    display: 'block',
+    width: '100%'
+  },
+  stepper: {
+    backgroundColor: '#ffffff'
+  },
+  socialIcon: {
+    color: 'rgba(0, 0, 0, 0.87)'
+  },
+  routerLinkUpdate: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  updateButton: {
+    maxWidth: '50%',
+  },
+  routerLink: {
+    width: "100%",
+    textDecoration: "none",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   editBtn: {
-    margin: theme.spacing(2, 0)
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 20,
   },
   secondaryText: {
     color: `${theme.palette.secondary.main} !important`
   },
-  carouselDiv: {
-    width: '100%',
-    objectFit: 'cover'
+  noCapitalize: {
+    textTransform: 'none !important'
   },
-  img: {
-    width: '65px',
-    objectFit: 'cover',
-    height: '65px',
-    borderRadius: '50%',
-    marginBottom: '30px'
+  customizedLinearProgress: {
+    height: 10,
+    borderRadius: 5
   },
-  divProgressProfile: {
-    width: '100%',
-    marginBottom: '40px'
+  alertBox: {
+    width: "100%",
+    padding: theme.spacing(0, 2),
+    marginBottom: theme.spacing(2)
   },
-  telephonesStyle: {
-    width: '100%',
-    marginBottom: '6px',
-    paddingRight: '8px',
-    color: theme.palette.secondary.onSecondaryMediumEmphasizedText
+  alert: {
+    width: "100%",
+
+    '& > div.MuiAlert-message': {
+      padding: 0,
+      margin: 0
+    },
+    '& > div.MuiAlert-action': {
+      maxHeight: 50
+    },
+  },
+  buttonContainer: {
+    width: "100%",
+    margin: theme.spacing(2, 0)
   }
 }))
 
@@ -79,6 +200,10 @@ const ProfilePageLifebank = ({ profile }) => {
   const [pendingFields, setPendingFields] = useState()
   const history = useHistory()
   const [, { logout }] = useUser()
+  const theme = useTheme()
+  const phones = JSON.parse(profile.telephones)
+  const images = JSON.parse(profile.photos)
+  const [activeStep, setActiveStep] = useState(0)
 
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
@@ -86,6 +211,11 @@ const ProfilePageLifebank = ({ profile }) => {
     },
     skip: true
   })
+
+  const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
+
+  const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
+
 
   useEffect(() => {
     const getUsername = async () => {
@@ -153,233 +283,305 @@ const ProfilePageLifebank = ({ profile }) => {
     if (profile) checkAvailableFields()
   }, [profile])
 
+  const generateSchedule = (schedules) => {
+    const scheduleFinal = []
+    let schedule
+    for (schedule of schedules) {
+      if (scheduleFinal.length > 0) {
+        let insert = 0
+        scheduleFinal.forEach((element) => {
+          if (
+            schedule.open === element[1][0] &&
+            schedule.close === element[1][1]
+          ) {
+            element[0] = `${element[0]}, ${schedule.day}`
+            insert++
+          }
+        })
+        if (insert === 0) {
+          const tempaSchedule = [
+            [schedule.day],
+            [schedule.open, schedule.close]
+          ]
+          scheduleFinal.push(tempaSchedule)
+        }
+      } else {
+        const tempaSchedule = [[schedule.day], [schedule.open, schedule.close]]
+        scheduleFinal.push(tempaSchedule)
+      }
+    }
+
+    return scheduleFinal
+  }
+
   return (
     <>
-      <div className={classes.divProgressProfile}>
-        {pendingFields && (
-          <Grid style={{ maxWidth: 500, margin: 'auto' }} item>
-            <Alert
-              action={
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
+      {pendingFields && (
+        <Box className={classes.alertBox}>
+          <Alert
+            action={
+              <Box>
+                <LinkRouter
+                  className={classes.routerLinkUpdate}
+                  style={{ textDecoration: 'none' }}
+                  to={{
+                    pathname: '/edit-profile',
+                    state: { isCompleting: true }
+                  }}
                 >
-                  <LinkRouter
-                    style={{ textDecoration: 'none' }}
-                    to={{
-                      pathname: '/edit-profile',
-                      state: { isCompleting: true, userName: userName }
-                    }}
-                  >
-                    <Button
-                      color="secondary"
-                      className={classes.noCapitalize}
-                      classes={{
-                        root: classes.editBtn
-                      }}
-                    >
-                      {t('common.update')}
-                    </Button>
-                  </LinkRouter>
-                </Box>
-              }
-              className={classes.alert}
-              severity="info"
-            >
-              <Typography> {t('profile.yourProfileIsNotComplete')} </Typography>
-              <Box display="flex" alignItems="center">
-                <Box width="100%" mr={1}>
-                  <LinearProgress
-                    variant="determinate"
+                  <Button
                     color="secondary"
-                    className={classes.customizedLinearProgress}
-                    value={
-                      ((11 - Object.keys(pendingFields).length) * 100) / 11
-                    }
-                  />
-                </Box>
-                <Box minWidth={35}>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                  >{`${Math.round(
-                    ((11 - Object.keys(pendingFields).length) * 100) / 11
-                  )}%`}</Typography>
-                </Box>
+                    className={classes.editBtn}
+                  >
+                    {t('common.update')}
+                  </Button>
+                </LinkRouter>
               </Box>
-            </Alert>
-          </Grid>
-        )}
-      </div>
-      {profile.logo_url.length > 0 && (
-        <Box className={classes.rowBox}>
-          <Typography variant="subtitle1">{t('profile.logo')}</Typography>
-          <img
-            className={classes.img}
-            src={`//images.weserv.nl?url=${profile.logo_url}&h=300&dpr=2`}
-            alt="logo image"
-          />
+            }
+            className={classes.alert}
+            severity="info"
+          >
+            <Typography>{t('profile.yourProfileIsNotComplete')} </Typography>
+            <Box display="flex" alignItems="center">
+              <Box width="100%" mr={1}>
+                <LinearProgress
+                  variant="determinate"
+                  color="secondary"
+                  className={classes.customizedLinearProgress}
+                  value={
+                    ((15 - Object.keys(pendingFields).length) * 100) / 15
+                  }
+                />
+              </Box>
+              <Box minWidth={35}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                >{`${Math.round(
+                  ((15 - Object.keys(pendingFields).length) * 100) / 15
+                )}%`}</Typography>
+              </Box>
+            </Box>
+          </Alert>
         </Box>
       )}
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography style={{ marginRight: '6px' }} noWrap variant="subtitle1">
-          {t('profile.urlSite')}
-        </Typography>
-        <Typography style={{ marginLeft: '36px' }} noWrap variant="body1">
-          <a variant="body1" href={`https://lifebank.io/info/${userName}`}>
-            {' '}
-            {`lifebank.io/info/${userName}`}
-          </a>
-        </Typography>
+      <Box className={classes.contentHeader}>
+        <Typography className={classes.titleProfile} noWrap>{profile.name}</Typography>
+        <Typography className={classes.subtitleProfile} noWrap>{profile.account}</Typography>
+        <Typography className={classes.subtitleProfile} noWrap>{t('miscellaneous.donationCenter')}</Typography>
+        <Avatar
+          className={classes.avatarRoundDesktop}
+          src={profile.logo_url ? profile.logo_url : ''}
+        >
+          <LocalHospitalIcon />
+        </Avatar>
       </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('common.account')}</Typography>
-        <Typography variant="body1">
-          <Link
-            href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
-            target="_blank"
-            rel="noopener"
-            color="secondary"
-          >
-            {profile.account}
-          </Link>
-        </Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('profile.organization')}</Typography>
-        <Typography variant="body1">{profile.name}</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('profile.role')}</Typography>
-        <Typography variant="body1">{profile.role}</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('common.email')}</Typography>
-        <Typography variant="body1">{profile.email}</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('signup.address')}</Typography>
-        <Typography variant="body1">{profile.address}</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('common.telephone')}</Typography>
-      </Box>
-      <Box style={{ textAlign: 'right', width: '100%', paddingRight: '1%' }}>
-        {JSON.parse(profile.telephones).length > 0 &&
-          JSON.parse(profile.telephones).map((phoneNumber, index) => (
-            <Typography
-              className={classes.telephonesStyle}
-              key={index}
-              variant="body1"
-            >
-              {phoneNumber}
-            </Typography>
-          ))}
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('profile.consent')}</Typography>
-        <Typography variant="body1">{`${profile.consent}`}</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">
-          {t('profile.communityAsset')}
-        </Typography>
-        <Typography variant="body1" className={classes.secondaryText}>
-          {profile.community_asset}
-        </Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">
-          {t('profile.hasImmunityTest')}
-        </Typography>
-        <Typography variant="body1">{`${Boolean(
-          profile.has_inmmunity_test
-        )}`}</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('common.bloodUrgency')}</Typography>
-        <Typography variant="body1" className={classes.secondaryText}>
-          {profile.blood_urgency_level}
-        </Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('common.schedule')}</Typography>
-        <Typography variant="body1" />
-      </Box>
-      <Schedule
-        data={JSON.parse(profile.schedule)}
-        showSchedule
-        showButton={false}
-      />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('signup.about')}</Typography>
-        <Typography variant="body1" />
-      </Box>
-      <TextField
-        id="about"
-        variant="outlined"
-        disabled
-        defaultValue={profile.about}
-        InputLabelProps={{
-          shrink: true
-        }}
-        multiline
-        fullWidth
-        rows={3}
-      />
-      {JSON.parse(profile.photos).length > 0 && (
-        <div>
+      {userName &&
+        <>
+          <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
-            <Typography variant="subtitle1">{t('profile.images')}</Typography>
-            <Typography variant="body1" />
+            <Typography noWrap className={classes.rowTitle} variant="subtitle1">{t('profile.urlSite')}</Typography>
+            <Typography noWrap variant="body1" className={classes.noCapitalize}>
+              <Link
+                href={`https://lifebank.io/info/${userName}`}
+                target="_blank"
+                rel="noopener"
+                color="secondary"
+              >
+                {`https://lifebank.io/info/${userName}`}
+              </Link>
+            </Typography>
           </Box>
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            md={6}
-            lg={4}
-            className={classes.carouselComponent}
-          >
-            <CarouselComponent images={JSON.parse(profile.photos)} />
-          </Grid>
-        </div>
-      )}
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('profile.location')}</Typography>
-        <Typography variant="body1" />
-      </Box>
-      <MapShowOneLocation
-        markerLocation={JSON.parse(profile.location)}
-        accountProp={profile.account}
-        width="100%"
-        height={400}
-        py={2}
-      />
-      <Divider className={classes.divider} />
-      <LinkRouter
-        to={{
-          pathname: '/edit-profile',
-          state: { isCompleting: false, userName: userName }
-        }}
-        className={classes.editBtn}
+        </>
+      }
+      {profile.email &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.email')}</Typography>
+            <Typography variant="body1">{profile.email}</Typography>
+          </Box>
+        </>
+      }
+      {profile.address &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.address')}</Typography>
+            <Typography variant="body1">{profile.address}</Typography>
+          </Box>
+        </>
+      }
+      {phones.length > 0 &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.telephone')}</Typography>
+            <Box
+              flexDirection="column"
+              justifySelf="center"
+              justifyContent="center"
+              display="flex"
+            >
+              {phones.map(
+                (item, index) => (
+                  <Typography variant="body1" key={index}>{item}</Typography>
+                ))
+              }
+            </Box>
+          </Box>
+        </>
+      }
+      {profile.consent &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.consent')}</Typography>
+            <Typography variant="body1">{`${profile.consent ? t('profile.granted') : t('profile.revoked')
+              }`}</Typography>
+          </Box>
+        </>
+      }
+      { profile.community_asset &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.communityAsset')}</Typography>
+            <Typography variant="body1" className={classes.secondaryText}>{profile.community_asset}</Typography>
+          </Box>
+        </>
+      }
+      { profile.has_inmmunity_test &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.hasImmunityTest')}</Typography>
+            <Typography variant="body1" className={classes.secondaryText}>{profile.has_inmmunity_test}</Typography>
+          </Box>
+        </>
+      }
+      { profile.blood_urgency_level &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
+            <Typography variant="body1" className={classes.secondaryText}>{profile.blood_urgency_level}</Typography>
+          </Box>
+        </>
+      }
+      {profile.about &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
+            <Typography >{profile.about}</Typography>
+          </Box>
+        </>
+      }
+      {profile.schedule &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
+            {generateSchedule(
+              JSON.parse(profile.schedule)
+            ).map((schedule, index) => (
+              <Typography
+                key={index}
+                id={index}
+              >{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
+            ))}
+          </Box>
+        </>
+      }
+      { profile.location && profile.location !== 'null' && (
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('miscellaneous.location')}</Typography>
+            <MapShowOneLocation
+              markerLocation={
+                profile && profile.location
+                  ? JSON.parse(profile.location || '{}')
+                  : {}
+              }
+              accountProp={profile.account}
+              width="100%"
+              height={250}
+              py={2}
+            />
+          </Box>
+        </>
+      )
+      }
+      {images.length > 0 &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.benefitDescription')}</Typography>
+            <Box>
+              <img className={classes.img} src={images[activeStep]} />
+              <MobileStepper
+                className={classes.stepper}
+                steps={images.length}
+                position="static"
+                variant="text"
+                activeStep={activeStep}
+                nextButton={
+                  <Button
+                    size="small"
+                    onClick={handleNext}
+                    disabled={activeStep === images.length - 1}
+                  >
+                    {t('common.next')}
+                    {theme.direction === 'rtl' ? (
+                      <KeyboardArrowLeft />
+                    ) : (
+                        <KeyboardArrowRight />
+                      )}
+                  </Button>
+                }
+                backButton={
+                  <Button
+                    size="small"
+                    onClick={handleBack}
+                    disabled={activeStep === 0}
+                  >
+                    {theme.direction === 'rtl' ? (
+                      <KeyboardArrowRight />
+                    ) : (
+                        <KeyboardArrowLeft />
+                      )}
+                    {t('common.prev')}
+                  </Button>
+                }
+              />
+            </Box>
+          </Box>
+        </>
+      }
+      {
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              justifySelf="center"
+              className={classes.buttonContainer}
+            >
+              <QRCode value={profile.account} size={200} />
+
+            </Box>
+          </Box>
+        </>
+      }
+      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
+        className={classes.routerLink}
       >
-        <Button variant="contained" color="primary">
-          {t('common.edit')}
-        </Button>
+        <Button variant="contained" color="primary" className={classes.editBtn}>{t('common.edit')}</Button>
       </LinkRouter>
     </>
   )
