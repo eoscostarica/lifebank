@@ -370,7 +370,7 @@ const InfoPage = () => {
                 </Typography>
                 <Typography className={classes.text} variant="body1">
                   {' '}
-                  {profile.about}
+                  {profile.description}
                 </Typography>
               </Box>
               <Divider className={classes.divider} />
