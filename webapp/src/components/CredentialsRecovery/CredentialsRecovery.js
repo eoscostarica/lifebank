@@ -251,7 +251,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   }}
                   value={user.email || ''}
                   onChange={(event) =>
-                    handleSetFieldEmail('email', event.target.value)
+                    handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))
                   }
                   onKeyPress={(event) =>
                     executeCredentialsRecovery(event)

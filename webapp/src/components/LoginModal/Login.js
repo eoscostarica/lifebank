@@ -341,7 +341,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                 variant="outlined"
                 className={classes.inputStyle}
                 onChange={(event) =>
-                  handleSetField('account', event.target.value)
+                  handleSetField('account', event.target.value.toLowerCase().replace(/\s/g, ''))
                 }
                 onKeyPress={(event) =>
                   executeLogin(event)
