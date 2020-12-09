@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
-import { Typography } from '@material-ui/core'
 import clsx from 'clsx'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   popup: {},
   ul: {
     margin: 0
@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
     letterSpacing: '0.4px',
     color: '#000000'
   },
-  bodytext:{
+  bodytext: {
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
@@ -58,76 +58,80 @@ const useStyles = makeStyles(() => ({
     letterSpacing: '0.4px',
     textAlign: 'center',
     float: 'left'
-    },
-    closeColor: {
-      color: '#ba0d0d'
-    },
-    openColor: {
-      color: '#00b13c'
-    },
-    mediumDiv:{
-      height: "100%",
-      width: '62.5%',
-      float: 'left'
-    },
-    button: {
-      marginTop: '6%',
-      marginLeft: '8%',
-      marginRight: '8%',
-      borderRadius: '50px',
-      backgroundColor: '#ba0d0d',
-      width: "84%",
-      height: '25px',
-      fontSize: '14px',
-      fontWeight: 500,
-      fontStretch: 'normal',
-      fontStyle: 'normal',
-      lineHeight: 1.14,
-      letterSpacing: '1px',
-      color: '#ffffff'
-    },
-}))
+  },
+  closeColor: {
+    color: '#ba0d0d'
+  },
+  openColor: {
+    color: '#00b13c'
+  },
+  mediumDiv: {
+    height: '100%',
+    width: '62.5%',
+    float: 'left'
+  },
+  button: {
+    marginTop: '6%',
+    marginLeft: '8%',
+    marginRight: '8%',
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: '84%',
+    height: '25px',
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff'
+  }
+})
 
 // TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
 function MapPopup({ id, info, username }) {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState()
-  const toDay = new Date();
-  let dd = toDay.getDay();
+  const toDay = new Date()
+  let dd = toDay.getDay()
   const hour = toDay.getHours()
 
   useEffect(() => {
     if (!open) {
-      switch(dd) {
+      switch (dd) {
         case 0:
           dd = 'Sunday'
-          break;
+          break
         case 1:
           dd = 'Monday'
-          break;
+          break
         case 2:
           dd = 'Tuesday'
-          break;
+          break
         case 3:
           dd = 'Wednesday'
-          break;
+          break
         case 4:
           dd = 'Thursday'
-          break;
+          break
         case 5:
           dd = 'Friday'
-          break;
+          break
         default:
           dd = 'Saturday'
       }
-      JSON.parse(info.schedule).forEach(element => {
+
+      JSON.parse(info.schedule).forEach((element) => {
         if (dd === element.day)
-          if (hour >= parseInt(element.open, 10) && hour < parseInt(element.close, 10))
+          if (
+            hour >= parseInt(element.open, 10) &&
+            hour < parseInt(element.close, 10)
+          )
             setOpen(true)
-      });
+      })
     }
-  }, )
+  })
 
   var isMobile = {
     platform: function () {
@@ -151,33 +155,36 @@ function MapPopup({ id, info, username }) {
   }
 
   return (
-    <Box key={id}>
-      <Typography className={classes.title}>{info.name} </Typography>
-      <div style={{width:'100%', marginBottom: '22px'}}>
+    <div key={id}>
+      <h3 className={classes.title}>{info.name} </h3>
+      <div style={{ width: '100%', marginBottom: '22px' }}>
         <div className={classes.mediumDiv}>
-          <Typography noWrap className={classes.subTitule}> {info.business_type || t('miscellaneous.donationCenter')} </Typography>
+          <h5 className={classes.subTitule}>
+            {info.business_type || t('miscellaneous.donationCenter')}{' '}
+          </h5>
         </div>
-          {open && 
-            <Typography className={clsx(classes.openingHourseText,classes.openColor)}> {t('miscellaneous.openNow')} </Typography>
-          }
-          {!open && 
-            <Typography className={clsx(classes.openingHourseText,classes.closeColor)}> {t('miscellaneous.closeNow')} </Typography>
-          }
+        {open && (
+          <p className={clsx(classes.openingHourseText, classes.openColor)}>
+            {t('miscellaneous.openNow')}{' '}
+          </p>
+        )}
+        {!open && (
+          <p className={clsx(classes.openingHourseText, classes.closeColor)}>
+            {t('miscellaneous.closeNow')}{' '}
+          </p>
+        )}
       </div>
       <div className={classes.bodytext}>
-      <Typography className={classes.bodytext}>
-        {'Tel: '}
-        <a
-          href={`tel: ${info.telephones}`}
-          className={classes.link}
-        >
-          {JSON.parse(info.telephones)[0]}
-        </a>
-      </Typography>
+        <p className={classes.bodytext}>
+          Tel:
+          <a href={`tel: ${info.telephones}`} className={classes.link}>
+            {JSON.parse(info.telephones)[0]}
+          </a>
+        </p>
       </div>
       <div className={classes.bodytext}>
-        <Typography className={classes.bodytext}>
-        {`${t('signup.address')}: `}
+        <p className={classes.bodytext}>
+          {`${t('signup.address')}: `}
           <a
             className={classes.link}
             href={goto()}
@@ -186,17 +193,17 @@ function MapPopup({ id, info, username }) {
           >
             {info.address}
           </a>
-        </Typography>
+        </p>
       </div>
-        <Button
-          variant="contained"
-          color="secondary"
-          href={`https://lifebank.io/info/${username}`}
-          className={classes.button}
-        >
-          {t('cardsSection.moreInfo')}
-        </Button>
-    </Box>
+      <Button
+        variant="contained"
+        color="secondary"
+        href={`https://lifebank.io/info/${username}`}
+        className={classes.button}
+      >
+        {t('cardsSection.moreInfo')}
+      </Button>
+    </div>
   )
 }
 
