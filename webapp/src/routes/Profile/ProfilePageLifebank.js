@@ -212,13 +212,10 @@ const ProfilePageLifebank = ({ profile }) => {
     skip: true
   })
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  }
+  const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
+  const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
+
 
   useEffect(() => {
     const getUsername = async () => {
@@ -386,7 +383,7 @@ const ProfilePageLifebank = ({ profile }) => {
             <Typography noWrap className={classes.rowTitle} variant="subtitle1">{t('profile.urlSite')}</Typography>
             <Typography noWrap variant="body1" className={classes.noCapitalize}>
               <Link
-                href= {`https://lifebank.io/info/${userName}`}
+                href={`https://lifebank.io/info/${userName}`}
                 target="_blank"
                 rel="noopener"
                 color="secondary"
