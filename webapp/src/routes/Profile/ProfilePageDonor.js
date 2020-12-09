@@ -7,33 +7,107 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import QRCode from 'qrcode.react'
-import Link from '@material-ui/core/Link'
 import Switch from '@material-ui/core/Switch'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
 
-import { eosConfig } from '../../config'
-
 const useStyles = makeStyles((theme) => ({
+  contentHeader: {
+    position: 'relative',
+    height: 'auto',
+    width: '100%',
+    marginBottom: '40px'
+  },
+  titleProfile: {
+    padding: theme.spacing(0, 2),
+    width: '65%',
+    fontFamily: 'Roboto',
+    fontSize: '34px',
+    fontWeight: 'bold',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.18',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.87)',
+    marginTop: '10px',
+    marginBottom: '4px',
+    textAlign: 'left',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '24px',
+    }
+  },
+  subtitleProfile: {
+    padding: theme.spacing(0, 2),
+    width: '100%',
+    fontFamily: 'Roboto',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    color: 'rgba(0, 0, 0, 0.6)',
+    textAlign: 'left'
+  },
+  avatarRoundDesktop: {
+    width: '80px',
+    height: '80px',
+    marginBottom: '5px'
+  },
+  heart: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    padding: 0,
+    width: '100px',
+    fontSize: 275,
+    animation: '$heartbeat 1.4s linear infinite',
+    [theme.breakpoints.up('md')]: {
+      width: '100px'
+    }
+  },
+  tokensBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: 'auto',
+    width: '100%',
+    alignItems: 'center',
+  },
   rowBox: {
     display: 'flex',
     width: '100%',
     justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(2, 2),
     alignItems: 'center',
     '& p': {
       color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-      textTransform: 'capitalize'
     }
   },
   divider: {
     width: '100%'
   },
+  routerLink: {
+    width: "100%",
+    textDecoration: "none",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   editBtn: {
-    marginTop: theme.spacing(2)
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 20,
   },
   formGroup: {
     display: 'flex',
@@ -41,10 +115,51 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     marginRight: theme.spacing(2) * -1
   },
-  secondaryText: {
-    color: `${theme.palette.secondary.main} !important`
+  boxQr: {
+    marginTop: '20px',
+    marginBottom: '20px'
   }
 }))
+
+
+const EmptyHeartSVG = ({ balance }) => {
+  const classes = useStyles()
+  const textColor = balance ? '#ffffff' : '#000000'
+
+  return (
+    <svg viewBox="0 0 800 700" className={classes.heart}>
+      <path
+        fill="#B71C1C"
+        d="M514.672,106.17c-45.701,0-88.395,22.526-114.661,59.024c-26.284-36.505-68.981-59.024-114.683-59.024C207.405,106.17,144,169.564,144,247.5c0,94.381,57.64,144.885,124.387,203.358c38.983,34.149,83.17,72.856,119.654,125.332l12.267,17.641l11.854-17.924c35.312-53.388,78.523-91.695,120.305-128.734C596.006,390.855,656,337.654,656,247.5C656,169.564,592.604,106.17,514.672,106.17z M513.143,425.371c-36.93,32.729-78.27,69.373-113.402,117.391c-35.717-46.873-76.089-82.242-112.148-113.834c-63.944-56.01-114.447-100.26-114.447-181.428c0-61.868,50.325-112.186,112.184-112.186c43.196,0,83.034,25.395,101.491,64.697l13.191,28.105l13.19-28.112c18.443-39.303,58.273-64.69,101.472-64.69c61.866,0,112.185,50.317,112.185,112.186C626.856,324.548,576.673,369.047,513.143,425.371z"
+      />
+      {balance && (
+        <g transform="translate(150, 200)">
+          <path
+            fill="#B71C1C"
+            d="M 10,30 A 25,22 0,0,1 250,10 A 25,20 0,0,1 480,10 Q 550,80 240,360 Q 10,150 10,30 z"
+          />
+        </g>
+      )}
+      <text
+        x="50%"
+        y="50%"
+        dominantBaseline="middle"
+        textAnchor="middle"
+        fontSize="200"
+        fontFamily="Roboto"
+        textRendering="geometricPrecision"
+        lengthAdjust="spacingAndGlyphs"
+        fill={textColor}
+      >
+        {balance}
+      </text>
+    </svg>
+  )
+}
+
+EmptyHeartSVG.propTypes = {
+  balance: PropTypes.number,
+}
 
 const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
   const { t } = useTranslation('translations')
@@ -52,32 +167,16 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
 
   return (
     <>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('common.account')}</Typography>
-        <Typography variant="body1">
-          <Link
-            href={`${eosConfig.BLOCK_EXPLORER_URL}account/${profile.account}`}
-            target="_blank"
-            rel="noopener"
-            color="secondary"
-          >
-            {profile.account}
-          </Link>
-        </Typography>
+      <Box className={classes.contentHeader}>
+        <Typography className={classes.titleProfile} noWrap>{profile.name}</Typography>
+        <Typography className={classes.subtitleProfile} noWrap>{profile.account}</Typography>
+        <Typography className={classes.subtitleProfile} noWrap>{t('rolesTitle.singular.donor')}</Typography>
+        <EmptyHeartSVG balance={parseInt((profile.balance.join(',').split(' ')[0]))} isDesktop />
       </Box>
+      <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
         <Typography variant="subtitle1">{t('common.email')}</Typography>
-        <Typography variant="body1">{profile.email || 'N/A'}</Typography>
-      </Box>
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('signup.name')}</Typography>
-        <Typography variant="body1">{profile.name || 'N/A'}</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('profile.role')}</Typography>
-        <Typography variant="body1">{profile.role}</Typography>
+        <Typography >{profile.email.toLowerCase() || 'N/A'}</Typography>
       </Box>
       <Divider className={classes.divider} />
       <Box className={classes.rowBox}>
@@ -111,38 +210,11 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         </FormGroup>
       </Box>
       <Divider className={classes.divider} />
-      <Box height={30} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('miscellaneous.tokens')}</Typography>
-        <Link
-          href={`${eosConfig.BLOCK_EXPLORER_URL}account/lifebankcoin?loadContract=true&tab=Tables&table=accounts&account=lifebankcoin&scope=${profile.account}&limit=100`}
-          target="_blank"
-          rel="noopener"
-          color="secondary"
-        >
-          <Typography variant="body1" className={classes.secondaryText}>
-            {(profile.balance || []).join(', ')}
-          </Typography>
-        </Link>
+      <Box className={classes.boxQr}>
+        <QRCode value={profile.account || 'n/a'} size={200} />
       </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">
-          {t('miscellaneous.redeemed')}
-        </Typography>
-        <Typography variant="body1">0</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">
-          {t('miscellaneous.expired')}
-        </Typography>
-        <Typography variant="body1">0</Typography>
-      </Box>
-      <Divider className={classes.divider} />
-      <QRCode value={profile.account || 'n/a'} size={200} />
-      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: true, userName: '' } }} className={classes.editBtn}>
-        <Button variant="contained" color="primary">
+      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: true, userName: '' } }} className={classes.routerLink} >
+        <Button variant="contained" className={classes.editBtn} color="primary">
           {t('common.edit')}
         </Button>
       </LinkRouter>
