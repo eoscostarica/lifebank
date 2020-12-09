@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
-import { Link as LinkRouter } from 'react-router-dom'
+import { Link as LinkRouter, useHistory } from 'react-router-dom'
+import { useQuery } from '@apollo/react-hooks'
 import Alert from '@material-ui/lab/Alert'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -21,7 +22,9 @@ import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
 
+import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
+import { GET_USERNAME } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   contentHeader: {
@@ -196,12 +199,22 @@ const useStyles = makeStyles((theme) => ({
 const ProfilePageSponsor = ({ profile }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
+  const [userName, setuserName] = useState()
   const [pendingFields, setPendingFields] = useState()
   const [activeStep, setActiveStep] = useState(0)
   const theme = useTheme()
+  const history = useHistory()
+  const [, { logout }] = useUser()
   const images = JSON.parse(profile.photos)
   const socialMedia = JSON.parse(profile.social_media_links)
   const phones = JSON.parse(profile.telephones)
+
+  const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
+    variables: {
+      account: profile.account
+    },
+    skip: true
+  })
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -210,6 +223,28 @@ const ProfilePageSponsor = ({ profile }) => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
+
+  useEffect(() => {
+    const getUsername = async () => {
+      const { data } = await getData({
+        account: profile.account
+      })
+
+      if (data) setuserName(data.user[0].username.replaceAll(' ', '-'))
+    }
+
+    if (!userName) getUsername()
+  })
+
+  useEffect(() => {
+    if (errorUsername) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+      } else history.push('/internal-error')
+    }
+
+  }, [errorUsername])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -372,6 +407,24 @@ const ProfilePageSponsor = ({ profile }) => {
                 color="secondary"
               >
                 {profile.website}
+              </Link>
+            </Typography>
+          </Box>
+        </>
+      }
+      {userName &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography noWrap className={classes.rowTitle} variant="subtitle1">{t('profile.urlSite')}</Typography>
+            <Typography noWrap variant="body1" className={classes.noCapitalize}>
+              <Link
+                href={`https://lifebank.io/info/${userName}`}
+                target="_blank"
+                rel="noopener"
+                color="secondary"
+              >
+                {`https://lifebank.io/info/${userName}`}
               </Link>
             </Typography>
           </Box>
