@@ -19,6 +19,7 @@ import { useParams } from 'react-router'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
+import ViewSchedule from '../../components/ViewSchedule'
 import { GET_LOCATION_PROFILE } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
 
@@ -191,37 +192,6 @@ const InfoPage = () => {
     skip: true
   })
 
-  const generateSchedule = (schedules) => {
-    const scheduleFinal = []
-    let schedule
-    for (schedule of schedules) {
-      if (scheduleFinal.length > 0) {
-        let insert = 0
-        scheduleFinal.forEach((element) => {
-          if (
-            schedule.open === element[1][0] &&
-            schedule.close === element[1][1]
-          ) {
-            element[0] = `${element[0]}, ${t(`schedule.${schedule.day.toLowerCase()}`)}`
-            insert++
-          }
-        })
-        if (insert === 0) {
-          const tempaSchedule = [
-            [t(`schedule.${schedule.day.toLowerCase()}`)],
-            [schedule.open, schedule.close]
-          ]
-          scheduleFinal.push(tempaSchedule)
-        }
-      } else {
-        const tempaSchedule = [[t(`schedule.${schedule.day.toLowerCase()}`)], [schedule.open, schedule.close]]
-        scheduleFinal.push(tempaSchedule)
-      }
-    }
-
-    return scheduleFinal
-  }
-
   useEffect(() => {
     getInfo()
 
@@ -378,17 +348,7 @@ const InfoPage = () => {
                 <Typography className={classes.boldText} variant="subtitle1">
                   {t('common.schedule')}
                 </Typography>
-                {JSON.parse(profile.openingHours).length > 0 &&
-                  generateSchedule(
-                    JSON.parse(profile.openingHours)
-                  ).map((schedule, index) => (
-                    <Typography
-                      key={index}
-                      className={classes.text}
-                      id={index}
-                      variant="body1"
-                    >{`${schedule[0]} ${t('schedule.from')} ${schedule[1][0]} ${t('offerView.to')} ${schedule[1][1]}`}</Typography>
-                  ))}
+                <ViewSchedule schedule = {profile.openingHours} />
               </Box>
               <Divider className={classes.divider} />
               <Box className={classes.midLabel}>
