@@ -131,6 +131,14 @@ const useStyles = makeStyles((theme) => ({
   socialIcon: {
     color: 'rgba(0, 0, 0, 0.87)'
   },
+  routerLinkUpdate: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  updateButton: {
+    maxWidth: '50%',
+  },
   routerLink: {
     width: "100%",
     textDecoration: "none",
@@ -316,6 +324,7 @@ const ProfilePageLifebank = ({ profile }) => {
             action={
               <Box>
                 <LinkRouter
+                  className={classes.routerLinkUpdate}
                   style={{ textDecoration: 'none' }}
                   to={{
                     pathname: '/edit-profile',
@@ -324,10 +333,7 @@ const ProfilePageLifebank = ({ profile }) => {
                 >
                   <Button
                     color="secondary"
-                    className={classes.noCapitalize}
-                    classes={{
-                      root: classes.editBtn
-                    }}
+                    className={classes.editBtn}
                   >
                     {t('common.update')}
                   </Button>

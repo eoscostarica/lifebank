@@ -138,6 +138,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  routerLinkUpdate: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  updateButton: {
+    maxWidth: '50%',
+  },
   editBtn: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
@@ -296,6 +304,7 @@ const ProfilePageSponsor = ({ profile }) => {
             action={
               <Box>
                 <LinkRouter
+                  className={classes.routerLinkUpdate}
                   style={{ textDecoration: 'none' }}
                   to={{
                     pathname: '/edit-profile',
@@ -304,10 +313,7 @@ const ProfilePageSponsor = ({ profile }) => {
                 >
                   <Button
                     color="secondary"
-                    className={classes.noCapitalize}
-                    classes={{
-                      root: classes.editBtn
-                    }}
+                    className={classes.updateButton}
                   >
                     {t('common.update')}
                   </Button>
