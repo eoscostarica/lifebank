@@ -162,7 +162,8 @@
       "open": "Abierto",
       "close": "Cerrado",
       "editSchedule": "Editar horario",
-      "chooseYourSchedule": "Escoge tu Horario"
+      "chooseYourSchedule": "Escoge tu Horario",
+      "from": "desde"
     },
     "profile": {
       "myProfile": "Mi Perfil",

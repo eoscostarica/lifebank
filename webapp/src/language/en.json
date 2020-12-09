@@ -162,7 +162,8 @@
       "open": "Open",
       "close": "Closed",
       "editSchedule": "Edit Schedule",
-      "chooseYourSchedule": "Choose Your Schedule"
+      "chooseYourSchedule": "Choose Your Schedule",
+      "from": "from"
     },
     "profile": {
       "myProfile": "My Profile",

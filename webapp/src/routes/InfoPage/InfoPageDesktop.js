@@ -202,19 +202,19 @@ const InfoPage = () => {
             schedule.open === element[1][0] &&
             schedule.close === element[1][1]
           ) {
-            element[0] = `${element[0]}, ${schedule.day}`
+            element[0] = `${element[0]}, ${t(`schedule.${schedule.day.toLowerCase()}`)}`
             insert++
           }
         })
         if (insert === 0) {
           const tempaSchedule = [
-            [schedule.day],
+            [t(`schedule.${schedule.day.toLowerCase()}`)],
             [schedule.open, schedule.close]
           ]
           scheduleFinal.push(tempaSchedule)
         }
       } else {
-        const tempaSchedule = [[schedule.day], [schedule.open, schedule.close]]
+        const tempaSchedule = [[t(`schedule.${schedule.day.toLowerCase()}`)], [schedule.open, schedule.close]]
         scheduleFinal.push(tempaSchedule)
       }
     }
@@ -387,7 +387,7 @@ const InfoPage = () => {
                       className={classes.text}
                       id={index}
                       variant="body1"
-                    >{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
+                    >{`${schedule[0]} ${t('schedule.from')} ${schedule[1][0]} ${t('offerView.to')} ${schedule[1][1]}`}</Typography>
                   ))}
               </Box>
               <Divider className={classes.divider} />
