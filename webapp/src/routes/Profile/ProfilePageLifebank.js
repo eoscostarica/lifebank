@@ -364,7 +364,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <Box className={classes.contentHeader}>
         <Typography className={classes.titleProfile} noWrap>{profile.name}</Typography>
         <Typography className={classes.subtitleProfile} noWrap>{profile.account}</Typography>
-        <Typography className={classes.subtitleProfile} noWrap>{t('rolesTitle.singular.sponsor')}</Typography>
+        <Typography className={classes.subtitleProfile} noWrap>{t('miscellaneous.miscellaneous')}</Typography>
         <Avatar
           className={classes.avatarRoundDesktop}
           src={profile.logo_url ? profile.logo_url : ''}
@@ -463,7 +463,7 @@ const ProfilePageLifebank = ({ profile }) => {
         <>
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.blood_urgency_level')}</Typography>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
             <Typography variant="body1" className={classes.secondaryText}>{profile.blood_urgency_level}</Typography>
           </Box>
         </>
@@ -474,6 +474,22 @@ const ProfilePageLifebank = ({ profile }) => {
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
             <Typography >{profile.about}</Typography>
+          </Box>
+        </>
+      }
+      {profile.schedule &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
+            {generateSchedule(
+              JSON.parse(profile.schedule)
+            ).map((schedule, index) => (
+              <Typography
+                key={index}
+                id={index}
+              >{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
+            ))}
           </Box>
         </>
       }
@@ -496,22 +512,6 @@ const ProfilePageLifebank = ({ profile }) => {
           </Box>
         </>
       )
-      }
-      {profile.schedule &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
-            {generateSchedule(
-              JSON.parse(profile.schedule)
-            ).map((schedule, index) => (
-              <Typography
-                key={index}
-                id={index}
-              >{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
-            ))}
-          </Box>
-        </>
       }
       {images.length > 0 &&
         <>
