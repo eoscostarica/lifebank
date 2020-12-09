@@ -266,7 +266,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <>
-          {isCompleting && profile.logo_url.length === 0 && (
+          {((isCompleting && profile.logo_url.length === 0) || (!isCompleting && profile.logo_url.length > 0 )) && (
             <Logo showCaption logoUrl={user.logo_url} />
           )}
         </>
@@ -274,7 +274,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           id="logo-url"
           name="logo-input"
           style={{
-            display: isCompleting && profile.logo_url.length === 0 ? 'block' : 'none'
+            display: ((isCompleting && profile.logo_url.length === 0) || (!isCompleting && profile.logo_url.length > 0 )) ? 'block' : 'none'
           }}
           label={t('editProfile.logoUrl')}
           variant="outlined"
