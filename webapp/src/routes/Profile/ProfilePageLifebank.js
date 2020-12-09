@@ -85,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
   },
   rowTitle: {
     fontWeight: 'bold',
+    marginRight: '10px'
   },
   rowBoxLeft: {
     display: 'flex',
@@ -382,18 +383,15 @@ const ProfilePageLifebank = ({ profile }) => {
         <>
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.urlSite')}</Typography>
-            <Typography variant="body1" className={classes.noCapitalize}>
+            <Typography noWrap className={classes.rowTitle} variant="subtitle1">{t('profile.urlSite')}</Typography>
+            <Typography noWrap variant="body1" className={classes.noCapitalize}>
               <Link
-                href={profile.account}
+                href= {`https://lifebank.io/info/${userName}`}
                 target="_blank"
                 rel="noopener"
                 color="secondary"
               >
-                <a variant="body1" href={`https://lifebank.io/info/${userName}`}>
-                  {' '}
-                  {`lifebank.io/info/${userName}`}
-                </a>
+                {`https://lifebank.io/info/${userName}`}
               </Link>
             </Typography>
           </Box>

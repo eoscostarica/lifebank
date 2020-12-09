@@ -85,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
   },
   rowTitle: {
     fontWeight: 'bold',
+    marginRight: '10px'
   },
   rowBoxLeft: {
     display: 'flex',
