@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next'
 const useStyles = makeStyles(() => ({
   text: {
     fontFamily: 'Roboto',
-    fontSize: '14px',
     fontWeight: 'normal',
     fontStretch: 'normal',
     fontStyle: 'normal',
