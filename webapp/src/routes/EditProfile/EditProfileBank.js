@@ -7,7 +7,6 @@ import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import Carousel from '../../components/Carousel'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -15,12 +14,13 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
-import Logo from '../../components/Logo'
 import Telephones from '../../components/Telephones'
+import Divider from '@material-ui/core/Divider'
 
-import { VERIFY_USERNAME} from '../../gql'
+import { VERIFY_USERNAME } from '../../gql'
 
 import Schedule from '../../components/Schedule'
+import LogoUrlInput from '../../components/LogoUrlInput'
 import MapEditLocation from '../../components/MapEditLocation'
 import { constants } from '../../config'
 
@@ -88,6 +88,17 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
     margin: theme.spacing(2, 0)
   },
+  boldText: {
+    fontWeight: 'bold',
+    width: "100%",
+    textAlign: "left",
+    marginBottom: '20px',
+  },
+  divider: {
+    marginTop: '30px',
+    marginBottom: '5px',
+    width: '100%'
+  },
   markLabel: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -118,6 +129,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     objectFit: 'cover'
   },
+  carouselContainer: {
+    marginTop: theme.spacing(2),
+    width: '100%',
+  },
   img: {
     maxWidth: '100%',
     objectFit: 'cover',
@@ -125,7 +140,50 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     marginTop: theme.spacing(2)
-  }
+  },
+  routerLink: {
+    width: "100%",
+    textDecoration: "none",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  saveBtn: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 20,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    },
+  },
+  cancelBtn: {
+    borderRadius: '50px',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '1px',
+    textAlign: 'center',
+    padding: '12px',
+    border: 'solid 1px rgba(0, 0, 0, 0.54)',
+    color: 'rgba(0, 0, 0, 0.54)',
+    backgroundColor: '#ffffff',
+    marginBottom: 20,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    },
+  },
 }))
 
 const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, userName }) => {
@@ -189,7 +247,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     skip: true
   })
 
-  const isUsernameUnique = async ( ) =>{
+  const isUsernameUnique = async () => {
     const { data } = await checkUserName({
       username: username,
       account: profile.account
@@ -205,7 +263,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const validUserName = (newUserName) => {
     const regularExpresion = /^[a-zA-Z0-9\s]*$/
 
-    if(regularExpresion.test(newUserName)) {
+    if (regularExpresion.test(newUserName)) {
       setIsvalid(true)
       setUserName(newUserName)
     }
@@ -222,8 +280,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   }
 
   useEffect(() => {
-    if (!firstRun){
-      if(isValid && isUnique){
+    if (!firstRun) {
+      if (isValid && isUnique) {
         const userToSubmit = { ...user }
         userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
         userToSubmit.photos = JSON.stringify(user.photos)
@@ -237,28 +295,28 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
-        e.preventDefault()
-        setUser({
-          ...user,
-          photos: [...user.photos, photoUrlValueRef.current.value]
-        })
-        photoUrlValueRef.current.value = ''
-        setDisablePhotoUrlInput(true)
+      e.preventDefault()
+      setUser({
+        ...user,
+        photos: [...user.photos, photoUrlValueRef.current.value]
+      })
+      photoUrlValueRef.current.value = ''
+      setDisablePhotoUrlInput(true)
     }
   }
 
   function executeAddTelephone(e) {
     if (e.key === 'Enter' && (!disablePhoneInput)) {
-        e.preventDefault()
-        setUser({
-          ...user,
-          telephones: [
-            ...user.telephones,
-            phoneValueRef.current.value
-          ]
-        })
-        phoneValueRef.current.value = ''
-        setDisablePhoneInput(true)
+      e.preventDefault()
+      setUser({
+        ...user,
+        telephones: [
+          ...user.telephones,
+          phoneValueRef.current.value
+        ]
+      })
+      phoneValueRef.current.value = ''
+      setDisablePhoneInput(true)
     }
   }
 
@@ -266,27 +324,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <>
-          {((isCompleting && profile.logo_url.length === 0) || (!isCompleting && profile.logo_url.length > 0 )) && (
-            <Logo showCaption logoUrl={user.logo_url} />
+          {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
+            <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
           )}
         </>
-        <TextField
-          id="logo-url"
-          name="logo-input"
-          style={{
-            display: ((isCompleting && profile.logo_url.length === 0) || (!isCompleting && profile.logo_url.length > 0 )) ? 'block' : 'none'
-          }}
-          label={t('editProfile.logoUrl')}
-          variant="outlined"
-          placeholder={t('editProfile.logoUrlPlaceholder')}
-          defaultValue={user.logo_url}
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          onChange={(event) => handleSetField('logo_url', event.target.value)}
-        />
         <TextField
           id="username"
           name="username"
@@ -303,7 +344,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
           }}
           helperText={
-             !isValid
+            !isValid
               ? t('editProfile.noValidUrl')
               : !isUnique
                 ? t('editProfile.noUniqueUrl')
@@ -326,59 +367,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           }}
           onChange={(event) => handleSetField('name', event.target.value)}
         />
-        <TextField
-          id="telephone"
-          style={{ display: isCompleting && user.telephones ? 'none' : '' }}
-          label={t('signup.phoneNumber')}
-          variant="outlined"
-          placeholder={t('signup.phoneNumberPlaceholder')}
-          fullWidth
-          inputRef={phoneValueRef}
-          onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
-          onKeyPress={(event) =>
-            executeAddTelephone(event)
-          }
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  disabled={disablePhoneInput}
-                  color="secondary"
-                  aria-label="toggle password visibility"
-                  onClick={() => {
-                    setUser({
-                      ...user,
-                      telephones: [
-                        ...user.telephones,
-                        phoneValueRef.current.value
-                      ]
-                    })
-                    phoneValueRef.current.value = ''
-                    setDisablePhoneInput(true)
-                  }}
-                >
-                  <AddIcon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-        />
-        <div style={{ display: isCompleting && user.telephones ? 'none' : '', marginBottom:'22px' }}>
-          <Telephones
-            phones={user.telephones}
-            showDelete
-            deletePhone={(phone) =>
-              setUser({
-                ...user,
-                telephones: user.telephones.filter((p) => p !== phone)
-              })
-            }
-          />
-        </div>
         <TextField
           id="address"
           style={{
@@ -411,17 +399,81 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             handleSetField('about', event.target.value)
           }
         />
-        <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" className={classes.textField}>
+
+        <Box style={{ display: isCompleting && user.telephones ? 'none' : '' }} width="100%">
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
+          <TextField
+            id="telephone"
+            style={{ display: isCompleting && user.telephones ? 'none' : '' }}
+            label={t('signup.phoneNumber')}
+            variant="outlined"
+            placeholder={t('signup.phoneNumberPlaceholder')}
+            fullWidth
+            inputRef={phoneValueRef}
+            onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
+            onKeyPress={(event) =>
+              executeAddTelephone(event)
+            }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    disabled={disablePhoneInput}
+                    color="secondary"
+                    aria-label="toggle password visibility"
+                    onClick={() => {
+                      setUser({
+                        ...user,
+                        telephones: [
+                          ...user.telephones,
+                          phoneValueRef.current.value
+                        ]
+                      })
+                      phoneValueRef.current.value = ''
+                      setDisablePhoneInput(true)
+                    }}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            InputLabelProps={{
+              shrink: true
+            }}
+            className={classes.textField}
+          />
+          {user.telephones.length > 0 && (
+            <Telephones
+              phones={user.telephones}
+              showDelete
+              deletePhone={(phone) =>
+                setUser({
+                  ...user,
+                  telephones: user.telephones.filter((p) => p !== phone)
+                })
+              }
+            />
+          )}
+        </Box>
+
+
+        <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
           <Schedule
             buttonText={t('schedule.editSchedule')}
             scheduleLoad={user.schedule}
             loading
             handleOnAddSchedule={handleOnAddSchedule}
+            data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
+            showSchedule
           />
         </Box>
-        <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.marginTitule}>
-          <Typography variant="h4">{t('profile.images')}</Typography>
-          <Typography variant="body1" />
+        <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('profile.images')}</Typography>
         </Box>
         <TextField
           id="image-url"
@@ -463,15 +515,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         />
         <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
           {user.photos.length > 0 && (
-            <>{user.photos && <Grid container justify="center">
-              <Grid
-                item
-                xs={12}
-                sm={8}
-                md={6}
-                lg={4}
-                className={classes.carouselComponent}
-              >
+            <Box className={classes.carouselContainer}>
+              {user.photos.length > 0 && (
                 <Carousel
                   deleteItem={(url) => {
                     setUser({
@@ -482,25 +527,13 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   activeDeletion
                   images={user.photos}
                 />
-              </Grid>
-            </Grid>} </>
+              )}
+            </Box>
           )}
         </div>
-        <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} className={classes.marginTitule}>
-          <Typography variant="h4">{t('profile.location')}</Typography>
-          <Typography variant="body1" />
-        </Box>
-        <MapEditLocation
-          style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
-          onGeolocationChange={handleOnGeolocationChange}
-          markerLocation={user.geolocation}
-          markerType={LIFE_BANK}
-          width="100%"
-          height={400}
-          mb={1}
-        />
         <div style={{ display: isCompleting && user.blood_urgency_level ? 'none' : '' }}>
-          <Typography variant="h4">{t('editProfile.bloodDemandLevel')}</Typography>
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('editProfile.bloodDemandLevel')}</Typography>
           <Typography variant="body1" className={classes.text}>
             {t('editProfile.dragOrtap')}
           </Typography>
@@ -568,26 +601,39 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             />
           </Box>
         </div>
+        <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
+          <MapEditLocation
+            style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
+            onGeolocationChange={handleOnGeolocationChange}
+            markerLocation={user.geolocation}
+            markerType={LIFE_BANK}
+            width="100%"
+            height={400}
+            mb={1}
+          />
+        </Box>
+
       </Box>
       <Box className={classes.btnWrapper}>
-        <Box className={classes.boxBtn}>
+        <Link to="/profile" className={classes.routerLink}>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => isUsernameUnique()}
+            className={classes.cancelBtn}
           >
-            {t('common.save')}
+            {t('common.cancel')}
           </Button>
-          <Link to="/profile" className={classes.labelBtn}>
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.labelBtn}
-            >
-              {t('common.cancel')}
-            </Button>
-          </Link>
-        </Box>
+        </Link>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => isUsernameUnique()}
+          className={classes.saveBtn}
+        >
+          {t('common.save')}
+        </Button>
         {loading && <CircularProgress />}
       </Box>
     </form>

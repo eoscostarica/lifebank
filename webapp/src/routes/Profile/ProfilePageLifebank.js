@@ -326,12 +326,12 @@ const ProfilePageLifebank = ({ profile }) => {
                   style={{ textDecoration: 'none' }}
                   to={{
                     pathname: '/edit-profile',
-                    state: { isCompleting: true }
+                    state: { isCompleting: true, userName: userName }
                   }}
                 >
                   <Button
                     color="secondary"
-                    className={classes.editBtn}
+                    className={classes.updateButton}
                   >
                     {t('common.update')}
                   </Button>
@@ -578,7 +578,7 @@ const ProfilePageLifebank = ({ profile }) => {
           </Box>
         </>
       }
-      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
+      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false, userName: userName } }}
         className={classes.routerLink}
       >
         <Button variant="contained" color="primary" className={classes.editBtn}>{t('common.edit')}</Button>

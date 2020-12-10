@@ -110,6 +110,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff',
     padding: '12px',
     marginBottom: 20,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    },
   },
   cancelBtn: {
     borderRadius: '50px',
@@ -126,6 +129,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgba(0, 0, 0, 0.54)',
     backgroundColor: '#ffffff',
     marginBottom: 20,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    },
   },
 }))
 

@@ -56,7 +56,10 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1px',
     color: '#ffffff',
     padding: '12px',
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    },
   },
   cancelBtn: {
     borderRadius: '50px',
@@ -72,7 +75,10 @@ const useStyles = makeStyles((theme) => ({
     border: 'solid 1px rgba(0, 0, 0, 0.54)',
     color: 'rgba(0, 0, 0, 0.54)',
     backgroundColor: '#ffffff',
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    },
   },
 }))
 
