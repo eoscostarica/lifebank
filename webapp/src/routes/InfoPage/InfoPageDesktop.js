@@ -150,11 +150,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '50px'
   },
   text: {
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
     lineHeight: '1.43',
     letterSpacing: '0.25px',
     textAlign: 'left',

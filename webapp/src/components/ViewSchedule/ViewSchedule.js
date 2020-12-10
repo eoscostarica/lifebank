@@ -4,12 +4,8 @@ import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   text: {
-    fontFamily: 'Roboto',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
     lineHeight: '1.43',
     letterSpacing: '0.25px',
     textAlign: 'left',
