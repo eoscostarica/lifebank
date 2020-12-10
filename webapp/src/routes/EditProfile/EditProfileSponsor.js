@@ -15,10 +15,11 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
+import Divider from '@material-ui/core/Divider'
+import FacebookIcon from '@material-ui/icons/Facebook'
+import TwitterIcon from '@material-ui/icons/Twitter'
+import InstagramIcon from '@material-ui/icons/Instagram'
 
-import FacebookIcon from '../../assets/facebook.svg'
-import InstagramIcon from '../../assets/instagram.svg'
-import TwitterIcon from '../../assets/twitter.svg'
 import MapEditLocation from '../../components/MapEditLocation'
 import Carousel from '../../components/Carousel'
 import Schedule from '../../components/Schedule'
@@ -34,19 +35,10 @@ const {
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    [theme.breakpoints.between('xs', 'sm')]: {
-      width: '100%'
-    },
-    [theme.breakpoints.between('sm', 'md')]: {
-      width: '60%'
-    },
-    [theme.breakpoints.between('md', 'lg')]: {
-      width: '40%'
-    },
+    width: '100%',
     padding: theme.spacing(0, 2)
   },
   textFieldWrapper: {
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
@@ -55,8 +47,21 @@ const useStyles = makeStyles((theme) => ({
       width: '100%'
     }
   },
+  boldText: {
+    fontWeight: 'bold',
+    width: "100%",
+    textAlign: "left",
+    marginBottom: '20px',
+  },
+  divider: {
+    marginTop: '30px',
+    marginBottom: '5px',
+    width: '100%'
+  },
   textField: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    height: 'auto',
+    overflowY: 'none',
   },
   btnWrapper: {
     display: 'flex',
@@ -85,7 +90,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 0)
   },
   carouselContainer: {
-    width: '100%'
+    marginTop: theme.spacing(2),
+    width: '100%',
   },
   socialMediaLinksContainer: {
     padding: theme.spacing(2),
@@ -168,10 +174,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       ...user,
       social_media_links: existingSocialMediaItem
         ? user.social_media_links.map((social) => {
-            if (social.name === name) social.url = url
+          if (social.name === name) social.url = url
 
-            return social
-          })
+          return social
+        })
         : [...user.social_media_links, { name: name, url: url }]
     })
   }
@@ -200,28 +206,28 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
-        e.preventDefault()
-        setUser({
-          ...user,
-          photos: [...user.photos, photoUrlValueRef.current.value]
-        })
-        photoUrlValueRef.current.value = ''
-        setDisablePhotoUrlInput(true)
+      e.preventDefault()
+      setUser({
+        ...user,
+        photos: [...user.photos, photoUrlValueRef.current.value]
+      })
+      photoUrlValueRef.current.value = ''
+      setDisablePhotoUrlInput(true)
     }
   }
 
   function executeAddTelephone(e) {
     if (e.key === 'Enter' && (!disablePhoneInput)) {
-        e.preventDefault()
-        setUser({
-          ...user,
-          telephones: [
-            ...user.telephones,
-            phoneValueRef.current.value
-          ]
-        })
-        phoneValueRef.current.value = ''
-        setDisablePhoneInput(true)
+      e.preventDefault()
+      setUser({
+        ...user,
+        telephones: [
+          ...user.telephones,
+          phoneValueRef.current.value
+        ]
+      })
+      phoneValueRef.current.value = ''
+      setDisablePhoneInput(true)
     }
   }
 
@@ -229,7 +235,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
-          <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} />
+          <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
         </Box>
         <TextField
           id="name"
@@ -297,6 +303,59 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           className={classes.textField}
           onChange={(event) => handleSetField('website', event.target.value)}
         />
+        <TextField
+          id="about"
+          style={{ display: showOrHide(profile.about) }}
+          label={t('signup.about')}
+          variant="outlined"
+          placeholder={t('signup.aboutBusiness')}
+          defaultValue={user.about}
+          multiline
+          rowsMax={10}
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          fullWidth
+          onChange={(event) => handleSetField('about', event.target.value)}
+        />
+
+        <TextField
+          id="covidImpact"
+          style={{ display: showOrHide(profile.covid_impact) }}
+          label={t('editProfile.covidImpact')}
+          variant="outlined"
+          placeholder={t('editProfile.covidImpactPlaceholder')}
+          defaultValue={user.covid_impact}
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          multiline
+          fullWidth
+          rowsMax={10}
+          onChange={(event) =>
+            handleSetField('covid_impact', event.target.value)
+          }
+        />
+        <TextField
+          id="benefitDescription"
+          style={{ display: showOrHide(profile.benefit_description) }}
+          label={t('profile.benefitDescription')}
+          variant="outlined"
+          placeholder=""
+          defaultValue={user.benefit_description}
+          InputLabelProps={{
+            shrink: true
+          }}
+          className={classes.textField}
+          multiline
+          fullWidth
+          rowsMax={10}
+          onChange={(event) =>
+            handleSetField('benefit_description', event.target.value)
+          }
+        />
         <Box
           width="100%"
           style={{
@@ -306,6 +365,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 : ''
           }}
         >
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
           <TextField
             id="telephone"
             label={t('signup.phoneNumber')}
@@ -359,73 +420,23 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             />
           )}
         </Box>
-        <br />
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="center"
           style={{ display: showOrHide(profile.schedule) }}
-          width="60%"
+          width="100%"
         >
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
           <Schedule
             handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
             data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
             showSchedule
           />
         </Box>
-        <TextField
-          id="about"
-          style={{ display: showOrHide(profile.about) }}
-          label={t('signup.about')}
-          variant="outlined"
-          placeholder={t('signup.aboutBusiness')}
-          defaultValue={user.about}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          multiline
-          fullWidth
-          rows={3}
-          onChange={(event) => handleSetField('about', event.target.value)}
-        />
 
-        <TextField
-          id="covidImpact"
-          style={{ display: showOrHide(profile.covid_impact) }}
-          label={t('editProfile.covidImpact')}
-          variant="outlined"
-          placeholder={t('editProfile.covidImpactPlaceholder')}
-          defaultValue={user.covid_impact}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          multiline
-          fullWidth
-          rows={3}
-          onChange={(event) =>
-            handleSetField('covid_impact', event.target.value)
-          }
-        />
-        <TextField
-          id="benefitDescription"
-          style={{ display: showOrHide(profile.benefit_description) }}
-          label={t('profile.benefitDescription')}
-          variant="outlined"
-          placeholder=""
-          defaultValue={user.benefit_description}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          multiline
-          fullWidth
-          rows={3}
-          onChange={(event) =>
-            handleSetField('benefit_description', event.target.value)
-          }
-        />
+
         <Box
           width="100%"
           style={{
@@ -435,6 +446,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 : ''
           }}
         >
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('profile.images')}</Typography>
           <TextField
             id="photo-url"
             label={t('editProfile.photoUrl')}
@@ -491,14 +504,14 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             </Box>
           )}
         </Box>
-
         <Box
           width="100%"
           style={{
             display: isCompleting && socialMedia.length === 3 ? 'none' : ''
           }}
-          className={classes.socialMediaLinksContainer}
         >
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('profile.socialMedia')}</Typography>
           <Box
             width="100%"
             style={{ display: showOrHideSocialMedia('facebook') }}
@@ -513,7 +526,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                   : undefined
               }
               placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
-              icon={FacebookIcon}
+              icon={<FacebookIcon />}
               onChangeSocialMediaTextField={(url) =>
                 handleOnSocialMediaTextFieldChange('facebook', url)
               }
@@ -531,11 +544,11 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               defaultValue={
                 socialMedia.find((social) => social.name === 'instagram')
                   ? socialMedia.find((social) => social.name === 'instagram')
-                      .url
+                    .url
                   : undefined
               }
               placeholder={t('editProfile.instagramUsernamePlaceholder')}
-              icon={InstagramIcon}
+              icon={<InstagramIcon />}
               onChangeSocialMediaTextField={(url) =>
                 handleOnSocialMediaTextFieldChange('instagram', url)
               }
@@ -556,7 +569,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                   : undefined
               }
               placeholder={t('editProfile.twitterUsernamePlaceholder')}
-              icon={TwitterIcon}
+              icon={<TwitterIcon />}
               onChangeSocialMediaTextField={(url) =>
                 handleOnSocialMediaTextFieldChange('twitter', url)
               }
@@ -564,25 +577,24 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           </Box>
         </Box>
         {(isCompleting && profile.location === '') ||
-        (!isCompleting && profile.location !== '') ? (
-          <>
-            <Typography variant="subtitle2" gutterBottom>
-              {t('signup.chooseYourLocation')}
-            </Typography>
-            <MapEditLocation
-              onGeolocationChange={handleOnGeolocationChange}
-              markerType={SPONSOR}
-              markerLocation={
-                user.geolocation
-                  ? user.geolocation
-                  : { longitude: -84.0556371, latitude: 9.9195872 }
-              }
-              width="100%"
-              height={400}
-              mb={1}
-            />
-          </>
-        ) : null}
+          (!isCompleting && profile.location !== '') ? (
+            <>
+              <Divider className={classes.divider} />
+              <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
+              <MapEditLocation
+                onGeolocationChange={handleOnGeolocationChange}
+                markerType={SPONSOR}
+                markerLocation={
+                  user.geolocation
+                    ? user.geolocation
+                    : { longitude: -84.0556371, latitude: 9.9195872 }
+                }
+                width="100%"
+                height={400}
+                mb={1}
+              />
+            </>
+          ) : null}
       </Box>
       <Box className={classes.btnWrapper}>
         <Box className={classes.boxBtn}>
