@@ -70,14 +70,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     margin: theme.spacing(2, 0)
   },
-  boxBtn: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    '& a': {
-      textDecoration: 'none'
-    }
-  },
   labelBtn: {
     color: theme.palette.white
   },
@@ -97,7 +89,44 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: theme.spacing(2),
     border: '1px dashed lightgray'
-  }
+  },
+  routerLink: {
+    width: "100%",
+    textDecoration: "none",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  saveBtn: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 20,
+  },
+  cancelBtn: {
+    borderRadius: '50px',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '1px',
+    textAlign: 'center',
+    padding: '12px',
+    border: 'solid 1px rgba(0, 0, 0, 0.54)',
+    color: 'rgba(0, 0, 0, 0.54)',
+    backgroundColor: '#ffffff',
+    marginBottom: 20,
+  },
 }))
 
 const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
@@ -435,8 +464,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             showSchedule
           />
         </Box>
-
-
         <Box
           width="100%"
           style={{
@@ -597,25 +624,23 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           ) : null}
       </Box>
       <Box className={classes.btnWrapper}>
-        <Box className={classes.boxBtn}>
+        <Link to="/profile" className={classes.routerLink}>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => prepareDataForSubmitting()}
+            className={classes.cancelBtn}
           >
-            {t('common.save')}
+            {t('common.cancel')}
           </Button>
-
-          <Link to="/profile" className={classes.labelBtn}>
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.labelBtn}
-            >
-              {t('common.cancel')}
-            </Button>
-          </Link>
-        </Box>
+        </Link>
+        <Button
+          className={classes.saveBtn}
+          variant="contained"
+          color="secondary"
+          onClick={() => prepareDataForSubmitting()}
+        >
+          {t('common.save')}
+        </Button>
         {loading && <CircularProgress />}
       </Box>
     </form>
