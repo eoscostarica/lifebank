@@ -137,7 +137,8 @@
       "all": "All",
       "donationCenter": "Donation center",
       "change": "Change",
-      "addTransparentIfPossible": "Add image with transparent background if possible."
+      "addTransparentIfPossible": "Add image with transparent background if possible.",
+      "noNear": "There aren’t any businesses or donation centers registered near this location. If you know any, refer them to Lifebank: "
     },
     "notFound": {
       "404Error": "404: Oh... this isn't the page you're looking for. Please, try again!",
