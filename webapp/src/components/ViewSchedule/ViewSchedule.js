@@ -18,12 +18,12 @@ const ViewSchedule = ({schedule}) => {
   const classes = useStyles()
 
   const generateSchedule = (schedules) => {
-    const scheduleFinal = []
+    const finalSchedule = []
     let schedule
     for (schedule of schedules) {
-      if (scheduleFinal.length > 0) {
+      if (finalSchedule.length > 0) {
         let insert = 0
-        scheduleFinal.forEach((element) => {
+        finalSchedule.forEach((element) => {
           if (
             schedule.open === element[1][0] &&
             schedule.close === element[1][1]
@@ -37,11 +37,11 @@ const ViewSchedule = ({schedule}) => {
             [t(`schedule.${schedule.day.toLowerCase()}`)],
             [schedule.open, schedule.close]
           ]
-          scheduleFinal.push(tempaSchedule)
+          finalSchedule.push(tempaSchedule)
         }
       } else {
         const tempaSchedule = [[t(`schedule.${schedule.day.toLowerCase()}`)], [schedule.open, schedule.close]]
-        scheduleFinal.push(tempaSchedule)
+        finalSchedule.push(tempaSchedule)
       }
     }
 
