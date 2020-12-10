@@ -183,7 +183,7 @@ const Schedule = ({
     { value: 'Sunday', label: t('schedule.sunday') },
     { value: 'Monday', label: t('schedule.monday') },
     { value: 'Tuesday', label: t('schedule.tuesday') },
-    { value: 'Wenesday', label: t('schedule.wednesday') },
+    { value: 'Wednesday', label: t('schedule.wednesday') },
     { value: 'Thursday', label: t('schedule.thursday') },
     { value: 'Friday', label: t('schedule.friday') },
     { value: 'Saturday', label: t('schedule.saturday') }
@@ -375,7 +375,7 @@ const Schedule = ({
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText
-                        primary={item.day}
+                        primary={t(`schedule.${item.day.toLowerCase()}`)}
                         secondary={`${convertHour(
                           item.open.split(':')[0]
                         )} to ${convertHour(item.close.split(':')[0])}`}
