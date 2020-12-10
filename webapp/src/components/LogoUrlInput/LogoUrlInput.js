@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Logo from '../Logo'
 import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/core/styles'
