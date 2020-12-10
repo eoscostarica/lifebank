@@ -28,29 +28,59 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3)
-  },
-  boxBtn: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    '& a': {
-      textDecoration: 'none'
-    }
   },
   labelBtn: {
     color: theme.palette.white
   },
   noCapitalize: {
     textTransform: 'none !important'
-  }
+  },
+  routerLink: {
+    width: "100%",
+    textDecoration: "none",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  saveBtn: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: theme.spacing(1)
+  },
+  cancelBtn: {
+    borderRadius: '50px',
+    width: "70%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '1px',
+    textAlign: 'center',
+    padding: '12px',
+    border: 'solid 1px rgba(0, 0, 0, 0.54)',
+    color: 'rgba(0, 0, 0, 0.54)',
+    backgroundColor: '#ffffff',
+    marginBottom: theme.spacing(1)
+  },
 }))
 
 const EditProfileDonor = ({ profile, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [user, setUser] = useState({
+    name: profile.name || '',
     email: profile.email || ''
   })
 
@@ -61,12 +91,13 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
+        {console.log(user)}
         <TextField
           id="email"
           label={t('signup.name')}
           fullWidth
           placeholder={t('signup.namePlaceholder')}
-          defaultValue={user.email}
+          defaultValue={user.name}
           variant="outlined"
           InputLabelProps={{
             shrink: true
@@ -74,42 +105,29 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
           onChange={(event) => handleSetField('name', event.target.value)}
           className={classes.textField}
         />
-        <TextField
-          id="email"
-          label={t('common.email')}
-          fullWidth
-          placeholder={t('common.emailPlaceholder')}
-          defaultValue={user.email}
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => handleSetField('email', event.target.value)}
-          className={classes.textField}
-        />
       </Box>
+      <Typography variant="body1">{t('about.weDontRequest')}</Typography>
       <Box className={classes.btnWrapper}>
-        <Box className={classes.boxBtn}>
+        <Link to="/profile" className={classes.routerLink}>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => onSubmit(user)}
+            className={classes.cancelBtn}
           >
-            {t('common.save')}
+            {t('common.cancel')}
           </Button>
-          <Link to="/profile" className={classes.labelBtn}>
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.labelBtn}
-            >
-              {t('common.cancel')}
-            </Button>
-          </Link>
-        </Box>
+        </Link>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => onSubmit(user)}
+          className={classes.saveBtn}
+        >
+          {t('common.save')}
+        </Button>
         {loading && <CircularProgress />}
       </Box>
-      <Typography variant="body1">{t('about.weDontRequest')}</Typography>
+
     </form>
   )
 }
