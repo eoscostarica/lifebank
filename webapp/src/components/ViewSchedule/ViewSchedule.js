@@ -45,7 +45,7 @@ const ViewSchedule = ({schedule}) => {
       }
     }
 
-    return scheduleFinal
+    return finalSchedule
   }
 
   return (
