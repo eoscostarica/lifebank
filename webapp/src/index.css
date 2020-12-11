@@ -21,3 +21,7 @@ body {
   height: 100%;
   width: 100%;
 }
+
+div.mapboxgl-popup-content {
+  padding: 6px !important;
+}

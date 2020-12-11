@@ -239,6 +239,7 @@ const Home = () => {
               key={key}
               name={el.name}
               openingHours={el.openingHours}
+              username={el.username}
               address={el.address}
               logo={el.logo}
               photos={JSON.parse(el.photos)}
@@ -257,6 +258,7 @@ const Home = () => {
               key={key}
               name={element.name}
               openingHours={element.openingHours}
+              username={element.username}
               address={element.address}
               logo={element.logo}
               photos={JSON.parse(element.photos)}
