@@ -137,7 +137,8 @@
       "all": "All",
       "donationCenter": "Centro de donación",
       "change": "Cambiar",
-      "addTransparentIfPossible": "Añade una imagen con fondo transparente, de ser posible."
+      "addTransparentIfPossible": "Añade una imagen con fondo transparente, de ser posible.",
+      "noNear": "No hay negocios o centros de donación registrados cerca de esta ubicación. Si conoce alguno, refiéralos a Lifebank: "
     },
     "notFound": {
       "404Error": "404: La página que buscas no existe",

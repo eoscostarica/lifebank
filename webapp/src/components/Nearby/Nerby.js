@@ -6,7 +6,6 @@ import { Box } from '@material-ui/core'
 import { useQuery } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar'
@@ -182,23 +181,13 @@ const Nearby = ({ location, searchDistance, account }) => {
         </Box>
       )}
       {!loadingLocations && nearbyLocations.length <= 0 && (
-        <Card className={classes.cardRoot}>
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            style={{ height: '100%' }}
-          >
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {t('miscellaneous.noBloodBank')}
-            </Typography>
-          </Grid>
-        </Card>
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+        >
+          {t('miscellaneous.noNear')}
+          <LinkRouter to="/" target="_blank">https://lifebank.io/</LinkRouter>
+        </Typography>
       )}
       {!loadingLocations &&
         nearbyLocations &&

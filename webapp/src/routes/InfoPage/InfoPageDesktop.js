@@ -164,7 +164,8 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '15px'
   },
   contentCards: {
-    marginTop: '50px',
+    marginTop: '10px',
+    marginBottom: '20px',
     width: '100%'
   }
 }))
@@ -343,7 +344,7 @@ const InfoPage = () => {
                 <Typography className={classes.boldText} variant="subtitle1">
                   {t('common.schedule')}
                 </Typography>
-                <ViewSchedule schedule = {profile.openingHours} />
+                <ViewSchedule schedule={profile.openingHours} />
               </Box>
               <Divider className={classes.divider} />
               <Box className={classes.midLabel}>
