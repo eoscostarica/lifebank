@@ -332,10 +332,17 @@
     "emailMessage": {
       "subjectAproveAccount": "Lifebank Cuenta Aprobada",
       "tituleAproveAccount": "Cuenta Aprobada",
-      "messageAproveAccount": "Su solicitud de registro en Lifebank ha sido aprobada, gracias por ser parte de este hermoso proyecto",
+      "messageAproveAccount": "Su solicitud de registro en Lifebank ha sido aprobada, gracias por ser parte de este hermoso proyecto.",
       "subjectChangePassword": "Lifebank Cambio de Contraseña",
       "tituleChangePassword": "Cambio de Contraseña",
-      "messageChangePassword": "Su contraseña ha sido cambiada con éxito, gracias por donar vida"
+      "messageChangePassword": "Su contraseña ha sido cambiada con éxito, gracias por donar vida.",
+      "subjectCredentialsRecovery": "Lifebank Recuperación de Credenciales",
+      "tituleCredentialsRecovery": "Recuperación de Credenciales",
+      "messageCredentialsRecovery": "Se ha generado una nueva contraseña para su cuenta, con esta ahora podes acceder a Lifebank y seguir donando vida.",
+      "subjectVerificationCode": "Lifebank Verificación del Email",
+      "tituleVerificationCode": "Verificación del Email",
+      "messageVerificationCode": "Gracias por ser parte de la comunidad de lifebank, haga clic en el botón para verificar y validar su cuenta.",
+      "verifyButton": "Verificar"
     },
     "approveAccount": {
       "accountapprove": "Esta cuenta ha sido aprobada",

@@ -44,7 +44,7 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, name, secret }) => {
+const create = async ({ role, email, emailContent, name, secret }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
@@ -67,9 +67,15 @@ const create = async ({ role, email, name, secret }) => {
   })
 
   await historyApi.insert(transaction)
-
   try {
-    mailApi.sendVerificationCode(email, verification_code)
+    mailApi.sendVerificationCode(
+      email, 
+      verification_code, 
+      emailContent.subject, 
+      emailContent.titule, 
+      emailContent.message, 
+      emailContent.button
+    )
   } catch (error) {
     console.log(error)
   }

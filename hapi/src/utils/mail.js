@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer')
 
 const { mailConfig } = require('../config')
 
-const sendVerificationCode = async (to, verficationCode) => {
+const sendVerificationCode = async (to, verficationCode, subject, titule, message, buttonText) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -19,12 +19,12 @@ const sendVerificationCode = async (to, verficationCode) => {
   await transporter.sendMail({
     from,
     to,
-    subject: 'Lifebank Verfication Code',
+    subject,
     html: `
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>Email verification</title>
+            <title>${titule}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -113,7 +113,7 @@ const sendVerificationCode = async (to, verficationCode) => {
           <body style="background-color: #f6f6f6;">
             <!-- start preheader -->
             <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-              Lifebank email verification.
+              ${subject}
             </div>
             <!-- end preheader -->
             <!-- start body -->
@@ -138,27 +138,27 @@ const sendVerificationCode = async (to, verficationCode) => {
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;">Email verification</h1>
+                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;">${titule}</h1>
                       </td>
                     </tr>
                     <tr>
                   </tr>
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                        <p style="margin: 0;">Thank you for wanting to be part of the lifebank community, click on the button to verify to validate your account.</p>
+                        <p style="margin: 0;">${message}</p>
                       </td>
                     </tr>
                     <tr>
                       <td align="center" bgcolor="#ffffff" 
                         style="padding: 24px; font-family: 'Source Sans Pro', 
                         Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                        <a href="https://www.lifebank.io/verification/${verficationCode}" target="_blank"
+                        <a href="https://lifebank.io/verification/${verficationCode}" target="_blank"
                           style="padding: 8px 12px; 
                           border: 1px solid #ED2939;border-radius: 5px;
                           font-family: Helvetica, Arial, sans-serif;font-size: 14px; 
                           color: #BA0D0D; text-decoration: none;
                           font-weight:bold;display: inline-block;">
-                          Verify
+                          ${buttonText}
                         </a>
                       </td>
                     </tr>
@@ -380,7 +380,7 @@ const sendRegistrationRequest = async (to, lifebankData) => {
   })
 }
 
-const sendCredentialsRecovery = async (to, account, tempSecret) => {
+const sendCredentialsRecovery = async (to, account, tempSecret, subject, titule, message, accountText, password) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -397,12 +397,12 @@ const sendCredentialsRecovery = async (to, account, tempSecret) => {
   await transporter.sendMail({
     from,
     to,
-    subject: 'Lifebank Credentials Recovery',
+    subject,
     html: `
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>Credentials Recovery</title>
+            <title${titule}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -491,7 +491,7 @@ const sendCredentialsRecovery = async (to, account, tempSecret) => {
           <body style="background-color: #f6f6f6;">
             <!-- start preheader -->
             <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-              Lifebank credentials recovery.
+              ${subject}
             </div>
             <!-- end preheader -->
             <!-- start body -->
@@ -515,17 +515,17 @@ const sendCredentialsRecovery = async (to, account, tempSecret) => {
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;">Credentials Recovery</h1>
+                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"${titule}</h1>
                       </td>
                     </tr>
                     <tr>
                   </tr>
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                      <p style="margin: 0;">A new password has been generated for your account, with this you can now access Lifebank and continue donating life</p>
-                      <h4>Account</h4>
+                      <p style="margin: 0;">${message}</p>
+                      <h4>${accountText}</h4>
                       <p style="margin: 0;">${account}</p>
-                      <h4>New password</h4>
+                      <h4>${password}</h4>
                       <p style="margin: 0;">${tempSecret}</p>
                       </td>
                     </tr>
@@ -546,7 +546,7 @@ const sendCredentialsRecovery = async (to, account, tempSecret) => {
   })
 }
 
-const sendConfirmMessage = async (to, subject, titulo, message) => {
+const sendConfirmMessage = async (to, subject, titule, message) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -568,7 +568,7 @@ const sendConfirmMessage = async (to, subject, titulo, message) => {
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>${titulo}</title>
+            <title>${titule}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -681,7 +681,7 @@ const sendConfirmMessage = async (to, subject, titulo, message) => {
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${titulo}</h1>
+                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${titule}</h1>
                       </td>
                     </tr>
                     <tr>

@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
   mutation(
     $email: String!
+    $emailContent: jsonb!
     $password: String!
     $name: String!
     $address: String!
@@ -16,6 +17,7 @@ export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
   ) {
     create_pre_register_lifebank(
       email: $email
+      emailContent: $emailContent
       password: $password
       name: $name
       address: $address

@@ -230,7 +230,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleSetField = useCallback((field, value) => {
-    setUser({ [field]: value.toLowerCase().replace(/\s/g, '') })
+    setUser({ [field]: value})
   }, [])
 
   const handleGoBack = () => {
@@ -250,6 +250,12 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
           variables: {
             role,
             email,
+            emailContent: {
+              subject: t('emailMessage.subjectVerificationCode'),
+              titule: t('emailMessage.tituleVerificationCode'),
+              message: t('emailMessage.messageVerificationCode'),
+              button: t('emailMessage.verifyButton')
+            },
             name,
             secret: hash
           }
@@ -311,6 +317,12 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
         preRegisterLifebank({
           variables: {
             email,
+            emailContent: {
+              subject: t('emailMessage.subjectVerificationCode'),
+              titule: t('emailMessage.tituleVerificationCode'),
+              message: t('emailMessage.messageVerificationCode'),
+              button: t('emailMessage.verifyButton')
+            },
             password: hash,
             name,
             address,

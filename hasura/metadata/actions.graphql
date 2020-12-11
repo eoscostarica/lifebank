@@ -1,6 +1,7 @@
 type Mutation {
   change_password (
     email: String!
+    emailContent: jsonb!
     currentPassword: String!
     newPassword: String!
   ): change_password_output
@@ -19,6 +20,7 @@ type Mutation {
   create_account (
     role: String!
     email: String!
+    emailContent: jsonb!
     name: String!
     secret: String!
   ): create_account_output
@@ -38,6 +40,7 @@ type Mutation {
 type Mutation {
   create_pre_register_lifebank (
     email: String!
+    emailContent: jsonb!
     password: String!
     name: String!
     address: String!
@@ -55,6 +58,7 @@ type Mutation {
 type Mutation {
   credentials_recovery (
     email: String!
+    emailContent: jsonb!
   ): credentials_recovery_output
 }
 

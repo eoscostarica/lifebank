@@ -135,7 +135,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setErrorMessage(null)
     credentialsRecovery({
       variables: {
-        email: user.email
+        email: user.email,
+        emailContent: {
+          subject: t('emailMessage.subjectCredentialsRecovery'),
+          titule: t('emailMessage.tituleCredentialsRecovery'),
+          message: t('emailMessage.messageCredentialsRecovery'),
+          account: t('common.account'),
+          password: t('signup.password')
+        }
       }
     })
     setValidEmailFormat(false)
@@ -145,7 +152,12 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setErrorMessage(null)
     changePassword({
       variables: {
-        ...user
+        ...user,
+        emailContent: {
+          subject: t('emailMessage.subjectChangePassword'),
+          titule: t('emailMessage.tituleChangePassword'),
+          message: t('emailMessage.messageChangePassword')
+        }
       }
     })
     setValidEmailFormat(false)
