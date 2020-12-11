@@ -56,9 +56,15 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
         const popupNode = document.createElement('div')
 
         ReactDOM.render(
-          <MapPopup id={id} info={info} username={user.username.replaceAll(' ', '-')} account={account} />,
+          <MapPopup
+            id={id}
+            info={info}
+            username={user.username}
+            account={account}
+          />,
           popupNode
         )
+
         if (accountProp === account) {
           const markertemp = new mapboxgl.Marker(markerNode)
           markertemp.setLngLat(coordinates)

@@ -15,16 +15,16 @@ import * as serviceWorker from './serviceWorker'
 import './index.css'
 
 render(
-  <ApolloProvider client={client}>
-    <CookiesProvider>
-      <UserProvider>
-        <CssBaseline />
-        <ThemeProvider theme={theme}>
+  <ThemeProvider theme={theme}>
+    <ApolloProvider client={client}>
+      <CookiesProvider>
+        <UserProvider>
+          <CssBaseline />
           <App />
-        </ThemeProvider>
-      </UserProvider>
-    </CookiesProvider>
-  </ApolloProvider>,
+        </UserProvider>
+      </CookiesProvider>
+    </ApolloProvider>
+  </ThemeProvider>,
   document.getElementById('root')
 )
 
