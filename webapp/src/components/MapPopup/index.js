@@ -6,38 +6,27 @@ import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 
 const useStyles = makeStyles({
-  popup: {},
+  popup: {
+    maxHeight: '109px',
+    padding: '0px !important',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '130px'
+  },
+  popupHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
+    justifyContent: 'space-between',
+    alignContent: 'space-between'
+  },
   ul: {
     margin: 0
   },
-  title: {
-    margin: '6px',
-    fontSize: '16px',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.6,
-    letterSpacing: '1.5px',
-    textAlign: 'center',
-    color: '#000000',
-    fontWeight: 'bold',
-    textTransform: 'uppercase'
-  },
-  link: {
-    textDecoration: 'none'
-  },
-  subTitule: {
-    width: '90%',
-    height: '20px',
-    fontSize: '14px',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: 2,
-    letterSpacing: '0.4px',
-    color: '#000000'
-  },
-  bodytext: {
-    fontSize: '14px',
+  boldText: {
+    fontSize: '8px',
     fontWeight: 500,
     fontStretch: 'normal',
     fontStyle: 'normal',
@@ -46,37 +35,34 @@ const useStyles = makeStyles({
     textAlign: 'left',
     color: '#000000'
   },
-  openingHourseText: {
-    width: '37.5%',
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 2,
-    letterSpacing: '0.4px',
+  title: {
+    margin: 0,
+    fontSize: '10px',
+    lineHeight: '1.6',
+    letterSpacing: '1.5px',
+    width: '93px',
+    height: '16px',
     textAlign: 'center',
-    float: 'left'
+    textTransform: 'uppercase',
+    fontWeight: 500,
+    color: 'black'
   },
-  closeColor: {
-    color: '#ba0d0d'
+  row: {
+    height: '16px',
+    verticalAlign: 'middle'
   },
-  openColor: {
-    color: '#00b13c'
-  },
-  mediumDiv: {
-    height: '100%',
-    width: '62.5%',
-    float: 'left'
+  overflowText: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
   button: {
-    marginTop: '6%',
-    marginLeft: '8%',
-    marginRight: '8%',
-    borderRadius: '50px',
+    borderRadius: '20px',
     backgroundColor: '#ba0d0d',
     width: '84%',
-    height: '25px',
-    fontSize: '14px',
+    marginTop: '4px',
+    height: '20px',
+    fontSize: '12px',
     fontWeight: 500,
     fontStretch: 'normal',
     fontStyle: 'normal',
@@ -86,8 +72,7 @@ const useStyles = makeStyles({
   }
 })
 
-// TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
-function MapPopup({ id, info, username }) {
+const MapPopup = ({ id, info, username }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState()
@@ -140,59 +125,65 @@ function MapPopup({ id, info, username }) {
   }
 
   const goto = () => {
-    if (navigator.userAgent.match(/iPhone|iPad|iPod/i) && isMobile.platform()) {
+    if (navigator.userAgent.match(/iPhone|iPad|iPod/i) && isMobile.platform())
       return `maps:0,0?q=${info.geolocation.latitude},${info.geolocation.longitude}`
-    } else if (
+    else if (
       navigator.userAgent.match(/Android|BlackBerry|Opera Mini/i) &&
       isMobile.platform()
-    ) {
+    )
       return `geo:0,0?q=${info.geolocation.latitude},${info.geolocation.longitude}`
-    } else {
+    else
       return `https://maps.google.com/maps?q=${info.geolocation.latitude},${info.geolocation.longitude}`
-    }
   }
 
   return (
-    <div key={id}>
-      <h3 className={classes.title}>{info.name} </h3>
-      <div style={{ width: '100%', marginBottom: '22px' }}>
-        <div className={classes.mediumDiv}>
-          <h5 className={classes.subTitule}>
-            {info.business_type || t('miscellaneous.donationCenter')}{' '}
-          </h5>
+    <div className={classes.popup} key={id}>
+      <span className={clsx(classes.title, classes.overflowText)}>
+        {info.name}
+      </span>
+      <div className={clsx(classes.popupHeader, classes.row)}>
+        <span
+          style={{ marginRight: '5px' }}
+          className={clsx(classes.overflowText, classes.boldText)}
+        >
+          {info.business_type || t('miscellaneous.donationCenter')}
+        </span>
+        <span
+          style={{ color: open ? '#00b13c' : '#ba0d0d', marginLeft: '5px' }}
+          className={clsx(classes.boldText)}
+        >
+          {t(`miscellaneous.${open ? 'openNow' : 'closeNow'}`)}
+        </span>
+      </div>
+
+      {JSON.parse(info.telephones).length > 0 && (
+        <div style={{ alignSelf: 'flex-start' }} className={classes.row}>
+          <span className={classes.boldText}>
+            Tel: &nbsp;
+            <a href={`tel: ${info.telephones}`}>
+              {JSON.parse(info.telephones)[0]}
+            </a>
+          </span>
         </div>
-        {open && (
-          <p className={clsx(classes.openingHourseText, classes.openColor)}>
-            {t('miscellaneous.openNow')}{' '}
-          </p>
-        )}
-        {!open && (
-          <p className={clsx(classes.openingHourseText, classes.closeColor)}>
-            {t('miscellaneous.closeNow')}{' '}
-          </p>
-        )}
-      </div>
-      <div className={classes.bodytext}>
-        <p className={classes.bodytext}>
-          Tel:
-          <a href={`tel: ${info.telephones}`} className={classes.link}>
-            {JSON.parse(info.telephones)[0]}
-          </a>
-        </p>
-      </div>
-      <div className={classes.bodytext}>
-        <p className={classes.bodytext}>
-          {`${t('signup.address')}: `}
-          <a
-            className={classes.link}
-            href={goto()}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {info.address}
-          </a>
-        </p>
-      </div>
+      )}
+      {info.address && info.address !== '' && (
+        <div
+          style={{ alignSelf: 'flex-start', marginBottom: '3px' }}
+          className={classes.row}
+        >
+          <span className={classes.boldText}>
+            {t('signup.address')}: &nbsp;
+            <a
+              href={goto()}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontWeight: 'normal' }}
+            >
+              {info.address}
+            </a>
+          </span>
+        </div>
+      )}
       <Button
         variant="contained"
         color="secondary"
