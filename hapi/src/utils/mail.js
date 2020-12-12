@@ -387,7 +387,16 @@ const sendRegistrationRequest = async (to, lifebankData) => {
   })
 }
 
-const sendCredentialsRecovery = async (to, account, tempSecret, subject, titule, message, accountText, password) => {
+const sendCredentialsRecovery = async (
+  to,
+  account,
+  tempSecret,
+  subject,
+  titule,
+  message,
+  accountText,
+  password
+) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,

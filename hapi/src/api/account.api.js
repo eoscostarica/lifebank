@@ -87,7 +87,7 @@ const create = async ({ role, email, emailContent, name, secret }) => {
   }
 }
 
-const createLifebank = async ({ 
+const createLifebank = async ({
   email,
   emailContent,
   name,
