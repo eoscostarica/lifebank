@@ -51,7 +51,14 @@ const preRegister = async ({
       verification_code
     })
 
-    mailApi.sendVerificationCode(email, verification_code, emailContent.subject, emailContent.titule, emailContent.message, emailContent.button)
+    mailApi.sendVerificationCode(
+      email,
+      verification_code,
+      emailContent.subject,
+      emailContent.titule,
+      emailContent.message,
+      emailContent.button
+    )
   } catch (error) {
     resultRegister = 'error'
 

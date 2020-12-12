@@ -35,7 +35,7 @@ module.exports = async ({ payload: { input } }) => {
           input.email,
           input.emailContent.subject,
           input.emailContent.titule,
-          input.emailContent.message,
+          input.emailContent.message
         )
 
       return {

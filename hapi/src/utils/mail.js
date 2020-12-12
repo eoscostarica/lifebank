@@ -2,7 +2,14 @@ const nodemailer = require('nodemailer')
 
 const { mailConfig } = require('../config')
 
-const sendVerificationCode = async (to, verficationCode, subject, titule, message, buttonText) => {
+const sendVerificationCode = async (
+  to,
+  verficationCode,
+  subject,
+  titule,
+  message,
+  buttonText
+) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,

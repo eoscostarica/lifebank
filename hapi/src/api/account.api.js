@@ -69,11 +69,11 @@ const create = async ({ role, email, emailContent, name, secret }) => {
   await historyApi.insert(transaction)
   try {
     mailApi.sendVerificationCode(
-      email, 
-      verification_code, 
-      emailContent.subject, 
-      emailContent.titule, 
-      emailContent.message, 
+      email,
+      verification_code,
+      emailContent.subject,
+      emailContent.titule,
+      emailContent.message,
       emailContent.button
     )
   } catch (error) {
@@ -87,7 +87,13 @@ const create = async ({ role, email, emailContent, name, secret }) => {
   }
 }
 
-const createLifebank = async ({ email, emailContent, name, secret, verification_code }) => {
+const createLifebank = async ({ 
+  email,
+  emailContent,
+  name,
+  secret,
+  verification_code
+}) => {
   const role = 'lifebank'
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
