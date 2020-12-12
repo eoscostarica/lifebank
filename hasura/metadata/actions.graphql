@@ -30,6 +30,7 @@ type Mutation {
 type Mutation {
   create_account_lifebank (
     email: String!
+    emailContent: jsonb!
     name: String!
     secret: String!
     verification_code: String!

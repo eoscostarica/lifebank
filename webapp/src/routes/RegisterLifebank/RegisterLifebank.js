@@ -92,6 +92,11 @@ const RegisterLifebank = (props) => {
       createAccountLifebank({
         variables: {
           email,
+          emailContent: {
+            subject: t('emailMessage.subjectAproveAccount'),
+            titule: t('emailMessage.tituleAproveAccount'),
+            message: t('emailMessage.messageAproveAccount'),
+          },
           name,
           secret,
           verification_code
