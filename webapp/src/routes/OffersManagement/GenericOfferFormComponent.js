@@ -42,14 +42,14 @@ const Transition = forwardRef((props, ref) => {
 const useStyles = makeStyles((theme) => ({
   dialog: {
     [theme.breakpoints.up('md')]: {
-      paddingTop: "48px",
-      paddingLeft: "48px",
-      paddingRight: "48px"
+      paddingTop: '48px',
+      paddingLeft: '48px',
+      paddingRight: '48px'
     }
   },
   form: {
     margin: 'auto',
-    width: "100%",
+    width: '100%',
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(2)
     }
@@ -63,8 +63,8 @@ const useStyles = makeStyles((theme) => ({
   },
   boldText: {
     fontWeight: 'bold',
-    width: "100%",
-    textAlign: "left",
+    width: '100%',
+    textAlign: 'left',
     marginBottom: '20px',
   },
   divider: {
@@ -82,14 +82,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between'
   },
   titleModal: {
-    fontSize: "34px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
-    lineHeight: "1.18",
-    letterSpacing: "0.25px",
-    textAlign: "left",
-    color: "rgba(0, 0, 0, 0.87)",
+    fontSize: '34px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.18',
+    letterSpacing: '0.25px',
+    textAlign: 'left',
+    color: 'rgba(0, 0, 0, 0.87)',
     marginBottom: 15
   },
   closeIcon: {
@@ -101,11 +101,11 @@ const useStyles = makeStyles((theme) => ({
     height: '5vh',
     '& svg': {
       fontSize: 25,
-      color: "rgba(0, 0, 0, 0.6)"
+      color: 'rgba(0, 0, 0, 0.6)'
     }
   },
   dateContainer: {
-    width: "100%"
+    width: '100%'
   },
   appBar: {
     position: 'relative',
@@ -124,12 +124,12 @@ const useStyles = makeStyles((theme) => ({
   },
   carrouselContainer: {
     maxWidth: '100%',
-    height: "300"
+    height: '300'
   },
   saveBtn: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
-    width: "100%",
+    width: '100%',
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
@@ -140,7 +140,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '12px',
     marginBottom: 20,
     [theme.breakpoints.down('md')]: {
-      width: "100%",
+      width: '100%',
     },
   },
 }))
