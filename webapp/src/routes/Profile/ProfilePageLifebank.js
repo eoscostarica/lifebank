@@ -301,7 +301,7 @@ const ProfilePageLifebank = ({ profile }) => {
                 >
                   <Button
                     color="secondary"
-                    className={classes.editBtn}
+                    className={classes.updateButton}
                   >
                     {t('common.update')}
                   </Button>
@@ -453,7 +453,7 @@ const ProfilePageLifebank = ({ profile }) => {
           <Divider className={classes.divider} />
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
-            <ViewSchedule schedule = {profile.schedule} />
+            <ViewSchedule schedule={profile.schedule} />
           </Box>
         </>
       }

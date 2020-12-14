@@ -243,6 +243,7 @@ const Schedule = ({
           color="primary"
           onClick={handleOpen}
           fullWidth
+          className={classes.addBtn}
         >
           {t('schedule.addSchedule')}
         </Button>
