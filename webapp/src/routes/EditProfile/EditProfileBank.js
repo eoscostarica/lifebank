@@ -470,15 +470,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             showSchedule
           />
         </Box>
-<<<<<<< HEAD
-        <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.marginTitle}>
-          <Typography variant="h4">{t('profile.images')}</Typography>
-          <Typography variant="body1" />
-=======
         <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
           <Divider className={classes.divider} />
           <Typography className={classes.boldText} variant="subtitle1">{t('profile.images')}</Typography>
->>>>>>> fcc41bf7a71d41b7028b194879fec6df2657c3fa
         </Box>
         <TextField
           id="image-url"
@@ -536,22 +530,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Box>
           )}
         </div>
-<<<<<<< HEAD
-        <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} className={classes.marginTitle}>
-          <Typography variant="h4">{t('profile.location')}</Typography>
-          <Typography variant="body1" />
-        </Box>
-        <MapEditLocation
-          style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
-          onGeolocationChange={handleOnGeolocationChange}
-          markerLocation={user.geolocation}
-          markerType={LIFE_BANK}
-          width="100%"
-          height={400}
-          mb={1}
-        />
-=======
->>>>>>> fcc41bf7a71d41b7028b194879fec6df2657c3fa
         <div style={{ display: isCompleting && user.blood_urgency_level ? 'none' : '' }}>
           <Divider className={classes.divider} />
           <Typography className={classes.boldText} variant="subtitle1">{t('editProfile.bloodDemandLevel')}</Typography>
