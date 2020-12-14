@@ -1,51 +1,93 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, ThemeProvider } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 
 const useStyles = makeStyles({
   popup: {
-    maxHeight: '150px',
-    padding: '0px !important',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '200px'
+    width: '250px',
+    padding: "10px"
   },
-  popupHeader: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignSelf: 'center',
-    justifyContent: 'space-between',
-    alignContent: 'space-between'
+  title: {
+    fontFamily: "Roboto",
+    fontSize: '16px',
+    lineHeight: '1.6',
+    letterSpacing: '1px',
+    width: '90%',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontWeight: "bold",
+    color: 'black',
+    maxWidth: "100%",
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
-  ul: {
-    margin: 0
-  },
-  boldText: {
-    fontSize: '12px',
-    fontWeight: 500,
+  typeText: {
+    fontFamily: "Roboto",
+    fontSize: '14px',
+    fontWeight: "bold",
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 2,
     letterSpacing: '0.4px',
     textAlign: 'left',
-    color: '#000000'
+    color: '#000000',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    maxWidth: "60%",
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
-  title: {
-    marginBottom: '5px',
+  closeText: {
+    fontFamily: "Roboto",
     fontSize: '14px',
-    lineHeight: '1.6',
-    letterSpacing: '1.5px',
-    width: '145px',
-    height: '16px',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    fontWeight: 500,
-    color: 'black'
+    fontWeight: "bold",
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 2,
+    letterSpacing: '0.4px',
+    textAlign: 'right',
+    color: '#BA0D0D',
+    position: "absolute",
+    top: 0,
+    right: 0
+  },
+  openText: {
+    fontFamily: "Roboto",
+    fontSize: '14px',
+    fontWeight: "bold",
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 2,
+    letterSpacing: '0.4px',
+    textAlign: 'right',
+    color: '#00B13C',
+    position: "absolute",
+    top: 0,
+    right: 0
+  },
+  boldText: {
+    fontFamily: "Roboto",
+    fontSize: '14px',
+    fontWeight: "bold",
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 2,
+    letterSpacing: '0.4px',
+    textAlign: 'left',
+    color: '#000000',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    maxWidth: "100%",
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
   addressText: {
     fontSize: '12px',
@@ -57,29 +99,33 @@ const useStyles = makeStyles({
     textAlign: 'left'
   },
   row: {
-    height: '16px',
-    verticalAlign: 'middle',
-    maxWidth: '185px',
-    width: 185
+    position: "relative",
+    width: "90%",
+    height: "20px",
+    marginBottom: "5px"
   },
-  overflowText: {
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden'
+  rowButtom: {
+    position: "relative",
+    width: "90%",
+    height: "50px",
   },
   button: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
     borderRadius: '20px',
     backgroundColor: '#ba0d0d',
-    width: '84%',
     margin: '4px 0',
-    height: '20px',
-    fontSize: '12px',
-    fontWeight: 500,
+    height: '30px',
+    fontSize: '14px',
+    fontWeight: "bold",
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 1.14,
     letterSpacing: '1px',
-    color: '#ffffff'
+    color: '#ffffff',
+    marginTop: "20px",
   }
 })
 
@@ -149,56 +195,45 @@ const MapPopup = ({ id, info, username }) => {
 
   return (
     <div className={classes.popup} key={id}>
-      <span className={clsx(classes.title, classes.overflowText)}>
+      <h1 className={classes.title}>
         {info.name}
-      </span>
-      <div className={clsx(classes.popupHeader, classes.row)}>
-        <span
-          style={{ marginRight: '5px' }}
-          className={clsx(classes.overflowText, classes.boldText)}
-        >
-          {info.business_type || t('miscellaneous.donationCenter')}
-        </span>
-        <span
-          style={{ color: open ? '#00b13c' : '#ba0d0d', marginLeft: '5px' }}
-          className={clsx(classes.boldText)}
-        >
-          {t(`miscellaneous.${open ? 'openNow' : 'closeNow'}`)}
-        </span>
+      </h1>
+      <div className={classes.row}>
+        <h2 className={classes.typeText} >{info.business_type || t('miscellaneous.donationCenter')}</h2>
+        {open &&
+          <h2 className={classes.openText} >{t('miscellaneous.openNow')}</h2>
+        }
+        {!open &&
+          <h2 className={classes.closeText} >{t('miscellaneous.closeNow')}</h2>
+        }
       </div>
-
       {JSON.parse(info.telephones).length > 0 && (
-        <div style={{ alignSelf: 'flex-start' }} className={classes.row}>
-          <span className={classes.boldText}>
-            Tel: &nbsp;
-            <a href={`tel: ${info.telephones}`}>
-              {JSON.parse(info.telephones)[0]}
-            </a>
-          </span>
+        <div className={classes.row}>
+          <h2 className={classes.boldText} >Tel:&nbsp; <a href={`tel: ${info.telephones}`}>{JSON.parse(info.telephones)[0]}</a></h2>
         </div>
       )}
-      <div
-        style={{ alignSelf: 'center', marginBottom: '3px' }}
-        className={classes.row}
-      >
-        <span className={classes.boldText}>{t('signup.address')}: &nbsp;</span>
+      <div className={classes.row}>
+        <h2 className={classes.boldText} >
+          {t('signup.address')}:{' '}
+          <a
+            href={goto()}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {info.address}
+          </a>
+        </h2>
       </div>
-      <a
-        href={goto()}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={clsx(classes.addressText, classes.overflowText)}
-      >
-        {info.address}
-      </a>
-      <Button
-        variant="contained"
-        color="secondary"
-        href={`https://lifebank.io/info/${username}`}
-        className={classes.button}
-      >
-        {t('cardsSection.moreInfo')}
-      </Button>
+      <div className={classes.rowButtom} >
+        <Button
+          variant="contained"
+          color="secondary"
+          href={`https://lifebank.io/info/${username}`}
+          className={classes.button}
+        >
+          {t('cardsSection.moreInfo')}
+        </Button>
+      </div>
     </div>
   )
 }
