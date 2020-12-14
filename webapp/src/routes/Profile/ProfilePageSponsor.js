@@ -24,6 +24,7 @@ import InstagramIcon from '@material-ui/icons/Instagram'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
+import ViewSchedule from '../../components/ViewSchedule'
 import { GET_USERNAME } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
@@ -297,37 +298,6 @@ const ProfilePageSponsor = ({ profile }) => {
     }
   }, [profile])
 
-  const generateSchedule = (schedules) => {
-    const scheduleFinal = []
-    let schedule
-    for (schedule of schedules) {
-      if (scheduleFinal.length > 0) {
-        let insert = 0
-        scheduleFinal.forEach((element) => {
-          if (
-            schedule.open === element[1][0] &&
-            schedule.close === element[1][1]
-          ) {
-            element[0] = `${element[0]}, ${schedule.day}`
-            insert++
-          }
-        })
-        if (insert === 0) {
-          const tempaSchedule = [
-            [schedule.day],
-            [schedule.open, schedule.close]
-          ]
-          scheduleFinal.push(tempaSchedule)
-        }
-      } else {
-        const tempaSchedule = [[schedule.day], [schedule.open, schedule.close]]
-        scheduleFinal.push(tempaSchedule)
-      }
-    }
-
-    return scheduleFinal
-  }
-
   return (
     <>
       {pendingFields && (
@@ -519,14 +489,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Divider className={classes.divider} />
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
-            {generateSchedule(
-              JSON.parse(profile.schedule)
-            ).map((schedule, index) => (
-              <Typography
-                key={index}
-                id={index}
-              >{`${schedule[0]} from ${schedule[1][0]} to ${schedule[1][1]}`}</Typography>
-            ))}
+            <ViewSchedule schedule = {profile.schedule} />
           </Box>
         </>
       }

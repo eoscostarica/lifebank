@@ -6,6 +6,7 @@ import { JSONLD, Generic } from 'react-structured-data'
 const LocalBusinessStructuredData = ({
   name,
   openingHours,
+  username,
   address,
   logo,
   photos,
@@ -45,6 +46,7 @@ const LocalBusinessStructuredData = ({
               ? 'https://dummyimage.com/640x360/fff/aaa'
               : photos[0],
           location: location,
+          url: `https://lifebank.io/info/${username}`,
           telephone: JSON.parse(telephone)[0]
         }}
       >
@@ -91,6 +93,7 @@ const LocalBusinessStructuredData = ({
 LocalBusinessStructuredData.propTypes = {
   name: PropTypes.string,
   openingHours: PropTypes.string,
+  username: PropTypes.string,
   address: PropTypes.string,
   logo: PropTypes.string,
   photos: PropTypes.array,

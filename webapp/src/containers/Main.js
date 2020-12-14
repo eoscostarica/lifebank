@@ -150,7 +150,7 @@ const Main = ({ children, sidebarContent, topbarContent, sideBarPosition }) => {
   return (
     <Container
       component="main"
-      maxWidth="xl"
+      maxWidth={false}
       className={clsx(classes.root, {
         [classes.paddingHome]: isDesktop && isHome
       })}

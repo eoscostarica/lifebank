@@ -57,6 +57,10 @@ export default {
     lineHeight: '21px'
   },
   body1: {
+    fontFamily: 'Roboto',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
     color: palette.text.primary,
     fontSize: '14px',
     letterSpacing: '-0.05px',
