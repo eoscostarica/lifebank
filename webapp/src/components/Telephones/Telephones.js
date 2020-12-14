@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     width: '100%',
     margin: 'auto',
-    maxWidth: 360,
     backgroundColor: 'transparent'
   }
 }))
