@@ -206,9 +206,9 @@ const ProfilePageSponsor = ({ profile }) => {
   const theme = useTheme()
   const history = useHistory()
   const [, { logout }] = useUser()
-  const images = JSON.parse(profile.photos)
-  const socialMedia = JSON.parse(profile.social_media_links)
-  const phones = JSON.parse(profile.telephones)
+  const images = profile.photos !== "" ? JSON.parse(profile.photos) : {}
+  const socialMedia = profile.social_media_links !== "" ? JSON.parse(profile.social_media_links) : {}
+  const phones = profile.telephones !== "" ? JSON.parse(profile.telephones) : {}
 
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
