@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between'
   },
-  marginTitule:
+  marginTitle:
   {
     marginTop: '3%'
   },
@@ -419,7 +419,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             handleOnAddSchedule={handleOnAddSchedule}
           />
         </Box>
-        <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.marginTitule}>
+        <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.marginTitle}>
           <Typography variant="h4">{t('profile.images')}</Typography>
           <Typography variant="body1" />
         </Box>
@@ -486,7 +486,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>} </>
           )}
         </div>
-        <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} className={classes.marginTitule}>
+        <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} className={classes.marginTitle}>
           <Typography variant="h4">{t('profile.location')}</Typography>
           <Typography variant="body1" />
         </Box>

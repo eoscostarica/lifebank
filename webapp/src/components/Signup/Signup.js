@@ -252,7 +252,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
             email,
             emailContent: {
               subject: t('emailMessage.subjectVerificationCode'),
-              titule: t('emailMessage.tituleVerificationCode'),
+              title: t('emailMessage.titleVerificationCode'),
               message: t('emailMessage.messageVerificationCode'),
               button: t('emailMessage.verifyButton')
             },
@@ -319,7 +319,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
             email,
             emailContent: {
               subject: t('emailMessage.subjectVerificationCode'),
-              titule: t('emailMessage.tituleVerificationCode'),
+              title: t('emailMessage.titleVerificationCode'),
               message: t('emailMessage.messageVerificationCode'),
               button: t('emailMessage.verifyButton')
             },

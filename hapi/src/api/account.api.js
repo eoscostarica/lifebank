@@ -72,7 +72,7 @@ const create = async ({ role, email, emailContent, name, secret }) => {
       email,
       verification_code,
       emailContent.subject,
-      emailContent.titule,
+      emailContent.title,
       emailContent.message,
       emailContent.button
     )
@@ -121,7 +121,7 @@ const createLifebank = async ({
     mailApi.sendConfirmMessage(
       email,
       emailContent.subject,
-      emailContent.titule,
+      emailContent.title,
       emailContent.message
     )
   } catch (error) {

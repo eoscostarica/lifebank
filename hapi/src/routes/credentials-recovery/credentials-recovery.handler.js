@@ -28,7 +28,7 @@ module.exports = async ({ payload: { input } }) => {
         user.update_user.returning[0].account,
         tempSecret,
         input.emailContent.subject,
-        input.emailContent.titule,
+        input.emailContent.title,
         input.emailContent.message,
         input.emailContent.account,
         input.emailContent.password

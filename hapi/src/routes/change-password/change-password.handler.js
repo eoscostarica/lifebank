@@ -34,7 +34,7 @@ module.exports = async ({ payload: { input } }) => {
         await mailUtils.sendConfirmMessage(
           input.email,
           input.emailContent.subject,
-          input.emailContent.titule,
+          input.emailContent.title,
           input.emailContent.message
         )
 

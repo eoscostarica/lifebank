@@ -138,7 +138,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         email: user.email,
         emailContent: {
           subject: t('emailMessage.subjectCredentialsRecovery'),
-          titule: t('emailMessage.tituleCredentialsRecovery'),
+          title: t('emailMessage.titleCredentialsRecovery'),
           message: t('emailMessage.messageCredentialsRecovery'),
           account: t('common.account'),
           password: t('signup.password')
@@ -155,7 +155,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         ...user,
         emailContent: {
           subject: t('emailMessage.subjectChangePassword'),
-          titule: t('emailMessage.tituleChangePassword'),
+          title: t('emailMessage.titleChangePassword'),
           message: t('emailMessage.messageChangePassword')
         }
       }

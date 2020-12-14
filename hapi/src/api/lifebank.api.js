@@ -55,7 +55,7 @@ const preRegister = async ({
       email,
       verification_code,
       emailContent.subject,
-      emailContent.titule,
+      emailContent.title,
       emailContent.message,
       emailContent.button
     )

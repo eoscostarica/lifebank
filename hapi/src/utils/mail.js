@@ -6,7 +6,7 @@ const sendVerificationCode = async (
   to,
   verficationCode,
   subject,
-  titule,
+  title,
   message,
   buttonText
 ) => {
@@ -31,7 +31,7 @@ const sendVerificationCode = async (
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>${titule}</title>
+            <title>${title}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -145,7 +145,7 @@ const sendVerificationCode = async (
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;">${titule}</h1>
+                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;">${title}</h1>
                       </td>
                     </tr>
                     <tr>
@@ -392,7 +392,7 @@ const sendCredentialsRecovery = async (
   account,
   tempSecret,
   subject,
-  titule,
+  title,
   message,
   accountText,
   password
@@ -418,7 +418,7 @@ const sendCredentialsRecovery = async (
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title${titule}</title>
+            <title${title}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -531,7 +531,7 @@ const sendCredentialsRecovery = async (
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"${titule}</h1>
+                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"${title}</h1>
                       </td>
                     </tr>
                     <tr>
@@ -562,7 +562,7 @@ const sendCredentialsRecovery = async (
   })
 }
 
-const sendConfirmMessage = async (to, subject, titule, message) => {
+const sendConfirmMessage = async (to, subject, title, message) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -584,7 +584,7 @@ const sendConfirmMessage = async (to, subject, titule, message) => {
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>${titule}</title>
+            <title>${title}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -697,7 +697,7 @@ const sendConfirmMessage = async (to, subject, titule, message) => {
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${titule}</h1>
+                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${title}</h1>
                       </td>
                     </tr>
                     <tr>

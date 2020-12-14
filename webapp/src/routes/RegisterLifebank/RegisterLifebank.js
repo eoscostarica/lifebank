@@ -94,7 +94,7 @@ const RegisterLifebank = (props) => {
           email,
           emailContent: {
             subject: t('emailMessage.subjectAproveAccount'),
-            titule: t('emailMessage.tituleAproveAccount'),
+            title: t('emailMessage.titleAproveAccount'),
             message: t('emailMessage.messageAproveAccount'),
           },
           name,
