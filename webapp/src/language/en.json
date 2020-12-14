@@ -330,9 +330,9 @@
       "takeHome": "Take me home"
     },
     "emailMessage": {
-      "subjectAproveAccount": "Lifebank Approve Account",
-      "titleAproveAccount": "Approve Account",
-      "messageAproveAccount": "Your application for registration in Lifebank has been approved, thank you for being part of this beautiful project",
+      "subjectApproveAccount": "Lifebank Approve Account",
+      "titleApproveAccount": "Approve Account",
+      "messageApproveAccount": "Your application for registration in Lifebank has been approved, thank you for being part of this beautiful project",
       "subjectChangePassword": "Lifebank Change Password",
       "titleChangePassword": "Change Password",
       "messageChangePassword": "Your password has been successfully changed, thank you for donating life",

@@ -93,9 +93,9 @@ const RegisterLifebank = (props) => {
         variables: {
           email,
           emailContent: {
-            subject: t('emailMessage.subjectAproveAccount'),
-            title: t('emailMessage.titleAproveAccount'),
-            message: t('emailMessage.messageAproveAccount'),
+            subject: t('emailMessage.subjectApproveAccount'),
+            title: t('emailMessage.titleApproveAccount'),
+            message: t('emailMessage.messageApproveAccount'),
           },
           name,
           secret,
