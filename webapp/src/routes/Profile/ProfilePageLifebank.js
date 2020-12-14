@@ -453,7 +453,7 @@ const ProfilePageLifebank = ({ profile }) => {
           <Divider className={classes.divider} />
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
-            <ViewSchedule schedule = {profile.schedule} />
+            <ViewSchedule schedule={profile.schedule} />
           </Box>
         </>
       }
@@ -481,7 +481,7 @@ const ProfilePageLifebank = ({ profile }) => {
         <>
           <Divider className={classes.divider} />
           <Box className={classes.rowBoxLeft}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.benefitDescription')}</Typography>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.images')}</Typography>
             <Box>
               <img className={classes.img} src={images[activeStep]} />
               <MobileStepper

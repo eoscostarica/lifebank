@@ -1,14 +1,10 @@
 import React, { forwardRef } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import Grid from '@material-ui/core/Grid'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Dialog from '@material-ui/core/Dialog'
-import Paper from '@material-ui/core/Paper'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
+import Box from '@material-ui/core/Box'
+import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Slide from '@material-ui/core/Slide'
@@ -36,18 +32,52 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative'
   },
   title: {
-    marginLeft: theme.spacing(2),
-    color: 'white',
-    flex: 1
+    fontSize: "34px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.18",
+    letterSpacing: "0.25px",
+    textAlign: "left",
+    color: "rgba(0, 0, 0, 0.87)",
+    marginBottom: 15
+  },
+  closeIcon: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 14,
+    right: 14,
+    margin: '0',
+    height: '5vh',
+    '& svg': {
+      fontSize: 25,
+      color: "rgba(0, 0, 0, 0.6)"
+    }
   },
   content: {
-    maxWidth: '100%',
-    margin: 'auto',
-    marginTop: theme.spacing(3)
+    width: "100%",
+    padding: theme.spacing(2)
+  },
+  rowBox: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    padding: theme.spacing(2, 2),
+    alignItems: 'center',
+    '& p': {
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+    }
+  },
+  divider: {
+    width: '100%'
   },
   carouselComponent: {
     justifyContent: 'center',
     justifySelf: 'center'
+  },
+  carouselContainer: {
+    maxWidth: '100%',
+    height: "300"
   },
   descriptionContainer: {
     margin: 'auto'
@@ -61,139 +91,107 @@ const OfferDetails = ({ offer, open, setOpen }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const timezone = moment.tz.guess()
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true
+  })
 
   return (
     <Dialog
-      fullScreen
+      fullScreen={!isDesktop}
       open={open}
       onClose={() => setOpen(false)}
       TransitionComponent={Transition}
+      maxWidth="sm"
+      fullWidth
     >
-      <AppBar className={classes.appBar}>
-        <Toolbar>
+      <Box className={classes.content}>
+        <Box className={classes.closeIcon}>
           <IconButton
-            edge="start"
-            color="inherit"
-            onClick={() => setOpen(false)}
             aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={() => setOpen(false)}
           >
-            <CloseIcon />
+            <CloseIcon fontSize="inherit" />
           </IconButton>
-          <Typography variant="h1" className={classes.title}>
+        </Box>
+        <Box>
+          <Typography className={classes.title}>
             {t('offersManagement.offerDetails')}
           </Typography>
-        </Toolbar>
-      </AppBar>
-      <Grid container spacing={3} className={classes.content}>
-        <Grid item xs={12}>
-          <Grid
-            item
-            className={classes.descriptionContainer}
-            xs={12}
-            sm={8}
-            md={6}
-            lg={4}
-          >
-            <Paper elevation={0} variant="outlined" className={classes.paper}>
-              <Typography variant="h4" style={{ textAlign: 'center' }}>
-                {t('common.description')}
-              </Typography>
-              <Typography variant="body1">{offer.description}</Typography>
-            </Paper>
-          </Grid>
-          <List>
-            {offer.start_date && (
-              <ListItem>
-                <ListItemIcon>
-                  <EventAvailableIcon color="secondary" />
-                </ListItemIcon>
-                <ListItemText>
-                  <strong>Start date: </strong>
-                  {m(offer.start_date)
-                    .tz(timezone)
-                    .format('DD MMMM YYYY, h:mm:ss a z')}
-                </ListItemText>
-              </ListItem>
-            )}
-            {offer.end_date && (
-              <ListItem>
-                <ListItemIcon>
-                  <EventBusyIcon color="secondary" />
-                </ListItemIcon>
-                <ListItemText>
-                  <strong>{t('offersManagement.endDate')}: </strong>
-                  {m(offer.end_date)
-                    .tz(timezone)
-                    .format('DD MMMM YYYY, h:mm:ss a z')}
-                </ListItemText>
-              </ListItem>
-            )}
-            <ListItem>
-              <ListItemIcon>
-                <ReceiptIcon color="secondary" />
-              </ListItemIcon>
-              <ListItemText>
-                <strong>{t('offersManagement.offerType')}: </strong>{' '}
-                {offer.offer_type}
-              </ListItemText>
-            </ListItem>
-            {offer.cost_in_tokens && (
-              <ListItem>
-                <ListItemIcon>
-                  <StyleIcon color="secondary" />
-                </ListItemIcon>
-                <ListItemText>
-                  <strong>{t('offersManagement.costInTokens')}: </strong>{' '}
-                  {offer.cost_in_tokens}
-                </ListItemText>
-              </ListItem>
-            )}
-            {offer.quantity && (
-              <ListItem>
-                <ListItemIcon>
-                  <BallotIcon color="secondary" />
-                </ListItemIcon>
-                <ListItemText>
-                  <strong>{t('offersManagement.quantity')}: </strong>{' '}
-                  {offer.quantity}
-                </ListItemText>
-              </ListItem>
-            )}
-            <ListItem>
-              <ListItemIcon>
-                {offer.online_only ? (
-                  <LocationOffIcon color="secondary" />
-                ) : (
-                  <LocationOnIcon color="secondary" />
-                )}
-              </ListItemIcon>
-              <ListItemText>
-                {offer.online_only
-                  ? t('offersManagement.onlineOnly')
-                  : t('offersManagement.physicalLocation')}
-              </ListItemText>
-            </ListItem>
-          </List>
-        </Grid>
-        <Grid container justify="center">
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            md={6}
-            lg={4}
-            className={classes.carouselComponent}
-          >
-            <CarouselComponent
-              images={
-                typeof offer.images === 'string'
-                  ? JSON.parse(offer.images)
-                  : offer.images
-              }
-            />
-          </Grid>
-        </Grid>
-      </Grid>
+        </Box>
+        <Divider className={classes.divider} />
+        <Box className={classes.rowBox}>
+          <Typography variant="subtitle1">{t('common.description')}</Typography>
+          <Typography >{offer.description}</Typography>
+        </Box>
+        <Divider className={classes.divider} />
+        {offer.start_date &&
+          <>
+            <Box className={classes.rowBox}>
+              <Typography variant="subtitle1">{t('offersManagement.startDate')}</Typography>
+              <Typography >{m(offer.start_date)
+                .tz(timezone)
+                .format('DD MMMM YYYY, h:mm:ss a z')}</Typography>
+            </Box>
+            <Divider className={classes.divider} />
+          </>
+        }
+        {offer.end_date &&
+          <>
+            <Box className={classes.rowBox}>
+              <Typography variant="subtitle1">{t('offersManagement.endDate')}</Typography>
+              <Typography >{m(offer.end_date)
+                .tz(timezone)
+                .format('DD MMMM YYYY, h:mm:ss a z')}</Typography>
+            </Box>
+            <Divider className={classes.divider} />
+          </>
+        }
+        <Box className={classes.rowBox}>
+          <Typography variant="subtitle1">{t('offersManagement.offerType')}</Typography>
+          <Typography >{offer.offer_type}</Typography>
+        </Box>
+        <Divider className={classes.divider} />
+        {offer.cost_in_tokens &&
+          <>
+            <Box className={classes.rowBox}>
+              <Typography variant="subtitle1">{t('offersManagement.costInTokens')}</Typography>
+              <Typography >{offer.cost_in_tokens}</Typography>
+            </Box>
+            <Divider className={classes.divider} />
+          </>
+        }
+        {offer.quantity &&
+          <>
+            <Box className={classes.rowBox}>
+              <Typography variant="subtitle1">{t('offersManagement.quantity')}</Typography>
+              <Typography >{offer.quantity}</Typography>
+            </Box>
+            <Divider className={classes.divider} />
+          </>
+        }
+        <Box className={classes.rowBox}>
+          <Typography variant="subtitle1">{t('miscellaneous.location')}</Typography>
+          <Typography >{offer.online_only
+            ? t('offersManagement.onlineOnly')
+            : t('offersManagement.physicalLocation')}</Typography>
+        </Box>
+        <Divider className={classes.divider} />
+        <Box className={classes.rowBox}>
+          <Typography variant="subtitle1">{t('profile.images')}</Typography>
+        </Box>
+        <Box className={classes.carouselContainer}>
+          <CarouselComponent
+            images={
+              typeof offer.images === 'string'
+                ? JSON.parse(offer.images)
+                : offer.images
+            }
+          />
+        </Box>
+      </Box>
     </Dialog>
   )
 }
