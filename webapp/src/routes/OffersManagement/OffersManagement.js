@@ -8,7 +8,6 @@ import AddIcon from '@material-ui/icons/Add'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
-import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -19,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import * as m from 'moment-timezone'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
@@ -33,14 +33,51 @@ import {
 import OfferDetails from './OfferDetails'
 import GenericOfferFormComponent from './GenericOfferFormComponent'
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    maxWidth: '1440px',
-    margin: 'auto',
+    padding: theme.spacing(4),
+    display: 'flex',
+    height: 'calc(100vh - 60px)',
+    width: "90%",
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
+  },
+  title: {
+    fontSize: "34px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.18",
+    letterSpacing: "0.25px",
+    textAlign: "center",
+    color: "rgba(0, 0, 0, 0.87)",
+    marginBottom: 15
+  },
+  btnAction: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "50%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 10,
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
+  },
+  content: {
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: theme.spacing(3)
+    display: 'flex',
+    width: "100%"
   },
   fab: {
     position: 'fixed',
@@ -50,7 +87,12 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     width: '100%'
+  },
+  tableContent: {
+    paddingTop: "30px",
+    width: "100%"
   }
+
 }))
 
 const columns = [
@@ -235,20 +277,18 @@ const OffersManagement = () => {
   }, [updateOfferResult])
 
   return (
-    <Grid container spacing={2} className={classes.root}>
-      <Grid item xs={11}>
-        {!offersLoaded ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            height="100vh"
-            alignItems="center"
-          >
-            <Typography variant="h3">{t('common.loading')}...</Typography>
-          </Box>
-        ) : (
-          <>
-            {offers && offers.length > 0 ? (
+    <Box className={classes.root}>
+      {!offersLoaded &&
+        <Box className={classes.content}>
+          <CircularProgress />
+          <Typography className={classes.title} >{t('common.loading')}...</Typography>
+        </Box>
+      }
+      {offersLoaded &&
+        <>
+          {offers && offers.length > 0 &&
+            <Box className={classes.tableContent} >
+              <Typography className={classes.title} >{t('offersManagement.offersManagement')}</Typography>
               <MUIDataTable
                 title={t('offersManagement.tableTitle')}
                 data={offers.map((offer, key) => [
@@ -277,27 +317,31 @@ const OffersManagement = () => {
                   print: false,
                   selectableRowsHideCheckboxes: true,
                   selectableRowsHeader: false,
-                  download: false
+                  download: false,
                 }}
               />
-            ) : (
-              <Box
-                display="flex"
-                justifyContent="center"
-                height="100vh"
-                alignItems="center"
+            </Box>
+          }
+          {offers.length === 0 &&
+            <Box className={classes.content}>
+              <Typography className={classes.title}>
+                {t('offersManagement.youHaveNoAddedOffers')}
+              </Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.btnAction}
+                onClick={() => setOpenGenericFormAddVariant(true)}
               >
-                <Typography variant="h3">
-                  {t('offersManagement.youHaveNoAddedOffers')}
-                </Typography>
-              </Box>
-            )}
-          </>
-        )}
-        {open ? (
-          <OfferDetails offer={clickedOffer} open={open} setOpen={setOpen} />
-        ) : null}
-      </Grid>
+                {t('offersManagement.addOffer')}
+              </Button>
+            </Box>
+          }
+        </>
+      }
+      {open &&
+        <OfferDetails offer={clickedOffer} open={open} setOpen={setOpen} />
+      }
       <Fab
         size="medium"
         className={classes.fab}
@@ -307,10 +351,12 @@ const OffersManagement = () => {
       >
         <AddIcon />
       </Fab>
-      {openGenericFormAddVariant && profileIDLoaded
-        ? getGenericOfferComponent(false, undefined)
-        : null}
-      {offerToEdit ? getGenericOfferComponent(true, offerToEdit) : null}
+      {openGenericFormAddVariant && profileIDLoaded &&
+        getGenericOfferComponent(false, undefined)
+      }
+      {offerToEdit &&
+        getGenericOfferComponent(true, offerToEdit)
+      }
       <Dialog open={openDeleteDialog} aria-labelledby="delete-dialog-title">
         <DialogTitle id="delete-dialog-title">
           {t('offersManagement.deleteOfferConfirmation')}
@@ -335,7 +381,7 @@ const OffersManagement = () => {
       >
         <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
       </Snackbar>
-    </Grid>
+    </Box>
   )
 }
 
