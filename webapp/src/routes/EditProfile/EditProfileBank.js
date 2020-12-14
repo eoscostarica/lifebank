@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between'
   },
-  marginTitule:
+  marginTitle:
   {
     marginTop: '3%'
   },

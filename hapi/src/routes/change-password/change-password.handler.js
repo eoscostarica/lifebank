@@ -33,9 +33,9 @@ module.exports = async ({ payload: { input } }) => {
       if (user)
         await mailUtils.sendConfirmMessage(
           input.email,
-          'Lifebank Change Password',
-          'Change Password',
-          'Your password has been successfully changed, thank you for donating life'
+          input.emailContent.subject,
+          input.emailContent.title,
+          input.emailContent.message
         )
 
       return {

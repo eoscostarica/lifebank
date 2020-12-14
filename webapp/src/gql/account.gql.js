@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const CREATE_ACCOUNT_MUTATION = gql`
-  mutation($role: String!, $email: String!, $name: String!, $secret: String!) {
-    create_account(role: $role, email: $email, name: $name, secret: $secret) {
+  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!) {
+    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret) {
       account
       token
       transaction_id
@@ -11,8 +11,8 @@ export const CREATE_ACCOUNT_MUTATION = gql`
 `
 
 export const CREATE_ACCOUNT_LIFEBANK_MUTATION = gql`
-  mutation($email: String!, $name: String!, $secret: String!, $verification_code: String!) {
-    create_account_lifebank (email: $email, name: $name, secret: $secret, verification_code: $verification_code){
+  mutation($email: String!, $emailContent: jsonb!, $name: String!, $secret: String!, $verification_code: String!) {
+    create_account_lifebank (email: $email, emailContent: $emailContent, name: $name, secret: $secret, verification_code: $verification_code){
       account
       token
       transaction_id
@@ -121,16 +121,16 @@ export const REVOKE_CONSENT_MUTATION = gql`
 `
 
 export const CREDENTIALS_RECOVERY = gql`
-  mutation($email: String!) {
-    credentials_recovery(email: $email) {
+  mutation($email: String!, $emailContent: jsonb!) {
+    credentials_recovery(email: $email, emailContent: $emailContent) {
       success
     }
   }
 `
 
 export const CHANGE_PASSWORD = gql`
-  mutation($email: String!, $currentPassword: String!, $newPassword: String!) {
-    change_password(email: $email, currentPassword: $currentPassword, newPassword: $newPassword) {
+  mutation($email: String!, $emailContent: jsonb!, $currentPassword: String!, $newPassword: String!) {
+    change_password(email: $email, emailContent: $emailContent, currentPassword: $currentPassword, newPassword: $newPassword) {
       success
     }
   }

@@ -37,7 +37,7 @@ const ValidateEmail = ({ isValid, loading, user, setField }) => {
       type="email"
       fullWidth
       value={user?.email || ""}
-      onChange={(event) => setField('email', event.target.value)}
+      onChange={(event) => setField('email', event.target.value.toLowerCase().replace(/\s/g, ''))}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

@@ -44,7 +44,7 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, name, secret }) => {
+const create = async ({ role, email, emailContent, name, secret }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
@@ -67,9 +67,15 @@ const create = async ({ role, email, name, secret }) => {
   })
 
   await historyApi.insert(transaction)
-
   try {
-    mailApi.sendVerificationCode(email, verification_code)
+    mailApi.sendVerificationCode(
+      email,
+      verification_code,
+      emailContent.subject,
+      emailContent.title,
+      emailContent.message,
+      emailContent.button
+    )
   } catch (error) {
     console.log(error)
   }
@@ -81,7 +87,13 @@ const create = async ({ role, email, name, secret }) => {
   }
 }
 
-const createLifebank = async ({ email, name, secret, verification_code }) => {
+const createLifebank = async ({
+  email,
+  emailContent,
+  name,
+  secret,
+  verification_code
+}) => {
   const role = 'lifebank'
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
@@ -108,9 +120,9 @@ const createLifebank = async ({ email, name, secret, verification_code }) => {
   try {
     mailApi.sendConfirmMessage(
       email,
-      'Lifebank Approve Account',
-      'Approve Account',
-      'Your application for registration in Lifebank has been approved, thank you for being part of this beautiful project'
+      emailContent.subject,
+      emailContent.title,
+      emailContent.message
     )
   } catch (error) {
     console.log(error)

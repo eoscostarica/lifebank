@@ -4,6 +4,7 @@ module.exports = {
   payload: Joi.object({
     input: Joi.object({
       email: Joi.string().required(),
+      emailContent: Joi.object().required(),
       password: Joi.string().required(),
       name: Joi.string().required(),
       address: Joi.string().required(),
