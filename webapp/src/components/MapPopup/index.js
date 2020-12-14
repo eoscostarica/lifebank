@@ -7,13 +7,13 @@ import clsx from 'clsx'
 
 const useStyles = makeStyles({
   popup: {
-    maxHeight: '109px',
+    maxHeight: '150px',
     padding: '0px !important',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '130px'
+    width: '200px'
   },
   popupHeader: {
     display: 'flex',
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     margin: 0
   },
   boldText: {
-    fontSize: '8px',
+    fontSize: '12px',
     fontWeight: 500,
     fontStretch: 'normal',
     fontStyle: 'normal',
@@ -36,16 +36,25 @@ const useStyles = makeStyles({
     color: '#000000'
   },
   title: {
-    margin: 0,
-    fontSize: '10px',
+    marginBottom: '5px',
+    fontSize: '14px',
     lineHeight: '1.6',
     letterSpacing: '1.5px',
-    width: '93px',
+    width: '110px',
     height: '16px',
     textAlign: 'center',
     textTransform: 'uppercase',
     fontWeight: 500,
     color: 'black'
+  },
+  addressText: {
+    fontSize: '12px',
+    height: '21px',
+    lineHeight: '1.31',
+    letterSpacing: '0.4px',
+    maxWidth: '170px',
+    width: '170px',
+    textAlign: 'left'
   },
   row: {
     height: '16px',
@@ -60,7 +69,7 @@ const useStyles = makeStyles({
     borderRadius: '20px',
     backgroundColor: '#ba0d0d',
     width: '84%',
-    marginTop: '4px',
+    margin: '4px 0',
     height: '20px',
     fontSize: '12px',
     fontWeight: 500,
@@ -166,24 +175,20 @@ const MapPopup = ({ id, info, username }) => {
           </span>
         </div>
       )}
-      {info.address && info.address !== '' && (
-        <div
-          style={{ alignSelf: 'flex-start', marginBottom: '3px' }}
-          className={classes.row}
-        >
-          <span className={classes.boldText}>
-            {t('signup.address')}: &nbsp;
-            <a
-              href={goto()}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontWeight: 'normal' }}
-            >
-              {info.address}
-            </a>
-          </span>
-        </div>
-      )}
+      <div
+        style={{ alignSelf: 'flex-start', marginBottom: '3px' }}
+        className={classes.row}
+      >
+        <span className={classes.boldText}>{t('signup.address')}: &nbsp;</span>
+      </div>
+      <a
+        href={goto()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={clsx(classes.addressText, classes.overflowText)}
+      >
+        {info.address}
+      </a>
       <Button
         variant="contained"
         color="secondary"
