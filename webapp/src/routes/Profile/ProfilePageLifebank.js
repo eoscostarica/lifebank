@@ -301,7 +301,7 @@ const ProfilePageLifebank = ({ profile }) => {
                 >
                   <Button
                     color="secondary"
-                    className={classes.editBtn}
+                    className={classes.updateButton}
                   >
                     {t('common.update')}
                   </Button>

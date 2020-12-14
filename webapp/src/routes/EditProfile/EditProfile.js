@@ -30,7 +30,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100%',
     padding: theme.spacing(6, 1, 0, 1),
-    alignItems: 'center'
+    alignItems: 'center',
+    minHeight: 'calc(100vh - 60px)',
+    paddingTop: '60px',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '35%',
+      paddingRight: '35%',
+    },
   },
   title: {
     fontSize: 48,

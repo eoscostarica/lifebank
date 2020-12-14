@@ -137,7 +137,8 @@
       "all": "All",
       "donationCenter": "Donation center",
       "change": "Change",
-      "addTransparentIfPossible": "Add image with transparent background if possible."
+      "addTransparentIfPossible": "Add image with transparent background if possible.",
+      "noNear": "There aren’t any businesses or donation centers registered near this location. If you know any, refer them to Lifebank: "
     },
     "notFound": {
       "404Error": "404: Oh... this isn't the page you're looking for. Please, try again!",
@@ -278,7 +279,7 @@
       "moreOver": "Moreover, the pandemic is impacting local economies due to a generalized lockdown. Small businesses that rely on the local community must think of ways to incentivize customers to buy as soon as restrictions are lifted.",
       "aDonorCanEarn": "A donor can earn life tokens after completing a blood donation at a Lifebank participating donation center. Donation centers can issue a maximum of 10,000 life tokens. These tokens can then be redeemed by the donor at any local business (or sponsor) in exchange for discounts or promotions.",
       "also": "Also, sponsors can save these tokens and then return them to donation centers to keep the tokens active.",
-      "weDontRequest": "We don't request or store any personal information on the blockchain. You may optionally add a full name and email address once you have completed registration.",
+      "weDontRequest": "We don't request or store any personal information on the blockchain. You may optionally add a full name.",
       "aboutLifeTokens": "About LIFE tokens"
     },
     "common": {

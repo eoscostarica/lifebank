@@ -6,6 +6,7 @@ import { JSONLD, Generic } from 'react-structured-data'
 const MedicalClinicStructuredData = ({
   name,
   openingHours,
+  username,
   address,
   logo,
   photos,
@@ -32,6 +33,7 @@ const MedicalClinicStructuredData = ({
             ? 'https://dummyimage.com/640x360/fff/aaa'
             : photos[0],
         description: description,
+        url: `https://lifebank.io/info/${username}`,
         location: location,
         telephone: JSON.parse(telephone)[0]
       }}
@@ -51,6 +53,7 @@ const MedicalClinicStructuredData = ({
 MedicalClinicStructuredData.propTypes = {
   name: PropTypes.string,
   openingHours: PropTypes.string,
+  username: PropTypes.string,
   address: PropTypes.string,
   logo: PropTypes.string,
   photos: PropTypes.array,

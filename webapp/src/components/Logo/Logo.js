@@ -4,13 +4,12 @@ import { makeStyles } from '@material-ui/styles'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
-    maxHeight: 370,
+    width: "100%",
+    maxHeight: 200,
     margin: 'auto',
     justifyContent: 'center',
     display: 'flex',
@@ -21,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
       border: '1px solid lightgray'
     }
   },
+
   logo: {
     maxWidth: '100%',
-    maxHeight: 300,
+    maxHeight: 150,
     margin: 'auto'
   }
 }))
@@ -52,13 +52,6 @@ const Logo = ({ logoUrl, showCaption, showDeleteButton, deleteActualLogo }) => {
           <Typography variant="caption" style={{ textAlign: 'right' }}>
             {t('miscellaneous.addTransparentIfPossible')}
           </Typography>
-        )}
-        {showDeleteButton && (
-          <Box display="flex" flexDirection="row" justifyContent="flex-end">
-            <Button onClick={() => deleteActualLogo(true)}>
-              {t('miscellaneous.change')}
-            </Button>
-          </Box>
         )}
       </Card>
     </Grid>

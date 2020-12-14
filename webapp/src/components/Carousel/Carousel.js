@@ -10,10 +10,12 @@ import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles({
   carousel: {
-    maxWidth: '100%'
+    maxWidth: '100%',
   },
   img: {
-    maxWidth: '100%'
+    width: '100%',
+    height: '300px',
+    objectFit: 'cover'
   }
 })
 
