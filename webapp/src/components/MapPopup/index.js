@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   popupHeader: {
     display: 'flex',
     flexDirection: 'row',
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     justifyContent: 'space-between',
     alignContent: 'space-between'
   },
@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     fontSize: '14px',
     lineHeight: '1.6',
     letterSpacing: '1.5px',
-    width: '110px',
+    width: '145px',
     height: '16px',
     textAlign: 'center',
     textTransform: 'uppercase',
@@ -52,13 +52,15 @@ const useStyles = makeStyles({
     height: '21px',
     lineHeight: '1.31',
     letterSpacing: '0.4px',
-    maxWidth: '170px',
-    width: '170px',
+    maxWidth: '185px',
+    width: '185px',
     textAlign: 'left'
   },
   row: {
     height: '16px',
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
+    maxWidth: '185px',
+    width: 185
   },
   overflowText: {
     textOverflow: 'ellipsis',
@@ -176,7 +178,7 @@ const MapPopup = ({ id, info, username }) => {
         </div>
       )}
       <div
-        style={{ alignSelf: 'flex-start', marginBottom: '3px' }}
+        style={{ alignSelf: 'center', marginBottom: '3px' }}
         className={classes.row}
       >
         <span className={classes.boldText}>{t('signup.address')}: &nbsp;</span>
