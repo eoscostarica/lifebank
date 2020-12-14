@@ -177,7 +177,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     padding: '12px',
     border: 'solid 1px rgba(0, 0, 0, 0.54)',
-    color: 'rgba(0, 0, 0, 0.54)',
     backgroundColor: '#ffffff',
     marginBottom: 20,
     [theme.breakpoints.down('md')]: {
@@ -619,7 +618,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
       <Box className={classes.btnWrapper}>
         <Link to="/profile" className={classes.routerLink}>
           <Button
-            variant="contained"
+            variant="outlined"
             color="primary"
             className={classes.cancelBtn}
           >
