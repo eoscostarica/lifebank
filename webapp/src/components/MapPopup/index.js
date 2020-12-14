@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
-import { makeStyles, ThemeProvider } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
-import clsx from 'clsx'
 
 const useStyles = makeStyles({
   popup: {
