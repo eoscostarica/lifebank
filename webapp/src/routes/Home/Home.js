@@ -159,7 +159,6 @@ const Home = () => {
   useEffect(() => {
     if (!loadingDataSpons) {
       let dataTemp = allSponsors.get_valid_sponsors
-      console.log("data:", dataTemp)
       if (valueSponsorCat !== 'All') {
         dataTemp = dataTemp.filter(
           (sponsor) =>
