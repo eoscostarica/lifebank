@@ -159,17 +159,17 @@ const Home = () => {
   useEffect(() => {
     if (!loadingDataSpons) {
       let dataTemp = allSponsors.get_valid_sponsors
-
+      console.log("data:", dataTemp)
       if (valueSponsorCat !== 'All') {
         dataTemp = dataTemp.filter(
-          (bank) =>
-            bank.bussines_type.toLowerCase() === valueSponsorCat.toLowerCase()
+          (sponsor) =>
+          sponsor.businessType.toLowerCase() === valueSponsorCat.toLowerCase()
         )
       }
 
       if (searchValue !== '')
-        dataTemp = dataTemp.filter((bank) =>
-          bank.name.toLowerCase().includes(searchValue.toLowerCase())
+        dataTemp = dataTemp.filter((sponsor) =>
+        sponsor.name.toLowerCase().includes(searchValue.toLowerCase())
         )
 
       setSponsors(dataTemp)
