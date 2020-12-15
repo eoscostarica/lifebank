@@ -3,91 +3,132 @@ import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
-import clsx from 'clsx'
 
 const useStyles = makeStyles({
-  popup: {},
-  ul: {
-    margin: 0
+  popup: {
+    width: '250px',
+    padding: "10px"
   },
   title: {
-    margin: '6px',
+    fontFamily: "Roboto",
     fontSize: '16px',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.6,
-    letterSpacing: '1.5px',
-    textAlign: 'center',
-    color: '#000000',
-    fontWeight: 'bold',
-    textTransform: 'uppercase'
-  },
-  link: {
-    textDecoration: 'none'
-  },
-  subTitule: {
+    lineHeight: '1.6',
+    letterSpacing: '1px',
     width: '90%',
-    height: '20px',
-    fontSize: '14px',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: 2,
-    letterSpacing: '0.4px',
-    color: '#000000'
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontWeight: "bold",
+    color: 'black',
+    maxWidth: "100%",
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
-  bodytext: {
+  typeText: {
+    fontFamily: "Roboto",
     fontSize: '14px',
-    fontWeight: 500,
+    fontWeight: "bold",
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 2,
     letterSpacing: '0.4px',
     textAlign: 'left',
-    color: '#000000'
+    color: '#000000',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    maxWidth: "60%",
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
-  openingHourseText: {
-    width: '37.5%',
+  closeText: {
+    fontFamily: "Roboto",
     fontSize: '14px',
-    fontWeight: 500,
+    fontWeight: "bold",
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 2,
     letterSpacing: '0.4px',
-    textAlign: 'center',
-    float: 'left'
+    textAlign: 'right',
+    color: '#BA0D0D',
+    position: "absolute",
+    top: 0,
+    right: 0
   },
-  closeColor: {
-    color: '#ba0d0d'
+  openText: {
+    fontFamily: "Roboto",
+    fontSize: '14px',
+    fontWeight: "bold",
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 2,
+    letterSpacing: '0.4px',
+    textAlign: 'right',
+    color: '#00B13C',
+    position: "absolute",
+    top: 0,
+    right: 0
   },
-  openColor: {
-    color: '#00b13c'
+  boldText: {
+    fontFamily: "Roboto",
+    fontSize: '14px',
+    fontWeight: "bold",
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 2,
+    letterSpacing: '0.4px',
+    textAlign: 'left',
+    color: '#000000',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    maxWidth: "100%",
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
-  mediumDiv: {
-    height: '100%',
-    width: '62.5%',
-    float: 'left'
+  addressText: {
+    fontSize: '12px',
+    height: '21px',
+    lineHeight: '1.31',
+    letterSpacing: '0.4px',
+    maxWidth: '185px',
+    width: '185px',
+    textAlign: 'left'
+  },
+  row: {
+    position: "relative",
+    width: "90%",
+    height: "20px",
+    marginBottom: "5px"
+  },
+  rowButtom: {
+    position: "relative",
+    width: "90%",
+    height: "50px",
   },
   button: {
-    marginTop: '6%',
-    marginLeft: '8%',
-    marginRight: '8%',
-    borderRadius: '50px',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    borderRadius: '20px',
     backgroundColor: '#ba0d0d',
-    width: '84%',
-    height: '25px',
+    margin: '4px 0',
+    height: '30px',
     fontSize: '14px',
-    fontWeight: 500,
+    fontWeight: "bold",
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 1.14,
     letterSpacing: '1px',
-    color: '#ffffff'
+    color: '#ffffff',
+    marginTop: "20px",
   }
 })
 
-// TODO: Improve styles and add a Link using the id to navigate to the detail screen of the SPONSOR | LIFE_BANK.
-function MapPopup({ id, info, username }) {
+const MapPopup = ({ id, info, username }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState()
@@ -140,67 +181,58 @@ function MapPopup({ id, info, username }) {
   }
 
   const goto = () => {
-    if (navigator.userAgent.match(/iPhone|iPad|iPod/i) && isMobile.platform()) {
+    if (navigator.userAgent.match(/iPhone|iPad|iPod/i) && isMobile.platform())
       return `maps:0,0?q=${info.geolocation.latitude},${info.geolocation.longitude}`
-    } else if (
+    else if (
       navigator.userAgent.match(/Android|BlackBerry|Opera Mini/i) &&
       isMobile.platform()
-    ) {
+    )
       return `geo:0,0?q=${info.geolocation.latitude},${info.geolocation.longitude}`
-    } else {
+    else
       return `https://maps.google.com/maps?q=${info.geolocation.latitude},${info.geolocation.longitude}`
-    }
   }
 
   return (
-    <div key={id}>
-      <h3 className={classes.title}>{info.name} </h3>
-      <div style={{ width: '100%', marginBottom: '22px' }}>
-        <div className={classes.mediumDiv}>
-          <h5 className={classes.subTitule}>
-            {info.business_type || t('miscellaneous.donationCenter')}{' '}
-          </h5>
+    <div className={classes.popup} key={id}>
+      <h1 className={classes.title}>
+        {info.name}
+      </h1>
+      <div className={classes.row}>
+        <h2 className={classes.typeText} >{info.business_type || t('miscellaneous.donationCenter')}</h2>
+        {open &&
+          <h2 className={classes.openText} >{t('miscellaneous.openNow')}</h2>
+        }
+        {!open &&
+          <h2 className={classes.closeText} >{t('miscellaneous.closeNow')}</h2>
+        }
+      </div>
+      {JSON.parse(info.telephones).length > 0 && (
+        <div className={classes.row}>
+          <h2 className={classes.boldText} >Tel:&nbsp; <a href={`tel: ${info.telephones}`}>{JSON.parse(info.telephones)[0]}</a></h2>
         </div>
-        {open && (
-          <p className={clsx(classes.openingHourseText, classes.openColor)}>
-            {t('miscellaneous.openNow')}{' '}
-          </p>
-        )}
-        {!open && (
-          <p className={clsx(classes.openingHourseText, classes.closeColor)}>
-            {t('miscellaneous.closeNow')}{' '}
-          </p>
-        )}
-      </div>
-      <div className={classes.bodytext}>
-        <p className={classes.bodytext}>
-          Tel:
-          <a href={`tel: ${info.telephones}`} className={classes.link}>
-            {JSON.parse(info.telephones)[0]}
-          </a>
-        </p>
-      </div>
-      <div className={classes.bodytext}>
-        <p className={classes.bodytext}>
-          {`${t('signup.address')}: `}
+      )}
+      <div className={classes.row}>
+        <h2 className={classes.boldText} >
+          {t('signup.address')}:{' '}
           <a
-            className={classes.link}
             href={goto()}
             target="_blank"
             rel="noopener noreferrer"
           >
             {info.address}
           </a>
-        </p>
+        </h2>
       </div>
-      <Button
-        variant="contained"
-        color="secondary"
-        href={`https://lifebank.io/info/${username}`}
-        className={classes.button}
-      >
-        {t('cardsSection.moreInfo')}
-      </Button>
+      <div className={classes.rowButtom} >
+        <Button
+          variant="contained"
+          color="secondary"
+          href={`https://lifebank.io/info/${username}`}
+          className={classes.button}
+        >
+          {t('cardsSection.moreInfo')}
+        </Button>
+      </div>
     </div>
   )
 }

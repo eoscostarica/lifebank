@@ -59,7 +59,7 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
           <MapPopup
             id={id}
             info={info}
-            username={user.username}
+            username={user.username.replaceAll(' ', '-')}
             account={account}
           />,
           popupNode
