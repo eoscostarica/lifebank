@@ -565,7 +565,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
                 <TextField
                   className={classes.inputText}
                   id="paylod-account"
-                  label={t('donations.enterSponsorUsername')}
+                  label={role === "lifebank" ? t('donations.enterDonorUsername') : t('donations.enterSponsorUsername')}
                   variant="filled"
                   value={accountInput}
                   onChange={handleChangeAccountInput}

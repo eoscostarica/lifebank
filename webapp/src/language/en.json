@@ -240,6 +240,7 @@
       "sendTokens": "Send tokens",
       "sendToken": "Send Token",
       "enterSponsorUsername": "Enter username here",
+      "enterDonorUsername": "Enter donor username here",
       "scanQR": "Scan QR code",
       "transferTokens": "Transfer",
       "claimReward": "Reward",
