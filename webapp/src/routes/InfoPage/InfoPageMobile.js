@@ -294,7 +294,6 @@ const InfoPageMobile = () => {
 
   }, [errorInfoProfile])
 
-
   const ScheduleItem = (schedule) => {
     return (
       <List>

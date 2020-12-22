@@ -203,6 +203,8 @@
       "medium": "Medium",
       "high": "High",
       "organizationPlaceholder": "Your Organization Name",
+      "namePlaceholder": "Add your name",
+      "urlWebsitePlaceHolder": "URL website",
       "bloodDemandLevel": "Blood Demand Level",
       "dragOrtap": "Drag or tap to the demand level that represent your Lifebank actual necesities. You can set the token rewards depending on this levels.",
       "lowLevelReward": "Low Level Reward",

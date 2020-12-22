@@ -331,10 +331,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           id="username"
           name="username"
           style={{ display: isCompleting && userName ? 'none' : '' }}
-          label="Direction website"
+          label={t('editProfile.urlWebsitePlaceHolder')}
           fullWidth
           variant="outlined"
-          placeholder="URL website"
+          placeholder={t('editProfile.urlWebsitePlaceHolder')}
           defaultValue={username}
           InputLabelProps={{
             shrink: true
@@ -389,7 +389,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           label={t('signup.about')}
           fullWidth
           variant="outlined"
-          laceholder={t('aboutPlaceholder')}
+          placeholder={t('signup.aboutPlaceholder')}
           defaultValue={user.about}
           InputLabelProps={{
             shrink: true
@@ -477,9 +477,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         <TextField
           id="image-url"
           style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
-          label="Image url"
+          label={t('offersManagement.imageUrl')}
           variant="outlined"
-          placeholder="Image url here"
+          placeholder={t('offersManagement.imageUrl')}
           fullWidth
           inputRef={photoUrlValueRef}
           onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
