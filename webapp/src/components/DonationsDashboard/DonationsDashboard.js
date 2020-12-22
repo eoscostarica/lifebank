@@ -771,7 +771,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               onClick={toggleDrawer(anchor, true)}
             >
               <FavoriteIcon className={classes.iconFab} />
-              {t('donations.transferTokens')}
+              {!isSmallScreen &&
+                t('donations.transferTokens')
+              }
             </Fab>
           }
           { role === "sponsor" && !isOffer &&
@@ -782,7 +784,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               onClick={toggleDrawer(anchor, true)}
             >
               <ShoppingCartIcon className={classes.iconFab} />
-              {t('donations.claimReward')}
+              {!isSmallScreen &&
+                t('donations.claimReward')
+              }
             </Fab>
           }
           {isOffer &&
