@@ -95,15 +95,6 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-const columns = [
-  'Offer name',
-  'Start date',
-  'End date',
-  'Status',
-  'Actions',
-  'Details'
-]
-
 const OffersManagement = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
@@ -118,6 +109,14 @@ const OffersManagement = () => {
   const [openGenericFormAddVariant, setOpenGenericFormAddVariant] = useState(
     false
   )
+  const columns = [
+    t('offersManagement.offerName'),
+    t('offersManagement.startDate'),
+    t('offersManagement.endDate'),
+    t('offersManagement.status'),
+    t('offersManagement.actions'),
+    t('offersManagement.details')
+  ]
   const [openGenericFormEditVariant, setOpenGenericFormEditVariant] = useState(
     false
   )
