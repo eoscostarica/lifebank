@@ -48,7 +48,11 @@ const useStyles = makeStyles((theme) => ({
     top: -30,
     right: 20,
     margin: '0',
-    color: '#ffffff'
+    color: '#ffffff',
+    [theme.breakpoints.down(350)]: {
+      height: 60,
+      width: 60,
+    }
   },
   fabButtonOffer: {
     position: "absolute",
@@ -86,7 +90,9 @@ const useStyles = makeStyles((theme) => ({
   },
   iconFab: {
     color: '#ffffff',
-    marginRight: 10
+    [theme.breakpoints.up(350)]: {
+      marginRight: 10
+    }
   },
   appBar: {
     position: 'relative',
@@ -340,6 +346,8 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const [state, setState] = useState({
     bottom: false
   })
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(350))
   const history = useHistory()
   const [
     loadProfile,
@@ -750,7 +758,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               onClick={toggleDrawer(anchor, true)}
             >
               <FavoriteIcon className={classes.iconFab} />
-              {t('donations.donate')}
+              {!isSmallScreen &&
+                t('donations.donate')
+              }
             </Fab>
           }
           { role === "lifebank" && !isOffer &&
