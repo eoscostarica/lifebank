@@ -240,6 +240,7 @@
       "sendTokens": "Enviar Tokens",
       "sendToken": "Enviar Token",
       "enterSponsorUsername": "Ingrese el nombre de usuario del Comercio Afiliado",
+      "enterDonorUsername": "Ingrese el nombre de usuario del donador",
       "scanQR": "Escanea el código QR",
       "transferTokens": "Transferir",
       "claimReward": "Recompensa",
