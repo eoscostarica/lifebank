@@ -38,7 +38,7 @@
     },
     "signup": {
       "register": "Let's Start!",
-      "registerText": "Choose the option that suits you best. To learn more, go here. ",
+      "registerText": "Choose the option that suits you best. ",
       "sucessfulPreregistration": "Thank you. Your information is now being validated.",
       "sucessfulRegistration": "You're in! Thanks for your support.",
       "createAnewAccount": "Create a new account",

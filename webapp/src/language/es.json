@@ -38,7 +38,7 @@
     },
     "signup": {
       "register": "Registro",
-      "registerText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula lacinia lectus luctus dictum. Suspendisse finibus nisi sed aliquam semper. ",
+      "registerText": "Elija la opción que más le convenga. ",
       "sucessfulPreregistration": "Pre-registro exitoso",
       "sucessfulRegistration": "Registro exitoso",
       "createAnewAccount": "Crear una nueva cuenta",
