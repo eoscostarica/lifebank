@@ -46,9 +46,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     zIndex: 1,
     top: -30,
-    right: 20,
+    right: 10,
     margin: '0',
-    color: '#ffffff'
+    color: '#ffffff',
+    [theme.breakpoints.down(370)]: {
+      height: 60,
+      width: 60,
+    }
   },
   fabButtonOffer: {
     position: "absolute",
@@ -86,7 +90,9 @@ const useStyles = makeStyles((theme) => ({
   },
   iconFab: {
     color: '#ffffff',
-    marginRight: 10
+    [theme.breakpoints.up(370)]: {
+      marginRight: 10
+    }
   },
   appBar: {
     position: 'relative',
@@ -340,6 +346,8 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const [state, setState] = useState({
     bottom: false
   })
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(370))
   const history = useHistory()
   const [
     loadProfile,
@@ -750,7 +758,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               onClick={toggleDrawer(anchor, true)}
             >
               <FavoriteIcon className={classes.iconFab} />
-              {t('donations.donate')}
+              {!isSmallScreen &&
+                t('donations.donate')
+              }
             </Fab>
           }
           { role === "lifebank" && !isOffer &&
@@ -761,7 +771,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               onClick={toggleDrawer(anchor, true)}
             >
               <FavoriteIcon className={classes.iconFab} />
-              {t('donations.transferTokens')}
+              {!isSmallScreen &&
+                t('donations.transferTokens')
+              }
             </Fab>
           }
           { role === "sponsor" && !isOffer &&
@@ -772,7 +784,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               onClick={toggleDrawer(anchor, true)}
             >
               <ShoppingCartIcon className={classes.iconFab} />
-              {t('donations.claimReward')}
+              {!isSmallScreen &&
+                t('donations.claimReward')
+              }
             </Fab>
           }
           {isOffer &&
