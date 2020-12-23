@@ -90,15 +90,15 @@ const SignupLifeBank = ({
   const marks = [
     {
       value: 1,
-      label: 'Low'
+      label: t('editProfile.low')
     },
     {
       value: 2,
-      label: 'Medium'
+      label: t('editProfile.medium')
     },
     {
       value: 3,
-      label: 'High'
+      label: t('editProfile.high')
     }
   ]
   const valueLabelFormat = (value) => {

@@ -119,7 +119,7 @@ const SimpleRegisterForm = ({
           color="primary"
           onClick={onSubmit}
         >
-          Create account
+          {t('signup.createAccount')}
         </Button>
         {loading && <CircularProgress />}
       </Box>

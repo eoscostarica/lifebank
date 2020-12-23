@@ -101,8 +101,8 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
           id="email"
           label={t('signup.name')}
           fullWidth
-          placeholder={t('signup.namePlaceholder')}
-          defaultValue={user.name}
+          placeholder={t('editProfile.namePlaceholder')}
+          defaultValue={user.name === "undefined" ? '' : user.name }
           variant="outlined"
           InputLabelProps={{
             shrink: true

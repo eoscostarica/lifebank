@@ -33,7 +33,6 @@ import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { GET_LOCATION_PROFILE } from '../../gql'
 
-
 const useStyles = makeStyles((theme) => ({
   contentBodyMobile: {
     width: '100%',
@@ -196,7 +195,6 @@ const InfoPageMobile = () => {
   const [, { logout }] = useUser()
   const history = useHistory()
   const [profile, setProfile] = useState()
-
   const { url } = useParams()
 
   const handleClickOpen = () => {
@@ -296,14 +294,13 @@ const InfoPageMobile = () => {
 
   }, [errorInfoProfile])
 
-
   const ScheduleItem = (schedule) => {
     return (
       <List>
         <Divider />
         <ListItem button>
           <ListItemText
-            primary={schedule.schedule.day}
+            primary={`${t(`schedule.${schedule.schedule.day.toLowerCase()}`)}`}
             secondary={`${schedule.schedule.open} - ${schedule.schedule.close}`}
           />
         </ListItem>

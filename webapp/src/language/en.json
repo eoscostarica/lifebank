@@ -38,7 +38,7 @@
     },
     "signup": {
       "register": "Let's Start!",
-      "registerText": "Choose the option that suits you best. To learn more, go here. ",
+      "registerText": "Choose the option that suits you best. ",
       "sucessfulPreregistration": "Thank you. Your information is now being validated.",
       "sucessfulRegistration": "You're in! Thanks for your support.",
       "createAnewAccount": "Create a new account",
@@ -203,6 +203,8 @@
       "medium": "Medium",
       "high": "High",
       "organizationPlaceholder": "Your Organization Name",
+      "namePlaceholder": "Add your name",
+      "urlWebsitePlaceHolder": "URL website",
       "bloodDemandLevel": "Blood Demand Level",
       "dragOrtap": "Drag or tap to the demand level that represent your Lifebank actual necesities. You can set the token rewards depending on this levels.",
       "lowLevelReward": "Low Level Reward",
