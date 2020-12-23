@@ -46,10 +46,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     zIndex: 1,
     top: -30,
-    right: 20,
+    right: 10,
     margin: '0',
     color: '#ffffff',
-    [theme.breakpoints.down(350)]: {
+    [theme.breakpoints.down(370)]: {
       height: 60,
       width: 60,
     }
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
   },
   iconFab: {
     color: '#ffffff',
-    [theme.breakpoints.up(350)]: {
+    [theme.breakpoints.up(370)]: {
       marginRight: 10
     }
   },
@@ -347,7 +347,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     bottom: false
   })
   const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down(350))
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(370))
   const history = useHistory()
   const [
     loadProfile,
