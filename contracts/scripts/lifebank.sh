@@ -31,9 +31,9 @@ create_lifebank_accounts() {
         "consent2life"
         "lifebankcode"
         "lifebankcoin"
-        "lbacccreator"
-        #"sponsprueba1"
-        #"donorprueba1"
+        #"lbacccreator"
+        "sponsprueba1"
+        "donorprueba1"
         "12letterlife"
     )
 
@@ -58,10 +58,10 @@ create_lifebank_accounts() {
 }
 
 assign_resources() {
-    cleos -u $EOS_API_URL get account lbacccreator 
-    cleos -u $EOS_API_URL system buyram eosio lbacccreator "10000 EOS"
-    cleos -u $EOS_API_URL get account lbacccreator 
-    cleos -u $EOS_API_URL transfer eosio lbacccreator "10000000 EOS" "Lifebank initial funding"
+    #cleos -u $EOS_API_URL get account lbacccreator 
+    #cleos -u $EOS_API_URL system buyram eosio lbacccreator "10000 EOS"
+    #cleos -u $EOS_API_URL get account lbacccreator 
+    #cleos -u $EOS_API_URL transfer eosio lbacccreator "10000000 EOS" "Lifebank initial funding"
 }
 
 deploy_lifebank_contracts() {
@@ -120,17 +120,14 @@ consent() {
     echo 'Consent to Contracts'
     cleos -u $EOS_API_URL push action consent2life consent '{"user": "lifebankcode", "contract": "lifebankcoin", "hash":""}' -p lifebankcode@active
     cleos -u $EOS_API_URL push action consent2life consent '{"user": "lifebankcoin", "contract": "lifebankcode", "hash":""}' -p lifebankcoin@active
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "lifebank", "contract": "lifebankcode", "hash":""}' -p 12letterlife@active
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "lifebank", "contract": "lifebankcoin", "hash":""}' -p 12letterlife@active
-    # cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcode", "hash":""}' -p sponsprueba1@active
-    # cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcoin", "hash":""}' -p sponsprueba1@active
-    # cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "donorprueba1", "contract": "lifebankcode", "hash":""}' -p donorprueba1@active
-    # cleos -u $EOS_API_URL push action consent2life consent push action consent2life consent '{"user": "donorprueba1", "contract": "lifebankcoin", "hash":""}' -p donorprueba1@active
+    cleos -u $EOS_API_URL push action consent2life consent '{"user": "12letterlife", "contract": "lifebankcode", "hash":""}' -p 12letterlife@active
+    cleos -u $EOS_API_URL push action consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcode", "hash":""}' -p sponsprueba1@active
+    cleos -u $EOS_API_URL push action consent2life consent '{"user": "donorprueba1", "contract": "lifebankcode", "hash":""}' -p donorprueba1@active
 }
 
 create_community() {
     echo 'Create Lifebank Community'
-    cleos -u $EOS_API_URL push action consent2life consent push action lifebankcode createcmm \
+    cleos -u $EOS_API_URL push action lifebankcode createcmm \
     '{
         "community_name":"LifeBank Costa Rica",
         "community_asset":"0 LIFE",
@@ -142,12 +139,12 @@ create_community() {
 
 register_lifebank() {
     echo 'Register LifeBank'
-    cleos -u $EOS_API_URL push action consent2life consent push action lifebankcode addlifebank \
+    cleos -u $EOS_API_URL push action lifebankcode addlifebank \
     '{
         "about": "Salvando vidas",
         "email":"bsSiquirres@mail.com",
         "photos": "[\"https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/hospital-trauma-mob.jpg\",\"https://d1lofqbqbj927c.cloudfront.net/monumental/2018/02/19141317/Calderon-Guardia-2.jpg\",\"https://www.ccss.sa.cr/images/hospitales/thumb/9.jpg\"]",
-        "account":"12letterliffe",
+        "account":"12letterlife",
         "address":"siquirres, Limon, Costa Rica",
         "location": "{\"latitude\":10.097867627911938,\"longitude\":-83.50939652646625}",
         "logo_url": "https://static.vecteezy.com/system/resources/previews/001/194/392/non_2x/red-cross-png.png",
@@ -163,7 +160,7 @@ register_lifebank() {
 
 register_donor() {
     echo 'Register Donor'
-    cleos -u $EOS_API_URL push action consent2life consent push action lifebankcode adddonor \
+    cleos -u $EOS_API_URL push action lifebankcode adddonor \
     '{
         "account":"donorprueba1",
         "community_asset":"0 LIFE"
@@ -172,7 +169,7 @@ register_donor() {
 
 register_sponsor() {
     echo 'Register Sponsor'
-    cleos -u $EOS_API_URL push action consent2life consent push action lifebankcode addsponsor \
+    cleos -u $EOS_API_URL push action lifebankcode addsponsor \
     '{
         "account":"sponsprueba1",
         "sponsor_name":"Ferreteria McGyver",
@@ -195,7 +192,7 @@ register_sponsor() {
 
 test_token_lifecycle() {
     echo 'Issue token'
-    cleos -u $EOS_API_URL push action consent2life consent push action lifebankcoin issue \
+    cleos -u $EOS_API_URL action lifebankcoin issue \
     '{
         "lifebank":"12letterlife",
         "to":"donorprueba1",
@@ -203,7 +200,7 @@ test_token_lifecycle() {
     }' -p 12letterlife@active
 
     echo 'Donor transfers to sponsor'
-    cleos -u $EOS_API_URL push action consent2life consent push action lifebankcoin transfer \
+    cleos -u $EOS_API_URL push action lifebankcoin transfer \
     '{
         "from":"donorprueba1",
         "to":"sponsprueba1",
@@ -212,7 +209,7 @@ test_token_lifecycle() {
     }' -p donorprueba1@active
 
     echo 'Sponsor transfer to lifebank'
-    cleos -u $EOS_API_URL push action consent2life consent push action lifebankcoin transfer \
+    cleos -u $EOS_API_URL push action lifebankcoin transfer \
     '{
         "from":"sponsprueba1",
         "to":"12letterlife",
@@ -226,25 +223,25 @@ test_token_lifecycle() {
 
 clear_tables() {
     echo 'Clear Consent Tables'
-    cleos -u $EOS_API_URL push action consent2life consent push action consent2life clear '' -p consent2life@active
+    cleos -u $EOS_API_URL push action consent2life clear '' -p consent2life@active
     echo 'Clear Code Tables'
-    cleos  -u $EOS_API_URL push action consent2life consent push action lifebankcode clear '' -p lifebankcode@active
+    cleos  -u $EOS_API_URL push action lifebankcode clear '' -p lifebankcode@active
     echo 'Clear Coin Tables'
-    cleos -u $EOS_API_URL push action consent2life consent push action lifebankcoin clear '' -p lifebankcoin@active
+    cleos -u $EOS_API_URL push action lifebankcoin clear '' -p lifebankcoin@active
 }
 
 run_lifebank() {
     echo 'Installing LifeBank ...'
-    #create_lifebank_wallet
-    #create_lifebank_accounts
+    create_lifebank_wallet
+    create_lifebank_accounts
     #assign_resources
-    #deploy_lifebank_contracts
-    #consent
-    #create_community
+    deploy_lifebank_contracts
+    consent
+    create_community
     register_lifebank
-    #register_donor
-    #register_sponsor
-    #test_token_lifecycle
+    register_donor
+    register_sponsor
+    test_token_lifecycle
     # TO DO: update_sponsor
     # TO DO: update_lifebank
     # TO DO: update_donor
