@@ -79,4 +79,4 @@ LoginWithFacebook.propTypes = {
 
 LoginWithFacebook.defaultProps = {}
 
-export default LoginWithFacebook
+export default React.memo(LoginWithFacebook)

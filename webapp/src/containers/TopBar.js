@@ -139,4 +139,4 @@ Topbar.propTypes = {
   onLogout: PropTypes.func
 }
 
-export default Topbar
+export default React.memo(Topbar)

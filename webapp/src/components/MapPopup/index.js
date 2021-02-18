@@ -170,7 +170,7 @@ const MapPopup = ({ id, info, username }) => {
             setOpen(true)
       })
     }
-  })
+  }, [dd, hour])
 
   var isMobile = {
     platform: function () {

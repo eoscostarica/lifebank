@@ -38,4 +38,4 @@ const ProfilePageGuest = () => {
   )
 }
 
-export default ProfilePageGuest
+export default React.memo(ProfilePageGuest)

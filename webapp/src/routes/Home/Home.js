@@ -162,13 +162,13 @@ const Home = () => {
       if (valueSponsorCat !== 'All') {
         dataTemp = dataTemp.filter(
           (sponsor) =>
-          sponsor.businessType.toLowerCase() === valueSponsorCat.toLowerCase()
+            sponsor.businessType.toLowerCase() === valueSponsorCat.toLowerCase()
         )
       }
 
       if (searchValue !== '')
         dataTemp = dataTemp.filter((sponsor) =>
-        sponsor.name.toLowerCase().includes(searchValue.toLowerCase())
+          sponsor.name.toLowerCase().includes(searchValue.toLowerCase())
         )
 
       setSponsors(dataTemp)
@@ -273,4 +273,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default React.memo(Home)

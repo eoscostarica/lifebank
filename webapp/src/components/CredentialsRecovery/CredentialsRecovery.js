@@ -126,7 +126,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const handleSetFieldEmail = (field, value) => {
     const regularExpresion = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-    if(regularExpresion.test(value)) setValidEmailFormat(true)
+    if (regularExpresion.test(value)) setValidEmailFormat(true)
     else setValidEmailFormat(false)
     setUser({ ...user, [field]: value })
   }
@@ -165,7 +165,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   useEffect(() => {
     if (error) {
-      if(error.message === `GraphQL error: Cannot read property 'account' of undefined`)
+      if (error.message === `GraphQL error: Cannot read property 'account' of undefined`)
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(error.message.replace('GraphQL error: ', ''))
     }
@@ -173,7 +173,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   useEffect(() => {
     if (errorChangePassword) {
-      if(errorChangePassword.message === `GraphQL error: Cannot read property 'secret' of null`)
+      if (errorChangePassword.message === `GraphQL error: Cannot read property 'secret' of null`)
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
     }
@@ -201,8 +201,8 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
       handleSubmitChangePassword()
     }
     else if (e.key === 'Enter' && (validEmailFormat && !loading)) {
-        e.preventDefault()
-        handleSubmit()
+      e.preventDefault()
+      handleSubmit()
     }
   }
 
@@ -227,8 +227,8 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         aria-describedby="transition-modal-description"
         open={open}
         onClose={handleOpen}
-        fullScreen = {!isDesktop}
-        maxWidth= 'xs'
+        fullScreen={!isDesktop}
+        maxWidth='xs'
         closeAfterTransition
         BackdropProps={{
           timeout: 500
@@ -287,7 +287,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 </Typography>
                 <TextField
                   id="currentPassword"
-                  label= {t('credentialsRecovery.currentPassword')}
+                  label={t('credentialsRecovery.currentPassword')}
                   variant="outlined"
                   InputLabelProps={{
                     shrink: true
@@ -303,7 +303,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 />
                 <TextField
                   id="newPassword"
-                  label= {t('credentialsRecovery.newPassword')}
+                  label={t('credentialsRecovery.newPassword')}
                   variant="outlined"
                   InputLabelProps={{
                     shrink: true

@@ -197,4 +197,4 @@ HomeMobile.propTypes = {
   handleChangeSearch: PropTypes.func
 }
 
-export default HomeMobile
+export default React.memo(HomeMobile)

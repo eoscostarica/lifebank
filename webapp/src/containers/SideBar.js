@@ -141,4 +141,4 @@ SideBar.propTypes = {
   triggerSideBarPosition: PropTypes.func
 }
 
-export default SideBar
+export default React.memo(SideBar)

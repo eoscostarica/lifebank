@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
@@ -256,8 +256,8 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 
   function executeLogin(e) {
     if (e.key === 'Enter' && (user.account && user.secret && !loading)) {
-        e.preventDefault()
-        handleLogin()
+      e.preventDefault()
+      handleLogin()
     }
   }
 
@@ -418,4 +418,4 @@ LoginModal.defaultProps = {
   isSideBar: false
 }
 
-export default LoginModal
+export default React.memo(LoginModal)

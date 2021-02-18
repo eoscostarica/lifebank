@@ -95,4 +95,4 @@ LoginWithGoogle.propTypes = {
 
 LoginWithGoogle.defaultProps = {}
 
-export default LoginWithGoogle
+export default React.memo(LoginWithGoogle)

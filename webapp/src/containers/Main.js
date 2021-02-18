@@ -194,4 +194,4 @@ ChangeAppBarColorOnScroll.propTypes = {
   isDesktop: PropTypes.bool,
 }
 
-export default Main
+export default React.memo(Main)
