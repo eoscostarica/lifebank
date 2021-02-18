@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import InfoIcon from '@material-ui/icons/Info'
+import HomeIcon from '@material-ui/icons/Home'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
@@ -17,22 +18,23 @@ import Signup from '../components/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    paddingTop: theme.spacing(6),
+    paddingTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column'
   },
   optionLink: {
     width: '100%',
     display: 'flex',
-    marginBottom: theme.spacing(2),
-    paddingLeft: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
     '& a': {
       textDecoration: 'none'
     }
   },
   labelOption: {
     color: `${theme.palette.primary.main} !important`,
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(2),
+    marginBottom: theme.spacing(1),
     fontSize: 14,
     textTransform: 'capitalize'
   },
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '500',
     lineHeight: 1.33,
     letterSpacing: '2px',
-    margin: theme.spacing(2, 0, 4, 0)
+    margin: theme.spacing(3, 0, 3, 0)
   }
 }))
 
@@ -65,18 +67,22 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
         <LoginModal isSideBar />
       </Box>
       <Box className={classes.optionLink}>
+        <HomeIcon className={classes.iconOption} />
+        <Link to="/">
+          <Typography variant="body1" className={classes.labelOption}>
+            {t('navigationDrawer.homepage')}
+          </Typography>
+        </Link>
+      </Box>
+      <Box className={classes.optionLink}>
         <Signup isSideBar />
       </Box>
+      <Divider />
+      <Typography variant="body1" className={classes.infoLabel}>
+        {t('navigationDrawer.tools')}
+      </Typography>
       {user && (
         <>
-          <Box className={classes.optionLink}>
-            <AccountCircleIcon className={classes.iconOption} />
-            <Link to="/profile">
-              <Typography variant="body1" className={classes.labelOption}>
-                {`${user.role} ${t('profile.profile')}`}
-              </Typography>
-            </Link>
-          </Box>
           {user.role === 'sponsor' && (
             <Box className={classes.optionLink}>
               <MenuBookIcon className={classes.iconOption} />
@@ -87,6 +93,15 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
               </Link>
             </Box>
           )}
+          <Box className={classes.optionLink}>
+            <AccountCircleIcon className={classes.iconOption} />
+            <Link to="/profile">
+              <Typography variant="body1" className={classes.labelOption}>
+                {t('profile.profile')}
+              </Typography>
+            </Link>
+          </Box>
+
           <Box className={classes.optionLink} onClick={onLogout}>
             <LogoutIcon className={classes.iconOption} />
             <Typography variant="body1" className={classes.labelOption}>
