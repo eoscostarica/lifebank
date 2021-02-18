@@ -287,7 +287,7 @@ const InfoPage = () => {
                 {JSON.parse(profile.photos).map((url, key) => (
                   <img
                     className={classes.carruselImage}
-                    src={`//images.weserv.nl?url=${url}&h=300&dpr=2`}
+                    src={url ? `//images.weserv.nl?url=${url}&h=300&dpr=2` : ''}
                     key={key}
                     alt={`${key}`}
                   />
