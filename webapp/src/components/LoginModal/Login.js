@@ -418,4 +418,4 @@ LoginModal.defaultProps = {
   isSideBar: false
 }
 
-export default React.memo(LoginModal)
+export default memo(LoginModal)

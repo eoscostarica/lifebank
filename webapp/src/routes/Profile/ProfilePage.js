@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react'
+import React, { memo, useEffect, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
@@ -208,4 +208,4 @@ const ProfilePage = () => {
   )
 }
 
-export default React.memo(ProfilePage)
+export default memo(ProfilePage)

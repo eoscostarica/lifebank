@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -38,4 +38,4 @@ const ProfilePageGuest = () => {
   )
 }
 
-export default React.memo(ProfilePageGuest)
+export default memo(ProfilePageGuest)

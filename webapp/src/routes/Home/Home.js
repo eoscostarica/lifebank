@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react'
+import React, { memo, useEffect, useState, lazy, Suspense } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -273,4 +273,4 @@ const Home = () => {
   )
 }
 
-export default React.memo(Home)
+export default memo(Home)
