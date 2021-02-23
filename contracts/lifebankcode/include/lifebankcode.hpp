@@ -213,7 +213,7 @@ public:
 
   /**
    *
-   *  Saves the info related with an offer
+   *  Remove the info related to an offer
    *
    * @param offer_name - Name of the offer
    *

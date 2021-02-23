@@ -358,4 +358,12 @@ ACTION lifebankcode::clear()
   {
     lifebank_itr = _lifebank.erase(lifebank_itr);
   }
+
+  offers_table _offers(get_self(), get_self().value);
+
+  auto offers_itr = _offers.begin();
+  while (offers_itr != _offers.end())
+  {
+    offers_itr = _offers.erase(offers_itr);
+  }
 }
