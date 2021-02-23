@@ -197,6 +197,31 @@ public:
 
   /**
    *
+   *  Saves the info related with an offer
+   *
+   * @param offer_name - Name of the offer
+   * @param sponsor_name - Name of the sponsor
+   * @param cost - Offer cost
+   * @param description - Offer description
+   *
+   */
+  ACTION addoffer(
+      eosio::name offer_name,
+      eosio::name sponsor_name,
+      uint8_t cost,
+      string description);
+
+  /**
+   *
+   *  Saves the info related with an offer
+   *
+   * @param offer_name - Name of the offer
+   *
+   */
+  ACTION rmoffer(name offer_name);
+
+  /**
+   *
    *  Clear all data in all constact's tables
    *
    */
@@ -355,6 +380,17 @@ private:
   };
   typedef multi_index<name("sponsors"), sponsor> sponsors_table;
 };
+
+TABLE offers
+{
+  eosio::name offer_name;
+  eosio::name sponsor_name;
+  uint8_t cost;
+  string description;
+  auto primary_key() const { return offer_name.value; }
+  EOSLIB_SERIALIZE(offers, (offer_name)(sponsor_name)(cost)(description));
+};
+typedef multi_index<name("offers"), offers> offers_table;
 
 constexpr eosio::name consent_account{"consent2life"_n};
 

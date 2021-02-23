@@ -270,6 +270,50 @@ ACTION lifebankcode::unsubscribe(name user, eosio::asset community_asset)
   }
 }
 
+ACTION lifebankcode::addoffer(eosio::name offer_name, eosio::name sponsor_name, uint8_t cost, string description)
+{
+  require_auth(sponsor);
+  check_consent(sponsor);
+
+  eosio::check(is_donor(sponsor), "Account must be a sponsor");
+  eosio::check(is_lifebank(sponsor), "Account must be a sponsor");
+
+  offers_table _offers(get_self(), get_self().value);
+
+  auto offers_itr = _offers.find(offer_name.value);
+  if (offers_itr == _offers.end())
+  {
+    // Create row if not exist
+    _offers.emplace(get_self(), [&](auto &row) {
+      row.offer_name = offer_name;
+      row.sponsor_name = sponsor_name;
+      row.cost = cost;
+      row.description = description;
+    });
+  }
+  else
+  {
+    // Modify an offer record if it does exists
+    _offers.modify(offers_itr, get_self(), [&](auto &row) {
+      row.cost = cost;
+      row.description = description;
+    });
+  }
+}
+
+ACTION lifebankcode::rmoffer(eosio::name offer_name)
+{
+  require_auth(get_self());
+
+  offers_table _offers(get_self(), get_self().value);
+
+  // Delete a filtered record in _offers table
+  auto offers_itr = _offers.find(offer_name.value);
+  eosio::check(offers_itr != _offers.end(), "Offer not found");
+
+  _offers.erase(offers_itr);
+}
+
 ACTION lifebankcode::clear()
 {
   // DEV only
