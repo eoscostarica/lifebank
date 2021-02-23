@@ -30,6 +30,8 @@
       "moreInfo": "More info"
     },
     "navigationDrawer": {
+      "homepage": "Home page",
+      "tools": "Tools",
       "yourDonations": "Your Donations",
       "information": "Information",
       "aboutLifebank": "About Lifebank",
