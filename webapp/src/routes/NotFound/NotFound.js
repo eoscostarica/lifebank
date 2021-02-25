@@ -80,7 +80,6 @@ const useStyles = makeStyles((theme) => ({
 const NotFound = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const preventDefault = (event) => event.preventDefault();
 
   return (
     <Box className={classes.root}>
