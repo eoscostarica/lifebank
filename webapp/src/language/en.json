@@ -143,9 +143,15 @@
       "noNear": "There aren’t any businesses or donation centers registered near this location. If you know any, refer them to Lifebank: "
     },
     "notFound": {
-      "404Error": "404: Oh... this isn't the page you're looking for. Please, try again!",
-      "notFoundMessage": "It seems like there is an error. Please, try using the navigation to find the page you're looking for. ",
-      "takeMeHome": "Take me to the home page"
+      "404Error": "Uh-oh, we couldn't find the page you were looking for. Please, go back to the ",
+      "404Error2": " and try again.",
+      "notFoundMessage": "Remember that Lifebank is an open-source, self-managed project. However, if you have any specific questions to the team, please contact us through our",
+      "notFoundMessage2": " or contact the",
+      "notFoundMessage3": " team directly. ",
+      "takeMeHome": "Take me to the home page",
+      "home": "home page",
+      "telegramChat": "Telegram chat",
+      "linkEOS": "EOS Costa Rica"
     },
     "internalError": {
       "500Error": "500: Oh... internal server error!",

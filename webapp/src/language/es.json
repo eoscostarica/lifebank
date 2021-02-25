@@ -143,9 +143,15 @@
       "noNear": "No hay negocios o centros de donación registrados cerca de esta ubicación. Si conoce alguno, refiéralos a Lifebank: "
     },
     "notFound": {
-      "404Error": "404: La página que buscas no existe",
-      "notFoundMessage": "O intentaste una ruta dudosa o viniste aquí por error. Sea lo que sea, intenta usar la navegación",
-      "takeMeHome": "Llévame al inicio"
+      "404Error": "No se pudo encontrar la página que buscaba. Por favor regrese a la ",
+      "404Error2": " e intenta de nuevo.",
+      "notFoundMessage": "Recuerde que Lifebank es un proyecto autogestionado de código abierto. Sin embargo, si tiene alguna pregunta específica para el equipo, comuníquese con nosotros a través de nuestro",
+      "notFoundMessage2": " o contacta al equipo de ",
+      "notFoundMessage3": " directamente.",
+      "takeMeHome": "Llévame al inicio",
+      "home": "página de inicio",
+      "telegramChat": "Telegram",
+      "linkEOS": "EOS Costa Rica"
     },
     "internalError": {
       "500Error": "500: ¡Oh ... error interno del servidor!",
