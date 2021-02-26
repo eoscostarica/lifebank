@@ -52,7 +52,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: "rgba(0, 0, 0, 0.6)",
     marginBottom: 30,
-    marginLeft: 10
+    marginLeft: "10%",
+    marginRight: "10%"
 
   },
   link: {
