@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import NotificationsIcon from '@material-ui/icons/Notifications'
@@ -16,6 +16,15 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import { Divider } from '@material-ui/core'
+
+import { useQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
+
+import {
+  // PROFILE_QUERY,
+  NOTIFICATION_SUBSCRIPTION
+} from '../../gql'
+
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -59,6 +68,10 @@ const Notification = () => {
   const isHome = location.pathname === '/'
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [maxWidth] = useState('md')
+  const [lastNotification, setLastNotification] = useState()
+  const [account, setAccount] = React.useState('doniq2ntcyq4')
+
+
 
 
 
@@ -80,6 +93,33 @@ const Notification = () => {
   const handleClose = () => {
     setOpen(false)
   }
+
+  const result = useSubscription(
+    NOTIFICATION_SUBSCRIPTION, { variables: { account } }
+  )
+
+
+  useEffect(() => {
+    console.log("TESTING")
+    console.log(result)
+    //   // if (
+    //   //   !profile 
+    //   //   !notification.length 
+    //   //   notification[0].id === lastNotification.id
+    //   // ) {
+    //   //   return
+    //   // }
+
+    //   // if (
+    //   //   notification[0].payload.newBalance.join() === profile.balance.join()
+    //   // ) {
+    //   //   return
+    //   // }
+
+    //   // setLastNotification(notification[0])
+    //   // loadProfile()
+    //   // }, [notification, profile, lastNotification, loadProfile])
+  }, [result])
 
   return (
     <>
@@ -115,7 +155,6 @@ const Notification = () => {
           </Toolbar>
         </AppBar>
         <List />
-
 
         <List>
           <Typography gutterBottom>
