@@ -12,6 +12,8 @@
  *    GitHub:         https://github.com/eoscostarica
  *
  */
+#pragma once
+
 #include <eosio/eosio.hpp>
 #include <eosio/transaction.hpp>
 #include <eosio/asset.hpp>
@@ -201,6 +203,9 @@ public:
    *
    * @param offer_name - Name of the offer
    * @param sponsor_name - Name of the sponsor
+   * @param category - Category of the offer
+   * @param beginning_date - Available redemption offer start date
+   * @param ending_date - Available redemption offer end date
    * @param cost - Offer cost
    * @param description - Offer description
    *
@@ -208,8 +213,12 @@ public:
   ACTION addoffer(
       eosio::name offer_name,
       eosio::name sponsor_name,
-      uint8_t cost,
-      string description);
+      string category,
+      string beginning_date,
+      string ending_date,
+      uint64_t cost,
+      string description,
+      string restriction);
 
   /**
    *
@@ -219,6 +228,25 @@ public:
    *
    */
   ACTION rmoffer(name offer_name);
+
+  /**
+   *
+   *  Link offer to a community
+   *
+   * @param offer_name - Name of the offer
+   * @param community - Community where the offer belong
+   *
+   */
+  ACTION linkoffer(eosio::name offer_name, eosio::symbol community);
+
+  /**
+   *
+   *  Remove the offer link
+   *
+   * @param id - linkoffer id
+   *
+   */
+  ACTION rmlinkoffer(uint64_t id);
 
   /**
    *
@@ -237,11 +265,7 @@ private:
    *
    */
   void create_token(const name &issuer,
-                    const asset &maximum_supply)
-  {
-    lifebankcoin::create_action create_new_token("lifebankcoin"_n, {get_self(), "active"_n});
-    create_new_token.send(issuer, maximum_supply);
-  }
+                    const asset &maximum_supply);
 
   /**
    *
@@ -290,6 +314,16 @@ private:
    * @return the tx id with sha256 format
    */
   checksum256 get_tx();
+
+  /**
+  *
+  *  Verify offer exist to link an offer
+  *
+  * @param name - The offer name
+  *
+  * @return true if the offer exist, otherwise returns false
+  */
+  bool offer_exist(eosio::name offer_name);
 
   /*
   *
@@ -381,16 +415,35 @@ private:
   typedef multi_index<name("sponsors"), sponsor> sponsors_table;
 };
 
+/*
+*  Table to store data realted with offers registered by sponsors
+*/
 TABLE offers
 {
   eosio::name offer_name;
   eosio::name sponsor_name;
-  uint8_t cost;
+  string category;
+  string beginning_date;
+  string ending_date;
+  uint64_t cost;
   string description;
   auto primary_key() const { return offer_name.value; }
-  EOSLIB_SERIALIZE(offers, (offer_name)(sponsor_name)(cost)(description));
+  EOSLIB_SERIALIZE(offers, (offer_name)(sponsor_name)(category)(beginning_date)(ending_date)(cost)(description));
 };
 typedef multi_index<name("offers"), offers> offers_table;
+
+/*
+*  Table to store data realted with lifebank offers
+*/
+TABLE lifebank_offers
+{
+  uint64_t id;
+  eosio::name offer_name;
+  eosio::symbol community;
+  auto primary_key() const { return id; }
+  EOSLIB_SERIALIZE(lifebank_offers, (id)(offer_name)(community));
+};
+typedef multi_index<name("commoffer"), lifebank_offers> lifebank_offers_table;
 
 constexpr eosio::name consent_account{"consent2life"_n};
 

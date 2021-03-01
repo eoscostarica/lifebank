@@ -195,6 +195,32 @@ ACTION lifebankcoin::transferlife(const name &from,
    add_balance(to, quantity, payer);
 }
 
+ACTION lifebankcoin::redeemoffer(uint64_t offer_comm_id, eosio::name donor_name)
+{
+   check(offercomm_exist(offer_comm_id) && has_funds(donor_name), "Failed to redeem offer");
+
+   redeem_offer_table _redeem_offer(get_self(), get_self().value);
+
+   _redeem_offer.emplace(get_self(), [&](auto &row) {
+      row.id = _redeem_offer.available_primary_key();
+      row.donor_name = donor_name;
+      row.offer_comm_id = offer_comm_id;
+   });
+}
+
+bool lifebankcoin::offercomm_exist(uint64_t offer_comm_id)
+{
+   lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
+
+   auto linkoffers_itr = _lifebank_offers.find(offer_comm_id);
+   return linkoffers_itr != _lifebank_offers.end();
+}
+
+bool lifebankcoin::has_funds(eosio::name donor)
+{
+   return true;
+}
+
 ACTION lifebankcoin::clear(const asset &current_asset, const name owner)
 {
    require_auth(get_self());

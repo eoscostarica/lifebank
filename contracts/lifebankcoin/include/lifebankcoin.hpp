@@ -19,6 +19,7 @@
 #include <string>
 
 #include <utils.hpp>
+#include <lifebankcode.hpp>
 
 using namespace std;
 using namespace eosio;
@@ -81,6 +82,18 @@ public:
                        const string &memo);
 
    /**
+   *  Contract only
+   *  For in-line action
+   *  Allow to redeem offers
+   *
+   * @param from - the account to transfer from,
+   * @param to - the account to be transferred to,
+   * @param quantity - the quantity of tokens to be transferred,
+   * @param memo - the memo string to accompany the transaction.
+   */
+   ACTION redeemoffer(uint64_t offer_comm_id, eosio::name donor_name);
+
+   /**
    *  TODO:
    *
    * @param token_contract_account - TODO:,
@@ -118,6 +131,11 @@ public:
 private:
    bool is_valid_transaction(const name &from,
                              const name &to);
+
+   bool offercomm_exist(uint64_t offer_comm_id);
+
+   bool has_funds(eosio::name donor);
+
    /*
       Table for store tha data related with account's balance
    */
@@ -234,3 +252,13 @@ typedef eosio::multi_index<eosio::name("network"),
                            eosio::indexed_by<eosio::name{"usersbycmm"},
                                              eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
     networks_table;
+
+TABLE redeem_offer
+{
+   uint64_t id;
+   eosio::name donor_name;
+   uint64_t offer_comm_id;
+   auto primary_key() const { return id; }
+   EOSLIB_SERIALIZE(redeem_offer, (id)(donor_name)(offer_comm_id));
+};
+typedef multi_index<name("redeemoffer"), redeem_offer> redeem_offer_table;

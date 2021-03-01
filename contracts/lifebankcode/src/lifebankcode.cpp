@@ -35,6 +35,21 @@ void lifebankcode::check_consent(name account)
   eosio::check(consent, "Account does not have consent for lifebankcode");
 }
 
+bool lifebankcode::offer_exist(eosio::name offer_name)
+{
+  offers_table _offers(get_self(), get_self().value);
+
+  auto offers_itr = _offers.find(offer_name.value);
+  return offers_itr != _offers.end();
+}
+
+void lifebankcode::create_token(const name &issuer,
+                                const asset &maximum_supply)
+{
+  lifebankcoin::create_action create_new_token("lifebankcoin"_n, {get_self(), "active"_n});
+  create_new_token.send(issuer, maximum_supply);
+}
+
 ACTION lifebankcode::createcmm(string community_name, eosio::asset community_asset, string description, string logo, const asset &maximum_supply)
 {
   // Only the contract can create communities at the moment
@@ -270,13 +285,20 @@ ACTION lifebankcode::unsubscribe(name user, eosio::asset community_asset)
   }
 }
 
-ACTION lifebankcode::addoffer(eosio::name offer_name, eosio::name sponsor_name, uint8_t cost, string description)
+ACTION lifebankcode::addoffer(
+    eosio::name offer_name,
+    eosio::name sponsor_name,
+    string category,
+    string beginning_date,
+    string ending_date,
+    uint64_t cost,
+    string description,
+    string restriction)
 {
-  require_auth(sponsor);
-  check_consent(sponsor);
+  require_auth(sponsor_name);
+  check_consent(sponsor_name);
 
-  eosio::check(is_donor(sponsor), "Account must be a sponsor");
-  eosio::check(is_lifebank(sponsor), "Account must be a sponsor");
+  eosio::check(is_sponsor(sponsor_name), "Account must be a sponsor");
 
   offers_table _offers(get_self(), get_self().value);
 
@@ -287,16 +309,20 @@ ACTION lifebankcode::addoffer(eosio::name offer_name, eosio::name sponsor_name, 
     _offers.emplace(get_self(), [&](auto &row) {
       row.offer_name = offer_name;
       row.sponsor_name = sponsor_name;
+      row.category = category;
+      row.beginning_date = beginning_date;
+      row.ending_date = ending_date;
       row.cost = cost;
-      row.description = description;
     });
   }
   else
   {
     // Modify an offer record if it does exists
     _offers.modify(offers_itr, get_self(), [&](auto &row) {
+      row.category = category;
+      row.beginning_date = beginning_date;
+      row.ending_date = ending_date;
       row.cost = cost;
-      row.description = description;
     });
   }
 }
@@ -307,11 +333,42 @@ ACTION lifebankcode::rmoffer(eosio::name offer_name)
 
   offers_table _offers(get_self(), get_self().value);
 
-  // Delete a filtered record in _offers table
+  // Delete a filter records in _offers table
   auto offers_itr = _offers.find(offer_name.value);
   eosio::check(offers_itr != _offers.end(), "Offer not found");
 
   _offers.erase(offers_itr);
+}
+
+ACTION lifebankcode::linkoffer(eosio::name offer_name, eosio::symbol community)
+{
+  require_auth(get_self());
+
+  check(offer_exist(offer_name), "Offer not found");
+
+  lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
+
+  auto linkoffers_itr = _lifebank_offers.find(offer_name.value);
+  eosio::check(linkoffers_itr == _lifebank_offers.end(), "The wish offer already exist");
+
+  _lifebank_offers.emplace(get_self(), [&](auto &row) {
+    row.id = _lifebank_offers.available_primary_key();
+    row.offer_name = offer_name;
+    row.community = community;
+  });
+}
+
+ACTION lifebankcode::rmlinkoffer(uint64_t id)
+{
+  require_auth(get_self());
+
+  lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
+
+  // Delete a filter records in _offers table
+  auto linkoffers_itr = _lifebank_offers.find(id);
+  eosio::check(linkoffers_itr != _lifebank_offers.end(), "Offer link not found");
+
+  _lifebank_offers.erase(linkoffers_itr);
 }
 
 ACTION lifebankcode::clear()
