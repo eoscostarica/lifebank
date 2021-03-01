@@ -208,6 +208,7 @@ public:
    * @param ending_date - Available redemption offer end date
    * @param cost - Offer cost
    * @param description - Offer description
+   * @param restriction - Offer restriction
    *
    */
   ACTION addoffer(

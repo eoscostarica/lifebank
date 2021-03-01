@@ -197,7 +197,25 @@ ACTION lifebankcoin::transferlife(const name &from,
 
 ACTION lifebankcoin::redeemoffer(uint64_t offer_comm_id, eosio::name donor_name)
 {
-   check(offercomm_exist(offer_comm_id) && has_funds(donor_name), "Failed to redeem offer");
+   lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
+
+   // START - Check if offer exist
+   auto linkoffers_itr = _lifebank_offers.find(offer_comm_id);
+   eosio::check(linkoffers_itr != _lifebank_offers.end(), "offer not exist");
+   // END - Check if offer exist
+
+   // START - Check if donor has funds to redeem the selected offer
+   accounts from_acnts(get_self(), donor_name.value);
+   offers_table _offers(get_self(), get_self().value);
+
+   const auto &from = from_acnts.get(0 /*value.symbol.code().raw()*/, "no balance object found");
+
+   const auto &offercomm_row = _lifebank_offers.get(offer_comm_id);
+   const auto &offer_row = _offers.get(offercomm_row.offer_name.value);
+   eosio::check(from.balance.amount >= offer_row.cost, "overdrawn balance");
+   // END - Check if offer exist
+
+   // check(offercomm_exist(offer_comm_id) && has_funds(donor_name), "Failed to redeem offer");
 
    redeem_offer_table _redeem_offer(get_self(), get_self().value);
 
@@ -206,19 +224,6 @@ ACTION lifebankcoin::redeemoffer(uint64_t offer_comm_id, eosio::name donor_name)
       row.donor_name = donor_name;
       row.offer_comm_id = offer_comm_id;
    });
-}
-
-bool lifebankcoin::offercomm_exist(uint64_t offer_comm_id)
-{
-   lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
-
-   auto linkoffers_itr = _lifebank_offers.find(offer_comm_id);
-   return linkoffers_itr != _lifebank_offers.end();
-}
-
-bool lifebankcoin::has_funds(eosio::name donor)
-{
-   return true;
 }
 
 ACTION lifebankcoin::clear(const asset &current_asset, const name owner)

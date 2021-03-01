@@ -132,10 +132,6 @@ private:
    bool is_valid_transaction(const name &from,
                              const name &to);
 
-   bool offercomm_exist(uint64_t offer_comm_id);
-
-   bool has_funds(eosio::name donor);
-
    /*
       Table for store tha data related with account's balance
    */
@@ -145,6 +141,7 @@ private:
 
       uint64_t primary_key() const { return balance.symbol.code().raw(); }
    };
+   typedef eosio::multi_index<"accounts"_n, account> accounts;
 
    /*
       Table for store tha data related with currencies' stats
@@ -157,8 +154,6 @@ private:
 
       uint64_t primary_key() const { return supply.symbol.code().raw(); }
    };
-
-   typedef eosio::multi_index<"accounts"_n, account> accounts;
    typedef eosio::multi_index<"stat"_n, currency_stats> stats;
 
    void sub_balance(const name &owner, const asset &value);
