@@ -20,10 +20,12 @@ import { Divider } from '@material-ui/core'
 import { useQuery } from '@apollo/react-hooks'
 import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
 
+
 import {
   // PROFILE_QUERY,
   NOTIFICATION_SUBSCRIPTION
 } from '../../gql'
+import { elementType } from 'prop-types'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -94,14 +96,14 @@ const Notification = () => {
     setOpen(false)
   }
 
-  const result = useSubscription(
+  const { data: notification = {} } = useSubscription(
     NOTIFICATION_SUBSCRIPTION, { variables: { account } }
   )
 
 
+
   useEffect(() => {
-    console.log("TESTING")
-    console.log(result)
+
     //   // if (
     //   //   !profile 
     //   //   !notification.length 
@@ -119,9 +121,14 @@ const Notification = () => {
     //   // setLastNotification(notification[0])
     //   // loadProfile()
     //   // }, [notification, profile, lastNotification, loadProfile])
-  }, [result])
+  }, [notification])
+
+  for (const element in notification.notification) {
+    console.log(element)
+  }
 
   return (
+
     <>
       <IconButton className={classes.wrapper} onClick={handleClickOpen}>
         <NotificationsIcon
@@ -131,6 +138,7 @@ const Notification = () => {
           })}
         />
       </IconButton>
+
       <Dialog
         fullScreen={fullScreen}
         maxWidth={maxWidth}
@@ -157,6 +165,8 @@ const Notification = () => {
         <List />
 
         <List>
+
+
           <Typography gutterBottom>
             Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
             lacus vel augue laoreet rutrum faucibus dolor auctor.
