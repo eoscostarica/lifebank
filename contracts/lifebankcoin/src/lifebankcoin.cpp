@@ -195,7 +195,7 @@ ACTION lifebankcoin::transferlife(const name &from,
    add_balance(to, quantity, payer);
 }
 
-ACTION lifebankcoin::redeemoffer(uint64_t offer_comm_id, eosio::name donor_name)
+ACTION lifebankcoin::redeemoffer(uint64_t offer_comm_id, name donor_name)
 {
    lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
 

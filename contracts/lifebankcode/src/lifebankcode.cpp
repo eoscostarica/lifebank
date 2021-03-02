@@ -35,7 +35,7 @@ void lifebankcode::check_consent(name account)
   eosio::check(consent, "Account does not have consent for lifebankcode");
 }
 
-bool lifebankcode::offer_exist(eosio::name offer_name)
+bool lifebankcode::offer_exist(name offer_name)
 {
   offers_table _offers(get_self(), get_self().value);
 
@@ -74,7 +74,7 @@ ACTION lifebankcode::createcmm(string community_name, eosio::asset community_ass
   create_token(get_self(), maximum_supply);
 }
 
-ACTION lifebankcode::link(eosio::asset community_asset, eosio::name new_user)
+ACTION lifebankcode::link(eosio::asset community_asset, name new_user)
 {
   // Only the contract can create create links
   require_auth(get_self());
@@ -130,7 +130,7 @@ ACTION lifebankcode::adddonor(name account, eosio::asset community_asset)
 }
 
 ACTION lifebankcode::addlifebank(
-    eosio::name account,
+    name account,
     string lifebank_name,
     string about,
     string address,
@@ -178,7 +178,7 @@ ACTION lifebankcode::addlifebank(
 }
 
 ACTION lifebankcode::uplifebank(
-    eosio::name account,
+    name account,
     string lifebank_name,
     string about,
     string address,
@@ -210,7 +210,7 @@ ACTION lifebankcode::uplifebank(
 }
 
 ACTION lifebankcode::addsponsor(
-    eosio::name account,
+    name account,
     string sponsor_name,
     string covid_impact,
     string benefit_description,
@@ -286,8 +286,8 @@ ACTION lifebankcode::unsubscribe(name user, eosio::asset community_asset)
 }
 
 ACTION lifebankcode::addoffer(
-    eosio::name offer_name,
-    eosio::name sponsor_name,
+    name offer_name,
+    name sponsor_name,
     string category,
     string beginning_date,
     string ending_date,
@@ -327,7 +327,7 @@ ACTION lifebankcode::addoffer(
   }
 }
 
-ACTION lifebankcode::rmoffer(eosio::name offer_name)
+ACTION lifebankcode::rmoffer(name offer_name)
 {
   require_auth(get_self());
 
@@ -340,7 +340,7 @@ ACTION lifebankcode::rmoffer(eosio::name offer_name)
   _offers.erase(offers_itr);
 }
 
-ACTION lifebankcode::linkoffer(eosio::name offer_name, eosio::symbol community)
+ACTION lifebankcode::linkoffer(name offer_name, eosio::symbol community)
 {
   require_auth(get_self());
 

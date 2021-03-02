@@ -91,7 +91,7 @@ public:
    * @param quantity - the quantity of tokens to be transferred,
    * @param memo - the memo string to accompany the transaction.
    */
-   ACTION redeemoffer(uint64_t offer_comm_id, eosio::name donor_name);
+   ACTION redeemoffer(uint64_t offer_comm_id, name donor_name);
 
    /**
    *  TODO:
@@ -167,7 +167,7 @@ struct community
 {
    eosio::symbol symbol;
 
-   eosio::name creator;
+   name creator;
    string community_name;
    string description;
    string logo;
@@ -178,14 +178,14 @@ struct community
                     (symbol)(creator)(community_name)(description)(logo));
 };
 
-typedef eosio::multi_index<eosio::name{"community"}, community> communities_table;
+typedef eosio::multi_index<name{"community"}, community> communities_table;
 
 /*
    Struct for store tha data related with donors for inline calls
 */
 struct donor
 {
-   eosio::name account;
+   name account;
 
    checksum256 tx;
    auto primary_key() const { return account.value; }
@@ -199,7 +199,7 @@ typedef multi_index<name("donors"), donor> donors_table;
 */
 struct lifebank
 {
-   eosio::name account;
+   name account;
    eosio::symbol community;
    uint8_t blood_urgency_level;
    checksum256 tx;
@@ -214,7 +214,7 @@ typedef multi_index<name("lifebanks"), lifebank> lifebanks_table;
 */
 struct sponsor
 {
-   eosio::name account;
+   name account;
 
    checksum256 tx;
    auto primary_key() const { return account.value; }
@@ -223,7 +223,7 @@ struct sponsor
 };
 typedef multi_index<name("sponsors"), sponsor> sponsors_table;
 
-constexpr eosio::name lifebankcode_account{"lifebankcode"_n};
+constexpr name lifebankcode_account{"lifebankcode"_n};
 
 /*
    Struct for store tha data related with network for inline calls
@@ -233,7 +233,7 @@ struct network
    uint64_t id;
 
    eosio::symbol community;
-   eosio::name user;
+   name user;
 
    uint64_t primary_key() const { return id; }
    uint64_t users_by_community() const { return community.raw(); }
@@ -242,16 +242,16 @@ struct network
                     (id)(community)(user));
 };
 
-typedef eosio::multi_index<eosio::name("network"),
+typedef eosio::multi_index<name("network"),
                            network,
-                           eosio::indexed_by<eosio::name{"usersbycmm"},
+                           eosio::indexed_by<name{"usersbycmm"},
                                              eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
     networks_table;
 
 TABLE redeem_offer
 {
    uint64_t id;
-   eosio::name donor_name;
+   name donor_name;
    uint64_t offer_comm_id;
    auto primary_key() const { return id; }
    EOSLIB_SERIALIZE(redeem_offer, (id)(donor_name)(offer_comm_id));

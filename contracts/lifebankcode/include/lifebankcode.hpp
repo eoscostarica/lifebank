@@ -66,7 +66,7 @@ public:
    * @pre Community's symbol must exits
    *
    */
-  ACTION link(eosio::asset community_asset, eosio::name new_user);
+  ACTION link(eosio::asset community_asset, name new_user);
 
   /**
    *
@@ -78,7 +78,7 @@ public:
    * @pre community's symbol must exits
    *
    */
-  ACTION adddonor(eosio::name account, eosio::asset community_asset);
+  ACTION adddonor(name account, eosio::asset community_asset);
 
   /**
    *
@@ -103,7 +103,7 @@ public:
    *
    */
   ACTION addlifebank(
-      eosio::name account,
+      name account,
       string lifebank_name,
       string about,
       string address,
@@ -141,7 +141,7 @@ public:
    *
    */
   ACTION uplifebank(
-      eosio::name account,
+      name account,
       string lifebank_name,
       string about,
       string address,
@@ -180,7 +180,7 @@ public:
    *
    */
   ACTION addsponsor(
-      eosio::name account,
+      name account,
       string sponsor_name,
       string covid_impact,
       string benefit_description,
@@ -212,8 +212,8 @@ public:
    *
    */
   ACTION addoffer(
-      eosio::name offer_name,
-      eosio::name sponsor_name,
+      name offer_name,
+      name sponsor_name,
       string category,
       string beginning_date,
       string ending_date,
@@ -238,7 +238,7 @@ public:
    * @param community - Community where the offer belong
    *
    */
-  ACTION linkoffer(eosio::name offer_name, eosio::symbol community);
+  ACTION linkoffer(name offer_name, eosio::symbol community);
 
   /**
    *
@@ -276,7 +276,7 @@ private:
    *
    * @return true is the account has a consent, otherwise returns false
    */
-  void check_consent(eosio::name account);
+  void check_consent(name account);
 
   /**
    *
@@ -324,7 +324,7 @@ private:
   *
   * @return true if the offer exist, otherwise returns false
   */
-  bool offer_exist(eosio::name offer_name);
+  bool offer_exist(name offer_name);
 
   /*
   *
@@ -334,7 +334,7 @@ private:
   {
     eosio::symbol symbol;
 
-    eosio::name creator;
+    name creator;
     string community_name;
     string description;
     string logo;
@@ -345,7 +345,7 @@ private:
                      (symbol)(creator)(community_name)(description)(logo));
   };
 
-  typedef eosio::multi_index<eosio::name{"community"}, community> communities_table;
+  typedef eosio::multi_index<name{"community"}, community> communities_table;
 
   /*
   *
@@ -356,7 +356,7 @@ private:
     uint64_t id;
 
     eosio::symbol community;
-    eosio::name user;
+    name user;
 
     uint64_t primary_key() const { return id; }
     uint64_t users_by_community() const { return community.raw(); }
@@ -365,9 +365,9 @@ private:
                      (id)(community)(user));
   };
 
-  typedef eosio::multi_index<eosio::name("network"),
+  typedef eosio::multi_index<name("network"),
                              network,
-                             eosio::indexed_by<eosio::name{"usersbycmm"},
+                             eosio::indexed_by<name{"usersbycmm"},
                                                eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
       networks_table;
   /*
@@ -376,7 +376,7 @@ private:
   */
   TABLE donor
   {
-    eosio::name account;
+    name account;
     checksum256 tx;
     auto primary_key() const { return account.value; }
     EOSLIB_SERIALIZE(donor,
@@ -390,7 +390,7 @@ private:
   */
   TABLE lifebank
   {
-    eosio::name account;
+    name account;
     eosio::symbol community;
     uint8_t blood_urgency_level;
     checksum256 tx;
@@ -406,7 +406,7 @@ private:
   */
   TABLE sponsor
   {
-    eosio::name account;
+    name account;
 
     checksum256 tx;
     auto primary_key() const { return account.value; }
@@ -421,8 +421,8 @@ private:
 */
 TABLE offers
 {
-  eosio::name offer_name;
-  eosio::name sponsor_name;
+  name offer_name;
+  name sponsor_name;
   string category;
   string beginning_date;
   string ending_date;
@@ -439,14 +439,14 @@ typedef multi_index<name("offers"), offers> offers_table;
 TABLE lifebank_offers
 {
   uint64_t id;
-  eosio::name offer_name;
+  name offer_name;
   eosio::symbol community;
   auto primary_key() const { return id; }
   EOSLIB_SERIALIZE(lifebank_offers, (id)(offer_name)(community));
 };
 typedef multi_index<name("commoffer"), lifebank_offers> lifebank_offers_table;
 
-constexpr eosio::name consent_account{"consent2life"_n};
+constexpr name consent_account{"consent2life"_n};
 
 /*
 *
@@ -457,8 +457,8 @@ struct informed_consent
   uint64_t id;
 
   checksum256 record;
-  eosio::name user;
-  eosio::name contract;
+  name user;
+  name contract;
   checksum256 hash;
   EOSLIB_SERIALIZE(informed_consent,
                    (id)(record)(user)(contract)(hash));
@@ -467,9 +467,9 @@ struct informed_consent
   checksum256 get_hash() const { return hash; }
 };
 
-typedef eosio::multi_index<eosio::name("userconsents"), informed_consent,
-                           indexed_by<eosio::name("singlerecord"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_record>>,
-                           indexed_by<eosio::name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash>>>
+typedef eosio::multi_index<name("userconsents"), informed_consent,
+                           indexed_by<name("singlerecord"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_record>>,
+                           indexed_by<name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash>>>
     informed_consents_table;
 
 /**
@@ -494,7 +494,7 @@ checksum256 string_to_hash(const string &input)
   *
   * @return true if the account has consent, otherwise returns false
   */
-bool has_consent(eosio::name account, eosio::name contract)
+bool has_consent(name account, name contract)
 {
   informed_consents_table _records(consent_account, consent_account.value);
   auto single_record = string_to_hash(account.to_string() + contract.to_string());
