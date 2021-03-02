@@ -101,7 +101,7 @@ ACTION lifebankcoin::issue(const name &lifebank, const name &donor, const string
 
    communities_table community(lifebankcode_account, lifebankcode_account.value);
    auto existing_cmm = community.find(lifebank_symbol.raw());
-   eosio::check(existing_cmm != community.end(), "community does not exists");
+   check(existing_cmm != community.end(), "community does not exists");
 
    check(memo.size() <= 256, "memo has more than 256 bytes");
 
@@ -201,7 +201,7 @@ ACTION lifebankcoin::redeemoffer(uint64_t offer_comm_id, name donor_name)
 
    // START - Check if offer exist
    auto linkoffers_itr = _lifebank_offers.find(offer_comm_id);
-   eosio::check(linkoffers_itr != _lifebank_offers.end(), "offer not exist");
+   check(linkoffers_itr != _lifebank_offers.end(), "offer not exist");
    // END - Check if offer exist
 
    // START - Check if donor has funds to redeem the selected offer
@@ -212,10 +212,8 @@ ACTION lifebankcoin::redeemoffer(uint64_t offer_comm_id, name donor_name)
 
    const auto &offercomm_row = _lifebank_offers.get(offer_comm_id);
    const auto &offer_row = _offers.get(offercomm_row.offer_name.value);
-   eosio::check(from.balance.amount >= offer_row.cost, "overdrawn balance");
+   check(from.balance.amount >= offer_row.cost, "overdrawn balance");
    // END - Check if offer exist
-
-   // check(offercomm_exist(offer_comm_id) && has_funds(donor_name), "Failed to redeem offer");
 
    redeem_offer_table _redeem_offer(get_self(), get_self().value);
 

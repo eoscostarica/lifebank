@@ -32,7 +32,7 @@ checksum256 lifebankcode::get_tx()
 void lifebankcode::check_consent(name account)
 {
   bool consent = has_consent(account, get_self());
-  eosio::check(consent, "Account does not have consent for lifebankcode");
+  check(consent, "Account does not have consent for lifebankcode");
 }
 
 bool lifebankcode::offer_exist(name offer_name)
@@ -54,16 +54,16 @@ ACTION lifebankcode::createcmm(string community_name, eosio::asset community_ass
 {
   // Only the contract can create communities at the moment
   require_auth(get_self());
-  // eosio::check(is_account(creator), "New user account does not exists");
+  // check(is_account(creator), "New user account does not exists");
 
-  eosio::check(community_name.size() <= 256, "name has more than 256 bytes");
-  eosio::check(description.size() <= 256, "description has more than 256 bytes");
-  eosio::check(logo.size() <= 256, "logo has more than 256 bytes");
+  check(community_name.size() <= 256, "name has more than 256 bytes");
+  check(description.size() <= 256, "description has more than 256 bytes");
+  check(logo.size() <= 256, "logo has more than 256 bytes");
 
   const eosio::symbol new_symbol = community_asset.symbol;
   communities_table community(get_self(), get_self().value);
   auto existing_cmm = community.find(new_symbol.raw());
-  eosio::check(existing_cmm == community.end(), "symbol already exists");
+  check(existing_cmm == community.end(), "symbol already exists");
   community.emplace(get_self(), [&](auto &raw) {
     raw.symbol = new_symbol;
     raw.creator = get_self();
@@ -78,7 +78,7 @@ ACTION lifebankcode::link(eosio::asset community_asset, name new_user)
 {
   // Only the contract can create create links
   require_auth(get_self());
-  eosio::check(is_account(new_user), "New user account does not exists");
+  check(is_account(new_user), "New user account does not exists");
   eosio::symbol community_symbol = community_asset.symbol;
   communities_table community(get_self(), get_self().value);
   const auto &cmm = community.get(community_symbol.raw(), "can't find any community with given asset");
@@ -103,8 +103,8 @@ ACTION lifebankcode::adddonor(name account, eosio::asset community_asset)
   require_auth(account);
   check_consent(account);
 
-  eosio::check(is_sponsor(account), "Account already belogs to sponsor");
-  eosio::check(is_lifebank(account), "Account already belogs to lifebank");
+  check(is_sponsor(account), "Account already belogs to sponsor");
+  check(is_lifebank(account), "Account already belogs to lifebank");
 
   donors_table _donors(get_self(), get_self().value);
   auto donor_itr = _donors.find(account.value);
@@ -146,12 +146,12 @@ ACTION lifebankcode::addlifebank(
     string social_media_links)
 {
   require_auth(get_self());
-  eosio::check(is_account(account), "New user account does not exists");
+  check(is_account(account), "New user account does not exists");
   check_consent(account);
   lifebanks_table _lifebanks(get_self(), get_self().value);
-  eosio::check(lifebank_name.size() <= 64, "Name has more than 64 bytes");
-  eosio::check(blood_urgency_level > 0, "blood urgency level must be positive");
-  eosio::check(blood_urgency_level < 4, "blood urgency level is out of range");
+  check(lifebank_name.size() <= 64, "Name has more than 64 bytes");
+  check(blood_urgency_level > 0, "blood urgency level must be positive");
+  check(blood_urgency_level < 4, "blood urgency level is out of range");
   auto lifebank_itr = _lifebanks.find(account.value);
   if (lifebank_itr == _lifebanks.end())
   {
@@ -196,9 +196,9 @@ ACTION lifebankcode::uplifebank(
   require_auth(account);
   check_consent(account);
   lifebanks_table _lifebanks(get_self(), get_self().value);
-  eosio::check(lifebank_name.size() <= 64, "Name has more than 64 bytes");
-  eosio::check(blood_urgency_level > 0, "blood urgency level must be positive");
-  eosio::check(blood_urgency_level < 4, "blood urgency level is out of range");
+  check(lifebank_name.size() <= 64, "Name has more than 64 bytes");
+  check(blood_urgency_level > 0, "blood urgency level must be positive");
+  check(blood_urgency_level < 4, "blood urgency level is out of range");
   auto lifebank_itr = _lifebanks.find(account.value);
   if (lifebank_itr != _lifebanks.end())
   {
@@ -230,11 +230,11 @@ ACTION lifebankcode::addsponsor(
   require_auth(account);
   check_consent(account);
 
-  eosio::check(is_donor(account), "Account already belogs to donor");
-  eosio::check(is_lifebank(account), "Account already belogs to lifebank");
+  check(is_donor(account), "Account already belogs to donor");
+  check(is_lifebank(account), "Account already belogs to lifebank");
 
   sponsors_table _sponsors(get_self(), get_self().value);
-  eosio::check(sponsor_name.size() <= 64, "Name has more than 64 bytes");
+  check(sponsor_name.size() <= 64, "Name has more than 64 bytes");
   auto sponsor_itr = _sponsors.find(account.value);
   if (sponsor_itr == _sponsors.end())
   {
@@ -298,7 +298,7 @@ ACTION lifebankcode::addoffer(
   require_auth(sponsor_name);
   check_consent(sponsor_name);
 
-  eosio::check(is_sponsor(sponsor_name), "Account must be a sponsor");
+  check(is_sponsor(sponsor_name), "Account must be a sponsor");
 
   offers_table _offers(get_self(), get_self().value);
 
@@ -335,7 +335,7 @@ ACTION lifebankcode::rmoffer(name offer_name)
 
   // Delete a filter records in _offers table
   auto offers_itr = _offers.find(offer_name.value);
-  eosio::check(offers_itr != _offers.end(), "Offer not found");
+  check(offers_itr != _offers.end(), "Offer not found");
 
   _offers.erase(offers_itr);
 }
@@ -349,7 +349,7 @@ ACTION lifebankcode::linkoffer(name offer_name, eosio::symbol community)
   lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
 
   auto linkoffers_itr = _lifebank_offers.find(offer_name.value);
-  eosio::check(linkoffers_itr == _lifebank_offers.end(), "The wish offer already exist");
+  check(linkoffers_itr == _lifebank_offers.end(), "The wish offer already exist");
 
   _lifebank_offers.emplace(get_self(), [&](auto &row) {
     row.id = _lifebank_offers.available_primary_key();
@@ -366,7 +366,7 @@ ACTION lifebankcode::rmlinkoffer(uint64_t id)
 
   // Delete a filter records in _offers table
   auto linkoffers_itr = _lifebank_offers.find(id);
-  eosio::check(linkoffers_itr != _lifebank_offers.end(), "Offer link not found");
+  check(linkoffers_itr != _lifebank_offers.end(), "Offer link not found");
 
   _lifebank_offers.erase(linkoffers_itr);
 }
