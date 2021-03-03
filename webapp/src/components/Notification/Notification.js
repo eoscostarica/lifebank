@@ -64,14 +64,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Notification = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const theme = useTheme()
   const location = useLocation()
   const isHome = location.pathname === '/'
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [maxWidth] = useState('md')
   const [lastNotification, setLastNotification] = useState()
-  const [account, setAccount] = React.useState('doniq2ntcyq4')
+  const [account, setAccount] = useState('doniq2ntcyq4')
 
 
 
@@ -104,6 +104,11 @@ const Notification = () => {
 
   useEffect(() => {
 
+    console.log("Primera..", Object.keys(notification))
+    if (Object.keys(notification).length) {
+      console.log("Entro...")
+      console.log("NOTIFICATION:", notification.notification[1])
+    }
     //   // if (
     //   //   !profile 
     //   //   !notification.length 
@@ -122,10 +127,6 @@ const Notification = () => {
     //   // loadProfile()
     //   // }, [notification, profile, lastNotification, loadProfile])
   }, [notification])
-
-  for (const element in notification.notification) {
-    console.log(element)
-  }
 
   return (
 
@@ -165,7 +166,7 @@ const Notification = () => {
         <List />
 
         <List>
-
+          {Object.keys(notification).map}
 
           <Typography gutterBottom>
             Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
