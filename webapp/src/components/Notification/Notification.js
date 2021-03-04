@@ -20,6 +20,7 @@ import { Divider } from '@material-ui/core'
 import { useQuery } from '@apollo/react-hooks'
 import { useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks'
 
+import { useUser } from '../../context/user.context'
 
 import {
   // PROFILE_QUERY,
@@ -70,10 +71,9 @@ const Notification = () => {
   const isHome = location.pathname === '/'
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [maxWidth] = useState('md')
-  const [lastNotification, setLastNotification] = useState()
-  const [account, setAccount] = useState('doniq2ntcyq4')
 
-
+  const [currentUser] = useUser()
+  const [account, setAccount] = useState(currentUser.account)
 
 
 
@@ -105,9 +105,11 @@ const Notification = () => {
   useEffect(() => {
 
     console.log("Primera..", Object.keys(notification))
+    console.log("USUARIO", currentUser)
     if (Object.keys(notification).length) {
       console.log("Entro...")
       console.log("NOTIFICATION:", notification.notification[1])
+
     }
     //   // if (
     //   //   !profile 
