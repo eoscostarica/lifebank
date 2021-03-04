@@ -638,14 +638,17 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             {t('common.cancel')}
           </Button>
         </Link>
+
         <Button
           className={classes.saveBtn}
           variant="contained"
           color="secondary"
           onClick={() => prepareDataForSubmitting()}
         >
+
           {t('common.save')}
         </Button>
+
         {loading && <CircularProgress />}
       </Box>
     </form>

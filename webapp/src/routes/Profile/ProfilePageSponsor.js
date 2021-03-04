@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
-import { Link as LinkRouter, useHistory } from 'react-router-dom'
+import { Link as LinkRouter, useHistory, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import Alert from '@material-ui/lab/Alert'
 import Typography from '@material-ui/core/Typography'
@@ -21,6 +21,9 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
+
+import CloseIcon from '@material-ui/icons/Close'
+import { Alert as AlertNotificaction, AlertTitle } from '@material-ui/lab'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -209,6 +212,8 @@ const ProfilePageSponsor = ({ profile }) => {
   const images = profile.photos !== "" ? JSON.parse(profile.photos) : {}
   const socialMedia = profile.social_media_links !== "" ? JSON.parse(profile.social_media_links) : {}
   const phones = profile.telephones !== "" ? JSON.parse(profile.telephones) : {}
+  const location = useLocation()
+  const [showAlert, setShowAlert] = useState(false)
 
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
@@ -231,7 +236,7 @@ const ProfilePageSponsor = ({ profile }) => {
     }
 
     if (!userName) getUsername()
-  })
+  }, [userName])
 
   useEffect(() => {
     if (errorUsername) {
@@ -298,8 +303,34 @@ const ProfilePageSponsor = ({ profile }) => {
     }
   }, [profile])
 
+  useEffect(() => {
+    if (location.state) {
+      history.replace({ state: false })
+      setShowAlert(true)
+    }
+  }, [])
+
   return (
     <>
+      <Box className={classes.boxMessage}>
+        {showAlert && (
+          <AlertNotificaction
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => setShowAlert(false)}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            <AlertTitle>{t('editProfile.success')}</AlertTitle>
+            {t('editProfile.profileWasUpdated')}
+          </AlertNotificaction>
+        )}
+      </Box>
       {pendingFields && (
         <Box className={classes.alertBox}>
           <Alert

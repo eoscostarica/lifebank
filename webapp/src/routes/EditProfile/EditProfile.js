@@ -80,7 +80,7 @@ const EditProfilePage = () => {
   const history = useHistory()
   const [, { logout }] = useUser()
   const [currentUser] = useUser()
-  const [showAlert, setShowAlert] = useState({ error: false, success: false })
+  const [showAlert, setShowAlert] = useState(false)
   const [isCompleting, setIsCompleting] = useState()
   const [userName, setuserName] = useState()
   const [
@@ -157,9 +157,13 @@ const EditProfilePage = () => {
 
     if (success) {
       loadProfile()
-      setShowAlert({ error: false, success: true })
+      history.push({
+        pathname: '/profile',
+        state: true
+      })
+
     } else if (!success) {
-      setShowAlert({ error: true, success: false })
+      setShowAlert(true)
     }
   }, [editProfileResult, loadProfile])
 
@@ -184,7 +188,7 @@ const EditProfilePage = () => {
   }, [errorProfile])
 
   useEffect(() => {
-    if (errorRevokeConsent || errorGrantConsent || errorEditResults) setShowAlert({ error: true, success: false })
+    if (errorRevokeConsent || errorGrantConsent || errorEditResults) setShowAlert(true)
 
   }, [errorRevokeConsent, errorGrantConsent, errorEditResults])
 
@@ -192,7 +196,7 @@ const EditProfilePage = () => {
   return (
     <Box className={classes.wrapper}>
       <Box className={classes.boxMessage}>
-        {showAlert.error && (
+        {showAlert && (
           <Alert
             severity="error"
             action={
@@ -200,7 +204,7 @@ const EditProfilePage = () => {
                 aria-label="close"
                 color="inherit"
                 size="small"
-                onClick={() => setShowAlert({ error: false, success: false })}
+                onClick={() => setShowAlert(false)}
               >
                 <CloseIcon fontSize="inherit" />
               </IconButton>
@@ -208,30 +212,6 @@ const EditProfilePage = () => {
           >
             <AlertTitle>{t('editProfile.error')}</AlertTitle>
             {t('editProfile.duringSaveProfileData')}
-            <Link to="/profile" className={classes.linkError}>
-              <strong>{t('donations.goToProfile')}</strong>
-            </Link>
-          </Alert>
-        )}
-        {showAlert.success && (
-          <Alert
-            severity="success"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => setShowAlert({ error: false, success: false })}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            <AlertTitle>{t('editProfile.success')}</AlertTitle>
-            {t('editProfile.profileWasUpdated')}
-            <Link to="/profile" className={classes.linkSuccess}>
-              <strong>{t('editProfile.goToProfile')}</strong>
-            </Link>
           </Alert>
         )}
       </Box>

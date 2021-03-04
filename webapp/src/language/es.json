@@ -195,10 +195,10 @@
     "editProfile": {
       "editProfile": "Editar Perfil",
       "error": "Error",
-      "duringSaveProfileData": "Mientras se guardaba la información del perfil - ",
+      "duringSaveProfileData": "Mientras se guardaba la información del perfil",
       "goToProfile": "Ir al perfil!",
       "success": "Éxito",
-      "profileWasUpdated": "El perfil fue actualizado - ",
+      "profileWasUpdated": "El perfil fue actualizado",
       "low": "Bajo",
       "medium": "Medio",
       "high": "Alto",
