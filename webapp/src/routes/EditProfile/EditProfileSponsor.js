@@ -648,7 +648,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
           {t('common.save')}
         </Button>
-
         {loading && <CircularProgress />}
       </Box>
     </form>
