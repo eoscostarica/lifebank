@@ -50,10 +50,9 @@ function MapSelectLocation({
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        // [position.coords.latitude, position.coords.longitude];
         map.flyTo({
           center: [position.coords.longitude, position.coords.latitude],
-          // essential: true // this animation is considered essential with respect to prefers-reduced-motion
+          essential: true
           });
       });
     }
