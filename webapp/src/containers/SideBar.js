@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -66,7 +66,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       <Box className={classes.optionLink}>
         <LoginModal isSideBar />
       </Box>
-      <Box className={classes.optionLink}>
+      <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
         <HomeIcon className={classes.iconOption} />
         <Link to="/">
           <Typography variant="body1" className={classes.labelOption}>
@@ -84,7 +84,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       {user && (
         <>
           {user.role === 'sponsor' && (
-            <Box className={classes.optionLink}>
+            <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
               <MenuBookIcon className={classes.iconOption} />
               <Link to="/offers-management">
                 <Typography variant="body1" className={classes.labelOption}>
@@ -93,7 +93,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
               </Link>
             </Box>
           )}
-          <Box className={classes.optionLink}>
+          <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">
               <Typography variant="body1" className={classes.labelOption}>
