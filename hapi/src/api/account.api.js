@@ -478,8 +478,15 @@ const transfer = async (from, details) => {
     account: { _eq: from }
   })
 
+  const userTo = await userApi.getOne({
+    account: { _eq: details.to }
+  })
+
   let transaction
 
+
+  await userApi.setToken({ account: { _eq: details.to } }, details.quantity + userTo.token)
+  
   switch (user.role) {
     case 'donor' || 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
