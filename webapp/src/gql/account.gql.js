@@ -152,6 +152,7 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
       description
       type
       payload
+      state
     }
   }
 `
