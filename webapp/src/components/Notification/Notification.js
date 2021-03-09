@@ -107,7 +107,7 @@ const Notification = () => {
 
 
     if (Object.keys(notification).length) {
-      let notificationList = notification.notification
+      const notificationList = notification.notification
       console.log("Entro...")
       console.log("Hola ", Array.isArray(notificationList))
 
