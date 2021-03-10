@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -197,4 +197,4 @@ HomeMobile.propTypes = {
   handleChangeSearch: PropTypes.func
 }
 
-export default HomeMobile
+export default memo(HomeMobile)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -139,4 +139,4 @@ Topbar.propTypes = {
   onLogout: PropTypes.func
 }
 
-export default Topbar
+export default memo(Topbar)

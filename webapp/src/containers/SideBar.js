@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -156,4 +156,4 @@ SideBar.propTypes = {
   triggerSideBarPosition: PropTypes.func
 }
 
-export default SideBar
+export default memo(SideBar)

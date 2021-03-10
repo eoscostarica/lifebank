@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { makeStyles, useTheme } from '@material-ui/styles'
@@ -194,4 +194,4 @@ ChangeAppBarColorOnScroll.propTypes = {
   isDesktop: PropTypes.bool,
 }
 
-export default Main
+export default memo(Main)

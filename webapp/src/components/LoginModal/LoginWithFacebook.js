@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { FacebookProvider, Login } from 'react-facebook'
 import { makeStyles } from '@material-ui/styles'
@@ -79,4 +79,4 @@ LoginWithFacebook.propTypes = {
 
 LoginWithFacebook.defaultProps = {}
 
-export default LoginWithFacebook
+export default memo(LoginWithFacebook)

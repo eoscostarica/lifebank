@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import GoogleLogin from 'react-google-login'
@@ -95,4 +95,4 @@ LoginWithGoogle.propTypes = {
 
 LoginWithGoogle.defaultProps = {}
 
-export default LoginWithGoogle
+export default memo(LoginWithGoogle)
