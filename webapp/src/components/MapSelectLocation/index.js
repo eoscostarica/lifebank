@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box'
 import { mapboxConfig, constants } from '../../config'
 import MapMarker from '../MapMarker'
 
-const initialGeoLocation = { lng: -74.0030977, lat: 40.7378021 }
+const initialGeoLocation = { lng: -84.091273, lat: 9.928209 }
 const initialZoom = 12.5
 const {
   LOCATION_TYPES: { SPONSOR, LIFE_BANK }
@@ -47,6 +47,15 @@ function MapSelectLocation({
         trackUserLocation: true
       })
     )
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        map.flyTo({
+          center: [position.coords.longitude, position.coords.latitude],
+          essential: true
+          });
+      });
+    }
 
     map.on('click', ({ lngLat }) => {
       const { lng, lat } = lngLat
