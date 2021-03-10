@@ -197,10 +197,10 @@
     "editProfile": {
       "editProfile": "Edit Profile",
       "error": "Error",
-      "duringSaveProfileData": "During save profile data -",
+      "duringSaveProfileData": "While saving profile information",
       "goToProfile": "Go to profile!",
       "success": "Success",
-      "profileWasUpdated": "Profile was updated - ",
+      "profileWasUpdated": "Profile was updated",
       "low": "Low",
       "medium": "Medium",
       "high": "High",
