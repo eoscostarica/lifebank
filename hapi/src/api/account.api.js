@@ -484,13 +484,19 @@ const transfer = async (from, details) => {
 
   let transaction
 
-  console.log("FROM", user)
-  console.log("TO", userTo)
-  console.log("DETAIL", details)
+  console.log('FROM', user)
+  console.log('TO', userTo)
+  console.log('DETAIL', details)
 
-  await userApi.setToken({ account: { _eq: user.account } }, user.token - details.quantity)
-  await userApi.setToken({ account: { _eq: details.to } }, userTo.token + details.quantity)
-  
+  await userApi.setToken(
+    { account: { _eq: user.account } },
+    user.token - details.quantity
+  )
+  await userApi.setToken(
+    { account: { _eq: details.to } },
+    userTo.token + details.quantity
+  )
+
   switch (user.role) {
     case 'donor' || 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
