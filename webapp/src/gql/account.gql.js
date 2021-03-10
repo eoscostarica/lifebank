@@ -145,8 +145,8 @@ export const TRANSFER_MUTATION = gql`
 `
 
 export const NOTIFICATION_SUBSCRIPTION = gql`
-  subscription ($account: String!) {
-    notification(order_by: { created_at: desc }, limit: 10, where: {account: {_eq: $account }}) {
+  subscription {
+    notification(order_by: { created_at: desc }, limit: 1) {
       id
       title
       description
