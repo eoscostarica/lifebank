@@ -213,6 +213,13 @@ const OffersManagement = () => {
     setOpen(true)
     setClickedOffer(offer)
   }
+  const handleCallback = () => {
+    setOpenSnackbar({
+      show: true,
+      message: t('offersManagement.offerCreation'),
+      severity: 'success'
+    })
+  }
 
   const handleClose = (_event, reason) => {
     if (reason === 'clickaway') return
@@ -231,6 +238,7 @@ const OffersManagement = () => {
         sponsor_id={profile.id}
         isEditing={editing}
         data={data}
+        offerNotification={handleCallback}
       />
     )
   }

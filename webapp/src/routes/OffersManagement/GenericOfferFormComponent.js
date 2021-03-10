@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import Snackbar from '@material-ui/core/Snackbar'
-import Alert from '@material-ui/lab/Alert'
 import PropTypes from 'prop-types'
 import Dialog from '@material-ui/core/Dialog'
 import AppBar from '@material-ui/core/AppBar'
@@ -198,7 +196,8 @@ const GenericOfferFormComponent = ({
   sponsor_id,
   isEditing,
   setOffers,
-  data
+  data,
+  offerNotification
 }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
@@ -298,12 +297,6 @@ const GenericOfferFormComponent = ({
     }
   }
 
-  const handleClose = (_event, reason) => {
-    if (reason === 'clickaway') return
-
-    setOpenSnackbar({ ...openSnackbar, show: false })
-  }
-
   useEffect(() => {
     if (data) {
       data.images = JSON.parse(data.images)
@@ -388,7 +381,6 @@ const GenericOfferFormComponent = ({
                 size="small"
                 onClick={() => setOpen(false)}
               >
-
                 <CloseIcon fontSize="inherit" />
               </IconButton>
             </Box>
@@ -591,7 +583,11 @@ const GenericOfferFormComponent = ({
                     !offer.cost_in_tokens ||
                     offer.images.length < 1
                   }
-                  onClick={handleSubmit}
+                  onClick={() => {
+                    handleSubmit()
+                    offerNotification()
+                    setOpen(false)
+                  }}
                   variant="contained"
                   color="primary"
                 >
@@ -601,13 +597,6 @@ const GenericOfferFormComponent = ({
             </form>
           )
         }
-        <Snackbar
-          open={openSnackbar.show}
-          autoHideDuration={3000}
-          onClose={handleClose}
-        >
-          <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
-        </Snackbar>
       </Box>
     </Dialog >
   )
@@ -626,7 +615,8 @@ GenericOfferFormComponent.propTypes = {
   sponsor_id: PropTypes.number,
   isEditing: PropTypes.bool,
   setOffers: PropTypes.func,
-  data: PropTypes.object
+  data: PropTypes.object,
+  offerNotification: PropTypes.func
 }
 
 export default GenericOfferFormComponent
