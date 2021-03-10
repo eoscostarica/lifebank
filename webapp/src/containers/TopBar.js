@@ -119,7 +119,7 @@ const Topbar = ({ user, onLogout }) => {
             onClose={handleClose}
           >
             <Link to="/profile" className={classes.link}>
-              <MenuItem className={classes.menuItem}>{user.account}</MenuItem>
+              <MenuItem className={classes.menuItem} onClick={handleClose}>{user.account}</MenuItem>
             </Link>
             <Divider />
             <MenuItem onClick={handleLogout} className={classes.menuItem}>
