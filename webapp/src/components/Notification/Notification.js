@@ -14,9 +14,7 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
-
 import Button from '@material-ui/core/Button'
-
 import { useSubscription } from '@apollo/react-hooks'
 import { useUser } from '../../context/user.context'
 import NotificationStructure from '../NotificationStructure'
@@ -62,13 +60,13 @@ const useStyles = makeStyles((theme) => ({
 
   },
   boxList: {
-    margin: '5%',
+    margin: '5%'
 
   },
   editBtn: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
-    width: "50%",
+    width: "30%",
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
@@ -78,10 +76,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff',
     padding: '12px',
     marginBottom: 20,
-    marginLeft: '25%',
+    marginLeft: '35%',
     position: 'absolute',
     bottom: 0
   }
+
 }))
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -126,22 +125,17 @@ const Notification = () => {
 
 
   useEffect(() => {
-    console.log("no..", notification.notification)
     if (Object.keys(notification).length) {
       let notificationList = notification.notification
-      console.log("Entro...")
-      console.log("Hola ", Array.isArray(notificationList))
 
-
-      console.log("NOTIFICATION:", notification.notification[1])
       setNotifications(notificationList)
+
     }
   }, [notification])
 
 
 
   return (
-
     <>
       <IconButton className={classes.wrapper} onClick={handleClickOpen}>
         <NotificationsIcon
@@ -151,7 +145,6 @@ const Notification = () => {
           })}
         />
       </IconButton>
-
       <Dialog className={classes.box}
         fullScreen
         open={open}
@@ -168,19 +161,18 @@ const Notification = () => {
         <List className={classes.boxList}>
           {notifications.length > 0 && (
             <>
-              {console.log("TAMAÑO:", notifications.length)}
-              {notifications.map((el, key) => (
-
+              {notifications.map((element, key) => (
                 <NotificationStructure
-
                   key={key}
-                  title={el.title}
-                  description={el.description}
+                  title={element.title}
+                  description={element.description}
+                  type={element.type}
+                  payload={element.payload}
+                  state={element.state}
                 />
               ))}
             </>
           )}
-
         </List>
         <Button variant="contained" className={classes.editBtn} color="primary">
           {t('common.loadMore')}

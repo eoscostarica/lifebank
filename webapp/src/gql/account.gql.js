@@ -197,6 +197,14 @@ export const GET_SECRET_BY_ACCOUNT = gql`
   }
 `
 
+export const GET_NAME = gql`
+  query($account: String!) {
+    user(where: { account: { _eq: $account } }) {
+      name
+    }
+  }
+`
+
 export const GET_USERNAME = gql`
   query($account: String!) {
     user(where: { account: { _eq: $account } }) {
