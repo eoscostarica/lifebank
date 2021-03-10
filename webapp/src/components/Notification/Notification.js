@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import NotificationsIcon from '@material-ui/icons/Notifications'
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
-import Box from '@material-ui/core/Dialog'
+import Dialog from '@material-ui/core/Dialog'
+import List from '@material-ui/core/List'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -15,6 +15,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 
+import Button from '@material-ui/core/Button'
 
 import { useSubscription } from '@apollo/react-hooks'
 import { useUser } from '../../context/user.context'
@@ -40,10 +41,11 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     position: 'relative',
-
+    width: '100%',
     backgroundColor: '#ffffff',
     boxShadow:
       '0 2px 4px 0 rgba(0, 0, 0, 0.24), 0 4px 8px 0 rgba(0, 0, 0, 0.18)'
+
   },
   backIcon: {
     color: '#121212'
@@ -55,15 +57,35 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '500'
   },
   box: {
-    display: 'flex',
     justifyContent: 'flex-end',
-    marginLeft: '30%',
-    backgroundColor: '#121212'
+    marginLeft: '60%',
+
+  },
+  boxList: {
+    margin: '5%',
+
+  },
+  editBtn: {
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "50%",
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    padding: '12px',
+    marginBottom: 20,
+    marginLeft: '25%',
+    position: 'absolute',
+    bottom: 0
   }
 }))
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
+  return <Slide direction="left" ref={ref} {...props} />
 })
 
 const Notification = () => {
@@ -73,7 +95,6 @@ const Notification = () => {
   const theme = useTheme()
   const location = useLocation()
   const isHome = location.pathname === '/'
-
 
   const [currentUser] = useUser()
   const [account, setAccount] = useState(currentUser.account)
@@ -98,14 +119,14 @@ const Notification = () => {
     setOpen(false)
   }
 
+
   const { data: notification = {} } = useSubscription(
     NOTIFICATION_SUBSCRIPTION, { variables: { account } }
   )
 
 
   useEffect(() => {
-
-
+    console.log("no..", notification.notification)
     if (Object.keys(notification).length) {
       let notificationList = notification.notification
       console.log("Entro...")
@@ -116,6 +137,8 @@ const Notification = () => {
       setNotifications(notificationList)
     }
   }, [notification])
+
+
 
   return (
 
@@ -129,42 +152,40 @@ const Notification = () => {
         />
       </IconButton>
 
-      <Box className={classes.box}
-
+      <Dialog className={classes.box}
+        fullScreen
         open={open}
         onClose={handleClose}
-
+        TransitionComponent={Transition}
       >
         <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              className={classes.backIcon}
-
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <KeyboardBackspaceIcon />
-            </IconButton>
+          <Toolbar >
             <Typography variant="h6" className={classes.title}>
               {t('miscellaneous.recentActivity')}
             </Typography>
           </Toolbar>
         </AppBar>
-        {notifications.length > 0 && (
-          <>
-            {notifications.map((el, key) => (
+        <List className={classes.boxList}>
+          {notifications.length > 0 && (
+            <>
+              {console.log("TAMAÑO:", notifications.length)}
+              {notifications.map((el, key) => (
 
-              <NotificationStructure
-                key={key}
-                title={el.title}
-                description={el.description}
-              />
-            ))}
+                <NotificationStructure
 
-          </>
-        )}
+                  key={key}
+                  title={el.title}
+                  description={el.description}
+                />
+              ))}
+            </>
+          )}
 
-      </Box>
+        </List>
+        <Button variant="contained" className={classes.editBtn} color="primary">
+          {t('common.loadMore')}
+        </Button>
+      </Dialog>
     </>
   )
 }

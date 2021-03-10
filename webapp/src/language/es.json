@@ -306,7 +306,8 @@
       "save": "Guardar",
       "saveChanges": "Guardar cambios",
       "currentLanguage": "es-CR",
-      "near": "Cerca de"
+      "near": "Cerca de",
+      "loadMore": "Cargar más"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",

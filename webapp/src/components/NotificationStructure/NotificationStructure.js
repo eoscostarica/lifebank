@@ -8,10 +8,18 @@ const NotificationStructure = ({ title, description }) => {
 
   return (
     <>
-      <Box >
+      <Box  >
         <Typography>
           {title}
         </Typography>
+        <Typography >
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+          lacus vel augue laoreet rutrum faucibus dolor auctor.
+          </Typography>
+        <Typography >
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+          lacus vel augue laoreet rutrum faucibus dolor auctor.
+          </Typography>
       </Box>
 
     </>

@@ -306,7 +306,8 @@
       "save": "Save",
       "saveChanges": "Save changes",
       "currentLanguage": "en-US",
-      "near": "Near"
+      "near": "Near",
+      "loadMore": "Load more"
     },
     "claimReward": {
       "claimReward": "Claim Reward",
