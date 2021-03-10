@@ -145,13 +145,21 @@ export const TRANSFER_MUTATION = gql`
 `
 
 export const NOTIFICATION_SUBSCRIPTION = gql`
-  subscription {
-    notification(order_by: { created_at: desc }, limit: 1) {
+  subscription ($account: String!) {
+    notification(order_by: { created_at: desc }, limit: 10, where: {account: {_eq: $account }}) {
       id
       title
       description
       type
       payload
+    }
+  }
+`
+
+export const TOKEN_SUBSCRIPTION = gql`
+  subscription ($account: String!) {
+    user(where: {account: {_eq: $account}}) {
+      token
     }
   }
 `
