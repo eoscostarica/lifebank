@@ -31,7 +31,7 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos'
 import Drawer from '@material-ui/core/Drawer'
 
-import { PROFILE_QUERY, TRANSFER_MUTATION, TOKEN_SUBSCRIPTION, NOTIFICATION_SUBSCRIPTION} from '../../gql'
+import { PROFILE_QUERY, TRANSFER_MUTATION, TOKEN_SUBSCRIPTION} from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   list: {
