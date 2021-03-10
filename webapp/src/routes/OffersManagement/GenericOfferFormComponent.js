@@ -30,6 +30,7 @@ import Divider from '@material-ui/core/Divider'
 import { useTranslation } from 'react-i18next'
 import '@brainhubeu/react-carousel/lib/style.css'
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
+import NumberFormat from 'react-number-format';
 
 import { CREATE_OFFER_MUTATION, UPDATE_OFFER_MUTATION } from '../../gql'
 
@@ -144,6 +145,34 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }))
+
+function NumberFormatCustom(props) {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+      allowLeadingZeros={false}
+      format="###"
+    />
+  );
+}
+
+NumberFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 const LimitationHandling = ({
   classes,
@@ -453,13 +482,15 @@ const GenericOfferFormComponent = ({
                 id="cost-in-tokens"
                 label={t('offersManagement.costInTokens')}
                 variant="outlined"
-                type="number"
                 onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
                 placeholder={t('offersManagement.costInTokensPlaceholder')}
                 value={offer.cost_in_tokens || undefined}
                 fullWidth
                 InputLabelProps={{
                   shrink: true
+                }}
+                InputProps={{
+                  inputComponent: NumberFormatCustom,
                 }}
                 onChange={(event) =>
                   setOffer({ ...offer, cost_in_tokens: event.target.value })
