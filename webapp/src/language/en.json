@@ -404,7 +404,8 @@
       "youHaveNoAddedOffers": "You have no added offers",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it",
-      "selectDateRange": "Select date range"
+      "selectDateRange": "Select date range",
+      "offerCreation": "Offer Created Successfully"
     },
     "offerView": {
       "selectedOffer": "Selected offer",
