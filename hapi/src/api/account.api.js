@@ -484,10 +484,6 @@ const transfer = async (from, details) => {
 
   let transaction
 
-  console.log('FROM', user)
-  console.log('TO', userTo)
-  console.log('DETAIL', details)
-
   await userApi.setToken(
     { account: { _eq: user.account } },
     user.token - details.quantity
