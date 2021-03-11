@@ -126,7 +126,8 @@ const Notification = () => {
 
   useEffect(() => {
     if (Object.keys(notification).length) {
-      let notificationList = notification.notification
+      const notificationList = notification.notification
+
 
       setNotifications(notificationList)
 
