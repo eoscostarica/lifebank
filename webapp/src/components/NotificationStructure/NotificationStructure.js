@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const NotificationStructure = ({ title, description, type, payload, state }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  //const [userName, setUsername] = useState()
+  // const [userName, setUsername] = useState()
   const [name, setName] = useState()
   // const { error: errorUsername, refetch: getData } = useQuery(GET_NAME, {
   //   variables: {
@@ -65,7 +65,7 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
     response()
   })
 
-  //description.substring(5, 17)
+  // description.substring(5, 17)
 
 
   return (
