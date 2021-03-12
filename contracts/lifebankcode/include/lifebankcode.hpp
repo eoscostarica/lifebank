@@ -282,9 +282,16 @@ public:
     name offer_name;
     eosio::symbol community;
     auto primary_key() const { return id; }
+    uint64_t by_secondary() const { return offer_name.value; }
     EOSLIB_SERIALIZE(lifebank_offers, (id)(offer_name)(community));
   };
-  typedef multi_index<name("commoffer"), lifebank_offers> lifebank_offers_table;
+  typedef eosio::multi_index<
+      name("commoffer"), lifebank_offers, eosio::indexed_by<
+        name("offername"), eosio::const_mem_fun<
+            lifebank_offers, uint64_t, &lifebank_offers::by_secondary
+          >
+        >
+      > lifebank_offers_table;
 
 private:
   /**
