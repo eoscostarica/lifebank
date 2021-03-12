@@ -96,13 +96,12 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        {console.log(user)}
         <TextField
           id="email"
           label={t('signup.name')}
           fullWidth
           placeholder={t('editProfile.namePlaceholder')}
-          defaultValue={user.name === "undefined" ? '' : user.name }
+          defaultValue={user.name === "undefined" ? '' : user.name}
           variant="outlined"
           InputLabelProps={{
             shrink: true

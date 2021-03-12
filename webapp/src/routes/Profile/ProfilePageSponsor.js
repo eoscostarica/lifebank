@@ -21,9 +21,7 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
-
-import CloseIcon from '@material-ui/icons/Close'
-import { Alert as AlertNotificaction, AlertTitle } from '@material-ui/lab'
+import Snackbar from '@material-ui/core/Snackbar'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -213,7 +211,7 @@ const ProfilePageSponsor = ({ profile }) => {
   const socialMedia = profile.social_media_links !== "" ? JSON.parse(profile.social_media_links) : {}
   const phones = profile.telephones !== "" ? JSON.parse(profile.telephones) : {}
   const location = useLocation()
-  const [showAlert, setShowAlert] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
@@ -221,6 +219,12 @@ const ProfilePageSponsor = ({ profile }) => {
     },
     skip: true
   })
+
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') return
+
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
 
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
@@ -306,31 +310,23 @@ const ProfilePageSponsor = ({ profile }) => {
   useEffect(() => {
     if (location.state) {
       history.replace({ state: false })
-      setShowAlert(true)
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.profileWasUpdated'),
+        severity: 'success'
+      })
     }
   }, [])
 
   return (
     <>
-      <Box className={classes.boxMessage}>
-        {showAlert && (
-          <AlertNotificaction
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => setShowAlert(false)}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            <AlertTitle>{t('editProfile.success')}</AlertTitle>
-            {t('editProfile.profileWasUpdated')}
-          </AlertNotificaction>
-        )}
-      </Box>
+      <Snackbar
+        open={openSnackbar.show}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
+      </Snackbar>
       {pendingFields && (
         <Box className={classes.alertBox}>
           <Alert
@@ -574,8 +570,8 @@ const ProfilePageSponsor = ({ profile }) => {
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowLeft />
                     ) : (
-                        <KeyboardArrowRight />
-                      )}
+                      <KeyboardArrowRight />
+                    )}
                   </Button>
                 }
                 backButton={
@@ -587,8 +583,8 @@ const ProfilePageSponsor = ({ profile }) => {
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowRight />
                     ) : (
-                        <KeyboardArrowLeft />
-                      )}
+                      <KeyboardArrowLeft />
+                    )}
                     {t('common.prev')}
                   </Button>
                 }
