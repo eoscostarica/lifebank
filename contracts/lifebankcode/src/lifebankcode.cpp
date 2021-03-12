@@ -291,7 +291,7 @@ ACTION lifebankcode::addoffer(
     string category,
     string beginning_date,
     string ending_date,
-    uint64_t cost,
+    asset cost,
     string description,
     string restriction)
 {
@@ -330,6 +330,11 @@ ACTION lifebankcode::addoffer(
 ACTION lifebankcode::rmoffer(name offer_name)
 {
   require_auth(get_self());
+
+  // WORKING ON SECONDARY INDEXES
+  lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
+  auto linkoffers_itr = _lifebank_offers.find(offer_name.value);
+  check(linkoffers_itr == _lifebank_offers.end(), "Cannot remove an offer if exist a reference to it from another table");
 
   offers_table _offers(get_self(), get_self().value);
 

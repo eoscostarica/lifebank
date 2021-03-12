@@ -217,7 +217,7 @@ public:
       string category,
       string beginning_date,
       string ending_date,
-      uint64_t cost,
+      asset cost,
       string description,
       string restriction);
 
@@ -255,6 +255,36 @@ public:
    *
    */
   ACTION clear();
+
+  /*
+  *  Table to store data realted with offers registered by sponsors
+  */
+  TABLE offers
+  {
+    name offer_name;
+    name sponsor_name;
+    string category;
+    string beginning_date;
+    string ending_date;
+    asset cost;
+    string description;
+    auto primary_key() const { return offer_name.value; }
+    EOSLIB_SERIALIZE(offers, (offer_name)(sponsor_name)(category)(beginning_date)(ending_date)(cost)(description));
+  };
+  typedef multi_index<name("offers"), offers> offers_table;
+
+  /*
+  *  Table to store data realted with lifebank offers
+  */
+  TABLE lifebank_offers
+  {
+    uint64_t id;
+    name offer_name;
+    eosio::symbol community;
+    auto primary_key() const { return id; }
+    EOSLIB_SERIALIZE(lifebank_offers, (id)(offer_name)(community));
+  };
+  typedef multi_index<name("commoffer"), lifebank_offers> lifebank_offers_table;
 
 private:
   /**
@@ -368,7 +398,7 @@ private:
   typedef eosio::multi_index<name("network"),
                              network,
                              eosio::indexed_by<name{"usersbycmm"},
-                                               eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
+                                               eosio::const_mem_fun<network, uint64_t, &network::users_by_community> > >
       networks_table;
   /*
   *
@@ -416,35 +446,7 @@ private:
   typedef multi_index<name("sponsors"), sponsor> sponsors_table;
 };
 
-/*
-*  Table to store data realted with offers registered by sponsors
-*/
-TABLE offers
-{
-  name offer_name;
-  name sponsor_name;
-  string category;
-  string beginning_date;
-  string ending_date;
-  uint64_t cost;
-  string description;
-  auto primary_key() const { return offer_name.value; }
-  EOSLIB_SERIALIZE(offers, (offer_name)(sponsor_name)(category)(beginning_date)(ending_date)(cost)(description));
-};
-typedef multi_index<name("offers"), offers> offers_table;
 
-/*
-*  Table to store data realted with lifebank offers
-*/
-TABLE lifebank_offers
-{
-  uint64_t id;
-  name offer_name;
-  eosio::symbol community;
-  auto primary_key() const { return id; }
-  EOSLIB_SERIALIZE(lifebank_offers, (id)(offer_name)(community));
-};
-typedef multi_index<name("commoffer"), lifebank_offers> lifebank_offers_table;
 
 constexpr name consent_account{"consent2life"_n};
 
@@ -468,8 +470,8 @@ struct informed_consent
 };
 
 typedef eosio::multi_index<name("userconsents"), informed_consent,
-                           indexed_by<name("singlerecord"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_record>>,
-                           indexed_by<name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash>>>
+                           indexed_by<name("singlerecord"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_record> >,
+                           indexed_by<name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash> > >
     informed_consents_table;
 
 /**

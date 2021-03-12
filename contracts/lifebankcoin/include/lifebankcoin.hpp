@@ -3,7 +3,6 @@
  * @author  (C) 2020 by eoscostarica [ https://eoscostarica.io ]
  * @version 1.1.0
  *
-
  * @section DESCRIPTION
  *  Header file for the declaration of all functions related with the lifebankcoin contract
  *
@@ -156,6 +155,19 @@ private:
    };
    typedef eosio::multi_index<"stat"_n, currency_stats> stats;
 
+   /*
+      Table for store tha data related with the redeems offers
+   */
+   TABLE redeem_offer
+   {
+      uint64_t id;
+      name donor_name;
+      uint64_t offer_comm_id;
+      auto primary_key() const { return id; }
+      EOSLIB_SERIALIZE(redeem_offer, (id)(donor_name)(offer_comm_id));
+   };
+   typedef multi_index<name("redeemoffer"), redeem_offer> redeem_offer_table;
+
    void sub_balance(const name &owner, const asset &value);
    void add_balance(const name &owner, const asset &value, const name &ram_payer);
 };
@@ -247,13 +259,3 @@ typedef eosio::multi_index<name("network"),
                            eosio::indexed_by<name{"usersbycmm"},
                                              eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
     networks_table;
-
-TABLE redeem_offer
-{
-   uint64_t id;
-   name donor_name;
-   uint64_t offer_comm_id;
-   auto primary_key() const { return id; }
-   EOSLIB_SERIALIZE(redeem_offer, (id)(donor_name)(offer_comm_id));
-};
-typedef multi_index<name("redeemoffer"), redeem_offer> redeem_offer_table;
