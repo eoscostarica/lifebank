@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   btnContinue: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
-    width: "70%",
+    width: '70%',
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
@@ -59,7 +59,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
     marginBottom: 10,
     [theme.breakpoints.down('md')]: {
-      width: "100%",
+      width: '70%',
+    }
+  },
+  grecaptcha: {
+    [theme.breakpoints.down('md')]: {
+      transform: 'scale(0.7)'
     }
   },
   mapBox: {
@@ -210,6 +215,7 @@ const SignupLifeBank = ({
         </Box>
         <Box className={classes.btnWrapper}>
           <ReCAPTCHA
+            className={classes.grecaptcha}
             sitekey={captchaConfig.sitekey}
             onChange={(value) => serRecaptchaValue(value)}
           />
