@@ -7,10 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Box } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
-
 import CustomRouterLink from '../../components/CustomRouterLink'
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 30,
     marginLeft: "10%",
     marginRight: "10%"
-
   },
   link: {
     textDecoration: 'none'
