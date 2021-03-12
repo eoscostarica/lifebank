@@ -470,8 +470,8 @@ struct informed_consent
 };
 
 typedef eosio::multi_index<name("userconsents"), informed_consent,
-                           indexed_by<name("singlerecord"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_record> >,
-                           indexed_by<name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash> > >
+                           indexed_by<name("singlerecord"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_record>>,
+                           indexed_by<name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash>>>
     informed_consents_table;
 
 /**
