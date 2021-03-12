@@ -333,8 +333,10 @@ ACTION lifebankcode::rmoffer(name offer_name)
 
   // WORKING ON SECONDARY INDEXES
   lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
-  auto linkoffers_itr = _lifebank_offers.find(offer_name.value);
-  check(linkoffers_itr == _lifebank_offers.end(), "Cannot remove an offer if exist a reference to it from another table");
+  auto linkoffers_idx = _lifebank_offers.get_index<name("offername")>();
+  auto linkoffers_itr = linkoffers_idx.find(offer_name.value);
+  
+  check(linkoffers_itr == linkoffers_idx.end(), "Cannot remove an offer if exist a reference to it from another table");
 
   offers_table _offers(get_self(), get_self().value);
 
