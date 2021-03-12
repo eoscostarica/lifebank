@@ -38,15 +38,8 @@ const useStyles = makeStyles((theme) => ({
 const NotificationStructure = ({ title, description, type, payload, state }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  //const [userName, setUsername] = useState()
   const [name, setName] = useState()
-  // const { error: errorUsername, refetch: getData } = useQuery(GET_NAME, {
-  //   variables: {
-  //     account: "lifsxd4d4bo3"
-  //   },
-  //   skip: true
 
-  // })
 
   const { refetch: getData } = useQuery(GET_NAME, {
     variables: {
@@ -59,14 +52,12 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
   useEffect(() => {
     const response = async () => {
       const { data } = await getData({ account: description.substring(5, 17) })
-      console.log(data)
+      setName(data.user[0].name)
     }
 
     response()
+
   })
-
-  //description.substring(5, 17)
-
 
   return (
 
@@ -76,13 +67,10 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
           {title}
         </Typography>
         <Typography className={classes.labelOption}>
-          {description}
+          {description.replace(description.substring(5, 17), name)}
         </Typography>
-
-
         {state === false && (
           <NewNotificationIcon className={classes.iconOption} />
-
         )}
         {state === true && (
           <OldNotificationIcon className={classes.iconOption} />

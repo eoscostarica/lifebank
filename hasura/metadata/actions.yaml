@@ -156,4 +156,5 @@ custom_types:
   - name: ValidLifebank
   - name: create_account_lifebank_output
   - name: change_password_output
+
   scalars: []

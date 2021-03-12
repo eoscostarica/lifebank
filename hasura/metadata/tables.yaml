@@ -77,14 +77,15 @@
   - role: donor
     permission:
       columns:
+      - account
+      - created_at
+      - description
       - id
       - payload
-      - created_at
-      - updated_at
-      - account
-      - description
+      - state
       - title
       - type
+      - updated_at
       filter:
         account:
           _eq: X-Hasura-User-Id

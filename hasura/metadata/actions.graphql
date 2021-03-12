@@ -64,6 +64,9 @@ type Mutation {
 }
 
 
+
+
+
 type Mutation {
   edit_profile (
     profile: jsonb!
@@ -241,4 +244,5 @@ type create_account_lifebank_output {
 type change_password_output {
   success : Boolean!
 }
+
 

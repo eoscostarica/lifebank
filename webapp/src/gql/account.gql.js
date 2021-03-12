@@ -157,6 +157,9 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
   }
 `
 
+
+
+
 export const EDIT_PROFILE_MUTATION = gql`
   mutation($profile: jsonb!) {
     edit_profile(profile: $profile) {
