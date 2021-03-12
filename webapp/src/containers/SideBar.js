@@ -66,7 +66,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       <Box className={classes.optionLink}>
         <LoginModal isSideBar />
       </Box>
-      <Box className={classes.optionLink}>
+      <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
         <HomeIcon className={classes.iconOption} />
         <Link to="/">
           <Typography variant="body1" className={classes.labelOption}>
@@ -84,7 +84,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       {user && (
         <>
           {user.role === 'sponsor' && (
-            <Box className={classes.optionLink}>
+            <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
               <MenuBookIcon className={classes.iconOption} />
               <Link to="/offers-management">
                 <Typography variant="body1" className={classes.labelOption}>
@@ -93,7 +93,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
               </Link>
             </Box>
           )}
-          <Box className={classes.optionLink}>
+          <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">
               <Typography variant="body1" className={classes.labelOption}>
@@ -122,7 +122,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       <Typography variant="body1" className={classes.infoLabel}>
         {t('navigationDrawer.information')}
       </Typography>
-      <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
+      <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
         <InfoIcon className={classes.iconOption} />
         <Link to="/about">
           <Typography variant="body1" className={classes.labelOption}>
@@ -130,7 +130,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Typography>
         </Link>
       </Box>
-      <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
+      <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
         <InfoIcon className={classes.iconOption} />
         <Link to="/terms-of-use">
           <Typography variant="body1" className={classes.labelOption}>
@@ -138,7 +138,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Typography>
         </Link>
       </Box>
-      <Box className={classes.optionLink} onClick={() => triggerSideBarPosition()}>
+      <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
         <InfoIcon className={classes.iconOption} />
         <Link to="/help">
           <Typography variant="body1" className={classes.labelOption}>
