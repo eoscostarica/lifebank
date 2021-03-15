@@ -1,4 +1,3 @@
-as
 import React, { useState, useEffect } from 'react'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -22,6 +21,7 @@ import NotificationStructure from '../NotificationStructure'
 import {
   NOTIFICATION_SUBSCRIPTION
 } from '../../gql'
+as
 
 
 
