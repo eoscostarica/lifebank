@@ -331,7 +331,6 @@ ACTION lifebankcode::rmoffer(name offer_name)
 {
   require_auth(get_self());
 
-  // WORKING ON SECONDARY INDEXES
   lifebank_offers_table _lifebank_offers(get_self(), get_self().value);
   auto linkoffers_idx = _lifebank_offers.get_index<name("offername")>();
   auto linkoffers_itr = linkoffers_idx.find(offer_name.value);
