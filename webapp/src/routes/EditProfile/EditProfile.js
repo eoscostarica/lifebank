@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'

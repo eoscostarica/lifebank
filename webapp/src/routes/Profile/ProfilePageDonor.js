@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
-import { Link as LinkRouter } from 'react-router-dom'
+import { Link as LinkRouter, useHistory, useLocation } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -12,6 +12,8 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 
 const useStyles = makeStyles((theme) => ({
   contentHeader: {
@@ -164,6 +166,26 @@ EmptyHeartSVG.propTypes = {
 const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const location = useLocation()
+  const history = useHistory()
+
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') return
+
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
+
+  useEffect(() => {
+    if (location.state) {
+      history.replace({ state: false })
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.profileWasUpdated'),
+        severity: 'success'
+      })
+    }
+  }, [])
 
   return (
     <>
@@ -218,6 +240,13 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
           {t('common.edit')}
         </Button>
       </LinkRouter>
+      <Snackbar
+        open={openSnackbar.show}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
+      </Snackbar>
     </>
   )
 }
