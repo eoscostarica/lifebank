@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 import Divider from '@material-ui/core/Divider'
 import NewNotificationIcon from '@material-ui/icons/Brightness1';
 import OldNotificationIcon from '@material-ui/icons/PanoramaFishEye';
-import { useQuery } from '@apollo/react-hooks'
-import { GET_NAME } from '../../gql'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import { GET_NAME, EDIT_NOTIFICATION_STATE } from '../../gql'
 
 
 
@@ -48,6 +48,10 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
     skip: true
   })
 
+  const [
+    editNotificationState,
+    { error: errorEditResults, loading: editLoading, data: { edit_notification_state: editNotificationStateResult } = {} }
+  ] = useMutation(EDIT_NOTIFICATION_STATE)
 
   useEffect(() => {
     const response = async () => {
@@ -57,8 +61,24 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
 
     response()
 
-  })
+    console.log("DATA")
 
+  }, [description])
+
+  const changeNotificationState = () => {
+    editNotificationState({
+      variables: {
+        id: 5
+      }
+    })
+  }
+
+  useEffect(() => {
+
+    changeNotificationState()
+    console.log("AQUII...", editNotificationStateResult)
+
+  }, [editNotificationStateResult])
   return (
 
     <Box className={classes.wrapper}>

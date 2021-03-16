@@ -38,6 +38,15 @@ actions:
     handler: http://hapi:9090/api/credentials-recovery
   permissions:
   - role: guest
+- name: edit_notification_state
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/edit-notification-state
+    forward_client_headers: true
+  permissions:
+  - role: donor
+  - role: lifebank
+  - role: sponsor
 - name: edit_profile
   definition:
     kind: synchronous
@@ -156,5 +165,5 @@ custom_types:
   - name: ValidLifebank
   - name: create_account_lifebank_output
   - name: change_password_output
-
+  - name: edit_notification_state_output
   scalars: []

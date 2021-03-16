@@ -157,8 +157,13 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
   }
 `
 
-
-
+export const EDIT_NOTIFICATION_STATE = gql`
+  mutation ($id: Int) {
+    edit_notification_state(id:$id) {
+      success
+    }
+  }
+`
 
 export const EDIT_PROFILE_MUTATION = gql`
   mutation($profile: jsonb!) {

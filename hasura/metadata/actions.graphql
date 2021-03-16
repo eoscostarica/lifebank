@@ -64,7 +64,11 @@ type Mutation {
 }
 
 
-
+type Mutation {
+  edit_notification_state (
+    id: Int
+  ): edit_notification_state_output
+}
 
 
 type Mutation {
@@ -245,4 +249,7 @@ type change_password_output {
   success : Boolean!
 }
 
+type edit_notification_state_output {
+  success : Boolean!
+}
 

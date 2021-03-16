@@ -3,6 +3,7 @@ const checkUsernameRoute = require('./check-username/check-username.route')
 const createAccountRoute = require('./create-account/create-account.route')
 const credentialsRecoveryRoute = require('./credentials-recovery/credentials-recovery.route')
 const editProfileRoute = require('./edit-profile/edit-profile.route')
+const editNotificationStateRoute = require('./edit-notification-state/edit-notification-sate.route')
 const getcontractRoute = require('./get-contract/get-contract.route')
 const getValidSponsorsRoute = require('./get-valid-sponsors/get-valid-sponsors.route')
 const grantConsentRoute = require('./grant-consent/grant-consent.route')
@@ -22,6 +23,7 @@ module.exports = [
   createAccountRoute,
   credentialsRecoveryRoute,
   editProfileRoute,
+  editNotificationStateRoute,
   getcontractRoute,
   getValidSponsorsRoute,
   grantConsentRoute,
