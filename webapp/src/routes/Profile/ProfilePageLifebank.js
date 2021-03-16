@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Alert from '@material-ui/lab/Alert'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import { Link as LinkRouter, useHistory } from 'react-router-dom'
+import { Link as LinkRouter, useHistory, useLocation } from 'react-router-dom'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -17,6 +17,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import QRCode from 'qrcode.react'
+import Snackbar from '@material-ui/core/Snackbar'
 import '@brainhubeu/react-carousel/lib/style.css'
 
 import { useUser } from '../../context/user.context'
@@ -200,11 +201,13 @@ const ProfilePageLifebank = ({ profile }) => {
   const [userName, setuserName] = useState()
   const [pendingFields, setPendingFields] = useState()
   const history = useHistory()
+  const location = useLocation()
   const [, { logout }] = useUser()
   const theme = useTheme()
   const phones = JSON.parse(profile.telephones)
   const images = JSON.parse(profile.photos)
   const [activeStep, setActiveStep] = useState(0)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
@@ -213,10 +216,15 @@ const ProfilePageLifebank = ({ profile }) => {
     skip: true
   })
 
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') return
+
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
+
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
-
 
   useEffect(() => {
     const getUsername = async () => {
@@ -284,8 +292,26 @@ const ProfilePageLifebank = ({ profile }) => {
     if (profile) checkAvailableFields()
   }, [profile])
 
+  useEffect(() => {
+    if (location.state) {
+      history.replace({ state: false })
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.profileWasUpdated'),
+        severity: 'success'
+      })
+    }
+  }, [])
+
   return (
     <>
+      <Snackbar
+        open={openSnackbar.show}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
+      </Snackbar>
       {pendingFields && (
         <Box className={classes.alertBox}>
           <Alert
@@ -500,8 +526,8 @@ const ProfilePageLifebank = ({ profile }) => {
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowLeft />
                     ) : (
-                        <KeyboardArrowRight />
-                      )}
+                      <KeyboardArrowRight />
+                    )}
                   </Button>
                 }
                 backButton={
@@ -513,8 +539,8 @@ const ProfilePageLifebank = ({ profile }) => {
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowRight />
                     ) : (
-                        <KeyboardArrowLeft />
-                      )}
+                      <KeyboardArrowLeft />
+                    )}
                     {t('common.prev')}
                   </Button>
                 }

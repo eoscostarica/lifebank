@@ -285,7 +285,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
         userToSubmit.photos = JSON.stringify(user.photos)
         onSubmit(userToSubmit, username, profile.account)
-        history.push('/profile')
+        history.push({
+          pathname: '/profile',
+          state: true
+        })
       }
       else document.getElementById("username").focus()
     }
