@@ -21,6 +21,7 @@ import NotificationStructure from '../NotificationStructure'
 import {
   NOTIFICATION_SUBSCRIPTION
 } from '../../gql'
+as
 
 
 
