@@ -156,6 +156,14 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
   }
 `
 
+export const TOKEN_SUBSCRIPTION = gql`
+  subscription ($account: String!) {
+    user(where: {account: {_eq: $account}}) {
+      token
+    }
+  }
+`
+
 export const EDIT_PROFILE_MUTATION = gql`
   mutation($profile: jsonb!) {
     edit_profile(profile: $profile) {

@@ -135,7 +135,7 @@ const createLifebank = async ({
   }
 }
 
-const getProfile = async account => {
+const getProfile = async (account) => {
   const user = await userApi.getOne({
     account: { _eq: account }
   })
@@ -164,7 +164,7 @@ const getProfile = async account => {
   }
 }
 
-const getDonorData = async account => {
+const getDonorData = async (account) => {
   const networks = await lifebankcodeUtils.getUserNetworks(account)
   const communities = []
 
@@ -193,7 +193,7 @@ const getDonorData = async account => {
   }
 }
 
-const getLifebankData = async account => {
+const getLifebankData = async (account) => {
   const { tx } = (await lifebankcodeUtils.getLifebank(account)) || {}
   const { lifebank_name: name, ...profile } = await getTransactionData(tx)
   const consent = await consent2lifeUtils.getConsent(
@@ -316,7 +316,7 @@ const getValidLifebanks = async () => {
   return validLifebanks
 }
 
-const getSponsorData = async account => {
+const getSponsorData = async (account) => {
   const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
   const { sponsor_name: name, ...profile } = await getTransactionData(tx)
   const networks = await lifebankcodeUtils.getUserNetworks(account)
@@ -353,7 +353,7 @@ const getSponsorData = async account => {
   }
 }
 
-const getTransactionData = async tx => {
+const getTransactionData = async (tx) => {
   const { processed: { action_traces: actionTraces = [] } = {} } =
     (await historyApi.getOne({
       transaction_id: { _eq: tx || '' }
@@ -364,7 +364,7 @@ const getTransactionData = async tx => {
   )
 }
 
-const grantConsent = async account => {
+const grantConsent = async (account) => {
   const password = await vaultApi.getPassword(account)
   const consentTransaction = await consent2lifeUtils.consent(
     LIFEBANKCODE_CONTRACT,
@@ -377,7 +377,7 @@ const grantConsent = async account => {
   return consentTransaction
 }
 
-const formatSchedule = schedule => {
+const formatSchedule = (schedule) => {
   let scheduleFormat = ''
 
   let hours
@@ -387,7 +387,7 @@ const formatSchedule = schedule => {
   return scheduleFormat.replace(',', ' ')
 }
 
-const formatLifebankData = lifebankData => {
+const formatLifebankData = (lifebankData) => {
   lifebankData.schedule = formatSchedule(JSON.parse(lifebankData.schedule))
   lifebankData.coordinates = JSON.parse(lifebankData.coordinates)
   if (lifebankData.immunity_test) lifebankData.immunity_test = 'Yes'
@@ -458,7 +458,7 @@ const login = async ({ account, secret }) => {
   }
 }
 
-const revokeConsent = async account => {
+const revokeConsent = async (account) => {
   const password = await vaultApi.getPassword(account)
   const consentTransaction = await consent2lifeUtils.revoke(
     LIFEBANKCODE_CONTRACT,
@@ -478,7 +478,20 @@ const transfer = async (from, details) => {
     account: { _eq: from }
   })
 
+  const userTo = await userApi.getOne({
+    account: { _eq: details.to }
+  })
+
   let transaction
+
+  await userApi.setToken(
+    { account: { _eq: user.account } },
+    user.token - details.quantity
+  )
+  await userApi.setToken(
+    { account: { _eq: details.to } },
+    userTo.token + details.quantity
+  )
 
   switch (user.role) {
     case 'donor' || 'sponsor':

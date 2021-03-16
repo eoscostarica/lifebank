@@ -1,8 +1,9 @@
 import React, { useState, useEffect, forwardRef } from 'react'
-import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+import { useMutation, useLazyQuery , useSubscription } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { useHistory } from 'react-router-dom'
+
 import Dialog from '@material-ui/core/Dialog'
 import Backdrop from '@material-ui/core/Backdrop'
 import Box from '@material-ui/core/Box'
@@ -30,7 +31,7 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos'
 import Drawer from '@material-ui/core/Drawer'
 
-import { PROFILE_QUERY, TRANSFER_MUTATION } from '../../gql'
+import { PROFILE_QUERY, TRANSFER_MUTATION, TOKEN_SUBSCRIPTION} from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -359,6 +360,10 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     { loading, error, data: { transfer: transferResult } = {} }
   ] = useMutation(TRANSFER_MUTATION)
 
+  const { data: tokenUser = {} } = useSubscription(
+    TOKEN_SUBSCRIPTION, { variables: { account } }
+  )
+
   const handleOpenAlert = () => setOpenAlert(!openAlert)
 
   useEffect(() => {
@@ -398,8 +403,12 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   }, [currentUser, history, client, loadProfile, state, open, transferResult])
 
   useEffect(() => {
-    setTokens(role === "donor" && profile?.balance.length ? profile.balance.join(',').split(' ')[0] : 0)
-  }, [profile])
+    if(tokenUser.user) {
+      setTokens(parseInt(tokenUser.user[0].token))
+    } else {
+      setTokens(role === "donor" && profile?.balance.length ? profile.balance.join(',').split(' ')[0] : 0)
+    }
+  }, [profile, tokenUser])
 
   const anchor = 'bottom'
 
