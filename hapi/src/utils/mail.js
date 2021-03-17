@@ -132,7 +132,7 @@ const sendVerificationCode = async (
                     <tr>
                       <td align="center" valign="top" style="padding: 36px 24px;">
                         <a href="" target="_blank" style="display: inline-block;">
-                          <img src="https://raw.githubusercontent.com/eoscostarica/lifebank/45cfa8ab1cbe36557aeb26275b127dc155411e42/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg" alt="Logo" border="0" width="70%" style="display: block; width: 70% ">
+                          <img src="https://raw.githubusercontent.com/eoscostarica/lifebank/master/webapp/src/assets/OverWhite-lifebank-logo.jpg" alt="Logo" border="0" width="70%" style="display: block; width: 70% ">
                         </a>
                       </td>
                     </tr>
@@ -309,7 +309,7 @@ const sendRegistrationRequest = async (to, lifebankData) => {
                     <tr>
                       <td align="center" valign="top" style="padding: 36px 24px;">
                         <a href="" target="_blank" style="display: inline-block;">
-                          <img src="https://raw.githubusercontent.com/eoscostarica/lifebank/45cfa8ab1cbe36557aeb26275b127dc155411e42/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg" alt="Logo" border="0" width="70%" style="display: block; width: 70% ">
+                          <img src="https://raw.githubusercontent.com/eoscostarica/lifebank/master/webapp/src/assets/OverWhite-lifebank-logo.jpg" alt="Logo" border="0" width="70%" style="display: block; width: 70% ">
                         </a>
                       </td>
                     </tr>
@@ -519,7 +519,7 @@ const sendCredentialsRecovery = async (
                     <tr>
                       <td align="center" valign="top" style="padding: 36px 24px;">
                         <a href="" target="_blank" style="display: inline-block;">
-                          <img src="https://raw.githubusercontent.com/eoscostarica/lifebank/45cfa8ab1cbe36557aeb26275b127dc155411e42/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg" alt="Logo" border="0" width="70%" style="display: block; width: 70% ">
+                          <img src="https://raw.githubusercontent.com/eoscostarica/lifebank/master/webapp/src/assets/OverWhite-lifebank-logo.jpg" alt="Logo" border="0" width="70%" style="display: block; width: 70% ">
                         </a>
                       </td>
                     </tr>
@@ -685,7 +685,7 @@ const sendConfirmMessage = async (to, subject, title, message) => {
                     <tr>
                       <td align="center" valign="top" style="padding: 36px 24px;">
                         <a href="" target="_blank" style="display: inline-block;">
-                          <img src="https://raw.githubusercontent.com/eoscostarica/lifebank/45cfa8ab1cbe36557aeb26275b127dc155411e42/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg" alt="Logo" border="0" width="70%" style="display: block; width: 70% ">
+                          <img src="https://raw.githubusercontent.com/eoscostarica/lifebank/master/webapp/src/assets/OverWhite-lifebank-logo.jpg" alt="Logo" border="0" width="70%" style="display: block; width: 70% ">
                         </a>
                       </td>
                     </tr>
