@@ -22,6 +22,8 @@ import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
 import { GET_LOCATION_PROFILE } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
+import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
+import { GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   carruselImage: {
@@ -167,6 +169,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px',
     marginBottom: '20px',
     width: '100%'
+  },
+  offerContainer: {
+    width: "100%",
+    margin: 20,
+    backgroundColor: '#000000'
   }
 }))
 
@@ -180,18 +187,76 @@ const InfoPage = () => {
   const history = useHistory()
   const [profile, setProfile] = useState()
   const { url } = useParams()
+  const [loadingOffers, setLoadingOffers] = useState(true)
+  const [offers, setOffers] = useState([])
+  const [sponsorID, setSponsorID] = useState()
+
+  const getOffers = async () => {
+    setLoadingOffers(true)
+    await getAllOffers()
+    await getSponsorID()
+  }
 
   const { error: errorInfoProfile, refetch: getInfoProfile } = useQuery(GET_LOCATION_PROFILE, {
     variables: {
       username: url
-    },
-    skip: true
+    }
+  })
+
+  const { error: errorUsername, data: sponsor_id, refetch: getSponsorID } = useQuery(GET_ID, {
+    variables: {
+      account: location.state.profile.account
+    }
+  })
+
+  const {
+    loading: loadingDataOffer,
+    error: allOffersError,
+    data: allOffers,
+    refetch: getAllOffers
+  } = useQuery(GET_OFFER_BY_SPONSOR_QUERY, {
+    variables: { active: true, sponsor_id: sponsorID },
+    fetchPolicy: 'cache-and-network'
   })
 
   useEffect(() => {
-    getInfo()
+    if (!loadingDataOffer) {
+      let dataOffers = allOffers.offer
+      setOffers(dataOffers)
+      setLoadingOffers(false)
+    }
+  }, [allOffers])
 
+  useEffect(() => {
+
+    if (sponsor_id) {
+      let sponsor = sponsor_id.user[0]
+      setSponsorID(sponsor.id)
+    }
+  }, [sponsor_id])
+
+  useEffect(() => {
+    getInfo()
+    getOffers()
   }, [location])
+
+  useEffect(() => {
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
+        && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
+        getInfo()
+        getOffers()
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+  }, [errorUsername, errorInfoProfile, allOffersError])
 
   const getInfo = async () => {
     if (location.state) setProfile(location.state.profile)
@@ -251,18 +316,6 @@ const InfoPage = () => {
 
     }
   }
-
-  useEffect(() => {
-    if (errorInfoProfile) {
-      if (errorInfoProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
-        logout()
-        getInfo()
-      } else {
-        history.push('/internal-error')
-      }
-    }
-
-  }, [errorInfoProfile])
 
   return (
     <>
@@ -479,15 +532,23 @@ const InfoPage = () => {
               variant="subtitle1"
             >{`${t('common.near')}  ${profile.name}`}</Typography>
             <Box className={classes.contentCards}>
-              <Nearby
-                location={JSON.parse(profile.location)}
-                searchDistance={1000}
-                account={profile.account}
-              />
+              {profile &&
+                <Nearby
+                  location={JSON.parse(profile.location)}
+                  searchDistance={1000}
+                  account={profile.account}
+                />
+              }
             </Box>
           </Box>
+          <ShowOffersDesktop
+            className={classes.offerContainer}
+            offers={offers}
+            loading={loadingOffers}
+          />
         </Box>
       )}
+
     </>
   )
 }

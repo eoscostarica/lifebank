@@ -123,7 +123,6 @@ const Nearby = ({ location, searchDistance, account }) => {
     })
 
     let dataOffers = data.locations
-
     dataOffers = dataOffers.filter((item) => item.account !== account)
 
     setNearbyLocations(dataOffers)
@@ -132,7 +131,7 @@ const Nearby = ({ location, searchDistance, account }) => {
 
   useEffect(() => {
     getNerbyLocations()
-  }, [location, searchDistance])
+  }, [searchDistance])
 
   const ItemCard = (props) => (
     <Card className={classes.cardRoot}>
