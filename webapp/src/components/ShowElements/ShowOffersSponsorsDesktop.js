@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { useTranslation } from 'react-i18next'
+import CheckIcon from '@material-ui/icons/Check';
 import OfferView from '../../components/OfferView'
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -202,40 +203,51 @@ const ShowOffers = ({ offers, loading }) => {
     return str.slice(0, num) + '...'
   }
   const OfferCard = (props) => {
+    const [approved, setApproved] = useState(props.offer.active)
     return (
-      <Card className={classes.cardRoot}>
-        <Box className={classes.cardHeader}>
-          <Avatar
-            className={classes.cardAvatar}
-            src={
-              props.offer.images[0] !== ''
-                ? `//images.weserv.nl?url=${JSON.parse(props.offer.images)[0]
-                }&h=60&dpr=1`
-                : ''
-            }
-          >
-            <LocalOfferIcon />
-          </Avatar>
-          <Box className={classes.cardTitleContainer}>
-            <Typography className={classes.cardTitle} noWrap>
-              {props.offer.offer_name}
-            </Typography>
+      <>
+        <Card className={classes.cardRoot}>
+          {approved && (
+            <Box className={classes.cardHeader}>
+              <CheckIcon />
+              <Typography>
+                Approved
+              </Typography>
+            </Box>
+          )}
+          <Box className={classes.cardHeader}>
+            <Avatar
+              className={classes.cardAvatar}
+              src={
+                props.offer.images[0] !== ''
+                  ? `//images.weserv.nl?url=${JSON.parse(props.offer.images)[0]
+                  }&h=60&dpr=1`
+                  : ''
+              }
+            >
+              <LocalOfferIcon />
+            </Avatar>
+            <Box className={classes.cardTitleContainer}>
+              <Typography className={classes.cardTitle} noWrap>
+                {props.offer.offer_name}
+              </Typography>
+            </Box>
+            <LocalOfferIcon className={classes.cardIconOffer} />
           </Box>
-          <LocalOfferIcon className={classes.cardIconOffer} />
-        </Box>
-        <CardContent className={classes.cardContent}>
-          <Typography paragraph className={classes.cardContentText}>
-            {truncateString(props.offer.description)}
-          </Typography>
-        </CardContent>
-        <Button
-          color="primary"
-          className={classes.cardActionButton}
-          onClick={() => handleOpenOfferView(props.offer)}
-        >
-          {t('cardsSection.moreInfo')}
-        </Button>
-      </Card>
+          <CardContent className={classes.cardContent}>
+            <Typography paragraph className={classes.cardContentText}>
+              {truncateString(props.offer.description)}
+            </Typography>
+          </CardContent>
+          <Button
+            color="primary"
+            className={classes.cardActionButton}
+            onClick={() => handleOpenOfferView(props.offer)}
+          >
+            {t('cardsSection.moreInfo')}
+          </Button>
+        </Card>
+      </>
     )
   }
   OfferCard.propTypes = {
