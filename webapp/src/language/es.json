@@ -27,7 +27,9 @@
     },
     "cardsSection": {
       "availableOffers": "Ofertas disponibles",
-      "moreInfo": "Más información"
+      "moreInfo": "Más información",
+      "approvedOffers": "Ofertas aprobadas",
+      "rejectedOffers": "Ofertas rechazadas"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -36,7 +38,8 @@
       "information": "Información",
       "aboutLifebank": "Acerca de Lifebank",
       "useTerms": "Términos de uso",
-      "help": "Ayuda"
+      "help": "Ayuda",
+      "offersApproval": "Aprobar ofertas"
     },
     "signup": {
       "register": "Registro",
