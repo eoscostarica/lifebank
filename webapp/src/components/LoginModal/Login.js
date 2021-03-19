@@ -235,15 +235,12 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 
   useEffect(() => {
     if (error) {
-      console.log('ERROR WITH CREDENTIALS')
       setErrorMessage(error.message.replace('GraphQL error: ', ''))
     }
   }, [error])
 
   useEffect(() => {
     if (loginResult) {
-      console.log("LOGIN RESULT")
-      console.log(loginResult)
       login(loginResult.token)
       setOpen(false)
     }
