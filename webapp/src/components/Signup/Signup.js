@@ -230,7 +230,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleSetField = useCallback((field, value) => {
-    setUser({ [field]: value})
+    setUser({ [field]: value })
   }, [])
 
   const handleGoBack = () => {
@@ -384,7 +384,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       handleOpen()
       setMessegaAlert(t('signup.sucessfulRegistration'))
       handleOpenAlert()
-      login(createAccountResult.token)
     }
 
   }, [createAccountResult])
