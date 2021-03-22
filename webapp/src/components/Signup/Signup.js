@@ -535,7 +535,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
                     <SignupDonor
                       onSubmit={handleCreateAccount}
                       onSubmitWithAuth={handleCreateAccountWithAuth}
-                      loading={createAccountLoadingAuth}
+                      loading={createAccountLoading || createAccountLoadingAuth}
                       setField={handleSetField}
                       isEmailValid={isEmailValid}
                     >
