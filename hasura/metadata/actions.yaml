@@ -20,6 +20,12 @@ actions:
     handler: http://hapi:9090/api/accounts
   permissions:
   - role: guest
+- name: create_account_auth
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/accounts-auth
+  permissions:
+  - role: guest
 - name: create_account_lifebank
   definition:
     kind: synchronous
@@ -156,4 +162,6 @@ custom_types:
   - name: ValidLifebank
   - name: create_account_lifebank_output
   - name: change_password_output
+  - name: create_account_lifebank_auth_output
+  - name: create_account_auth_output
   scalars: []

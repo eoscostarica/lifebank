@@ -28,6 +28,17 @@ type Mutation {
 
 
 type Mutation {
+  create_account_auth (
+    role: String!
+    email: String!
+    emailContent: jsonb!
+    name: String!
+    secret: String!
+  ): create_account_auth_output
+}
+
+
+type Mutation {
   create_account_lifebank (
     email: String!
     emailContent: jsonb!
@@ -240,5 +251,17 @@ type create_account_lifebank_output {
 
 type change_password_output {
   success : Boolean!
+}
+
+type create_account_lifebank_auth_output {
+  account : String!
+  transaction_id : String!
+  token : String!
+}
+
+type create_account_auth_output {
+  account : String!
+  transaction_id : String!
+  token : String!
 }
 
