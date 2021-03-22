@@ -12,8 +12,6 @@
  *    GitHub:         https://github.com/eoscostarica
  *
  */
-#pragma once
-
 #include <eosio/eosio.hpp>
 #include <eosio/transaction.hpp>
 #include <eosio/asset.hpp>
@@ -66,7 +64,7 @@ public:
    * @pre Community's symbol must exits
    *
    */
-  ACTION link(eosio::asset community_asset, name new_user);
+  ACTION link(eosio::asset community_asset, eosio::name new_user);
 
   /**
    *
@@ -78,7 +76,7 @@ public:
    * @pre community's symbol must exits
    *
    */
-  ACTION adddonor(name account, eosio::asset community_asset);
+  ACTION adddonor(eosio::name account, eosio::asset community_asset);
 
   /**
    *
@@ -103,7 +101,7 @@ public:
    *
    */
   ACTION addlifebank(
-      name account,
+      eosio::name account,
       string lifebank_name,
       string about,
       string address,
@@ -141,7 +139,7 @@ public:
    *
    */
   ACTION uplifebank(
-      name account,
+      eosio::name account,
       string lifebank_name,
       string about,
       string address,
@@ -180,7 +178,7 @@ public:
    *
    */
   ACTION addsponsor(
-      name account,
+      eosio::name account,
       string sponsor_name,
       string covid_impact,
       string benefit_description,
@@ -199,99 +197,10 @@ public:
 
   /**
    *
-   *  Saves the info related with an offer
-   *
-   * @param offer_name - Name of the offer
-   * @param sponsor_name - Name of the sponsor
-   * @param category - Category of the offer
-   * @param beginning_date - Available redemption offer start date
-   * @param ending_date - Available redemption offer end date
-   * @param cost - Offer cost
-   * @param description - Offer description
-   * @param restriction - Offer restriction
-   *
-   */
-  ACTION addoffer(
-      name offer_name,
-      name sponsor_name,
-      string category,
-      string beginning_date,
-      string ending_date,
-      asset cost,
-      string description,
-      string restriction);
-
-  /**
-   *
-   *  Remove the info related to an offer
-   *
-   * @param offer_name - Name of the offer
-   *
-   */
-  ACTION rmoffer(name offer_name);
-
-  /**
-   *
-   *  Link offer to a community
-   *
-   * @param offer_name - Name of the offer
-   * @param community - Community where the offer belong
-   *
-   */
-  ACTION linkoffer(name offer_name, eosio::symbol community);
-
-  /**
-   *
-   *  Remove the offer link
-   *
-   * @param id - linkoffer id
-   *
-   */
-  ACTION rmlinkoffer(uint64_t id);
-
-  /**
-   *
    *  Clear all data in all constact's tables
    *
    */
   ACTION clear();
-
-  /*
-  *  Table to store data realted with offers registered by sponsors
-  */
-  TABLE offers
-  {
-    name offer_name;
-    name sponsor_name;
-    string category;
-    string beginning_date;
-    string ending_date;
-    asset cost;
-    string description;
-    auto primary_key() const { return offer_name.value; }
-    EOSLIB_SERIALIZE(offers, (offer_name)(sponsor_name)(category)(beginning_date)(ending_date)(cost)(description));
-  };
-  typedef multi_index<name("offers"), offers> offers_table;
-
-  /*
-  *  Table to store data realted with lifebank offers
-  */
-  TABLE lifebank_offers
-  {
-    uint64_t id;
-    name offer_name;
-    eosio::symbol community;
-    auto primary_key() const { return id; }
-    uint64_t by_secondary() const { return offer_name.value; }
-    EOSLIB_SERIALIZE(lifebank_offers, (id)(offer_name)(community));
-  };
-  typedef eosio::multi_index<
-      name("commoffer"), lifebank_offers, eosio::indexed_by<
-        name("offername"), eosio::const_mem_fun<
-            lifebank_offers, uint64_t, &lifebank_offers::by_secondary
-          >
-        >
-      > lifebank_offers_table;
 
 private:
   /**
@@ -303,7 +212,11 @@ private:
    *
    */
   void create_token(const name &issuer,
-                    const asset &maximum_supply);
+                    const asset &maximum_supply)
+  {
+    lifebankcoin::create_action create_new_token("lifebankcoin"_n, {get_self(), "active"_n});
+    create_new_token.send(issuer, maximum_supply);
+  }
 
   /**
    *
@@ -313,7 +226,7 @@ private:
    *
    * @return true is the account has a consent, otherwise returns false
    */
-  void check_consent(name account);
+  void check_consent(eosio::name account);
 
   /**
    *
@@ -353,16 +266,6 @@ private:
    */
   checksum256 get_tx();
 
-  /**
-  *
-  *  Verify offer exist to link an offer
-  *
-  * @param name - The offer name
-  *
-  * @return true if the offer exist, otherwise returns false
-  */
-  bool offer_exist(name offer_name);
-
   /*
   *
   *  Table to store community data
@@ -371,7 +274,7 @@ private:
   {
     eosio::symbol symbol;
 
-    name creator;
+    eosio::name creator;
     string community_name;
     string description;
     string logo;
@@ -382,7 +285,7 @@ private:
                      (symbol)(creator)(community_name)(description)(logo));
   };
 
-  typedef eosio::multi_index<name{"community"}, community> communities_table;
+  typedef eosio::multi_index<eosio::name{"community"}, community> communities_table;
 
   /*
   *
@@ -393,7 +296,7 @@ private:
     uint64_t id;
 
     eosio::symbol community;
-    name user;
+    eosio::name user;
 
     uint64_t primary_key() const { return id; }
     uint64_t users_by_community() const { return community.raw(); }
@@ -402,10 +305,10 @@ private:
                      (id)(community)(user));
   };
 
-  typedef eosio::multi_index<name("network"),
+  typedef eosio::multi_index<eosio::name("network"),
                              network,
-                             eosio::indexed_by<name{"usersbycmm"},
-                                               eosio::const_mem_fun<network, uint64_t, &network::users_by_community> > >
+                             eosio::indexed_by<eosio::name{"usersbycmm"},
+                                               eosio::const_mem_fun<network, uint64_t, &network::users_by_community>>>
       networks_table;
   /*
   *
@@ -413,7 +316,7 @@ private:
   */
   TABLE donor
   {
-    name account;
+    eosio::name account;
     checksum256 tx;
     auto primary_key() const { return account.value; }
     EOSLIB_SERIALIZE(donor,
@@ -427,7 +330,7 @@ private:
   */
   TABLE lifebank
   {
-    name account;
+    eosio::name account;
     eosio::symbol community;
     uint8_t blood_urgency_level;
     checksum256 tx;
@@ -443,7 +346,7 @@ private:
   */
   TABLE sponsor
   {
-    name account;
+    eosio::name account;
 
     checksum256 tx;
     auto primary_key() const { return account.value; }
@@ -453,9 +356,7 @@ private:
   typedef multi_index<name("sponsors"), sponsor> sponsors_table;
 };
 
-
-
-constexpr name consent_account{"consent2life"_n};
+constexpr eosio::name consent_account{"consent2life"_n};
 
 /*
 *
@@ -466,8 +367,8 @@ struct informed_consent
   uint64_t id;
 
   checksum256 record;
-  name user;
-  name contract;
+  eosio::name user;
+  eosio::name contract;
   checksum256 hash;
   EOSLIB_SERIALIZE(informed_consent,
                    (id)(record)(user)(contract)(hash));
@@ -476,9 +377,9 @@ struct informed_consent
   checksum256 get_hash() const { return hash; }
 };
 
-typedef eosio::multi_index<name("userconsents"), informed_consent,
-                           indexed_by<name("singlerecord"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_record>>,
-                           indexed_by<name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash>>>
+typedef eosio::multi_index<eosio::name("userconsents"), informed_consent,
+                           indexed_by<eosio::name("singlerecord"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_record>>,
+                           indexed_by<eosio::name("byhash"), const_mem_fun<informed_consent, checksum256, &informed_consent::get_hash>>>
     informed_consents_table;
 
 /**
@@ -503,7 +404,7 @@ checksum256 string_to_hash(const string &input)
   *
   * @return true if the account has consent, otherwise returns false
   */
-bool has_consent(name account, name contract)
+bool has_consent(eosio::name account, eosio::name contract)
 {
   informed_consents_table _records(consent_account, consent_account.value);
   auto single_record = string_to_hash(account.to_string() + contract.to_string());

@@ -55,14 +55,14 @@ void lifebankcoin::add_balance(const name &owner, const asset &value, const name
    auto to = to_acnts.find(value.symbol.code().raw());
    if (to == to_acnts.end())
    {
-      to_acnts.emplace(get_self(), [&](auto &row) {
-         row.balance = value;
+      to_acnts.emplace(get_self(), [&](auto &a) {
+         a.balance = value;
       });
    }
    else
    {
-      to_acnts.modify(to, get_self(), [&](auto &row) {
-         row.balance += value;
+      to_acnts.modify(to, get_self(), [&](auto &a) {
+         a.balance += value;
       });
    }
 }
@@ -101,7 +101,7 @@ ACTION lifebankcoin::issue(const name &lifebank, const name &donor, const string
 
    communities_table community(lifebankcode_account, lifebankcode_account.value);
    auto existing_cmm = community.find(lifebank_symbol.raw());
-   check(existing_cmm != community.end(), "community does not exists");
+   eosio::check(existing_cmm != community.end(), "community does not exists");
 
    check(memo.size() <= 256, "memo has more than 256 bytes");
 
@@ -193,38 +193,6 @@ ACTION lifebankcoin::transferlife(const name &from,
 
    sub_balance(from, quantity);
    add_balance(to, quantity, payer);
-}
-
-ACTION lifebankcoin::redeemoffer(uint64_t offer_comm_id, name donor_name)
-{
-   require_auth(get_self());
-   
-   const name payer = name("lifebankcode");
-   lifebankcode::lifebank_offers_table _lifebank_offers(payer, payer.value);
-
-   // START - Check if offer exist
-   auto linkoffers_itr = _lifebank_offers.find(offer_comm_id);
-   check(linkoffers_itr != _lifebank_offers.end(), "offer not exist");
-   // END - Check if offer exist
-
-   // START - Check if donor has funds to redeem the selected offer
-   accounts from_acnts(get_self(), donor_name.value);
-   lifebankcode::offers_table _offers(payer, payer.value);
-
-   const auto &offercomm_row = _lifebank_offers.get(offer_comm_id);
-   const auto &offer_row = _offers.get(offercomm_row.offer_name.value);
-   const auto &from = from_acnts.get(offer_row.cost.symbol.code().raw(), "no balance object found");
-
-   check(from.balance.amount >= offer_row.cost.amount, "overdrawn balance");
-   // END - Check if offer exist
-
-   redeem_offer_table _redeem_offer(get_self(), get_self().value);
-
-   _redeem_offer.emplace(get_self(), [&](auto &row) {
-      row.id = _redeem_offer.available_primary_key();
-      row.donor_name = donor_name;
-      row.offer_comm_id = offer_comm_id;
-   });
 }
 
 ACTION lifebankcoin::clear(const asset &current_asset, const name owner)
