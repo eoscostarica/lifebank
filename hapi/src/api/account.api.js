@@ -44,6 +44,14 @@ query MyQuery {
 }
 `
 
+const GET_LIFEBANK_ACCOUNT_LOWER_TOKEN = `
+query MyQuery {
+  user(limit: 1, order_by: {token: asc}, where: {role: {_eq: "lifebank"}}) {
+    account
+  }
+}
+`
+
 const create = async ({ role, email, emailContent, name, secret }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
@@ -494,7 +502,10 @@ const transfer = async (from, details) => {
   )
 
   switch (user.role) {
-    case 'donor' || 'sponsor':
+    case 'donor':
+      transaction = await lifebankcoinUtils.transfer(from, password, details)
+      break
+    case 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
       break
     case 'lifebank':
@@ -517,6 +528,17 @@ const transfer = async (from, details) => {
       transaction: transaction.transaction_id
     }
   })
+
+  if (user.role == 'donor') {
+    const tempDetail = {}
+    Object.assign(tempDetail, details);
+
+    const { user } = await hasuraUtils.request(GET_LIFEBANK_ACCOUNT_LOWER_TOKEN)
+    if (user.length === 1) {
+      tempDetail.to = user[0].account
+      transfer(details.to, tempDetail)
+    }
+  }
 
   return transaction
 }
