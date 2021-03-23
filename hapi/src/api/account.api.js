@@ -528,7 +528,7 @@ const transfer = async (from, details) => {
 
   if (user.role == 'donor') {
     const tempDetail = {}
-    Object.assign(tempDetail, details);
+    Object.assign(tempDetail, details)
 
     const { user } = await hasuraUtils.request(GET_LIFEBANK_ACCOUNT_LOWER_TOKEN)
     if (user.length === 1) {
