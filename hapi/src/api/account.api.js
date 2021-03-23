@@ -502,10 +502,7 @@ const transfer = async (from, details) => {
   )
 
   switch (user.role) {
-    case 'donor':
-      transaction = await lifebankcoinUtils.transfer(from, password, details)
-      break
-    case 'sponsor':
+    case 'donor' || 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
       break
     case 'lifebank':
