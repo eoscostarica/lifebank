@@ -526,7 +526,7 @@ const transfer = async (from, details) => {
     }
   })
 
-  if (user.role == 'donor') {
+  if (user.role === 'donor') {
     const tempDetail = {}
     Object.assign(tempDetail, details)
 
