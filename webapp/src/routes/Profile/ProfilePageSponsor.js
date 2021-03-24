@@ -274,7 +274,7 @@ const ProfilePageSponsor = ({ profile }) => {
 
   useEffect(() => {
     if (!loadingDataOffer) {
-      let dataOffers = allOffers.offer
+      const dataOffers = allOffers.offer
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
