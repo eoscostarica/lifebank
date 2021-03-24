@@ -219,8 +219,8 @@ const ProfilePageSponsor = ({ profile }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
-  const [approvedOffers, setApprovedOffers] = useState([])
-  const [rejectedOffers, setRejectedOffers] = useState([])
+  const [approvedOffers, setActiveOffers] = useState([])
+  const [rejectedOffers, setInactiveOffers] = useState([])
 
 
   const [state, setState] = useState({
@@ -302,8 +302,14 @@ const ProfilePageSponsor = ({ profile }) => {
         history.push('/')
       } else history.push('/internal-error')
     }
+    if (allOffersError) {
+      if (allOffersError.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+      } else history.push('/internal-error')
+    }
 
-  }, [errorUsername])
+  }, [errorUsername, allOffersError])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -356,17 +362,17 @@ const ProfilePageSponsor = ({ profile }) => {
 
   useEffect(() => {
     let AOffers = []
-    let ROffers = []
+    let IOffers = []
 
     offers.map((offer) => {
       if (!offer.active)
-        ROffers.push(offer)
+        IOffers.push(offer)
       else
         AOffers.push(offer)
     })
 
-    setApprovedOffers(AOffers)
-    setRejectedOffers(ROffers)
+    setActiveOffers(AOffers)
+    setInactiveOffers(IOffers)
 
   }, [offers])
 
