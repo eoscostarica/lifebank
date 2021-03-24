@@ -200,6 +200,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     margin: 20,
     backgroundColor: '#000000'
+  },
+  mainGridDesktop: {
+    paddingTop: 39,
+    backgroundColor: '#ffffff'
   }
 }))
 
@@ -219,8 +223,8 @@ const ProfilePageSponsor = ({ profile }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
-  const [approvedOffers, setActiveOffers] = useState([])
-  const [rejectedOffers, setInactiveOffers] = useState([])
+  const [activeOffers, setActiveOffers] = useState([])
+  const [inactiveOffers, setInactiveOffers] = useState([])
 
 
   const [state, setState] = useState({
@@ -704,57 +708,57 @@ const ProfilePageSponsor = ({ profile }) => {
         xl={10}
       >
         <Grid item md={12}>
-          <Typography variant="h2" className={classes.SubtitleSection}>
+          <Typography variant="subtitle1" className={classes.rowTitle}>
             {t('offersManagement.offerStateActive')}
           </Typography>
 
         </Grid>
         <ShowOffersDesktop
           className={classes.offerContainer}
-          offers={approvedOffers}
+          offers={activeOffers}
           loading={loadingOffers}
         />
       </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="flex-start"
-        spacing={0}
-        className={classes.mainGridDesktop}
-        md={12}
-        xl={10}
-      >
-        <Grid item md={12}>
-          <Typography variant="h2" className={classes.SubtitleSection}>
-            {t('offersManagement.offerStateInactive')}
-          </Typography>
+      { inactiveOffers.length && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.mainGridDesktop}
+          md={12}
+          xl={10}
+        >
+          <Grid item md={12}>
+            <Typography variant="subtitle1" className={classes.rowTitle}>
+              {t('offersManagement.offerStateInactive')}
+            </Typography>
 
+          </Grid>
+          <ShowOffersDesktop
+            className={classes.offerContainer}
+            offers={inactiveOffers}
+            loading={loadingOffers}
+          />
         </Grid>
-        <ShowOffersDesktop
-          className={classes.offerContainer}
-          offers={rejectedOffers}
-          loading={loadingOffers}
-        />
-      </Grid>
-      {
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              justifySelf="center"
-              className={classes.buttonContainer}
-            >
-              <QRCode value={profile.account} size={200} />
+      )}
+      <>
+        <Divider className={classes.divider} />
+        <Box className={classes.rowBoxLeft}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            justifySelf="center"
+            className={classes.buttonContainer}
+          >
+            <QRCode value={profile.account} size={200} />
 
-            </Box>
           </Box>
-        </>
-      }
+        </Box>
+      </>
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
         className={classes.routerLink}
       >
