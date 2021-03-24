@@ -21,10 +21,10 @@ import Grid from '@material-ui/core/Grid'
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
-import { GET_LOCATION_PROFILE } from '../../gql'
+import { GET_LOCATION_PROFILE , GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
 import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
-import { GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
+
 
 const useStyles = makeStyles((theme) => ({
   carruselImage: {
@@ -226,7 +226,7 @@ const InfoPage = () => {
 
   useEffect(() => {
     if (!loadingDataOffer) {
-      let dataOffers = allOffers.offer
+      const dataOffers = allOffers.offer
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
@@ -235,7 +235,7 @@ const InfoPage = () => {
   useEffect(() => {
 
     if (sponsor_id) {
-      let sponsor = sponsor_id.user[0]
+      const sponsor = sponsor_id.user[0]
       setSponsorID(sponsor.id)
     }
   }, [sponsor_id])
