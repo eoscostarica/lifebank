@@ -366,8 +366,8 @@ const ProfilePageSponsor = ({ profile }) => {
 
   useEffect(() => {
 
-    let AOffers = []
-    let IOffers = []
+    const AOffers = []
+    const IOffers = []
 
     offers.map((offer) => {
       if (!offer.active)
