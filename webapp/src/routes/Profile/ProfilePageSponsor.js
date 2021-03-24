@@ -701,7 +701,6 @@ const ProfilePageSponsor = ({ profile }) => {
             {t('offersManagement.offerStateActive')}
           </Typography>
 
-
         </Grid>
         <ShowOffersDesktop
           className={classes.offerContainer}
