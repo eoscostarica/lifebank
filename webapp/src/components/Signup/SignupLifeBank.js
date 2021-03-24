@@ -150,7 +150,7 @@ const SignupLifeBank = ({
             fullWidth
             className={classes.textField}
             onChange={(event) => setField('categories', ["Coupons", "Discount", "Gift"])}
-          />*/
+          /> */
         }
         <TextField
           id="description"
