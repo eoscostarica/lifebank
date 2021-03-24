@@ -478,7 +478,7 @@ const revokeConsent = async (account) => {
 
   return consentTransaction
 }
-// liffedwp5ybk
+
 const transfer = async (from, details) => {
   const currentBalance = await lifebankcoinUtils.getbalance(details.to)
   const password = await vaultApi.getPassword(from)
