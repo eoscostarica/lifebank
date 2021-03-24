@@ -20,7 +20,7 @@ import Dialog from '@material-ui/core/Dialog'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTranslation } from 'react-i18next'
 
-const AMPM = ['am', 'pm']
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -131,26 +131,6 @@ const getWeekCategoryXSorted = (data) => {
   })
 }
 
-const getHours = () => {
-  const times = []
-
-  for (let s = 6; s < 24; s++) {
-    const hour = s % 12
-    times.push({
-      label: (hour || '12') + ':00' + AMPM[Math.floor(s / 12)],
-      value: ('0' + s).slice(-2) + ':00'
-    })
-  }
-
-  return times
-}
-
-const convertHour = (time) => {
-  const hour = time % 12
-
-  return (hour || '12') + ':00' + AMPM[Math.floor(time / 12)]
-}
-
 const Categories = ({
   handleOnAddCategories,
   CategoriesLoad,
@@ -174,7 +154,6 @@ const Categories = ({
     { value: 'Badges', label: t('categories.badges') }
 
   ]
-  const hours = getHours()
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
@@ -236,11 +215,7 @@ const Categories = ({
                 </Box>
                 <Box className={classes.CategoriesListResult}>
                   <Typography variant="h6">{CategoriesItem.category}</Typography>
-                  <Typography variant="body1">
-                    {`${convertHour(
-                      CategoriesItem.open.split(':')[0]
-                    )} - ${convertHour(CategoriesItem.close.split(':')[0])}`}
-                  </Typography>
+
                 </Box>
                 <Box className={classes.boxDivider}>
 
