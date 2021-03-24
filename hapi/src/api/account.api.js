@@ -107,7 +107,8 @@ const createLifebank = async ({
     email,
     secret,
     name,
-    verification_code
+    verification_code,
+    token: 1000000
   })
 
   await vaultApi.insert({
