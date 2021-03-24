@@ -478,7 +478,7 @@ const revokeConsent = async (account) => {
 
   return consentTransaction
 }
-
+// liffedwp5ybk
 const transfer = async (from, details) => {
   const currentBalance = await lifebankcoinUtils.getbalance(details.to)
   const password = await vaultApi.getPassword(from)
@@ -502,7 +502,10 @@ const transfer = async (from, details) => {
   )
 
   switch (user.role) {
-    case 'donor' || 'sponsor':
+    case 'donor':
+      transaction = await lifebankcoinUtils.transfer(from, password, details)
+      break
+    case 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
       break
     case 'lifebank':
@@ -533,7 +536,7 @@ const transfer = async (from, details) => {
     const { user } = await hasuraUtils.request(GET_LIFEBANK_ACCOUNT_LOWER_TOKEN)
     if (user.length === 1) {
       tempDetail.to = user[0].account
-      transfer(details.to, tempDetail)
+      await transfer(details.to, tempDetail)
     }
   }
 
