@@ -140,6 +140,18 @@ const SignupLifeBank = ({
           className={classes.textField}
           onChange={(event) => setField('name', event.target.value)}
         />
+        {
+          // Front-End Connection Example
+          /*
+          <TextField
+            id="name"
+            label={'categories'}
+            variant="outlined"
+            fullWidth
+            className={classes.textField}
+            onChange={(event) => setField('categories', ["Coupons", "Discount", "Gift"])}
+          />*/
+        }
         <TextField
           id="description"
           label={t('common.description')}

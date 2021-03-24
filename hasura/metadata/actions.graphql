@@ -52,6 +52,7 @@ type Mutation {
     coordinates: String!
     immunity_test: Boolean!
     invitation_code: String!
+    categories: jsonb!
   ): create_pre_register_lifebank_output
 }
 

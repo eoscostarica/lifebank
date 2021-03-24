@@ -15,6 +15,7 @@ const INSERT_LIFEBANK = `
       immunity_test
       invitation_code,
       verification_code
+      categories
     }
   }
 `
@@ -34,6 +35,7 @@ const SET_EMAIL_VERIFIED = `
         schedule
         urgency_level
         verification_code
+        categories
       }
       affected_rows
     }
@@ -63,7 +65,8 @@ const GET_LIFEBANK_DATA = `
       phone
       schedule
       urgency_level,
-      state
+      state,
+      categories
     }
   }
 `

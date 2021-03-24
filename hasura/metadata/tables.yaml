@@ -259,6 +259,7 @@
     permission:
       columns:
       - address
+      - categories
       - coordinates
       - created_at
       - description
