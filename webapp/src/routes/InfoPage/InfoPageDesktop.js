@@ -16,6 +16,7 @@ import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
 import { useParams } from 'react-router'
+import Grid from '@material-ui/core/Grid'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
@@ -174,6 +175,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     margin: 20,
     backgroundColor: '#000000'
+  },
+  mainGridDesktop: {
+    paddingTop: 39,
+    backgroundColor: '#ffffff'
   }
 }))
 
@@ -541,11 +546,29 @@ const InfoPage = () => {
               }
             </Box>
           </Box>
-          <ShowOffersDesktop
-            className={classes.offerContainer}
-            offers={offers}
-            loading={loadingOffers}
-          />
+          <Divider className={classes.divider} />
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+            className={classes.mainGridDesktop}
+            md={12}
+            xl={10}
+          >
+            <Grid item md={12}>
+              <Typography variant="subtitle1" className={classes.boldText}>
+                {t('offerView.lifebankOffers')}
+              </Typography>
+
+            </Grid>
+            <ShowOffersDesktop
+              className={classes.offerContainer}
+              offers={offers}
+              loading={loadingOffers}
+            />
+          </Grid>
         </Box>
       )}
 
