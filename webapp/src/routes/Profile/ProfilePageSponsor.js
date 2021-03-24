@@ -22,11 +22,13 @@ import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
 import Snackbar from '@material-ui/core/Snackbar'
+import Grid from '@material-ui/core/Grid'
 
+import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
-import { GET_USERNAME } from '../../gql'
+import { GET_USERNAME, GET_SPONSOR_OFFERS_QUERY } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   contentHeader: {
@@ -152,20 +154,6 @@ const useStyles = makeStyles((theme) => ({
   updateButton: {
     maxWidth: '50%',
   },
-  editBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
-  },
   secondaryText: {
     color: `${theme.palette.secondary.main} !important`
   },
@@ -195,6 +183,23 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     width: "100%",
     margin: theme.spacing(2, 0)
+  },
+  editButton: {
+    borderRadius: 50,
+    height: 60,
+    padding: 20,
+    position: 'fixed',
+    zIndex: 1,
+    bottom: 20,
+    right: 20,
+    margin: '0',
+    color: '#ffffff',
+    backgroundColor: '#ba0d0d'
+  },
+  offerContainer: {
+    width: "100%",
+    margin: 20,
+    backgroundColor: '#000000'
   }
 }))
 
@@ -212,6 +217,30 @@ const ProfilePageSponsor = ({ profile }) => {
   const phones = profile.telephones !== "" ? JSON.parse(profile.telephones) : {}
   const location = useLocation()
   const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [loadingOffers, setLoadingOffers] = useState(true)
+  const [offers, setOffers] = useState([])
+  const [approvedOffers, setApprovedOffers] = useState([])
+  const [rejectedOffers, setRejectedOffers] = useState([])
+
+
+  const [state, setState] = useState({
+    bottom: false
+  })
+
+  const {
+    loading: loadingDataOffer,
+    error: allOffersError,
+    data: allOffers,
+    refetch: getAllOffers
+  } = useQuery(GET_SPONSOR_OFFERS_QUERY, {
+    variables: { sponsor_id: profile.id },
+    fetchPolicy: 'cache-and-network'
+  })
+
+  const getOffers = async () => {
+    setLoadingOffers(true)
+    await getAllOffers()
+  }
 
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
@@ -226,9 +255,33 @@ const ProfilePageSponsor = ({ profile }) => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event) {
+      if (
+        event.type === 'keydown' &&
+        (event.key === 'Tab' || event.key === 'Shift')
+      )
+        return
+
+      setState({ ...state, [anchor]: open })
+    }
+  }
+
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
+
+  useEffect(() => {
+    getOffers()
+  }, [])
+
+  useEffect(() => {
+    if (!loadingDataOffer) {
+      let dataOffers = allOffers.offer
+      setOffers(dataOffers)
+      setLoadingOffers(false)
+    }
+  }, [allOffers])
 
   useEffect(() => {
     const getUsername = async () => {
@@ -300,6 +353,22 @@ const ProfilePageSponsor = ({ profile }) => {
     if (Object.keys(pendingFieldsObject).length > 0)
       setPendingFields(pendingFieldsObject)
   }
+
+  useEffect(() => {
+    let AOffers = []
+    let ROffers = []
+
+    offers.map((offer) => {
+      if (!offer.active)
+        ROffers.push(offer)
+      else
+        AOffers.push(offer)
+    })
+
+    setApprovedOffers(AOffers)
+    setRejectedOffers(ROffers)
+
+  }, [offers])
 
   useEffect(() => {
     if (profile) {
@@ -614,6 +683,53 @@ const ProfilePageSponsor = ({ profile }) => {
         </>
       )
       }
+
+      <Divider className={classes.divider} />
+
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="flex-start"
+        spacing={0}
+        className={classes.mainGridDesktop}
+        md={12}
+        xl={10}
+      >
+        <Grid item md={12}>
+          <Typography variant="h2" className={classes.SubtitleSection}>
+            {t('offersManagement.offerStateActive')}
+          </Typography>
+
+        </Grid>
+        <ShowOffersDesktop
+          className={classes.offerContainer}
+          offers={approvedOffers}
+          loading={loadingOffers}
+        />
+      </Grid>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="flex-start"
+        spacing={0}
+        className={classes.mainGridDesktop}
+        md={12}
+        xl={10}
+      >
+        <Grid item md={12}>
+          <Typography variant="h2" className={classes.SubtitleSection}>
+            {t('offersManagement.offerStateInactive')}
+          </Typography>
+
+        </Grid>
+        <ShowOffersDesktop
+          className={classes.offerContainer}
+          offers={rejectedOffers}
+          loading={loadingOffers}
+        />
+      </Grid>
       {
         <>
           <Divider className={classes.divider} />
@@ -635,11 +751,14 @@ const ProfilePageSponsor = ({ profile }) => {
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
         className={classes.routerLink}
       >
-        <Button variant="contained" color="primary" className={classes.editBtn}>{t('common.edit')}</Button>
+        <Button className={classes.editButton} color="secondary" variant="contained">
+          {t('common.edit')}
+        </Button>
       </LinkRouter>
     </>
   )
 }
+
 
 ProfilePageSponsor.propTypes = {
   profile: PropTypes.object
