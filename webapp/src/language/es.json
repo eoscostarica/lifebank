@@ -158,6 +158,15 @@
       "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
       "takeMeHome": "Llévame al inicio"
     },
+    "categories": {
+      "discounts": "Descuentos",
+      "freeproducts": "Productos gratis",
+      "coupons": "Cupones",
+      "benefits": "Beneficios",
+      "badges": "Insignias",
+      "chooseYourCategories": "Escoge tus Categorías",
+      "addCategories": "Añadir categorías"
+    },
     "schedule": {
       "sunday": "Domingo",
       "monday": "Lunes",

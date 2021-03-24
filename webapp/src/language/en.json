@@ -158,6 +158,15 @@
       "errorMessage": "An error occurred and your request couldn't be completed",
       "takeMeHome": "Take me to the home page"
     },
+    "categories": {
+      "discounts": "Discounts",
+      "freeproducts": "Free products",
+      "coupons": "Coupons",
+      "benefits": "Benefits",
+      "badges": "Badges",
+      "chooseYourCategories": "Choose Your Categories",
+      "addCategories": "Add categories"
+    },
     "schedule": {
       "sunday": "Sunday",
       "monday": "Monday",

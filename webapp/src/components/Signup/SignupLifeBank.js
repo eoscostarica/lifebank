@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
+import Categories from '../../components/Categories'
 import { captchaConfig, constants } from '../../config'
 
 const {
@@ -91,6 +92,11 @@ const SignupLifeBank = ({
     [setField]
   )
   const [recaptchaValue, serRecaptchaValue] = useState('')
+  const handleOnAddCategories = useCallback(
+    (data) => setField('categories', JSON.stringify(data)),
+    [setField]
+  )
+
 
   const marks = [
     {
@@ -164,6 +170,17 @@ const SignupLifeBank = ({
           className={classes.textField}
           onChange={(event) => setField('phone', event.target.value)}
         />
+        {/*
+          <TextField
+            id="name"
+            label={'categories'}
+            variant="outlined"
+            fullWidth
+            className={classes.textField}
+            onChange={(event) => setField('categories', ["Coupons", "Discount", "Gift"])}
+          /> 
+        */}
+
         <TextField
           id="invitationCode"
           label={t('signup.invitationCode')}
@@ -172,6 +189,8 @@ const SignupLifeBank = ({
           className={classes.textField}
           onChange={(event) => setField('invitation_code', event.target.value)}
         />
+
+
         <FormGroup className={classes.boxCenter}>
           <FormControlLabel
             control={
@@ -200,6 +219,9 @@ const SignupLifeBank = ({
         </Box>
         <Box className={classes.boxCenter}>
           <Schedule handleOnAddSchedule={handleOnAddSchedule} />
+        </Box>
+        <Box className={classes.boxCenter}>
+          <Categories handleOnAddCategories={handleOnAddCategories} />
         </Box>
         <Box className={classes.boxCenter}>
           <Typography gutterBottom>
