@@ -755,6 +755,11 @@ const ProfilePageSponsor = ({ profile }) => {
           {t('common.edit')}
         </Button>
       </LinkRouter>
+      <ShowOffersSponsorsDesktop
+        className={classes.offerContainer}
+        offers={offers}
+        loading={loadingOffers}
+      />
     </>
   )
 }
