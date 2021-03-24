@@ -20,6 +20,7 @@ import Divider from '@material-ui/core/Divider'
 import { VERIFY_USERNAME } from '../../gql'
 
 import Schedule from '../../components/Schedule'
+import Categories from '../../components/Categories'
 import LogoUrlInput from '../../components/LogoUrlInput'
 import MapEditLocation from '../../components/MapEditLocation'
 import { constants } from '../../config'
@@ -207,6 +208,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     geolocation: JSON.parse(profile.location),
     name: profile.name,
     schedule: profile.schedule,
+    categories: profile.categories,
     blood_urgency_level: profile.blood_urgency_level,
     has_immunity_test: Boolean(profile.has_immunity_test)
   })
@@ -271,6 +273,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   const handleOnAddSchedule = useCallback(
     (data) => handleSetField('schedule', JSON.stringify(data)),
+    [setField]
+  )
+
+  const handleOnAddCategories = useCallback(
+    (data) => handleSetField('categories', JSON.stringify(data)),
     [setField]
   )
 
@@ -474,6 +481,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           />
         </Box>
         <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('common.categories')}</Typography>
+          <Box className={classes.boxCenter}>
+            <Categories handleOnAddCategories={handleOnAddCategories} />
+          </Box>
           <Divider className={classes.divider} />
           <Typography className={classes.boldText} variant="subtitle1">{t('profile.images')}</Typography>
         </Box>
