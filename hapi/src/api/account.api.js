@@ -223,7 +223,6 @@ const getLifebankData = async (account) => {
       telephones: JSON.stringify([data.preregister_lifebank[0].phone]),
       schedule: data.preregister_lifebank[0].schedule,
       blood_urgency_level: data.preregister_lifebank[0].urgency_level,
-      categories: data.preregister_lifebank[0].categories,
       consent: !!consent
     }
   } else {
@@ -311,8 +310,7 @@ const getValidLifebanks = async () => {
         photos: lifebankAccounts[index].info.photos,
         role: lifebankAccounts[index].user.role,
         urgencyLevel: lifebankAccounts[index].info.blood_urgency_level,
-        userName: lifebankAccounts[index].user.username,
-        categories: lifebankAccounts[index].user.categories
+        userName: lifebankAccounts[index].user.username
       })
   }
 

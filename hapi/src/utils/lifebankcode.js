@@ -57,7 +57,6 @@ const addLifebank = (
           schedule: JSON.stringify(profile.schedule),
           email: profile.email,
           social_media_links: profile.social_media_links || '[]',
-          categories: profile.categories || '[]',
           ...profile
         }
       }
@@ -98,7 +97,6 @@ const upLifebank = (
           schedule: profile.schedule,
           email: profile.email,
           social_media_links: profile.social_media_links || '[]',
-          categories: profile.categories || '[]',
           ...profile
         }
       }
