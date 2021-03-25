@@ -14,8 +14,7 @@ module.exports = {
       urgency_level: Joi.number(),
       coordinates: Joi.string().required(),
       immunity_test: Joi.boolean(),
-      invitation_code: Joi.string(),
-      categories: Joi.array()
+      invitation_code: Joi.string()
     })
   }).options({ stripUnknown: true })
 }
