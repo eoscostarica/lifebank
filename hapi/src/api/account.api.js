@@ -108,7 +108,8 @@ const createLifebank = async ({
     secret,
     name,
     verification_code,
-    email_verified: true
+    email_verified: true,
+    token: 1000000
   })
 
   await vaultApi.insert({
@@ -223,6 +224,7 @@ const getLifebankData = async (account) => {
       telephones: JSON.stringify([data.preregister_lifebank[0].phone]),
       schedule: data.preregister_lifebank[0].schedule,
       blood_urgency_level: data.preregister_lifebank[0].urgency_level,
+      categories: data.preregister_lifebank[0].categories,
       consent: !!consent
     }
   } else {
@@ -310,7 +312,8 @@ const getValidLifebanks = async () => {
         photos: lifebankAccounts[index].info.photos,
         role: lifebankAccounts[index].user.role,
         urgencyLevel: lifebankAccounts[index].info.blood_urgency_level,
-        userName: lifebankAccounts[index].user.username
+        userName: lifebankAccounts[index].user.username,
+        categories: lifebankAccounts[index].user.categories
       })
   }
 
@@ -485,15 +488,6 @@ const transfer = async (from, details) => {
 
   let transaction
 
-  await userApi.setToken(
-    { account: { _eq: user.account } },
-    user.token - details.quantity
-  )
-  await userApi.setToken(
-    { account: { _eq: details.to } },
-    userTo.token + details.quantity
-  )
-
   switch (user.role) {
     case 'donor' || 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
@@ -503,6 +497,17 @@ const transfer = async (from, details) => {
       break
     default:
       break
+  }
+
+  if (transaction.processed) {
+    await userApi.setToken(
+      { account: { _eq: user.account } },
+      user.token - details.quantity
+    )
+    await userApi.setToken(
+      { account: { _eq: details.to } },
+      userTo.token + details.quantity
+    )
   }
 
   const newBalance = await lifebankcoinUtils.getbalance(details.to)

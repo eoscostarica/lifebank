@@ -230,7 +230,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleSetField = useCallback((field, value) => {
-    setUser({ [field]: value})
+    setUser({ [field]: value })
   }, [])
 
   const handleGoBack = () => {
@@ -299,7 +299,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       schedule,
       phone,
       description,
-      coordinates
+      coordinates,
+      categories
     } = user
     let { immunity_test, invitation_code, urgency_level } = user
 
@@ -332,7 +333,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
             urgency_level,
             coordinates,
             immunity_test,
-            invitation_code
+            invitation_code,
+            categories
           }
         })
       }

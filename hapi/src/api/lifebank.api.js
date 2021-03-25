@@ -30,7 +30,8 @@ const preRegister = async ({
   name,
   password,
   description,
-  invitation_code
+  invitation_code,
+  categories
 }) => {
   const { verification_code } = await verificationCodeApi.generate()
   let resultRegister = 'ok'
@@ -48,7 +49,8 @@ const preRegister = async ({
       coordinates,
       immunity_test,
       invitation_code,
-      verification_code
+      verification_code,
+      categories
     })
 
     mailApi.sendVerificationCode(
@@ -107,7 +109,6 @@ const signup = async (account, profile) => {
   )
   await historyApi.insert(addLifebankTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
-
   await locationApi.insert({
     account,
     name: profile.name,
