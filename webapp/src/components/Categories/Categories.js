@@ -133,7 +133,7 @@ const getWeekCategoryXSorted = (data) => {
 
 const Categories = ({
   handleOnAddCategories,
-  CategoriesLoad,
+  categoriesLoad,
   data,
   loading,
   showCategories,
@@ -170,7 +170,7 @@ const Categories = ({
   }
 
   const loadCategories = () => {
-    if (CategoriesLoad) setCategories(JSON.parse(CategoriesLoad))
+    if (categoriesLoad) setCategories(JSON.parse(categoriesLoad))
   }
 
   const handleDeleteCategoriesPercategory = (item) => {
@@ -180,7 +180,7 @@ const Categories = ({
 
   const handleOpen = () => {
     setOpenModal(!openModal)
-    if (loading) loadCategories(CategoriesLoad)
+    if (loading) loadCategories(categoriesLoad)
   }
 
   const onHandleOnAddCategories = () => {
@@ -331,7 +331,7 @@ const Categories = ({
 
 Categories.propTypes = {
   handleOnAddCategories: PropTypes.func,
-  CategoriesLoad: PropTypes.string,
+  categoriesLoad: PropTypes.string,
   data: PropTypes.array,
   loading: PropTypes.bool,
   showCategories: PropTypes.bool,
@@ -340,7 +340,7 @@ Categories.propTypes = {
 
 Categories.defaultProps = {
   handleOnAddCategories: () => { },
-  CategoriesLoad: '',
+  categoriesLoad: '',
   data: null,
   loading: false,
   showCategories: false,

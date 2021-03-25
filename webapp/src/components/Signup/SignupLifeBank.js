@@ -6,16 +6,11 @@ import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import Slider from '@material-ui/core/Slider'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useTranslation } from 'react-i18next'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import Schedule from '../../components/Schedule'
-import Categories from '../../components/Categories'
 import { captchaConfig, constants } from '../../config'
 
 const {
@@ -92,38 +87,6 @@ const SignupLifeBank = ({
     [setField]
   )
   const [recaptchaValue, serRecaptchaValue] = useState('')
-  const handleOnAddCategories = useCallback(
-    (data) => setField('categories', JSON.stringify(data)),
-    [setField]
-  )
-
-
-  const marks = [
-    {
-      value: 1,
-      label: t('editProfile.low')
-    },
-    {
-      value: 2,
-      label: t('editProfile.medium')
-    },
-    {
-      value: 3,
-      label: t('editProfile.high')
-    }
-  ]
-  const valueLabelFormat = (value) => {
-    switch (value) {
-      case 1:
-        return t('editProfile.low')
-      case 2:
-        return t('editProfile.medium')
-      case 3:
-        return t('editProfile.high')
-      default:
-        return 'N/A'
-    }
-  }
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -170,45 +133,8 @@ const SignupLifeBank = ({
           className={classes.textField}
           onChange={(event) => setField('phone', event.target.value)}
         />
-        <TextField
-          id="invitationCode"
-          label={t('signup.invitationCode')}
-          variant="outlined"
-          fullWidth
-          className={classes.textField}
-          onChange={(event) => setField('invitation_code', event.target.value)}
-        />
-        <FormGroup className={classes.boxCenter}>
-          <FormControlLabel
-            control={
-              <Switch
-                id="hasImmunityTest"
-                name="hasImmunityTest"
-                color="primary"
-                checked={user.immunity_test || false}
-                onChange={() => setField('immunity_test', !user.immunity_test)}
-              />
-            }
-            label={t('profile.hasImmunityTest')}
-          />
-        </FormGroup>
-        <Box className={classes.boxCenter}>
-          <Typography gutterBottom>{t('common.bloodUrgency')}</Typography>
-          <Slider
-            valueLabelDisplay="auto"
-            valueLabelFormat={valueLabelFormat}
-            onChange={(event, value) => setField('urgency_level', value)}
-            marks={marks}
-            step={null}
-            min={0}
-            max={4}
-          />
-        </Box>
         <Box className={classes.boxCenter}>
           <Schedule handleOnAddSchedule={handleOnAddSchedule} />
-        </Box>
-        <Box className={classes.boxCenter}>
-          <Categories handleOnAddCategories={handleOnAddCategories} />
         </Box>
         <Box className={classes.boxCenter}>
           <Typography gutterBottom>
