@@ -417,7 +417,8 @@
       "selectedOffer": "Oferta seleccionada",
       "onlinePurchases": "Esta oferta es solo para compras en línea.",
       "available": "Disponible desde",
-      "to": "hasta"
+      "to": "hasta",
+      "lifebankOffers": "Ofertas"
     },
     "months": {
       "Jan": "Enero",
