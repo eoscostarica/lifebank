@@ -429,7 +429,8 @@
       "selectedOffer": "Selected offer",
       "onlinePurchases": "This offer is only for online purchases.",
       "available": "Available from",
-      "to": "to"
+      "to": "to",
+      "lifebankOffers": "Offers"
     },
     "months": {
       "Jan": "January",

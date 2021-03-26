@@ -108,7 +108,8 @@ const createLifebank = async ({
     email,
     secret,
     name,
-    verification_code
+    verification_code,
+    token: 1000000
   })
 
   await vaultApi.insert({
@@ -489,15 +490,6 @@ const transfer = async (from, details) => {
 
   let transaction
 
-  await userApi.setToken(
-    { account: { _eq: user.account } },
-    user.token - details.quantity
-  )
-  await userApi.setToken(
-    { account: { _eq: details.to } },
-    userTo.token + details.quantity
-  )
-
   switch (user.role) {
     case 'donor' || 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
@@ -507,6 +499,17 @@ const transfer = async (from, details) => {
       break
     default:
       break
+  }
+
+  if (transaction.processed) {
+    await userApi.setToken(
+      { account: { _eq: user.account } },
+      user.token - details.quantity
+    )
+    await userApi.setToken(
+      { account: { _eq: details.to } },
+      userTo.token + details.quantity
+    )
   }
 
   const newBalance = await lifebankcoinUtils.getbalance(details.to)
