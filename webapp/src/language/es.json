@@ -412,8 +412,8 @@
       "yesDeleteIt": "Si, borrar",
       "selectDateRange": "Seleccione el rango de fecha",
       "offerCreation": "Oferta creada correctamente",
-      "offerStateActive": "Offertas Activas",
-      "offerStateInactive": "Offertas Inactivas"
+      "offerStateActive": "Ofertas Activas",
+      "offerStateInactive": "Ofertas Inactivas"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",
