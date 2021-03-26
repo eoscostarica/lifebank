@@ -109,6 +109,7 @@ const createLifebank = async ({
     secret,
     name,
     verification_code,
+    email_verified: true,
     token: 1000000
   })
 
