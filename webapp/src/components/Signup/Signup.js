@@ -239,8 +239,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleCreateAccount = () => {
-    const { email, secret } = user
-    const name = 'undefined'
+    const { email, name, secret } = user
     const bcrypt = require('bcryptjs')
     const saltRounds = 10
 
