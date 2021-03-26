@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router'
-import { useUser } from '../../context/user.context'
 import Grid from '@material-ui/core/Grid'
 import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
 import { GET_ALL_OFFERS_QUERY } from '../../gql'
@@ -42,22 +39,23 @@ const useStyles = makeStyles((theme) => ({
     paddingRigth: 20,
     backgroundColor: '#ffffff'
   },
+  generalDescription: {
+    marginTop: 10,
+    paddingLeft: 5
+  },
+  description: {
+    marginBottom: 5
+  }
 }))
 
 const OffersApproval = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const [actualImageIndex, setActualImageIndex] = useState(0)
-  const location = useLocation()
-  const [, { logout }] = useUser()
-  const history = useHistory()
-  const [profile, setProfile] = useState()
-  const { url } = useParams()
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
   const [approvedOffers, setApprovedOffers] = useState([])
   const [rejectedOffers, setRejectedOffers] = useState([])
-
+  const lista = ["freeProduct", "coupon", "benefit", "badge"]
   const getOffers = async () => {
     setLoadingOffers(true)
     await getAllOffers()
@@ -65,7 +63,6 @@ const OffersApproval = () => {
 
   const {
     loading: loadingDataOffer,
-    error: allOffersError,
     data: allOffers,
     refetch: getAllOffers
   } = useQuery(GET_ALL_OFFERS_QUERY, {
@@ -90,7 +87,8 @@ const OffersApproval = () => {
     let ROffers = []
 
     offers.map((offer) => {
-      if (!offer.active)
+      console.log(offer.offer_type, lista)
+      if (!lista.includes(offer.offer_type))
         ROffers.push(offer)
       else
         AOffers.push(offer)
@@ -117,16 +115,11 @@ const OffersApproval = () => {
             {t('cardsSection.approvedOffers')}
           </Typography>
         </Grid>
-        <Grid item md={12}>
+        <Grid item md={12} className={classes.generalDescription}>
+          <Typography className={classes.description} >
+            {t('offerApproval.description')} </Typography>
           <Typography  >
-            Lorem ipsum dolor sit amet consectetur adipiscing elit vestibulum
-            sagittis fermentum, feugiat ante habitasse praesent nibh senectus
-            conubia venenatis etiam. Lacus pharetra litora molestie phasellus
-            semper dictum quis mollis senectus malesuada, enim laoreet bibendum
-            dis parturient arcu nunc egestas tempus, diam conubia quam sociosqu
-            leo tempor lectus habitant pulvinar. Placerat purus platea felis dui
-            torquent lectus tincidunt, duis cubilia dignissim pharetra curabitur
-            hac integer vel, natoque ullamcorper conubia elementum montes pulvinar.
+            {t('offerApproval.description2')}
           </Typography>
         </Grid>
       </Grid>

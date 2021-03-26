@@ -326,6 +326,10 @@
       "orYourUsername": "Or your username",
       "imDone": "I'm Done"
     },
+    "offerApproval": {
+      "description": "Here you can approve or reject the categories of redeemable offers.",
+      "description2": "If you think that a category doesn't represent your organization, feel free to uncheck it, and automatically the life tokens obtained at your center will not be redeemable in exchange for any of these offers."
+    },
     "credentialsRecovery": {
       "credentialsRecovery": "Credentials Recovery",
       "emailError": "The email entered is not associated with any accoun",

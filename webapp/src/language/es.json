@@ -203,6 +203,10 @@
       "authError": "Ha ocurrido un error con la autenticación",
       "tokenExpiration": "La sesión ha expirado"
     },
+    "offerApproval": {
+      "description": "Aquí puedes aprobar o rechazar las categorías de ofertas redimibles.",
+      "description2": "Si crees que una categoría no representa tu organización, puedes desmarcarla y automáticamente los life tokens obtenidos en tu centro no podrán ser redimidos por estas ofertas."
+    },
     "editProfile": {
       "editProfile": "Editar Perfil",
       "error": "Error",
