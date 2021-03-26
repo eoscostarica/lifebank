@@ -85,14 +85,14 @@ const OffersApproval = () => {
 
   useEffect(() => {
     if (!loadingInfo) {
-      let dataCategories = info.location[0].info.categories
+      const dataCategories = info.location[0].info.categories
       setCategories(dataCategories)
     }
   }, [info])
 
   useEffect(() => {
     if (!loadingDataOffer) {
-      let dataOffers = allOffers.offer
+      const dataOffers = allOffers.offer
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
@@ -104,8 +104,8 @@ const OffersApproval = () => {
   }, [])
 
   useEffect(() => {
-    let AOffers = []
-    let ROffers = []
+    const AOffers = []
+    const ROffers = []
 
 
     offers.map((offer) => {
