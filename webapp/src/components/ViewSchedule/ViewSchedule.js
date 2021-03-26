@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ViewSchedule = ({schedule}) => {
+const ViewSchedule = ({ schedule }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
@@ -51,16 +51,16 @@ const ViewSchedule = ({schedule}) => {
   return (
     <>
       {JSON.parse(schedule).length > 0 &&
-      generateSchedule(
-        JSON.parse(schedule)
-      ).map((scheduleItem, index) => (
-        <Typography
-          key={index}
-          className={classes.text}
-          id={index}
-          variant="body1"
-        >{`${scheduleItem[0]} ${t('schedule.from')} ${scheduleItem[1][0]} ${t('offerView.to')} ${scheduleItem[1][1]}`}</Typography>
-      ))}
+        generateSchedule(
+          JSON.parse(schedule)
+        ).map((scheduleItem, index) => (
+          <Typography
+            key={index}
+            className={classes.text}
+            id={index}
+            variant="body1"
+          >{`${scheduleItem[0]} ${t('schedule.from')} ${scheduleItem[1][0]} ${t('offerView.to')} ${scheduleItem[1][1]}`}</Typography>
+        ))}
     </>
   )
 }

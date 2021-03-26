@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/styles'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 
-
 const useStyles = makeStyles((theme) => ({
   text: {
     lineHeight: '1.43',

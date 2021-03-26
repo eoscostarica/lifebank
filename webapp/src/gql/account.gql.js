@@ -44,6 +44,14 @@ export const LOGIN_MUTATION = gql`
   }
 `
 
+export const GET_INFO = gql`
+  query info($account: String!) {
+    location(where: {account: {_eq: $account}}) {
+      info
+    }
+  }
+`
+
 export const PROFILE_QUERY = gql`
   query {
     profile {

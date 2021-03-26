@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { useTranslation } from 'react-i18next'
+import Divider from '@material-ui/core/Divider'
 
 import OfferView from '../../components/OfferView'
 
@@ -142,6 +143,9 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1',
     textAlign: 'center',
     color: '#121212'
+  },
+  categories: {
+    marginTop: '5%'
   }
 }))
 
@@ -224,7 +228,6 @@ const ShowOffers = ({ offers, loading }) => {
                 : ''
             }
           >
-            <LocalOfferIcon />
           </Avatar>
           <Box className={classes.cardTitleContainer}>
             <Typography className={classes.cardTitle} noWrap>
@@ -238,13 +241,19 @@ const ShowOffers = ({ offers, loading }) => {
             {truncateString(props.offer.description)}
           </Typography>
         </CardContent>
-        <Button
-          color="primary"
-          className={classes.cardActionButton}
-          onClick={() => handleOpenOfferView(props.offer)}
-        >
-          {t('cardsSection.moreInfo')}
-        </Button>
+        <Divider />
+        <Box >
+          <Typography className={classes.categories}>
+            {props.offer.offer_type[0].toUpperCase() + props.offer.offer_type.slice(1)}
+          </Typography>
+          <Button
+            color="primary"
+            className={classes.cardActionButton}
+            onClick={() => handleOpenOfferView(props.offer)}
+          >
+            {t('cardsSection.moreInfo')}
+          </Button>
+        </Box>
       </Card>
     )
   }
@@ -262,7 +271,7 @@ const ShowOffers = ({ offers, loading }) => {
 
 ShowOffers.propTypes = {
   offers: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
 }
 
 export default ShowOffers

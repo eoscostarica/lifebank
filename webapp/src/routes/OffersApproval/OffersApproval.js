@@ -5,18 +5,14 @@ import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
 import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
-import { GET_ALL_OFFERS_QUERY } from '../../gql'
+import {
+  GET_ALL_OFFERS_QUERY,
+  GET_INFO
+} from '../../gql'
+import { useUser } from '../../context/user.context'
 
 const useStyles = makeStyles((theme) => ({
 
-  contentBodyDesktop: {
-    width: '100%',
-    backgroundColor: '#000000',
-    paddingTop: '50px',
-    paddingLeft: '20%',
-    paddingRight: '20%',
-    height: 'auto'
-  },
   titleMainSection: {
     fontSize: '34px',
     fontWeight: 'normal',
@@ -36,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
   mainGridDesktop: {
     paddingTop: 39,
     paddingLeft: 20,
-    paddingRigth: 20,
-    backgroundColor: '#ffffff'
+    paddingRigth: 20
   },
   generalDescription: {
     marginTop: 10,
@@ -45,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     marginBottom: 5
+  },
+  showOffers: {
+    paddingTop: 39,
+    paddingLeft: 20,
+    paddingRigth: 20,
+    paddingBottom: 90
   }
 }))
 
@@ -53,14 +54,18 @@ const OffersApproval = () => {
   const classes = useStyles()
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
+  const [currentUser] = useUser()
+  const [account, setAccount] = useState(currentUser.account)
   const [approvedOffers, setApprovedOffers] = useState([])
   const [rejectedOffers, setRejectedOffers] = useState([])
-  const lista = ["freeProduct", "coupon", "benefit", "badge"]
+  const [categories, setCategories] = useState([])
+
   const getOffers = async () => {
     setLoadingOffers(true)
     await getAllOffers()
+    await getInfo()
   }
-
+  console.log("Cuenta..", account)
   const {
     loading: loadingDataOffer,
     data: allOffers,
@@ -68,6 +73,22 @@ const OffersApproval = () => {
   } = useQuery(GET_ALL_OFFERS_QUERY, {
     fetchPolicy: 'cache-and-network'
   })
+
+  const {
+    loading: loadingInfo,
+    data: info,
+    refetch: getInfo
+  } = useQuery(GET_INFO, {
+    variables: { account },
+    fetchPolicy: 'cache-and-network'
+  })
+
+  useEffect(() => {
+    if (!loadingInfo) {
+      let dataCategories = info.location[0].info.categories
+      setCategories(dataCategories)
+    }
+  }, [info])
 
   useEffect(() => {
     if (!loadingDataOffer) {
@@ -78,7 +99,7 @@ const OffersApproval = () => {
   }, [allOffers])
 
   useEffect(() => {
-
+    getInfo()
     getOffers()
   }, [])
 
@@ -86,9 +107,9 @@ const OffersApproval = () => {
     let AOffers = []
     let ROffers = []
 
+
     offers.map((offer) => {
-      console.log(offer.offer_type, lista)
-      if (!lista.includes(offer.offer_type))
+      if (!categories.includes(offer.offer_type))
         ROffers.push(offer)
       else
         AOffers.push(offer)
@@ -107,10 +128,8 @@ const OffersApproval = () => {
         alignItems="flex-start"
         spacing={0}
         className={classes.mainGridDesktop}
-        md={12}
-        xl={10}
       >
-        <Grid item md={12}>
+        <Grid item md={12} >
           <Typography variant="h1" className={classes.titleMainSection}>
             {t('cardsSection.approvedOffers')}
           </Typography>
@@ -130,8 +149,6 @@ const OffersApproval = () => {
         alignItems="flex-start"
         spacing={0}
         className={classes.mainGridDesktop}
-        md={12}
-        xl={10}
       >
         <Grid item md={12}>
           <Typography variant="h2" className={classes.SubtitleSection}>
@@ -139,7 +156,6 @@ const OffersApproval = () => {
           </Typography>
         </Grid>
         <ShowOffersDesktop
-          className={classes.offerContainer}
           offers={approvedOffers}
           loading={loadingOffers}
         />
@@ -150,7 +166,7 @@ const OffersApproval = () => {
         justify="center"
         alignItems="flex-start"
         spacing={0}
-        className={classes.mainGridDesktop}
+        className={classes.showOffers}
         md={12}
         xl={10}
       >
@@ -161,11 +177,12 @@ const OffersApproval = () => {
 
         </Grid>
         <ShowOffersDesktop
-          className={classes.offerContainer}
           offers={rejectedOffers}
           loading={loadingOffers}
         />
+
       </Grid>
+
     </>
   )
 }

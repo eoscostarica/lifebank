@@ -451,24 +451,6 @@ const ProfilePageLifebank = ({ profile }) => {
           </Box>
         </>
       }
-      { profile.has_inmmunity_test &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.hasImmunityTest')}</Typography>
-            <Typography variant="body1" className={classes.secondaryText}>{profile.has_inmmunity_test}</Typography>
-          </Box>
-        </>
-      }
-      { profile.blood_urgency_level &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
-            <Typography variant="body1" className={classes.secondaryText}>{profile.blood_urgency_level}</Typography>
-          </Box>
-        </>
-      }
       {profile.about &&
         <>
           <Divider className={classes.divider} />
