@@ -438,10 +438,11 @@ const verifyEmail = async ({ code }) => {
 const login = async ({ account, secret }) => {
   const user = await userApi.getOne({
     _or: [
-      { account: { _eq: account } },
+      { email: { _eq: account } },
       { username: { _eq: account } },
-      { email: { _eq: account } }
-    ]
+      { account: { _eq: account } }
+    ],
+    secret: { _eq: secret }
   })
 
   if (!user) {

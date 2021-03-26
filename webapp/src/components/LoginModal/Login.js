@@ -244,7 +244,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       login(loginResult.token)
       setOpen(false)
     }
-
   }, [loginResult])
 
   useEffect(() => {
