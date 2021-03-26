@@ -244,7 +244,7 @@ const ShowOffers = ({ offers, loading }) => {
         <Divider />
         <Box >
           <Typography className={classes.categories}>
-            {props.offer.offer_type[0].toUpperCase() + props.offer.offer_type.slice(1)}
+            {t(`categories.${props.offer.offer_type}`)}
           </Typography>
           <Button
             color="primary"
