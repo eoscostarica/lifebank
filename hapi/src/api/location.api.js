@@ -11,6 +11,14 @@ const INSERT = `
   }
 `
 
+const GET_INFO = `
+query info($account: String!) {
+  location(where: {account: {_eq: $account}}) {
+    info
+  }
+}
+`
+
 const UPDATE = `
   mutation location($account: String!, $location: location_set_input!) {
     update_location(where: {account: {_eq: $account}}, _set: $location) {
@@ -33,16 +41,19 @@ const VERIFY_EXISTENCE = `
   }
 `
 
-const insert = location => hasuraUtils.request(INSERT, { location })
+const insert = (location) => hasuraUtils.request(INSERT, { location })
 
-const verifyExistence = account =>
+const verifyExistence = (account) =>
   hasuraUtils.request(VERIFY_EXISTENCE, { account })
 
 const update = (account, location) =>
   hasuraUtils.request(UPDATE, { account, location })
 
+const infoQuery = (account) => hasuraUtils.request(GET_INFO, { account })
+
 module.exports = {
   insert,
   verifyExistence,
-  update
+  update,
+  infoQuery
 }

@@ -16,12 +16,15 @@ import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
 import { useParams } from 'react-router'
+import Grid from '@material-ui/core/Grid'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
-import { GET_LOCATION_PROFILE } from '../../gql'
+import { GET_LOCATION_PROFILE , GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
+import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
+
 
 const useStyles = makeStyles((theme) => ({
   carruselImage: {
@@ -167,6 +170,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px',
     marginBottom: '20px',
     width: '100%'
+  },
+  offerContainer: {
+    width: "100%",
+    margin: 20,
+    backgroundColor: '#000000'
+  },
+  mainGridDesktop: {
+    paddingTop: 39,
+    backgroundColor: '#ffffff'
   }
 }))
 
@@ -180,18 +192,76 @@ const InfoPage = () => {
   const history = useHistory()
   const [profile, setProfile] = useState()
   const { url } = useParams()
+  const [loadingOffers, setLoadingOffers] = useState(true)
+  const [offers, setOffers] = useState([])
+  const [sponsorID, setSponsorID] = useState()
+
+  const getOffers = async () => {
+    setLoadingOffers(true)
+    await getAllOffers()
+    await getSponsorID()
+  }
 
   const { error: errorInfoProfile, refetch: getInfoProfile } = useQuery(GET_LOCATION_PROFILE, {
     variables: {
       username: url
-    },
-    skip: true
+    }
+  })
+
+  const { error: errorUsername, data: sponsor_id, refetch: getSponsorID } = useQuery(GET_ID, {
+    variables: {
+      account: location.state.profile.account
+    }
+  })
+
+  const {
+    loading: loadingDataOffer,
+    error: allOffersError,
+    data: allOffers,
+    refetch: getAllOffers
+  } = useQuery(GET_OFFER_BY_SPONSOR_QUERY, {
+    variables: { active: true, sponsor_id: sponsorID },
+    fetchPolicy: 'cache-and-network'
   })
 
   useEffect(() => {
-    getInfo()
+    if (!loadingDataOffer) {
+      const dataOffers = allOffers.offer
+      setOffers(dataOffers)
+      setLoadingOffers(false)
+    }
+  }, [allOffers])
 
+  useEffect(() => {
+
+    if (sponsor_id) {
+      const sponsor = sponsor_id.user[0]
+      setSponsorID(sponsor.id)
+    }
+  }, [sponsor_id])
+
+  useEffect(() => {
+    getInfo()
+    getOffers()
   }, [location])
+
+  useEffect(() => {
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
+        && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
+        getInfo()
+        getOffers()
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+  }, [errorUsername, errorInfoProfile, allOffersError])
 
   const getInfo = async () => {
     if (location.state) setProfile(location.state.profile)
@@ -251,18 +321,6 @@ const InfoPage = () => {
 
     }
   }
-
-  useEffect(() => {
-    if (errorInfoProfile) {
-      if (errorInfoProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
-        logout()
-        getInfo()
-      } else {
-        history.push('/internal-error')
-      }
-    }
-
-  }, [errorInfoProfile])
 
   return (
     <>
@@ -479,15 +537,41 @@ const InfoPage = () => {
               variant="subtitle1"
             >{`${t('common.near')}  ${profile.name}`}</Typography>
             <Box className={classes.contentCards}>
-              <Nearby
-                location={JSON.parse(profile.location)}
-                searchDistance={1000}
-                account={profile.account}
-              />
+              {profile &&
+                <Nearby
+                  location={JSON.parse(profile.location)}
+                  searchDistance={1000}
+                  account={profile.account}
+                />
+              }
             </Box>
           </Box>
+          <Divider className={classes.divider} />
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+            className={classes.mainGridDesktop}
+            md={12}
+            xl={10}
+          >
+            <Grid item md={12}>
+              <Typography variant="subtitle1" className={classes.boldText}>
+                {t('offerView.lifebankOffers')}
+              </Typography>
+
+            </Grid>
+            <ShowOffersDesktop
+              className={classes.offerContainer}
+              offers={offers}
+              loading={loadingOffers}
+            />
+          </Grid>
         </Box>
       )}
+
     </>
   )
 }
