@@ -117,11 +117,11 @@ const useStyles = makeStyles((theme) => ({
 
 const getWeekCategoryXSorted = (data) => {
   const sorter = {
-    Discounts: 0,
-    FreeProducts: 1,
-    Coupons: 2,
-    Benefits: 3,
-    Badges: 4
+    discount: 0,
+    freeProduct: 1,
+    coupon: 2,
+    benefit: 3,
+    badge: 4
   }
 
   return data.sort((a, b) => {
@@ -141,17 +141,17 @@ const Categories = ({
 }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const [category, setcategory] = useState('Discounts')
+  const [category, setcategory] = useState('discount')
   const theme = useTheme()
   const [CategoriesList, setCategoriesList] = useState([])
   const [Categories, setCategories] = useState([])
   const [openModal, setOpenModal] = useState(false)
   const CategoryX = [
-    { value: 'Discounts', label: t('categories.discounts') },
-    { value: 'FreeProducts', label: t('categories.freeproducts') },
-    { value: 'Coupons', label: t('categories.coupons') },
-    { value: 'Benefits', label: t('categories.benefits') },
-    { value: 'Badges', label: t('categories.badges') }
+    { value: 'discount', label: t('categories.discount') },
+    { value: 'freeProduct', label: t('categories.freeproduct') },
+    { value: 'coupon', label: t('categories.coupon') },
+    { value: 'benefit', label: t('categories.benefit') },
+    { value: 'badge', label: t('categories.badge') }
 
   ]
 
@@ -299,7 +299,7 @@ const Categories = ({
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText
-                        primary={t(`categories.${item.category.toLowerCase()}`)}
+                        primary={t(`categories.${item.category}`)}
                       />
                       <IconButton
                         onClick={() => handleDeleteCategoriesPercategory(item.category)}

@@ -482,7 +482,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Divider className={classes.divider} />
           <Typography className={classes.boldText} variant="subtitle1">{t('common.categories')}</Typography>
           <Typography variant="body1" className={classes.text}>
-            {t('editProfile.dragOrtap')}
+            {t('categories.description')}
           </Typography>
           <Box className={classes.boxCenter}>
             <Categories

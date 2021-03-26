@@ -159,14 +159,15 @@
       "takeMeHome": "Take me to the home page"
     },
     "categories": {
-      "discounts": "Discounts",
-      "freeproducts": "Free products",
-      "coupons": "Coupons",
-      "benefits": "Benefits",
-      "badges": "Badges",
+      "discount": "Discounts",
+      "freeproduct": "Free products",
+      "coupon": "Coupons",
+      "benefit": "Benefits",
+      "badge": "Badges",
       "chooseYourCategories": "Choose Your Categories",
-      "addCategories": "Add categories",
-      "editCategories": "Edit categories"
+      "addCategories": "Choose offer categories",
+      "editCategories": "Edit categories",
+      "description": "Choose the offer categories that you want to approve. This means that the life tokens obtained for donations at your facilities will be redeemable for offers in the approved categories."
     },
     "schedule": {
       "sunday": "Sunday",
