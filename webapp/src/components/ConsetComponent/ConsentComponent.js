@@ -88,16 +88,11 @@ const ConsetComponent = () => {
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const { refetch: accountName } = useQuery(GET_ACCOUNT_NAME, {
-    variables: {
-      account: currentUser
-    },
+    variables: {},
     skip: true
   })
 
-  const [
-    editProfile,
-    { error: errorEditResults, loading: editLoading, data: { edit_profile: editProfileResult } = {} }
-  ] = useMutation(EDIT_PROFILE_MUTATION)
+  const [editProfile] = useMutation(EDIT_PROFILE_MUTATION)
 
   const handleOpenConsent = () => {
     setOpenConsent(!openConsent)
