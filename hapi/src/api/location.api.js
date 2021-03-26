@@ -41,15 +41,15 @@ const VERIFY_EXISTENCE = `
   }
 `
 
-const insert = location => hasuraUtils.request(INSERT, { location })
+const insert = (location) => hasuraUtils.request(INSERT, { location })
 
-const verifyExistence = account =>
+const verifyExistence = (account) =>
   hasuraUtils.request(VERIFY_EXISTENCE, { account })
 
 const update = (account, location) =>
   hasuraUtils.request(UPDATE, { account, location })
 
-const infoQuery = account => hasuraUtils.request(GET_INFO, { account })
+const infoQuery = (account) => hasuraUtils.request(GET_INFO, { account })
 
 module.exports = {
   insert,

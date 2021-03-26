@@ -213,7 +213,6 @@ const getLifebankData = async (account) => {
       email: { _eq: email }
     })
 
-
     return {
       ...profile,
       address: data.preregister_lifebank[0].address,
