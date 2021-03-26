@@ -158,6 +158,17 @@
       "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
       "takeMeHome": "Llévame al inicio"
     },
+    "categories": {
+      "discount": "Descuentos",
+      "freeproduct": "Productos gratis",
+      "coupon": "Cupones",
+      "benefit": "Beneficios",
+      "badge": "Insignias",
+      "chooseYourCategories": "Escoge tus Categorías",
+      "addCategories": "Eliga categorías de ofertas",
+      "editCategories": "Editar categorías",
+      "description": "Elija las categorías de ofertas que desea aprobar. Esto quiere decir que los life tokens obtenidos por donaciones en su centro podrán ser redimidas por ofertas que calcen las categorías aprobadas."
+    },
     "schedule": {
       "sunday": "Domingo",
       "monday": "Lunes",
@@ -214,7 +225,6 @@
       "namePlaceholder": "Ingrese su nombre",
       "urlWebsitePlaceHolder": "URL del sitio web",
       "bloodDemandLevel": "Nivel de demanda de sangre",
-      "dragOrtap": "Arrastre o toque el nivel de demanda que representa las necesidades reales de su Banco de Sangre. Puede establecer las recompensas simbólicas dependiendo de estos niveles.",
       "lowLevelReward": "Nivel bajo de urgencia",
       "mediumLevelReward": "Nivel medio de urgencia",
       "highLevelReward": "Alto nivel de urgencia",
@@ -311,6 +321,7 @@
       "benefits": "Beneficios",
       "bloodUrgency": "Urgencia de sangre",
       "schedule": "Horario",
+      "categories": "Categorías",
       "save": "Guardar",
       "saveChanges": "Guardar cambios",
       "currentLanguage": "es-CR",

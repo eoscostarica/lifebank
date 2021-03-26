@@ -12,6 +12,7 @@ const historyApi = require('./history.api')
 const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
+const locationApi = require('./location.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
@@ -202,6 +203,8 @@ const getLifebankData = async (account) => {
     account
   )
 
+  const info = await locationApi.infoQuery(account)
+
   if (Object.entries(profile).length === 0) {
     const { email } = await userApi.getOne({
       account: { _eq: account }
@@ -229,6 +232,7 @@ const getLifebankData = async (account) => {
     return {
       ...profile,
       name,
+      categories: info.location[0].info.categories || '[]',
       consent: !!consent
     }
   }
