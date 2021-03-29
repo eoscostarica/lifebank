@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     paddingTop: '60px',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '5%',
-      paddingRight: '5%',
+      paddingLeft: '23%',
+      paddingRight: '23%',
     },
   },
   rowBox: {
