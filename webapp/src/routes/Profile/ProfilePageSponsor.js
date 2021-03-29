@@ -719,7 +719,7 @@ const ProfilePageSponsor = ({ profile }) => {
           loading={loadingOffers}
         />
       </Grid>
-      { inactiveOffers.length && (
+      { inactiveOffers.length !== 0 && (
         <Grid
           container
           direction="row"
