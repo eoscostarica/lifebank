@@ -96,7 +96,7 @@ type Mutation {
 type Mutation {
   login (
     account: String!
-    secret: String!
+    password: String!
   ): login_output
 }
 
