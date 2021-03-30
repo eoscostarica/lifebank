@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 import FavoriteIcon from '@material-ui/icons/Favorite'
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import Divider from '@material-ui/core/Divider'
 import Slider from '@material-ui/core/Slider'
 import Dialog from '@material-ui/core/Dialog'
@@ -28,10 +29,12 @@ import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
 import { useParams } from 'react-router'
+import Grid from '@material-ui/core/Grid'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
-import { GET_LOCATION_PROFILE } from '../../gql'
+import { GET_LOCATION_PROFILE, GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
+import ShowOffersMobile from '../../components/ShowElements/ShowOffersMobile'
 
 const useStyles = makeStyles((theme) => ({
   contentBodyMobile: {
@@ -105,6 +108,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '15px',
     float: 'left'
   },
+  headerDetailsOffers: {
+    marginTop: '15px',
+    width: '85%',
+    marginBottom: '15px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   bodyDetails: {
     width: '100%'
   },
@@ -170,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     position: 'sticky',
-    height: '32px'
+    height: '32px',
   },
   positionXIcon: {
     position: 'absolute',
@@ -179,6 +190,15 @@ const useStyles = makeStyles((theme) => ({
   },
   modal: {
     margin: theme.spacing(6)
+  },
+  offerContainer: {
+    width: "100%",
+    margin: 20,
+    backgroundColor: '#000000'
+  },
+  mainGridMobile: {
+    paddingTop: 39,
+    backgroundColor: '#ffffff'
   }
 }))
 const Transition = forwardRef((props, ref) => {
@@ -191,11 +211,15 @@ const InfoPageMobile = () => {
   const [actualImageIndex, setActualImageIndex] = useState(0)
   const [open, setOpenModalLocation] = useState(false)
   const [openSchedule, setOpenModalSchedule] = useState(false)
+  const [openOffers, setOpenModalOffers] = useState(false)
   const location = useLocation()
   const [, { logout }] = useUser()
   const history = useHistory()
   const [profile, setProfile] = useState()
   const { url } = useParams()
+  const [loadingOffers, setLoadingOffers] = useState(true)
+  const [offers, setOffers] = useState([])
+  const [sponsorID, setSponsorID] = useState()
 
   const handleClickOpen = () => {
     setOpenModalLocation(true)
@@ -208,8 +232,16 @@ const InfoPageMobile = () => {
     setOpenModalSchedule(true)
   }
 
+  const handleClickOpenOffers = () => {
+    setOpenModalOffers(true)
+  }
+
   const handleCloseSchedule = () => {
     setOpenModalSchedule(false)
+  }
+
+  const handleCloseOffers = () => {
+    setOpenModalOffers(false)
   }
 
   const { error: errorInfoProfile, refetch: getInfoProfile } = useQuery(GET_LOCATION_PROFILE, {
@@ -223,6 +255,28 @@ const InfoPageMobile = () => {
     getInfo()
 
   }, [location])
+
+  const getOffers = async () => {
+    setLoadingOffers(true)
+    await getAllOffers()
+    await getSponsorID()
+  }
+
+  const { error: errorUsername, data: sponsor_id, refetch: getSponsorID } = useQuery(GET_ID, {
+    variables: {
+      account: location.state.profile.account
+    }
+  })
+
+  const {
+    loading: loadingDataOffer,
+    error: allOffersError,
+    data: allOffers,
+    refetch: getAllOffers
+  } = useQuery(GET_OFFER_BY_SPONSOR_QUERY, {
+    variables: { active: true, sponsor_id: sponsorID },
+    fetchPolicy: 'cache-and-network'
+  })
 
   const getInfo = async () => {
     if (location.state) setProfile(location.state.profile)
@@ -284,15 +338,43 @@ const InfoPageMobile = () => {
   }
 
   useEffect(() => {
-    if (errorInfoProfile) {
-      if (errorInfoProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
-        logout()
-        getInfo()
-      } else history.push('/internal-error')
-
+    if (!loadingDataOffer) {
+      let dataOffers = allOffers.offer
+      setOffers(dataOffers)
+      setLoadingOffers(false)
     }
+  }, [allOffers])
 
-  }, [errorInfoProfile])
+  useEffect(() => {
+
+    if (sponsor_id) {
+      let sponsor = sponsor_id.user[0]
+      setSponsorID(sponsor.id)
+    }
+  }, [sponsor_id])
+
+  useEffect(() => {
+    getInfo()
+    getOffers()
+  }, [location])
+
+  useEffect(() => {
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
+        && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
+        getInfo()
+        getOffers()
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+  }, [errorUsername, errorInfoProfile, allOffersError])
 
   const ScheduleItem = (schedule) => {
     return (
@@ -450,6 +532,57 @@ const InfoPageMobile = () => {
                       schedule={schedule}
                     />
                   ))}
+              </Dialog>
+            </Box>
+            <Divider className={classes.divider} />
+            <Box className={classes.headerDetailsOffers}>
+              <Button
+                className={classes.label}
+                startIcon={<LocalOfferIcon color="action" />}
+                onClick={handleClickOpenOffers}
+              >
+                {t('common.offers')}
+              </Button>
+              <Dialog
+                fullScreen
+                className={classes.modal}
+                open={openOffers}
+                onClose={handleCloseOffers}
+                TransitionComponent={Transition}
+              >
+                <Box className={classes.appBar}>
+                  <Toolbar>
+                    <IconButton
+                      className={classes.positionXIcon}
+                      onClick={handleCloseOffers}
+                      aria-label="close"
+                    >
+                      <CloseIcon color="secondary" />
+                    </IconButton>
+                  </Toolbar>
+                </Box>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="flex-start"
+                  spacing={0}
+                  className={classes.mainGridDesktop}
+                  md={12}
+                  xl={10}
+                >
+                  <Grid item md={12}>
+                    <Typography variant="subtitle1" className={classes.boldText}>
+                      {t('offerView.lifebankOffers')}
+                    </Typography>
+
+                  </Grid>
+                  <ShowOffersMobile
+                    className={classes.offerContainer}
+                    offers={offers}
+                    loading={loadingOffers}
+                  />
+                </Grid>
               </Dialog>
             </Box>
             <Box className={classes.bodyDetails}>

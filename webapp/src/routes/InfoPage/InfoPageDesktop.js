@@ -21,7 +21,7 @@ import Grid from '@material-ui/core/Grid'
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
-import { GET_LOCATION_PROFILE , GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
+import { GET_LOCATION_PROFILE, GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
 import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
 
