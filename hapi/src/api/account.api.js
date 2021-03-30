@@ -46,18 +46,6 @@ query MyQuery {
 }
 `
 
-const createPasswordHash = async password => {
-  console.log('PASSWORD', password)
-  const bcrypt = require('bcryptjs')
-  const saltRounds = 10
-
-  const hash = await bcrypt.hash(password, saltRounds)
-
-  console.log('HASH', hash)
-
-  return hash
-}
-
 const create = async ({ role, email, emailContent, name, passwordPlainText }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
