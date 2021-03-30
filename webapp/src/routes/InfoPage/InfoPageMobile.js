@@ -339,7 +339,7 @@ const InfoPageMobile = () => {
 
   useEffect(() => {
     if (!loadingDataOffer) {
-      let dataOffers = allOffers.offer
+      const dataOffers = allOffers.offer
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
@@ -348,7 +348,7 @@ const InfoPageMobile = () => {
   useEffect(() => {
 
     if (sponsor_id) {
-      let sponsor = sponsor_id.user[0]
+      const sponsor = sponsor_id.user[0]
       setSponsorID(sponsor.id)
     }
   }, [sponsor_id])
