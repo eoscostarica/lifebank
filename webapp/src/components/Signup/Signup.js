@@ -257,14 +257,15 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               button: t('emailMessage.verifyButton')
             },
             name,
-            secret: hash
+            secret: hash,
+            signup_method: 'lifebank'
           }
         })
       }
     })
   }
 
-  const handleCreateAccountWithAuth = async (status, email, name, secret) => {
+  const handleCreateAccountWithAuth = async (status, email, name, secret, signupMethod) => {
     if (status) {
       const { data } = await checkEmail({ email: email })
 
@@ -278,8 +279,15 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               variables: {
                 role,
                 email,
+                emailContent: {
+                  subject: t('emailMessage.subjectVerificationCode'),
+                  title: t('emailMessage.titleVerificationCode'),
+                  message: t('emailMessage.messageVerificationCode'),
+                  button: t('emailMessage.verifyButton')
+                },
                 name,
-                secret: hash
+                secret: hash,
+                signup_method: signupMethod
               }
             })
           }

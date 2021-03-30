@@ -16,6 +16,7 @@ const locationApi = require('./location.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+const verifyEmailHandler = require('../routes/verify-email/verify-email.handler')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
@@ -45,7 +46,7 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, emailContent, name, secret }) => {
+const create = async ({ role, email, emailContent, name, secret, signup_method }) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
@@ -59,7 +60,8 @@ const create = async ({ role, email, emailContent, name, secret }) => {
     email,
     secret,
     name,
-    verification_code
+    verification_code,
+    signup_method
   })
 
   await vaultApi.insert({
@@ -164,6 +166,27 @@ const getProfile = async (account) => {
     role: user.role,
     id: user.id,
     ...data
+  }
+}
+
+const isPasswordChangable = async ({ email }) => {
+  const user = await userApi.getOne({
+    email: { _eq: email }
+  })
+
+  if (user) {
+    switch (user.signup_method) {
+      case 'google': case 'facebook':
+        return {
+          password_changable: false
+        }
+      default:
+        break
+    }
+  }
+
+  return {
+    password_changable: true
   }
 }
 
@@ -533,6 +556,7 @@ module.exports = {
   create,
   createLifebank,
   getProfile,
+  isPasswordChangable,
   login,
   grantConsent,
   revokeConsent,
