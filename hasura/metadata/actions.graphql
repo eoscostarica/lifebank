@@ -22,7 +22,8 @@ type Mutation {
     email: String!
     emailContent: jsonb!
     name: String!
-    secret: String!
+    passwordPlainText: String!
+    signup_method: String!
   ): create_account_output
 }
 
@@ -115,6 +116,13 @@ type Mutation {
   signup (
     profile: jsonb!
   ): signup_output
+}
+
+
+type Mutation {
+  signup_method (
+    email: String!
+  ): signup_method_output
 }
 
 
@@ -240,5 +248,9 @@ type create_account_lifebank_output {
 
 type change_password_output {
   success : Boolean!
+}
+
+type signup_method_output {
+  password_changable : Boolean!
 }
 

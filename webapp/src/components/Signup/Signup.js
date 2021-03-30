@@ -241,25 +241,20 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const handleCreateAccount = () => {
     const { email, secret } = user
     const name = 'undefined'
-    const bcrypt = require('bcryptjs')
-    const saltRounds = 10
 
-    bcrypt.hash(secret, saltRounds, function (err, hash) {
-      if (!err) {
-        createAccount({
-          variables: {
-            role,
-            email,
-            emailContent: {
-              subject: t('emailMessage.subjectVerificationCode'),
-              title: t('emailMessage.titleVerificationCode'),
-              message: t('emailMessage.messageVerificationCode'),
-              button: t('emailMessage.verifyButton')
-            },
-            name,
-            secret: hash
-          }
-        })
+    createAccount({
+      variables: {
+        role,
+        email,
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        },
+        name,
+        passwordPlainText: secret,
+        signup_method: 'lifebank'
       }
     })
   }
