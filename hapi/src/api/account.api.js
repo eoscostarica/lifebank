@@ -46,7 +46,14 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, emailContent, name, secret, signup_method }) => {
+const create = async ({
+  role,
+  email,
+  emailContent,
+  name,
+  secret,
+  signup_method
+}) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
@@ -176,7 +183,8 @@ const isPasswordChangable = async ({ email }) => {
 
   if (user) {
     switch (user.signup_method) {
-      case 'google': case 'facebook':
+      case 'google':
+      case 'facebook':
         return {
           password_changable: false
         }
