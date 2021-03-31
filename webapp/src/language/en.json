@@ -346,7 +346,7 @@
       "instructionCredentialsRecovery": "Enter the email associated with your account to be able to recover it",
       "checkYourEmail": "Check your email",
       "recovery": "Recover",
-      "passwordNotChangable": "Please, log in into your Facebook or Google account to change your password"
+      "passwordNotChangable": "Please, log in to your Facebook or Google account to change your password"
     },
     "emailVerification": {
       "emailVerified": "Your email has been verified",
