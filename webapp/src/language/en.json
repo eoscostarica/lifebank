@@ -72,7 +72,9 @@
       "aboutPlaceholder": "About the LifeBank",
       "consentGranted": "Ready! You can start using Lifebank",
       "consentRevoked": "Consent revoked",
-      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. "
+      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. ",
+      "noConsentNoEdit": "You must first accept the terms and conditions before changing anything.",
+      "noConsentNoEdit2": "Read it here."
     },
     "login": {
       "letsStarted": "Let's get started!",

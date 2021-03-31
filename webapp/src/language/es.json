@@ -72,7 +72,9 @@
       "aboutPlaceholder": "Acerca del LifeBank",
       "consentGranted": "Consentimiento otorgado",
       "consentRevoked": "Consentimiento revocado",
-      "consentError": "Error al otorgar consentimiento"
+      "consentError": "Error al otorgar consentimiento",
+      "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
+      "noConsentNoEdit2": "Léelo aquí."
     },
     "login": {
       "letsStarted": "¡Empecemos!",

@@ -135,7 +135,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (profile && !profile.consent) {
-      setMessegaAlert('Cannot edit your profile before you accept the consent contract')
+      setMessegaAlert(t('signup.noConsentNoEdit'))
       handleOpenAlert()
     }
   }, [profile])

@@ -3,7 +3,6 @@ import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
-import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -16,6 +15,8 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import Telephones from '../../components/Telephones'
 import Divider from '@material-ui/core/Divider'
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert'
 
 import { VERIFY_USERNAME } from '../../gql'
 
@@ -201,11 +202,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
-    telephones: profile.telephones && profile.telephones !== '' ? JSON.parse(profile.telephones) : [],
+    telephones: profile.telephones ? JSON.parse(profile.telephones) : [],
     email: profile.email,
     logo_url: profile.logo_url,
-    photos: profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
-    geolocation: JSON.parse(profile.location),
+    photos: profile.photos ? JSON.parse(profile.photos) : [],
+    geolocation: profile.location ? JSON.parse(profile.location) : { longitude: -84.091273, latitude: 9.928209 },
     name: profile.name,
     schedule: profile.schedule,
     categories: profile.categories,
@@ -216,29 +217,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     (geolocation) => handleSetField('geolocation', geolocation),
     [setField]
   )
-  const marks = [
-    {
-      value: 1
-    },
-    {
-      value: 2
-    },
-    {
-      value: 3
-    }
-  ]
-  const valueLabelFormat = (value) => {
-    switch (value) {
-      case 1:
-        return t('editProfile.low')
-      case 2:
-        return t('editProfile.medium')
-      case 3:
-        return t('editProfile.high')
-      default:
-        return 'N/A'
-    }
-  }
 
   const { refetch: checkUserName } = useQuery(VERIFY_USERNAME, {
     variables: {
@@ -249,16 +227,19 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   })
 
   const isUsernameUnique = async () => {
-    const { data } = await checkUserName({
-      username: username,
-      account: profile.account
-    })
+    console.log('PROFILE', profile)
+    if (profile && profile.consent) {
+      const { data } = await checkUserName({
+        username: username,
+        account: profile.account
+      })
 
-    if (data) {
-      if (data.user.length !== 0) setIsUnique(false)
-      else setIsUnique(true)
-    }
-    setFirstRun(false)
+      if (data) {
+        if (data.user.length !== 0) setIsUnique(false)
+        else setIsUnique(true)
+      }
+      setFirstRun(false)
+    } else console.log('ERROR')
   }
 
   const validUserName = (newUserName) => {
@@ -331,6 +312,12 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   return (
     <form autoComplete="off" className={classes.form}>
+      <Snackbar open={true} autoHideDuration={6000} >
+        <Alert severity="error">
+          This is a error message!
+        </Alert>
+      </Snackbar>
+
       <Box className={classes.textFieldWrapper}>
         <>
           {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
