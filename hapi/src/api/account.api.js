@@ -45,14 +45,13 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, emailContent, name, secret }) => {
+const create = async ({ role, email, emailContent, name, secret }, withAuth) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
   const token = jwtUtils.create({ role, username, account })
   const { verification_code } = await verificationCodeApi.generate()
-
-  await userApi.insert({
+  const data = {
     role,
     username,
     account,
@@ -60,7 +59,11 @@ const create = async ({ role, email, emailContent, name, secret }) => {
     secret,
     name,
     verification_code
-  })
+  }
+
+  if (withAuth) data.email_verified = true
+
+  await userApi.insert(data)
 
   await vaultApi.insert({
     account,
