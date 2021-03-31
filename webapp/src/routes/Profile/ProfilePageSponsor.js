@@ -207,9 +207,9 @@ const ProfilePageSponsor = ({ profile }) => {
   const theme = useTheme()
   const history = useHistory()
   const [, { logout }] = useUser()
-  const images = profile.photos !== "" ? JSON.parse(profile.photos) : {}
-  const socialMedia = profile.social_media_links !== "" ? JSON.parse(profile.social_media_links) : {}
-  const phones = profile.telephones !== "" ? JSON.parse(profile.telephones) : {}
+  const images = profile.photos ? JSON.parse(profile.photos) : {}
+  const socialMedia = profile.social_media_links ? JSON.parse(profile.social_media_links) : {}
+  const phones = profile.telephones ? JSON.parse(profile.telephones) : {}
   const location = useLocation()
   const [openSnackbar, setOpenSnackbar] = useState(false)
 

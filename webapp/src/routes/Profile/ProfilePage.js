@@ -134,6 +134,13 @@ const ProfilePage = () => {
   ])
 
   useEffect(() => {
+    if (profile && !profile.consent) {
+      setMessegaAlert('Cannot edit your profile before you accept the consent contract')
+      handleOpenAlert()
+    }
+  }, [profile])
+
+  useEffect(() => {
     if (errorProfile) {
       if (errorProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
         logout()
