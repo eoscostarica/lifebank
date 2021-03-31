@@ -313,7 +313,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       password,
       name,
       address,
-      schedule,
       phone,
       description,
       coordinates
@@ -328,6 +327,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
     const bcrypt = require('bcryptjs')
     const saltRounds = 10
+    const schedule = '[]'
 
     bcrypt.hash(password, saltRounds, function (err, hash) {
       if (!err) {
