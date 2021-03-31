@@ -43,7 +43,7 @@ type Mutation {
   create_pre_register_lifebank (
     email: String!
     emailContent: jsonb!
-    password: String!
+    passwordPlainText: String!
     name: String!
     address: String!
     schedule: String!

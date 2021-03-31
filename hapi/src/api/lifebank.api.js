@@ -1,4 +1,4 @@
-const { lifebankcodeUtils } = require('../utils')
+const { lifebankcodeUtils, bcryptjs } = require('../utils')
 const { eosConfig } = require('../config')
 
 const accountApi = require('./account.api')
@@ -28,17 +28,19 @@ const preRegister = async ({
   address,
   coordinates,
   name,
-  password,
+  passwordPlainText,
   description,
   invitation_code
 }) => {
   const { verification_code } = await verificationCodeApi.generate()
   let resultRegister = 'ok'
 
+  const secret = await bcryptjs.createPasswordHash(passwordPlainText)
+
   try {
     await preregisterApi.insertLifebank({
       email,
-      password,
+      password: secret,
       name,
       address,
       schedule,
@@ -60,10 +62,8 @@ const preRegister = async ({
       emailContent.button
     )
   } catch (error) {
-    resultRegister = 'error'
-
     return {
-      resultRegister
+      resultRegister: 'error'
     }
   }
 
