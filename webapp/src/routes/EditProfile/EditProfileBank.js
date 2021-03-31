@@ -216,29 +216,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     (geolocation) => handleSetField('geolocation', geolocation),
     [setField]
   )
-  const marks = [
-    {
-      value: 1
-    },
-    {
-      value: 2
-    },
-    {
-      value: 3
-    }
-  ]
-  const valueLabelFormat = (value) => {
-    switch (value) {
-      case 1:
-        return t('editProfile.low')
-      case 2:
-        return t('editProfile.medium')
-      case 3:
-        return t('editProfile.high')
-      default:
-        return 'N/A'
-    }
-  }
 
   const { refetch: checkUserName } = useQuery(VERIFY_USERNAME, {
     variables: {
@@ -294,7 +271,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         onSubmit(userToSubmit, username, profile.account)
         history.push({
           pathname: '/profile',
-          state: true
+          state: true,
+          changes: true
         })
       }
       else document.getElementById("username").focus()

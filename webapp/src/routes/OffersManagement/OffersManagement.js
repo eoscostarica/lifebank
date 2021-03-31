@@ -254,7 +254,7 @@ const OffersManagement = () => {
     }
 
     if (profileIDLoaded) getOffers()
-  }, [getSponsorOffers, profileIDLoaded])
+  })
 
   useEffect(() => {
     loadProfileID()

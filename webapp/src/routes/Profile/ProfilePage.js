@@ -94,6 +94,10 @@ const ProfilePage = () => {
     profile?.consent ? revokeConsent() : grantConsent()
   }
 
+  const response = () => {
+    window.location.reload()
+  }
+
   useEffect(() => {
     if (!currentUser) {
       client && client.resetStore()
@@ -195,7 +199,7 @@ const ProfilePage = () => {
       )}
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <Suspense fallback={<CircularProgress />}>
-          <ProfilePageLifebank profile={profile} />
+          <ProfilePageLifebank profile={profile} responsive={response} />
         </Suspense>
       )}
       {!currentUser &&

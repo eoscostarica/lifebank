@@ -196,7 +196,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ProfilePageLifebank = ({ profile }) => {
+const ProfilePageLifebank = ({ profile, response }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [userName, setuserName] = useState()
@@ -299,11 +299,7 @@ const ProfilePageLifebank = ({ profile }) => {
   useEffect(() => {
     if (location.state) {
       history.replace({ state: false })
-      setOpenSnackbar({
-        show: true,
-        message: t('editProfile.profileWasUpdated'),
-        severity: 'success'
-      })
+      response()
     }
   }, [])
 
@@ -590,7 +586,8 @@ const ProfilePageLifebank = ({ profile }) => {
 }
 
 ProfilePageLifebank.propTypes = {
-  profile: PropTypes.object
+  profile: PropTypes.object,
+  responsive: PropTypes.func
 }
 
 export default ProfilePageLifebank
