@@ -12,6 +12,7 @@ const historyApi = require('./history.api')
 const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
+const locationApi = require('./location.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
@@ -44,14 +45,16 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, emailContent, name, secret }) => {
+const create = async (
+  { role, email, emailContent, name, secret },
+  withAuth
+) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
   const token = jwtUtils.create({ role, username, account })
   const { verification_code } = await verificationCodeApi.generate()
-
-  await userApi.insert({
+  const data = {
     role,
     username,
     account,
@@ -59,7 +62,11 @@ const create = async ({ role, email, emailContent, name, secret }) => {
     secret,
     name,
     verification_code
-  })
+  }
+
+  if (withAuth) data.email_verified = true
+
+  await userApi.insert(data)
 
   await vaultApi.insert({
     account,
@@ -107,7 +114,9 @@ const createLifebank = async ({
     email,
     secret,
     name,
-    verification_code
+    verification_code,
+    email_verified: true,
+    token: 1000000
   })
 
   await vaultApi.insert({
@@ -201,6 +210,8 @@ const getLifebankData = async (account) => {
     account
   )
 
+  const info = await locationApi.infoQuery(account)
+
   if (Object.entries(profile).length === 0) {
     const { email } = await userApi.getOne({
       account: { _eq: account }
@@ -228,6 +239,7 @@ const getLifebankData = async (account) => {
     return {
       ...profile,
       name,
+      categories: info.location[0].info.categories || '[]',
       consent: !!consent
     }
   }
@@ -484,15 +496,6 @@ const transfer = async (from, details) => {
 
   let transaction
 
-  await userApi.setToken(
-    { account: { _eq: user.account } },
-    user.token - details.quantity
-  )
-  await userApi.setToken(
-    { account: { _eq: details.to } },
-    userTo.token + details.quantity
-  )
-
   switch (user.role) {
     case 'donor' || 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
@@ -502,6 +505,17 @@ const transfer = async (from, details) => {
       break
     default:
       break
+  }
+
+  if (transaction.processed) {
+    await userApi.setToken(
+      { account: { _eq: user.account } },
+      user.token - details.quantity
+    )
+    await userApi.setToken(
+      { account: { _eq: details.to } },
+      userTo.token + details.quantity
+    )
   }
 
   const newBalance = await lifebankcoinUtils.getbalance(details.to)

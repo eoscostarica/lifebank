@@ -23,6 +23,7 @@ import '@brainhubeu/react-carousel/lib/style.css'
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
+import ViewCategories from '../../components/ViewCategories'
 import { GET_USERNAME } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
@@ -269,6 +270,9 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.schedule)
       pendingFieldsObject = { ...pendingFieldsObject, schedule: false }
 
+    if (!profile.categories)
+      pendingFieldsObject = { ...pendingFieldsObject, categories: false }
+
     if (!profile.location)
       pendingFieldsObject = { ...pendingFieldsObject, location: false }
 
@@ -480,6 +484,15 @@ const ProfilePageLifebank = ({ profile }) => {
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
             <ViewSchedule schedule={profile.schedule} />
+          </Box>
+        </>
+      }
+      {profile.categories &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.categories')}</Typography>
+            <ViewCategories categories={profile.categories} />
           </Box>
         </>
       }
