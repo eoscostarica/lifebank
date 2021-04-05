@@ -317,10 +317,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   }
 
   const cannotEditProfileAlertClose = () => {
-    history.push({
-      pathname: '/',
-      state: true
-    })
+    history.push('/')
   }
 
   const handleSnackbarClose = (event, reason) => {
