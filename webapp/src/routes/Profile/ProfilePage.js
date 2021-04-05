@@ -135,6 +135,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (profile && !profile.consent) {
+      setSeverity("error")
       setMessegaAlert(t('signup.noConsentNoEdit'))
       handleOpenAlert()
     }

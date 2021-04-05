@@ -17,6 +17,7 @@ import Telephones from '../../components/Telephones'
 import Divider from '@material-ui/core/Divider'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert'
+import CloseIcon from '@material-ui/icons/Close'
 
 import { VERIFY_USERNAME } from '../../gql'
 
@@ -194,11 +195,13 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const photoUrlValueRef = useRef(undefined)
   const phoneValueRef = useRef(undefined)
   const history = useHistory()
+  const [severity] = useState('error')
   const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [username, setUserName] = useState(userName.replaceAll('-', ' '))
   const [isValid, setIsvalid] = useState(true)
   const [isUnique, setIsUnique] = useState(true)
   const [firstRun, setFirstRun] = useState(true)
+  const [open, setOpen] = useState(false)
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
@@ -227,19 +230,22 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   })
 
   const isUsernameUnique = async () => {
-    console.log('PROFILE', profile)
-    if (profile && profile.consent) {
-      const { data } = await checkUserName({
-        username: username,
-        account: profile.account
-      })
-
-      if (data) {
-        if (data.user.length !== 0) setIsUnique(false)
-        else setIsUnique(true)
+    if(!profile.consent) {
+      handleSnackbarClose()
+    } else {
+      if (profile && profile.consent) {
+        const { data } = await checkUserName({
+          username: username,
+          account: profile.account
+        })
+  
+        if (data) {
+          if (data.user.length !== 0) setIsUnique(false)
+          else setIsUnique(true)
+        }
+        setFirstRun(false)
       }
-      setFirstRun(false)
-    } else console.log('ERROR')
+    }
   }
 
   const validUserName = (newUserName) => {
@@ -310,11 +316,38 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     }
   }
 
+  const cannotEditProfileAlertClose = () => {
+    history.push({
+      pathname: '/',
+      state: true
+    })
+  }
+
+  const handleSnackbarClose = (event, reason) => {
+    if(event !== null) setOpen(!open)
+  };
+
+  const buttonCloseHandler = (
+    <>
+      <Button color="secondary" size="small" onClick={cannotEditProfileAlertClose}>
+        {t('signup.noConsentNoEdit2')}
+      </Button>
+      <IconButton
+        aria-label="close"
+        color="inherit"
+        size="small"
+        onClick={handleSnackbarClose}
+      >
+        <CloseIcon fontSize="inherit"/>
+      </IconButton>
+    </>
+  );
+
   return (
     <form autoComplete="off" className={classes.form}>
-      <Snackbar open={true} autoHideDuration={6000} >
-        <Alert severity="error">
-          This is a error message!
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert severity={severity} action={buttonCloseHandler}>
+          {t('signup.noConsentNoEdit')}
         </Alert>
       </Snackbar>
 
