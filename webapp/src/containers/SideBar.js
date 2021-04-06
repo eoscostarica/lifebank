@@ -104,9 +104,11 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
 
           <Box className={classes.optionLink} onClick={onLogout}>
             <LogoutIcon className={classes.iconOption} />
+            <Link to="/">
             <Typography variant="body1" className={classes.labelOption}>
               {t('logout')}
             </Typography>
+            </Link>
           </Box>
         </>
       )}
