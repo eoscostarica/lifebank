@@ -53,7 +53,7 @@ const create = async ({ role, email, emailContent, name, passwordPlainText, sign
   const username = account
   const token = jwtUtils.create({ role, username, account })
   const { verification_code } = await verificationCodeApi.generate()
-  
+
   const data = {
     role,
     username,
