@@ -325,16 +325,17 @@
   - role: guest
     permission:
       columns:
-      - id
-      - role
-      - username
       - account
-      - secret
+      - created_at
       - email
       - email_verified
-      - created_at
-      - updated_at
+      - id
       - name
+      - role
+      - secret
+      - signup_method
+      - updated_at
+      - username
       filter: {}
   - role: lifebank
     permission:
