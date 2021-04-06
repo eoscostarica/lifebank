@@ -42,7 +42,8 @@ const SignupWithGoogle = ({ handlerSubmit }) => {
       true,
       response.profileObj.email,
       response.profileObj.name,
-      response.profileObj.googleId
+      response.profileObj.googleId,
+      'google'
     )
   }
 
