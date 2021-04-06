@@ -185,7 +185,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         severity: 'success'
       })
     }
-  }, [])
+  }, [t, location.state, history])
 
   return (
     <>

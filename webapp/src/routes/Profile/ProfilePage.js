@@ -126,10 +126,12 @@ const ProfilePage = () => {
 
     loadProfile()
   }, [
+    handleOpenAlert,
+    t,
+    loadProfile,
     grantConsentResult,
     revokeConsentResult,
     lastConsentChange,
-    loadProfile,
     classes
   ])
 

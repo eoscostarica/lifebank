@@ -188,7 +188,7 @@ const LimitationHandling = ({
     if (dates && dates[0] !== undefined && dates[1] !== undefined) {
       setDates(dates)
     }
-  }, [dates])
+  }, [setDates, dates])
 
   return (
     <Box className={classes.limitationHandlingPaper}>
@@ -236,7 +236,7 @@ const GenericOfferFormComponent = ({
   const imgUrlValueRef = useRef(undefined)
   const [offer, setOffer] = useState()
   const [updatedOffer, setUpdatedOffer] = useState()
-  const [openSnackbar, setOpenSnackbar] = useState({
+  const [setOpenSnackbar] = useState({
     show: false,
     message: '',
     severity: 'success'

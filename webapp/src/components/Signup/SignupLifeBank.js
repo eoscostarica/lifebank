@@ -10,7 +10,6 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import { useTranslation } from 'react-i18next'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
-import Schedule from '../../components/Schedule'
 import { captchaConfig, constants } from '../../config'
 
 const {
