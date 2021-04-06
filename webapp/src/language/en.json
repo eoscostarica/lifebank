@@ -42,7 +42,7 @@
       "register": "Let's Start!",
       "registerText": "Choose the option that suits you best. ",
       "sucessfulPreregistration": "Thank you. Your information is now being validated.",
-      "sucessfulRegistration": "You're in! Thanks for your support.",
+      "sucessfulRegistration": "Please, check your inbox and verify your email to start using Lifebank.",
       "createAnewAccount": "Create a new account",
       "allYouNeed": "Please, type a valid email address and password to create an account.",
       "preRegisterAnewAccount": "We're almost there! Pre-register a new account",
@@ -72,7 +72,9 @@
       "aboutPlaceholder": "About the LifeBank",
       "consentGranted": "Ready! You can start using Lifebank",
       "consentRevoked": "Consent revoked",
-      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. "
+      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. ",
+      "noConsentNoEdit": "You must first accept the terms and conditions before changing anything.",
+      "noConsentNoEdit2": "Read it here"
     },
     "login": {
       "letsStarted": "Let's get started!",
@@ -157,6 +159,17 @@
       "500Error": "500: Oh... internal server error!",
       "errorMessage": "An error occurred and your request couldn't be completed",
       "takeMeHome": "Take me to the home page"
+    },
+    "categories": {
+      "discount": "Discounts",
+      "freeproduct": "Free products",
+      "coupon": "Coupons",
+      "benefit": "Benefits",
+      "badge": "Badges",
+      "chooseYourCategories": "Choose Your Categories",
+      "addCategories": "Choose offer categories",
+      "editCategories": "Edit categories",
+      "description": "Choose the offer categories that you want to approve. This means that the life tokens obtained for donations at your facilities will be redeemable for offers in the approved categories."
     },
     "schedule": {
       "sunday": "Sunday",
@@ -311,6 +324,7 @@
       "benefits": "Benefits",
       "bloodUrgency": "Blood urgency level",
       "schedule": "Schedule",
+      "categories": "Categories",
       "save": "Save",
       "saveChanges": "Save changes",
       "currentLanguage": "en-US",
@@ -333,7 +347,8 @@
       "newPassword": "New password",
       "instructionCredentialsRecovery": "Enter the email associated with your account to be able to recover it",
       "checkYourEmail": "Check your email",
-      "recovery": "Recover"
+      "recovery": "Recover",
+      "passwordNotChangable": "Please, log in to your Facebook or Google account to change your password"
     },
     "emailVerification": {
       "emailVerified": "Your email has been verified",
@@ -411,7 +426,9 @@
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it",
       "selectDateRange": "Select date range",
-      "offerCreation": "Offer Created Successfully"
+      "offerCreation": "Offer Created Successfully",
+      "offerStateActive": "Active Offers",
+      "offerStateInactive": "Inactive Offers"
     },
     "offerView": {
       "selectedOffer": "Selected offer",

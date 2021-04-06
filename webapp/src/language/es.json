@@ -42,7 +42,7 @@
       "register": "Registro",
       "registerText": "Elija la opción que más le convenga. ",
       "sucessfulPreregistration": "Pre-registro exitoso",
-      "sucessfulRegistration": "Registro exitoso",
+      "sucessfulRegistration": "Revisa tu bandeja de entrada y verifica tu email para comenzar a usar Lifebank.",
       "createAnewAccount": "Crear una nueva cuenta",
       "allYouNeed": "Para registrarte, lo único que tienes que poner es tu email y contraseña",
       "preRegisterAnewAccount": "Pre-registrar una nueva cuenta",
@@ -72,7 +72,9 @@
       "aboutPlaceholder": "Acerca del LifeBank",
       "consentGranted": "Consentimiento otorgado",
       "consentRevoked": "Consentimiento revocado",
-      "consentError": "Error al otorgar consentimiento"
+      "consentError": "Error al otorgar consentimiento",
+      "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
+      "noConsentNoEdit2": "Léelo aquí"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
@@ -158,6 +160,17 @@
       "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
       "takeMeHome": "Llévame al inicio"
     },
+    "categories": {
+      "discount": "Descuentos",
+      "freeproduct": "Productos gratis",
+      "coupon": "Cupones",
+      "benefit": "Beneficios",
+      "badge": "Insignias",
+      "chooseYourCategories": "Escoge tus Categorías",
+      "addCategories": "Eliga categorías de ofertas",
+      "editCategories": "Editar categorías",
+      "description": "Elija las categorías de ofertas que desea aprobar. Esto quiere decir que los life tokens obtenidos por donaciones en su centro podrán ser redimidas por ofertas que calcen las categorías aprobadas."
+    },
     "schedule": {
       "sunday": "Domingo",
       "monday": "Lunes",
@@ -214,7 +227,6 @@
       "namePlaceholder": "Ingrese su nombre",
       "urlWebsitePlaceHolder": "URL del sitio web",
       "bloodDemandLevel": "Nivel de demanda de sangre",
-      "dragOrtap": "Arrastre o toque el nivel de demanda que representa las necesidades reales de su Banco de Sangre. Puede establecer las recompensas simbólicas dependiendo de estos niveles.",
       "lowLevelReward": "Nivel bajo de urgencia",
       "mediumLevelReward": "Nivel medio de urgencia",
       "highLevelReward": "Alto nivel de urgencia",
@@ -311,6 +323,7 @@
       "benefits": "Beneficios",
       "bloodUrgency": "Urgencia de sangre",
       "schedule": "Horario",
+      "categories": "Categorías",
       "save": "Guardar",
       "saveChanges": "Guardar cambios",
       "currentLanguage": "es-CR",
@@ -333,7 +346,8 @@
       "newPassword": "Nueva contraseña",
       "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
       "checkYourEmail": "Revisa tu correo",
-      "recovery": "Recuperar"
+      "recovery": "Recuperar",
+      "passwordNotChangable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
     },
     "emailVerification": {
       "emailVerified": "Tu correo ha sido verificado",
@@ -411,7 +425,9 @@
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
       "yesDeleteIt": "Si, borrar",
       "selectDateRange": "Seleccione el rango de fecha",
-      "offerCreation": "Oferta creada correctamente"
+      "offerCreation": "Oferta creada correctamente",
+      "offerStateActive": "Ofertas Activas",
+      "offerStateInactive": "Ofertas Inactivas"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",
