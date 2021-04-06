@@ -21,6 +21,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import {
   CREATE_ACCOUNT_MUTATION,
+  CREATE_ACCOUNT_AUTH_MUTATION,
   CREATE_PRE_REGITER_LIFEBANK_MUTATION,
   VALIDATION_EMAIL
 } from '../../gql'
@@ -215,6 +216,16 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       data: { create_account: createAccountResult } = {}
     }
   ] = useMutation(CREATE_ACCOUNT_MUTATION)
+
+  const [
+    createAccountAuth,
+    {
+      error: errorcreateAccountAuth,
+      loading: createAccountLoadingAuth,
+      data: { create_account_auth: createAccountResultAuth } = {}
+    }
+  ] = useMutation(CREATE_ACCOUNT_AUTH_MUTATION)
+
   const [
     preRegisterLifebank,
     {
@@ -239,8 +250,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleCreateAccount = () => {
-    const { email, secret } = user
-    const name = 'undefined'
+    const { email, name, secret } = user
     const bcrypt = require('bcryptjs')
     const saltRounds = 10
 
@@ -275,7 +285,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
         bcrypt.hash(secret, saltRounds, function (err, hash) {
           if (!err) {
-            createAccount({
+            createAccountAuth({
               variables: {
                 role,
                 email,
@@ -304,7 +314,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       password,
       name,
       address,
-      schedule,
       phone,
       description,
       coordinates
@@ -319,6 +328,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
     const bcrypt = require('bcryptjs')
     const saltRounds = 10
+    const schedule = '[]'
 
     bcrypt.hash(password, saltRounds, function (err, hash) {
       if (!err) {
@@ -396,12 +406,26 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   }, [createAccountResult])
 
+  useEffect(() => {
+    if (createAccountResultAuth) {
+      handleOpen()
+      setMessegaAlert(t('signup.sucessfulRegistration'))
+      handleOpenAlert()
+      login(createAccountResultAuth.token)
+    }
+
+  }, [createAccountResultAuth])
+
 
   useEffect(() => {
     if (errorcreateAccount) setErrorMessage(t('errors.authError'))
 
   }, [errorcreateAccount])
 
+  useEffect(() => {
+    if (errorcreateAccountAuth) setErrorMessage(t('errors.authError'))
+
+  }, [errorcreateAccountAuth])
 
   useEffect(() => {
     if (errorpreRegisterLifebank) setErrorMessage(t('errors.authError'))
@@ -511,7 +535,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
                     <SignupDonor
                       onSubmit={handleCreateAccount}
                       onSubmitWithAuth={handleCreateAccountWithAuth}
-                      loading={createAccountLoading}
+                      loading={createAccountLoading || createAccountLoadingAuth}
                       setField={handleSetField}
                       isEmailValid={isEmailValid}
                     >

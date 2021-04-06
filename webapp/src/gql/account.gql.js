@@ -10,6 +10,16 @@ export const CREATE_ACCOUNT_MUTATION = gql`
   }
 `
 
+export const CREATE_ACCOUNT_AUTH_MUTATION = gql`
+  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!) {
+    create_account_auth(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret) {
+      account
+      token
+      transaction_id
+    }
+  }
+`
+
 export const CREATE_ACCOUNT_LIFEBANK_MUTATION = gql`
   mutation($email: String!, $emailContent: jsonb!, $name: String!, $secret: String!, $verification_code: String!) {
     create_account_lifebank (email: $email, emailContent: $emailContent, name: $name, secret: $secret, verification_code: $verification_code){
@@ -200,6 +210,14 @@ export const GET_SECRET_BY_ACCOUNT = gql`
   query ($account: String!) {
     user(where: {_or: [{account: {_eq: $account}}, {username: {_eq: $account}}, {email: {_eq: $account}}], _and: {email_verified: {_eq: true}}}) {
       secret
+    }
+  }
+`
+
+export const GET_ACCOUNT_NAME = gql`
+  query ($account: String!) {
+    user(where: {account: {_eq: $account}}, limit: 1) {
+      name
     }
   }
 `

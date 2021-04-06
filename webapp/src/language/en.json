@@ -424,7 +424,9 @@
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it",
       "selectDateRange": "Select date range",
-      "offerCreation": "Offer Created Successfully"
+      "offerCreation": "Offer Created Successfully",
+      "offerStateActive": "Active Offers",
+      "offerStateInactive": "Inactive Offers"
     },
     "offerView": {
       "selectedOffer": "Selected offer",
