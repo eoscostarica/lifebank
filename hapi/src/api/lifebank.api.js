@@ -33,7 +33,7 @@ const preRegister = async ({
   invitation_code
 }) => {
   const { verification_code } = await verificationCodeApi.generate()
-  let resultRegister = 'ok'
+  const resultRegister = 'ok'
 
   const secret = await bcryptjs.createPasswordHash(passwordPlainText)
 
