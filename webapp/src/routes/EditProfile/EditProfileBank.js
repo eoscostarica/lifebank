@@ -20,6 +20,7 @@ import Divider from '@material-ui/core/Divider'
 import { VERIFY_USERNAME } from '../../gql'
 
 import Schedule from '../../components/Schedule'
+import Categories from '../../components/Categories'
 import LogoUrlInput from '../../components/LogoUrlInput'
 import MapEditLocation from '../../components/MapEditLocation'
 import { constants } from '../../config'
@@ -207,6 +208,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     geolocation: JSON.parse(profile.location),
     name: profile.name,
     schedule: profile.schedule,
+    categories: profile.categories,
     blood_urgency_level: profile.blood_urgency_level,
     has_immunity_test: Boolean(profile.has_immunity_test)
   })
@@ -271,6 +273,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   const handleOnAddSchedule = useCallback(
     (data) => handleSetField('schedule', JSON.stringify(data)),
+    [setField]
+  )
+
+  const handleOnAddCategories = useCallback(
+    (data) => handleSetField('categories', JSON.stringify(data)),
     [setField]
   )
 
@@ -459,8 +466,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             />
           )}
         </Box>
-
-
         <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
           <Divider className={classes.divider} />
           <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
@@ -474,6 +479,21 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           />
         </Box>
         <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
+          <Divider className={classes.divider} />
+          <Typography className={classes.boldText} variant="subtitle1">{t('common.categories')}</Typography>
+          <Typography variant="body1" className={classes.text}>
+            {t('categories.description')}
+          </Typography>
+          <Box className={classes.boxCenter}>
+            <Categories
+              buttonText={t('categories.editCategories')}
+              categoriesLoad={user.categories}
+              loading
+              handleOnAddCategories={handleOnAddCategories}
+              data={user.categories ? JSON.parse(user.categories || '[]') : []}
+              showCategories
+            />
+          </Box>
           <Divider className={classes.divider} />
           <Typography className={classes.boldText} variant="subtitle1">{t('profile.images')}</Typography>
         </Box>
@@ -532,76 +552,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               )}
             </Box>
           )}
-        </div>
-        <div style={{ display: isCompleting && user.blood_urgency_level ? 'none' : '' }}>
-          <Divider className={classes.divider} />
-          <Typography className={classes.boldText} variant="subtitle1">{t('editProfile.bloodDemandLevel')}</Typography>
-          <Typography variant="body1" className={classes.text}>
-            {t('editProfile.dragOrtap')}
-          </Typography>
-          <Box className={classes.bloodDemand}>
-            <Box className={classes.markLabel}>
-              <Typography variant="h4">{t('editProfile.low')}</Typography>
-              <Typography variant="h4" className={classes.midLabel}>
-                {t('editProfile.medium')}
-              </Typography>
-              <Typography variant="h4">{t('editProfile.high')}</Typography>
-            </Box>
-            <Box className={classes.slider}>
-              <Slider
-                valueLabelDisplay="off"
-                color="secondary"
-                defaultValue={user.blood_urgency_level}
-                valueLabelFormat={valueLabelFormat}
-                onChange={(event, value) =>
-                  handleSetField('blood_urgency_level', value)
-                }
-                marks={marks}
-                step={null}
-                min={1}
-                max={3}
-              />
-            </Box>
-          </Box>
-          <Box className={classes.levelReward}>
-            <Typography variant="h4">{t('editProfile.lowLevelReward')}</Typography>
-            <TextField
-              id="lowLevelReward"
-              type="number"
-              disabled
-              variant="outlined"
-              defaultValue={1}
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-          </Box>
-          <Box className={classes.levelReward}>
-            <Typography variant="h4">{t('editProfile.mediumLevelReward')}</Typography>
-            <TextField
-              id="mediumLevelReward"
-              type="number"
-              disabled
-              variant="outlined"
-              defaultValue={2}
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-          </Box>
-          <Box className={classes.levelReward}>
-            <Typography variant="h4">{t('editProfile.highLevelReward')}</Typography>
-            <TextField
-              id="urgentLevelReward"
-              type="number"
-              disabled
-              variant="outlined"
-              defaultValue={3}
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-          </Box>
         </div>
         <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
           <Divider className={classes.divider} />
