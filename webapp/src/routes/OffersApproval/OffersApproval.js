@@ -4,6 +4,13 @@ import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
 import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import SnackbarContent from '@material-ui/core/SnackbarContent'
+
 import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
 import {
   GET_ALL_OFFERS_QUERY,
@@ -32,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
   mainGridDesktop: {
     paddingTop: 39,
     paddingLeft: 20,
-    paddingRigth: 20
+    paddingRigth: 20,
+    paddingBottom: 30
   },
   generalDescription: {
     marginTop: 10,
@@ -45,7 +53,24 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 39,
     paddingLeft: 20,
     paddingRigth: 20,
-    paddingBottom: 90
+    paddingBottom: '15%'
+  },
+  boxSelect: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
+  formControl: {
+    margin: theme.spacing(2),
+    marginLeft: 25,
+    minWidth: 180
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  },
+  snackbar: {
+    marginRight: 100
   }
 }))
 
@@ -56,16 +81,33 @@ const OffersApproval = () => {
   const [offers, setOffers] = useState([])
   const [currentUser] = useUser()
   const [account, setAccount] = useState(currentUser.account)
-  const [approvedOffers, setApprovedOffers] = useState([])
-  const [rejectedOffers, setRejectedOffers] = useState([])
+  const [discountOffers, setDiscountOffers] = useState([])
+  const [freeOffers, setFreetOffers] = useState([])
+  const [badgeOffers, setBadgeOffers] = useState([])
+  const [couponOffers, setCouponOffers] = useState([])
+  const [benefitsOffers, setBenefitsOffers] = useState([])
   const [categories, setCategories] = useState([])
+  const [category, setCategory] = useState('')
+
+  const CategoryX = [
+    { value: 'discount', label: t('categories.discount') },
+    { value: 'freeProduct', label: t('categories.freeProduct') },
+    { value: 'coupon', label: t('categories.coupon') },
+    { value: 'benefit', label: t('categories.benefit') },
+    { value: 'badge', label: t('categories.badge') }
+
+  ]
 
   const getOffers = async () => {
     setLoadingOffers(true)
     await getAllOffers()
     await getInfo()
   }
-  console.log("Cuenta..", account)
+
+  const handleChange = (event) => {
+    setCategory(event.target.value);
+  };
+
   const {
     loading: loadingDataOffer,
     data: allOffers,
@@ -104,19 +146,39 @@ const OffersApproval = () => {
   }, [])
 
   useEffect(() => {
-    const AOffers = []
-    const ROffers = []
-
+    const discountOff = []
+    const freeProductOff = []
+    const couponOff = []
+    const benefitOff = []
+    const badgeOff = []
 
     offers.map((offer) => {
-      if (!categories.includes(offer.offer_type))
-        ROffers.push(offer)
-      else
-        AOffers.push(offer)
+      switch (offer.offer_type) {
+        case 'discount':
+          discountOff.push(offer)
+          break
+        case 'benefit':
+          benefitOff.push(offer)
+          break
+        case 'freeProduct':
+          freeProductOff.push(offer)
+          break
+        case 'coupon':
+          couponOff.push(offer)
+          break
+        case 'badge':
+          badgeOff.push(offer)
+          break
+        default:
+          console.log("ERRORRRR")
+      }
     })
 
-    setApprovedOffers(AOffers)
-    setRejectedOffers(ROffers)
+    setDiscountOffers(discountOff)
+    setFreetOffers(freeProductOff)
+    setBadgeOffers(badgeOff)
+    setCouponOffers(couponOff)
+    setBenefitsOffers(benefitOff)
 
   }, [offers])
 
@@ -142,47 +204,131 @@ const OffersApproval = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="flex-start"
-        spacing={0}
-        className={classes.mainGridDesktop}
-      >
-        <Grid item md={12}>
-          <Typography variant="h2" className={classes.SubtitleSection}>
-            {t('cardsSection.approvedOffers')}
-          </Typography>
+      <Box className={classes.boxSelect}>
+        <FormControl variant="filled" className={classes.formControl}>
+          <InputLabel id="demo-simple-select-outlined-label">{t('common.categories')}</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={category}
+            onChange={handleChange}
+            label="category"
+          >
+            {CategoryX.map((option) => {
+              return (
+                <MenuItem
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </MenuItem>
+              )
+            })}
+          </Select>
+        </FormControl>
+        <Typography className={classes.snackbar}>Mensaje</Typography>
+      </Box>
+      {category === 'discount' && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.showOffers}
+        >
+          <Grid item md={12} sm={6}>
+            <Typography variant="h2" className={classes.SubtitleSection}>
+              {t('categories.discount')}
+            </Typography>
+          </Grid>
+          <ShowOffersDesktop
+            offers={discountOffers}
+            loading={loadingOffers}
+          />
         </Grid>
-        <ShowOffersDesktop
-          offers={approvedOffers}
-          loading={loadingOffers}
-        />
-      </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="flex-start"
-        spacing={0}
-        className={classes.showOffers}
-        md={12}
-        xl={10}
-      >
-        <Grid item md={12}>
-          <Typography variant="h2" className={classes.SubtitleSection}>
-            {t('cardsSection.rejectedOffers')}
-          </Typography>
-
+      )}
+      {category === 'freeProduct' && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.showOffers}
+        >
+          <Grid item md={12} sm={6}>
+            <Typography variant="h2" className={classes.SubtitleSection}>
+              {t('categories.freeProduct')}
+            </Typography>
+          </Grid>
+          <ShowOffersDesktop
+            offers={freeOffers}
+            loading={loadingOffers}
+          />
         </Grid>
-        <ShowOffersDesktop
-          offers={rejectedOffers}
-          loading={loadingOffers}
-        />
-
-      </Grid>
-
+      )}
+      {category === 'coupon' && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.showOffers}
+        >
+          <Grid item md={12} sm={6}>
+            <Typography variant="h2" className={classes.SubtitleSection}>
+              {t('categories.coupon')}
+            </Typography>
+          </Grid>
+          <ShowOffersDesktop
+            offers={couponOffers}
+            loading={loadingOffers}
+          />
+        </Grid>
+      )}
+      {category === 'benefit' && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.showOffers}
+        >
+          <Grid item md={12} sm={6}>
+            <Typography variant="h2" className={classes.SubtitleSection}>
+              {t('categories.benefit')}
+            </Typography>
+          </Grid>
+          <ShowOffersDesktop
+            offers={benefitsOffers}
+            loading={loadingOffers}
+          />
+        </Grid>
+      )}
+      {category === 'badge' && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.showOffers}
+          md={12}
+        >
+          <Grid item md={12} sm={6}>
+            <Typography variant="h2" className={classes.SubtitleSection}>
+              {t('categories.badge')}
+            </Typography>
+          </Grid>
+          <ShowOffersDesktop
+            offers={badgeOffers}
+            loading={loadingOffers}
+          />
+        </Grid>
+      )}
     </>
   )
 }
