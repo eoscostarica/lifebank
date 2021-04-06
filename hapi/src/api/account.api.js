@@ -47,7 +47,10 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, emailContent, name, passwordPlainText, signup_method }, withAuth) => {
+const create = async (
+  { role, email, emailContent, name, passwordPlainText, signup_method },
+  withAuth
+) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
