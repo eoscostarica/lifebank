@@ -12,7 +12,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { useTranslation } from 'react-i18next'
 import Divider from '@material-ui/core/Divider'
-
 import OfferView from '../../components/OfferView'
 
 const useStyles = makeStyles((theme) => ({
@@ -148,23 +147,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5%'
   }
 }))
-
 const ShowOffers = ({ offers, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [openOfferView, setOpenOfferView] = useState(true)
   const [selectOffer, setSelectOffer] = useState()
-
   const handleOpenOfferView = (offer) => {
     setSelectOffer(offer)
     setOpenOfferView(true)
   }
-
   const handleCloseOfferView = (offer) => {
     setSelectOffer(null)
     setOpenOfferView(false)
   }
-
   const LoadOfferDesktop = () => {
     return (
       <>
@@ -206,15 +201,11 @@ const ShowOffers = ({ offers, loading }) => {
       </>
     )
   }
-
   const truncateString = (str) => {
     const num = 55
-
     if (str.length <= num) return str
-
     return str.slice(0, num) + '...'
   }
-
   const OfferCard = (props) => {
     return (
       <Card className={classes.cardRoot}>
@@ -257,21 +248,17 @@ const ShowOffers = ({ offers, loading }) => {
       </Card>
     )
   }
-
   OfferCard.propTypes = {
     offer: PropTypes.object
   }
-
   return (
     <Box className={classes.offersGridContainer} spacing={2}>
       <LoadOfferDesktop />
     </Box>
   )
 }
-
 ShowOffers.propTypes = {
   offers: PropTypes.array,
   loading: PropTypes.bool,
 }
-
 export default ShowOffers

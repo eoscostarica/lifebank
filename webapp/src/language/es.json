@@ -45,7 +45,7 @@
       "register": "Registro",
       "registerText": "Elija la opción que más le convenga. ",
       "sucessfulPreregistration": "Pre-registro exitoso",
-      "sucessfulRegistration": "Registro exitoso",
+      "sucessfulRegistration": "Revisa tu bandeja de entrada y verifica tu email para comenzar a usar Lifebank.",
       "createAnewAccount": "Crear una nueva cuenta",
       "allYouNeed": "Para registrarte, lo único que tienes que poner es tu email y contraseña",
       "preRegisterAnewAccount": "Pre-registrar una nueva cuenta",
@@ -429,7 +429,9 @@
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
       "yesDeleteIt": "Si, borrar",
       "selectDateRange": "Seleccione el rango de fecha",
-      "offerCreation": "Oferta creada correctamente"
+      "offerCreation": "Oferta creada correctamente",
+      "offerStateActive": "Ofertas Activas",
+      "offerStateInactive": "Ofertas Inactivas"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",

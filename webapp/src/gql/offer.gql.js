@@ -125,6 +125,7 @@ export const GET_SPONSOR_OFFERS_QUERY = gql`
     }
   }
 `
+
 export const GET_OFFERS_QUERY = gql`
   query($active: Boolean!) {
     offer(where: { active: { _eq: $active } }) {
