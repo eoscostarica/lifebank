@@ -82,10 +82,6 @@ const SignupLifeBank = ({
     (coordinates) => setField('coordinates', JSON.stringify(coordinates)),
     [setField]
   )
-  const handleOnAddSchedule = useCallback(
-    (data) => setField('schedule', JSON.stringify(data)),
-    [setField]
-  )
   const [recaptchaValue, serRecaptchaValue] = useState('')
 
   return (
@@ -134,9 +130,6 @@ const SignupLifeBank = ({
           onChange={(event) => setField('phone', event.target.value)}
         />
         <Box className={classes.boxCenter}>
-          <Schedule handleOnAddSchedule={handleOnAddSchedule} />
-        </Box>
-        <Box className={classes.boxCenter}>
           <Typography gutterBottom>
             {t('signup.chooseYourLocation')}
           </Typography>
@@ -161,7 +154,6 @@ const SignupLifeBank = ({
               !user.name ||
               !user.address ||
               !user.phone ||
-              !user.schedule ||
               !user.coordinates ||
               !recaptchaValue ||
               loading

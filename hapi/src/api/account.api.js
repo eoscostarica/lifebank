@@ -46,16 +46,14 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, emailContent, name, passwordPlainText }) => {
+const create = async ({ role, email, emailContent, name, passwordPlainText }, withAuth) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
   const token = jwtUtils.create({ role, username, account })
   const { verification_code } = await verificationCodeApi.generate()
-
-  const secret = await bcryptjs.createPasswordHash(passwordPlainText)
-
-  await userApi.insert({
+  
+  const data = {
     role,
     username,
     account,
@@ -63,7 +61,11 @@ const create = async ({ role, email, emailContent, name, passwordPlainText }) =>
     secret: secret,
     name,
     verification_code
-  })
+  }
+
+  if (withAuth) data.email_verified = true
+
+  await userApi.insert(data)
 
   await vaultApi.insert({
     account,
