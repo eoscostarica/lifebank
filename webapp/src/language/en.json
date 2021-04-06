@@ -337,7 +337,7 @@
     },
     "credentialsRecovery": {
       "credentialsRecovery": "Credentials Recovery",
-      "emailError": "The email entered is not associated with any accoun",
+      "emailError": "The email entered is not associated with any account",
       "changePasswordInstructions": "To change your password, enter the email associated with your account, the current password and the new one",
       "changePassword": "Change Password",
       "currentPassword": "Current password",
