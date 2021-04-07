@@ -214,7 +214,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     schedule: profile.schedule,
     categories: profile.categories,
     blood_urgency_level: profile.blood_urgency_level,
-    has_immunity_test: Boolean(profile.has_immunity_test)
+    has_immunity_test: Boolean(profile.has_immunity_test),
+    requirement: profile.requirement
   })
   const handleOnGeolocationChange = useCallback(
     (geolocation) => handleSetField('geolocation', geolocation),
@@ -423,6 +424,26 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           }}
           onChange={(event) =>
             handleSetField('about', event.target.value)
+          }
+        />
+
+        <TextField
+          id="requirement"
+          style={{
+            display: isCompleting && user.requirement ? 'none' : ''
+          }}
+          label={t('signup.requirement')}
+          fullWidth
+          multiline
+          rowsMax={6}
+          variant="outlined"
+          placeholder={t('signup.requirementPlaceholder')}
+          defaultValue={user.requirement}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(event) =>
+            handleSetField('requirement', event.target.value)
           }
         />
 
