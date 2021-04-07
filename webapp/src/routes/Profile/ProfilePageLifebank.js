@@ -150,19 +150,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  editBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
+  editButton: {
+    borderRadius: 50,
+    height: 60,
+    padding: 20,
+    position: 'fixed',
+    zIndex: 1,
+    bottom: 20,
+    right: 20,
+    margin: '0',
     color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
+    backgroundColor: '#ba0d0d'
   },
   secondaryText: {
     color: `${theme.palette.secondary.main} !important`
@@ -583,7 +581,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false, userName: userName } }}
         className={classes.routerLink}
       >
-        <Button variant="contained" color="primary" className={classes.editBtn}>{t('common.edit')}</Button>
+        <Button variant="contained" color="secondary" className={classes.editButton}>{t('common.edit')}</Button>
       </LinkRouter>
     </>
   )
