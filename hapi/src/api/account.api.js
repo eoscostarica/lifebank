@@ -359,8 +359,6 @@ const getValidLifebanks = async () => {
       })
   }
 
-  console.log('LIFEBANK', validLifebanks)
-
   return validLifebanks
 }
 

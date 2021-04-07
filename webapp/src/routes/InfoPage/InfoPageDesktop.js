@@ -264,7 +264,6 @@ const InfoPage = () => {
   }, [errorUsername, errorInfoProfile, allOffersError])
 
   const getInfo = async () => {
-    console.log('LOCATION', location)
     if (location.state) setProfile(location.state.profile)
     else {
       const getProfile = async () => {
@@ -323,10 +322,6 @@ const InfoPage = () => {
 
     }
   }
-
-  useEffect(() => {
-    console.log('PROFILE', profile)
-  }, [profile])
 
   return (
     <>

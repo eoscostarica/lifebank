@@ -295,10 +295,6 @@ const InfoPageMobile = () => {
 
   }, [errorInfoProfile])
 
-  useEffect(() => {
-    console.log('PROFILE', profile)
-  }, [profile])
-
   const ScheduleItem = (schedule) => {
     return (
       <List>
