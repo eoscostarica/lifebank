@@ -264,6 +264,7 @@ const InfoPage = () => {
   }, [errorUsername, errorInfoProfile, allOffersError])
 
   const getInfo = async () => {
+    console.log('LOCATION', location)
     if (location.state) setProfile(location.state.profile)
     else {
       const getProfile = async () => {
@@ -310,6 +311,7 @@ const InfoPage = () => {
                 "urgencyLevel": objectTemp.info.blood_urgency_level,
                 "telephone": objectTemp.info.telephones,
                 "userName": objectTemp.user.username,
+                "requirement": objectTemp.info.requirement
               })
           }
 
@@ -321,6 +323,10 @@ const InfoPage = () => {
 
     }
   }
+
+  useEffect(() => {
+    console.log('PROFILE', profile)
+  }, [profile])
 
   return (
     <>
@@ -441,7 +447,20 @@ const InfoPage = () => {
                     )
                   )}
               </Box>
-
+              { profile.role === 'lifebank' && (
+                <Box className={classes.midLabel}>
+                <Typography className={classes.boldText} variant="subtitle1">
+                  {t('signup.requirement')}
+                </Typography>
+                <Typography
+                  style={{ marginTop: '4px' }}
+                  className={classes.text}
+                  variant="body1"
+                >
+                  {profile.requirement.replaceAll('\n', ', ')}
+                </Typography>
+              </Box>
+              )}
               {profile.role === 'lifebank' && (
                 <Box className={classes.midLabel}>
                   <Divider className={classes.divider} />

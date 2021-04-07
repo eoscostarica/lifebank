@@ -271,6 +271,7 @@ const InfoPageMobile = () => {
                 "urgencyLevel": objectTemp.info.blood_urgency_level,
                 "telephone": objectTemp.info.telephones,
                 "userName": objectTemp.user.username,
+                "requirement": objectTemp.info.requirement
               })
           }
 
@@ -293,6 +294,10 @@ const InfoPageMobile = () => {
     }
 
   }, [errorInfoProfile])
+
+  useEffect(() => {
+    console.log('PROFILE', profile)
+  }, [profile])
 
   const ScheduleItem = (schedule) => {
     return (
@@ -500,6 +505,20 @@ const InfoPageMobile = () => {
                     )
                   )}
               </Box>
+              { profile.role === 'lifebank' && (
+                <Box className={classes.midLabel}>
+                <Typography className={classes.boldText} variant="subtitle1">
+                  {t('signup.requirement')}
+                </Typography>
+                <Typography
+                  style={{ marginTop: '4px' }}
+                  className={classes.text}
+                  variant="body1"
+                >
+                  {profile.requirement.replaceAll('\n', ', ')}
+                </Typography>
+              </Box>
+              )}
               <Divider className={classes.divider} />
               {profile.role === 'sponsor' && JSON.parse(profile.social_media_links).length > 0 && (
                 <Box

@@ -354,9 +354,12 @@ const getValidLifebanks = async () => {
         photos: lifebankAccounts[index].info.photos,
         role: lifebankAccounts[index].user.role,
         urgencyLevel: lifebankAccounts[index].info.blood_urgency_level,
-        userName: lifebankAccounts[index].user.username
+        userName: lifebankAccounts[index].user.username,
+        requirement: lifebankAccounts[index].info.requirement
       })
   }
+
+  console.log('LIFEBANK', validLifebanks)
 
   return validLifebanks
 }
