@@ -16,6 +16,7 @@ const locationApi = require('./location.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+const verifyEmailHandler = require('../routes/verify-email/verify-email.handler')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
@@ -45,22 +46,37 @@ query MyQuery {
 }
 `
 
-const create = async ({ role, email, emailContent, name, secret }) => {
+const GET_LIFEBANK_ACCOUNT_LOWER_TOKEN = `
+query MyQuery {
+  user(limit: 1, order_by: {token: asc}, where: {role: {_eq: "lifebank"}}) {
+    account
+  }
+}
+`
+
+const create = async (
+  { role, email, emailContent, name, secret, signup_method },
+  withAuth
+) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
   const { password, transaction } = await eosUtils.createAccount(account)
   const username = account
   const token = jwtUtils.create({ role, username, account })
   const { verification_code } = await verificationCodeApi.generate()
-
-  await userApi.insert({
+  const data = {
     role,
     username,
     account,
     email,
     secret,
     name,
-    verification_code
-  })
+    verification_code,
+    signup_method
+  }
+
+  if (withAuth) data.email_verified = true
+
+  await userApi.insert(data)
 
   await vaultApi.insert({
     account,
@@ -164,6 +180,28 @@ const getProfile = async (account) => {
     role: user.role,
     id: user.id,
     ...data
+  }
+}
+
+const isPasswordChangable = async ({ email }) => {
+  const user = await userApi.getOne({
+    email: { _eq: email }
+  })
+
+  if (user) {
+    switch (user.signup_method) {
+      case 'google':
+      case 'facebook':
+        return {
+          password_changable: false
+        }
+      default:
+        break
+    }
+  }
+
+  return {
+    password_changable: true
   }
 }
 
@@ -491,7 +529,10 @@ const transfer = async (from, details) => {
   let transaction
 
   switch (user.role) {
-    case 'donor' || 'sponsor':
+    case 'donor':
+      transaction = await lifebankcoinUtils.transfer(from, password, details)
+      break
+    case 'sponsor':
       transaction = await lifebankcoinUtils.transfer(from, password, details)
       break
     case 'lifebank':
@@ -526,6 +567,17 @@ const transfer = async (from, details) => {
     }
   })
 
+  if (user.role === 'donor') {
+    const tempDetail = {}
+    Object.assign(tempDetail, details)
+
+    const { user } = await hasuraUtils.request(GET_LIFEBANK_ACCOUNT_LOWER_TOKEN)
+    if (user.length === 1) {
+      tempDetail.to = user[0].account
+      await transfer(details.to, tempDetail)
+    }
+  }
+
   return transaction
 }
 
@@ -533,6 +585,7 @@ module.exports = {
   create,
   createLifebank,
   getProfile,
+  isPasswordChangable,
   login,
   grantConsent,
   revokeConsent,

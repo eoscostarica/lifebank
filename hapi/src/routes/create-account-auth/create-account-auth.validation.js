@@ -7,8 +7,7 @@ module.exports = {
       email: Joi.string().required(),
       emailContent: Joi.object().required(),
       name: Joi.string().required(),
-      secret: Joi.string().required(),
-      signup_method: Joi.string().required()
+      secret: Joi.string().required()
     })
   }).options({ stripUnknown: true })
 }

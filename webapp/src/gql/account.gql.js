@@ -1,8 +1,18 @@
 import gql from 'graphql-tag'
 
 export const CREATE_ACCOUNT_MUTATION = gql`
+  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!, $signup_method: String!) {
+    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret, signup_method: $signup_method) {
+      account
+      token
+      transaction_id
+    }
+  }
+`
+
+export const CREATE_ACCOUNT_AUTH_MUTATION = gql`
   mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!) {
-    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret) {
+    create_account_auth(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret) {
       account
       token
       transaction_id
@@ -188,10 +198,26 @@ export const VALIDATE_EMAIL = gql`
   }
 `
 
+export const GET_ACCOUNT_SIGNUP_METHOD = gql`
+  mutation ($email: String!) {
+    signup_method(email: $email) {
+      password_changable
+    }
+  }
+`
+
 export const GET_SECRET_BY_ACCOUNT = gql`
   query ($account: String!) {
     user(where: {_or: [{account: {_eq: $account}}, {username: {_eq: $account}}, {email: {_eq: $account}}], _and: {email_verified: {_eq: true}}}) {
       secret
+    }
+  }
+`
+
+export const GET_ACCOUNT_NAME = gql`
+  query ($account: String!) {
+    user(where: {account: {_eq: $account}}, limit: 1) {
+      name
     }
   }
 `
