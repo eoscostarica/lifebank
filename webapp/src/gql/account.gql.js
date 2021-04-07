@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const CREATE_ACCOUNT_MUTATION = gql`
-  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!) {
-    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret) {
+  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!, $signup_method: String!) {
+    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret, signup_method: $signup_method) {
       account
       token
       transaction_id
@@ -194,6 +194,14 @@ export const VALIDATE_EMAIL = gql`
   query($email: String!) {
     user(where: { email: { _eq: $email } }) {
       email
+    }
+  }
+`
+
+export const GET_ACCOUNT_SIGNUP_METHOD = gql`
+  mutation ($email: String!) {
+    signup_method(email: $email) {
+      password_changable
     }
   }
 `

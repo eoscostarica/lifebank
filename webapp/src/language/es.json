@@ -72,7 +72,9 @@
       "aboutPlaceholder": "Acerca del LifeBank",
       "consentGranted": "Consentimiento otorgado",
       "consentRevoked": "Consentimiento revocado",
-      "consentError": "Error al otorgar consentimiento"
+      "consentError": "Error al otorgar consentimiento",
+      "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
+      "noConsentNoEdit2": "Léelo aquí"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
@@ -344,7 +346,8 @@
       "newPassword": "Nueva contraseña",
       "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
       "checkYourEmail": "Revisa tu correo",
-      "recovery": "Recuperar"
+      "recovery": "Recuperar",
+      "passwordNotChangable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
     },
     "emailVerification": {
       "emailVerified": "Tu correo ha sido verificado",

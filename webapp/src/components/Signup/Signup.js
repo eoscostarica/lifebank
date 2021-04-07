@@ -267,14 +267,15 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               button: t('emailMessage.verifyButton')
             },
             name,
-            secret: hash
+            secret: hash,
+            signup_method: 'lifebank'
           }
         })
       }
     })
   }
 
-  const handleCreateAccountWithAuth = async (status, email, name, secret) => {
+  const handleCreateAccountWithAuth = async (status, email, name, secret, signupMethod) => {
     if (status) {
       const { data } = await checkEmail({ email: email })
 
@@ -295,7 +296,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
                   button: t('emailMessage.verifyButton')
                 },
                 name,
-                secret: hash
+                secret: hash,
+                signup_method: signupMethod
               }
             })
           }
