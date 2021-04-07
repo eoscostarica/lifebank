@@ -16,6 +16,9 @@ import CloseIcon from '@material-ui/icons/Close'
 import Dialog from '@material-ui/core/Dialog'
 import LockIcon from '@material-ui/icons/Lock'
 import { useTranslation } from 'react-i18next'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD } from '../../gql'
 
@@ -103,6 +106,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
+  const [showPassword, setShowPassword] = useState(false)
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
@@ -161,6 +165,10 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
       }
     })
     setValidEmailFormat(false)
+  }
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
   }
 
   useEffect(() => {
@@ -289,8 +297,20 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   id="currentPassword"
                   label={t('credentialsRecovery.currentPassword')}
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
+                  type={showPassword ? 'text' : 'password'}
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
                   }}
                   value={user.currentPassword || ''}
                   onChange={(event) =>
@@ -304,9 +324,21 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 <TextField
                   id="newPassword"
                   label={t('credentialsRecovery.newPassword')}
+                  type={showPassword ? 'text' : 'password'}
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
                   }}
                   value={user.newPassword || ''}
                   onChange={(event) =>
