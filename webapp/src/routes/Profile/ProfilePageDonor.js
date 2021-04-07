@@ -187,10 +187,6 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
     }
   }, [])
 
-  useEffect(() => {
-    console.log('PROFILE', profile)
-  }, [profile])
-
   return (
     <>
       <Box className={classes.contentHeader}>

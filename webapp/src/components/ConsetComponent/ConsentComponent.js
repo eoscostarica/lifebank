@@ -99,7 +99,6 @@ const ConsetComponent = () => {
   }
 
   const handleSingup = () => {
-    console.log('PROFILE-SIGNUP', profile)
     signup({
       variables: {
         profile
