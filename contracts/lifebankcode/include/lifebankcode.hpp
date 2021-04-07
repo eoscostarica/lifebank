@@ -98,6 +98,7 @@ public:
    * @param photos - Life bank's photos
    * @param logo_url - Life bank's logo
    * @param social_media_links - Life bank's social media links
+   * @param requirement - Life bank's requirement
    * @pre community's symbol must exits
    *
    *
@@ -116,7 +117,8 @@ public:
       string email,
       string photos,
       string logo_url,
-      string social_media_links);
+      string social_media_links,
+      string requirement);
 
   /**
    *
@@ -136,6 +138,7 @@ public:
    * @param photos - Life bank's photos
    * @param logo_url - Life bank's logo
    * @param social_media_links - Life bank's social media links
+   * @param requirement - Life bank's requirement
    *
    * @pre community's symbol must exits
    *
@@ -154,7 +157,8 @@ public:
       string email,
       string photos,
       string logo_url,
-      string social_media_links);
+      string social_media_links,
+      string requirement);
 
   /**
    *

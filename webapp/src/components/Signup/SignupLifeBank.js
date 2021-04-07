@@ -10,7 +10,6 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import { useTranslation } from 'react-i18next'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
-import Schedule from '../../components/Schedule'
 import { captchaConfig, constants } from '../../config'
 
 const {
@@ -99,7 +98,7 @@ const SignupLifeBank = ({
         />
         <TextField
           id="name"
-          label={t('signup.name')}
+          label={t('signup.nameLifebank')}
           variant="outlined"
           fullWidth
           className={classes.textField}
@@ -128,6 +127,16 @@ const SignupLifeBank = ({
           fullWidth
           className={classes.textField}
           onChange={(event) => setField('phone', event.target.value)}
+        />
+        <TextField
+          id="requirement"
+          label={t('signup.requirement')}
+          variant="outlined"
+          fullWidth
+          multiline
+          rowsMax={6}
+          className={classes.textField}
+          onChange={(event) => setField('requirement', event.target.value)}
         />
         <Box className={classes.boxCenter}>
           <Typography gutterBottom>

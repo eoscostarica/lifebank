@@ -23,6 +23,7 @@ type Mutation {
     emailContent: jsonb!
     name: String!
     secret: String!
+    signup_method: String!
   ): create_account_output
 }
 
@@ -63,6 +64,7 @@ type Mutation {
     coordinates: String!
     immunity_test: Boolean!
     invitation_code: String!
+    requirement: String!
   ): create_pre_register_lifebank_output
 }
 
@@ -126,6 +128,13 @@ type Mutation {
   signup (
     profile: jsonb!
   ): signup_output
+}
+
+
+type Mutation {
+  signup_method (
+    email: String!
+  ): signup_method_output
 }
 
 
@@ -241,6 +250,7 @@ type ValidLifebank {
   userName : String!
   photos : String!
   urgencyLevel : Int!
+  requirement : String!
 }
 
 type create_account_lifebank_output {
@@ -251,6 +261,10 @@ type create_account_lifebank_output {
 
 type change_password_output {
   success : Boolean!
+}
+
+type signup_method_output {
+  password_changable : Boolean!
 }
 
 type create_account_lifebank_auth_output {
