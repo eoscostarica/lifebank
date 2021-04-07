@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useMutation, useLazyQuery } from '@apollo/react-hooks'
+import { useMutation, useQuery, useLazyQuery } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
 import Dialog from '@material-ui/core/Dialog'
@@ -14,7 +14,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 
 import { useUser } from '../../context/user.context'
-import { SIGNUP_MUTATION, PROFILE_QUERY, } from '../../gql'
+import { SIGNUP_MUTATION, PROFILE_QUERY, GET_ACCOUNT_NAME, EDIT_PROFILE_MUTATION } from '../../gql'
 import SignupAccount from '../Signup/SignupAccount'
 import SignupConsent from '../Signup/SignupConsent'
 
@@ -87,6 +87,13 @@ const ConsetComponent = () => {
     { error: errorProfile, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
+  const { refetch: accountName } = useQuery(GET_ACCOUNT_NAME, {
+    variables: {},
+    skip: true
+  })
+
+  const [editProfile] = useMutation(EDIT_PROFILE_MUTATION)
+
   const handleOpenConsent = () => {
     setOpenConsent(!openConsent)
   }
@@ -104,7 +111,9 @@ const ConsetComponent = () => {
   }
 
   useEffect(() => {
-    if (currentUser) loadProfile()
+    if (currentUser) {
+      loadProfile()
+    }
 
   }, [currentUser])
 
@@ -114,8 +123,8 @@ const ConsetComponent = () => {
 
   useEffect(() => {
     if (signupResult) {
-
       if (signupResult.success) {
+        if(profile.role === 'sponsor') updateProfile()
         setSeverity("success")
         setMessegaAlert(t('signup.consentGranted'))
         handleOpenAlert()
@@ -125,7 +134,6 @@ const ConsetComponent = () => {
         setMessegaAlert(t('signup.consentError'))
         handleOpenAlert()
       }
-
     }
   }, [signupResult])
 
@@ -135,8 +143,19 @@ const ConsetComponent = () => {
       setMessegaAlert(t('signup.consentError'))
       handleOpenAlert()
     }
-
   }, [errorSignup, errorProfile])
+
+  const updateProfile = async () => {
+    const { data: { user } } = await accountName({ account: currentUser.account })
+    if (user.length > 0) {
+      const name = user[0].name
+      editProfile({
+        variables: {
+          profile: { name }
+        }
+      })
+    }
+  }
 
   return (
     <>

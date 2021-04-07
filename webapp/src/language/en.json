@@ -58,10 +58,14 @@
       "signupWithGoogle": "Sign up using Google",
       "createAccount": "Create an account",
       "name": "Name",
+      "nameSponsor": "Business name",
+      "nameLifebank": "Lifebank name",
       "address": "Address",
       "addressPlaceholder": "Type your address here",
       "phoneNumber": "Phone Number",
       "phoneNumberPlaceholder": "Type your phone number here",
+      "requirement": "Requirements",
+      "requirementPlaceholder": "List requirements for donors",
       "invitationCode": "Invitation Code",
       "chooseYourLocation": "Choose your location",
       "asAdonor": "As a Donor",
@@ -72,7 +76,9 @@
       "aboutPlaceholder": "About the LifeBank",
       "consentGranted": "Ready! You can start using Lifebank",
       "consentRevoked": "Consent revoked",
-      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. "
+      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. ",
+      "noConsentNoEdit": "You must first accept the terms and conditions before changing anything.",
+      "noConsentNoEdit2": "Read it here"
     },
     "login": {
       "letsStarted": "Let's get started!",
@@ -337,7 +343,7 @@
     },
     "credentialsRecovery": {
       "credentialsRecovery": "Credentials Recovery",
-      "emailError": "The email entered is not associated with any accoun",
+      "emailError": "The email entered is not associated with any account",
       "changePasswordInstructions": "To change your password, enter the email associated with your account, the current password and the new one",
       "changePassword": "Change Password",
       "currentPassword": "Current password",
@@ -345,7 +351,8 @@
       "newPassword": "New password",
       "instructionCredentialsRecovery": "Enter the email associated with your account to be able to recover it",
       "checkYourEmail": "Check your email",
-      "recovery": "Recover"
+      "recovery": "Recover",
+      "passwordNotChangable": "Please, log in to your Facebook or Google account to change your password"
     },
     "emailVerification": {
       "emailVerified": "Your email has been verified",
@@ -423,7 +430,9 @@
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it",
       "selectDateRange": "Select date range",
-      "offerCreation": "Offer Created Successfully"
+      "offerCreation": "Offer Created Successfully",
+      "offerStateActive": "Active Offers",
+      "offerStateInactive": "Inactive Offers"
     },
     "offerView": {
       "selectedOffer": "Selected offer",

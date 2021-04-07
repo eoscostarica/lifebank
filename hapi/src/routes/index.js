@@ -1,6 +1,7 @@
 const changePasswordRoute = require('./change-password/change-password.route')
 const checkUsernameRoute = require('./check-username/check-username.route')
 const createAccountRoute = require('./create-account/create-account.route')
+const createAccountAuthRoute = require('./create-account-auth/create-account-auth.route')
 const credentialsRecoveryRoute = require('./credentials-recovery/credentials-recovery.route')
 const editProfileRoute = require('./edit-profile/edit-profile.route')
 const getcontractRoute = require('./get-contract/get-contract.route')
@@ -15,11 +16,13 @@ const preregisterLifebankRoute = require('./pre-register/pre-register-lifebank.r
 const registerLifebankRoute = require('./create-account-lifebank/create-account-lifebank.route')
 const verifyEmailRouteRoute = require('./verify-email/verify-email.route')
 const getValidLifebanksRoute = require('./get-valid-lifebanks/get-valid-lifebanks.route')
+const checkSignupMethod = require('./signup-method/signup-method.route')
 
 module.exports = [
   changePasswordRoute,
   checkUsernameRoute,
   createAccountRoute,
+  createAccountAuthRoute,
   credentialsRecoveryRoute,
   editProfileRoute,
   getcontractRoute,
@@ -33,5 +36,6 @@ module.exports = [
   preregisterLifebankRoute,
   registerLifebankRoute,
   verifyEmailRouteRoute,
-  getValidLifebanksRoute
+  getValidLifebanksRoute,
+  checkSignupMethod
 ]

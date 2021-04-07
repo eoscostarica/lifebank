@@ -17,7 +17,7 @@ import Dialog from '@material-ui/core/Dialog'
 import LockIcon from '@material-ui/icons/Lock'
 import { useTranslation } from 'react-i18next'
 
-import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD } from '../../gql'
+import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -116,6 +116,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   ] = useMutation(CHANGE_PASSWORD)
   const [open, setOpen] = useState(false)
 
+  const [
+    getAccountSignupMethod,
+    { error: errorGetAccountSignupMethod, loading: getAccountSignupMethodLoading, data: { signup_method: getAccountSignupMethodResult } = {} }
+  ] = useMutation(GET_ACCOUNT_SIGNUP_METHOD)
+
   const handleOpen = () => {
     setOpen(!open)
   }
@@ -131,37 +136,53 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const handleSubmit = () => {
-    setErrorMessage(null)
-    credentialsRecovery({
+  const loadPasswordChangable = () => {
+    getAccountSignupMethod({
       variables: {
-        email: user.email,
-        emailContent: {
-          subject: t('emailMessage.subjectCredentialsRecovery'),
-          title: t('emailMessage.titleCredentialsRecovery'),
-          message: t('emailMessage.messageCredentialsRecovery'),
-          account: t('common.account'),
-          password: t('signup.password')
-        }
+        email: user.email
       }
     })
-    setValidEmailFormat(false)
   }
 
-  const handleSubmitChangePassword = () => {
-    setErrorMessage(null)
-    changePassword({
-      variables: {
-        ...user,
-        emailContent: {
-          subject: t('emailMessage.subjectChangePassword'),
-          title: t('emailMessage.titleChangePassword'),
-          message: t('emailMessage.messageChangePassword')
+  const handleSubmit = async () => {
+    if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
+      setErrorMessage(null)
+      credentialsRecovery({
+        variables: {
+          email: user.email,
+          emailContent: {
+            subject: t('emailMessage.subjectCredentialsRecovery'),
+            title: t('emailMessage.titleCredentialsRecovery'),
+            message: t('emailMessage.messageCredentialsRecovery'),
+            account: t('common.account'),
+            password: t('signup.password')
+          }
         }
-      }
-    })
-    setValidEmailFormat(false)
+      })
+      setValidEmailFormat(false)
+    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
   }
+
+  const handleSubmitChangePassword = async () => {
+    if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
+      setErrorMessage(null)
+      changePassword({
+        variables: {
+          ...user,
+          emailContent: {
+            subject: t('emailMessage.subjectChangePassword'),
+            title: t('emailMessage.titleChangePassword'),
+            message: t('emailMessage.messageChangePassword')
+          }
+        }
+      })
+      setValidEmailFormat(false)
+    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
+  }
+
+  useEffect(() => {
+    loadPasswordChangable()
+  }, [user])
 
   useEffect(() => {
     if (error) {

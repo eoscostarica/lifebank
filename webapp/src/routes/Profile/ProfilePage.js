@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     paddingTop: '60px',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '28%',
-      paddingRight: '28%',
+      paddingLeft: '23%',
+      paddingRight: '23%',
     },
   },
   rowBox: {
@@ -136,6 +136,14 @@ const ProfilePage = () => {
     loadProfile,
     classes
   ])
+
+  useEffect(() => {
+    if (profile && !profile.consent) {
+      setSeverity("error")
+      setMessegaAlert(t('signup.noConsentNoEdit'))
+      handleOpenAlert()
+    }
+  }, [profile])
 
   useEffect(() => {
     if (errorProfile) {

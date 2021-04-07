@@ -146,6 +146,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       ? JSON.parse(profile.social_media_links)
       : []
   )
+
   const [user, setUser] = useState({
     logo_url: profile.logo_url,
     name: profile.name,
@@ -610,23 +611,23 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         </Box>
         {(isCompleting && profile.location === '') ||
           (!isCompleting && profile.location !== '') ? (
-            <>
-              <Divider className={classes.divider} />
-              <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
-              <MapEditLocation
-                onGeolocationChange={handleOnGeolocationChange}
-                markerType={SPONSOR}
-                markerLocation={
-                  user.geolocation
-                    ? user.geolocation
-                    : { longitude: -84.0556371, latitude: 9.9195872 }
-                }
-                width="100%"
-                height={400}
-                mb={1}
-              />
-            </>
-          ) : null}
+          <>
+            <Divider className={classes.divider} />
+            <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
+            <MapEditLocation
+              onGeolocationChange={handleOnGeolocationChange}
+              markerType={SPONSOR}
+              markerLocation={
+                user.geolocation
+                  ? user.geolocation
+                  : { longitude: -84.0556371, latitude: 9.9195872 }
+              }
+              width="100%"
+              height={400}
+              mb={1}
+            />
+          </>
+        ) : null}
       </Box>
       <Box className={classes.btnWrapper}>
         <Link to="/profile" className={classes.routerLink}>
