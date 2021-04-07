@@ -99,7 +99,7 @@ const SignupLifeBank = ({
         />
         <TextField
           id="name"
-          label={t('signup.name')}
+          label={t('signup.nameLifebank')}
           variant="outlined"
           fullWidth
           className={classes.textField}

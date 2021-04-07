@@ -58,6 +58,8 @@
       "signupWithGoogle": "Sign up using Google",
       "createAccount": "Create an account",
       "name": "Name",
+      "nameSponsor": "Business name",
+      "nameLifebank": "Lifebank name",
       "address": "Address",
       "addressPlaceholder": "Type your address here",
       "phoneNumber": "Phone Number",
