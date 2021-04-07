@@ -62,6 +62,8 @@
       "addressPlaceholder": "Escribe tu dirección aquí",
       "phoneNumber": "Número de teléfono",
       "phoneNumberPlaceholder": "Escribe tu número aquí",
+      "requirement": "Requisitos",
+      "requirementPlaceholder": "Lista de requisitos para donantes",
       "invitationCode": "Código de invitación",
       "chooseYourLocation": "Escoge tu ubicación",
       "asAdonor": "Como Donador",

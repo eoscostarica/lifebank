@@ -265,7 +265,8 @@ const getLifebankData = async (account) => {
       telephones: JSON.stringify([data.preregister_lifebank[0].phone]),
       schedule: data.preregister_lifebank[0].schedule,
       blood_urgency_level: data.preregister_lifebank[0].urgency_level,
-      consent: !!consent
+      consent: !!consent,
+      requirement: data.preregister_lifebank[0].requirement
     }
   } else {
     return {

@@ -143,7 +143,8 @@ ACTION lifebankcode::addlifebank(
     string email,
     string photos,
     string logo_url,
-    string social_media_links)
+    string social_media_links,
+    string requirement)
 {
   require_auth(get_self());
   check(is_account(account), "New user account does not exists");
@@ -191,7 +192,8 @@ ACTION lifebankcode::uplifebank(
     string email,
     string photos,
     string logo_url,
-    string social_media_links)
+    string social_media_links,
+    string requirement)
 {
   require_auth(account);
   check_consent(account);

@@ -56,6 +56,7 @@ type Mutation {
     coordinates: String!
     immunity_test: Boolean!
     invitation_code: String!
+    requirement: String!
   ): create_pre_register_lifebank_output
 }
 

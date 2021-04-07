@@ -99,6 +99,7 @@ const ConsetComponent = () => {
   }
 
   const handleSingup = () => {
+    console.log('PROFILE-SIGNUP', profile)
     signup({
       variables: {
         profile
@@ -124,7 +125,7 @@ const ConsetComponent = () => {
   useEffect(() => {
     if (signupResult) {
       if (signupResult.success) {
-        updateProfile()
+        // updateProfile()
         setSeverity("success")
         setMessegaAlert(t('signup.consentGranted'))
         handleOpenAlert()
@@ -134,7 +135,6 @@ const ConsetComponent = () => {
         setMessegaAlert(t('signup.consentError'))
         handleOpenAlert()
       }
-
     }
   }, [signupResult])
 
