@@ -11,6 +11,7 @@ const GET_ONE = `
       email
       name
       token
+      signup_method
     }
   }
 `
