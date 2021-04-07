@@ -15,7 +15,7 @@ module.exports = {
       coordinates: Joi.string().required(),
       immunity_test: Joi.boolean(),
       invitation_code: Joi.string(),
-      requirement: Joi.string(),
+      requirement: Joi.string()
     })
   }).options({ stripUnknown: true })
 }
