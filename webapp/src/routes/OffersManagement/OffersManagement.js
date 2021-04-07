@@ -293,15 +293,15 @@ const OffersManagement = () => {
                 title={t('offersManagement.tableTitle')}
                 data={offers.map((offer, key) => [
                   offer.offer_name,
+                  offer.active
+                    ? t('offersManagement.active')
+                    : t('offersManagement.inactive'),
                   offer.start_date
                     ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
                   offer.end_date
                     ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
-                  offer.active
-                    ? t('offersManagement.active')
-                    : t('offersManagement.inactive'),
 
                   Actions(offer.active, offer.id),
                   <IconButton
@@ -320,6 +320,12 @@ const OffersManagement = () => {
                     }
                   },
                   {
+                    name: t('offersManagement.status'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
                     name: t('offersManagement.startDate'),
                     options: {
                       filter: true,
@@ -327,12 +333,6 @@ const OffersManagement = () => {
                   },
                   {
                     name: t('offersManagement.endDate'),
-                    options: {
-                      filter: true,
-                    }
-                  },
-                  {
-                    name: t('offersManagement.status'),
                     options: {
                       filter: true,
                     }
