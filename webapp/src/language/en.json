@@ -64,6 +64,8 @@
       "addressPlaceholder": "Type your address here",
       "phoneNumber": "Phone Number",
       "phoneNumberPlaceholder": "Type your phone number here",
+      "requirement": "Requirements",
+      "requirementPlaceholder": "List requirements for donors",
       "invitationCode": "Invitation Code",
       "chooseYourLocation": "Choose your location",
       "asAdonor": "As a Donor",
