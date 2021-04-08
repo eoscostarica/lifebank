@@ -282,8 +282,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         onSubmit(userToSubmit, username, profile.account)
         history.push({
           pathname: '/profile',
-          state: true,
-          changes: true
+          state: true
         })
       }
       else document.getElementById("username").focus()

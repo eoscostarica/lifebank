@@ -279,7 +279,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const handleCreateAccountWithAuth = async (status, email, name, secret, signupMethod) => {
     if (status) {
       const { data } = await checkEmail({ email: email })
-      console.log(status, email, name, secret, signupMethod)
       if (data.user.length === 0) {
         const bcrypt = require('bcryptjs')
         const saltRounds = 10
@@ -422,7 +421,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   useEffect(() => {
     if (errorcreateAccount) {
-      console.log(errorcreateAccount)
       setErrorMessage(t('errors.authError'))
     }
 
