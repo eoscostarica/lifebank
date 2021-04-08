@@ -183,53 +183,22 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   }
 
   const handleLogin = async () => {
-    setErrorMessage(null)
-    const bcrypt = require('bcryptjs')
-    const { data } = await getHash({ account: user.account })
-
-    if (data.user.length >= 1) {
-      const hash = data.user[0].secret
-
-      bcrypt.compare(user.secret, hash, function (err, res) {
-        if (!err && res) {
-          setErrorMessage(null)
-          loginMutation({
-            variables: {
-              account: user.account,
-              secret: hash
-            }
-          })
-        } else {
-          setErrorMessage(t('login.invalidAccountOrPassword'))
-        }
-      })
-    } else {
-      setErrorMessage(t('login.invalidAccountOrPassword'))
-    }
+    loginMutation({
+      variables: {
+        account: user.account,
+        password: user.secret
+      }
+    })
   }
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
-      const { data } = await checkEmail({ email })
-
-      if (data.user.length === 1) {
-        const bcrypt = require('bcryptjs')
-        const { data } = await getHash({ account: email })
-        const hash = data.user[0].secret
-
-        bcrypt.compare(secret, hash, function (err, res) {
-          if (!err && res) {
-            setErrorMessage(null)
-            loginMutation({
-              variables: {
-                account: email,
-                secret: hash
-              }
-            })
-          } else setErrorMessage(t('login.invalidAccountOrPassword'))
-
-        })
-      } else setErrorMessage(t('login.accountDoesntExist'))
+      loginMutation({
+        variables: {
+          account: email,
+          password: secret
+        }
+      })
     } else setErrorMessage(t('login.somethingHappenedWithAuth'))
   }
 
@@ -244,7 +213,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       login(loginResult.token)
       setOpen(false)
     }
-
   }, [loginResult])
 
   useEffect(() => {

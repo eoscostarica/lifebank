@@ -47,8 +47,8 @@ export const CHECK_USERNAME_MUTATION = gql`
 `
 
 export const LOGIN_MUTATION = gql`
-  mutation($account: String!, $secret: String!) {
-    login(account: $account, secret: $secret) {
+  mutation($account: String!, $password: String!) {
+    login(account: $account, password: $password) {
       token
     }
   }
@@ -102,6 +102,7 @@ export const GET_VALID_LIFEBANKS_QUERY = gql`
       userName
       photos
       urgencyLevel
+      requirement
     }
   }
 `
