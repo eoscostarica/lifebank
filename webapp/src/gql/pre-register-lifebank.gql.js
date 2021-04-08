@@ -14,6 +14,7 @@ export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
     $coordinates: String!
     $immunity_test: Boolean!
     $invitation_code: String!
+    $requirement: String!
   ) {
     create_pre_register_lifebank(
       email: $email
@@ -28,6 +29,7 @@ export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
       coordinates: $coordinates
       immunity_test: $immunity_test
       invitation_code: $invitation_code
+      requirement: $requirement
     ) {
       resultRegister
     }

@@ -3,7 +3,6 @@ import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
-import Slider from '@material-ui/core/Slider'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -16,6 +15,9 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import Telephones from '../../components/Telephones'
 import Divider from '@material-ui/core/Divider'
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert'
+import CloseIcon from '@material-ui/icons/Close'
 
 import { VERIFY_USERNAME } from '../../gql'
 
@@ -193,52 +195,32 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const photoUrlValueRef = useRef(undefined)
   const phoneValueRef = useRef(undefined)
   const history = useHistory()
+  const [severity] = useState('error')
   const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [username, setUserName] = useState(userName.replaceAll('-', ' '))
   const [isValid, setIsvalid] = useState(true)
   const [isUnique, setIsUnique] = useState(true)
   const [firstRun, setFirstRun] = useState(true)
+  const [open, setOpen] = useState(false)
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
-    telephones: profile.telephones && profile.telephones !== '' ? JSON.parse(profile.telephones) : [],
+    telephones: profile.telephones ? JSON.parse(profile.telephones) : [],
     email: profile.email,
     logo_url: profile.logo_url,
-    photos: profile.photos && profile.photos !== '' ? JSON.parse(profile.photos) : [],
-    geolocation: JSON.parse(profile.location),
+    photos: profile.photos ? JSON.parse(profile.photos) : [],
+    geolocation: profile.location ? JSON.parse(profile.location) : { longitude: -84.091273, latitude: 9.928209 },
     name: profile.name,
     schedule: profile.schedule,
     categories: profile.categories,
     blood_urgency_level: profile.blood_urgency_level,
-    has_immunity_test: Boolean(profile.has_immunity_test)
+    has_immunity_test: Boolean(profile.has_immunity_test),
+    requirement: profile.requirement
   })
   const handleOnGeolocationChange = useCallback(
     (geolocation) => handleSetField('geolocation', geolocation),
     [setField]
   )
-  const marks = [
-    {
-      value: 1
-    },
-    {
-      value: 2
-    },
-    {
-      value: 3
-    }
-  ]
-  const valueLabelFormat = (value) => {
-    switch (value) {
-      case 1:
-        return t('editProfile.low')
-      case 2:
-        return t('editProfile.medium')
-      case 3:
-        return t('editProfile.high')
-      default:
-        return 'N/A'
-    }
-  }
 
   const { refetch: checkUserName } = useQuery(VERIFY_USERNAME, {
     variables: {
@@ -249,16 +231,22 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   })
 
   const isUsernameUnique = async () => {
-    const { data } = await checkUserName({
-      username: username,
-      account: profile.account
-    })
-
-    if (data) {
-      if (data.user.length !== 0) setIsUnique(false)
-      else setIsUnique(true)
+    if(!profile.consent) {
+      handleSnackbarClose()
+    } else {
+      if (profile && profile.consent) {
+        const { data } = await checkUserName({
+          username: username,
+          account: profile.account
+        })
+  
+        if (data) {
+          if (data.user.length !== 0) setIsUnique(false)
+          else setIsUnique(true)
+        }
+        setFirstRun(false)
+      }
     }
-    setFirstRun(false)
   }
 
   const validUserName = (newUserName) => {
@@ -329,8 +317,38 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     }
   }
 
+  const cannotEditProfileAlertClose = () => {
+    history.push('/')
+  }
+
+  const handleSnackbarClose = (event, reason) => {
+    if(event !== null) setOpen(!open)
+  };
+
+  const buttonCloseHandler = (
+    <>
+      <Button color="secondary" size="small" onClick={cannotEditProfileAlertClose}>
+        {t('signup.noConsentNoEdit2')}
+      </Button>
+      <IconButton
+        aria-label="close"
+        color="inherit"
+        size="small"
+        onClick={handleSnackbarClose}
+      >
+        <CloseIcon fontSize="inherit"/>
+      </IconButton>
+    </>
+  );
+
   return (
     <form autoComplete="off" className={classes.form}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert severity={severity} action={buttonCloseHandler}>
+          {t('signup.noConsentNoEdit')}
+        </Alert>
+      </Snackbar>
+
       <Box className={classes.textFieldWrapper}>
         <>
           {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
@@ -406,6 +424,26 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           }}
           onChange={(event) =>
             handleSetField('about', event.target.value)
+          }
+        />
+
+        <TextField
+          id="requirement"
+          style={{
+            display: isCompleting && user.requirement ? 'none' : ''
+          }}
+          label={t('signup.requirement')}
+          fullWidth
+          multiline
+          rowsMax={6}
+          variant="outlined"
+          placeholder={t('signup.requirementPlaceholder')}
+          defaultValue={user.requirement}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(event) =>
+            handleSetField('requirement', event.target.value)
           }
         />
 

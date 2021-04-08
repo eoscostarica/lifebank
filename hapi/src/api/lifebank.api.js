@@ -30,7 +30,8 @@ const preRegister = async ({
   name,
   passwordPlainText,
   description,
-  invitation_code
+  invitation_code,
+  requirement
 }) => {
   const { verification_code } = await verificationCodeApi.generate()
   const resultRegister = 'ok'
@@ -50,7 +51,8 @@ const preRegister = async ({
       coordinates,
       immunity_test,
       invitation_code,
-      verification_code
+      verification_code,
+      requirement
     })
 
     mailApi.sendVerificationCode(

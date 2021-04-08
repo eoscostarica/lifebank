@@ -56,6 +56,7 @@ type Mutation {
     coordinates: String!
     immunity_test: Boolean!
     invitation_code: String!
+    requirement: String!
   ): create_pre_register_lifebank_output
 }
 
@@ -87,7 +88,7 @@ type Mutation {
 }
 
 type Mutation {
-  login(account: String!, secret: String!): login_output
+  login(account: String!, password: String!): login_output
 }
 
 type Query {
@@ -208,6 +209,7 @@ type ValidLifebank {
   userName: String!
   photos: String!
   urgencyLevel: Int!
+  requirement: String!
 }
 
 type create_account_lifebank_output {
