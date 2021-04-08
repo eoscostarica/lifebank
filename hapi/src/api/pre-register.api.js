@@ -14,7 +14,8 @@ const INSERT_LIFEBANK = `
       coordinates
       immunity_test
       invitation_code,
-      verification_code
+      verification_code,
+      requirement
     }
   }
 `
@@ -63,7 +64,8 @@ const GET_LIFEBANK_DATA = `
       phone
       schedule
       urgency_level,
-      state
+      state,
+      requirement
     }
   }
 `

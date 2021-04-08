@@ -316,7 +316,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       address,
       phone,
       description,
-      coordinates
+      coordinates,
+      requirement
     } = user
     let { immunity_test, invitation_code, urgency_level } = user
 
@@ -350,7 +351,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
             urgency_level,
             coordinates,
             immunity_test,
-            invitation_code
+            invitation_code,
+            requirement
           }
         })
       }

@@ -196,7 +196,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ProfilePageLifebank = ({ profile }) => {
+const ProfilePageLifebank = ({ profile, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [userName, setuserName] = useState()
@@ -282,11 +282,17 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.about)
       pendingFieldsObject = { ...pendingFieldsObject, about: false }
 
+      if (!profile.requirement)
+      pendingFieldsObject = { ...pendingFieldsObject, requirement: false }
+
     if (!profile.blood_urgency_level)
       pendingFieldsObject = {
         ...pendingFieldsObject,
         blood_urgency_level: false
       }
+
+    if (!profile.requirement)
+      pendingFieldsObject = { ...pendingFieldsObject, requirement: false }
 
     if (Object.keys(pendingFieldsObject).length > 0)
       setPendingFields(pendingFieldsObject)
@@ -478,6 +484,15 @@ const ProfilePageLifebank = ({ profile }) => {
           </Box>
         </>
       }
+      {profile.requirement &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBoxLeft}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.requirement')}</Typography>
+            <Typography >{profile.requirement.replaceAll("\n", ", ")}</Typography>
+          </Box>
+        </>
+      }
       {profile.schedule &&
         <>
           <Divider className={classes.divider} />
@@ -590,7 +605,8 @@ const ProfilePageLifebank = ({ profile }) => {
 }
 
 ProfilePageLifebank.propTypes = {
-  profile: PropTypes.object
+  profile: PropTypes.object,
+  loading: PropTypes.bool
 }
 
 export default ProfilePageLifebank

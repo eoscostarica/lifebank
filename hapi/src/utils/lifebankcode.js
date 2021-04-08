@@ -56,6 +56,7 @@ const addLifebank = (
           blood_urgency_level: profile.blood_urgency_level || 1,
           schedule: JSON.stringify(profile.schedule),
           email: profile.email,
+          requirement: profile.requirement,
           social_media_links: profile.social_media_links || '[]',
           ...profile
         }
@@ -96,6 +97,7 @@ const upLifebank = (
           blood_urgency_level: profile.blood_urgency_level || 1,
           schedule: profile.schedule,
           email: profile.email,
+          requirement: profile.requirement,
           social_media_links: profile.social_media_links || '[]',
           ...profile
         }
