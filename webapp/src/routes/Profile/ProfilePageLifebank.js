@@ -196,11 +196,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-<<<<<<< HEAD
-const ProfilePageLifebank = ({ profile, response }) => {
-=======
-const ProfilePageLifebank = ({ profile, loading }) => {
->>>>>>> master
+const ProfilePageLifebank = ({ profile }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [userName, setuserName] = useState()
@@ -209,8 +205,8 @@ const ProfilePageLifebank = ({ profile, loading }) => {
   const location = useLocation()
   const [, { logout }] = useUser()
   const theme = useTheme()
-  const phones = JSON.parse(profile.telephones)
-  const images = JSON.parse(profile.photos)
+  const images = profile.photos ? JSON.parse(profile.photos) : {}
+  const phones = profile.telephones ? JSON.parse(profile.telephones) : {}
   const [activeStep, setActiveStep] = useState(0)
   const [openSnackbar, setOpenSnackbar] = useState(false)
 
@@ -309,7 +305,11 @@ const ProfilePageLifebank = ({ profile, loading }) => {
   useEffect(() => {
     if (location.state) {
       history.replace({ state: false })
-      response()
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.profileWasUpdated'),
+        severity: 'success'
+      })
     }
   }, [])
 
@@ -605,12 +605,7 @@ const ProfilePageLifebank = ({ profile, loading }) => {
 }
 
 ProfilePageLifebank.propTypes = {
-  profile: PropTypes.object,
-<<<<<<< HEAD
-  responsive: PropTypes.func
-=======
-  loading: PropTypes.bool
->>>>>>> master
+  profile: PropTypes.object
 }
 
 export default ProfilePageLifebank

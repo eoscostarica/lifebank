@@ -199,6 +199,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
+  const [userName , setUserName] = useState(t('signup.defaultUsername'))
 
   const handleOpen = () => {
     setOpen(!open)
@@ -250,10 +251,10 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleCreateAccount = () => {
-    const { email, name, secret } = user
+    const { name, email, secret } = user
     const bcrypt = require('bcryptjs')
     const saltRounds = 10
-
+    if(name) setUserName(name)
     bcrypt.hash(secret, saltRounds, function (err, hash) {
       if (!err) {
         createAccount({
@@ -266,7 +267,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               message: t('emailMessage.messageVerificationCode'),
               button: t('emailMessage.verifyButton')
             },
-            name,
+            name: userName,
             secret: hash,
             signup_method: 'lifebank'
           }
@@ -278,7 +279,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const handleCreateAccountWithAuth = async (status, email, name, secret, signupMethod) => {
     if (status) {
       const { data } = await checkEmail({ email: email })
-
+      console.log(status, email, name, secret, signupMethod)
       if (data.user.length === 0) {
         const bcrypt = require('bcryptjs')
         const saltRounds = 10
@@ -420,7 +421,10 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
 
   useEffect(() => {
-    if (errorcreateAccount) setErrorMessage(t('errors.authError'))
+    if (errorcreateAccount) {
+      console.log(errorcreateAccount)
+      setErrorMessage(t('errors.authError'))
+    }
 
   }, [errorcreateAccount])
 
