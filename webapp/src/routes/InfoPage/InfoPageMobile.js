@@ -257,14 +257,18 @@ const InfoPageMobile = () => {
   }, [location])
 
   const getOffers = async () => {
-    setLoadingOffers(true)
-    await getAllOffers()
-    await getSponsorID()
+    if(profile){
+      if(profile.role === 'sponsor'){
+      setLoadingOffers(true)
+      await getAllOffers()
+      await getSponsorID()
+      }
+    }
   }
 
   const { error: errorUsername, data: sponsor_id, refetch: getSponsorID } = useQuery(GET_ID, {
     variables: {
-      account: location.state.profile.account
+      username: url
     }
   })
 
@@ -285,51 +289,50 @@ const InfoPageMobile = () => {
         const { data } = await getInfoProfile({
           username: url.replaceAll("-", " ")
         })
-
-        if (data.location.length > 0) {
-          const objectTemp = data.location[0]
-          if (objectTemp.type === "SPONSOR") {
-            setProfile(
-              {
-                "account": objectTemp.account,
-                "address": objectTemp.info.address,
-                "benefitDescription": objectTemp.info.benefit_description,
-                "businessType": objectTemp.info.business_type,
-                "covidImpact": objectTemp.info.covid_impact,
-                "description": objectTemp.info.about,
-                "email": objectTemp.info.email,
-                "location": JSON.stringify(objectTemp.info.geolocation),
-                "logo": objectTemp.info.logo_url,
-                "name": objectTemp.info.name,
-                "openingHours": objectTemp.info.schedule,
-                "photos": objectTemp.info.photos,
-                "role": "sponsor",
-                "social_media_links": objectTemp.info.social_media_links,
-                "telephone": objectTemp.info.telephones,
-                "userName": objectTemp.user.username,
-                "website": objectTemp.info.website
-              })
-          } else {
-            setProfile(
-              {
-                "account": objectTemp.account,
-                "address": objectTemp.info.address,
-                "description": objectTemp.info.about,
-                "email": objectTemp.info.email,
-                "location": JSON.stringify(objectTemp.info.geolocation),
-                "logo": objectTemp.info.logo_url,
-                "name": objectTemp.info.name,
-                "openingHours": objectTemp.info.schedule,
-                "photos": objectTemp.info.photos,
-                "role": "lifebank",
-                "urgencyLevel": objectTemp.info.blood_urgency_level,
-                "telephone": objectTemp.info.telephones,
-                "userName": objectTemp.user.username,
-              })
-          }
-
-        } else history.push('/not-found')
-
+        if(data){
+          if (data.location.length > 0) {
+            const objectTemp = data.location[0]
+            if (objectTemp.type === "SPONSOR") {
+              setProfile(
+                {
+                  "account": objectTemp.account,
+                  "address": objectTemp.info.address,
+                  "benefitDescription": objectTemp.info.benefit_description,
+                  "businessType": objectTemp.info.business_type,
+                  "covidImpact": objectTemp.info.covid_impact,
+                  "description": objectTemp.info.about,
+                  "email": objectTemp.info.email,
+                  "location": JSON.stringify(objectTemp.info.geolocation),
+                  "logo": objectTemp.info.logo_url,
+                  "name": objectTemp.info.name,
+                  "openingHours": objectTemp.info.schedule,
+                  "photos": objectTemp.info.photos,
+                  "role": "sponsor",
+                  "social_media_links": objectTemp.info.social_media_links,
+                  "telephone": objectTemp.info.telephones,
+                  "userName": objectTemp.user.username,
+                  "website": objectTemp.info.website
+                })
+            } else {
+              setProfile(
+                {
+                  "account": objectTemp.account,
+                  "address": objectTemp.info.address,
+                  "description": objectTemp.info.about,
+                  "email": objectTemp.info.email,
+                  "location": JSON.stringify(objectTemp.info.geolocation),
+                  "logo": objectTemp.info.logo_url,
+                  "name": objectTemp.info.name,
+                  "openingHours": objectTemp.info.schedule,
+                  "photos": objectTemp.info.photos,
+                  "role": "lifebank",
+                  "urgencyLevel": objectTemp.info.blood_urgency_level,
+                  "telephone": objectTemp.info.telephones,
+                  "userName": objectTemp.user.username,
+                })
+            }
+          } else history.push('/not-found')
+        }
       }
 
       if (!location.state) getProfile()
@@ -355,7 +358,11 @@ const InfoPageMobile = () => {
 
   useEffect(() => {
     getInfo()
-    getOffers()
+    if(profile){
+      if(profile.role === 'sponsor'){
+        getOffers()
+      }
+    }
   }, [location])
 
   useEffect(() => {
@@ -369,7 +376,11 @@ const InfoPageMobile = () => {
       if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
         && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
         getInfo()
-        getOffers()
+        if(profile){
+          if(profile.role === 'sponsor'){
+            getOffers()
+          }
+        }
         logout()
         history.push(`/info/${location.state.profile.account}`)
       } else history.push('/internal-error')
@@ -535,6 +546,7 @@ const InfoPageMobile = () => {
               </Dialog>
             </Box>
             <Divider className={classes.divider} />
+            {profile.role === 'sponsor' && (
             <Box className={classes.headerDetailsOffers}>
               <Button
                 className={classes.label}
@@ -585,6 +597,7 @@ const InfoPageMobile = () => {
                 </Grid>
               </Dialog>
             </Box>
+            )}
             <Box className={classes.bodyDetails}>
               <Divider className={classes.divider} />
               <Box className={classes.midLabel}>
