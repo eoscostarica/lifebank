@@ -480,16 +480,23 @@ const verifyEmail = async ({ code }) => {
   }
 }
 
-const login = async ({ account, secret }) => {
+const login = async ({ account, password }) => {
+  const bcrypt = require('bcryptjs')
   const user = await userApi.getOne({
     _or: [
-      { account: { _eq: account } },
+      { email: { _eq: account } },
       { username: { _eq: account } },
-      { email: { _eq: account } }
+      { account: { _eq: account } }
     ]
   })
 
   if (!user) {
+    throw new Error('Invalid account or secret')
+  }
+
+  const comparison = await bcrypt.compare(password, user.secret)
+
+  if (!comparison) {
     throw new Error('Invalid account or secret')
   }
 
