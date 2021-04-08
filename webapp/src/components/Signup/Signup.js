@@ -420,9 +420,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
 
   useEffect(() => {
-    if (errorcreateAccount) {
-      setErrorMessage(t('errors.authError'))
-    }
+    if (errorcreateAccount) setErrorMessage(t('errors.authError'))
 
   }, [errorcreateAccount])
 
