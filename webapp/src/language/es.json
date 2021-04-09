@@ -78,7 +78,8 @@
       "consentRevoked": "Consentimiento revocado",
       "consentError": "Error al otorgar consentimiento",
       "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
-      "noConsentNoEdit2": "Léelo aquí"
+      "noConsentNoEdit2": "Léelo aquí",
+      "forgetPassword": "¿Olvidaste la Contraseña?"
     },
     "login": {
       "letsStarted": "¡Empecemos!",

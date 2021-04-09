@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   loginBtn: {
-    display: 'flex',
+
     alignItems: 'center',
   },
   labelOption: {
@@ -94,6 +94,20 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "21px",
       paddingRight: "21px"
     }
+  },
+  languageTextTransparent: {
+    color: '#FFFFFF'
+  },
+  languageText: {
+    borderRadius: '4px',
+    fontSize: '10px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#FFFFFF',
+    align: 'center',
   }
 }))
 
@@ -128,6 +142,8 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const handleOpen = () => {
     setOpen(!open)
   }
+
+  const useTransparentBG = isDesktop  && '/'
 
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
@@ -241,14 +257,15 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         className={clsx(classes.loginBtn, overrideBoxClass)}
         onClick={handleOpen}
       >
-        <LockIcon className={classes.iconOption} />
         <Link to="/">
-          <Typography
-            variant="body1"
-            className={clsx(classes.labelOption, overrideLabelClass)}
-          >
-            {t('credentialsRecovery.credentialsRecovery')}
-          </Typography>
+        <Typography
+          variant="secondary"
+          className={clsx(classes.languageText, {
+            [classes.languageTextTransparent]: useTransparentBG
+          })}
+        >
+          {t('signup.forgetPassword')}
+        </Typography>
         </Link>
       </Box>
       <Dialog
@@ -310,7 +327,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 </Button>
                 {loading && <CircularProgress />}
               </Box>
-              <Box className={clsx(classes.textFieldWrapper, classes.marginTopBox)}>
+              {/*<Box className={clsx(classes.textFieldWrapper, classes.marginTopBox)}>
                 <Typography >
                   {t('credentialsRecovery.changePasswordInstructions')}
                 </Typography>
@@ -381,6 +398,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 </Button>
                 {loadingChangePassword && <CircularProgress />}
               </Box>
+                */}
               {errorMessage && (
                 <Alert
                   className={classes.alert}

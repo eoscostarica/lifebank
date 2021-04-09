@@ -13,7 +13,6 @@ import MenuBookIcon from '@material-ui/icons/MenuBook'
 import { useTranslation } from 'react-i18next'
 
 import LoginModal from '../components/LoginModal'
-import CredentialsRecovery from '../components/CredentialsRecovery'
 import Signup from '../components/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
@@ -110,14 +109,6 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
               </Typography>
             </Link>
           </Box>
-        </>
-      )}
-      {!user && (
-        <>
-          <CredentialsRecovery
-            overrideBoxClass={classes.optionLink}
-            overrideLabelClass={classes.labelOption}
-          />
         </>
       )}
       <Divider />
