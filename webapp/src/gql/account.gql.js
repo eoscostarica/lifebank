@@ -251,8 +251,8 @@ export const VERIFY_USERNAME = gql`
 `
 
 export const GET_ID = gql`
-  query($account: String!) {
-    user(where: { account: { _eq: $account } }) {
+  query($username: String!) {
+    user(where: { username: { _eq: $username } }) {
       id
     }
   }
