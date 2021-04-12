@@ -27,7 +27,9 @@
     },
     "cardsSection": {
       "availableOffers": "Available Offers",
-      "moreInfo": "More info"
+      "moreInfo": "More info",
+      "approvedOffers": "Approved Offers",
+      "rejectedOffers": "Rejected Offers"
     },
     "navigationDrawer": {
       "homepage": "Home page",
@@ -36,7 +38,8 @@
       "information": "Information",
       "aboutLifebank": "About Lifebank",
       "useTerms": "Terms of Use",
-      "help": "Help"
+      "help": "Help",
+      "offersApproval": "Offers approval"
     },
     "signup": {
       "register": "Let's Start!",
@@ -167,7 +170,7 @@
     },
     "categories": {
       "discount": "Discounts",
-      "freeproduct": "Free products",
+      "freeProduct": "Free Products",
       "coupon": "Coupons",
       "benefit": "Benefits",
       "badge": "Badges",
@@ -342,6 +345,12 @@
       "showThisCode": "Show this code",
       "orYourUsername": "Or your username",
       "imDone": "I'm Done"
+    },
+    "offerApproval": {
+      "description": "Here you can approve or reject the categories of redeemable offers.",
+      "description2": "If you think that a category doesn't represent your organization, feel free to uncheck it, and automatically the life tokens obtained at your center will not be redeemable in exchange for any of these offers.",
+      "message1": "These offers are available because you approved this category. Change it anytime.",
+      "message2": "These offers aren't available because you unchecked this category. Change it anytime."
     },
     "credentialsRecovery": {
       "credentialsRecovery": "Credentials Recovery",

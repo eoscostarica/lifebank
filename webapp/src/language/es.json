@@ -27,7 +27,9 @@
     },
     "cardsSection": {
       "availableOffers": "Ofertas disponibles",
-      "moreInfo": "Más información"
+      "moreInfo": "Más información",
+      "approvedOffers": "Ofertas aprobadas",
+      "rejectedOffers": "Ofertas rechazadas"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -36,7 +38,8 @@
       "information": "Información",
       "aboutLifebank": "Acerca de Lifebank",
       "useTerms": "Términos de uso",
-      "help": "Ayuda"
+      "help": "Ayuda",
+      "offersApproval": "Aprobar ofertas"
     },
     "signup": {
       "register": "Registro",
@@ -167,7 +170,7 @@
     },
     "categories": {
       "discount": "Descuentos",
-      "freeproduct": "Productos gratis",
+      "freeProduct": "Productos Gratis",
       "coupon": "Cupones",
       "benefit": "Beneficios",
       "badge": "Insignias",
@@ -217,6 +220,12 @@
     "errors": {
       "authError": "Ha ocurrido un error con la autenticación",
       "tokenExpiration": "La sesión ha expirado"
+    },
+    "offerApproval": {
+      "description": "Aquí puedes aprobar o rechazar las categorías de ofertas redimibles.",
+      "description2": "Si crees que una categoría no representa tu organización, puedes desmarcarla y automáticamente los life tokens obtenidos en tu centro no podrán ser redimidos por estas ofertas.",
+      "message1": "Estas ofertas están disponibles porque aprobaste esta categoría. Cámbialo en cualquier momento.",
+      "message2": "Estas ofertas no están disponibles porque desmarcaste esta categoría. Cámbialo en cualquier momento."
     },
     "editProfile": {
       "editProfile": "Editar Perfil",
