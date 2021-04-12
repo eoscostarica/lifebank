@@ -199,6 +199,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
+  const [userName , setUserName] = useState(t('signup.defaultUsername'))
 
   const handleOpen = () => {
     setOpen(!open)
