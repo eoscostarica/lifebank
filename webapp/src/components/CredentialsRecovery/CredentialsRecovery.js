@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
-import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -15,11 +13,7 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Dialog from '@material-ui/core/Dialog'
 import Snackbar from '@material-ui/core/Snackbar'
-import LockIcon from '@material-ui/icons/Lock'
 import { useTranslation } from 'react-i18next'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
 
@@ -28,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4)
   },
   textFieldWrapper: {
-    padding: theme.spacing(2, 0),
+    padding: theme.spacing(2, 2),
     display: 'flex',
     flexDirection: 'column',
     height: 200,
@@ -55,23 +49,15 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.4px',
     color: '#000000'
   },
-  recoveryBox: {    display: 'flex',
+  recoveryBox: {    
+  display: 'flex',
   justifyContent: 'center',
   flexDirection: 'row',
-  alignItems: 'center'},
-  labelOption: {
-    color: theme.palette.primary.main,
-    marginLeft: theme.spacing(3),
-    fontSize: 14,
-    cursor: "pointer"
+  alignItems: 'center'
   },
   bodyWrapper: {
     height: '90%',
     padding: theme.spacing(0, 2)
-  },
-  iconOption: {
-    color: 'rgba(0, 0, 0, 0.54)',
-    fontSize: 20
   },
   marginTop: {
     marginTop: '6%'
@@ -104,20 +90,6 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "21px",
       paddingRight: "21px"
     }
-  },
-  languageTextTransparent: {
-    color: '#FFFFFF'
-  },
-  languageText: {
-    borderRadius: '4px',
-    fontSize: '10px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#FFFFFF',
-    align: 'center',
   }
 }))
 
@@ -126,11 +98,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
-  const [errorPassword, setErrorPassword] = useState(true)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
-  const [showPassword, setShowPassword] = useState(false)
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
@@ -152,14 +122,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const handleOpen = () => {
     setOpen(!open)
   }
-  const handleOpenSnackBar = () => {
-    setOpen(!open)
-    setUser({})
-    setSuccess(false)
-  }
-
-  const handleSetField = (field, value) => {
-    setUser({ ...user, [field]: value })
+  const handleCloseSnackBar = () => {
+    if(errorMessage){
+      setErrorMessage(null)
+    } else{
+      setOpen(!open)
+      setUser({})
+      setSuccess(false)
+    }
   }
 
   const handleSetFieldEmail = (field, value) => {
@@ -194,10 +164,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
       })
       setValidEmailFormat(false)
     } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
-  }
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword)
   }
 
   const handleSubmitChangePassword = async () => {
@@ -321,28 +287,22 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 >
                   {t('credentialsRecovery.recovery')}
                 </Button>
+                <Box className={classes.recoveryBox}>
                 {loading && <CircularProgress />}
+                </Box>
               </Box>
               {errorMessage && (
+                <Snackbar open={true} autoHideDuration={4000} onClose={handleCloseSnackBar}>
                 <Alert
                   className={classes.alert}
                   severity="error"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setErrorMessage(null)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
                 >
                   {errorMessage}
-                </Alert>
+                </Alert>                  
+                </Snackbar>
               )}
               {success && (
-                 <Snackbar open={success} autoHideDuration={4000} onClose={handleOpenSnackBar}>
+                 <Snackbar open={success} autoHideDuration={4000} onClose={handleCloseSnackBar}>
                 <Alert
                   className={classes.alert}
                   severity="success"

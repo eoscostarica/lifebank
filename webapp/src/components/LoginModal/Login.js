@@ -115,6 +115,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 30,
     marginBottom: 10
   },
+  credentialsBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10
+  },
   btnLoginModal: {
     borderRadius: '4px',
     boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24)',
@@ -371,7 +377,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           <Box className={classes.registerBox}>
             <Signup isModal />
           </Box>
-          <Box>
+          <Box className={classes.credentialsBox}>
             <CredentialsRecovery/>
           </Box>
         </Box>
