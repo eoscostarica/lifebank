@@ -262,7 +262,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
           message: t('emailMessage.messageVerificationCode'),
           button: t('emailMessage.verifyButton')
         },
-        name: name ? name : t('signup.defaultUsername'),
+        name: name || t('signup.defaultUsername'),
         passwordPlainText,
         signup_method: 'lifebank'
       }
