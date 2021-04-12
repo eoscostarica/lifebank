@@ -76,10 +76,6 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       <Box className={classes.optionLink}>
         <Signup isSideBar />
       </Box>
-      <Divider />
-      <Typography variant="body1" className={classes.infoLabel}>
-        {t('navigationDrawer.tools')}
-      </Typography>
       {user && (
         <>
           {user.role === 'sponsor' && (

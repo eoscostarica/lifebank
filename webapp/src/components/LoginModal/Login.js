@@ -30,6 +30,7 @@ import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
+import CredentialsRecovery from '../CredentialsRecovery/CredentialsRecovery'
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -369,6 +370,9 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           </form>
           <Box className={classes.registerBox}>
             <Signup isModal />
+          </Box>
+          <Box>
+            <CredentialsRecovery/>
           </Box>
         </Box>
       </Dialog>
