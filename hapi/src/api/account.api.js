@@ -64,13 +64,15 @@ const create = async (
   const username = account
   const token = jwtUtils.create({ role, username, account })
   const { verification_code } = await verificationCodeApi.generate()
+  
+  const secret = await bcryptjs.createPasswordHash(passwordPlainText)
 
   const data = {
     role,
     username,
     account,
     email,
-    secret: passwordPlainText,
+    secret,
     name,
     verification_code,
     signup_method
@@ -489,7 +491,8 @@ const login = async ({ account, password }) => {
       { email: { _eq: account } },
       { username: { _eq: account } },
       { account: { _eq: account } }
-    ]
+    ],
+    email_verified: {_eq: true}
   })
 
   if (!user) {

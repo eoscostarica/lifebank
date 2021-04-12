@@ -199,7 +199,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
-  const [userName , setUserName] = useState(t('signup.defaultUsername'))
 
   const handleOpen = () => {
     setOpen(!open)
@@ -251,7 +250,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleCreateAccount = () => {
-    const { email, name, secret } = user
+    const { email, name, passwordPlainText } = user
 
     createAccount({
       variables: {
@@ -263,8 +262,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
           message: t('emailMessage.messageVerificationCode'),
           button: t('emailMessage.verifyButton')
         },
-        name,
-        passwordPlainText: secret,
+        name: name ? name : t('signup.defaultUsername'),
+        passwordPlainText,
         signup_method: 'lifebank'
       }
     })
