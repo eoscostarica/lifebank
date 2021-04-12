@@ -223,7 +223,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   return (
     <>
-
         <Box className={classes.recoveryBox}>
           <Button color="secondary" className={classes.recoveryButton} onClick={handleOpen}>
           {t('signup.forgetPassword')}
