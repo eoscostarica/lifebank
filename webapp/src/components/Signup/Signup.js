@@ -264,7 +264,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
           button: t('emailMessage.verifyButton')
         },
         name,
-        passwordPlainText: secret
+        passwordPlainText: secret,
+        signup_method: 'lifebank'
       }
     })
   }
