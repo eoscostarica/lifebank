@@ -222,7 +222,9 @@
     },
     "offerApproval": {
       "description": "Aquí puedes aprobar o rechazar las categorías de ofertas redimibles.",
-      "description2": "Si crees que una categoría no representa tu organización, puedes desmarcarla y automáticamente los life tokens obtenidos en tu centro no podrán ser redimidos por estas ofertas."
+      "description2": "Si crees que una categoría no representa tu organización, puedes desmarcarla y automáticamente los life tokens obtenidos en tu centro no podrán ser redimidos por estas ofertas.",
+      "message1": "Estas ofertas están disponibles porque aprobaste esta categoría. Cámbialo en cualquier momento.",
+      "message2": "Estas ofertas no están disponibles porque desmarcaste esta categoría. Cámbialo en cualquier momento."
     },
     "editProfile": {
       "editProfile": "Editar Perfil",

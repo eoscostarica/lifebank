@@ -346,7 +346,9 @@
     },
     "offerApproval": {
       "description": "Here you can approve or reject the categories of redeemable offers.",
-      "description2": "If you think that a category doesn't represent your organization, feel free to uncheck it, and automatically the life tokens obtained at your center will not be redeemable in exchange for any of these offers."
+      "description2": "If you think that a category doesn't represent your organization, feel free to uncheck it, and automatically the life tokens obtained at your center will not be redeemable in exchange for any of these offers.",
+      "message1": "These offers are available because you approved this category. Change it anytime.",
+      "message2": "These offers aren't available because you unchecked this category. Change it anytime."
     },
     "credentialsRecovery": {
       "credentialsRecovery": "Credentials Recovery",

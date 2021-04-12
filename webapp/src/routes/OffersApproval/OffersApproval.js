@@ -70,7 +70,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2)
   },
   snackbar: {
-    marginRight: 100
+    marginRight: 100,
+    backgroundColor: 'white',
+    color: 'black'
   }
 }))
 
@@ -89,13 +91,13 @@ const OffersApproval = () => {
   const [categories, setCategories] = useState([])
   const [category, setCategory] = useState('')
 
+
   const CategoryX = [
     { value: 'discount', label: t('categories.discount') },
     { value: 'freeProduct', label: t('categories.freeProduct') },
     { value: 'coupon', label: t('categories.coupon') },
     { value: 'benefit', label: t('categories.benefit') },
     { value: 'badge', label: t('categories.badge') }
-
   ]
 
   const getOffers = async () => {
@@ -169,8 +171,6 @@ const OffersApproval = () => {
         case 'badge':
           badgeOff.push(offer)
           break
-        default:
-          console.log("ERRORRRR")
       }
     })
 
@@ -226,7 +226,6 @@ const OffersApproval = () => {
             })}
           </Select>
         </FormControl>
-        <Typography className={classes.snackbar}>Mensaje</Typography>
       </Box>
       {category === 'discount' && (
         <Grid
@@ -237,6 +236,12 @@ const OffersApproval = () => {
           spacing={0}
           className={classes.showOffers}
         >
+          {categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+          )}
+          {!categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+          )}
           <Grid item md={12} sm={6}>
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.discount')}
@@ -257,6 +262,12 @@ const OffersApproval = () => {
           spacing={0}
           className={classes.showOffers}
         >
+          {categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+          )}
+          {!categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+          )}
           <Grid item md={12} sm={6}>
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.freeProduct')}
@@ -277,6 +288,12 @@ const OffersApproval = () => {
           spacing={0}
           className={classes.showOffers}
         >
+          {categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+          )}
+          {!categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+          )}
           <Grid item md={12} sm={6}>
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.coupon')}
@@ -297,6 +314,12 @@ const OffersApproval = () => {
           spacing={0}
           className={classes.showOffers}
         >
+          {categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+          )}
+          {!categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+          )}
           <Grid item md={12} sm={6}>
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.benefit')}
@@ -318,6 +341,12 @@ const OffersApproval = () => {
           className={classes.showOffers}
           md={12}
         >
+          {categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+          )}
+          {!categories.includes(category) && (
+            <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+          )}
           <Grid item md={12} sm={6}>
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.badge')}

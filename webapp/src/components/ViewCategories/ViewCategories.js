@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ViewCategories = ({ categories }) => {
+  const { t } = useTranslation('translations')
   const classes = useStyles()
 
   return (
@@ -24,7 +26,7 @@ const ViewCategories = ({ categories }) => {
           id={index}
           variant="body1"
         >
-          {categoriesItem.category}
+          {t(`categories.${categoriesItem.category}`)}
         </Typography>
       ))}
     </>
