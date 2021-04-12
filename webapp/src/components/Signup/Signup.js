@@ -269,12 +269,12 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
     })
   }
 
-  const handleCreateAccountWithAuth = async (status, email, name, passwordPlainText) => {
+  const handleCreateAccountWithAuth = async (status, email, name, passwordPlainText, signupMethod) => {
     if (status) {
       const { data } = await checkEmail({ email: email })
 
       if (data.user.length === 0) {
-        createAccount({
+        createAccountAuth({
           variables: {
             role,
             email,
@@ -285,7 +285,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               button: t('emailMessage.verifyButton')
             },
             name,
-            passwordPlainText
+            passwordPlainText,
+            signup_method: signupMethod
           }
         })
       } else {
