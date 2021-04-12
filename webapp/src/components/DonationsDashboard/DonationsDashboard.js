@@ -366,6 +366,11 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
 
   const handleOpenAlert = () => setOpenAlert(!openAlert)
 
+  const handleSnackbarClose =  () => {
+    setSuccess(false)
+    setErrorMessage(null)
+    setAccountTo()
+  }
   useEffect(() => {
     if (!error)
       return
@@ -431,7 +436,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const hanndlerTransferTokens = (account) => {
     setErrorMessage(null)
     setAccountTo(account)
-
   }
 
   useEffect(() => {
@@ -590,42 +594,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
                 <QrReaderModal setAccountInput={setAccountInput} />
               </form>
             </Box>
-            {errorMessage && (
-              <Alert
-                className={classes.alert}
-                severity="error"
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => setErrorMessage(null)}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-              >
-                {errorMessage}
-              </Alert>
-            )}
-            {success && transferResult && (
-              <Alert
-                className={classes.alert}
-                severity="success"
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => setSuccess(false)}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-              >
-                {t('donations.succesful')}
-              </Alert>
-            )}
             <Box className={classes.boxButtonSendToken}>
               {loading &&
                 <>
@@ -886,6 +854,22 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
           {messegaAlert}
         </Alert>
       </Snackbar>
+      <Snackbar open={success} autoHideDuration={2000} onClose={handleSnackbarClose}>
+        <Alert
+          className={classes.alert}
+          severity="success">
+          {t('donations.succesful')}
+        </Alert>
+      </Snackbar>
+      {errorMessage && (
+         <Snackbar open={true} autoHideDuration={3000} onClose={handleSnackbarClose}>
+         <Alert
+           className={classes.alert}
+           severity="error">
+            {errorMessage}
+         </Alert>
+       </Snackbar>
+            )}
     </>
   )
 }
