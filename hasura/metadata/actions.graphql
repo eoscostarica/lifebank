@@ -88,7 +88,11 @@ type Mutation {
 }
 
 type Mutation {
+<<<<<<< HEAD
   login(account: String!, secret: String!): login_output
+=======
+  login(account: String!, password: String!): login_output
+>>>>>>> c69baf5105dade3bfcf21ffbddbbb30b61f34d1a
 }
 
 type Query {
