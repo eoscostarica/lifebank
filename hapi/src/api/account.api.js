@@ -487,7 +487,8 @@ const login = async ({ account, password }) => {
       { email: { _eq: account } },
       { username: { _eq: account } },
       { account: { _eq: account } }
-    ]
+    ],
+    email_verified: {_eq: true}
   })
 
   if (!user) {

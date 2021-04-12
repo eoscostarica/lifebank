@@ -199,7 +199,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
-  const [userName , setUserName] = useState(t('signup.defaultUsername'))
 
   const handleOpen = () => {
     setOpen(!open)
@@ -254,7 +253,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
     const { name, email, secret } = user
     const bcrypt = require('bcryptjs')
     const saltRounds = 10
-    if(name) setUserName(name)
     bcrypt.hash(secret, saltRounds, function (err, hash) {
       if (!err) {
         createAccount({
@@ -267,7 +265,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               message: t('emailMessage.messageVerificationCode'),
               button: t('emailMessage.verifyButton')
             },
-            name: userName,
+            name: name ? name : t('signup.defaultUsername'),
             secret: hash,
             signup_method: 'lifebank'
           }
