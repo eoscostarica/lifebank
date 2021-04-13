@@ -87,7 +87,7 @@ const EmailVerification = (props) => {
         code: code
       }
     })
-  }, [code])
+  }, [verifyEmail, code])
 
   useEffect(() => {
     if (verifyEmailResult) setValidate(verifyEmailResult.is_verified)

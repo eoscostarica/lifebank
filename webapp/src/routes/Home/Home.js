@@ -89,7 +89,7 @@ const Home = () => {
       else if (allBanksError) typeError(allBanksError.message)
       else if (allSponsorsError) typeError(allSponsorsError.message)
     }
-  }, [allOffersError, allBanksError, allSponsorsError])
+  }, [typeError, fetchError, allOffersError, allBanksError, allSponsorsError])
 
   const getOffers = async () => {
     setLoadingOffers(true)

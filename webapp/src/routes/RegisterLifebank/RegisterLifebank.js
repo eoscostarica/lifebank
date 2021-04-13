@@ -138,7 +138,7 @@ const RegisterLifebank = (props) => {
       }
     }
 
-  }, [errorVerifyEmail])
+  }, [logout, verifyEmail, setLifebank, code, history, errorVerifyEmail])
 
   useEffect(() => {
     if (errorCreateAccount) {
@@ -155,7 +155,7 @@ const RegisterLifebank = (props) => {
       }
     }
 
-  }, [errorCreateAccount])
+  }, [logout, verifyEmail, code, history, errorCreateAccount])
 
   return (
     <Box className={classes.root}>
