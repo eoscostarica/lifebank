@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   alert: {
     marginTop: theme.spacing(4)
   },
+  title:{
+    paddingBottom: '10px'
+  },
   textFieldWrapper: {
     padding: theme.spacing(2, 2),
     display: 'flex',
@@ -85,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "53px",
     paddingLeft: "53px",
     paddingRight: "53px",
-    paddingBottom: "60px",
+    paddingBottom: "43px",
     [theme.breakpoints.down('md')]: {
       paddingLeft: "21px",
       paddingRight: "21px"
@@ -110,10 +113,10 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   ] = useMutation(CREDENTIALS_RECOVERY)
   const [
     changePassword,
-    { loading: loadingChangePassword, error: errorChangePassword, data: { change_password: responseChangePassword } = {} }
+    { loading: loadingChangePassword, error: errorChangePassword }
   ] = useMutation(CHANGE_PASSWORD)
   const [open, setOpen] = useState(false)
-
+  
   const [
     getAccountSignupMethod,
     { data: { signup_method: getAccountSignupMethodResult } = {} }
@@ -193,7 +196,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(error.message.replace('GraphQL error: ', ''))
     }
-  }, [error])
+  }, [error,t])
 
   useEffect(() => {
     if (errorChangePassword) {
@@ -201,7 +204,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
     }
-  }, [errorChangePassword])
+  }, [errorChangePassword,t])
 
 
   useEffect(() => {
@@ -225,10 +228,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     <>
         <Box className={classes.recoveryBox}>
           <Button color="secondary" className={classes.recoveryButton} onClick={handleOpen}>
-          {t('signup.forgetPassword')}
+            {t('signup.forgetPassword')}
           </Button>
         </Box>
-
       <Dialog
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -253,11 +255,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
             </IconButton>
           </Box>
           <Box className={classes.bodyWrapper}>
-            <Typography variant="h3">
-              {t('credentialsRecovery.credentialsRecovery')}
-            </Typography>
             <form autoComplete="off">
               <Box className={classes.textFieldWrapper}>
+                <Typography variant="h3" className={classes.title}>
+                  {t('credentialsRecovery.credentialsRecovery')}
+                </Typography>
                 <Typography >
                   {t('credentialsRecovery.instructionCredentialsRecovery')}
                 </Typography>
