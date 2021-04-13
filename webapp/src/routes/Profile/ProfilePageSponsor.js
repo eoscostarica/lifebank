@@ -614,7 +614,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.images')}</Typography>
             <Box>
-              <img className={classes.img} src={images[activeStep]} alt='Profile sponsor' />
+              <img className={classes.img} src={images[activeStep]} alt={t('profile.profileImageAlt')} />
               <MobileStepper
                 className={classes.stepper}
                 steps={images.length}
