@@ -109,7 +109,7 @@ const EmailVerification = (props) => {
       }
     }
 
-  }, [errorVerifyEmail])
+  }, [verifyEmail, logout, code, history, errorVerifyEmail])
 
   return (
     <Box className={classes.root}>

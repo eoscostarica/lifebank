@@ -226,11 +226,6 @@ const ProfilePageSponsor = ({ profile }) => {
   const [activeOffers, setActiveOffers] = useState([])
   const [inactiveOffers, setInactiveOffers] = useState([])
 
-
-  const [state, setState] = useState({
-    bottom: false
-  })
-
   const {
     loading: loadingDataOffer,
     error: allOffersError,
@@ -263,9 +258,7 @@ const ProfilePageSponsor = ({ profile }) => {
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
 
-  useEffect(() => {
-    getOffers()
-  }, [])
+  getOffers()
 
   useEffect(() => {
     if (!loadingDataOffer) {
@@ -273,7 +266,7 @@ const ProfilePageSponsor = ({ profile }) => {
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [allOffers])
+  }, [loadingDataOffer, allOffers])
 
   useEffect(() => {
     const getUsername = async () => {
@@ -285,7 +278,7 @@ const ProfilePageSponsor = ({ profile }) => {
     }
 
     if (!userName) getUsername()
-  }, [userName])
+  }, [getData, profile.account, userName])
 
   useEffect(() => {
     if (errorUsername) {
@@ -301,7 +294,7 @@ const ProfilePageSponsor = ({ profile }) => {
       } else history.push('/internal-error')
     }
 
-  }, [errorUsername, allOffersError])
+  }, [logout, history, errorUsername, allOffersError])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -373,7 +366,7 @@ const ProfilePageSponsor = ({ profile }) => {
     if (profile) {
       checkAvailableFields()
     }
-  }, [profile])
+  }, [checkAvailableFields, profile])
 
   useEffect(() => {
     if (location.state) {
@@ -384,7 +377,7 @@ const ProfilePageSponsor = ({ profile }) => {
         severity: 'success'
       })
     }
-  }, [])
+  }, [t, history, location.state])
 
   return (
     <>
@@ -621,7 +614,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.images')}</Typography>
             <Box>
-              <img className={classes.img} src={images[activeStep]} />
+              <img className={classes.img} src={images[activeStep]} alt='Profile sponsor' />
               <MobileStepper
                 className={classes.stepper}
                 steps={images.length}

@@ -195,7 +195,7 @@ const HomeDesktop = (props) => {
 
   useEffect(() => {
     props.handleChangeSearch(transcript)
-  }, [transcript]);
+  }, [props, transcript]);
 
   return (
     <>

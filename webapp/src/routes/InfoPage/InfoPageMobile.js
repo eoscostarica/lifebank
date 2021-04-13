@@ -384,7 +384,7 @@ const InfoPageMobile = () => {
         history.push(`/info/${location.state.profile.account}`)
       } else history.push('/internal-error')
     }
-  }, [errorUsername, errorInfoProfile, allOffersError])
+  }, [logout, profile, getInfo, getOffers, history.push, location.state.profile.account,  errorUsername, errorInfoProfile, allOffersError])
 
   const ScheduleItem = (schedule) => {
     return (

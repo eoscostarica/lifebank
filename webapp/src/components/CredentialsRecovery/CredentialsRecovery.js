@@ -190,7 +190,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   useEffect(() => {
     loadPasswordChangable()
-  }, [user])
+  }, [loadPasswordChangable, user])
 
   useEffect(() => {
     if (error) {

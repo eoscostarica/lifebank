@@ -245,7 +245,7 @@ const ProfilePageLifebank = ({ profile }) => {
       } else history.push('/internal-error')
     }
 
-  }, [errorUsername])
+  }, [logout, errorUsername, history])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -298,7 +298,7 @@ const ProfilePageLifebank = ({ profile }) => {
 
   useEffect(() => {
     if (profile) checkAvailableFields()
-  }, [profile])
+  }, [checkAvailableFields, profile])
 
   useEffect(() => {
     if (location.state) {
@@ -309,7 +309,7 @@ const ProfilePageLifebank = ({ profile }) => {
         severity: 'success'
       })
     }
-  }, [])
+  }, [t, history, location.state])
 
   return (
     <>
@@ -517,7 +517,7 @@ const ProfilePageLifebank = ({ profile }) => {
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.images')}</Typography>
             <Box>
-              <img className={classes.img} src={images[activeStep]} />
+              <img className={classes.img} src={images[activeStep]} alt='Lifebank profile' />
               <MobileStepper
                 className={classes.stepper}
                 steps={images.length}

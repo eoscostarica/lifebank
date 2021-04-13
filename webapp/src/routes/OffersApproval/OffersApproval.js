@@ -132,7 +132,7 @@ const OffersApproval = () => {
       const dataCategories = info.location[0].info.categories
       setCategories(dataCategories)
     }
-  }, [info])
+  }, [loadingInfo, info])
 
   useEffect(() => {
     if (!loadingDataOffer) {
@@ -140,12 +140,12 @@ const OffersApproval = () => {
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [allOffers])
+  }, [loadingDataOffer, allOffers])
 
   useEffect(() => {
     getInfo()
     getOffers()
-  }, [])
+  }, [getInfo, getOffers])
 
   useEffect(() => {
     const discountOff = []
@@ -170,6 +170,8 @@ const OffersApproval = () => {
           break
         case 'badge':
           badgeOff.push(offer)
+          break
+        default:
           break
       }
     })
