@@ -199,6 +199,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
+  const [userName , setUserName] = useState(t('signup.defaultUsername'))
 
   const handleOpen = () => {
     setOpen(!open)
@@ -250,10 +251,10 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleCreateAccount = () => {
-    const { email, name, secret } = user
+    const { name, email, secret } = user
     const bcrypt = require('bcryptjs')
     const saltRounds = 10
-
+    if(name) setUserName(name)
     bcrypt.hash(secret, saltRounds, function (err, hash) {
       if (!err) {
         createAccount({
@@ -266,18 +267,18 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               message: t('emailMessage.messageVerificationCode'),
               button: t('emailMessage.verifyButton')
             },
-            name,
-            secret: hash
+            name: userName,
+            secret: hash,
+            signup_method: 'lifebank'
           }
         })
       }
     })
   }
 
-  const handleCreateAccountWithAuth = async (status, email, name, secret) => {
+  const handleCreateAccountWithAuth = async (status, email, name, secret, signupMethod) => {
     if (status) {
       const { data } = await checkEmail({ email: email })
-
       if (data.user.length === 0) {
         const bcrypt = require('bcryptjs')
         const saltRounds = 10
@@ -295,7 +296,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
                   button: t('emailMessage.verifyButton')
                 },
                 name,
-                secret: hash
+                secret: hash,
+                signup_method: signupMethod
               }
             })
           }
@@ -314,7 +316,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       address,
       phone,
       description,
-      coordinates
+      coordinates,
+      requirement
     } = user
     let { immunity_test, invitation_code, urgency_level } = user
 
@@ -348,7 +351,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
             urgency_level,
             coordinates,
             immunity_test,
-            invitation_code
+            invitation_code,
+            requirement
           }
         })
       }

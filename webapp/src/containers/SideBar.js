@@ -93,6 +93,16 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
               </Link>
             </Box>
           )}
+          {user.role === 'lifebank' && (
+            <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
+              <MenuBookIcon className={classes.iconOption} />
+              <Link to="/offers-approval">
+                <Typography variant="body1" className={classes.labelOption}>
+                  {t('navigationDrawer.offersApproval')}
+                </Typography>
+              </Link>
+            </Box>
+          )}
           <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
             <AccountCircleIcon className={classes.iconOption} />
             <Link to="/profile">
@@ -104,9 +114,11 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
 
           <Box className={classes.optionLink} onClick={onLogout}>
             <LogoutIcon className={classes.iconOption} />
-            <Typography variant="body1" className={classes.labelOption}>
-              {t('logout')}
-            </Typography>
+            <Link to="/">
+              <Typography variant="body1" className={classes.labelOption}>
+                {t('logout')}
+              </Typography>
+            </Link>
           </Box>
         </>
       )}

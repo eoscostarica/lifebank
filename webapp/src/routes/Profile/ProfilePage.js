@@ -136,6 +136,14 @@ const ProfilePage = () => {
   ])
 
   useEffect(() => {
+    if (profile && !profile.consent) {
+      setSeverity("error")
+      setMessegaAlert(t('signup.noConsentNoEdit'))
+      handleOpenAlert()
+    }
+  }, [profile])
+
+  useEffect(() => {
     if (errorProfile) {
       if (errorProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
         logout()
@@ -197,7 +205,7 @@ const ProfilePage = () => {
       )}
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <Suspense fallback={<CircularProgress />}>
-          <ProfilePageLifebank profile={profile} />
+          <ProfilePageLifebank profile={profile}/>
         </Suspense>
       )}
       {!currentUser &&

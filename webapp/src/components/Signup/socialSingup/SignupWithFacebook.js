@@ -41,7 +41,8 @@ const SignupWithFacebook = ({ handlerSubmit }) => {
       true,
       response.profile.email,
       response.profile.name,
-      response.profile.id
+      response.profile.id,
+      'facebook'
     )
   }
 

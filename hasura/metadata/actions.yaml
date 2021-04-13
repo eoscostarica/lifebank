@@ -122,6 +122,13 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
+- name: signup_method
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/signup-method
+    forward_client_headers: true
+  permissions:
+  - role: guest
 - name: transfer
   definition:
     kind: synchronous
@@ -162,6 +169,7 @@ custom_types:
   - name: ValidLifebank
   - name: create_account_lifebank_output
   - name: change_password_output
+  - name: signup_method_output
   - name: create_account_lifebank_auth_output
   - name: create_account_auth_output
   scalars: []

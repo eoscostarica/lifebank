@@ -148,7 +148,7 @@ const Categories = ({
   const [openModal, setOpenModal] = useState(false)
   const CategoryX = [
     { value: 'discount', label: t('categories.discount') },
-    { value: 'freeProduct', label: t('categories.freeproduct') },
+    { value: 'freeProduct', label: t('categories.freeProduct') },
     { value: 'coupon', label: t('categories.coupon') },
     { value: 'benefit', label: t('categories.benefit') },
     { value: 'badge', label: t('categories.badge') }
@@ -214,7 +214,7 @@ const Categories = ({
                   <Divider />
                 </Box>
                 <Box className={classes.CategoriesListResult}>
-                  <Typography variant="h6">{CategoriesItem.category}</Typography>
+                  <Typography variant="h6">{t(`categories.${CategoriesItem.category}`)}</Typography>
 
                 </Box>
                 <Box className={classes.boxDivider}>
@@ -279,7 +279,6 @@ const Categories = ({
                 )
               })}
             </TextField>
-
             <Button
               className={classes.addBtn}
               variant="contained"

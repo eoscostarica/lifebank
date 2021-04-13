@@ -79,7 +79,7 @@ const SimpleRegisterForm = ({
         {children}
         <TextField
           id="name"
-          label={t('signup.name')}
+          label={t('signup.nameSponsor')}
           variant="outlined"
           fullWidth
           className={classes.textField}

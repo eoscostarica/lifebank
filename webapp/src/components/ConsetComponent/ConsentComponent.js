@@ -136,7 +136,7 @@ const ConsetComponent = () => {
   useEffect(() => {
     if (signupResult) {
       if (signupResult.success) {
-        updateProfile()
+        if(profile.role === 'sponsor') updateProfile()
         setSeverity("success")
         setMessegaAlert(t('signup.consentGranted'))
         handleOpenAlert()
@@ -146,7 +146,6 @@ const ConsetComponent = () => {
         setMessegaAlert(t('signup.consentError'))
         handleOpenAlert()
       }
-
     }
   }, [updateProfile, setSeverity, setMessegaAlert, handleOpenAlert, handleOpenConsent, t, signupResult])
 

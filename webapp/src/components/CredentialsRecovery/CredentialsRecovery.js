@@ -16,8 +16,11 @@ import CloseIcon from '@material-ui/icons/Close'
 import Dialog from '@material-ui/core/Dialog'
 import LockIcon from '@material-ui/icons/Lock'
 import { useTranslation } from 'react-i18next'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD } from '../../gql'
+import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -103,6 +106,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
+  const [showPassword, setShowPassword] = useState(false)
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
@@ -115,6 +119,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     { loading: loadingChangePassword, error: errorChangePassword, data: { change_password: responseChangePassword } = {} }
   ] = useMutation(CHANGE_PASSWORD)
   const [open, setOpen] = useState(false)
+
+  const [
+    getAccountSignupMethod,
+    { data: { signup_method: getAccountSignupMethodResult } = {} }
+  ] = useMutation(GET_ACCOUNT_SIGNUP_METHOD)
 
   const handleOpen = () => {
     setOpen(!open)
@@ -131,37 +140,57 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const handleSubmit = () => {
-    setErrorMessage(null)
-    credentialsRecovery({
+  const loadPasswordChangable = () => {
+    getAccountSignupMethod({
       variables: {
-        email: user.email,
-        emailContent: {
-          subject: t('emailMessage.subjectCredentialsRecovery'),
-          title: t('emailMessage.titleCredentialsRecovery'),
-          message: t('emailMessage.messageCredentialsRecovery'),
-          account: t('common.account'),
-          password: t('signup.password')
-        }
+        email: user.email
       }
     })
-    setValidEmailFormat(false)
   }
 
-  const handleSubmitChangePassword = () => {
-    setErrorMessage(null)
-    changePassword({
-      variables: {
-        ...user,
-        emailContent: {
-          subject: t('emailMessage.subjectChangePassword'),
-          title: t('emailMessage.titleChangePassword'),
-          message: t('emailMessage.messageChangePassword')
+  const handleSubmit = async () => {
+    if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
+      setErrorMessage(null)
+      credentialsRecovery({
+        variables: {
+          email: user.email,
+          emailContent: {
+            subject: t('emailMessage.subjectCredentialsRecovery'),
+            title: t('emailMessage.titleCredentialsRecovery'),
+            message: t('emailMessage.messageCredentialsRecovery'),
+            account: t('common.account'),
+            password: t('signup.password')
+          }
         }
-      }
-    })
-    setValidEmailFormat(false)
+      })
+      setValidEmailFormat(false)
+    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
   }
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
+
+  const handleSubmitChangePassword = async () => {
+    if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
+      setErrorMessage(null)
+      changePassword({
+        variables: {
+          ...user,
+          emailContent: {
+            subject: t('emailMessage.subjectChangePassword'),
+            title: t('emailMessage.titleChangePassword'),
+            message: t('emailMessage.messageChangePassword')
+          }
+        }
+      })
+      setValidEmailFormat(false)
+    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
+  }
+
+  useEffect(() => {
+    loadPasswordChangable()
+  }, [user])
 
   useEffect(() => {
     if (error) {
@@ -289,8 +318,20 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   id="currentPassword"
                   label={t('credentialsRecovery.currentPassword')}
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
+                  type={showPassword ? 'text' : 'password'}
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
                   }}
                   value={user.currentPassword || ''}
                   onChange={(event) =>
@@ -304,9 +345,21 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 <TextField
                   id="newPassword"
                   label={t('credentialsRecovery.newPassword')}
+                  type={showPassword ? 'text' : 'password'}
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
                   }}
                   value={user.newPassword || ''}
                   onChange={(event) =>

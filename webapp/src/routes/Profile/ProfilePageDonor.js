@@ -97,19 +97,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  editBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
+  editButton: {
+    borderRadius: 50,
+    height: 60,
+    padding: 20,
+    position: 'fixed',
+    zIndex: 1,
+    bottom: 20,
+    right: 20,
+    margin: '0',
     color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
+    backgroundColor: '#ba0d0d'
   },
   formGroup: {
     display: 'flex',
@@ -236,7 +234,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         <QRCode value={profile.account || 'n/a'} size={200} />
       </Box>
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: true, userName: '' } }} className={classes.routerLink} >
-        <Button variant="contained" className={classes.editBtn} color="primary">
+        <Button variant="contained" className={classes.editButton} color="secondary">
           {t('common.edit')}
         </Button>
       </LinkRouter>
