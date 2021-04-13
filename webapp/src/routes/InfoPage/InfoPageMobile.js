@@ -331,10 +331,10 @@ const InfoPageMobile = () => {
 
   const getOffers = async () => {
     if(profile){
-      if(profile.role === 'sponsor'){
-      setLoadingOffers(true)
-      await getAllOffers()
-      await getSponsorID()
+      if(profile.role === 'sponsor') {
+        setLoadingOffers(true)
+        await getAllOffers()
+        await getSponsorID()
       }
     }
   }

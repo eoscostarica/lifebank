@@ -147,7 +147,7 @@ const ConsetComponent = () => {
         handleOpenAlert()
       }
     }
-  }, [updateProfile, setSeverity, setMessegaAlert, handleOpenAlert, handleOpenConsent, t, signupResult, profile.role])
+  }, [updateProfile, setSeverity, setMessegaAlert, handleOpenAlert, handleOpenConsent, t, signupResult, profile])
 
   useEffect(() => {
     if (errorSignup || errorProfile) {
