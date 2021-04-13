@@ -21,7 +21,7 @@ import Grid from '@material-ui/core/Grid'
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
-import { GET_LOCATION_PROFILE , GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
+import { GET_LOCATION_PROFILE, GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
 import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
 
@@ -197,9 +197,13 @@ const InfoPage = () => {
   const [sponsorID, setSponsorID] = useState()
 
   const getOffers = async () => {
-    setLoadingOffers(true)
-    await getAllOffers()
-    await getSponsorID()
+    if(profile){
+      if(profile.role === 'sponsor'){
+      setLoadingOffers(true)
+      await getAllOffers()
+      await getSponsorID()
+      }
+    }
   }
 
   const { error: errorInfoProfile, refetch: getInfoProfile } = useQuery(GET_LOCATION_PROFILE, {
@@ -210,7 +214,7 @@ const InfoPage = () => {
 
   const { error: errorUsername, data: sponsor_id, refetch: getSponsorID } = useQuery(GET_ID, {
     variables: {
-      account: location.state.profile.account
+      username: url
     }
   })
 
@@ -242,7 +246,11 @@ const InfoPage = () => {
 
   useEffect(() => {
     getInfo()
-    getOffers()
+    if(profile){
+      if(profile.role === 'sponsor'){
+        getOffers()
+      }
+    }
   }, [location])
 
   useEffect(() => {
@@ -256,7 +264,11 @@ const InfoPage = () => {
       if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
         && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
         getInfo()
-        getOffers()
+        if(profile){
+          if(profile.role === 'sponsor'){
+            getOffers()
+          }
+        }
         logout()
         history.push(`/info/${location.state.profile.account}`)
       } else history.push('/internal-error')
@@ -571,17 +583,19 @@ const InfoPage = () => {
             md={12}
             xl={10}
           >
+          {profile.role === 'sponsor' && (
             <Grid item md={12}>
               <Typography variant="subtitle1" className={classes.boldText}>
                 {t('offerView.lifebankOffers')}
-              </Typography>
-
-            </Grid>
-            <ShowOffersDesktop
+              </Typography>        
+              <ShowOffersDesktop
               className={classes.offerContainer}
               offers={offers}
               loading={loadingOffers}
             />
+            </Grid>
+          ) }
+            
           </Grid>
         </Box>
       )}

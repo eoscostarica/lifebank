@@ -16,6 +16,9 @@ import CloseIcon from '@material-ui/icons/Close'
 import Dialog from '@material-ui/core/Dialog'
 import LockIcon from '@material-ui/icons/Lock'
 import { useTranslation } from 'react-i18next'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
 
@@ -103,6 +106,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
+  const [showPassword, setShowPassword] = useState(false)
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
@@ -118,7 +122,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const [
     getAccountSignupMethod,
-    { error: errorGetAccountSignupMethod, loading: getAccountSignupMethodLoading, data: { signup_method: getAccountSignupMethodResult } = {} }
+    { data: { signup_method: getAccountSignupMethodResult } = {} }
   ] = useMutation(GET_ACCOUNT_SIGNUP_METHOD)
 
   const handleOpen = () => {
@@ -134,14 +138,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     if (regularExpresion.test(value)) setValidEmailFormat(true)
     else setValidEmailFormat(false)
     setUser({ ...user, [field]: value })
-  }
-
-  const loadPasswordChangable = () => {
-    getAccountSignupMethod({
-      variables: {
-        email: user.email
-      }
-    })
   }
 
   const handleSubmit = async () => {
@@ -163,6 +159,10 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
   }
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
+
   const handleSubmitChangePassword = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
       setErrorMessage(null)
@@ -181,7 +181,13 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }
 
   useEffect(() => {
-    loadPasswordChangable()
+    if(user.email) {
+      getAccountSignupMethod({
+        variables: {
+          email: user.email
+        }
+      })
+    }
   }, [user])
 
   useEffect(() => {
@@ -310,8 +316,20 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   id="currentPassword"
                   label={t('credentialsRecovery.currentPassword')}
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
+                  type={showPassword ? 'text' : 'password'}
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
                   }}
                   value={user.currentPassword || ''}
                   onChange={(event) =>
@@ -325,9 +343,21 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 <TextField
                   id="newPassword"
                   label={t('credentialsRecovery.newPassword')}
+                  type={showPassword ? 'text' : 'password'}
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
+                  InputLabelProps={{ shrink: true }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
                   }}
                   value={user.newPassword || ''}
                   onChange={(event) =>

@@ -203,7 +203,7 @@ const ProfilePage = () => {
       )}
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <Suspense fallback={<CircularProgress />}>
-          <ProfilePageLifebank profile={profile} />
+          <ProfilePageLifebank profile={profile}/>
         </Suspense>
       )}
       {!currentUser &&

@@ -6,5 +6,6 @@ module.exports = {
   walletUtils: require('./wallet'),
   lifebankcodeUtils: require('./lifebankcode'),
   lifebankcoinUtils: require('./lifebankcoin'),
-  mailUtils: require('./mail')
+  mailUtils: require('./mail'),
+  bcryptjs: require('./bcryptjs')
 }

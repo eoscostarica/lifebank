@@ -109,14 +109,7 @@ const OffersManagement = () => {
   const [openGenericFormAddVariant, setOpenGenericFormAddVariant] = useState(
     false
   )
-  const columns = [
-    t('offersManagement.offerName'),
-    t('offersManagement.startDate'),
-    t('offersManagement.endDate'),
-    t('offersManagement.status'),
-    t('offersManagement.actions'),
-    t('offersManagement.details')
-  ]
+
   const [openGenericFormEditVariant, setOpenGenericFormEditVariant] = useState(
     false
   )
@@ -254,7 +247,7 @@ const OffersManagement = () => {
     }
 
     if (profileIDLoaded) getOffers()
-  }, [getSponsorOffers, profileIDLoaded])
+  })
 
   useEffect(() => {
     loadProfileID()
@@ -300,15 +293,16 @@ const OffersManagement = () => {
                 title={t('offersManagement.tableTitle')}
                 data={offers.map((offer, key) => [
                   offer.offer_name,
+                  offer.active
+                    ? t('offersManagement.active')
+                    : t('offersManagement.inactive'),
                   offer.start_date
                     ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
                   offer.end_date
                     ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
-                  offer.active
-                    ? t('offersManagement.active')
-                    : t('offersManagement.inactive'),
+
                   Actions(offer.active, offer.id),
                   <IconButton
                     key={key}
@@ -318,15 +312,52 @@ const OffersManagement = () => {
                     <MoreHorizIcon />
                   </IconButton>
                 ])}
-                columns={columns}
+                columns={[
+                  {
+                    name: t('offersManagement.offerName'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.status'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.startDate'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.endDate'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.actions'),
+                    options: {
+                      filter: false,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.details'),
+                    options: {
+                      filter: false,
+                    }
+                  }
+                ]}
                 options={{
-                  filter: true,
                   print: false,
                   selectableRowsHideCheckboxes: true,
                   selectableRowsHeader: false,
                   download: false,
                 }}
               />
+
             </Box>
           }
           {offers.length === 0 &&
@@ -383,7 +414,7 @@ const OffersManagement = () => {
       </Dialog>
       <Snackbar
         open={openSnackbar.show}
-        autoHideDuration={5000}
+        autoHideDuration={2000}
         onClose={handleClose}
       >
         <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>

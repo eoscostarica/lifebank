@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const CREATE_ACCOUNT_MUTATION = gql`
-  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!, $signup_method: String!) {
-    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret, signup_method: $signup_method) {
+  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $passwordPlainText: String!, $signup_method: String!) {
+    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, passwordPlainText: $passwordPlainText, signup_method: $name) {
       account
       token
       transaction_id
@@ -11,8 +11,8 @@ export const CREATE_ACCOUNT_MUTATION = gql`
 `
 
 export const CREATE_ACCOUNT_AUTH_MUTATION = gql`
-  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!) {
-    create_account_auth(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret) {
+  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $passwordPlainText: String!, $signup_method: String) {
+    create_account_auth(role: $role, email: $email, emailContent: $emailContent, name: $name, passwordPlainText: $passwordPlainText, signup_method: $name) {
       account
       token
       transaction_id
@@ -47,8 +47,8 @@ export const CHECK_USERNAME_MUTATION = gql`
 `
 
 export const LOGIN_MUTATION = gql`
-  mutation($account: String!, $secret: String!) {
-    login(account: $account, secret: $secret) {
+  mutation($account: String!, $password: String!) {
+    login(account: $account, password: $password) {
       token
     }
   }
@@ -259,8 +259,8 @@ export const VERIFY_USERNAME = gql`
 `
 
 export const GET_ID = gql`
-  query($account: String!) {
-    user(where: { account: { _eq: $account } }) {
+  query($username: String!) {
+    user(where: { username: { _eq: $username } }) {
       id
     }
   }

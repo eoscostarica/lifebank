@@ -81,7 +81,8 @@
       "consentRevoked": "Consentimiento revocado",
       "consentError": "Error al otorgar consentimiento",
       "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
-      "noConsentNoEdit2": "Léelo aquí"
+      "noConsentNoEdit2": "Léelo aquí",
+      "defaultUsername": "Tu perfil"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
@@ -340,7 +341,8 @@
       "save": "Guardar",
       "saveChanges": "Guardar cambios",
       "currentLanguage": "es-CR",
-      "near": "Cerca de"
+      "near": "Cerca de",
+      "offers": "Ofertas"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",

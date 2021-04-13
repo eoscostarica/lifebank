@@ -250,13 +250,31 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleCreateAccount = () => {
-    const { email, name, secret } = user
-    const bcrypt = require('bcryptjs')
-    const saltRounds = 10
+    const { email, name, passwordPlainText } = user
 
-    bcrypt.hash(secret, saltRounds, function (err, hash) {
-      if (!err) {
-        createAccount({
+    createAccount({
+      variables: {
+        role,
+        email,
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        },
+        name: name || t('signup.defaultUsername'),
+        passwordPlainText,
+        signup_method: 'lifebank'
+      }
+    })
+  }
+
+  const handleCreateAccountWithAuth = async (status, email, name, passwordPlainText, signupMethod) => {
+    if (status) {
+      const { data } = await checkEmail({ email: email })
+
+      if (data.user.length === 0) {
+        createAccountAuth({
           variables: {
             role,
             email,
@@ -267,39 +285,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               button: t('emailMessage.verifyButton')
             },
             name,
-            secret: hash,
-            signup_method: 'lifebank'
-          }
-        })
-      }
-    })
-  }
-
-  const handleCreateAccountWithAuth = async (status, email, name, secret, signupMethod) => {
-    if (status) {
-      const { data } = await checkEmail({ email: email })
-
-      if (data.user.length === 0) {
-        const bcrypt = require('bcryptjs')
-        const saltRounds = 10
-
-        bcrypt.hash(secret, saltRounds, function (err, hash) {
-          if (!err) {
-            createAccountAuth({
-              variables: {
-                role,
-                email,
-                emailContent: {
-                  subject: t('emailMessage.subjectVerificationCode'),
-                  title: t('emailMessage.titleVerificationCode'),
-                  message: t('emailMessage.messageVerificationCode'),
-                  button: t('emailMessage.verifyButton')
-                },
-                name,
-                secret: hash,
-                signup_method: signupMethod
-              }
-            })
+            passwordPlainText,
+            signup_method: signupMethod
           }
         })
       } else {
@@ -327,34 +314,28 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
     if (urgency_level === undefined) urgency_level = 1
 
-    const bcrypt = require('bcryptjs')
-    const saltRounds = 10
     const schedule = '[]'
 
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-      if (!err) {
-        preRegisterLifebank({
-          variables: {
-            email,
-            emailContent: {
-              subject: t('emailMessage.subjectVerificationCode'),
-              title: t('emailMessage.titleVerificationCode'),
-              message: t('emailMessage.messageVerificationCode'),
-              button: t('emailMessage.verifyButton')
-            },
-            password: hash,
-            name,
-            address,
-            schedule,
-            phone,
-            description,
-            urgency_level,
-            coordinates,
-            immunity_test,
-            invitation_code,
-            requirement
-          }
-        })
+    preRegisterLifebank({
+      variables: {
+        email,
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        },
+        passwordPlainText: password,
+        name,
+        address,
+        schedule,
+        phone,
+        description,
+        urgency_level,
+        coordinates,
+        immunity_test,
+        invitation_code,
+        requirement
       }
     })
   }
