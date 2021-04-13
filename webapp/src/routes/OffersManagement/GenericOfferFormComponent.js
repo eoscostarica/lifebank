@@ -352,7 +352,7 @@ const GenericOfferFormComponent = ({
         })
       )
     }
-  }, [updateOfferResult])
+  }, [setOpenSnackbar, setOffers, t, updatedOffer, updateOfferResult])
 
   useEffect(() => {
     if (createOfferResult) {
@@ -363,7 +363,7 @@ const GenericOfferFormComponent = ({
       })
       setOffers((offs) => [...offs, createOfferResult])
     }
-  }, [createOfferResult])
+  }, [setOffers, setOpenSnackbar, t, createOfferResult])
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disableUrlInput)) {
@@ -450,9 +450,9 @@ const GenericOfferFormComponent = ({
                   }
                 >
                   <MenuItem value="discount">{t('offersManagement.discount')}</MenuItem>
-                  <MenuItem value="gift">{t('offersManagement.gift')}</MenuItem>//
+                  <MenuItem value="gift">{t('offersManagement.gift')}</MenuItem>
                   <MenuItem value="benefit">{t('offersManagement.benefit')}</MenuItem>
-                  <MenuItem value="other">{t('offersManagement.other')}</MenuItem>//
+                  <MenuItem value="other">{t('offersManagement.other')}</MenuItem>
                 </Select>
               </FormControl>
               <TextField

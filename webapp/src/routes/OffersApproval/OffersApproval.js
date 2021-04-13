@@ -82,7 +82,7 @@ const OffersApproval = () => {
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
   const [currentUser] = useUser()
-  const [account, setAccount] = useState(currentUser.account)
+  const [account] = useState(currentUser.account)
   const [discountOffers, setDiscountOffers] = useState([])
   const [freeOffers, setFreetOffers] = useState([])
   const [badgeOffers, setBadgeOffers] = useState([])

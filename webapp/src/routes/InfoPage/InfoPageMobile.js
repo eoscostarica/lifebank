@@ -251,21 +251,6 @@ const InfoPageMobile = () => {
     skip: true
   })
 
-  useEffect(() => {
-    getInfo()
-
-  }, [location])
-
-  const getOffers = async () => {
-    if(profile){
-      if(profile.role === 'sponsor'){
-      setLoadingOffers(true)
-      await getAllOffers()
-      await getSponsorID()
-      }
-    }
-  }
-
   const { error: errorUsername, data: sponsor_id, refetch: getSponsorID } = useQuery(GET_ID, {
     variables: {
       username: url
@@ -341,12 +326,26 @@ const InfoPageMobile = () => {
   }
 
   useEffect(() => {
+    getInfo()
+  }, [getInfo, location])
+
+  const getOffers = async () => {
+    if(profile){
+      if(profile.role === 'sponsor'){
+      setLoadingOffers(true)
+      await getAllOffers()
+      await getSponsorID()
+      }
+    }
+  }
+
+  useEffect(() => {
     if (!loadingDataOffer) {
       const dataOffers = allOffers.offer
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [allOffers])
+  }, [setOffers, setLoadingOffers, loadingDataOffer, allOffers])
 
   useEffect(() => {
 
@@ -363,7 +362,7 @@ const InfoPageMobile = () => {
         getOffers()
       }
     }
-  }, [location])
+  }, [getInfo, getOffers, profile, location])
 
   useEffect(() => {
     if (errorUsername && errorInfoProfile) {

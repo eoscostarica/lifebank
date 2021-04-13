@@ -388,7 +388,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       setEmailValid(false)
       setcheckEmailLoaded(false)
     }
-  }, [user?.email, checkEmail])
+  }, [user, checkEmail])
 
   useEffect(() => {
     if (preRegisterLifebankResult) {
@@ -397,7 +397,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       handleOpenAlert()
 
     }
-  }, [preRegisterLifebankResult])
+  }, [handleOpen, setMessegaAlert, handleOpenAlert, t, preRegisterLifebankResult])
 
   useEffect(() => {
     if (createAccountResult) {

@@ -259,18 +259,6 @@ const ProfilePageSponsor = ({ profile }) => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event) {
-      if (
-        event.type === 'keydown' &&
-        (event.key === 'Tab' || event.key === 'Shift')
-      )
-        return
-
-      setState({ ...state, [anchor]: open })
-    }
-  }
-
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
