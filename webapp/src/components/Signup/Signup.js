@@ -439,7 +439,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       handleSetField('email', ' ')
       setActiveStep(0)
     }
-    },[open])
+  }, [open])
 
   const ErrorMessage = () => {
     return (
