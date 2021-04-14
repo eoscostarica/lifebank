@@ -419,7 +419,7 @@ const OffersManagement = () => {
                 variant="contained"
                 color="secondary"
                 className={classes.btnAction}
-                onClick={() => checkAvailableFields()}
+                onClick={checkAvailableFields}
               >
                 {t('offersManagement.addOffer')}
               </Button>
@@ -435,7 +435,7 @@ const OffersManagement = () => {
         className={classes.fab}
         color="secondary"
         aria-label="add"
-        onClick={() => checkAvailableFields()}
+        onClick={checkAvailableFields}
       >
         <AddIcon />
       </Fab>
