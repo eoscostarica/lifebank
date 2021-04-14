@@ -226,11 +226,6 @@ const ProfilePageSponsor = ({ profile }) => {
   const [activeOffers, setActiveOffers] = useState([])
   const [inactiveOffers, setInactiveOffers] = useState([])
 
-
-  const [state, setState] = useState({
-    bottom: false
-  })
-
   const {
     loading: loadingDataOffer,
     error: allOffersError,
@@ -259,25 +254,11 @@ const ProfilePageSponsor = ({ profile }) => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event) {
-      if (
-        event.type === 'keydown' &&
-        (event.key === 'Tab' || event.key === 'Shift')
-      )
-        return
-
-      setState({ ...state, [anchor]: open })
-    }
-  }
-
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
 
-  useEffect(() => {
-    getOffers()
-  }, [])
+  getOffers()
 
   useEffect(() => {
     if (!loadingDataOffer) {
@@ -285,7 +266,7 @@ const ProfilePageSponsor = ({ profile }) => {
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [allOffers])
+  }, [loadingDataOffer, allOffers])
 
   useEffect(() => {
     const getUsername = async () => {
@@ -297,7 +278,7 @@ const ProfilePageSponsor = ({ profile }) => {
     }
 
     if (!userName) getUsername()
-  }, [userName])
+  }, [getData, profile.account, userName])
 
   useEffect(() => {
     if (errorUsername) {
@@ -313,7 +294,7 @@ const ProfilePageSponsor = ({ profile }) => {
       } else history.push('/internal-error')
     }
 
-  }, [errorUsername, allOffersError])
+  }, [logout, history, errorUsername, allOffersError])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -385,7 +366,7 @@ const ProfilePageSponsor = ({ profile }) => {
     if (profile) {
       checkAvailableFields()
     }
-  }, [profile])
+  }, [checkAvailableFields, profile])
 
   useEffect(() => {
     if (location.state) {
@@ -396,7 +377,7 @@ const ProfilePageSponsor = ({ profile }) => {
         severity: 'success'
       })
     }
-  }, [])
+  }, [t, history, location.state])
 
   return (
     <>
@@ -633,7 +614,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Box className={classes.rowBoxLeft}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.images')}</Typography>
             <Box>
-              <img className={classes.img} src={images[activeStep]} />
+              <img className={classes.img} src={images[activeStep]} alt={t('profile.profileImageAlt')} />
               <MobileStepper
                 className={classes.stepper}
                 steps={images.length}

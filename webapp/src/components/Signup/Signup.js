@@ -369,7 +369,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       setEmailValid(false)
       setcheckEmailLoaded(false)
     }
-  }, [user?.email, checkEmail])
+  }, [user, checkEmail])
 
   useEffect(() => {
     if (preRegisterLifebankResult) {
@@ -378,7 +378,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       handleOpenAlert()
 
     }
-  }, [preRegisterLifebankResult])
+  }, [handleOpen, setMessegaAlert, handleOpenAlert, t, preRegisterLifebankResult])
 
   useEffect(() => {
     if (createAccountResult) {
@@ -387,7 +387,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       handleOpenAlert()
     }
 
-  }, [createAccountResult])
+  }, [handleOpen, setMessegaAlert, handleOpenAlert, t, createAccountResult])
 
   useEffect(() => {
     if (createAccountResultAuth) {
@@ -396,24 +396,23 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       handleOpenAlert()
       login(createAccountResultAuth.token)
     }
-
-  }, [createAccountResultAuth])
+  }, [handleOpen, setMessegaAlert, handleOpenAlert, login, t, createAccountResultAuth])
 
 
   useEffect(() => {
     if (errorcreateAccount) setErrorMessage(t('errors.authError'))
 
-  }, [errorcreateAccount])
+  }, [t, errorcreateAccount])
 
   useEffect(() => {
     if (errorcreateAccountAuth) setErrorMessage(t('errors.authError'))
 
-  }, [errorcreateAccountAuth])
+  }, [t, errorcreateAccountAuth])
 
   useEffect(() => {
     if (errorpreRegisterLifebank) setErrorMessage(t('errors.authError'))
 
-  }, [errorpreRegisterLifebank])
+  }, [t, errorpreRegisterLifebank])
 
   const ErrorMessage = () => {
     return (

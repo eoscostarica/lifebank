@@ -22,9 +22,6 @@ function MapEditLocation({
   const mapContainerRef = useRef(null)
   const currentMarker = useRef(null)
 
-  let markerNode = null
-  let marker = null
-
   useEffect(() => {
     mapboxgl.accessToken = mapboxConfig.accessToken
 
@@ -35,10 +32,10 @@ function MapEditLocation({
       zoom: initialZoom
     })
 
-    markerNode = document.createElement('div')
+    let markerNode = document.createElement('div')
     ReactDOM.render(<MapMarker type={markerType} />, markerNode)
 
-    marker = new mapboxgl.Marker(markerNode)
+    let marker = new mapboxgl.Marker(markerNode)
     marker
       .setLngLat([markerLocation.longitude, markerLocation.latitude])
       .addTo(map)

@@ -73,7 +73,7 @@ const DonorSignup = ({
       else setError(false)
     }, 100)
     return () => clearTimeout(timer)
-  }, [confirmPassword])
+  }, [confirmPassword, password])
 
   return (
     <form autoComplete="off" className={classes.form}>
