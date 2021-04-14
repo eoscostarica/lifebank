@@ -11,7 +11,8 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
 
-import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
+import ShowOffersAproval from '../../components/ShowElements/ShowOffersAproval'
+
 import {
   GET_ALL_OFFERS_QUERY,
   GET_INFO
@@ -44,22 +45,29 @@ const useStyles = makeStyles((theme) => ({
   },
   generalDescription: {
     marginTop: 10,
-    paddingLeft: 5
+    paddingLeft: 5,
+    paddingRigth: 20
   },
   description: {
-    marginBottom: 5
+    marginBottom: 5,
+    marginRight: 20
   },
   showOffers: {
     paddingTop: 39,
     paddingLeft: 20,
     paddingRigth: 20,
-    paddingBottom: '15%'
+    paddingBottom: '15%',
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: 10
+    }
   },
   boxSelect: {
     display: 'flex',
     width: '100%',
-    justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center'
+    }
   },
   formControl: {
     margin: theme.spacing(2),
@@ -71,8 +79,15 @@ const useStyles = makeStyles((theme) => ({
   },
   snackbar: {
     marginRight: 100,
+    marginBottom: 40,
     backgroundColor: 'white',
-    color: 'black'
+    color: 'black',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+      marginRight: '20%',
+      marginLeft: '15%',
+      marginBottom: 40
+    }
   }
 }))
 
@@ -82,7 +97,7 @@ const OffersApproval = () => {
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
   const [currentUser] = useUser()
-  const [account, setAccount] = useState(currentUser.account)
+  const [account] = useState(currentUser.account)
   const [discountOffers, setDiscountOffers] = useState([])
   const [freeOffers, setFreetOffers] = useState([])
   const [badgeOffers, setBadgeOffers] = useState([])
@@ -93,11 +108,12 @@ const OffersApproval = () => {
 
 
   const CategoryX = [
+    { value: 'all', label: t('categories.all') },
     { value: 'discount', label: t('categories.discount') },
     { value: 'freeProduct', label: t('categories.freeProduct') },
     { value: 'coupon', label: t('categories.coupon') },
     { value: 'benefit', label: t('categories.benefit') },
-    { value: 'badge', label: t('categories.badge') }
+    { value: 'badge', label: t('categories.badge') },
   ]
 
   const getOffers = async () => {
@@ -196,10 +212,10 @@ const OffersApproval = () => {
             {t('cardsSection.approvedOffers')}
           </Typography>
         </Grid>
-        <Grid item md={12} className={classes.generalDescription}>
+        <Grid item className={classes.generalDescription}>
           <Typography className={classes.description} >
             {t('offerApproval.description')} </Typography>
-          <Typography  >
+          <Typography className={classes.description} >
             {t('offerApproval.description2')}
           </Typography>
         </Grid>
@@ -227,7 +243,7 @@ const OffersApproval = () => {
           </Select>
         </FormControl>
       </Box>
-      {category === 'discount' && (
+      {category === 'all' && (
         <Grid
           container
           direction="row"
@@ -236,18 +252,49 @@ const OffersApproval = () => {
           spacing={0}
           className={classes.showOffers}
         >
+          <ShowOffersAproval
+            offers={offers}
+            loading={loadingOffers}
+          />
+        </Grid>
+      )}
+      {category === '' && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.showOffers}
+        >
+          <ShowOffersAproval
+            offers={offers}
+            loading={loadingOffers}
+          />
+        </Grid>
+      )}
+      {category === 'discount' && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.showOffers}
+
+        >
           {categories.includes(category) && (
             <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
           )}
           {!categories.includes(category) && (
             <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
           )}
-          <Grid item md={12} sm={6}>
+          <Grid item md={12} >
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.discount')}
             </Typography>
           </Grid>
-          <ShowOffersDesktop
+          <ShowOffersAproval
             offers={discountOffers}
             loading={loadingOffers}
           />
@@ -268,12 +315,12 @@ const OffersApproval = () => {
           {!categories.includes(category) && (
             <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
           )}
-          <Grid item md={12} sm={6}>
+          <Grid item md={12} >
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.freeProduct')}
             </Typography>
           </Grid>
-          <ShowOffersDesktop
+          <ShowOffersAproval
             offers={freeOffers}
             loading={loadingOffers}
           />
@@ -294,12 +341,12 @@ const OffersApproval = () => {
           {!categories.includes(category) && (
             <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
           )}
-          <Grid item md={12} sm={6}>
+          <Grid item md={12} >
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.coupon')}
             </Typography>
           </Grid>
-          <ShowOffersDesktop
+          <ShowOffersAproval
             offers={couponOffers}
             loading={loadingOffers}
           />
@@ -320,12 +367,12 @@ const OffersApproval = () => {
           {!categories.includes(category) && (
             <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
           )}
-          <Grid item md={12} sm={6}>
+          <Grid item md={12} >
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.benefit')}
             </Typography>
           </Grid>
-          <ShowOffersDesktop
+          <ShowOffersAproval
             offers={benefitsOffers}
             loading={loadingOffers}
           />
@@ -347,12 +394,12 @@ const OffersApproval = () => {
           {!categories.includes(category) && (
             <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
           )}
-          <Grid item md={12} sm={6}>
+          <Grid item md={12} >
             <Typography variant="h2" className={classes.SubtitleSection}>
               {t('categories.badge')}
             </Typography>
           </Grid>
-          <ShowOffersDesktop
+          <ShowOffersAproval
             offers={badgeOffers}
             loading={loadingOffers}
           />

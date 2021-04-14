@@ -42,23 +42,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4)
   },
   offersGridContainer: {
-    overflowX: 'auto',
-    overflow: 'auto',
-    whiteSpace: 'nowrap',
     width: '100%',
-    height: '170px',
+    height: '100%',
     marginTop: 15,
     marginBottom: 15,
     padding: 5,
-    '&::-webkit-scrollbar': {
-      height: '0.5em'
-    },
-    '&::-webkit-scrollbar-track': {
-      backgroundColor: 'rgba(0,0,0,.05)'
-    },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0,0,0,.1)',
-      borderRadius: '10px'
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'center'
     }
   },
   cardRoot: {
@@ -68,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     width: '265px',
     height: '145px',
     padding: 10,
+    marginBottom: 15,
     marginRight: theme.spacing(2)
   },
   cardHeader: {
@@ -120,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.43',
     letterSpacing: '0.25px',
     textAlign: 'left',
-    color: 'rgba(0, 0, 0, 0.6)'
+    color: 'rgba(0, 0, 0, 0.6)',
   },
   cardActions: {
     padding: 0,
@@ -144,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#121212'
   },
   categories: {
-    marginTop: '5%'
+    position: 'absolute',
   }
 }))
 const ShowOffers = ({ offers, loading }) => {
@@ -240,7 +231,6 @@ const ShowOffers = ({ offers, loading }) => {
         >
           {t('cardsSection.moreInfo')}
         </Button>
-
       </Card>
     )
   }
