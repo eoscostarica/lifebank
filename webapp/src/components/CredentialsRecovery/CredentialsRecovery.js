@@ -181,7 +181,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }
 
   useEffect(() => {
-    loadPasswordChangable()
     if(user.email) {
       getAccountSignupMethod({
         variables: {
@@ -189,7 +188,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         }
       })
     }
-  }, [loadPasswordChangable, user])
+  }, [user])
 
   useEffect(() => {
     if (error) {
