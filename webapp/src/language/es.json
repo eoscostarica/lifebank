@@ -442,7 +442,8 @@
       "selectDateRange": "Seleccione el rango de fecha",
       "offerCreation": "Oferta creada correctamente",
       "offerStateActive": "Ofertas Activas",
-      "offerStateInactive": "Ofertas Inactivas"
+      "offerStateInactive": "Ofertas Inactivas",
+      "info": "Para que pueda agregar una Oferta, complete la información de su perfil"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",
