@@ -196,7 +196,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(error.message.replace('GraphQL error: ', ''))
     }
-  }, [error,t])
+  }, [error, t])
 
   useEffect(() => {
     if (errorChangePassword) {
@@ -204,7 +204,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
     }
-  }, [errorChangePassword,t])
+  }, [errorChangePassword, t])
 
 
   useEffect(() => {
