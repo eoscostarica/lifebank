@@ -140,14 +140,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const loadPasswordChangable = () => {
-    getAccountSignupMethod({
-      variables: {
-        email: user.email
-      }
-    })
-  }
-
   const handleSubmit = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
       setErrorMessage(null)
@@ -190,6 +182,13 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   useEffect(() => {
     loadPasswordChangable()
+    if(user.email) {
+      getAccountSignupMethod({
+        variables: {
+          email: user.email
+        }
+      })
+    }
   }, [loadPasswordChangable, user])
 
   useEffect(() => {
