@@ -434,13 +434,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   }, [errorpreRegisterLifebank])
 
-  useEffect(()=>{
-    if(open){
-      handleSetField('email', ' ')
-      setActiveStep(0)
-    }
-    },[open])
-
   const ErrorMessage = () => {
     return (
       <>
