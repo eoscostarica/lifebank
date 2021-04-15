@@ -82,7 +82,7 @@ const OffersApproval = () => {
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
   const [currentUser] = useUser()
-  const [account] = useState(currentUser.account)
+  const [account, setAccount] = useState(currentUser.account)
   const [discountOffers, setDiscountOffers] = useState([])
   const [freeOffers, setFreetOffers] = useState([])
   const [badgeOffers, setBadgeOffers] = useState([])
@@ -132,7 +132,7 @@ const OffersApproval = () => {
       const dataCategories = info.location[0].info.categories
       setCategories(dataCategories)
     }
-  }, [loadingInfo, info])
+  }, [info])
 
   useEffect(() => {
     if (!loadingDataOffer) {
@@ -140,12 +140,12 @@ const OffersApproval = () => {
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [loadingDataOffer, allOffers])
+  }, [allOffers])
 
   useEffect(() => {
     getInfo()
     getOffers()
-  }, [getInfo, getOffers])
+  }, [])
 
   useEffect(() => {
     const discountOff = []
@@ -170,8 +170,6 @@ const OffersApproval = () => {
           break
         case 'badge':
           badgeOff.push(offer)
-          break
-        default:
           break
       }
     })

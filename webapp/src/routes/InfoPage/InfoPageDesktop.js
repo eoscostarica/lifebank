@@ -228,6 +228,53 @@ const InfoPage = () => {
     fetchPolicy: 'cache-and-network'
   })
 
+  useEffect(() => {
+    if (!loadingDataOffer) {
+      const dataOffers = allOffers.offer
+      setOffers(dataOffers)
+      setLoadingOffers(false)
+    }
+  }, [allOffers])
+
+  useEffect(() => {
+
+    if (sponsor_id) {
+      const sponsor = sponsor_id.user[0]
+      setSponsorID(sponsor.id)
+    }
+  }, [sponsor_id])
+
+  useEffect(() => {
+    getInfo()
+    if(profile){
+      if(profile.role === 'sponsor'){
+        getOffers()
+      }
+    }
+  }, [location])
+
+  useEffect(() => {
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
+        && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
+        getInfo()
+        if(profile){
+          if(profile.role === 'sponsor'){
+            getOffers()
+          }
+        }
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+  }, [errorUsername, errorInfoProfile, allOffersError])
+
   const getInfo = async () => {
     if (location.state) setProfile(location.state.profile)
     else {
@@ -287,53 +334,6 @@ const InfoPage = () => {
 
     }
   }
-
-  useEffect(() => {
-    if (!loadingDataOffer) {
-      const dataOffers = allOffers.offer
-      setOffers(dataOffers)
-      setLoadingOffers(false)
-    }
-  }, [loadingDataOffer, allOffers])
-
-  useEffect(() => {
-
-    if (sponsor_id) {
-      const sponsor = sponsor_id.user[0]
-      setSponsorID(sponsor.id)
-    }
-  }, [sponsor_id])
-
-  useEffect(() => {
-    getInfo()
-    if(profile){
-      if(profile.role === 'sponsor'){
-        getOffers()
-      }
-    }
-  }, [getInfo, getOffers, profile, location])
-
-  useEffect(() => {
-    if (errorUsername && errorInfoProfile) {
-      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
-        logout()
-        history.push(`/info/${location.state.profile.account}`)
-      } else history.push('/internal-error')
-    }
-    if (errorUsername && errorInfoProfile) {
-      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
-        && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
-        getInfo()
-        if(profile){
-          if(profile.role === 'sponsor'){
-            getOffers()
-          }
-        }
-        logout()
-        history.push(`/info/${location.state.profile.account}`)
-      } else history.push('/internal-error')
-    }
-  }, [logout, getInfo, getOffers, profile, history, location.state.profile.account, errorUsername, errorInfoProfile, allOffersError])
 
   return (
     <>

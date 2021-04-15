@@ -87,7 +87,7 @@ const EmailVerification = (props) => {
         code: code
       }
     })
-  }, [verifyEmail, code])
+  }, [code])
 
   useEffect(() => {
     if (verifyEmailResult) setValidate(verifyEmailResult.is_verified)
@@ -109,7 +109,7 @@ const EmailVerification = (props) => {
       }
     }
 
-  }, [verifyEmail, logout, code, history, errorVerifyEmail])
+  }, [errorVerifyEmail])
 
   return (
     <Box className={classes.root}>

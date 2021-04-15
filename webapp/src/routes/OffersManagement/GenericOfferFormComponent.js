@@ -188,7 +188,7 @@ const LimitationHandling = ({
     if (dates && dates[0] !== undefined && dates[1] !== undefined) {
       setDates(dates)
     }
-  }, [setDates, dates])
+  }, [dates])
 
   return (
     <Box className={classes.limitationHandlingPaper}>
@@ -236,7 +236,7 @@ const GenericOfferFormComponent = ({
   const imgUrlValueRef = useRef(undefined)
   const [offer, setOffer] = useState()
   const [updatedOffer, setUpdatedOffer] = useState()
-  const [setOpenSnackbar] = useState({
+  const [openSnackbar, setOpenSnackbar] = useState({
     show: false,
     message: '',
     severity: 'success'
@@ -352,7 +352,7 @@ const GenericOfferFormComponent = ({
         })
       )
     }
-  }, [setOpenSnackbar, setOffers, t, updatedOffer, updateOfferResult])
+  }, [updateOfferResult])
 
   useEffect(() => {
     if (createOfferResult) {
@@ -363,7 +363,7 @@ const GenericOfferFormComponent = ({
       })
       setOffers((offs) => [...offs, createOfferResult])
     }
-  }, [setOffers, setOpenSnackbar, t, createOfferResult])
+  }, [createOfferResult])
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disableUrlInput)) {
@@ -450,9 +450,9 @@ const GenericOfferFormComponent = ({
                   }
                 >
                   <MenuItem value="discount">{t('offersManagement.discount')}</MenuItem>
-                  <MenuItem value="gift">{t('offersManagement.gift')}</MenuItem>
+                  <MenuItem value="gift">{t('offersManagement.gift')}</MenuItem>//
                   <MenuItem value="benefit">{t('offersManagement.benefit')}</MenuItem>
-                  <MenuItem value="other">{t('offersManagement.other')}</MenuItem>
+                  <MenuItem value="other">{t('offersManagement.other')}</MenuItem>//
                 </Select>
               </FormControl>
               <TextField

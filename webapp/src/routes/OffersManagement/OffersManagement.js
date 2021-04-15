@@ -274,7 +274,7 @@ const OffersManagement = () => {
         severity: 'success'
       })
     }
-  }, [t, offers, updateOfferResult])
+  }, [updateOfferResult])
 
   return (
     <Box className={classes.root}>

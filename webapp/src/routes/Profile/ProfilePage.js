@@ -126,12 +126,10 @@ const ProfilePage = () => {
 
     loadProfile()
   }, [
-    handleOpenAlert,
-    t,
-    loadProfile,
     grantConsentResult,
     revokeConsentResult,
     lastConsentChange,
+    loadProfile,
     classes
   ])
 
@@ -141,7 +139,7 @@ const ProfilePage = () => {
       setMessegaAlert(t('signup.noConsentNoEdit'))
       handleOpenAlert()
     }
-  }, [setSeverity, setMessegaAlert, handleOpenAlert, t, profile])
+  }, [profile])
 
   useEffect(() => {
     if (errorProfile) {
@@ -151,7 +149,7 @@ const ProfilePage = () => {
       } else history.push('/internal-error')
     }
 
-  }, [logout, errorProfile, history])
+  }, [errorProfile])
 
   useEffect(() => {
     if (errorRevokeConsent) {
@@ -165,7 +163,7 @@ const ProfilePage = () => {
       }
     }
 
-  }, [setSeverity, setMessegaAlert, handleOpenAlert, t, logout, history, errorRevokeConsent])
+  }, [errorRevokeConsent])
 
   useEffect(() => {
     if (errorGrantConsent) {
@@ -179,7 +177,7 @@ const ProfilePage = () => {
       }
     }
 
-  }, [handleOpenAlert, logout, t, history, errorGrantConsent])
+  }, [errorGrantConsent])
 
   return (
     <Box className={classes.contentBody}>

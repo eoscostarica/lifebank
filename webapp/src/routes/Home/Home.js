@@ -89,7 +89,7 @@ const Home = () => {
       else if (allBanksError) typeError(allBanksError.message)
       else if (allSponsorsError) typeError(allSponsorsError.message)
     }
-  }, [typeError, fetchError, allOffersError, allBanksError, allSponsorsError])
+  }, [allOffersError, allBanksError, allSponsorsError])
 
   const getOffers = async () => {
     setLoadingOffers(true)
@@ -130,7 +130,7 @@ const Home = () => {
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [valueTokenPrice, valueSponsorCat, valueOfferCat, searchValue, loadingDataOffer, allOffers])
+  }, [allOffers])
 
   const getLifebanks = async () => {
     setLoadingLifebanks(true)
@@ -149,7 +149,7 @@ const Home = () => {
       setLifebanks(dataTemp)
       setLoadingLifebanks(false)
     }
-  }, [loadingDataBanks, searchValue, allBanks])
+  }, [allBanks])
 
   const getSponsors = async () => {
     setLoadingSponsors(true)
@@ -175,7 +175,7 @@ const Home = () => {
 
       setLoadingSponsors(false)
     }
-  }, [loadingDataSpons, searchValue, valueSponsorCat, allSponsors])
+  }, [allSponsors])
 
   const applyFilters = (p_sponsor_cat, p_offer_cat, p_tokenPrice) => {
     setValueSponsorCat(p_sponsor_cat)
@@ -187,7 +187,7 @@ const Home = () => {
     getOffers()
     getSponsors()
     getLifebanks()
-  }, [getOffers, getSponsors, getLifebanks, valueSponsorCat, valueOfferCat, valueTokenPrice, searchValue])
+  }, [valueSponsorCat, valueOfferCat, valueTokenPrice, searchValue])
 
   return (
     <>
