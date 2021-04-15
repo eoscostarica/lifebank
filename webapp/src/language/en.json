@@ -215,7 +215,9 @@
       "urlSite": "URL site",
       "images": "Images",
       "yourProfileIsNotComplete": "Your profile is not complete",
-      "socialMedia": "Social media"
+      "socialMedia": "Social media",
+      "profileSponsorImageAlt": "Sponsor profile image",
+      "profileLifebankImageAlt": "Lifebank profile image"
     },
     "errors": {
       "authError": "Something happened with the authentication",
@@ -450,7 +452,8 @@
       "onlinePurchases": "This offer is only for online purchases.",
       "available": "Available from",
       "to": "to",
-      "lifebankOffers": "Offers"
+      "lifebankOffers": "Offers",
+      "offerImageAlt": "Offer profile image"
     },
     "months": {
       "Jan": "January",

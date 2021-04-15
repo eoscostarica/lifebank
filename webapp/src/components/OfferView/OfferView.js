@@ -237,7 +237,7 @@ const OfferView = ({
   const ShowImages = () => {
     return (
       <Box>
-        <img className={classes.img} src={images[activeStep]} />
+        <img className={classes.img} src={images[activeStep]} alt={t('offerView.offerImageAlt')} />
         <MobileStepper
           className={classes.stepper}
           steps={maxSteps}

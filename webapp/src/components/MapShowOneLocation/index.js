@@ -98,7 +98,7 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
     map.on('load', () => loadMarkersEvent())
 
     return () => map.remove()
-  }, [getNearbyLocations, markerLocation.longitude, markerLocation.latitude])
+  }, [loadMarkersEvent, getNearbyLocations, markerLocation.longitude, markerLocation.latitude])
 
   return <Box ref={mapContainerRef} {...props} />
 }

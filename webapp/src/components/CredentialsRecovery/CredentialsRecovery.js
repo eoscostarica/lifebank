@@ -140,14 +140,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const loadPasswordChangable = () => {
-    getAccountSignupMethod({
-      variables: {
-        email: user.email
-      }
-    })
-  }
-
   const handleSubmit = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
       setErrorMessage(null)
@@ -189,7 +181,13 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }
 
   useEffect(() => {
-    loadPasswordChangable()
+    if(user.email) {
+      getAccountSignupMethod({
+        variables: {
+          email: user.email
+        }
+      })
+    }
   }, [user])
 
   useEffect(() => {
@@ -198,7 +196,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(error.message.replace('GraphQL error: ', ''))
     }
-  }, [error])
+  }, [setErrorMessage, t, error])
 
   useEffect(() => {
     if (errorChangePassword) {
@@ -206,7 +204,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
     }
-  }, [errorChangePassword])
+  }, [t, errorChangePassword])
 
 
   useEffect(() => {

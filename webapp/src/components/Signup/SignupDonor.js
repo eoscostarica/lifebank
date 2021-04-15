@@ -73,21 +73,21 @@ const DonorSignup = ({
       else setError(false)
     }, 100)
     return () => clearTimeout(timer)
-  }, [confirmPassword])
+  }, [confirmPassword, password])
 
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
         {children}
         <TextField
-          id="secret"
+          id="passwordPlainText"
           label={t('signup.password')}
           type="password"
           fullWidth
           variant="outlined"
           className={classes.textField}
           onChange={(event) => {
-            setField('secret', event.target.value)
+            setField('passwordPlainText', event.target.value)
             setPassword(event.target.value)
           }}
         />

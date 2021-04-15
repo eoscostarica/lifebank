@@ -217,9 +217,14 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     has_immunity_test: Boolean(profile.has_immunity_test),
     requirement: profile.requirement
   })
+
+  const handleSetField = (field, value) => {
+    setUser({ ...user, [field]: value })
+  }
+
   const handleOnGeolocationChange = useCallback(
     (geolocation) => handleSetField('geolocation', geolocation),
-    [setField]
+    [handleSetField]
   )
 
   const { refetch: checkUserName } = useQuery(VERIFY_USERNAME, {
@@ -261,17 +266,13 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   const handleOnAddSchedule = useCallback(
     (data) => handleSetField('schedule', JSON.stringify(data)),
-    [setField]
+    [handleSetField]
   )
 
   const handleOnAddCategories = useCallback(
     (data) => handleSetField('categories', JSON.stringify(data)),
-    [setField]
+    [handleSetField]
   )
-
-  const handleSetField = (field, value) => {
-    setUser({ ...user, [field]: value })
-  }
 
   useEffect(() => {
     if (!firstRun) {
@@ -284,7 +285,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
       else document.getElementById("username").focus()
     }
 
-  }, [isUnique, firstRun])
+  }, [onSubmit, profile.account, user, username, isValid, isUnique, firstRun])
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {

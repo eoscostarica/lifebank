@@ -106,7 +106,7 @@ const SeachComponent = (props) => {
 
   useEffect(() => {
     props.handleChangeSearch(transcript)
-  }, [transcript]);
+  }, [props, transcript]);
 
   return (
     <>

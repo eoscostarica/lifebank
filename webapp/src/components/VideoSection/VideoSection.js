@@ -12,12 +12,8 @@ const Video = ({ ...pros }) => {
   const [height, setHeight] = useState("500px");
 
   useEffect(() => {
-    setVideoHeight()
-  },[matches])
-
-  const setVideoHeight = () => {
     matches ? setHeight("300px") : setHeight("500px");
-  }
+  },[setHeight, matches])
 
   return (
 
