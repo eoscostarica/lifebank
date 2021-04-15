@@ -14,46 +14,14 @@ import {
   REVOKE_CONSENT_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const ProfilePageDonor = lazy(() => import('./ProfilePageDonor'));
 const ProfilePageGuest = lazy(() => import('./ProfilePageGuest'));
 const ProfilePageLifebank = lazy(() => import('./ProfilePageLifebank'));
 const ProfilePageSponsor = lazy(() => import('./ProfilePageSponsor'));
-
-const useStyles = makeStyles((theme) => ({
-  contentBody: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    minHeight: 'calc(100vh - 60px)',
-    width: '100%',
-    paddingTop: '60px',
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '23%',
-      paddingRight: '23%',
-    },
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
-    }
-  },
-  divider: {
-    width: '100%'
-  },
-  editBtn: {
-    marginTop: theme.spacing(4)
-  },
-  transactionLink: {
-    wordBreak: 'break-all'
-  }
-}))
 
 const ProfilePage = () => {
   const { t } = useTranslation('translations')
