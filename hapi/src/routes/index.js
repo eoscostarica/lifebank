@@ -8,6 +8,7 @@ const getcontractRoute = require('./get-contract/get-contract.route')
 const getValidSponsorsRoute = require('./get-valid-sponsors/get-valid-sponsors.route')
 const grantConsentRoute = require('./grant-consent/grant-consent.route')
 const loginRoute = require('./login/login.route')
+const sendEmailRoute = require('./send-email/send-email.route')
 const profileRoute = require('./profile/profile.route')
 const revokeConsentRoute = require('./revoke-consent/revoke-consent.route')
 const signupRoute = require('./signup/signup.route')
@@ -29,6 +30,7 @@ module.exports = [
   getValidSponsorsRoute,
   grantConsentRoute,
   loginRoute,
+  sendEmailRoute,
   profileRoute,
   revokeConsentRoute,
   signupRoute,

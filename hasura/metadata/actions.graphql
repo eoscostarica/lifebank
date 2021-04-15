@@ -126,6 +126,14 @@ type Mutation {
 
 
 type Mutation {
+  send_email (
+    account: String!
+    emailContent: jsonb!
+  ): send_email_output
+}
+
+
+type Mutation {
   signup (
     profile: jsonb!
   ): signup_output
@@ -278,5 +286,9 @@ type create_account_auth_output {
   account : String!
   transaction_id : String!
   token : String!
+}
+
+type send_email_output {
+  success : Boolean!
 }
 

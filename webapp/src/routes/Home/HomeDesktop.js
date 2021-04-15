@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/styles'
@@ -24,6 +25,10 @@ import mobileBgImage from '../../assets/the-world.png'
 import bgImage from '../../assets/lifebank-hero-bg.png'
 import FilterHome from '../../components/FilterHome'
 import Signup from '../../components/Signup/Signup'
+
+import {
+  SEND_EMAIL_MUTATION
+} from '../../gql'
 
 const useStyles = makeStyles((theme) => ({
   homeHeader: {
@@ -180,6 +185,28 @@ const HomeDesktop = (props) => {
   const [currentUser] = useUser()
   const [recording, setRecording] = React.useState(false)
   const { transcript } = useSpeechRecognition()
+  const [
+    sendEmail,
+    {
+      error: errorSendEmail,
+      loading: SendEmailLoading,
+      data: { send_email: sendEmailResult } = {}
+    }
+  ] = useMutation(SEND_EMAIL_MUTATION)
+
+  const handleSendEmail = () => {
+    sendEmail({
+      variables: {
+        account: 'leisterac.1997@gmaial.com',
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        }
+      }
+    })
+  }
 
   const handleRecording = () => {
     if (!recording) {
@@ -195,7 +222,11 @@ const HomeDesktop = (props) => {
 
   useEffect(() => {
     props.handleChangeSearch(transcript)
-  }, [transcript]);
+  }, [transcript])
+
+  useEffect(() => {
+    console.log('SEND-EMAIL-RESULT', sendEmailResult)
+  }, [sendEmailResult])
 
   return (
     <>
@@ -234,6 +265,14 @@ const HomeDesktop = (props) => {
             >
               {t('contentToolbar.favorites')}
             </Button>
+            <Button
+              className={classes.buttonIconDesktop}
+              startIcon={<StarIcon />}
+              onClick={handleSendEmail}
+            >
+              SEND EMAIL
+            </Button>
+
           </Box>
         </Grid>
         <Grid item md={5} lg={6} className={classes.boxControls}>

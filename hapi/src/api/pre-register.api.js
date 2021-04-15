@@ -65,7 +65,8 @@ const GET_LIFEBANK_DATA = `
       schedule
       urgency_level,
       state,
-      requirement
+      requirement,
+      verification_code
     }
   }
 `

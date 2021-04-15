@@ -113,6 +113,12 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
+- name: send_email
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/send-email
+  permissions:
+  - role: guest
 - name: signup
   definition:
     kind: synchronous
@@ -172,4 +178,5 @@ custom_types:
   - name: signup_method_output
   - name: create_account_lifebank_auth_output
   - name: create_account_auth_output
+  - name: send_email_output
   scalars: []

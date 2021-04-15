@@ -54,6 +54,14 @@ export const LOGIN_MUTATION = gql`
   }
 `
 
+export const SEND_EMAIL_MUTATION = gql`
+  mutation($account: String!, $emailContent: jsonb!) {
+    send_email(account: $account, emailContent: $emailContent) {
+      success
+    }
+  }
+`
+
 export const GET_INFO = gql`
   query info($account: String!) {
     location(where: {account: {_eq: $account}}) {
