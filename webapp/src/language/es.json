@@ -215,9 +215,7 @@
       "urlSite": "URL del sitio",
       "images": "Imagenes",
       "yourProfileIsNotComplete": "Tu perfil no está completo",
-      "socialMedia": "Redes sociales",
-      "profileSponsorImageAlt": "Imagen del perfil del Sponsor",
-      "profileLifebankImageAlt": "Imagen del perfil del Banco de Sangre"
+      "socialMedia": "Redes sociales"
     },
     "errors": {
       "authError": "Ha ocurrido un error con la autenticación",
@@ -451,8 +449,7 @@
       "onlinePurchases": "Esta oferta es solo para compras en línea.",
       "available": "Disponible desde",
       "to": "hasta",
-      "lifebankOffers": "Ofertas",
-      "offerImageAlt": "Imagen del perfil de la Oferta"
+      "lifebankOffers": "Ofertas"
     },
     "months": {
       "Jan": "Enero",

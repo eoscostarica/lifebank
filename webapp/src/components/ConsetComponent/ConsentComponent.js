@@ -109,29 +109,17 @@ const ConsetComponent = () => {
   const handleOpenAlert = () => {
     setOpenAlert(!openAlert)
   }
-  
-  const updateProfile = async () => {
-    const { data: { user } } = await accountName({ account: currentUser.account })
-    if (user.length > 0) {
-      const name = user[0].name
-      editProfile({
-        variables: {
-          profile: { name }
-        }
-      })
-    }
-  }
 
   useEffect(() => {
     if (currentUser) {
       loadProfile()
     }
 
-  }, [loadProfile, currentUser])
+  }, [currentUser])
 
   useEffect(() => {
     if (currentUser && profile && !profile.consent) handleOpenConsent()
-  }, [handleOpenConsent, currentUser, profile])
+  }, [profile])
 
   useEffect(() => {
     if (signupResult) {
@@ -147,7 +135,7 @@ const ConsetComponent = () => {
         handleOpenAlert()
       }
     }
-  }, [updateProfile, setSeverity, setMessegaAlert, handleOpenAlert, handleOpenConsent, t, signupResult, profile])
+  }, [signupResult])
 
   useEffect(() => {
     if (errorSignup || errorProfile) {
@@ -155,7 +143,19 @@ const ConsetComponent = () => {
       setMessegaAlert(t('signup.consentError'))
       handleOpenAlert()
     }
-  }, [setSeverity, setMessegaAlert, handleOpenAlert, t, errorSignup, errorProfile])
+  }, [errorSignup, errorProfile])
+
+  const updateProfile = async () => {
+    const { data: { user } } = await accountName({ account: currentUser.account })
+    if (user.length > 0) {
+      const name = user[0].name
+      editProfile({
+        variables: {
+          profile: { name }
+        }
+      })
+    }
+  }
 
   return (
     <>

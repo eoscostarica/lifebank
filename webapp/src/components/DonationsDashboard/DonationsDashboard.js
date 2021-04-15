@@ -371,36 +371,12 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     setErrorMessage(null)
     setAccountTo()
   }
-
-  const anchor = 'bottom'
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event) {
-      if (
-        event.type === 'keydown' &&
-        (event.key === 'Tab' || event.key === 'Shift')
-      )
-        return
-
-      setState({ ...state, [anchor]: open })
-    }
-  }
-
-  const handleOpen = () => setOpen(!open)
-
-  const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
-
-  const hanndlerTransferTokens = (account) => {
-    setErrorMessage(null)
-    setAccountTo(account)
-  }
-
   useEffect(() => {
     if (!error)
       return
 
     setErrorMessage(t('donations.donationsError'))
-  }, [setErrorMessage, t, error])
+  }, [error])
 
   useEffect(() => {
     if (errroLoadProfile) {
@@ -408,7 +384,8 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
       setMessegaAlert(t('donations.donationsProfileError'))
       handleOpenAlert()
     }
-  }, [handleOpen, setMessegaAlert, t, handleOpenAlert, errroLoadProfile])
+
+  }, [errroLoadProfile])
 
   useEffect(() => {
     if (!transferResult)
@@ -436,7 +413,30 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     } else {
       setTokens(role === "donor" && profile?.balance.length ? profile.balance.join(',').split(' ')[0] : 0)
     }
-  }, [role, profile, tokenUser])
+  }, [profile, tokenUser])
+
+  const anchor = 'bottom'
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event) {
+      if (
+        event.type === 'keydown' &&
+        (event.key === 'Tab' || event.key === 'Shift')
+      )
+        return
+
+      setState({ ...state, [anchor]: open })
+    }
+  }
+
+  const handleOpen = () => setOpen(!open)
+
+  const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
+
+  const hanndlerTransferTokens = (account) => {
+    setErrorMessage(null)
+    setAccountTo(account)
+  }
 
   useEffect(() => {
     if (accountTo) {
@@ -451,7 +451,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
         }
       })
     }
-  }, [transfer, t, role, accountTo])
+  }, [accountTo])
 
 
   const DashboardContent = () => {

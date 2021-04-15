@@ -195,7 +195,7 @@ const HomeDesktop = (props) => {
 
   useEffect(() => {
     props.handleChangeSearch(transcript)
-  }, [props, transcript]);
+  }, [transcript]);
 
   return (
     <>
@@ -216,6 +216,7 @@ const HomeDesktop = (props) => {
         alignItems="flex-start"
         spacing={0}
         className={classes.mainGridControlsDesktop}
+        md={12}
         xl={10}
       >
         <Grid item md={7} lg={6} className={classes.boxControls}>
@@ -265,6 +266,7 @@ const HomeDesktop = (props) => {
         alignItems="flex-start"
         spacing={0}
         className={classes.mainGridDesktop}
+        md={12}
         xl={10}
       >
         <Grid item md={12}>

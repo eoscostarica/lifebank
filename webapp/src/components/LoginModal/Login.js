@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +22,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import FingerprintIcon from '@material-ui/icons/Fingerprint'
 
 import {
-  LOGIN_MUTATION
+  LOGIN_MUTATION,
+  VALIDATE_EMAIL,
+  GET_SECRET_BY_ACCOUNT,
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
@@ -158,6 +160,20 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     defaultMatches: true
   })
 
+  const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
+    variables: {
+      email: user.email
+    },
+    skip: true
+  })
+
+  const { refetch: getHash } = useQuery(GET_SECRET_BY_ACCOUNT, {
+    variables: {
+      account: user.email
+    },
+    skip: true
+  })
+
   const handleOpen = () => {
     setOpen(!open)
   }
@@ -197,7 +213,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       login(loginResult.token)
       setOpen(false)
     }
-  }, [login, loginResult])
+  }, [loginResult])
 
   useEffect(() => {
     if (currentUser) {

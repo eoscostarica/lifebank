@@ -133,32 +133,32 @@ const MapPopup = ({ id, info, username }) => {
   const classes = useStyles()
   const [open, setOpen] = useState()
   const toDay = new Date()
-  const [dd, setDD]  = toDay.getDay()
+  let dd = toDay.getDay()
   const hour = toDay.getHours()
 
   useEffect(() => {
     if (!open) {
       switch (dd) {
         case 0:
-          setDD('Sunday')
+          dd = 'Sunday'
           break
         case 1:
-          setDD('Monday')
+          dd = 'Monday'
           break
         case 2:
-          setDD('Tuesday')
+          dd = 'Tuesday'
           break
         case 3:
-          setDD('Wednesday')
+          dd = 'Wednesday'
           break
         case 4:
-          setDD('Thursday')
+          dd = 'Thursday'
           break
         case 5:
-          setDD('Friday')
+          dd = 'Friday'
           break
         default:
-          setDD('Saturday')
+          dd = 'Saturday'
       }
 
       JSON.parse(info.schedule).forEach((element) => {
@@ -170,7 +170,7 @@ const MapPopup = ({ id, info, username }) => {
             setOpen(true)
       })
     }
-  }, [setDD, dd, hour, info.schedule, open])
+  }, [dd, hour])
 
   const isMobile = {
     platform: function () {

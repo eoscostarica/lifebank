@@ -131,7 +131,7 @@ const Nearby = ({ location, searchDistance, account }) => {
 
   useEffect(() => {
     getNerbyLocations()
-  }, [getNerbyLocations, searchDistance])
+  }, [searchDistance])
 
   const ItemCard = (props) => (
     <Card className={classes.cardRoot}>

@@ -317,7 +317,7 @@ function MapShowLocations({ location, ...props }) {
     map.on('load', () => centerUserLocation())
 
     return () => map.remove()
-  }, [loadMarkersEvent, getNearbyLocations, t, location.longitude, location.latitude])
+  }, [getNearbyLocations, location.longitude, location.latitude])
 
   const classes = useStyles()
 

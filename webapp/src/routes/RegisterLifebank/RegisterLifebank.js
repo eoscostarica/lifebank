@@ -111,7 +111,7 @@ const RegisterLifebank = (props) => {
         verification_code: code
       }
     })
-  }, [verifyEmail, code])
+  }, [code])
 
   useEffect(() => {
     if (lifebankData) setLifebank(lifebankData.returning[0])
@@ -121,7 +121,7 @@ const RegisterLifebank = (props) => {
   useEffect(() => {
     if (lifebank) handleCreateAccountLifebank()
 
-  }, [handleCreateAccountLifebank, lifebank])
+  }, [lifebank])
 
   useEffect(() => {
     if (errorVerifyEmail) {
@@ -138,7 +138,7 @@ const RegisterLifebank = (props) => {
       }
     }
 
-  }, [logout, verifyEmail, setLifebank, code, history, errorVerifyEmail])
+  }, [errorVerifyEmail])
 
   useEffect(() => {
     if (errorCreateAccount) {
@@ -155,7 +155,7 @@ const RegisterLifebank = (props) => {
       }
     }
 
-  }, [logout, verifyEmail, code, history, errorCreateAccount])
+  }, [errorCreateAccount])
 
   return (
     <Box className={classes.root}>

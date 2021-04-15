@@ -133,7 +133,7 @@ const EditProfilePage = () => {
         })
       }
     },
-    [editProfile, setUsername]
+    [editProfile]
   )
 
   useEffect(() => {
@@ -165,7 +165,7 @@ const EditProfilePage = () => {
     } else if (!success) {
       setShowAlert(true)
     }
-  }, [loadProfile, setShowAlert, editProfileResult, history])
+  }, [editProfileResult, loadProfile])
 
   useEffect(() => {
     if (location.state) {
@@ -175,7 +175,7 @@ const EditProfilePage = () => {
       setuserName(location.state.userName)
     } else history.push('/profile')
 
-  }, [location, history])
+  }, [location])
 
   useEffect(() => {
     if (errorProfile) {
@@ -185,7 +185,7 @@ const EditProfilePage = () => {
       } else history.push('/internal-error')
     }
 
-  }, [logout, errorProfile, history])
+  }, [errorProfile])
 
   useEffect(() => {
     if (errorRevokeConsent || errorGrantConsent || errorEditResults) setShowAlert(true)

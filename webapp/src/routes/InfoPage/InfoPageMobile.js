@@ -251,6 +251,21 @@ const InfoPageMobile = () => {
     skip: true
   })
 
+  useEffect(() => {
+    getInfo()
+
+  }, [location])
+
+  const getOffers = async () => {
+    if(profile){
+      if(profile.role === 'sponsor'){
+      setLoadingOffers(true)
+      await getAllOffers()
+      await getSponsorID()
+      }
+    }
+  }
+
   const { error: errorUsername, data: sponsor_id, refetch: getSponsorID } = useQuery(GET_ID, {
     variables: {
       username: url
@@ -326,26 +341,12 @@ const InfoPageMobile = () => {
   }
 
   useEffect(() => {
-    getInfo()
-  }, [getInfo, location])
-
-  const getOffers = async () => {
-    if(profile){
-      if(profile.role === 'sponsor') {
-        setLoadingOffers(true)
-        await getAllOffers()
-        await getSponsorID()
-      }
-    }
-  }
-
-  useEffect(() => {
     if (!loadingDataOffer) {
       const dataOffers = allOffers.offer
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [setOffers, setLoadingOffers, loadingDataOffer, allOffers])
+  }, [allOffers])
 
   useEffect(() => {
 
@@ -362,7 +363,7 @@ const InfoPageMobile = () => {
         getOffers()
       }
     }
-  }, [getInfo, getOffers, profile, location])
+  }, [location])
 
   useEffect(() => {
     if (errorUsername && errorInfoProfile) {
@@ -384,7 +385,7 @@ const InfoPageMobile = () => {
         history.push(`/info/${location.state.profile.account}`)
       } else history.push('/internal-error')
     }
-  }, [logout, profile, getInfo, getOffers, history.push, location.state.profile.account, history, errorUsername, errorInfoProfile, allOffersError])
+  }, [errorUsername, errorInfoProfile, allOffersError])
 
   const ScheduleItem = (schedule) => {
     return (
