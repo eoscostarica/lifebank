@@ -86,6 +86,16 @@ const useStyles = makeStyles((theme) => ({
       textTransform: 'capitalize'
     }
   },
+  rowBoxEmail: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    padding: theme.spacing(2, 2),
+    alignItems: 'center',
+    '& p': {
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
+    }
+  },
   rowTitle: {
     fontWeight: 'bold',
     marginRight: '10px'
@@ -280,7 +290,7 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.about)
       pendingFieldsObject = { ...pendingFieldsObject, about: false }
 
-      if (!profile.requirement)
+    if (!profile.requirement)
       pendingFieldsObject = { ...pendingFieldsObject, requirement: false }
 
     if (!profile.blood_urgency_level)
@@ -401,7 +411,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.email &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
+          <Box className={classes.rowBoxEmail}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.email')}</Typography>
             <Typography variant="body1">{profile.email}</Typography>
           </Box>
