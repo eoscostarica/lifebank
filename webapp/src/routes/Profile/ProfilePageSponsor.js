@@ -360,7 +360,7 @@ const ProfilePageSponsor = ({ profile }) => {
       {profile.address &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.address')}</Typography>
             <Typography variant="body1">{profile.address}</Typography>
           </Box>
@@ -420,7 +420,7 @@ const ProfilePageSponsor = ({ profile }) => {
       {profile.schedule &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
             <ViewSchedule schedule={profile.schedule} />
           </Box>
@@ -429,7 +429,7 @@ const ProfilePageSponsor = ({ profile }) => {
       {profile.about &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
             <Typography >{profile.about}</Typography>
           </Box>
@@ -438,7 +438,7 @@ const ProfilePageSponsor = ({ profile }) => {
       {profile.covid_impact &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('editProfile.covidImpact')}</Typography>
             <Typography >{profile.covid_impact}</Typography>
           </Box>
@@ -447,7 +447,7 @@ const ProfilePageSponsor = ({ profile }) => {
       {profile.benefit_description &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.benefitDescription')}</Typography>
             <Typography >{profile.benefit_description}</Typography>
           </Box>
