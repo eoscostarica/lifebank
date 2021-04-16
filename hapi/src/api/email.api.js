@@ -19,7 +19,12 @@ const sendEmail = async ({ account, emailContent }) => {
     email_verified: { _eq: false }
   })
 
-  if(preRegsiterUser.preregister_lifebank.length > 0) return sendEmailAux(account, emailContent, preRegsiterUser.preregister_lifebank[0].verification_code)
+  if (preRegsiterUser.preregister_lifebank.length > 0)
+    return sendEmailAux(
+      account,
+      emailContent,
+      preRegsiterUser.preregister_lifebank[0].verification_code
+    )
 
   return {
     success: false
