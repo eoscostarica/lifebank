@@ -5,28 +5,9 @@ import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  imageContainer: {
-    width: "100%",
-    maxHeight: 200,
-    margin: 'auto',
-    justifyContent: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    '& > div.MuiCard-root': {
-      padding: theme.spacing(2),
-      backgroundColor: 'transparent',
-      border: '1px solid lightgray'
-    }
-  },
-
-  logo: {
-    maxWidth: '100%',
-    maxHeight: 150,
-    margin: 'auto'
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const Logo = ({ logoUrl, showCaption, showDeleteButton, deleteActualLogo }) => {
   const { t } = useTranslation('translations')

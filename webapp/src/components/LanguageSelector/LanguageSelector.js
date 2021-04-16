@@ -11,32 +11,9 @@ import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useLocation } from 'react-router-dom'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    color: 'inherit'
-  },
-  languageText: {
-    color: '#121212',
-    fontSize: '1rem',
-    marginLeft: 3,
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'inline'
-    }
-  },
-  languageTextTransparent: {
-    color: '#ffffff'
-  },
-  iconLanguage: {
-    color: '#121212',
-    width: 24,
-    height: 24
-  },
-  iconLanguageTransparent: {
-    color: '#ffffff'
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const LanguageSelector = ({ alt }) => {
   const classes = useStyles()

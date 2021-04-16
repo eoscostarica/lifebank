@@ -6,12 +6,9 @@ import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  success: {
-    color: theme.palette.success.main
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const SignupUsername = ({ isValid, loading, user, setField }) => {
   const { t } = useTranslation('translations')

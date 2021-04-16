@@ -14,70 +14,13 @@ import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 
 import CarouselComponent from '../../components/Carousel'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const Transition = forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />
 })
-
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative'
-  },
-  title: {
-    fontSize: "34px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
-    lineHeight: "1.18",
-    letterSpacing: "0.25px",
-    textAlign: "left",
-    color: "rgba(0, 0, 0, 0.87)",
-    marginBottom: 15
-  },
-  closeIcon: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 14,
-    right: 14,
-    margin: '0',
-    height: '5vh',
-    '& svg': {
-      fontSize: 25,
-      color: "rgba(0, 0, 0, 0.6)"
-    }
-  },
-  content: {
-    width: "100%",
-    padding: theme.spacing(2)
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    padding: theme.spacing(2, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-    }
-  },
-  divider: {
-    width: '100%'
-  },
-  carouselComponent: {
-    justifyContent: 'center',
-    justifySelf: 'center'
-  },
-  carouselContainer: {
-    maxWidth: '100%',
-    height: "300"
-  },
-  descriptionContainer: {
-    margin: 'auto'
-  },
-  paper: {
-    padding: theme.spacing(3)
-  }
-}))
 
 const OfferDetails = ({ offer, open, setOpen }) => {
   const { t } = useTranslation('translations')
@@ -97,7 +40,7 @@ const OfferDetails = ({ offer, open, setOpen }) => {
       maxWidth="sm"
       fullWidth
     >
-      <Box className={classes.content}>
+      <Box className={classes.contentIcon}>
         <Box className={classes.closeIcon}>
           <IconButton
             aria-label="close"
