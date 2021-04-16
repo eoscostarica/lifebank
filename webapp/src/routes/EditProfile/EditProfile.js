@@ -18,60 +18,13 @@ import {
   SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const EditProfileDonor = lazy(() => import('./EditProfileDonor'));
 const EditProfileBank = lazy(() => import('./EditProfileBank'));
 const EditProfileSponsor = lazy(() => import('./EditProfileSponsor'));
-
-
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    padding: theme.spacing(6, 1, 0, 1),
-    alignItems: 'center',
-    minHeight: 'calc(100vh - 60px)',
-    paddingTop: '60px',
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '35%',
-      paddingRight: '35%',
-    },
-  },
-  title: {
-    fontSize: 48,
-    marginBottom: theme.spacing(4)
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
-    }
-  },
-  divider: {
-    width: '100%'
-  },
-  editBtn: {
-    marginTop: theme.spacing(4)
-  },
-  linkSuccess: {
-    textDecoration: 'none',
-    color: 'rgb(26, 64, 28)'
-  },
-  linkError: {
-    textDecoration: 'none',
-    color: 'rgb(91, 22, 21)'
-  },
-  boxMessage: {
-    width: '100%',
-    marginBottom: theme.spacing(2)
-  }
-}))
 
 const EditProfilePage = () => {
   const { t } = useTranslation('translations')

@@ -7,36 +7,9 @@ import HttpIcon from '@material-ui/icons/Http'
 import TelegramIcon from '@material-ui/icons/Telegram'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  contentInfo: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'column',
-    padding: theme.spacing(3, 1),
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-      marginTop: theme.spacing(2)
-    }
-  },
-  boxLinks: {
-    display: 'flex',
-    marginTop: theme.spacing(3),
-    '& a': {
-      '&:hover': {
-        textDecoration: 'none'
-      }
-    },
-    '& svg': {
-      marginRight: theme.spacing(3),
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
-    },
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-      marginTop: 0
-    }
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const Help = () => {
   const { t } = useTranslation('translations')

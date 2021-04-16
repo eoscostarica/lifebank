@@ -7,30 +7,9 @@ import SvgIcon from '@material-ui/core/SvgIcon'
 import { useTranslation } from 'react-i18next'
 
 import { oAuthConfig } from '../../config'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  btnFacebook: {
-    display: 'flex',
-    backgroundColor: '#1778f2',
-    borderRadius: '50px',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '10px',
-    marginBottom: 10,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
-  },
-  facebookIcon: {
-    marginRight: 5
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const LoginWithFacebook = ({ onSubmit }) => {
   const { t } = useTranslation('translations')
