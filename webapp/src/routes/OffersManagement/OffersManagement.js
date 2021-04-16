@@ -172,7 +172,7 @@ const OffersManagement = () => {
       setOpenSnackbar({
         show: true,
         message: t("offersManagement.info"),
-        severity: 'info'
+        severity: 'warning'
       })
     } else{
       setOpenGenericFormAddVariant(true)
