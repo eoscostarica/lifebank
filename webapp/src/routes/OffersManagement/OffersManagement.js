@@ -167,7 +167,7 @@ const OffersManagement = () => {
     if (!profile.location)
       pendingFieldsObject = { ...pendingFieldsObject, location: false }
 
-    if(Object.keys(pendingFieldsObject).length>0){
+    if(Object.keys(pendingFieldsObject).length > 0){
       setOpenGenericFormAddVariant(false)
       setOpenSnackbar({
         show: true,
