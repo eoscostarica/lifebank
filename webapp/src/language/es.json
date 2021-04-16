@@ -26,10 +26,9 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Ofertas aprobadas",
-      "moreInfo": "Más información",
-      "approvedOffers": "Lista de Ofertas",
-      "rejectedOffers": "Ofertas rechazadas"
+      "availableOffers": "Ofertas Aprobadas",
+      "moreInfo": "Más Información",
+      "approvedOffers": "Lista de Ofertas"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",

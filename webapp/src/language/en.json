@@ -27,9 +27,8 @@
     },
     "cardsSection": {
       "availableOffers": "Approved Offers",
-      "moreInfo": "More info",
-      "approvedOffers": "Offers List",
-      "rejectedOffers": "Rejected Offers"
+      "moreInfo": "More Info",
+      "approvedOffers": "Offers List"
     },
     "navigationDrawer": {
       "homepage": "Home page",
