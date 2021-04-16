@@ -86,6 +86,16 @@ const useStyles = makeStyles((theme) => ({
       textTransform: 'capitalize'
     }
   },
+  rowBoxInfo: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    padding: theme.spacing(2, 2),
+    alignItems: 'center',
+    '& p': {
+      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
+    }
+  },
   rowTitle: {
     fontWeight: 'bold',
     marginRight: '10px'
@@ -280,7 +290,7 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.about)
       pendingFieldsObject = { ...pendingFieldsObject, about: false }
 
-      if (!profile.requirement)
+    if (!profile.requirement)
       pendingFieldsObject = { ...pendingFieldsObject, requirement: false }
 
     if (!profile.blood_urgency_level)
@@ -401,7 +411,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.email &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.email')}</Typography>
             <Typography variant="body1">{profile.email}</Typography>
           </Box>
@@ -458,7 +468,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.about &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
             <Typography >{profile.about}</Typography>
           </Box>
@@ -467,7 +477,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.requirement &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.requirement')}</Typography>
             <Typography >{profile.requirement.replaceAll("\n", ", ")}</Typography>
           </Box>
@@ -476,7 +486,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.schedule &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
             <ViewSchedule schedule={profile.schedule} />
           </Box>
@@ -485,7 +495,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.categories &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBoxInfo}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.categories')}</Typography>
             <ViewCategories categories={profile.categories} />
           </Box>
