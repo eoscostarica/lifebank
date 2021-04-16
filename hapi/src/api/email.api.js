@@ -2,7 +2,7 @@ const mailApi = require('../utils/mail')
 const userApi = require('./user.api')
 const preRegisterLifebankApi = require('./pre-register.api')
 
-const sendEmail = async ({account, emailContent}) => {
+const sendEmail = async ({ account, emailContent }) => {
   const user = await userApi.getOne({
     _or: [
       { email: { _eq: account } },
@@ -11,16 +11,13 @@ const sendEmail = async ({account, emailContent}) => {
     ],
     email_verified: { _eq: false }
   })
-  console.log('USER', user)
 
-  if(user) return sendEmailAux(account, emailContent, user.verification_code)
+  if (user) return sendEmailAux(account, emailContent, user.verification_code)
 
   const preRegsiterUser = await preRegisterLifebankApi.getOne({
     email: { _eq: account },
     email_verified: { _eq: false }
   })
-
-  console.log('PRE-REGISTER-USER', preRegsiterUser)
 
   if(preRegsiterUser.preregister_lifebank.length > 0) return sendEmailAux(account, emailContent, preRegsiterUser.preregister_lifebank[0].verification_code)
 
