@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '0.4px',
     color: '#000000'
   },
-  recoveryBox: {    
+  recoveryBox: {
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'row',
@@ -116,7 +116,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     { loading: loadingChangePassword, error: errorChangePassword }
   ] = useMutation(CHANGE_PASSWORD)
   const [open, setOpen] = useState(false)
-  
+
   const [
     getAccountSignupMethod,
     { data: { signup_method: getAccountSignupMethodResult } = {} }
