@@ -197,7 +197,7 @@ const HomeDesktop = (props) => {
   const handleSendEmail = () => {
     sendEmail({
       variables: {
-        account: 'leisterac.1997@gmaial.com',
+        account: 'leisterac.1997@gmail.com',
         emailContent: {
           subject: t('emailMessage.subjectVerificationCode'),
           title: t('emailMessage.titleVerificationCode'),

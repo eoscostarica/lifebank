@@ -11,6 +11,7 @@ const sendEmail = async ({account, emailContent}) => {
     ],
     email_verified: { _eq: false }
   })
+  console.log('USER', user)
 
   if(user) return sendEmailAux(account, emailContent, user.verification_code)
 
@@ -19,7 +20,9 @@ const sendEmail = async ({account, emailContent}) => {
     email_verified: { _eq: false }
   })
 
-  if(preRegsiterUser) return sendEmailAux(account, emailContent, user.verification_code)
+  console.log('PRE-REGISTER-USER', preRegsiterUser)
+
+  if(preRegsiterUser.preregister_lifebank.length > 0) return sendEmailAux(account, emailContent, preRegsiterUser.preregister_lifebank[0].verification_code)
 
   return {
     success: false
