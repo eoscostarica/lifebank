@@ -588,7 +588,7 @@ const ProfilePageSponsor = ({ profile }) => {
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
         className={classes.routerLink}
       >
-        <Button className={classes.editButton} color="secondary" variant="contained">
+        <Button className={classes.editButton} color="primary" variant="contained">
           {t('common.edit')}
         </Button>
       </LinkRouter>

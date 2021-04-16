@@ -11,45 +11,9 @@ import { useTranslation } from 'react-i18next'
 import SignupWithFacebook from './socialSingup/SignupWithFacebook'
 import SignupWithGoogle from './socialSingup/SignupWithGoogle'
 import { captchaConfig } from '../../config'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  form: {
-    width: '100%',
-    padding: theme.spacing(0, 2)
-  },
-  textField: {
-    marginBottom: 10
-  },
-  textFieldWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  btnWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10
-  },
-  btnSignup: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 10,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const DonorSignup = ({
   onSubmit,

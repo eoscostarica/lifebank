@@ -64,14 +64,10 @@ export default (theme) => ({
     alignItems: 'center',
   },
   editButton: {
-    borderRadius: 50,
-    height: 60,
-    padding: 20,
     position: 'fixed',
     zIndex: 1,
     bottom: 20,
     right: 20,
-    margin: '0',
     color: '#ffffff',
     backgroundColor: '#ba0d0d'
   },
