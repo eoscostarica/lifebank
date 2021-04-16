@@ -89,14 +89,14 @@ const SimpleRegisterForm = ({
           }}
         />
         <TextField
-          id="secret"
+          id="passwordPlainText"
           label={t('signup.password')}
           type="password"
           fullWidth
           variant="outlined"
           className={classes.textField}
           onChange={(event) => {
-            setField('secret', event.target.value)
+            setField('passwordPlainText', event.target.value)
             setPassword(event.target.value)
           }}
         />
