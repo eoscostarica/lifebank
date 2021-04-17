@@ -212,13 +212,13 @@ clear_tables() {
 
 deploy_lifebank_contracts_to_lacchain() {
     WORK_DIR=/opt/application
-
+    
     echo 'Deploy Consent Contract'
-    mkdir -p /opt/application/stdout/lifebankcoin
-    TEMP_DIR=/opt/application/stdout/lifebankcoin
+    mkdir -p ./stdout/lifebankcode
+    TEMP_DIR=./stdout/lifebankcode
 
-    echo '1. set lifebankcoin smart contract code'
-    cleos -u $EOS_API_URL set contract lifebankcoin -j -d -s ../lifebankcoin/ >$TEMP_DIR/tx2.json
+    echo '1. set lifebankcode smart contract code'
+    cleos -u $EOS_API_URL set contract lifebankcode -j -d -s ../lifebankcode/ >$TEMP_DIR/tx2.json
 
     echo '2. writer auth'
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
@@ -230,9 +230,7 @@ deploy_lifebank_contracts_to_lacchain() {
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
 
     echo '5. sign transaction'
-    cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcoin@active
-
-    # cleos -u $EOS_API_URL set contract consent2life ../consent2life/ -p consent2life@active -j -s -d
+    cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
 run_lifebank() {
