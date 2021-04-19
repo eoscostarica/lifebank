@@ -519,11 +519,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <MapEditLocation
               onGeolocationChange={handleOnGeolocationChange}
               markerType={SPONSOR}
-              markerLocation={
-                user.geolocation
-                  ? user.geolocation
-                  : { longitude: -84.0556371, latitude: 9.9195872 }
-              }
+              markerLocation={user.geolocation}
               width="100%"
               height={400}
               mb={1}

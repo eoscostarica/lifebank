@@ -70,24 +70,21 @@ const EditProfilePage = () => {
     profile?.consent ? revokeConsent() : grantConsent()
   }
 
-  const handleUpdateUser = useCallback(
-    (userEdited, userNameEdited, account) => {
-      editProfile({
+  const handleUpdateUser = (userEdited, userNameEdited, account) => {
+    editProfile({
+      variables: {
+        profile: userEdited
+      }
+    })
+    if (account && userNameEdited) {
+      setUsername({
         variables: {
-          profile: userEdited
+          account: account,
+          username: userNameEdited
         }
       })
-      if (account && userNameEdited) {
-        setUsername({
-          variables: {
-            account: account,
-            username: userNameEdited
-          }
-        })
-      }
-    },
-    [editProfile]
-  )
+    }
+  }
 
   useEffect(() => {
     if (!currentUser) {
@@ -109,7 +106,6 @@ const EditProfilePage = () => {
     const { success } = editProfileResult
 
     if (success) {
-      loadProfile()
       history.push({
         pathname: '/profile',
         state: true
@@ -118,7 +114,7 @@ const EditProfilePage = () => {
     } else if (!success) {
       setShowAlert(true)
     }
-  }, [editProfileResult, loadProfile])
+  }, [editProfileResult])
 
   useEffect(() => {
     if (location.state) {

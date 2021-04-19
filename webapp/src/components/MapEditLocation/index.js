@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box'
 import { mapboxConfig, constants } from '../../config'
 import MapMarker from '../MapMarker'
 
+const CR_SJ_POINT = { longitude: -84.0556371, latitude: 9.9195872 }
 const initialZoom = 12.5
 const {
   LOCATION_TYPES: { SPONSOR, LIFE_BANK }
@@ -21,6 +22,8 @@ function MapEditLocation({
 }) {
   const mapContainerRef = useRef(null)
   const currentMarker = useRef(null)
+
+  if(!markerLocation) markerLocation = CR_SJ_POINT
 
   let markerNode = null
   let marker = null
