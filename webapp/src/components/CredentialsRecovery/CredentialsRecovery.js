@@ -211,27 +211,27 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   {t('credentialsRecovery.recovery')}
                 </Button>
                 <Box className={classes.recoveryBox}>
-                {loading && <CircularProgress />}
+                  {loading && <CircularProgress />}
                 </Box>
               </Box>
               {errorMessage && (
                 <Snackbar open={true} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                <Alert
-                  className={classes.alert}
-                  severity="error"
-                >
-                  {errorMessage}
-                </Alert>                  
+                  <Alert
+                    className={classes.alert}
+                    severity="error"
+                  >
+                    {errorMessage}
+                  </Alert>                  
                 </Snackbar>
               )}
               {success && (
-                 <Snackbar open={success} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                <Alert
-                  className={classes.alert}
-                  severity="success"
-                >
-                  {t('credentialsRecovery.checkYourEmail')}
-                </Alert>
+                <Snackbar open={success} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+                  <Alert
+                    className={classes.alert}
+                    severity="success"
+                  >
+                    {t('credentialsRecovery.checkYourEmail')}
+                  </Alert>
                 </Snackbar>
               )}
             </form>
