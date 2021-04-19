@@ -32,7 +32,7 @@ import styles from './styles'
 const useStyles = makeStyles(styles)
 
 const {
-  LOCATION_TYPES: { SPONSOR },
+  LOCATION_TYPES: { SPONSOR, PENDING_SPONSOR },
   SPONSOR_TYPES
 } = constants
 
@@ -518,7 +518,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
             <MapEditLocation
               onGeolocationChange={handleOnGeolocationChange}
-              markerType={SPONSOR}
+              markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
               markerLocation={user.geolocation}
               width="100%"
               height={400}
