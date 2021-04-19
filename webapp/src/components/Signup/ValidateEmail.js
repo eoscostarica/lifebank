@@ -5,15 +5,9 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  success: {
-    color: theme.palette.success.main
-  },
-  textField: {
-    marginBottom: 10
-  },
-}))
+const useStyles = makeStyles(styles)
 
 const ValidateEmail = ({ isValid, loading, user, setField }) => {
   const { t } = useTranslation('translations')

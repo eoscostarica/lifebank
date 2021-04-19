@@ -7,17 +7,9 @@ import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel'
 import DeleteIcon from '@material-ui/icons/Delete'
 import '@brainhubeu/react-carousel/lib/style.css'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles({
-  carousel: {
-    maxWidth: '100%',
-  },
-  img: {
-    width: '100%',
-    height: '300px',
-    objectFit: 'cover'
-  }
-})
+const useStyles = makeStyles(styles)
 
 const CarouselComponent = ({ images, activeDeletion, deleteItem }) => {
   const { t } = useTranslation('translations')

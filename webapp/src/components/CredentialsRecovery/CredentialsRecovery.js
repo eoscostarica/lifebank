@@ -16,85 +16,9 @@ import Snackbar from '@material-ui/core/Snackbar'
 import { useTranslation } from 'react-i18next'
 
 import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  alert: {
-    marginTop: theme.spacing(4)
-  },
-  title:{
-    paddingBottom: '10px'
-  },
-  textFieldWrapper: {
-    padding: theme.spacing(2, 2),
-    display: 'flex',
-    flexDirection: 'column',
-    height: 200,
-    justifyContent: 'space-evenly'
-  },
-  closeIcon: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 14,
-    right: 14,
-    margin: '0',
-    height: '5vh',
-    '& svg': {
-      fontSize: 25,
-      color: "rgba(0, 0, 0, 0.6)"
-    }
-  },
-  recoveryButton: {
-    fontSize: '12px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.33,
-    letterSpacing: '0.4px',
-    color: '#000000'
-  },
-  recoveryBox: {
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'row',
-  alignItems: 'center'
-  },
-  bodyWrapper: {
-    height: '90%',
-    padding: theme.spacing(0, 2)
-  },
-  marginTop: {
-    marginTop: '6%'
-  },
-  marginTopBox: {
-    marginTop: '16%'
-  },
-  button: {
-    marginTop: '6%',
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "100%",
-    height: '40px',
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '15px',
-    marginBottom: 10
-  },
-  dialog: {
-    paddingTop: "53px",
-    paddingLeft: "53px",
-    paddingRight: "53px",
-    paddingBottom: "43px",
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: "21px",
-      paddingRight: "21px"
-    }
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const { t } = useTranslation('translations')
@@ -142,14 +66,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setUser({ ...user, [field]: value })
   }
 
-  const loadPasswordChangable = () => {
-    getAccountSignupMethod({
-      variables: {
-        email: user.email
-      }
-    })
-  }
-
   const handleSubmit = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
       setErrorMessage(null)
@@ -187,7 +103,13 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }
 
   useEffect(() => {
-    loadPasswordChangable()
+    if(user.email) {
+      getAccountSignupMethod({
+        variables: {
+          email: user.email
+        }
+      })
+    }
   }, [user])
 
   useEffect(() => {

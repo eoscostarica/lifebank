@@ -18,50 +18,9 @@ import DonationsDashboard from '../../components/DonationsDashboard'
 import SearchComponent from '../../components/SearchComponent'
 import MapModal from '../../components/MapModal'
 import FilterHome from '../../components/FilterHome'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  appBarTab: {
-    backgroundColor: '#ffffff',
-    boxShadow: 'none'
-  },
-  tabs: {
-    color: '#121212',
-    backgroundColor: 'ffffff'
-  },
-  tabPanel: {
-    backgroundColor: '#ffffff'
-  },
-  bottomAppBar: {
-    top: 'auto',
-    bottom: 0,
-    backgroundColor: '#ffffff'
-  },
-  fabButton: {
-    borderRadius: 50,
-    height: 60,
-    padding: 20,
-    position: 'absolute',
-    zIndex: 1,
-    top: -30,
-    right: 20,
-    margin: '0',
-    color: '#ffffff'
-  },
-  iconBottomAppBar: {
-    color: '#121212'
-  },
-  iconFab: {
-    color: '#ffffff',
-    marginRight: 10
-  },
-  title: {
-    height: '50px',
-    [theme.breakpoints.down('md')]: {
-      marginBottom: 30
-    }
-  }
-}))
-
+const useStyles = makeStyles(styles)
 function TabPanel(props) {
   const { children, value, index, ...other } = props
 
