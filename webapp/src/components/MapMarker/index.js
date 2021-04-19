@@ -8,7 +8,7 @@ import sponsorSvg from './locator-sponsor-01.svg'
 import lifeBankSvg from './locator-donators-01.svg'
 
 const {
-  LOCATION_TYPES: { SPONSOR, LIFE_BANK }
+  LOCATION_TYPES: { PENDING_SPONSOR, SPONSOR, LIFE_BANK }
 } = constants
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
       switch (type) {
         case SPONSOR:
           return `url(${sponsorSvg})`
+
+        case PENDING_SPONSOR:
+          return `url(${lifeBankSvg})`
 
         case LIFE_BANK:
           return `url(${lifeBankSvg})`
@@ -40,7 +43,7 @@ function MapMarker({ type }) {
 }
 
 MapMarker.propTypes = {
-  type: PropTypes.oneOf([SPONSOR, LIFE_BANK])
+  type: PropTypes.oneOf([SPONSOR, PENDING_SPONSOR, LIFE_BANK])
 }
 
 export default MapMarker

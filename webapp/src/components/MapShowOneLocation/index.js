@@ -36,7 +36,7 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
         coordinates: [lng, lat]
       }
     })
-
+    
     data &&
       data.locations &&
       data.locations.forEach((location) => {
@@ -60,7 +60,6 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
             id={id}
             info={info}
             username={user.username.replaceAll(' ', '-')}
-            account={account}
           />,
           popupNode
         )

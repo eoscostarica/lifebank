@@ -11,7 +11,7 @@ import MapMarker from '../MapMarker'
 const CR_SJ_POINT = { longitude: -84.0556371, latitude: 9.9195872 }
 const initialZoom = 12.5
 const {
-  LOCATION_TYPES: { SPONSOR, LIFE_BANK }
+  LOCATION_TYPES: { SPONSOR, PENDING_SPONSOR, LIFE_BANK }
 } = constants
 
 function MapEditLocation({
@@ -42,10 +42,13 @@ function MapEditLocation({
     ReactDOM.render(<MapMarker type={markerType} />, markerNode)
 
     marker = new mapboxgl.Marker(markerNode)
-    marker
-      .setLngLat([markerLocation.longitude, markerLocation.latitude])
-      .addTo(map)
-    currentMarker.current = marker
+    
+    if(markerLocation !== CR_SJ_POINT) {
+      marker
+        .setLngLat([markerLocation.longitude, markerLocation.latitude])
+        .addTo(map)
+      currentMarker.current = marker
+    }
 
     map.addControl(
       new MapboxGeocoder({
@@ -89,7 +92,7 @@ function MapEditLocation({
 MapEditLocation.propTypes = {
   onGeolocationChange: PropTypes.func,
   markerLocation: PropTypes.object,
-  markerType: PropTypes.oneOf([SPONSOR, LIFE_BANK]),
+  markerType: PropTypes.oneOf([SPONSOR, PENDING_SPONSOR, LIFE_BANK]),
   props: PropTypes.object
 }
 
