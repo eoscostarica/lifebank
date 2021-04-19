@@ -213,7 +213,7 @@ clear_tables() {
 deploy_lifebank_contracts_to_lacchain() {
     WORK_DIR=/opt/application
     
-    echo 'Deploy Consent Contract'
+    echo 'Deploy Lifebankcode'
     mkdir -p ./stdout/lifebankcode
     TEMP_DIR=./stdout/lifebankcode
 
