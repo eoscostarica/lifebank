@@ -82,7 +82,8 @@
       "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. ",
       "noConsentNoEdit": "You must first accept the terms and conditions before changing anything.",
       "noConsentNoEdit2": "Read it here",
-      "defaultUsername": "Your Profile"
+      "defaultUsername": "Your Profile",
+      "forgetPassword": "Forgot Password?"
     },
     "login": {
       "letsStarted": "Let's get started!",

@@ -82,7 +82,8 @@
       "consentError": "Error al otorgar consentimiento",
       "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
       "noConsentNoEdit2": "Léelo aquí",
-      "defaultUsername": "Tu perfil"
+      "defaultUsername": "Tu perfil",
+      "forgetPassword": "¿Olvidaste la Contraseña?"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
