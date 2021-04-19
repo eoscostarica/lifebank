@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles'
 
 import { constants } from '../../config'
 import sponsorSvg from './locator-sponsor-01.svg'
+import pendingSponsorSvg from './locator-donators-01.svg'
 import lifeBankSvg from './locator-donators-01.svg'
 
 const {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
           return `url(${sponsorSvg})`
 
         case PENDING_SPONSOR:
-          return `url(${lifeBankSvg})`
+          return `url(${pendingSponsorSvg})`
 
         case LIFE_BANK:
           return `url(${lifeBankSvg})`
