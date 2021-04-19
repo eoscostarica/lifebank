@@ -170,7 +170,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Box className={classes.textFieldWrapper}>
+      <Box className={classes.textFieldWrapperSponsor}>
         <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
           <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
         </Box>
