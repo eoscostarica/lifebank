@@ -36,7 +36,7 @@ function MapShowOneLocation({ markerLocation, accountProp, ...props }) {
         coordinates: [lng, lat]
       }
     })
-    
+
     data &&
       data.locations &&
       data.locations.forEach((location) => {
