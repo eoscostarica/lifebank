@@ -75,10 +75,13 @@ const OffersApproval = () => {
   })
 
   useEffect(() => {
-    if (!loadingInfo) {
-      const dataCategories = info.location[0].info.categories
-      setCategories(dataCategories)
-    }
+    try {
+      if (!loadingInfo) {
+        const dataCategories = info.location[0].info.categories
+        setCategories(dataCategories)
+      }
+    } catch (error) { }
+
   }, [info])
 
   useEffect(() => {

@@ -16,6 +16,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
+import ImportantIcon from '@material-ui/icons/LabelImportant'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTranslation } from 'react-i18next'
 
@@ -96,8 +97,8 @@ const OfferView = ({
               {theme.direction === 'rtl' ? (
                 <KeyboardArrowLeft />
               ) : (
-                  <KeyboardArrowRight />
-                )}
+                <KeyboardArrowRight />
+              )}
             </Button>
           }
           backButton={
@@ -109,8 +110,8 @@ const OfferView = ({
               {theme.direction === 'rtl' ? (
                 <KeyboardArrowRight />
               ) : (
-                  <KeyboardArrowLeft />
-                )}
+                <KeyboardArrowLeft />
+              )}
               {t('common.prev')}
             </Button>
           }
@@ -185,6 +186,13 @@ const OfferView = ({
           {currentUser && currentUser.role === 'donor' && (
             <DonationsDashboard isDesktop={isDesktop} currentUser={currentUser} isOffer />
           )}
+          <Button
+            disabled
+            className={classes.buttonIconDesktop}
+            startIcon={<ImportantIcon />}
+          >
+            {t(`categories.${selectOffer.offer_type}`)}
+          </Button>
         </Box>
       </Box>
     )
