@@ -153,13 +153,11 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     about: profile.about,
     address: profile.address,
     website: profile.website,
-    benefit_description: "default information",
     telephones:
       profile.telephones && profile.telephones !== '[]'
         ? JSON.parse(profile.telephones)
         : [],
     business_type: profile.business_type,
-    covid_impact: "default information",
     geolocation: profile.location ? JSON.parse(profile.location) : null,
     schedule: profile.schedule,
     photos:

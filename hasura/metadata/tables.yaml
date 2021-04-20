@@ -11,278 +11,278 @@
     schema: public
     name: location
   object_relationships:
-    - name: location_type
-      using:
-        foreign_key_constraint_on: type
-    - name: user
-      using:
-        foreign_key_constraint_on: account
+  - name: location_type
+    using:
+      foreign_key_constraint_on: type
+  - name: user
+    using:
+      foreign_key_constraint_on: account
   select_permissions:
-    - role: donor
-      permission:
-        columns:
-          - account
-          - geolocation
-          - id
-          - info
-          - name
-          - type
-        filter: {}
-    - role: guest
-      permission:
-        columns:
-          - account
-          - geolocation
-          - id
-          - info
-          - name
-          - type
-        filter: {}
-    - role: lifebank
-      permission:
-        columns:
-          - account
-          - geolocation
-          - id
-          - info
-          - name
-          - type
-        filter: {}
-    - role: sponsor
-      permission:
-        columns:
-          - account
-          - geolocation
-          - id
-          - info
-          - name
-          - type
-        filter: {}
+  - role: donor
+    permission:
+      columns:
+      - account
+      - geolocation
+      - id
+      - info
+      - name
+      - type
+      filter: {}
+  - role: guest
+    permission:
+      columns:
+      - account
+      - geolocation
+      - id
+      - info
+      - name
+      - type
+      filter: {}
+  - role: lifebank
+    permission:
+      columns:
+      - account
+      - geolocation
+      - id
+      - info
+      - name
+      - type
+      filter: {}
+  - role: sponsor
+    permission:
+      columns:
+      - account
+      - geolocation
+      - id
+      - info
+      - name
+      - type
+      filter: {}
 - table:
     schema: public
     name: location_type
   is_enum: true
   array_relationships:
-    - name: locations
-      using:
-        foreign_key_constraint_on:
-          column: type
-          table:
-            schema: public
-            name: location
+  - name: locations
+    using:
+      foreign_key_constraint_on:
+        column: type
+        table:
+          schema: public
+          name: location
 - table:
     schema: public
     name: notification
   select_permissions:
-    - role: donor
-      permission:
-        columns:
-          - id
-          - payload
-          - created_at
-          - updated_at
-          - account
-          - description
-          - title
-          - type
-        filter:
-          account:
-            _eq: X-Hasura-User-Id
-    - role: lifebank
-      permission:
-        columns:
-          - id
-          - payload
-          - created_at
-          - updated_at
-          - account
-          - description
-          - title
-          - type
-        filter:
-          account:
-            _eq: X-Hasura-User-Id
-    - role: sponsor
-      permission:
-        columns:
-          - id
-          - payload
-          - created_at
-          - updated_at
-          - account
-          - description
-          - title
-          - type
-        filter:
-          account:
-            _eq: X-Hasura-User-Id
+  - role: donor
+    permission:
+      columns:
+      - id
+      - payload
+      - created_at
+      - updated_at
+      - account
+      - description
+      - title
+      - type
+      filter:
+        account:
+          _eq: X-Hasura-User-Id
+  - role: lifebank
+    permission:
+      columns:
+      - id
+      - payload
+      - created_at
+      - updated_at
+      - account
+      - description
+      - title
+      - type
+      filter:
+        account:
+          _eq: X-Hasura-User-Id
+  - role: sponsor
+    permission:
+      columns:
+      - id
+      - payload
+      - created_at
+      - updated_at
+      - account
+      - description
+      - title
+      - type
+      filter:
+        account:
+          _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: offer
   object_relationships:
-    - name: user
-      using:
-        foreign_key_constraint_on: sponsor_id
+  - name: user
+    using:
+      foreign_key_constraint_on: sponsor_id
   insert_permissions:
-    - role: guest
-      permission:
-        check: {}
-        columns:
-          - active
-          - description
-          - end_date
-          - id
-          - images
-          - limited
-          - offer_name
-          - offer_type
-          - online_only
-          - quantity
-          - sponsor_id
-          - start_date
-        backend_only: false
-    - role: sponsor
-      permission:
-        check: {}
-        columns:
-          - active
-          - cost_in_tokens
-          - description
-          - end_date
-          - id
-          - images
-          - limited
-          - offer_name
-          - offer_type
-          - online_only
-          - quantity
-          - sponsor_id
-          - start_date
-        backend_only: false
+  - role: guest
+    permission:
+      check: {}
+      columns:
+      - active
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      backend_only: false
+  - role: sponsor
+    permission:
+      check: {}
+      columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      backend_only: false
   select_permissions:
-    - role: donor
-      permission:
-        columns:
-          - active
-          - cost_in_tokens
-          - description
-          - end_date
-          - id
-          - images
-          - limited
-          - offer_name
-          - offer_type
-          - online_only
-          - quantity
-          - sponsor_id
-          - start_date
-        filter: {}
-    - role: guest
-      permission:
-        columns:
-          - limited
-          - online_only
-          - quantity
-          - offer_type
-          - description
-          - start_date
-          - end_date
-          - images
-          - sponsor_id
-          - id
-          - offer_name
-          - active
-          - cost_in_tokens
-        filter: {}
-    - role: lifebank
-      permission:
-        columns:
-          - limited
-          - online_only
-          - quantity
-          - offer_type
-          - description
-          - start_date
-          - end_date
-          - images
-          - sponsor_id
-          - id
-          - offer_name
-          - active
-          - cost_in_tokens
-        filter: {}
-    - role: sponsor
-      permission:
-        columns:
-          - active
-          - cost_in_tokens
-          - description
-          - end_date
-          - id
-          - images
-          - limited
-          - offer_name
-          - offer_type
-          - online_only
-          - quantity
-          - sponsor_id
-          - start_date
-        filter: {}
+  - role: donor
+    permission:
+      columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      filter: {}
+  - role: guest
+    permission:
+      columns:
+      - limited
+      - online_only
+      - quantity
+      - offer_type
+      - description
+      - start_date
+      - end_date
+      - images
+      - sponsor_id
+      - id
+      - offer_name
+      - active
+      - cost_in_tokens
+      filter: {}
+  - role: lifebank
+    permission:
+      columns:
+      - limited
+      - online_only
+      - quantity
+      - offer_type
+      - description
+      - start_date
+      - end_date
+      - images
+      - sponsor_id
+      - id
+      - offer_name
+      - active
+      - cost_in_tokens
+      filter: {}
+  - role: sponsor
+    permission:
+      columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      filter: {}
   update_permissions:
-    - role: sponsor
-      permission:
-        columns:
-          - active
-          - cost_in_tokens
-          - description
-          - end_date
-          - id
-          - images
-          - limited
-          - offer_name
-          - offer_type
-          - online_only
-          - quantity
-          - sponsor_id
-          - start_date
-        filter: {}
-        check: null
+  - role: sponsor
+    permission:
+      columns:
+      - active
+      - cost_in_tokens
+      - description
+      - end_date
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
+      filter: {}
+      check: null
   delete_permissions:
-    - role: sponsor
-      permission:
-        filter: {}
+  - role: sponsor
+    permission:
+      filter: {}
 - table:
     schema: public
     name: preregister_lifebank
   select_permissions:
-    - role: guest
-      permission:
-        columns:
-          - address
-          - coordinates
-          - created_at
-          - description
-          - email
-          - id
-          - immunity_test
-          - invitation_code
-          - name
-          - password
-          - phone
-          - schedule
-          - state
-          - updated_at
-          - urgency_level
-          - verification_code
-        filter: {}
+  - role: guest
+    permission:
+      columns:
+      - address
+      - coordinates
+      - created_at
+      - description
+      - email
+      - id
+      - immunity_test
+      - invitation_code
+      - name
+      - password
+      - phone
+      - schedule
+      - state
+      - updated_at
+      - urgency_level
+      - verification_code
+      filter: {}
   update_permissions:
-    - role: guest
-      permission:
-        columns:
-          - state
-          - verification_code
-        filter: {}
-        check: null
+  - role: guest
+    permission:
+      columns:
+      - state
+      - verification_code
+      filter: {}
+      check: null
 - table:
     schema: public
     name: raster_columns
@@ -296,78 +296,78 @@
     schema: public
     name: user
   object_relationships:
-    - name: location
-      using:
-        manual_configuration:
-          remote_table:
-            schema: public
-            name: location
-          column_mapping:
-            account: account
+  - name: location
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: location
+        column_mapping:
+          account: account
   array_relationships:
-    - name: offers
-      using:
-        foreign_key_constraint_on:
-          column: sponsor_id
-          table:
-            schema: public
-            name: offer
+  - name: offers
+    using:
+      foreign_key_constraint_on:
+        column: sponsor_id
+        table:
+          schema: public
+          name: offer
   select_permissions:
-    - role: donor
-      permission:
-        columns:
-          - account
-          - id
-          - name
-          - token
-          - username
-        filter: {}
-    - role: guest
-      permission:
-        columns:
-          - account
-          - created_at
-          - email
-          - email_verified
-          - id
-          - name
-          - role
-          - secret
-          - signup_method
-          - updated_at
-          - username
-        filter: {}
-    - role: lifebank
-      permission:
-        columns:
-          - account
-          - created_at
-          - id
-          - name
-          - role
-          - username
-        filter: {}
-    - role: sponsor
-      permission:
-        columns:
-          - account
-          - id
-          - name
-          - role
-          - username
-        filter: {}
+  - role: donor
+    permission:
+      columns:
+      - account
+      - id
+      - name
+      - token
+      - username
+      filter: {}
+  - role: guest
+    permission:
+      columns:
+      - account
+      - created_at
+      - email
+      - email_verified
+      - id
+      - name
+      - role
+      - secret
+      - signup_method
+      - updated_at
+      - username
+      filter: {}
+  - role: lifebank
+    permission:
+      columns:
+      - account
+      - created_at
+      - id
+      - name
+      - role
+      - username
+      filter: {}
+  - role: sponsor
+    permission:
+      columns:
+      - account
+      - id
+      - name
+      - role
+      - username
+      filter: {}
   update_permissions:
-    - role: lifebank
-      permission:
-        columns:
-          - email
-          - email_verified
-          - name
-          - secret
-          - updated_at
-          - username
-        filter: {}
-        check: null
+  - role: lifebank
+    permission:
+      columns:
+      - email
+      - email_verified
+      - name
+      - secret
+      - updated_at
+      - username
+      filter: {}
+      check: null
 - table:
     schema: public
     name: vault

@@ -166,8 +166,6 @@ public:
    *
    * @param account - The user account name,
    * @param sponsor_name - The name of sponsor
-   * @param covid_impact - covid impact
-   * @param benefit_description - Sponsor benefit description
    * @param website - Sponsor's website
    * @param telephones - Sponsor's phone_numbers
    * @param business_type - Sponsor business_type
@@ -186,8 +184,6 @@ public:
   ACTION addsponsor(
       name account,
       string sponsor_name,
-      string covid_impact,
-      string benefit_description,
       string website,
       string telephones,
       string business_type,
