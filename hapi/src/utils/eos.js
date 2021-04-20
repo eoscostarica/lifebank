@@ -14,14 +14,14 @@ const eosApi = EosApi({
   fetchConfiguration: {}
 })
 
-const createAccount = async accountName => {
+const createAccount = async (accountName) => {
   console.log('ACCOUNT-NAME', accountName)
   const password = await wallet.create(accountName)
   const key = await wallet.createKey(accountName)
   console.log('KEY', key)
   try {
     await wallet.unlock(eosConfig.baseAccount, eosConfig.baseAccountPassword)
-  } catch (error) { }
+  } catch (error) {}
   // const keys = await wallet.listKeys(
   //   eosConfig.baseAccount,
   //   eosConfig.baseAccountPassword
@@ -59,20 +59,32 @@ const createAccount = async accountName => {
           account: 'eosio',
           name: 'newaccount',
           data: {
-            creator : "lbacccreator",
-            name : accountName,
-            active : {
-                "threshold":2,
-                "keys":[ {"weight":1,"key":key}],
-                "accounts":[ {"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
+            creator: 'lbacccreator',
+            name: accountName,
+            active: {
+              threshold: 2,
+              keys: [{ weight: 1, key: key }],
+              accounts: [
+                {
+                  weight: 1,
+                  permission: { actor: 'writer', permission: 'access' }
+                }
+              ],
+              waits: []
             },
-            owner : {
-                "threshold":2,
-                "keys":[ {"weight":1,"key":key}],
-                "accounts":[{"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
-            },
+            owner: {
+              threshold: 2,
+              keys: [{ weight: 1, key: key }],
+              accounts: [
+                {
+                  weight: 1,
+                  permission: { actor: 'writer', permission: 'access' }
+                }
+              ],
+              waits: []
+            }
           }
-        },
+        }
       ]
     },
     {
@@ -109,9 +121,9 @@ const generateRandomAccountName = async (prefix = '') => {
   }
 }
 
-const getAbi = account => eosApi.getAbi(account)
+const getAbi = (account) => eosApi.getAbi(account)
 
-const getAccount = async account => {
+const getAccount = async (account) => {
   try {
     const accountInfo = await eosApi.getAccount(account)
     return accountInfo
@@ -120,17 +132,18 @@ const getAccount = async account => {
   }
 }
 
-const getCodeHash = account => eosApi.getCodeHash(account)
+const getCodeHash = (account) => eosApi.getCodeHash(account)
 
 const getCurrencyBalance = (code, account, symbol) =>
   eosApi.getCurrencyBalance(code, account, symbol)
 
-const getTableRows = options => eosApi.getTableRows({ json: true, ...options })
+const getTableRows = (options) =>
+  eosApi.getTableRows({ json: true, ...options })
 
 const transact = async (actions, account, password) => {
   try {
     await wallet.unlock(account, password)
-  } catch (error) { }
+  } catch (error) {}
   const keys = await wallet.listKeys(account, password)
   const api = new Api({
     rpc,
