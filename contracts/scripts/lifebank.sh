@@ -211,8 +211,6 @@ clear_tables() {
 }
 
 deploy_lifebank_contracts_to_lacchain() {
-    WORK_DIR=/opt/application
-    
     echo 'Deploy Lifebankcode'
     mkdir -p ./stdout/lifebankcode
     TEMP_DIR=./stdout/lifebankcode
@@ -233,10 +231,40 @@ deploy_lifebank_contracts_to_lacchain() {
     cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
+create_lifebank_acount_to_lacchain() {
+    WORK_DIR=/opt/application
+    mkdir -p ./stdout/account
+    TEMP_DIR=./stdout/account
+
+    cleos -u $EOS_API_URL push action -j -d -s eosio setram \
+        '{
+        "entity":"latamlink",
+        "account":"eosmechanics",
+        "ram_bytes": 200000
+    }' -p latamlink@writer >$TEMP_DIR/tx1.json
+
+#     cleos -u $EOS_API_URL push action -j eosio newaccount \
+#     '{
+#       "creator" : "costarica",
+#       "name" : "dongxudypk1m",
+#       "active" : {
+#           "threshold":2,
+#           "keys":[ {"weight":1,"key":"EOS75UWSDJ7XSsneG1YTuZuZKe3CQVucwnrLnyRPB2SDUAKuuqyRL"}],
+#           "accounts":[ {"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
+#       },
+#       "owner" : {
+#           "threshold":2,
+#           "keys":[ {"weight":1,"key":"EOS75UWSDJ7XSsneG1YTuZuZKe3CQVucwnrLnyRPB2SDUAKuuqyRL"}],
+#           "accounts":[{"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
+#       },
+#   }' -p costarica@writer >$TEMP_DIR/tx1.json
+}
+
 run_lifebank() {
     echo 'Installing LifeBank ...'
     # create_lifebank_wallet
-    deploy_lifebank_contracts_to_lacchain
+    create_lifebank_acount_to_lacchain
+    # deploy_lifebank_contracts_to_lacchain
     # create_lifebank_accounts
     # assign_resources
     # deploy_lifebank_contracts
