@@ -1,12 +1,12 @@
-const createAccountHandler = require('./create-account.handler')
-const createAccountValidation = require('./create-account.validation')
+const offerHandler = require('./create-account.handler')
+const offerValidation = require('./create-account.validation')
 
 module.exports = {
   method: 'POST',
-  path: '/api/accounts',
-  handler: createAccountHandler,
+  path: '/api/redeem-offer',
+  handler: offerHandler,
   options: {
-    validate: createAccountValidation,
-    auth: false
+    validate: offerValidation,
+    auth: true
   }
 }

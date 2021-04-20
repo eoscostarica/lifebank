@@ -1,11 +1,11 @@
 const Boom = require('@hapi/boom')
 const { INTERNAL_SERVER_ERROR } = require('http-status-codes')
 
-const { accountApi } = require('../../api')
+const { offerApi } = require('../../api')
 
 module.exports = async ({ payload: { input } }) => {
   try {
-    const response = await accountApi.create(input)
+    const response = await offerApi.redeem(input)
 
     return response
   } catch (error) {
