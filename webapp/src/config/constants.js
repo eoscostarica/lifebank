@@ -1,6 +1,7 @@
 export const constants = {
   LOCATION_TYPES: {
     SPONSOR: 'SPONSOR',
+    PENDING_SPONSOR: 'PENDING_SPONSOR',
     LIFE_BANK: 'LIFE_BANK'
   },
   SPONSOR_TYPES: [

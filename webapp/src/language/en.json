@@ -27,7 +27,9 @@
     },
     "cardsSection": {
       "availableOffers": "Available Offers",
-      "moreInfo": "More info"
+      "moreInfo": "More info",
+      "approvedOffers": "Approved Offers",
+      "rejectedOffers": "Rejected Offers"
     },
     "navigationDrawer": {
       "homepage": "Home page",
@@ -36,7 +38,8 @@
       "information": "Information",
       "aboutLifebank": "About Lifebank",
       "useTerms": "Terms of Use",
-      "help": "Help"
+      "help": "Help",
+      "offersApproval": "Offers approval"
     },
     "signup": {
       "register": "Let's Start!",
@@ -79,7 +82,8 @@
       "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. ",
       "noConsentNoEdit": "You must first accept the terms and conditions before changing anything.",
       "noConsentNoEdit2": "Read it here",
-      "defaultUsername": "Your Profile"
+      "defaultUsername": "Your Profile",
+      "forgetPassword": "Forgot Password?"
     },
     "login": {
       "letsStarted": "Let's get started!",
@@ -167,7 +171,7 @@
     },
     "categories": {
       "discount": "Discounts",
-      "freeproduct": "Free products",
+      "freeProduct": "Free Products",
       "coupon": "Coupons",
       "benefit": "Benefits",
       "badge": "Badges",
@@ -342,6 +346,12 @@
       "orYourUsername": "Or your username",
       "imDone": "I'm Done"
     },
+    "offerApproval": {
+      "description": "Here you can approve or reject the categories of redeemable offers.",
+      "description2": "If you think that a category doesn't represent your organization, feel free to uncheck it, and automatically the life tokens obtained at your center will not be redeemable in exchange for any of these offers.",
+      "message1": "These offers are available because you approved this category. Change it anytime.",
+      "message2": "These offers aren't available because you unchecked this category. Change it anytime."
+    },
     "credentialsRecovery": {
       "credentialsRecovery": "Credentials Recovery",
       "emailError": "The email entered is not associated with any account",
@@ -381,7 +391,7 @@
     },
     "offersManagement": {
       "offersManagement": "Offers Management",
-      "addOffer": "Add Offer",
+      "addOffer": "Add an Offer",
       "offerName": "Offer name",
       "offerNamePlaceholder": "Type the name here",
       "offerType": "Offer type",
@@ -427,13 +437,14 @@
       "active": "Active",
       "inactive": "Inactive",
       "noProvidedDate": "No provided date",
-      "youHaveNoAddedOffers": "You have no added offers",
+      "youHaveNoAddedOffers": "You have no offers available",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it",
       "selectDateRange": "Select date range",
       "offerCreation": "Offer Created Successfully",
       "offerStateActive": "Active Offers",
-      "offerStateInactive": "Inactive Offers"
+      "offerStateInactive": "Inactive Offers",
+      "info": "First complete your profile to add an offer"
     },
     "offerView": {
       "selectedOffer": "Selected offer",

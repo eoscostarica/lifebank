@@ -3,17 +3,11 @@ import { makeStyles } from '@material-ui/styles'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  text: {
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    textAlign: 'left',
-    color: 'rgba(0, 0, 0, 0.6)'
-  }
-}))
+const useStyles = makeStyles(styles)
 
-const ViewSchedule = ({schedule}) => {
+const ViewSchedule = ({ schedule }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
 
@@ -51,16 +45,16 @@ const ViewSchedule = ({schedule}) => {
   return (
     <>
       {JSON.parse(schedule).length > 0 &&
-      generateSchedule(
-        JSON.parse(schedule)
-      ).map((scheduleItem, index) => (
-        <Typography
-          key={index}
-          className={classes.text}
-          id={index}
-          variant="body1"
-        >{`${scheduleItem[0]} ${t('schedule.from')} ${scheduleItem[1][0]} ${t('offerView.to')} ${scheduleItem[1][1]}`}</Typography>
-      ))}
+        generateSchedule(
+          JSON.parse(schedule)
+        ).map((scheduleItem, index) => (
+          <Typography
+            key={index}
+            className={classes.text}
+            id={index}
+            variant="body1"
+          >{`${scheduleItem[0]} ${t('schedule.from')} ${scheduleItem[1][0]} ${t('offerView.to')} ${scheduleItem[1][1]}`}</Typography>
+        ))}
     </>
   )
 }

@@ -11,137 +11,12 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { useTranslation } from 'react-i18next'
+import Divider from '@material-ui/core/Divider'
 import OfferView from '../../components/OfferView'
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%'
-  },
-  modal: {
-    position: 'absolute',
-    width: 400,
-    border: '0px',
-    backgroundColor: '#FFF',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
-  },
-  modalTitle: {
-    fontSize: 30,
-    marginBottom: theme.spacing(4)
-  },
-  inputStyle: {
-    width: '100%',
-    marginBottom: 15
-  },
-  infoText: {
-    fontSize: 30,
-    marginBottom: theme.spacing(4)
-  },
-  offersGridContainer: {
-    overflowX: 'auto',
-    overflow: 'auto',
-    whiteSpace: 'nowrap',
-    width: '100%',
-    height: '170px',
-    marginTop: 15,
-    marginBottom: 15,
-    padding: 5,
-    '&::-webkit-scrollbar': {
-      height: '0.5em'
-    },
-    '&::-webkit-scrollbar-track': {
-      backgroundColor: 'rgba(0,0,0,.05)'
-    },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0,0,0,.1)',
-      borderRadius: '10px'
-    }
-  },
-  cardRoot: {
-    whiteSpace: 'normal',
-    display: 'inline-block',
-    position: 'relative',
-    width: '265px',
-    height: '145px',
-    padding: 10,
-    marginRight: theme.spacing(2)
-  },
-  cardHeader: {
-    padding: 0,
-    margin: 0,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start'
-  },
-  cardAvatar: {
-    height: '40px',
-    width: '40px'
-  },
-  cardTitleContainer: {
-    width: '60%'
-  },
-  cardTitle: {
-    marginLeft: 7,
-    marginTop: 10,
-    width: '100%',
-    fontFamily: 'Roboto',
-    fontsize: '16px',
-    fontweight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.5',
-    letterSpacing: '0.15px',
-    textAlign: 'left',
-    color: 'rgba(0, 0, 0, 0.87)'
-  },
-  cardIconOffer: {
-    position: 'absolute',
-    color: 'rgba(0, 0, 0, 0.6)',
-    width: 20,
-    height: 20,
-    top: 20,
-    right: 15
-  },
-  cardContent: {
-    marginTop: 10,
-    padding: 0
-  },
-  cardContentText: {
-    fontFamily: 'Roboto',
-    fontsize: '14px',
-    fontweight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    textAlign: 'left',
-    color: 'rgba(0, 0, 0, 0.6)'
-  },
-  cardActions: {
-    padding: 0,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end'
-  },
-  cardActionButton: {
-    position: 'absolute',
-    bottom: 10,
-    right: 15,
-    fontFamily: 'Roboto',
-    fontsize: '14px',
-    fontweight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.14',
-    letterSpacing: '1',
-    textAlign: 'center',
-    color: '#121212'
-  }
-}))
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
+
 const ShowOffers = ({ offers, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
@@ -214,7 +89,6 @@ const ShowOffers = ({ offers, loading }) => {
                 : ''
             }
           >
-            <LocalOfferIcon />
           </Avatar>
           <Box className={classes.cardTitleContainer}>
             <Typography className={classes.cardTitle} noWrap>
@@ -228,13 +102,19 @@ const ShowOffers = ({ offers, loading }) => {
             {truncateString(props.offer.description)}
           </Typography>
         </CardContent>
-        <Button
-          color="primary"
-          className={classes.cardActionButton}
-          onClick={() => handleOpenOfferView(props.offer)}
-        >
-          {t('cardsSection.moreInfo')}
-        </Button>
+        <Divider />
+        <Box >
+          <Typography className={classes.categories}>
+            {t(`categories.${props.offer.offer_type}`)}
+          </Typography>
+          <Button
+            color="primary"
+            className={classes.cardActionButton}
+            onClick={() => handleOpenOfferView(props.offer)}
+          >
+            {t('cardsSection.moreInfo')}
+          </Button>
+        </Box>
       </Card>
     )
   }
@@ -249,6 +129,6 @@ const ShowOffers = ({ offers, loading }) => {
 }
 ShowOffers.propTypes = {
   offers: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
 }
 export default ShowOffers

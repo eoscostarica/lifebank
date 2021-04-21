@@ -18,60 +18,13 @@ import {
   SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const EditProfileDonor = lazy(() => import('./EditProfileDonor'));
 const EditProfileBank = lazy(() => import('./EditProfileBank'));
 const EditProfileSponsor = lazy(() => import('./EditProfileSponsor'));
-
-
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    padding: theme.spacing(6, 1, 0, 1),
-    alignItems: 'center',
-    minHeight: 'calc(100vh - 60px)',
-    paddingTop: '60px',
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '35%',
-      paddingRight: '35%',
-    },
-  },
-  title: {
-    fontSize: 48,
-    marginBottom: theme.spacing(4)
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
-    }
-  },
-  divider: {
-    width: '100%'
-  },
-  editBtn: {
-    marginTop: theme.spacing(4)
-  },
-  linkSuccess: {
-    textDecoration: 'none',
-    color: 'rgb(26, 64, 28)'
-  },
-  linkError: {
-    textDecoration: 'none',
-    color: 'rgb(91, 22, 21)'
-  },
-  boxMessage: {
-    width: '100%',
-    marginBottom: theme.spacing(2)
-  }
-}))
 
 const EditProfilePage = () => {
   const { t } = useTranslation('translations')
@@ -117,24 +70,21 @@ const EditProfilePage = () => {
     profile?.consent ? revokeConsent() : grantConsent()
   }
 
-  const handleUpdateUser = useCallback(
-    (userEdited, userNameEdited, account) => {
-      editProfile({
+  const handleUpdateUser = (userEdited, userNameEdited, account) => {
+    editProfile({
+      variables: {
+        profile: userEdited
+      }
+    })
+    if (account && userNameEdited) {
+      setUsername({
         variables: {
-          profile: userEdited
+          account: account,
+          username: userNameEdited
         }
       })
-      if (account && userNameEdited) {
-        setUsername({
-          variables: {
-            account: account,
-            username: userNameEdited
-          }
-        })
-      }
-    },
-    [editProfile]
-  )
+    }
+  }
 
   useEffect(() => {
     if (!currentUser) {
@@ -156,7 +106,6 @@ const EditProfilePage = () => {
     const { success } = editProfileResult
 
     if (success) {
-      loadProfile()
       history.push({
         pathname: '/profile',
         state: true
@@ -165,7 +114,7 @@ const EditProfilePage = () => {
     } else if (!success) {
       setShowAlert(true)
     }
-  }, [editProfileResult, loadProfile])
+  }, [editProfileResult])
 
   useEffect(() => {
     if (location.state) {
