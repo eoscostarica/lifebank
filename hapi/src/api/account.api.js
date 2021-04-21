@@ -578,7 +578,8 @@ const transfer = async (from, details, notification) => {
   }
   else {
     await notificationApi.insert({
-      account: details.to,
+      account_from: from,
+      account_to: details.to,
       title: 'New tokens',
       description: `From ${from} ${details.memo}`,
       type: 'new_tokens',

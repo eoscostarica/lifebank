@@ -1,5 +1,5 @@
-const offerHandler = require('./create-account.handler')
-const offerValidation = require('./create-account.validation')
+const offerHandler = require('./redeem-offer.handler')
+const offerValidation = require('./redeem-offer.validation')
 
 module.exports = {
   method: 'POST',
@@ -7,6 +7,5 @@ module.exports = {
   handler: offerHandler,
   options: {
     validate: offerValidation,
-    auth: true
   }
 }

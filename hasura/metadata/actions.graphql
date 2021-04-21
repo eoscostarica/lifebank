@@ -126,7 +126,7 @@ type Mutation {
     memo: String!
     quantity: Int
     offer: jsonb!
-  ): transfer_output
+  ): redeem_offer_output
 }
 
 
