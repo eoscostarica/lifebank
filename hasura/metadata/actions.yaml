@@ -104,6 +104,13 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
+- name: redeem_offer
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/redeem-offer
+    forward_client_headers: true
+  permissions:
+  - role: donor
 - name: revoke_consent
   definition:
     kind: synchronous
@@ -172,4 +179,5 @@ custom_types:
   - name: signup_method_output
   - name: create_account_lifebank_auth_output
   - name: create_account_auth_output
+  - name: redeem_offer_output
   scalars: []

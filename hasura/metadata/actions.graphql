@@ -121,6 +121,16 @@ type Query {
 
 
 type Mutation {
+  redeem_offer (
+    to: String!
+    memo: String!
+    quantity: Int
+    offer: jsonb!
+  ): transfer_output
+}
+
+
+type Mutation {
   revoke_consent : revoke_consent_output
 }
 
@@ -278,5 +288,9 @@ type create_account_auth_output {
   account : String!
   transaction_id : String!
   token : String!
+}
+
+type redeem_offer_output {
+  transaction_id : String!
 }
 

@@ -1,36 +1,35 @@
 const accountApi = require('./account.api')
-const {
-  lifebankcoinUtils,
-} = require('../utils')
 
-// FROM liffivjjbcki
-// DETAILS { memo: 'Thanks for your donation', quantity: 1, to: 'donpiub3hlno' }
-const redeem = async (from, details, offer) => {
-  const currentBalance = await lifebankcoinUtils.getbalance(details.to)
 
+const redeem = async (from, details) => {
   const user = await userApi.getOne({
     account: { _eq: from }
   })
+
+  if (user.role !== 'donor') {
+    throw new Error('Only donors can redeem an offer')
+  }
 
   const userTo = await userApi.getOne({
     account: { _eq: details.to }
   })
 
-  if(user.role === '')
-
-  await notificationApi.insert({
-    account: details.to,
-    title: 'New tokens',
+  if (userTo.role !== 'sponsor') {
+    throw new Error('Only sponsor can receive tokens by a transaction')
+  }
+  
+  const notificationData = {
+    account_from: from,
+    account_to: details.to,
+    title: 'Redeem offer',
     description: `From ${from} ${details.memo}`,
     type: 'new_tokens',
     payload: {
-      currentBalance,
-      newBalance,
-      transaction: transaction.transaction_id
+      offer: details.offer
     }
-  }) 
+  }
 
-  return transaction
+  return await accountApi.transfer(from, details, notificationData)
 }
 
 module.exports = {

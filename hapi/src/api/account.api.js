@@ -529,7 +529,7 @@ const revokeConsent = async (account) => {
   return consentTransaction
 }
 
-const transfer = async (from, details) => {
+const transfer = async (from, details, notification) => {
   const currentBalance = await lifebankcoinUtils.getbalance(details.to)
   const password = await vaultApi.getPassword(from)
   const user = await userApi.getOne({
@@ -569,17 +569,26 @@ const transfer = async (from, details) => {
 
   const newBalance = await lifebankcoinUtils.getbalance(details.to)
   await historyApi.insert(transaction)
-  await notificationApi.insert({
-    account: details.to,
-    title: 'New tokens',
-    description: `From ${from} ${details.memo}`,
-    type: 'new_tokens',
-    payload: {
-      currentBalance,
-      newBalance,
-      transaction: transaction.transaction_id
-    }
-  })
+
+  if(notification) {
+    notification.payload.currentBalance = currentBalance
+    notification.payload.newBalance = newBalance
+    notification.payload.transaction = transaction.transaction_id
+    await notificationApi.insert(notification)
+  }
+  else {
+    await notificationApi.insert({
+      account: details.to,
+      title: 'New tokens',
+      description: `From ${from} ${details.memo}`,
+      type: 'new_tokens',
+      payload: {
+        currentBalance,
+        newBalance,
+        transaction: transaction.transaction_id
+      }
+    })
+  }
 
   if (user.role === 'donor') {
     const tempDetail = {}
