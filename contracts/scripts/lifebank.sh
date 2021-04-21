@@ -57,53 +57,53 @@ assign_resources() {
 deploy_lifebank_contracts() {
     echo 'Deploy Consent Contract'
     cleos -u $EOS_API_URL set contract consent2life ../consent2life/ -p consent2life@active -j -s -d
-    # sleep 2
-    # echo 'Deploy Code Contract'
-    # cleos -u $EOS_API_URL set contract lifebankcode ../lifebankcode/ -p lifebankcode@active
-    # code_pubkey=$(cat ./secrets/lifebankcode.pub)
-    # cleos -u $EOS_API_URL set account permission lifebankcode active \
-    #     '{
-    #         "threshold":1,
-    #         "keys":[
-    #             {
-    #                 "key":"'$code_pubkey'",
-    #                 "weight":1
-    #             }
-    #         ],
-    #         "accounts": [
-    #             {
-    #                 "permission":{
-    #                     "actor":"lifebankcode",
-    #                     "permission":"eosio.code"
-    #                 },
-    #                 "weight":1
-    #             }
-    #         ]
-    #     }' owner -p lifebankcode
-    # cleos -u $EOS_API_URL get account lifebankcode
-    # echo 'Deploy Coin Contract'
-    # coin_pubkey=$(cat ./secrets/lifebankcoin.pub)
-    # cleos -u $EOS_API_URL set contract lifebankcoin ../lifebankcoin/ -p lifebankcoin@active
-    # cleos -u $EOS_API_URL set account permission lifebankcoin active \
-    #     '{
-    #         "threshold":1,
-    #         "keys":[
-    #             {
-    #                 "key":"'$coin_pubkey'",
-    #                 "weight":1
-    #             }
-    #         ],
-    #         "accounts": [
-    #             {
-    #                 "permission":{
-    #                     "actor":"lifebankcoin",
-    #                     "permission":"eosio.code"
-    #                 },
-    #                 "weight":1
-    #             }
-    #         ]
-    #     }' owner -p lifebankcoin
-    # cleos -u $EOS_API_URL get account lifebankcoin
+    sleep 2
+    echo 'Deploy Code Contract'
+    cleos -u $EOS_API_URL set contract lifebankcode ../lifebankcode/ -p lifebankcode@active
+    code_pubkey=$(cat ./secrets/lifebankcode.pub)
+    cleos -u $EOS_API_URL set account permission lifebankcode active \
+        '{
+            "threshold":1,
+            "keys":[
+                {
+                    "key":"'$code_pubkey'",
+                    "weight":1
+                }
+            ],
+            "accounts": [
+                {
+                    "permission":{
+                        "actor":"lifebankcode",
+                        "permission":"eosio.code"
+                    },
+                    "weight":1
+                }
+            ]
+        }' owner -p lifebankcode
+    cleos -u $EOS_API_URL get account lifebankcode
+    echo 'Deploy Coin Contract'
+    coin_pubkey=$(cat ./secrets/lifebankcoin.pub)
+    cleos -u $EOS_API_URL set contract lifebankcoin ../lifebankcoin/ -p lifebankcoin@active
+    cleos -u $EOS_API_URL set account permission lifebankcoin active \
+        '{
+            "threshold":1,
+            "keys":[
+                {
+                    "key":"'$coin_pubkey'",
+                    "weight":1
+                }
+            ],
+            "accounts": [
+                {
+                    "permission":{
+                        "actor":"lifebankcoin",
+                        "permission":"eosio.code"
+                    },
+                    "weight":1
+                }
+            ]
+        }' owner -p lifebankcoin
+    cleos -u $EOS_API_URL get account lifebankcoin
 }
 consent() {
     echo 'Consent to Contracts'
