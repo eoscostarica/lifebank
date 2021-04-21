@@ -26,10 +26,9 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Available Offers",
-      "moreInfo": "More info",
-      "approvedOffers": "Approved Offers",
-      "rejectedOffers": "Rejected Offers"
+      "availableOffers": "Approved Offers",
+      "moreInfo": "More Info",
+      "approvedOffers": "Offers List"
     },
     "navigationDrawer": {
       "homepage": "Home page",
@@ -170,6 +169,7 @@
       "takeMeHome": "Take me to the home page"
     },
     "categories": {
+      "all": "All",
       "discount": "Discounts",
       "freeProduct": "Free Products",
       "coupon": "Coupons",
@@ -242,8 +242,6 @@
       "logoUrl": "Logo Url",
       "logoUrlPlaceholder": "Your logo url here",
       "sponsorNamePlaceholder": "Your Sponsor name here",
-      "covidImpact": "Covid Impact",
-      "covidImpactPlaceholder": "Description about covid impact here",
       "photoUrl": "Photo url",
       "photoUrlPlaceholder": "Your photo url here",
       "facebookProfileUrl": "Facebook profile url",

@@ -26,10 +26,9 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Ofertas disponibles",
-      "moreInfo": "Más información",
-      "approvedOffers": "Ofertas aprobadas",
-      "rejectedOffers": "Ofertas rechazadas"
+      "availableOffers": "Ofertas Aprobadas",
+      "moreInfo": "Más Información",
+      "approvedOffers": "Lista de Ofertas"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -170,6 +169,7 @@
       "takeMeHome": "Llévame al inicio"
     },
     "categories": {
+      "all": "Todos",
       "discount": "Descuentos",
       "freeProduct": "Productos Gratis",
       "coupon": "Cupones",
@@ -247,8 +247,6 @@
       "logoUrl": "Dirección de imagen",
       "logoUrlPlaceholder": "La dirección de la imagen aquí",
       "sponsorNamePlaceholder": "El nombre de su comercio afiliado aquí",
-      "covidImpact": "Impacto de la pandemia provocada por el Covid-19",
-      "covidImpactPlaceholder": "Escribe el impacto que has tenido de la pandemia aquí",
       "photoUrl": "Dirección de foto",
       "photoUrlPlaceholder": "La dirección de la imagen aquí",
       "facebookProfileUrl": "Dirección del perfil de Facebook",
