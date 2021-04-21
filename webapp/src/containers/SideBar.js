@@ -13,7 +13,6 @@ import MenuBookIcon from '@material-ui/icons/MenuBook'
 import { useTranslation } from 'react-i18next'
 
 import LoginModal from '../components/LoginModal'
-import CredentialsRecovery from '../components/CredentialsRecovery'
 import Signup from '../components/Signup/Signup'
 
 const useStyles = makeStyles((theme) => ({
@@ -77,10 +76,6 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
       <Box className={classes.optionLink}>
         <Signup isSideBar />
       </Box>
-      <Divider />
-      <Typography variant="body1" className={classes.infoLabel}>
-        {t('navigationDrawer.tools')}
-      </Typography>
       {user && (
         <>
           {user.role === 'sponsor' && (
@@ -89,6 +84,16 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
               <Link to="/offers-management">
                 <Typography variant="body1" className={classes.labelOption}>
                   {t('offersManagement.offersManagement')}
+                </Typography>
+              </Link>
+            </Box>
+          )}
+          {user.role === 'lifebank' && (
+            <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
+              <MenuBookIcon className={classes.iconOption} />
+              <Link to="/offers-approval">
+                <Typography variant="body1" className={classes.labelOption}>
+                  {t('navigationDrawer.offersApproval')}
                 </Typography>
               </Link>
             </Box>
@@ -110,14 +115,6 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
               </Typography>
             </Link>
           </Box>
-        </>
-      )}
-      {!user && (
-        <>
-          <CredentialsRecovery
-            overrideBoxClass={classes.optionLink}
-            overrideLabelClass={classes.labelOption}
-          />
         </>
       )}
       <Divider />

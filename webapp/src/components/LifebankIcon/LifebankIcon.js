@@ -2,15 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import SvgIcon from '@material-ui/core/SvgIcon'
+import styles from './styles'
 
-const useStyles = makeStyles(() => ({
-  lifeBankIcon: {
-    fontFamily: '"Arial Black", Gadget, sans-serif',
-    fontSize: 35.2,
-    letterSpacing: '0.47px'
-  },
-  svgRoot: { width: 'auto' }
-}))
+const useStyles = makeStyles(styles)
 
 const LifeBankIcon = ({ color, ...props }) => {
   const classes = useStyles()

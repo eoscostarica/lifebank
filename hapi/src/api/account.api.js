@@ -5,7 +5,8 @@ const {
   consent2lifeUtils,
   lifebankcodeUtils,
   lifebankcoinUtils,
-  hasuraUtils
+  hasuraUtils,
+  bcryptjs
 } = require('../utils')
 
 const historyApi = require('./history.api')
@@ -55,7 +56,7 @@ query MyQuery {
 `
 
 const create = async (
-  { role, email, emailContent, name, secret, signup_method },
+  { role, email, emailContent, name, passwordPlainText, signup_method },
   withAuth
 ) => {
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
@@ -63,6 +64,9 @@ const create = async (
   const username = account
   const token = jwtUtils.create({ role, username, account })
   const { verification_code } = await verificationCodeApi.generate()
+
+  const secret = await bcryptjs.createPasswordHash(passwordPlainText)
+
   const data = {
     role,
     username,
@@ -80,7 +84,7 @@ const create = async (
 
   await vaultApi.insert({
     account,
-    password
+    password: password
   })
 
   await historyApi.insert(transaction)
@@ -485,7 +489,8 @@ const login = async ({ account, password }) => {
       { email: { _eq: account } },
       { username: { _eq: account } },
       { account: { _eq: account } }
-    ]
+    ],
+    email_verified: { _eq: true }
   })
 
   if (!user) {

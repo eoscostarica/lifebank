@@ -10,6 +10,7 @@ import InfoPage from './InfoPage'
 import Home from './Home'
 import EmailVerification from './EmailVerification'
 import RegisterLifebank from './RegisterLifebank'
+import OffersApproval from './OffersApproval'
 
 export default [
   {
@@ -26,6 +27,12 @@ export default [
     name: 'offersManagement',
     path: '/offers-management',
     component: OffersManagement
+  },
+  {
+    name: 'offersApproval',
+    path: '/offers-approval',
+    component: OffersApproval,
+    exact: true
   },
   {
     name: 'home',

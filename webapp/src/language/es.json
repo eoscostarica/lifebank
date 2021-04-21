@@ -26,8 +26,9 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Ofertas disponibles",
-      "moreInfo": "Más información"
+      "availableOffers": "Ofertas Aprobadas",
+      "moreInfo": "Más Información",
+      "approvedOffers": "Lista de Ofertas"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -36,7 +37,8 @@
       "information": "Información",
       "aboutLifebank": "Acerca de Lifebank",
       "useTerms": "Términos de uso",
-      "help": "Ayuda"
+      "help": "Ayuda",
+      "offersApproval": "Aprobar ofertas"
     },
     "signup": {
       "register": "Registro",
@@ -79,7 +81,8 @@
       "consentError": "Error al otorgar consentimiento",
       "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
       "noConsentNoEdit2": "Léelo aquí",
-      "defaultUsername": "Tu perfil"
+      "defaultUsername": "Tu perfil",
+      "forgetPassword": "¿Olvidaste la Contraseña?"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
@@ -166,8 +169,9 @@
       "takeMeHome": "Llévame al inicio"
     },
     "categories": {
+      "all": "Todos",
       "discount": "Descuentos",
-      "freeproduct": "Productos gratis",
+      "freeProduct": "Productos Gratis",
       "coupon": "Cupones",
       "benefit": "Beneficios",
       "badge": "Insignias",
@@ -217,6 +221,12 @@
       "authError": "Ha ocurrido un error con la autenticación",
       "tokenExpiration": "La sesión ha expirado"
     },
+    "offerApproval": {
+      "description": "Aquí puedes aprobar o rechazar las categorías de ofertas redimibles.",
+      "description2": "Si crees que una categoría no representa tu organización, puedes desmarcarla y automáticamente los life tokens obtenidos en tu centro no podrán ser redimidos por estas ofertas.",
+      "message1": "Estas ofertas están disponibles porque aprobaste esta categoría. Cámbialo en cualquier momento.",
+      "message2": "Estas ofertas no están disponibles porque desmarcaste esta categoría. Cámbialo en cualquier momento."
+    },
     "editProfile": {
       "editProfile": "Editar Perfil",
       "error": "Error",
@@ -237,8 +247,6 @@
       "logoUrl": "Dirección de imagen",
       "logoUrlPlaceholder": "La dirección de la imagen aquí",
       "sponsorNamePlaceholder": "El nombre de su comercio afiliado aquí",
-      "covidImpact": "Impacto de la pandemia provocada por el Covid-19",
-      "covidImpactPlaceholder": "Escribe el impacto que has tenido de la pandemia aquí",
       "photoUrl": "Dirección de foto",
       "photoUrlPlaceholder": "La dirección de la imagen aquí",
       "facebookProfileUrl": "Dirección del perfil de Facebook",
@@ -380,7 +388,7 @@
     },
     "offersManagement": {
       "offersManagement": "Manejo de ofertas",
-      "addOffer": "Añadir oferta",
+      "addOffer": "Agrega una oferta",
       "offerName": "Nombre de oferta",
       "offerNamePlaceholder": "Ingresar el nombre aquí",
       "offerType": "Tipo de oferta",
@@ -426,13 +434,14 @@
       "active": "Activa",
       "inactive": "Inactiva",
       "noProvidedDate": "Sin fecha",
-      "youHaveNoAddedOffers": "No tienes ofertas agregadas",
+      "youHaveNoAddedOffers": "No tienes ofertas disponibles",
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
       "yesDeleteIt": "Si, borrar",
       "selectDateRange": "Seleccione el rango de fecha",
       "offerCreation": "Oferta creada correctamente",
       "offerStateActive": "Ofertas Activas",
-      "offerStateInactive": "Ofertas Inactivas"
+      "offerStateInactive": "Ofertas Inactivas",
+      "info": "Primero completa tu perfil para agregar una oferta"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",

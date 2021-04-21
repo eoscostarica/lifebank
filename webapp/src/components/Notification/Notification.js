@@ -14,35 +14,9 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    color: 'inherit'
-  },
-  notificationIcon: {
-    color: '#121212',
-    width: 24,
-    height: 24
-  },
-  notificationIconTransparent: {
-    color: '#ffffff'
-  },
-  appBar: {
-    position: 'relative',
-    backgroundColor: '#ffffff',
-    boxShadow:
-      '0 2px 4px 0 rgba(0, 0, 0, 0.24), 0 4px 8px 0 rgba(0, 0, 0, 0.18)'
-  },
-  backIcon: {
-    color: '#121212'
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
-    fontSize: '20px',
-    fontWeight: '500'
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
