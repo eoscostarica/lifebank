@@ -30,6 +30,8 @@ import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
+import ResendComponent from '../ResendComponent'
+
 
 const useStyles = makeStyles((theme) => ({
   alert: {
@@ -160,6 +162,15 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     defaultMatches: true
   })
 
+  const [openVerify, setopenVerify] = useState(false)
+
+  const handlerSetOpenVerify = () => {
+    setopenVerify(!openVerify)
+  }
+
+  const verify = () => {
+    setopenVerify(true)
+  }
   const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
     variables: {
       email: user.email
@@ -178,6 +189,10 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     setOpen(!open)
   }
 
+  const handleRoleChange = () => {
+    setOpen(!open)
+  }
+
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
   }
@@ -190,6 +205,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       }
     })
   }
+
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
@@ -356,6 +372,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
               >
                 {t('login.login')}
               </Button>
+
             </Box>
             <Box className={classes.centerBox}>
               {loading && <CircularProgress />}
@@ -370,6 +387,21 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           <Box className={classes.registerBox}>
             <Signup isModal />
           </Box>
+          <Box className={classes.centerBox}>
+            <Button
+              id="buttonLogin"
+              className={classes.btnLogin}
+
+              variant="contained"
+              color="secondary"
+              onClick={verify}
+            >
+              PRUEBA
+              </Button>
+
+          </Box>
+          <ResendComponent open={openVerify} handlerOpen={handlerSetOpenVerify} />
+
         </Box>
       </Dialog>
     </>
