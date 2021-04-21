@@ -345,10 +345,11 @@ const GenericOfferFormComponent = ({
                     setOffer({ ...offer, offer_type: event.target.value })
                   }
                 >
-                  <MenuItem value="discount">{t('offersManagement.discount')}</MenuItem>
-                  <MenuItem value="gift">{t('offersManagement.gift')}</MenuItem>//
-                  <MenuItem value="benefit">{t('offersManagement.benefit')}</MenuItem>
-                  <MenuItem value="other">{t('offersManagement.other')}</MenuItem>//
+                  <MenuItem value="discount">{t('categories.discount')}</MenuItem>
+                  <MenuItem value="freeProduct">{t('categories.freeProduct')}</MenuItem>//
+                  <MenuItem value="coupon">{t('categories.coupon')}</MenuItem>
+                  <MenuItem value="badge">{t('categories.badge')}</MenuItem>//
+                  <MenuItem value="benefit">{t('categories.benefit')}</MenuItem>
                 </Select>
               </FormControl>
               <TextField

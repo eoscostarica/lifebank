@@ -86,7 +86,7 @@ const OfferDetails = ({ offer, open, setOpen }) => {
         }
         <Box className={classes.rowBox}>
           <Typography variant="subtitle1">{t('offersManagement.offerType')}</Typography>
-          <Typography >{offer.offer_type}</Typography>
+          <Typography >{t(`categories.${offer.offer_type}`)}</Typography>
         </Box>
         <Divider className={classes.divider} />
         {offer.cost_in_tokens &&
