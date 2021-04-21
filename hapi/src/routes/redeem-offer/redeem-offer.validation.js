@@ -6,7 +6,7 @@ module.exports = {
       to: Joi.string().required(),
       memo: Joi.string().required(),
       quantity: Joi.number().optional(),
-      offer: Joi.object().required(),
+      offer: Joi.object().required()
     })
   }).options({ stripUnknown: true })
 }

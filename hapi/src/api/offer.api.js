@@ -1,7 +1,6 @@
 const accountApi = require('./account.api')
 const userApi = require('./user.api')
 
-
 const redeem = async (from, details) => {
   const user = await userApi.getOne({
     account: { _eq: from }
@@ -18,7 +17,7 @@ const redeem = async (from, details) => {
   if (userTo.role !== 'sponsor') {
     throw new Error('Only sponsor can receive tokens by an offer redemption')
   }
-  
+
   const notificationData = {
     account_from: from,
     account_to: details.to,

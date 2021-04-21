@@ -570,13 +570,12 @@ const transfer = async (from, details, notification) => {
   const newBalance = await lifebankcoinUtils.getbalance(details.to)
   await historyApi.insert(transaction)
 
-  if(notification) {
+  if (notification) {
     notification.payload.currentBalance = currentBalance
     notification.payload.newBalance = newBalance
     notification.payload.transaction = transaction.transaction_id
     await notificationApi.insert(notification)
-  }
-  else {
+  } else {
     await notificationApi.insert({
       account_from: from,
       account_to: details.to,
