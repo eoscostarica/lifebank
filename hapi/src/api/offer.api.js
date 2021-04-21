@@ -16,7 +16,7 @@ const redeem = async (from, details) => {
   })
 
   if (userTo.role !== 'sponsor') {
-    throw new Error('Only sponsor can receive tokens by a transaction')
+    throw new Error('Only sponsor can receive tokens by an offer redemption')
   }
   
   const notificationData = {
