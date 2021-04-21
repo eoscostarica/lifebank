@@ -50,9 +50,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setOpen(!open)
   }
   const handleCloseSnackBar = () => {
-    if(errorMessage){
+    if (errorMessage) {
       setErrorMessage(null)
-    } else{
+    } else {
       setOpen(!open)
       setUser({})
       setSuccess(false)
@@ -103,7 +103,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }
 
   useEffect(() => {
-    if(user.email) {
+    if (user.email) {
       getAccountSignupMethod({
         variables: {
           email: user.email
@@ -148,11 +148,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   return (
     <>
-        <Box className={classes.recoveryBox}>
-          <Button color="secondary" className={classes.recoveryButton} onClick={handleOpen}>
-            {t('signup.forgetPassword')}
-          </Button>
-        </Box>
+      <Box className={classes.recoveryBox}>
+        <Button color="secondary" className={classes.recoveryButton} onClick={handleOpen}>
+          {t('signup.forgetPassword')}
+        </Button>
+      </Box>
       <Dialog
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -221,7 +221,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                     severity="error"
                   >
                     {errorMessage}
-                  </Alert>                  
+                  </Alert>
                 </Snackbar>
               )}
               {success && (
