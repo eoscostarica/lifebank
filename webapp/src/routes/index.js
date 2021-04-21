@@ -11,6 +11,7 @@ import Home from './Home'
 import EmailVerification from './EmailVerification'
 import RegisterLifebank from './RegisterLifebank'
 import OffersApproval from './OffersApproval'
+import TransactionReport from './TransactionReport'
 
 export default [
   {
@@ -79,5 +80,10 @@ export default [
     name: 'register-lifebank',
     path: '/register-lifebank/:code',
     component: RegisterLifebank
+  },
+  {
+    name: 'report',
+    path: '/report',
+    component: TransactionReport
   }
 ]
