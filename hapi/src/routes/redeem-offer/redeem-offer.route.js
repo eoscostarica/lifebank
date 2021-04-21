@@ -6,6 +6,6 @@ module.exports = {
   path: '/api/redeem-offer',
   handler: offerHandler,
   options: {
-    validate: offerValidation,
+    validate: offerValidation
   }
 }
