@@ -71,7 +71,7 @@ const HomeDesktop = (props) => {
 
     checkEmailVerified({
       variables: {
-        account: 'donor@gmail.com'
+        account: 'lifebank@gmail.com'
       }
     })
   }
