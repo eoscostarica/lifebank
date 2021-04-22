@@ -86,6 +86,11 @@ push-docker-images:
 	@echo $(DOCKER_PASSWORD) | docker login \
 		--username $(DOCKER_USER) \
 		--password-stdin
-	for dir in $(SUBDIRS); do \
+	@for dir in $(SUBDIRS); do \
 		$(MAKE) push-image -C $$dir; \
 	done
+
+docker_images:
+docker_images: 
+	make build-docker-images
+	make push-docker-images
