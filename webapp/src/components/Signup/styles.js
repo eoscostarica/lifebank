@@ -258,7 +258,6 @@ export default (theme) => ({
   mapBox: {
     marginTop: theme.spacing(2)
   },
-  // --
   wrapperRoleSelector: {
     display: 'flex',
     flexDirection: 'column',
