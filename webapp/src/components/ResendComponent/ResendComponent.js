@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff',
     padding: '12px',
     marginBottom: 10,
+    marginLeft: '23%',
     [theme.breakpoints.down('md')]: {
       width: "100%",
     }
