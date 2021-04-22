@@ -92,6 +92,13 @@ type Query {
 }
 
 
+type Mutation {
+  get_notifications (
+    account: String!
+  ): get_notifications_output
+}
+
+
 type Query {
   get_valid_lifebanks : [ValidLifebank]!
 }
@@ -278,5 +285,9 @@ type create_account_auth_output {
   account : String!
   transaction_id : String!
   token : String!
+}
+
+type get_notifications_output {
+  notifications : jsonb!
 }
 

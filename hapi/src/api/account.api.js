@@ -483,6 +483,17 @@ const verifyEmail = async ({ code }) => {
   }
 }
 
+const getNotifications = ({account}) => {
+  const user = await userApi.getOne({
+    _or: [
+      { email: { _eq: account } },
+      { username: { _eq: account } },
+      { account: { _eq: account } }
+    ]
+  })
+}
+
+
 const login = async ({ account, password }) => {
   const bcrypt = require('bcryptjs')
   const user = await userApi.getOne({
@@ -605,5 +616,6 @@ module.exports = {
   transfer,
   verifyEmail,
   getValidSponsors,
-  getValidLifebanks
+  getValidLifebanks,
+  getNotifications
 }

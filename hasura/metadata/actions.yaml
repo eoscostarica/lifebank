@@ -62,6 +62,13 @@ actions:
   - role: guest
   - role: lifebank
   - role: sponsor
+- name: get_notifications
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/get-notifications
+  permissions:
+  - role: lifebank
+  - role: sponsor
 - name: get_valid_lifebanks
   definition:
     kind: ""
@@ -172,4 +179,5 @@ custom_types:
   - name: signup_method_output
   - name: create_account_lifebank_auth_output
   - name: create_account_auth_output
+  - name: get_notifications_output
   scalars: []
