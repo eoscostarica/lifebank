@@ -332,21 +332,11 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           <Box className={classes.registerBox}>
             <Signup isModal />
           </Box>
-          <Box className={classes.centerBox}>
-            <Button
-              id="buttonLogin"
-              className={classes.btnLogin}
-
-              variant="contained"
-              color="secondary"
-              onClick={verify}
-            >
-              PRUEBA
-              </Button>
-
-          </Box>
-          <ResendComponent open={openVerify} handlerOpen={handlerSetOpenVerify} handlerSendEmail={handleSendEmail} />
-
+          <ResendComponent
+            open={openVerify}
+            handlerOpen={handlerSetOpenVerify}
+            handlerSendEmail={handleSendEmail}
+          />
           <Box className={classes.credentialsBox}>
             <CredentialsRecovery />
           </Box>

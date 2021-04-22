@@ -27,13 +27,16 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   dialog: {
-    paddingTop: "48px",
-    paddingLeft: "48px",
-    paddingRight: "48px"
+    paddingTop: "25px",
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: '25%'
+    }
   },
   box: {
     alignItems: 'center',
     margin: '15%',
+    marginLeft: '5%',
+    marginRight: '5%'
   },
   mainButton: {
     borderRadius: '50px',
@@ -47,10 +50,10 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '1px',
     color: '#ffffff',
     padding: '12px',
-    marginBottom: 10,
+    marginBottom: 20,
     marginLeft: '23%',
     [theme.breakpoints.down('md')]: {
-      width: "100%",
+      width: "50%"
     }
   },
   title: {
@@ -63,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "0.25px",
     textAlign: "center",
     color: "rgba(0, 0, 0, 0.87)",
-    marginBottom: 15
+    marginBottom: 45
   },
   subTitle: {
     fontFamily: "Roboto",
@@ -75,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "0.25px",
     textAlign: "center",
     color: "rgba(0, 0, 0, 0.6)",
-    marginBottom: 30
+    marginBottom: 46
   }
 
 }))
