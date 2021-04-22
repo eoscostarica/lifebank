@@ -25,11 +25,6 @@ import FilterHome from '../../components/FilterHome'
 import Signup from '../../components/Signup/Signup'
 import styles from './styles'
 
-import {
-  SEND_EMAIL_MUTATION,
-  CHECK_EMAIL_VERIFIED
-} from '../../gql'
-
 const useStyles = makeStyles(styles)
 
 const HomeDesktop = (props) => {
@@ -38,43 +33,6 @@ const HomeDesktop = (props) => {
   const [currentUser] = useUser()
   const [recording, setRecording] = React.useState(false)
   const { transcript } = useSpeechRecognition()
-  const [
-    sendEmail,
-    {
-      error: errorSendEmail,
-      loading: SendEmailLoading,
-      data: { send_email: sendEmailResult } = {}
-    }
-  ] = useMutation(SEND_EMAIL_MUTATION)
-
-  const [
-    checkEmailVerified,
-    {
-      error: errorCheckEmailVerified,
-      loading: checkEmailVerifiedLoading,
-      data: { check_email_verified: checkEmailVerifiedResult } = {}
-    }
-  ] = useMutation(CHECK_EMAIL_VERIFIED)
-
-  const handleSendEmail = () => {
-    // sendEmail({
-    //   variables: {
-    //     account: 'steph1@gmail.com',
-    //     emailContent: {
-    //       subject: t('emailMessage.subjectVerificationCode'),
-    //       title: t('emailMessage.titleVerificationCode'),
-    //       message: t('emailMessage.messageVerificationCode'),
-    //       button: t('emailMessage.verifyButton')
-    //     }
-    //   }
-    // })
-
-    checkEmailVerified({
-      variables: {
-        account: 'donor@gmail.com'
-      }
-    })
-  }
 
   const handleRecording = () => {
     if (!recording) {
@@ -91,14 +49,6 @@ const HomeDesktop = (props) => {
   useEffect(() => {
     props.handleChangeSearch(transcript)
   }, [transcript])
-
-  useEffect(() => {
-    console.log('SEND-EMAIL-RESULT', sendEmailResult)
-  }, [sendEmailResult])
-
-  useEffect(() => {
-    console.log('CHECK-EMAIL-VERIFIED-RESULT', checkEmailVerifiedResult)
-  }, [checkEmailVerifiedResult])
 
   return (
     <>
@@ -137,14 +87,6 @@ const HomeDesktop = (props) => {
             >
               {t('contentToolbar.favorites')}
             </Button>
-            <Button
-              className={classes.buttonIconDesktop}
-              startIcon={<StarIcon />}
-              onClick={handleSendEmail}
-            >
-              SEND EMAIL
-            </Button>
-
           </Box>
         </Grid>
         <Grid item md={5} lg={6} className={classes.boxControls}>
