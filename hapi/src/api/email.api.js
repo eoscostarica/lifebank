@@ -68,7 +68,8 @@ const checkEmailVerified = async ({ account }) => {
     email: { _eq: account }
   })
 
-  if (preRegisterUser.preregister_lifebank.length > 0) return { verified: preRegisterUser.preregister_lifebank[0].email_verified }
+  if (preRegisterUser.preregister_lifebank.length > 0)
+    return { verified: preRegisterUser.preregister_lifebank[0].email_verified }
 
   return {
     verified: false
