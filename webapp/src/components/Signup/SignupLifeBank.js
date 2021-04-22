@@ -11,61 +11,12 @@ import { useTranslation } from 'react-i18next'
 
 import MapSelectLocation from '../../components/MapSelectLocation'
 import { captchaConfig, constants } from '../../config'
+import styles from './styles'
 
+const useStyles = makeStyles(styles)
 const {
   LOCATION_TYPES: { LIFE_BANK }
 } = constants
-
-const useStyles = makeStyles((theme) => ({
-  form: {
-    width: '100%',
-  },
-  textField: {
-    marginBottom: 10
-  },
-  textFieldWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  boxCenter: {
-    width: '100%',
-    marginBottom: 15
-  },
-  btnWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10
-  },
-  btnContinue: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: '70%',
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginTop: 10,
-    marginBottom: 10,
-    [theme.breakpoints.down('md')]: {
-      width: '70%',
-    }
-  },
-  grecaptcha: {
-    [theme.breakpoints.down('md')]: {
-      transform: 'scale(0.7)'
-    }
-  },
-  mapBox: {
-    marginTop: theme.spacing(2)
-  }
-}))
 
 const SignupLifeBank = ({
   onSubmit,
@@ -84,7 +35,7 @@ const SignupLifeBank = ({
   const [recaptchaValue, serRecaptchaValue] = useState('')
 
   return (
-    <form autoComplete="off" className={classes.form}>
+    <form autoComplete="off" className={classes.formLifeBank}>
       <Box className={classes.textFieldWrapper}>
         {children}
         <TextField

@@ -27,112 +27,14 @@ import LogoUrlInput from '../../components/LogoUrlInput'
 import Telephones from '../../components/Telephones'
 import SocialMediaTextField from '../../components/SocialMediaTextField'
 import { constants } from '../../config'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const {
-  LOCATION_TYPES: { SPONSOR },
+  LOCATION_TYPES: { SPONSOR, PENDING_SPONSOR },
   SPONSOR_TYPES
 } = constants
-
-const useStyles = makeStyles((theme) => ({
-  form: {
-    width: '100%',
-    padding: theme.spacing(0, 2)
-  },
-  textFieldWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    '& > div.MuiFormControl-root': {
-      width: '100%'
-    }
-  },
-  boldText: {
-    fontWeight: 'bold',
-    width: "100%",
-    textAlign: "left",
-    marginBottom: '20px',
-  },
-  divider: {
-    marginTop: '30px',
-    marginBottom: '5px',
-    width: '100%'
-  },
-  textField: {
-    marginTop: theme.spacing(2),
-    height: 'auto',
-    overflowY: 'none',
-  },
-  btnWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: theme.spacing(2, 0)
-  },
-  labelBtn: {
-    color: theme.palette.white
-  },
-  logo: {
-    maxWidth: '100%',
-    maxHeight: 340
-  },
-  addBtn: {
-    color: 'white',
-    margin: theme.spacing(2, 0)
-  },
-  carouselContainer: {
-    marginTop: theme.spacing(2),
-    width: '100%',
-  },
-  socialMediaLinksContainer: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(2),
-    border: '1px dashed lightgray'
-  },
-  routerLink: {
-    width: "100%",
-    textDecoration: "none",
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  saveBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    },
-  },
-  cancelBtn: {
-    borderRadius: '50px',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 'normal',
-    letterSpacing: '1px',
-    textAlign: 'center',
-    padding: '12px',
-    border: 'solid 1px rgba(0, 0, 0, 0.54)',
-    backgroundColor: '#ffffff',
-    marginBottom: 20,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    },
-  },
-}))
 
 const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
@@ -268,7 +170,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Box className={classes.textFieldWrapper}>
+      <Box className={classes.textFieldWrapperSponsor}>
         <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
           <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
         </Box>
@@ -616,12 +518,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
             <MapEditLocation
               onGeolocationChange={handleOnGeolocationChange}
-              markerType={SPONSOR}
-              markerLocation={
-                user.geolocation
-                  ? user.geolocation
-                  : { longitude: -84.0556371, latitude: 9.9195872 }
-              }
+              markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
+              markerLocation={user.geolocation}
               width="100%"
               height={400}
               mb={1}

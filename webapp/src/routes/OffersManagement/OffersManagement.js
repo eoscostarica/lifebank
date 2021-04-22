@@ -32,68 +32,9 @@ import {
 
 import OfferDetails from './OfferDetails'
 import GenericOfferFormComponent from './GenericOfferFormComponent'
+import styles from './styles'
 
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(4),
-    display: 'flex',
-    height: 'calc(100vh - 60px)',
-    width: "90%",
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
-  },
-  title: {
-    fontSize: "34px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
-    lineHeight: "1.18",
-    letterSpacing: "0.25px",
-    textAlign: "center",
-    color: "rgba(0, 0, 0, 0.87)",
-    marginBottom: 15
-  },
-  btnAction: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "50%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 10,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
-  },
-  content: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    width: "100%"
-  },
-  fab: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-    color: 'white'
-  },
-  formControl: {
-    width: '100%'
-  },
-  tableContent: {
-    paddingTop: "30px",
-    width: "100%"
-  }
-
-}))
+const useStyles = makeStyles(styles)
 
 const OffersManagement = () => {
   const { t } = useTranslation('translations')
@@ -109,7 +50,6 @@ const OffersManagement = () => {
   const [openGenericFormAddVariant, setOpenGenericFormAddVariant] = useState(
     false
   )
-
   const [openGenericFormEditVariant, setOpenGenericFormEditVariant] = useState(
     false
   )
@@ -127,6 +67,58 @@ const OffersManagement = () => {
     skip: true
   })
 
+  const checkAvailableFields = () => {
+    let pendingFieldsObject = {}
+    if (!profile.address)
+      pendingFieldsObject = { ...pendingFieldsObject, address: false }
+
+    if (!profile.about)
+      pendingFieldsObject = { ...pendingFieldsObject, about: false }
+
+    if (!profile.logo_url)
+      pendingFieldsObject = { ...pendingFieldsObject, logo_url: false }
+
+    if (!profile.name)
+      pendingFieldsObject = { ...pendingFieldsObject, name: false }
+
+    if (!profile.telephones)
+      pendingFieldsObject = { ...pendingFieldsObject, telephones: false }
+
+    if (!profile.photos)
+      pendingFieldsObject = { ...pendingFieldsObject, photos: false }
+
+    if (!profile.social_media_links)
+      pendingFieldsObject = {
+        ...pendingFieldsObject,
+        social_media_links: false
+      }
+
+    if (!profile.website)
+      pendingFieldsObject = { ...pendingFieldsObject, website: false }
+
+    if (!profile.schedule)
+      pendingFieldsObject = { ...pendingFieldsObject, schedule: false }
+
+    if (!profile.benefit_description)
+      pendingFieldsObject = {
+        ...pendingFieldsObject,
+        benefit_description: false
+      }
+
+    if (!profile.location)
+      pendingFieldsObject = { ...pendingFieldsObject, location: false }
+
+    if(Object.keys(pendingFieldsObject).length > 0){
+      setOpenGenericFormAddVariant(false)
+      setOpenSnackbar({
+        show: true,
+        message: t("offersManagement.info"),
+        severity: 'warning'
+      })
+    } else{
+      setOpenGenericFormAddVariant(true)
+    }
+  }
   const [
     loadProfileID,
     { data: { profile: { profile } = {} } = {} }
@@ -179,7 +171,6 @@ const OffersManagement = () => {
         break
     }
   }
-
   const Actions = (active, offer_id) => (
     <FormControl variant="filled" className={classes.formControl}>
       <InputLabel id="actions-selection-label">
@@ -369,7 +360,7 @@ const OffersManagement = () => {
                 variant="contained"
                 color="secondary"
                 className={classes.btnAction}
-                onClick={() => setOpenGenericFormAddVariant(true)}
+                onClick={checkAvailableFields}
               >
                 {t('offersManagement.addOffer')}
               </Button>
@@ -385,7 +376,7 @@ const OffersManagement = () => {
         className={classes.fab}
         color="secondary"
         aria-label="add"
-        onClick={() => setOpenGenericFormAddVariant(true)}
+        onClick={checkAvailableFields}
       >
         <AddIcon />
       </Fab>

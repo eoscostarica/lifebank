@@ -18,6 +18,7 @@ const registerLifebankRoute = require('./create-account-lifebank/create-account-
 const verifyEmailRouteRoute = require('./verify-email/verify-email.route')
 const getValidLifebanksRoute = require('./get-valid-lifebanks/get-valid-lifebanks.route')
 const checkSignupMethod = require('./signup-method/signup-method.route')
+const checkEmailVerified = require('./check-email-verified/check-email-verified.route')
 
 module.exports = [
   changePasswordRoute,
@@ -39,5 +40,6 @@ module.exports = [
   registerLifebankRoute,
   verifyEmailRouteRoute,
   getValidLifebanksRoute,
-  checkSignupMethod
+  checkSignupMethod,
+  checkEmailVerified
 ]

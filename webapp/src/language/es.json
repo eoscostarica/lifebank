@@ -26,10 +26,9 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Ofertas disponibles",
-      "moreInfo": "Más información",
-      "approvedOffers": "Ofertas aprobadas",
-      "rejectedOffers": "Ofertas rechazadas"
+      "availableOffers": "Ofertas Aprobadas",
+      "moreInfo": "Más Información",
+      "approvedOffers": "Lista de Ofertas"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -82,7 +81,8 @@
       "consentError": "Error al otorgar consentimiento",
       "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
       "noConsentNoEdit2": "Léelo aquí",
-      "defaultUsername": "Tu perfil"
+      "defaultUsername": "Tu perfil",
+      "forgetPassword": "¿Olvidaste la Contraseña?"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
@@ -172,6 +172,7 @@
       "takeMeHome": "Llévame al inicio"
     },
     "categories": {
+      "all": "Todos",
       "discount": "Descuentos",
       "freeProduct": "Productos Gratis",
       "coupon": "Cupones",
@@ -393,7 +394,7 @@
     },
     "offersManagement": {
       "offersManagement": "Manejo de ofertas",
-      "addOffer": "Añadir oferta",
+      "addOffer": "Agrega una oferta",
       "offerName": "Nombre de oferta",
       "offerNamePlaceholder": "Ingresar el nombre aquí",
       "offerType": "Tipo de oferta",
@@ -439,13 +440,14 @@
       "active": "Activa",
       "inactive": "Inactiva",
       "noProvidedDate": "Sin fecha",
-      "youHaveNoAddedOffers": "No tienes ofertas agregadas",
+      "youHaveNoAddedOffers": "No tienes ofertas disponibles",
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
       "yesDeleteIt": "Si, borrar",
       "selectDateRange": "Seleccione el rango de fecha",
       "offerCreation": "Oferta creada correctamente",
       "offerStateActive": "Ofertas Activas",
-      "offerStateInactive": "Ofertas Inactivas"
+      "offerStateInactive": "Ofertas Inactivas",
+      "info": "Primero completa tu perfil para agregar una oferta"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",

@@ -66,7 +66,8 @@ const GET_LIFEBANK_DATA = `
       urgency_level,
       state,
       requirement,
-      verification_code
+      verification_code,
+      email_verified
     }
   }
 `

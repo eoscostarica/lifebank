@@ -9,6 +9,13 @@ type Mutation {
 
 
 type Mutation {
+  check_email_verified (
+    account: String!
+  ): check_email_verified_output
+}
+
+
+type Mutation {
   check_username (
     role: String!
     username: String!
@@ -290,5 +297,9 @@ type create_account_auth_output {
 
 type send_email_output {
   success : Boolean!
+}
+
+type check_email_verified_output {
+  verified : Boolean!
 }
 

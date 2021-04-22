@@ -53,6 +53,31 @@ const sendEmailAux = (account, emailContent, verification_code) => {
   }
 }
 
+const checkEmailVerified = async ({ account }) => {
+  const user = await userApi.getOne({
+    _or: [
+      { email: { _eq: account } },
+      { username: { _eq: account } },
+      { account: { _eq: account } }
+    ]
+  })
+
+
+  if (user) return { verified: user.email_verified }
+
+  const preRegsiterUser = await preRegisterLifebankApi.getOne({
+    email: { _eq: account },
+    email_verified: { _eq: false }
+  })
+
+  if (preRegsiterUser.preregister_lifebank.length > 0)  return { verified: preRegsiterUser.preregister_lifebank[0].email_verified }
+
+  return {
+    verified: false
+  }
+}
+
 module.exports = {
-  sendEmail
+  sendEmail,
+  checkEmailVerified
 }

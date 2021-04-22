@@ -8,30 +8,9 @@ import Divider from '@material-ui/core/Divider'
 import { useTranslation } from 'react-i18next'
 
 import { eosConfig } from '../../config'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    maxHeight: 400
-  },
-  boxInfo: {
-    width: '100%',
-    marginBottom: theme.spacing(1)
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
-    }
-  },
-  divider: {
-    width: '100%'
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const SignupAccount = ({ account }) => {
   const { t } = useTranslation('translations')
