@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-const ResendComponent = ({ open, handlerOpen }) => {
+const ResendComponent = ({ open, handlerOpen, handlerSendEmail }) => {
   const { t } = useTranslation('translations')
   const theme = useTheme()
   const classes = useStyles()
@@ -128,6 +128,7 @@ const ResendComponent = ({ open, handlerOpen }) => {
           className={classes.mainButton}
           variant="contained"
           color="secondary"
+          onClick={handlerSendEmail}
         >
           {t('login.resend')}</Button>
       </Box>
@@ -137,7 +138,8 @@ const ResendComponent = ({ open, handlerOpen }) => {
 
 ResendComponent.propTypes = {
   open: PropTypes.bool,
-  handlerOpen: PropTypes.func
+  handlerOpen: PropTypes.func,
+  handlerSendEmail: PropTypes.func
 }
 
 export default ResendComponent
