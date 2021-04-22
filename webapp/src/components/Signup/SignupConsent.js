@@ -34,7 +34,7 @@ const SignupConsent = ({ onSubmit, loading }) => {
         <Tab label="lifebankcode" />
         <Tab label="consent2life" />
       </Tabs>
-      <div className={classes.wrapper}>
+      <div className={classes.wrapperConsent}>
         {tab === 0 && lifebankcoin && (
           <Box>
             <RicardianContract
@@ -63,7 +63,7 @@ const SignupConsent = ({ onSubmit, loading }) => {
           </Box>
         )}
       </div>
-      <Box className={classes.btnWrapper}>
+      <Box className={classes.btnWrapperConsent}>
         <Button
           variant="contained"
           color="secondary"

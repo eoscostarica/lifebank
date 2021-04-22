@@ -26,10 +26,9 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Ofertas disponibles",
-      "moreInfo": "Más información",
-      "approvedOffers": "Ofertas aprobadas",
-      "rejectedOffers": "Ofertas rechazadas"
+      "availableOffers": "Ofertas Aprobadas",
+      "moreInfo": "Más Información",
+      "approvedOffers": "Lista de Ofertas"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -170,6 +169,7 @@
       "takeMeHome": "Llévame al inicio"
     },
     "categories": {
+      "all": "Todos",
       "discount": "Descuentos",
       "freeProduct": "Productos Gratis",
       "coupon": "Cupones",
