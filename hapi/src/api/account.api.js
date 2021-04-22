@@ -483,7 +483,7 @@ const verifyEmail = async ({ code }) => {
   }
 }
 
-const getNotifications = ({account}) => {
+const getNotifications = async ({account}) => {
   const user = await userApi.getOne({
     _or: [
       { email: { _eq: account } },
