@@ -14,16 +14,16 @@ const sendEmail = async ({ account, emailContent }) => {
 
   if (user) return sendEmailAux(account, emailContent, user.verification_code)
 
-  const preRegsiterUser = await preRegisterLifebankApi.getOne({
+  const preRegisterUser = await preRegisterLifebankApi.getOne({
     email: { _eq: account },
     email_verified: { _eq: false }
   })
 
-  if (preRegsiterUser.preregister_lifebank.length > 0)
+  if (preRegisterUser.preregister_lifebank.length > 0)
     return sendEmailAux(
       account,
       emailContent,
-      preRegsiterUser.preregister_lifebank[0].verification_code
+      preRegisterUser.preregister_lifebank[0].verification_code
     )
 
   return {
@@ -65,12 +65,11 @@ const checkEmailVerified = async ({ account }) => {
 
   if (user) return { verified: user.email_verified }
 
-  const preRegsiterUser = await preRegisterLifebankApi.getOne({
-    email: { _eq: account },
-    email_verified: { _eq: false }
+  const preRegisterUser = await preRegisterLifebankApi.getOne({
+    email: { _eq: account }
   })
 
-  if (preRegsiterUser.preregister_lifebank.length > 0)  return { verified: preRegsiterUser.preregister_lifebank[0].email_verified }
+  if (preRegisterUser.preregister_lifebank.length > 0)  return { verified: preRegsiterUser.preregister_lifebank[0].email_verified }
 
   return {
     verified: false
