@@ -62,7 +62,6 @@ const checkEmailVerified = async ({ account }) => {
     ]
   })
 
-
   if (user) return { verified: user.email_verified }
 
   const preRegisterUser = await preRegisterLifebankApi.getOne({
