@@ -19,7 +19,6 @@ const getValidLifebanksRoute = require('./get-valid-lifebanks/get-valid-lifebank
 const checkSignupMethod = require('./signup-method/signup-method.route')
 const getNotificationsRoute = require('./get-notifications/get-notifications.route')
 
-
 module.exports = [
   changePasswordRoute,
   checkUsernameRoute,
