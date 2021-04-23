@@ -484,7 +484,6 @@ const verifyEmail = async ({ code }) => {
 }
 
 const getNotifications = async (account) => {
-  console.log('ACCOUNT', account)
   const user = await userApi.getOne({
     _or: [
       { email: { _eq: account } },
@@ -495,29 +494,56 @@ const getNotifications = async (account) => {
 
   if(!user) throw new Error('No valid account')
 
-  console.log('ACCOUNT-USER', user.account)
-  
-  const notifications = await notificationApi.getOne({
-    account_to: {_eq: user.account}
-  })
+  if(user.role === 'sponsor') return await getNotificationsSponsor(user.account)
+  else if(user.role === 'lifebank') return await getNotificationsLifebank(user.account)
+}
 
-  console.log('NOTIFICATIONS', notifications)
+const getNotificationsSponsor = async (account) => {
+  const notifications = await notificationApi.getOne({
+    account_to: {_eq: account}
+  })
 
   if(!notifications) return {}
 
-  if(user.role === 'sponsor') return await getNotificationsSponsor(notifications)
-  else if(user.role === 'lifebank') return await getNotificationsLifebank(notifications)
+  return {
+    notifications: {
+      payerUser: notifications.account_from,
+      created_at_date: notifications.created_at.split('T')[0],
+      created_at_time: notifications.created_at.split('T')[1].split('.')[0],
+      offer: notifications.payload.offer
+    }
+  }
 }
 
-const getNotificationsSponsor = async (notifications) => {
-  console.log('SPONSOR-NOTIFICATIONS', notifications)
-  return {}
+const getNotificationsLifebank = async (account) => {
+  const notificationsSend = await notificationApi.getOne({
+    account_from: {_eq: account}
+  })
+
+  const notificationsRecieve = await notificationApi.getOne({
+    account_to: {_eq: account}
+  })
+
+  return {
+    notifications: {
+      sent: {
+        created_at_date: notificationsSend.created_at.split('T')[0],
+        created_at_time: notificationsSend.created_at.split('T')[1].split('.')[0],
+        tokens: parseInt(notificationsSend.payload.newBalance[0].split(' ')[0]) - parseInt(notificationsSend.payload.currentBalance[0].split(' ')[0]),
+        send_to: notificationsSend.account_to
+      },
+  
+      recieved: {
+        created_at_date: notificationsRecieve.created_at.split('T')[0],
+        created_at_time: notificationsRecieve.created_at.split('T')[1].split('.')[0],
+        tokens: parseInt(notificationsRecieve.payload.newBalance[0].split(' ')[0]) - parseInt(notificationsRecieve.payload.currentBalance[0].split(' ')[0]),
+        business: notificationsRecieve.account_from
+      }
+    }
+  }
 }
 
-const getNotificationsLifebank = async (notifications) => {
-  console.log('LIFEBANK-NOTIFICATIONS', notifications)
-  return {}
-}
+
 
 
 const login = async ({ account, password }) => {

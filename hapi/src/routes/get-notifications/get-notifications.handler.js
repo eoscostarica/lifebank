@@ -7,6 +7,8 @@ module.exports = async ({ auth: { credentials } }) => {
   try {
     const response = await accountApi.getNotifications(credentials.sub)
 
+    console.log('RESPONSE', response)
+
     return response
   } catch (error) {
     console.error(error)

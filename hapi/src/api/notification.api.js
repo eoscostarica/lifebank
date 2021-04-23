@@ -36,10 +36,7 @@ const insert = notification => {
 }
 
 const getOne = async (where = {}) => {
-  console.log('WHERE', where)
   const { notification } = await hasuraUtils.request(GET_ONE, { where })
-
-  console.log('NOTIFICATIONS-GET-ONE', notification)
 
   if (notification && notification.length > 0) return notification[0]
 
