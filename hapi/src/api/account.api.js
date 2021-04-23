@@ -494,16 +494,18 @@ const getNotifications = async (account) => {
 
   if (!user) throw new Error('No valid account')
 
-  if(user.role === 'sponsor') return await getNotificationsSponsor(user.account)
-  else if(user.role === 'lifebank') return await getNotificationsLifebank(user.account)
+  if (user.role === 'sponsor')
+    return await getNotificationsSponsor(user.account)
+  else if (user.role === 'lifebank')
+    return await getNotificationsLifebank(user.account)
 }
 
 const getNotificationsSponsor = async (account) => {
   const notifications = await notificationApi.getOne({
-    account_to: {_eq: account}
+    account_to: { _eq: account }
   })
 
-  if(!notifications) return {}
+  if (!notifications) return {}
 
   return {
     notifications: {
@@ -517,26 +519,36 @@ const getNotificationsSponsor = async (account) => {
 
 const getNotificationsLifebank = async (account) => {
   const notificationsSend = await notificationApi.getOne({
-    account_from: {_eq: account}
+    account_from: { _eq: account }
   })
 
   const notificationsRecieve = await notificationApi.getOne({
-    account_to: {_eq: account}
+    account_to: { _eq: account }
   })
 
   return {
     notifications: {
       sent: {
         created_at_date: notificationsSend.created_at.split('T')[0],
-        created_at_time: notificationsSend.created_at.split('T')[1].split('.')[0],
-        tokens: parseInt(notificationsSend.payload.newBalance[0].split(' ')[0]) - parseInt(notificationsSend.payload.currentBalance[0].split(' ')[0]),
+        created_at_time: notificationsSend.created_at
+          .split('T')[1]
+          .split('.')[0],
+        tokens:
+          parseInt(notificationsSend.payload.newBalance[0].split(' ')[0]) -
+          parseInt(notificationsSend.payload.currentBalance[0].split(' ')[0]),
         send_to: notificationsSend.account_to
       },
-  
+
       recieved: {
         created_at_date: notificationsRecieve.created_at.split('T')[0],
-        created_at_time: notificationsRecieve.created_at.split('T')[1].split('.')[0],
-        tokens: parseInt(notificationsRecieve.payload.newBalance[0].split(' ')[0]) - parseInt(notificationsRecieve.payload.currentBalance[0].split(' ')[0]),
+        created_at_time: notificationsRecieve.created_at
+          .split('T')[1]
+          .split('.')[0],
+        tokens:
+          parseInt(notificationsRecieve.payload.newBalance[0].split(' ')[0]) -
+          parseInt(
+            notificationsRecieve.payload.currentBalance[0].split(' ')[0]
+          ),
         business: notificationsRecieve.account_from
       }
     }
