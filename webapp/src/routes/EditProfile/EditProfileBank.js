@@ -15,9 +15,10 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import Telephones from '../../components/Telephones'
 import Divider from '@material-ui/core/Divider'
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
+import Grid from '@material-ui/core/Grid'
 
 import { VERIFY_USERNAME } from '../../gql'
 
@@ -33,6 +34,7 @@ const useStyles = makeStyles(styles)
 const {
   LOCATION_TYPES: { LIFE_BANK }
 } = constants
+const CHARACTER_LIMIT = 512
 
 const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, userName }) => {
   const { t } = useTranslation('translations')
@@ -48,6 +50,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const [isUnique, setIsUnique] = useState(true)
   const [firstRun, setFirstRun] = useState(true)
   const [open, setOpen] = useState(false)
+  const [values, setValues] = useState({
+    about: ""
+  });
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
@@ -77,7 +82,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   })
 
   const isUsernameUnique = async () => {
-    if(!profile.consent) {
+    if (!profile.consent) {
       handleSnackbarClose()
     } else {
       if (profile && profile.consent) {
@@ -85,7 +90,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           username: username,
           account: profile.account
         })
-  
+
         if (data) {
           if (data.user.length !== 0) setIsUnique(false)
           else setIsUnique(true)
@@ -117,6 +122,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
+    if (field === 'about') {
+      console.log(field)
+      setValues({ ...values, [field]: value })
+    }
   }
 
   useEffect(() => {
@@ -164,7 +173,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   }
 
   const handleSnackbarClose = (event, reason) => {
-    if(event !== null) setOpen(!open)
+    if (event !== null) setOpen(!open)
   };
 
   const buttonCloseHandler = (
@@ -178,7 +187,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         size="small"
         onClick={handleSnackbarClose}
       >
-        <CloseIcon fontSize="inherit"/>
+        <CloseIcon fontSize="inherit" />
       </IconButton>
     </>
   );
@@ -190,264 +199,376 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           {t('signup.noConsentNoEdit')}
         </Alert>
       </Snackbar>
-
-      <Box className={classes.textFieldWrapper}>
-        <>
-          {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
-            <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
-          )}
-        </>
-        <TextField
-          id="username"
-          name="username"
-          style={{ display: isCompleting && userName ? 'none' : '' }}
-          label={t('editProfile.urlWebsitePlaceHolder')}
-          fullWidth
-          variant="outlined"
-          placeholder={t('editProfile.urlWebsitePlaceHolder')}
-          defaultValue={username}
-          InputLabelProps={{
-            shrink: true
-          }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
-          }}
-          helperText={
-            !isValid
-              ? t('editProfile.noValidUrl')
-              : !isUnique
-                ? t('editProfile.noUniqueUrl')
-                : ''
-          }
-          onChange={(event) => validUserName(event.target.value)}
-          error={!isValid || !isUnique}
-        />
-        <TextField
-          id="fullname"
-          name="name"
-          style={{ display: isCompleting && user.name ? 'none' : '' }}
-          label={t('profile.organization')}
-          fullWidth
-          variant="outlined"
-          placeholder={t('editProfile.organizationPlaceholder')}
-          defaultValue={user.name}
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => handleSetField('name', event.target.value)}
-        />
-        <TextField
-          id="address"
-          style={{
-            display: isCompleting && user.address ? 'none' : ''
-          }}
-          label={t('signup.address')}
-          fullWidth
-          variant="outlined"
-          placeholder={t('signup.addressPlaceholder')}
-          defaultValue={user.address}
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => handleSetField('address', event.target.value)}
-        />
-        <TextField
-          id="about"
-          style={{
-            display: isCompleting && user.about ? 'none' : ''
-          }}
-          label={t('signup.about')}
-          fullWidth
-          variant="outlined"
-          placeholder={t('signup.aboutPlaceholder')}
-          defaultValue={user.about}
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) =>
-            handleSetField('about', event.target.value)
-          }
-        />
-
-        <TextField
-          id="requirement"
-          style={{
-            display: isCompleting && user.requirement ? 'none' : ''
-          }}
-          label={t('signup.requirement')}
-          fullWidth
-          multiline
-          rowsMax={6}
-          variant="outlined"
-          placeholder={t('signup.requirementPlaceholder')}
-          defaultValue={user.requirement}
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) =>
-            handleSetField('requirement', event.target.value)
-          }
-        />
-
-        <Box style={{ display: isCompleting && user.telephones ? 'none' : '' }} width="100%">
-          <Divider className={classes.divider} />
-          <Typography className={classes.boldText} variant="subtitle1">{t('common.telephone')}</Typography>
+      <Grid container spacing={3}>
+        <Grid container item xs={12} direction="column">
+          <Typography className={classes.boldText} variant="h2">
+            Lifebank Account Profile
+          </Typography>
+          <Typography className={classes.paper}>
+            Information
+          </Typography>
+        </Grid>
+        <Grid container item xs={12} direction="column">
+          <Typography className={classes.boldText} variant="h2">
+            Name
+          </Typography>
           <TextField
-            id="telephone"
-            style={{ display: isCompleting && user.telephones ? 'none' : '' }}
-            label={t('signup.phoneNumber')}
-            variant="outlined"
-            placeholder={t('signup.phoneNumberPlaceholder')}
+            id="fullname"
+            name="name"
+            style={{ display: isCompleting && user.name ? 'none' : '' }}
+            //label={t('profile.organization')}
             fullWidth
-            inputRef={phoneValueRef}
-            onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
-            onKeyPress={(event) =>
-              executeAddTelephone(event)
-            }
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    disabled={disablePhoneInput}
-                    color="secondary"
-                    aria-label="toggle password visibility"
-                    onClick={() => {
-                      setUser({
-                        ...user,
-                        telephones: [
-                          ...user.telephones,
-                          phoneValueRef.current.value
-                        ]
-                      })
-                      phoneValueRef.current.value = ''
-                      setDisablePhoneInput(true)
-                    }}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
+            variant="filled"
+            placeholder={t('editProfile.organizationPlaceholder')}
+            defaultValue={user.name}
             InputLabelProps={{
               shrink: true
             }}
-            className={classes.textField}
+            onChange={(event) => handleSetField('name', event.target.value)}
           />
-          {user.telephones.length > 0 && (
-            <Telephones
-              phones={user.telephones}
-              showDelete
-              deletePhone={(phone) =>
-                setUser({
-                  ...user,
-                  telephones: user.telephones.filter((p) => p !== phone)
-                })
-              }
-            />
-          )}
-        </Box>
-        <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
-          <Divider className={classes.divider} />
-          <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
-          <Schedule
-            buttonText={t('schedule.editSchedule')}
-            scheduleLoad={user.schedule}
-            loading
-            handleOnAddSchedule={handleOnAddSchedule}
-            data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
-            showSchedule
-          />
-        </Box>
-        <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
-          <Divider className={classes.divider} />
-          <Typography className={classes.boldText} variant="subtitle1">{t('common.categories')}</Typography>
-          <Typography variant="body1" className={classes.text}>
-            {t('categories.description')}
+        </Grid>
+        <Grid container item xs={12} direction="column">
+          <Typography className={classes.boldText} variant="h2">
+            About
           </Typography>
-          <Box className={classes.boxCenter}>
-            <Categories
-              buttonText={t('categories.editCategories')}
-              categoriesLoad={user.categories}
-              loading
-              handleOnAddCategories={handleOnAddCategories}
-              data={user.categories ? JSON.parse(user.categories || '[]') : []}
-              showCategories
-            />
-          </Box>
-          <Divider className={classes.divider} />
-          <Typography className={classes.boldText} variant="subtitle1">{t('profile.images')}</Typography>
-        </Box>
-        <TextField
-          id="image-url"
-          style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
-          label={t('offersManagement.imageUrl')}
-          variant="outlined"
-          placeholder={t('offersManagement.imageUrl')}
-          fullWidth
-          inputRef={photoUrlValueRef}
-          onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
-          onKeyPress={(event) =>
-            executeAddImage(event)
-          }
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  color="secondary"
-                  aria-label="add photo url"
-                  disabled={disablePhotoUrlInput}
-                  onClick={() => {
+          <TextField
+            id="about"
+            multiline
+            rows={5}
+            inputProps={{
+              maxlength: CHARACTER_LIMIT
+            }}
+            helperText={`${values.about.length}/${CHARACTER_LIMIT}`}
+            style={{
+              display: isCompleting && user.about ? 'none' : ''
+            }}
+            //label={t('signup.about')}
+            fullWidth
+            height="200px"
+            variant="filled"
+            placeholder={t('signup.aboutPlaceholder')}
+            defaultValue={user.about}
+            InputLabelProps={{
+              shrink: true
+            }}
+            onChange={(event) =>
+              handleSetField('about', event.target.value)
+            }
+          />
+        </Grid>
+        <Grid container item xs={12} direction="column">
+          <Typography className={classes.boldText} variant="h2">
+            Contact Information
+          </Typography>
+          <Grid container item spacing={3}>
+            <Grid item xs={4}>
+              <TextField
+                id="username"
+                name="username"
+                style={{ display: isCompleting && userName ? 'none' : '' }}
+                label={t('editProfile.urlWebsitePlaceHolder')}
+                fullWidth
+                variant="filled"
+                placeholder={t('editProfile.urlWebsitePlaceHolder')}
+                defaultValue={username}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
+                }}
+                helperText={
+                  !isValid
+                    ? t('editProfile.noValidUrl')
+                    : !isUnique
+                      ? t('editProfile.noUniqueUrl')
+                      : ''
+                }
+                onChange={(event) => validUserName(event.target.value)}
+                error={!isValid || !isUnique}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                id="phoneNumber1"
+                style={{
+                  display: isCompleting && user.address ? 'none' : ''
+                }}
+                //label={t('signup.address')}
+                fullWidth
+                variant="filled"
+                placeholder={t("Phone Number 1")}
+                //defaultValue={user.address}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              //onChange={(event) => handleSetField('address', event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                id="telephone"
+                style={{ display: isCompleting && user.telephones ? 'none' : '' }}
+                label={t('signup.phoneNumber')}
+                variant="filled"
+                placeholder={t('signup.phoneNumberPlaceholder')}
+                fullWidth
+                inputRef={phoneValueRef}
+                onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
+                onKeyPress={(event) =>
+                  executeAddTelephone(event)
+                }
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        disabled={disablePhoneInput}
+                        color="secondary"
+                        aria-label="toggle password visibility"
+                        onClick={() => {
+                          setUser({
+                            ...user,
+                            telephones: [
+                              ...user.telephones,
+                              phoneValueRef.current.value
+                            ]
+                          })
+                          phoneValueRef.current.value = ''
+                          setDisablePhoneInput(true)
+                        }}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+              {user.telephones.length > 0 && (
+                <Telephones
+                  phones={user.telephones}
+                  showDelete
+                  deletePhone={(phone) =>
                     setUser({
                       ...user,
-                      photos: [...user.photos, photoUrlValueRef.current.value]
+                      telephones: user.telephones.filter((p) => p !== phone)
                     })
-                    photoUrlValueRef.current.value = ''
-                    setDisablePhotoUrlInput(true)
-                  }}
-                >
-                  <AddIcon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-        />
-        <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
-          {user.photos.length > 0 && (
-            <Box className={classes.carouselContainer}>
-              {user.photos.length > 0 && (
-                <Carousel
-                  deleteItem={(url) => {
-                    setUser({
-                      ...user,
-                      photos: user.photos.filter((p) => p !== url)
-                    })
-                  }}
-                  activeDeletion
-                  images={user.photos}
+                  }
                 />
               )}
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid container item xs={12} direction="column">
+          <Typography className={classes.boldText} variant="h2">
+            Address and Location
+          </Typography>
+          <Typography className={classes.paper}>
+            address information
+          </Typography>
+          <Grid container xs={12} spacing={3}>
+            <Grid container item spacing={3} xs={6}>
+              <Grid item xs={12}>
+                <TextField
+                  id="address"
+                  style={{
+                    display: isCompleting && user.address ? 'none' : ''
+                  }}
+                  //label={t('signup.address')}
+                  fullWidth
+                  variant="filled"
+                  placeholder={t('signup.addressPlaceholder')}
+                  defaultValue={user.address}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onChange={(event) => handleSetField('address', event.target.value)}
+                />
+              </Grid>
+              <Grid
+                container
+                item xs={12}
+                justify="space-between"
+              >
+                <Grid item xs={5}>
+                  <TextField
+                    id="city"
+                    style={{
+                      display: isCompleting && user.address ? 'none' : ''
+                    }}
+                    //label={t('signup.address')}
+                    fullWidth
+                    variant="filled"
+                    placeholder={t('City')}
+                    defaultValue={user.address}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    onChange={(event) => handleSetField('address', event.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={5}>
+                  <TextField
+                    id="state"
+                    style={{
+                      display: isCompleting && user.address ? 'none' : ''
+                    }}
+                    //label={t('signup.address')}
+                    fullWidth
+                    variant="filled"
+                    placeholder={t('State/Province')}
+                    defaultValue={user.address}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    onChange={(event) => handleSetField('address', event.target.value)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="country"
+                  style={{
+                    display: isCompleting && user.address ? 'none' : ''
+                  }}
+                  //label={t('signup.address')}
+                  fullWidth
+                  variant="filled"
+                  placeholder={t('Country')}
+                  defaultValue={user.address}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onChange={(event) => handleSetField('address', event.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Grid item xs={6}>
+              <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
+                <MapEditLocation
+                  style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
+                  onGeolocationChange={handleOnGeolocationChange}
+                  markerLocation={user.geolocation}
+                  markerType={LIFE_BANK}
+                  width="100%"
+                  height={287}
+                  mb={1}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+          <Grid item xs={6}>
+            <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
+              <Divider className={classes.divider} />
+              <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
+              <Schedule
+                buttonText={t('schedule.editSchedule')}
+                scheduleLoad={user.schedule}
+                loading
+                handleOnAddSchedule={handleOnAddSchedule}
+                data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
+                showSchedule
+              />
             </Box>
-          )}
-        </div>
-        <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
-          <Divider className={classes.divider} />
-          <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
-          <MapEditLocation
-            style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
-            onGeolocationChange={handleOnGeolocationChange}
-            markerLocation={user.geolocation}
-            markerType={LIFE_BANK}
-            width="100%"
-            height={400}
-            mb={1}
-          />
-        </Box>
-
-      </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
+              <Divider className={classes.divider} />
+              <Typography className={classes.boldText} variant="subtitle1">{t('common.categories')}</Typography>
+              <Typography variant="body1" className={classes.text}>
+                {t('categories.description')}
+              </Typography>
+              <Box className={classes.boxCenter}>
+                <Categories
+                  buttonText={t('categories.editCategories')}
+                  categoriesLoad={user.categories}
+                  loading
+                  handleOnAddCategories={handleOnAddCategories}
+                  data={user.categories ? JSON.parse(user.categories || '[]') : []}
+                  showCategories
+                />
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid container item xs={12} direction="column">
+          <Typography className={classes.boldText}>
+            Imagery
+          </Typography>
+          <Typography className={classes.paper}>
+            Type a link to your images so your Lifebank page is shown more atractive to your donors. You can upload images to IMGUR.com
+            Logo or Avatar image must be a square image, no bigger than 500px or heavier than 250kb.
+            Banner Image should be a horizontal image, no bigger than 1200px or heavier than 1mb.
+          </Typography>
+          <Grid container item xs={6} >
+            <>
+              {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
+                <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
+              )}
+            </>
+            <TextField
+              id="image-url"
+              style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
+              label={t('offersManagement.imageUrl')}
+              variant="outlined"
+              placeholder={t('offersManagement.imageUrl')}
+              fullWidth
+              inputRef={photoUrlValueRef}
+              onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
+              onKeyPress={(event) =>
+                executeAddImage(event)
+              }
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      color="secondary"
+                      aria-label="add photo url"
+                      disabled={disablePhotoUrlInput}
+                      onClick={() => {
+                        setUser({
+                          ...user,
+                          photos: [...user.photos, photoUrlValueRef.current.value]
+                        })
+                        photoUrlValueRef.current.value = ''
+                        setDisablePhotoUrlInput(true)
+                      }}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              InputLabelProps={{
+                shrink: true
+              }}
+              className={classes.textField}
+            />
+            <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
+              {user.photos.length > 0 && (
+                <Box className={classes.carouselContainer}>
+                  {user.photos.length > 0 && (
+                    <Carousel
+                      deleteItem={(url) => {
+                        setUser({
+                          ...user,
+                          photos: user.photos.filter((p) => p !== url)
+                        })
+                      }}
+                      activeDeletion
+                      images={user.photos}
+                    />
+                  )}
+                </Box>
+              )}
+            </div>
+          </Grid>
+        </Grid>
+      </Grid>
       <Box className={classes.btnWrapper}>
         <Link to="/profile" className={classes.routerLink}>
           <Button

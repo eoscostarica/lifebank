@@ -8,8 +8,8 @@ export default (theme) => ({
     minHeight: 'calc(100vh - 60px)',
     paddingTop: '60px',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '35%',
-      paddingRight: '35%',
+      paddingLeft: '10%',
+      paddingRight: '10%',
     },
   },
   title: {
@@ -44,7 +44,6 @@ export default (theme) => ({
   },
   form: {
     width: '100%',
-    padding: theme.spacing(0, 2)
   },
   textFieldWrapper: {
     height: '100%',
