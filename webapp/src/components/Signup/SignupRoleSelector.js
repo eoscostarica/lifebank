@@ -13,7 +13,7 @@ const SignupRoleSelector = ({ onSubmit }) => {
   const classes = useStyles()
 
   return (
-    <Box className={classes.wrapper}>
+    <Box className={classes.wrapperRoleSelector}>
       <Button
         className={classes.btn}
         variant="contained"

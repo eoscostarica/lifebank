@@ -56,6 +56,15 @@ export default (theme) => ({
       marginBottom: theme.spacing(2)
     }
   },
+  textFieldWrapperSponsor: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    '& > div.MuiFormControl-root': {
+      width: '100%'
+    }
+  },
   btnWrapper: {
     display: 'flex',
     justifyContent: 'center',

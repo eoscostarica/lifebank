@@ -263,7 +263,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
             <Signup isModal />
           </Box>
           <Box className={classes.credentialsBox}>
-            <CredentialsRecovery/>
+            <CredentialsRecovery />
           </Box>
         </Box>
       </Dialog>
