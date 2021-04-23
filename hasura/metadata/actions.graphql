@@ -92,10 +92,8 @@ type Query {
 }
 
 
-type Mutation {
-  get_notifications (
-    account: String!
-  ): get_notifications_output
+type Query {
+  get_notifications : get_notifications_output
 }
 
 
@@ -124,6 +122,16 @@ type Mutation {
 
 type Query {
   profile : profile_output
+}
+
+
+type Mutation {
+  redeem_offer (
+    to: String!
+    memo: String!
+    quantity: Int
+    offer: jsonb!
+  ): redeem_offer_output
 }
 
 
@@ -289,5 +297,9 @@ type create_account_auth_output {
 
 type get_notifications_output {
   notifications : jsonb!
+}
+
+type redeem_offer_output {
+  transaction_id : String!
 }
 

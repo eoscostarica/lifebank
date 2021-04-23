@@ -64,8 +64,9 @@ actions:
   - role: sponsor
 - name: get_notifications
   definition:
-    kind: synchronous
+    kind: ""
     handler: http://hapi:9090/api/get-notifications
+    forward_client_headers: true
   permissions:
   - role: lifebank
   - role: sponsor
@@ -111,6 +112,13 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
+- name: redeem_offer
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/redeem-offer
+    forward_client_headers: true
+  permissions:
+  - role: donor
 - name: revoke_consent
   definition:
     kind: synchronous
@@ -180,4 +188,5 @@ custom_types:
   - name: create_account_lifebank_auth_output
   - name: create_account_auth_output
   - name: get_notifications_output
+  - name: redeem_offer_output
   scalars: []

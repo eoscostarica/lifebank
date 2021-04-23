@@ -483,7 +483,8 @@ const verifyEmail = async ({ code }) => {
   }
 }
 
-const getNotifications = async ({account}) => {
+const getNotifications = async (account) => {
+  console.log('ACCOUNT', account)
   const user = await userApi.getOne({
     _or: [
       { email: { _eq: account } },
@@ -491,6 +492,31 @@ const getNotifications = async ({account}) => {
       { account: { _eq: account } }
     ]
   })
+
+  if(!user) throw new Error('No valid account')
+
+  console.log('ACCOUNT-USER', user.account)
+  
+  const notifications = await notificationApi.getOne({
+    account_to: {_eq: user.account}
+  })
+
+  console.log('NOTIFICATIONS', notifications)
+
+  if(!notifications) return {}
+
+  if(user.role === 'sponsor') return await getNotificationsSponsor(notifications)
+  else if(user.role === 'lifebank') return await getNotificationsLifebank(notifications)
+}
+
+const getNotificationsSponsor = async (notifications) => {
+  console.log('SPONSOR-NOTIFICATIONS', notifications)
+  return {}
+}
+
+const getNotificationsLifebank = async (notifications) => {
+  console.log('LIFEBANK-NOTIFICATIONS', notifications)
+  return {}
 }
 
 
@@ -539,7 +565,7 @@ const revokeConsent = async (account) => {
   return consentTransaction
 }
 
-const transfer = async (from, details) => {
+const transfer = async (from, details, notification) => {
   const currentBalance = await lifebankcoinUtils.getbalance(details.to)
   const password = await vaultApi.getPassword(from)
   const user = await userApi.getOne({
@@ -579,17 +605,26 @@ const transfer = async (from, details) => {
 
   const newBalance = await lifebankcoinUtils.getbalance(details.to)
   await historyApi.insert(transaction)
-  await notificationApi.insert({
-    account: details.to,
-    title: 'New tokens',
-    description: `From ${from} ${details.memo}`,
-    type: 'new_tokens',
-    payload: {
-      currentBalance,
-      newBalance,
-      transaction: transaction.transaction_id
-    }
-  })
+
+  if (notification) {
+    notification.payload.currentBalance = currentBalance
+    notification.payload.newBalance = newBalance
+    notification.payload.transaction = transaction.transaction_id
+    await notificationApi.insert(notification)
+  } else {
+    await notificationApi.insert({
+      account_from: from,
+      account_to: details.to,
+      title: 'New tokens',
+      description: `From ${from} ${details.memo}`,
+      type: 'new_tokens',
+      payload: {
+        currentBalance,
+        newBalance,
+        transaction: transaction.transaction_id
+      }
+    })
+  }
 
   if (user.role === 'donor') {
     const tempDetail = {}

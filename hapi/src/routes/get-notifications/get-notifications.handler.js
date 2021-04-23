@@ -3,9 +3,9 @@ const { BAD_REQUEST } = require('http-status-codes')
 
 const { accountApi } = require('../../api')
 
-module.exports = async ({ payload: { input } }) => {
+module.exports = async ({ auth: { credentials } }) => {
   try {
-    const response = await accountApi.getNotifications(input)
+    const response = await accountApi.getNotifications(credentials.sub)
 
     return response
   } catch (error) {

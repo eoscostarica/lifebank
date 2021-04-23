@@ -54,6 +54,14 @@ export const LOGIN_MUTATION = gql`
   }
 `
 
+export const GET_NOTIFICATIONS_QUERY = gql`
+  query {
+    get_notifications {
+      notifications
+    }
+  }
+`
+
 export const GET_INFO = gql`
   query info($account: String!) {
     location(where: {account: {_eq: $account}}) {

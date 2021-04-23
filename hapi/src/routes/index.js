@@ -18,6 +18,7 @@ const verifyEmailRouteRoute = require('./verify-email/verify-email.route')
 const getValidLifebanksRoute = require('./get-valid-lifebanks/get-valid-lifebanks.route')
 const checkSignupMethod = require('./signup-method/signup-method.route')
 const getNotificationsRoute = require('./get-notifications/get-notifications.route')
+const redeemOffer = require('./redeem-offer/redeem-offer.route')
 
 module.exports = [
   changePasswordRoute,
@@ -39,5 +40,6 @@ module.exports = [
   verifyEmailRouteRoute,
   getValidLifebanksRoute,
   checkSignupMethod,
-  getNotificationsRoute
+  getNotificationsRoute,
+  redeemOffer
 ]

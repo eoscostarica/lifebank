@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/styles'
@@ -23,6 +24,7 @@ import MapModal from '../../components/MapModal'
 import FilterHome from '../../components/FilterHome'
 import Signup from '../../components/Signup/Signup'
 import styles from './styles'
+import { REDEEM_OFFER_MUTATION, GET_NOTIFICATIONS_QUERY } from '../../gql'
 
 const useStyles = makeStyles(styles)
 
@@ -32,6 +34,16 @@ const HomeDesktop = (props) => {
   const [currentUser] = useUser()
   const [recording, setRecording] = React.useState(false)
   const { transcript } = useSpeechRecognition()
+
+  const [
+    redeemOffer,
+    { loading, error, data: { redeem_offer: redeemOfferResult } = {} }
+  ] = useMutation(REDEEM_OFFER_MUTATION)
+
+  const [
+    getNotificationsQuery,
+    { loadingNotification, errorNotification, data: { get_notifications: getNotificationsResult } = {} }
+  ] = useLazyQuery(GET_NOTIFICATIONS_QUERY, { fetchPolicy: 'network-only' })
 
   const handleRecording = () => {
     if (!recording) {
@@ -44,6 +56,36 @@ const HomeDesktop = (props) => {
       setRecording(false)
     }
   }
+
+  const redeemOfferHandler = () => {
+    getNotificationsQuery()
+    // const payload = {
+    //   to: 'spoxq4orqkoi',
+    //   memo: 'testing',
+    //   quantity: 10,
+    //   offer: {
+    //     id: 54,
+    //     name: 'OFFER TEST2'
+    //   }
+    // }
+    // redeemOffer({
+    //   variables: {
+    //     ...payload
+    //   }
+    // })
+  }
+
+  useEffect(() => {
+    console.log('GET-NOTIFICATIONS-RESULT', getNotificationsResult)
+  }, [getNotificationsResult])
+
+  useEffect(() => {
+    console.log('GET-NOTIFICATIONS-ERROR', errorNotification)
+  }, [errorNotification])
+
+  useEffect(() => {
+    console.log('REDEEM-OFFER-RESULT', redeemOfferResult)
+  }, [redeemOfferResult])
 
   useEffect(() => {
     props.handleChangeSearch(transcript)
@@ -85,6 +127,13 @@ const HomeDesktop = (props) => {
               startIcon={<StarIcon />}
             >
               {t('contentToolbar.favorites')}
+            </Button>
+            <Button
+              className={classes.buttonIconDesktop}
+              startIcon={<StarIcon />}
+              onClick={redeemOfferHandler}
+            >
+              REDEEM OFFER
             </Button>
           </Box>
         </Grid>
