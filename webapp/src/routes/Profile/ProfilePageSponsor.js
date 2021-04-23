@@ -334,7 +334,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('offersManagement.type')}</Typography>
-            <Typography variant="body1">{profile.business_type}</Typography>
+            <Typography variant="body1">{t(`sponsorTypes.${profile.business_type}`)}</Typography>
           </Box>
         </>
       }

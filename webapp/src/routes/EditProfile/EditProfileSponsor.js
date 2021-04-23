@@ -209,7 +209,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           variant="outlined"
           className={classes.textField}
         >
-          <InputLabel id="bussines-type-label">Type</InputLabel>
+          <InputLabel id="bussines-type-label">{t('signup.type')}</InputLabel>
           <Select
             labelId="bussines-type-label"
             id="bussines-type"
@@ -217,7 +217,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             onChange={(event) =>
               handleSetField('business_type', event.target.value)
             }
-            label="Type"
+            label={t('signup.type')}
           >
             {SPONSOR_TYPES.map((option) => (
               <MenuItem key={`bussines-type-option-${option}`} value={option}>

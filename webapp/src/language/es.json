@@ -60,6 +60,7 @@
       "signupWithGoogle": "Registrarse con Google",
       "createAccount": "Crear cuenta",
       "name": "Nombre",
+      "type": "Tipo",
       "nameSponsor": "Nombre del negocio",
       "nameLifebank": "Nombre del Lifebank",
       "address": "Dirección",
