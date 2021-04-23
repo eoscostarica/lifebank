@@ -493,20 +493,22 @@ const getNotifications = async (account) => {
     ]
   })
 
-  if(!user) throw new Error('No valid account')
+  if (!user) throw new Error('No valid account')
 
   console.log('ACCOUNT-USER', user.account)
-  
+
   const notifications = await notificationApi.getOne({
-    account_to: {_eq: user.account}
+    account_to: { _eq: user.account }
   })
 
   console.log('NOTIFICATIONS', notifications)
 
-  if(!notifications) return {}
+  if (!notifications) return {}
 
-  if(user.role === 'sponsor') return await getNotificationsSponsor(notifications)
-  else if(user.role === 'lifebank') return await getNotificationsLifebank(notifications)
+  if (user.role === 'sponsor')
+    return await getNotificationsSponsor(notifications)
+  else if (user.role === 'lifebank')
+    return await getNotificationsLifebank(notifications)
 }
 
 const getNotificationsSponsor = async (notifications) => {
@@ -518,7 +520,6 @@ const getNotificationsLifebank = async (notifications) => {
   console.log('LIFEBANK-NOTIFICATIONS', notifications)
   return {}
 }
-
 
 const login = async ({ account, password }) => {
   const bcrypt = require('bcryptjs')
