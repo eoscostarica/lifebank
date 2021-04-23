@@ -12,7 +12,8 @@ const sendEmail = async ({ account, emailContent }) => {
     email_verified: { _eq: false }
   })
 
-  if (user) return sendEmailAux(user.email, emailContent, user.verification_code)
+  if (user)
+    return sendEmailAux(user.email, emailContent, user.verification_code)
 
   const preRegisterUser = await preRegisterLifebankApi.getOne({
     email: { _eq: account },
