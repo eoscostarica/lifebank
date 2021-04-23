@@ -492,7 +492,7 @@ const getNotifications = async (account) => {
     ]
   })
 
-  if(!user) throw new Error('No valid account')
+  if (!user) throw new Error('No valid account')
 
   if(user.role === 'sponsor') return await getNotificationsSponsor(user.account)
   else if(user.role === 'lifebank') return await getNotificationsLifebank(user.account)
@@ -542,9 +542,6 @@ const getNotificationsLifebank = async (account) => {
     }
   }
 }
-
-
-
 
 const login = async ({ account, password }) => {
   const bcrypt = require('bcryptjs')
