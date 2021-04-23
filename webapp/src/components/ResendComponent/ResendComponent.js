@@ -12,6 +12,7 @@ import Backdrop from '@material-ui/core/Backdrop'
 
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
+
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -21,9 +22,16 @@ const ResendComponent = ({ open, handlerOpen, handlerSendEmail }) => {
   const theme = useTheme()
   const classes = useStyles()
 
+
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
+
+
+  const resendEmail = () => {
+    handlerSendEmail()
+    handlerOpen(false)
+  }
 
   return (
     <Dialog
@@ -64,7 +72,7 @@ const ResendComponent = ({ open, handlerOpen, handlerSendEmail }) => {
           className={classes.mainButton}
           variant="contained"
           color="secondary"
-          onClick={handlerSendEmail}
+          onClick={resendEmail}
         >
           {t('login.resend')}</Button>
       </Box>

@@ -47,6 +47,8 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentUser, { login }] = useUser()
+
+
   const [
     loginMutation,
     { loading, error, data: { login: loginResult } = {} }
@@ -71,7 +73,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   ] = useMutation(SEND_EMAIL_MUTATION)
 
   const handleSendEmail = () => {
-    handleOpen()///
+    handleOpen()
     sendEmail({
       variables: {
         account: user.account,
@@ -118,10 +120,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     setOpen(!open)
   }
 
-  const handleRoleChange = () => {
-    setOpen(!open)
-  }
-
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
   }
@@ -134,7 +132,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       }
     })
   }
-
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
@@ -340,6 +337,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           <Box className={classes.credentialsBox}>
             <CredentialsRecovery />
           </Box>
+
         </Box>
       </Dialog>
     </>
