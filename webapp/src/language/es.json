@@ -168,6 +168,24 @@
       "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
       "takeMeHome": "Llévame al inicio"
     },
+    "sponsorTypes": {
+      "autoRepair": "Reparación de Automóviles",
+      "bank": "Servicios Bancarios o Financieros",
+      "beautySalon": "Salón de Belleza",
+      "dryCleaning": "Lavandería",
+      "entertaiment": "Negocio del Entretenimiento",
+      "gym": "Gym o Centro Fitness",
+      "hospitality": "Hospital",
+      "medical": "Servicios Médicos",
+      "pharmacies": "Farmacias",
+      "restaurant": "Restaurante o Tienda de Alimentos",
+      "retail": "Tienda Minorista",
+      "shopping": "Centro Comercial",
+      "gas": "Transporte o Gasolinera",
+      "travel": "Agencia de Viajes",
+      "veterinarian": "Veterinaria",
+      "other": "Otro"
+    },
     "categories": {
       "all": "Todos",
       "discount": "Descuentos",

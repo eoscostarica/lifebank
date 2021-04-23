@@ -221,7 +221,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           >
             {SPONSOR_TYPES.map((option) => (
               <MenuItem key={`bussines-type-option-${option}`} value={option}>
-                {option}
+                {t(`sponsorTypes.${option}`)}
               </MenuItem>
             ))}
           </Select>

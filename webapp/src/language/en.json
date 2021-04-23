@@ -168,6 +168,24 @@
       "errorMessage": "An error occurred and your request couldn't be completed",
       "takeMeHome": "Take me to the home page"
     },
+    "sponsorTypes": {
+      "autoRepair": "Auto Repair",
+      "bank": "Bank or Financial Services",
+      "beautySalon": "Beauty Salon",
+      "dryCleaning": "Dry Cleaning Or Laundry",
+      "entertaiment": "Entertainment Business",
+      "gym": "Gym or Fitness Center",
+      "hospitality": "Hospitality or Leisure",
+      "medical": "Medical or Health Services",
+      "pharmacies": "Pharmacies",
+      "restaurant": "Restaurant or Food Shop",
+      "retail": "Retail Store",
+      "shopping": "Shopping Center",
+      "gas": "Transportation or Gas Station",
+      "travel": "Travel Agency",
+      "veterinarian": "Veterinarian",
+      "other": "Other"
+    },
     "categories": {
       "all": "All",
       "discount": "Discounts",

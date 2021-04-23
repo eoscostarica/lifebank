@@ -5,21 +5,21 @@ export const constants = {
     LIFE_BANK: 'LIFE_BANK'
   },
   SPONSOR_TYPES: [
-    'Auto Repair',
-    'Bank or Financial Services',
-    'Beauty Salon',
-    'Dry Cleaning Or Laundry',
-    'Entertainment Business',
-    'Gym or Fitness Center',
-    'Hospitality or Leisure',
-    'Medical or Health Services',
-    'Pharmacies',
-    'Restaurant or Food Shop',
-    'Retail Store',
-    'Shopping Center',
-    'Transportation or Gas Station',
-    'Travel Agency',
-    'Veterinarian',
-    'Other'
+    'autoRepair',
+    'bank',
+    'beautySalon',
+    'dryCleaning',
+    'entertaiment',
+    'gym',
+    'hospitality',
+    'medical',
+    'pharmacies',
+    'restaurant',
+    'retail',
+    'shopping',
+    'gas',
+    'travel',
+    'veterinarian',
+    'other'
   ]
 }
