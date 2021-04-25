@@ -202,15 +202,15 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
       <Grid container spacing={3}>
         <Grid container item xs={12} direction="column">
           <Typography className={classes.boldText} variant="h2">
-            Lifebank Account Profile
+            {t('editProfile.editTitleLifebank')}
           </Typography>
-          <Typography className={classes.paper}>
-            Information
+          <Typography className={classes.text} variant="h5">
+            {t('editProfile.information')}
           </Typography>
         </Grid>
         <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h2">
-            Name
+          <Typography className={classes.boldText} variant="h4">
+            {t('editProfile.officialName')}
           </Typography>
           <TextField
             id="fullname"
@@ -228,8 +228,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           />
         </Grid>
         <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h2">
-            About
+          <Typography className={classes.boldText} variant="h4">
+            {t('signup.about')}
           </Typography>
           <TextField
             id="about"
@@ -257,8 +257,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           />
         </Grid>
         <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h2">
-            Contact Information
+          <Typography className={classes.boldText} variant="h4">
+            {t('editProfile.contactInformation')}
           </Typography>
           <Grid container item spacing={3}>
             <Grid item xs={4}>
@@ -362,21 +362,21 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           </Grid>
         </Grid>
         <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h2">
-            Address and Location
+          <Typography className={classes.boldText} variant="h4">
+            {t('editProfile.addressInformation')}
           </Typography>
-          <Typography className={classes.paper}>
-            address information
+          <Typography className={classes.text}>
+            {t('editProfile.addressDescription')}
           </Typography>
           <Grid container xs={12} spacing={3}>
-            <Grid container item spacing={3} xs={6}>
+            <Grid container item spacing={2} xs={6}>
               <Grid item xs={12}>
                 <TextField
                   id="address"
                   style={{
                     display: isCompleting && user.address ? 'none' : ''
                   }}
-                  //label={t('signup.address')}
+                  label={t('signup.address')}
                   fullWidth
                   variant="filled"
                   placeholder={t('signup.addressPlaceholder')}
@@ -398,10 +398,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                     style={{
                       display: isCompleting && user.address ? 'none' : ''
                     }}
-                    //label={t('signup.address')}
+                    label={t('editProfile.city')}
                     fullWidth
                     variant="filled"
-                    placeholder={t('City')}
+                    placeholder={t('San José')}
                     defaultValue={user.address}
                     InputLabelProps={{
                       shrink: true
@@ -415,10 +415,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                     style={{
                       display: isCompleting && user.address ? 'none' : ''
                     }}
-                    //label={t('signup.address')}
+                    label={t('editProfile.stateProvince')}
                     fullWidth
                     variant="filled"
-                    placeholder={t('State/Province')}
+                    placeholder={t('Tibás')}
                     defaultValue={user.address}
                     InputLabelProps={{
                       shrink: true
@@ -433,10 +433,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   style={{
                     display: isCompleting && user.address ? 'none' : ''
                   }}
-                  //label={t('signup.address')}
+                  label={t('editProfile.country')}
                   fullWidth
                   variant="filled"
-                  placeholder={t('Country')}
+                  placeholder={t('Costa Rica')}
                   defaultValue={user.address}
                   InputLabelProps={{
                     shrink: true
@@ -496,13 +496,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           </Grid>
         </Grid>
         <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText}>
-            Imagery
+          <Typography className={classes.boldText} variant="h4">
+            {t('editProfile.imagery')}
           </Typography>
           <Typography className={classes.paper}>
-            Type a link to your images so your Lifebank page is shown more atractive to your donors. You can upload images to IMGUR.com
-            Logo or Avatar image must be a square image, no bigger than 500px or heavier than 250kb.
-            Banner Image should be a horizontal image, no bigger than 1200px or heavier than 1mb.
+            {t('editProfile.imageryDescription')}
           </Typography>
           <Grid container item xs={6} >
             <>
@@ -514,7 +512,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               id="image-url"
               style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
               label={t('offersManagement.imageUrl')}
-              variant="outlined"
+              variant="filled"
               placeholder={t('offersManagement.imageUrl')}
               fullWidth
               inputRef={photoUrlValueRef}

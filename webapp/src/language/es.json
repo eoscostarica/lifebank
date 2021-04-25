@@ -259,7 +259,15 @@
       "twitterUsername": "Usuario de Twitter",
       "twitterUsernamePlaceholder": "El usuario de Twitter aquí",
       "noValidUrl": "La direccion no debe tener caracteres especiales",
-      "noUniqueUrl": "Esta direccion esta asociada a otra cuenta"
+      "noUniqueUrl": "Esta direccion esta asociada a otra cuenta",
+      "editTitleLifebank": "Perfil de la cuenta de Lifebank",
+      "information": "La información que se encuentra en este perfil se puede ver en su página de Lifebank. Asegúrese de incluir información detallada para que los donantes puedan encontrarlo fácilmente y contactarte para proceder con la donación...",
+      "officialName": "Nombre Oficial",
+      "contactInformation": "Información de Contacto",
+      "addressInformation": "Datos de Domicilio",
+      "addressDescription": "Describe tu dirección de Lifebank y usa el mapa para seleccionar la ubicación correcta para que los donantes puedan llegar a ti fácilmente.",
+      "imagery": "Imágenes",
+      "imageryDescription": "Escriba un enlace a sus imágenes para que su página de Lifebank se muestre más atractiva para sus donantes. Puede subir imágenes al logotipo de IMGUR.com o la imagen de avatar debe ser una imagen cuadrada, no mayor de 500px o más pesada de 250kb. La imagen del banner debe ser una imagen horizontal, no mayor a 1200px ni más pesada que 1mb."
     },
     "donations": {
       "donations": "Donaciones",

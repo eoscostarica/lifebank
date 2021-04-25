@@ -164,9 +164,6 @@ const EditProfilePage = () => {
           </Alert>
         )}
       </Box>
-      <Typography variant="h1" className={classes.title}>
-        {t('editProfile.editProfile')}
-      </Typography>
       {loading && <CircularProgress />}
       {!loading && currentUser && profile?.role === 'donor' && (
         <Suspense fallback={<CircularProgress />}>
