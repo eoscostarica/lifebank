@@ -32,7 +32,7 @@ import styles from './styles'
 const useStyles = makeStyles(styles)
 
 const {
-  LOCATION_TYPES: { SPONSOR },
+  LOCATION_TYPES: { SPONSOR, PENDING_SPONSOR },
   SPONSOR_TYPES
 } = constants
 
@@ -170,7 +170,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Box className={classes.textFieldWrapper}>
+      <Box className={classes.textFieldWrapperSponsor}>
         <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
           <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
         </Box>
@@ -518,12 +518,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
             <MapEditLocation
               onGeolocationChange={handleOnGeolocationChange}
-              markerType={SPONSOR}
-              markerLocation={
-                user.geolocation
-                  ? user.geolocation
-                  : { longitude: -84.0556371, latitude: 9.9195872 }
-              }
+              markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
+              markerLocation={user.geolocation}
               width="100%"
               height={400}
               mb={1}

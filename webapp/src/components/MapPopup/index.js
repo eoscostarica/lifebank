@@ -160,15 +160,17 @@ const MapPopup = ({ id, info, username }) => {
         default:
           dd = 'Saturday'
       }
-
-      JSON.parse(info.schedule).forEach((element) => {
-        if (dd === element.day)
-          if (
-            hour >= parseInt(element.open, 10) &&
-            hour < parseInt(element.close, 10)
-          )
-            setOpen(true)
-      })
+      
+      if(info.schedule) {
+        JSON.parse(info.schedule).forEach((element) => {
+          if (dd === element.day)
+            if (
+              hour >= parseInt(element.open, 10) &&
+              hour < parseInt(element.close, 10)
+            )
+              setOpen(true)
+        })
+      }
     }
   }, [dd, hour])
 

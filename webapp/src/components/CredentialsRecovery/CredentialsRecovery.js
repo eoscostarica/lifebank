@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
-import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -14,11 +12,8 @@ import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Dialog from '@material-ui/core/Dialog'
-import LockIcon from '@material-ui/icons/Lock'
+import Snackbar from '@material-ui/core/Snackbar'
 import { useTranslation } from 'react-i18next'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
 import styles from './styles'
@@ -30,11 +25,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
-  const [errorPassword, setErrorPassword] = useState(true)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
-  const [showPassword, setShowPassword] = useState(false)
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
@@ -44,7 +37,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   ] = useMutation(CREDENTIALS_RECOVERY)
   const [
     changePassword,
-    { loading: loadingChangePassword, error: errorChangePassword, data: { change_password: responseChangePassword } = {} }
+    { loading: loadingChangePassword, error: errorChangePassword }
   ] = useMutation(CHANGE_PASSWORD)
   const [open, setOpen] = useState(false)
 
@@ -56,9 +49,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const handleOpen = () => {
     setOpen(!open)
   }
-
-  const handleSetField = (field, value) => {
-    setUser({ ...user, [field]: value })
+  const handleCloseSnackBar = () => {
+    if (errorMessage) {
+      setErrorMessage(null)
+    } else {
+      setOpen(!open)
+      setUser({})
+      setSuccess(false)
+    }
   }
 
   const handleSetFieldEmail = (field, value) => {
@@ -87,10 +85,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
   }
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword)
-  }
-
   const handleSubmitChangePassword = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
       setErrorMessage(null)
@@ -109,7 +103,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   }
 
   useEffect(() => {
-    if(user.email) {
+    if (user.email) {
       getAccountSignupMethod({
         variables: {
           email: user.email
@@ -124,7 +118,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(error.message.replace('GraphQL error: ', ''))
     }
-  }, [error])
+  }, [error, t])
 
   useEffect(() => {
     if (errorChangePassword) {
@@ -132,23 +126,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
     }
-  }, [errorChangePassword])
+  }, [errorChangePassword, t])
 
 
   useEffect(() => {
     if (response) {
-      setUser({})
       setSuccess(response.success)
     }
   }, [response])
-
-  useEffect(() => {
-    if (responseChangePassword) {
-      setUser({})
-      setSuccess(responseChangePassword.success)
-      setErrorPassword(responseChangePassword.success)
-    }
-  }, [responseChangePassword])
 
   function executeCredentialsRecovery(e) {
     if (e.key === 'Enter' && ((user.newPassword && user.currentPassword && validEmailFormat) && !loadingChangePassword)) {
@@ -163,19 +148,10 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   return (
     <>
-      <Box
-        className={clsx(classes.loginBtn, overrideBoxClass)}
-        onClick={handleOpen}
-      >
-        <LockIcon className={classes.iconOption} />
-        <Link to="/">
-          <Typography
-            variant="body1"
-            className={clsx(classes.labelOption, overrideLabelClass)}
-          >
-            {t('credentialsRecovery.credentialsRecovery')}
-          </Typography>
-        </Link>
+      <Box className={classes.recoveryBox}>
+        <Button color="secondary" className={classes.recoveryButton} onClick={handleOpen}>
+          {t('signup.forgetPassword')}
+        </Button>
       </Box>
       <Dialog
         aria-labelledby="transition-modal-title"
@@ -201,11 +177,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
             </IconButton>
           </Box>
           <Box className={classes.bodyWrapper}>
-            <Typography variant="h3">
-              {t('credentialsRecovery.credentialsRecovery')}
-            </Typography>
             <form autoComplete="off">
               <Box className={classes.textFieldWrapper}>
+                <Typography variant="h3" className={classes.title}>
+                  {t('credentialsRecovery.credentialsRecovery')}
+                </Typography>
                 <Typography >
                   {t('credentialsRecovery.instructionCredentialsRecovery')}
                 </Typography>
@@ -234,132 +210,29 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 >
                   {t('credentialsRecovery.recovery')}
                 </Button>
-                {loading && <CircularProgress />}
-              </Box>
-              <Box className={clsx(classes.textFieldWrapper, classes.marginTopBox)}>
-                <Typography >
-                  {t('credentialsRecovery.changePasswordInstructions')}
-                </Typography>
-                <TextField
-                  id="currentPassword"
-                  label={t('credentialsRecovery.currentPassword')}
-                  variant="outlined"
-                  type={showPassword ? 'text' : 'password'}
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                  value={user.currentPassword || ''}
-                  onChange={(event) =>
-                    handleSetField('currentPassword', event.target.value)
-                  }
-                  onKeyPress={(event) =>
-                    executeCredentialsRecovery(event)
-                  }
-                  className={classes.marginTop}
-                />
-                <TextField
-                  id="newPassword"
-                  label={t('credentialsRecovery.newPassword')}
-                  type={showPassword ? 'text' : 'password'}
-                  variant="outlined"
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                  value={user.newPassword || ''}
-                  onChange={(event) =>
-                    handleSetField('newPassword', event.target.value)
-                  }
-                  onKeyPress={(event) =>
-                    executeCredentialsRecovery(event)
-                  }
-                  className={classes.marginTop}
-                />
-                <Button
-                  disabled={(!user.newPassword || !user.currentPassword || !validEmailFormat) || loadingChangePassword}
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleSubmitChangePassword}
-                  className={classes.button}
-                >
-                  {t('credentialsRecovery.changePassword')}
-                </Button>
-                {loadingChangePassword && <CircularProgress />}
+                <Box className={classes.recoveryBox}>
+                  {loading && <CircularProgress />}
+                </Box>
               </Box>
               {errorMessage && (
-                <Alert
-                  className={classes.alert}
-                  severity="error"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setErrorMessage(null)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  {errorMessage}
-                </Alert>
-              )}
-              {!errorPassword && (
-                <Alert
-                  className={classes.alert}
-                  severity="error"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setErrorPassword(true)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  {t('credentialsRecovery.errorPassword')}
-                </Alert>
+                <Snackbar open={true} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+                  <Alert
+                    className={classes.alert}
+                    severity="error"
+                  >
+                    {errorMessage}
+                  </Alert>
+                </Snackbar>
               )}
               {success && (
-                <Alert
-                  className={classes.alert}
-                  severity="success"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setSuccess(false)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  {t('credentialsRecovery.checkYourEmail')}
-                </Alert>
+                <Snackbar open={success} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+                  <Alert
+                    className={classes.alert}
+                    severity="success"
+                  >
+                    {t('credentialsRecovery.checkYourEmail')}
+                  </Alert>
+                </Snackbar>
               )}
             </form>
           </Box>

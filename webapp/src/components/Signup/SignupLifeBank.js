@@ -35,7 +35,7 @@ const SignupLifeBank = ({
   const [recaptchaValue, serRecaptchaValue] = useState('')
 
   return (
-    <form autoComplete="off" className={classes.form}>
+    <form autoComplete="off" className={classes.formLifeBank}>
       <Box className={classes.textFieldWrapper}>
         {children}
         <TextField

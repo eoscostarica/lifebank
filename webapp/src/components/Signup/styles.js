@@ -75,29 +75,6 @@ export default (theme) => ({
     color: '#000000',
     marginBottom: 30
   },
-  form: {
-    width: '100%',
-    padding: theme.spacing(0, 2),
-    marginTop: theme.spacing(3)
-  },
-  textFieldWrapper: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  textField: {
-    marginTop: theme.spacing(2),
-    width: '100%'
-  },
-  btnWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: theme.spacing(2, 0)
-  },
   alert: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -141,9 +118,6 @@ export default (theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  wrapper: {
-    maxHeight: 400
-  },
   boxInfo: {
     width: '100%',
     marginBottom: theme.spacing(1)
@@ -162,7 +136,7 @@ export default (theme) => ({
   divider: {
     width: '100%'
   },
-  wrapper: {
+  wrapperConsent: {
     height: "40vh",
     overflowY: 'scroll',
     marginTop: theme.spacing(2),
@@ -189,6 +163,12 @@ export default (theme) => ({
       height: "35vh",
     }
   },
+  btnWrapperConsent: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   btnAccept: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
@@ -206,6 +186,25 @@ export default (theme) => ({
       width: "100%",
     }
   },
+  formDonor: {
+    width: '100%',
+    padding: theme.spacing(0, 2)
+  },
+  textFieldDonor: {
+    marginBottom: 10
+  },
+  textFieldWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  btnWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10
+  },
   btnSignup: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
@@ -222,6 +221,12 @@ export default (theme) => ({
     [theme.breakpoints.down('md')]: {
       width: "100%",
     }
+  },
+  formLifeBank: {
+    width: '100%',
+  },
+  textField: {
+    marginBottom: 10
   },
   boxCenter: {
     width: '100%',
@@ -253,7 +258,7 @@ export default (theme) => ({
   mapBox: {
     marginTop: theme.spacing(2)
   },
-  wrapper: {
+  wrapperRoleSelector: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -279,5 +284,5 @@ export default (theme) => ({
   },
   success: {
     color: theme.palette.success.main
-  },
+  }
 })
