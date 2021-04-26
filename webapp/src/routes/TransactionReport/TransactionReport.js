@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
 import PDF, { Text, AddPage, Line, Image, Table, Html } from 'jspdf-react'
 import { useTranslation } from 'react-i18next'
-
+import { useUser } from '../../context/user.context'
 import { GET_REPORT_QUERY } from '../../gql'
 
 const TransactionReport = () => {
   const { t } = useTranslation('translations')
+  const [currentUser] = useUser()
   const properties = { header: 'Acme' }
 
   const headReceive = [
@@ -67,8 +68,13 @@ const TransactionReport = () => {
     console.log('GET-REPORT-ERROR', errorReport)
   }, [errorReport])
 
+  useEffect(() => {
+    console.log('CURRENT-USER', currentUser)
+  }, [currentUser])
+
   return (
     <>
+    {currentUser === 'lifebank' && (
       <PDF
         filename="Report"
         properties={properties}
@@ -89,6 +95,8 @@ const TransactionReport = () => {
           body={bodySent}
         />
       </PDF>
+    )}
+      
     </>
   )
 }
