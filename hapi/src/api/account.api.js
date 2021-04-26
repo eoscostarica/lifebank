@@ -501,7 +501,7 @@ const getReport = async (account) => {
 
 const getReportSponsor = async (account) => {
   const notifications = await notificationApi.getOne({
-    account_to: {_eq: account}
+    account_to: { _eq: account }
   })
 
   if(!notifications) return { notifications: {} }
