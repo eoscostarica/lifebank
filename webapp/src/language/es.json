@@ -466,6 +466,15 @@
       "Oct": "Octubre",
       "Nov": "Noviembre",
       "Dec": "Diciembre"
+    },
+    "report": {
+      "sentTokens": "Tokens enviados",
+      "receivedTokens": "Tokens recibidos",
+      "business": "Patrocinador",
+      "donor": "Donador",
+      "date": "Fecha",
+      "time": "Hora",
+      "tokens": "Tokens"
     }
   }
 }

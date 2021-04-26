@@ -9,10 +9,24 @@ const TransactionReport = () => {
   const { t } = useTranslation('translations')
   const properties = { header: 'Acme' }
 
-  const headReceive = [["business", "date", "time", "tokens"]]
+  const headReceive = [
+    [
+      t('report.business'),
+      t('report.date'),
+      t('report.time'),
+      t('report.tokens')
+    ]
+  ]
   const [bodyReceive, setBodyReceive] = useState()
 
-  const headSent = [["donor", "date", "time", "tokens"]]
+  const headSent = [
+    [
+      t('report.donor'),
+      t('report.date'),
+      t('report.time'),
+      t('report.tokens')
+    ]
+  ]
   const [bodySent, setBodySent] = useState()
 
   const [
@@ -61,7 +75,7 @@ const TransactionReport = () => {
         preview={true}
         previewWidth="100%"
       >
-        <Text x={35} y={25} size={40}>Receive tokens</Text>
+        <Text x={35} y={25} size={40}>{t('report.receivedTokens')}</Text>
         <Table
           head={headReceive}
           body={bodyReceive}
@@ -69,7 +83,7 @@ const TransactionReport = () => {
 
         <AddPage />
 
-        <Text x={35} y={25} size={40}>Sent tokens</Text>
+        <Text x={35} y={25} size={40}>{t('report.sentTokens')}</Text>
         <Table
           head={headSent}
           body={bodySent}
