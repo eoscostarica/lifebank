@@ -471,10 +471,12 @@
       "sentTokens": "Tokens enviados",
       "receivedTokens": "Tokens recibidos",
       "business": "Patrocinador",
+      "user": "Usuario",
       "donor": "Donador",
       "date": "Fecha",
       "time": "Hora",
-      "tokens": "Tokens"
+      "tokens": "Tokens",
+      "offer": "Oferta"
     }
   }
 }

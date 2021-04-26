@@ -10,14 +10,7 @@ const TransactionReport = () => {
   const [currentUser] = useUser()
   const properties = { header: 'Acme' }
 
-  const headReceive = [
-    [
-      t('report.business'),
-      t('report.date'),
-      t('report.time'),
-      t('report.tokens')
-    ]
-  ]
+  const [headReceive, setHeadReceived] = useState()
   const [bodyReceive, setBodyReceive] = useState()
 
   const headSent = [
@@ -35,47 +28,75 @@ const TransactionReport = () => {
     { errorReport, data: { get_report: getReportResult } = {} }
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
-
   useEffect(() => {
     if(!getReportResult) {
       getReportQuery()
     } else {
-      const receive = getReportResult.notifications.recieved.map(function(notification) {
-        return [
-          notification.business,
-          notification.created_at_date,
-          notification.created_at_time,
-          notification.tokens
-        ]
-      })
-
-      const sent = getReportResult.notifications.sent.map(function(notification) {
-        return [
-          notification.send_to,
-          notification.created_at_date,
-          notification.created_at_time,
-          notification.tokens
-        ]
-      })
-
-      setBodyReceive(receive)
-      setBodySent(sent)
+      console.log('REPORT', getReportResult)
+      if(currentUser && currentUser.role === 'lifebank') formatDataToLifebankReport()
+      else if(currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
     }
-    console.log('GET-REPORT-RESULT', getReportResult)
   }, [getReportResult])
 
-  useEffect(() => {
-    console.log('GET-REPORT-ERROR', errorReport)
-  }, [errorReport])
+  const formatDataToLifebankReport = () => {
+    const received = getReportResult.notifications.recieved.map(function(notification) {
+      return [
+        notification.business,
+        notification.created_at_date,
+        notification.created_at_time,
+        notification.tokens
+      ]
+    })
 
-  useEffect(() => {
-    console.log('CURRENT-USER', currentUser)
-  }, [currentUser])
+    const sent = getReportResult.notifications.sent.map(function(notification) {
+      return [
+        notification.send_to,
+        notification.created_at_date,
+        notification.created_at_time,
+        notification.tokens
+      ]
+    })
+
+    setHeadReceived([
+        [
+          t('report.business'),
+          t('report.date'),
+          t('report.time'),
+          t('report.tokens')
+        ]
+      ]
+    )
+    setBodyReceive(received)
+    setBodySent(sent)
+  }
+
+  const formatDataToSponsorReport = () => {
+    const received = getReportResult.notifications.recieved.map(function(notification) {
+      return [
+        notification.payerUser,
+        "",
+        notification.created_at_date,
+        notification.created_at_time,
+        notification.offer
+      ]
+    })
+
+    setHeadReceived([
+      [
+        t('report.user'),
+        t('report.offer'),
+        t('report.date'),
+        t('report.time'),
+        t('report.tokens')
+      ]
+    ]
+  )
+
+    setBodyReceive(received)
+  }
 
   return (
-    <>
-    {currentUser === 'lifebank' && (
-      <PDF
+    <PDF
         filename="Report"
         properties={properties}
         preview={true}
@@ -95,9 +116,6 @@ const TransactionReport = () => {
           body={bodySent}
         />
       </PDF>
-    )}
-      
-    </>
   )
 }
 

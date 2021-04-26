@@ -472,10 +472,12 @@
       "sentTokens": "Sent tokens",
       "receivedTokens": "Received tokens",
       "business": "Business",
+      "user": "User",
       "donor": "Donor",
       "date": "Date",
       "time": "Time",
-      "tokens": "Tokens"
+      "tokens": "Tokens",
+      "offer": "Offer"
     }
   }
 }
