@@ -54,8 +54,8 @@ assign_resources() {
     cleos -u $EOS_API_URL transfer eosio lbacccreator "10000000 EOS" "Lifebank initial funding"
 }
 deploy_lifebank_contracts() {
-    # echo 'Deploy Consent Contract'
-    # cleos -u $EOS_API_URL set contract consent2life ../consent2life/ -p consent2life@active -j -s -d
+    echo 'Deploy Consent Contract'
+    cleos -u $EOS_API_URL set contract consent2life ../consent2life/ -p consent2life@active -j -s -d
     sleep 2
     echo 'Deploy Code Contract'
     cleos -u $EOS_API_URL set contract lifebankcode ../lifebankcode/ -p lifebankcode@active
@@ -80,29 +80,29 @@ deploy_lifebank_contracts() {
             ]
         }' owner -p lifebankcode
     cleos -u $EOS_API_URL get account lifebankcode
-    # echo 'Deploy Coin Contract'
-    # coin_pubkey=$(cat ./secrets/lifebankcoin.pub)
-    # cleos -u $EOS_API_URL set contract lifebankcoin ../lifebankcoin/ -p lifebankcoin@active
-    # cleos -u $EOS_API_URL set account permission lifebankcoin active \
-    #     '{
-    #         "threshold":1,
-    #         "keys":[
-    #             {
-    #                 "key":"'$coin_pubkey'",
-    #                 "weight":1
-    #             }
-    #         ],
-    #         "accounts": [
-    #             {
-    #                 "permission":{
-    #                     "actor":"lifebankcoin",
-    #                     "permission":"eosio.code"
-    #                 },
-    #                 "weight":1
-    #             }
-    #         ]
-    #     }' owner -p lifebankcoin
-    # cleos -u $EOS_API_URL get account lifebankcoin
+    echo 'Deploy Coin Contract'
+    coin_pubkey=$(cat ./secrets/lifebankcoin.pub)
+    cleos -u $EOS_API_URL set contract lifebankcoin ../lifebankcoin/ -p lifebankcoin@active
+    cleos -u $EOS_API_URL set account permission lifebankcoin active \
+        '{
+            "threshold":1,
+            "keys":[
+                {
+                    "key":"'$coin_pubkey'",
+                    "weight":1
+                }
+            ],
+            "accounts": [
+                {
+                    "permission":{
+                        "actor":"lifebankcoin",
+                        "permission":"eosio.code"
+                    },
+                    "weight":1
+                }
+            ]
+        }' owner -p lifebankcoin
+    cleos -u $EOS_API_URL get account lifebankcoin
 }
 consent() {
     echo 'Consent to Contracts'
@@ -210,19 +210,19 @@ clear_tables() {
 }
 run_lifebank() {
     echo 'Installing LifeBank ...'
-    # create_lifebank_wallet
-    # create_lifebank_accounts
-    # assign_resources
+    create_lifebank_wallet
+    create_lifebank_accounts
+    assign_resources
     deploy_lifebank_contracts
-    # consent
-    # create_community
-    # register_lifebank
-    # register_donor
-    # register_sponsor
-    # test_token_lifecycle
-    # TO DO: update_sponsor
-    # TO DO: update_lifebank
-    # TO DO: update_donor
-    #clear_tables
+    consent
+    create_community
+    register_lifebank
+    register_donor
+    register_sponsor
+    test_token_lifecycle
+    TO DO: update_sponsor
+    TO DO: update_lifebank
+    TO DO: update_donor
+    clear_tables
 }
 run_lifebank
