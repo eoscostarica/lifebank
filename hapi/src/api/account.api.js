@@ -501,9 +501,11 @@ const getReport = async (account) => {
 }
 
 const getReportSponsor = async (account) => {
-  const notifications = (await notificationApi.getMany({
-    account_to: { _eq: account }
-  })).map(function (notification) {
+  const notifications = (
+    await notificationApi.getMany({
+      account_to: { _eq: account }
+    })
+  ).map(function (notification) {
     return {
       payerUser: notification.account_from,
       created_at_date: notification.created_at.split('T')[0],
