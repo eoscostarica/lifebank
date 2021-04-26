@@ -85,7 +85,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
         }
       }
     })
-
   }
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
@@ -163,14 +162,12 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   }, [loginResult])
 
   useEffect(() => {
-    console.log('CHECK-EMAIL-VERIFIED-RESULT', checkEmailVerifiedResult)
     if (checkEmailVerifiedResult && !checkEmailVerifiedResult.verified) {
       verify()
     }
   }, [checkEmailVerifiedResult])
 
   useEffect(() => {
-    console.log('SEND-EMAIL-RESULT', sendEmailResult)
   }, [sendEmailResult])
 
   useEffect(() => {
@@ -314,7 +311,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
               >
                 {t('login.login')}
               </Button>
-
             </Box>
             <Box className={classes.centerBox}>
               {loading && <CircularProgress />}
@@ -337,7 +333,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           <Box className={classes.credentialsBox}>
             <CredentialsRecovery />
           </Box>
-
         </Box>
       </Dialog>
     </>

@@ -37,8 +37,6 @@ const ResendComponent = ({ open, handlerOpen, handlerSendEmail }) => {
     <Dialog
       open={open}
       onClose={handlerOpen}
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
       fullScreen={!isDesktop}
       closeAfterTransition
       BackdropComponent={Backdrop}
@@ -46,7 +44,6 @@ const ResendComponent = ({ open, handlerOpen, handlerSendEmail }) => {
         timeout: 500
       }}
     >
-
       <Box className={classes.dialog}>
         <Box className={classes.closeIcon}>
           <IconButton
