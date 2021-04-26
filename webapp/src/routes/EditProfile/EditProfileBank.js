@@ -378,7 +378,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             {t('editProfile.addressDescription')}
           </Typography>
           <Grid container xs={12} spacing={3}>
-            <Grid container item spacing={2} xs={6}>
+            <Grid container item xs={6}>
               <Grid item xs={12}>
                 <TextField
                   id="address"
@@ -401,39 +401,43 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                 item xs={12}
                 justify="space-between"
               >
-                <Grid item xs={5}>
-                  <TextField
-                    id="city"
-                    style={{
-                      display: isCompleting && user.address ? 'none' : ''
-                    }}
-                    label={t('editProfile.city')}
-                    fullWidth
-                    variant="filled"
-                    placeholder={t('San José')}
-                    defaultValue={user.address}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    onChange={(event) => handleSetField('address', event.target.value)}
-                  />
+                <Grid item xs={6}>
+                  <Box className={classes.leftBox}>
+                    <TextField
+                      id="city"
+                      style={{
+                        display: isCompleting && user.address ? 'none' : ''
+                      }}
+                      label={t('editProfile.city')}
+                      fullWidth
+                      variant="filled"
+                      placeholder={t('San José')}
+                      defaultValue={user.address}
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      onChange={(event) => handleSetField('address', event.target.value)}
+                    />
+                  </Box>
                 </Grid>
-                <Grid item xs={5}>
-                  <TextField
-                    id="state"
-                    style={{
-                      display: isCompleting && user.address ? 'none' : ''
-                    }}
-                    label={t('editProfile.stateProvince')}
-                    fullWidth
-                    variant="filled"
-                    placeholder={t('Tibás')}
-                    defaultValue={user.address}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    onChange={(event) => handleSetField('address', event.target.value)}
-                  />
+                <Grid item xs={6}>
+                  <Box className={classes.rightBox}>
+                    <TextField
+                      id="state"
+                      style={{
+                        display: isCompleting && user.address ? 'none' : ''
+                      }}
+                      label={t('editProfile.stateProvince')}
+                      fullWidth
+                      variant="filled"
+                      placeholder={t('Tibás')}
+                      defaultValue={user.address}
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      onChange={(event) => handleSetField('address', event.target.value)}
+                    />
+                  </Box>
                 </Grid>
               </Grid>
               <Grid item xs={12}>
@@ -511,68 +515,76 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.paper}>
             {t('editProfile.imageryDescription')}
           </Typography>
-          <Grid container item xs={6} >
-            <>
-              {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
-                <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
-              )}
-            </>
-            <TextField
-              id="image-url"
-              style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
-              label={t('offersManagement.imageUrl')}
-              variant="filled"
-              placeholder={t('offersManagement.imageUrl')}
-              fullWidth
-              inputRef={photoUrlValueRef}
-              onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
-              onKeyPress={(event) =>
-                executeAddImage(event)
-              }
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      color="secondary"
-                      aria-label="add photo url"
-                      disabled={disablePhotoUrlInput}
-                      onClick={() => {
-                        setUser({
-                          ...user,
-                          photos: [...user.photos, photoUrlValueRef.current.value]
-                        })
-                        photoUrlValueRef.current.value = ''
-                        setDisablePhotoUrlInput(true)
-                      }}
-                    >
-                      <AddIcon />
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
-              InputLabelProps={{
-                shrink: true
-              }}
-              className={classes.textField}
-            />
-            <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
-              {user.photos.length > 0 && (
-                <Box className={classes.carouselContainer}>
-                  {user.photos.length > 0 && (
-                    <Carousel
-                      deleteItem={(url) => {
-                        setUser({
-                          ...user,
-                          photos: user.photos.filter((p) => p !== url)
-                        })
-                      }}
-                      activeDeletion
-                      images={user.photos}
-                    />
+          <Grid container item xs={12} >
+            <Grid item xs={6} >
+              <Box className={classes.rightBox}>
+                <>
+                  {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
+                    <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
                   )}
-                </Box>
-              )}
-            </div>
+                </>
+                <TextField
+                  id="image-url"
+                  style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
+                  label={t('offersManagement.imageUrl')}
+                  variant="filled"
+                  placeholder={t('offersManagement.imageUrl')}
+                  fullWidth
+                  inputRef={photoUrlValueRef}
+                  onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
+                  onKeyPress={(event) =>
+                    executeAddImage(event)
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          color="secondary"
+                          aria-label="add photo url"
+                          disabled={disablePhotoUrlInput}
+                          onClick={() => {
+                            setUser({
+                              ...user,
+                              photos: [...user.photos, photoUrlValueRef.current.value]
+                            })
+                            photoUrlValueRef.current.value = ''
+                            setDisablePhotoUrlInput(true)
+                          }}
+                        >
+                          <AddIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.textField}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6} >
+              <Box className={classes.rightBox}>
+                <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
+                  {user.photos.length > 0 && (
+                    <Box className={classes.carouselContainer}>
+                      {user.photos.length > 0 && (
+                        <Carousel
+                          deleteItem={(url) => {
+                            setUser({
+                              ...user,
+                              photos: user.photos.filter((p) => p !== url)
+                            })
+                          }}
+                          activeDeletion
+                          images={user.photos}
+                        />
+                      )}
+                    </Box>
+                  )}
+                </div>
+              </Box>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

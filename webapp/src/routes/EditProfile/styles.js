@@ -183,6 +183,12 @@ export default (theme) => ({
       width: "100%",
     },
   },
+  rightBox: {
+    paddingLeft: '8px'
+  },
+  leftBox: {
+    paddingRight: '8px'
+  },
   cancelBtn: {
     borderRadius: '50px',
     width: "70%",
