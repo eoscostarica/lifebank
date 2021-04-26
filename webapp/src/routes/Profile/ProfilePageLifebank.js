@@ -236,7 +236,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.email &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxInfo}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.email')}</Typography>
             <Typography variant="body1">{profile.email}</Typography>
           </Box>
@@ -293,7 +293,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.about &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxInfo}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
             <Typography >{profile.about}</Typography>
           </Box>
@@ -302,7 +302,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.requirement &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxInfo}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.requirement')}</Typography>
             <Typography >{profile.requirement.replaceAll("\n", ", ")}</Typography>
           </Box>
@@ -311,7 +311,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.schedule &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxInfo}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
             <ViewSchedule schedule={profile.schedule} />
           </Box>
@@ -320,7 +320,7 @@ const ProfilePageLifebank = ({ profile }) => {
       {profile.categories &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxInfo}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.categories')}</Typography>
             <ViewCategories categories={profile.categories} />
           </Box>

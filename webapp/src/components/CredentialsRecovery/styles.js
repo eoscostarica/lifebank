@@ -9,6 +9,21 @@ export default (theme) => ({
     height: 200,
     justifyContent: 'space-evenly'
   },
+  recoveryButton: {
+    fontSize: '12px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.33,
+    letterSpacing: '0.4px',
+    color: '#000000'
+  },
+  recoveryBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   closeIcon: {
     position: 'absolute',
     zIndex: 1,
