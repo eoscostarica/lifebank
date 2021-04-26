@@ -7,8 +7,6 @@ module.exports = async ({ auth: { credentials } }) => {
   try {
     const response = await accountApi.getReport(credentials.sub)
 
-    console.log('RESPONSE', response)
-
     return response
   } catch (error) {
     console.error(error)

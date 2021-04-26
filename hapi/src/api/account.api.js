@@ -484,7 +484,6 @@ const verifyEmail = async ({ code }) => {
 }
 
 const getReport = async (account) => {
-  console.log('GET-REPORT')
   const user = await userApi.getOne({
     _or: [
       { email: { _eq: account } },

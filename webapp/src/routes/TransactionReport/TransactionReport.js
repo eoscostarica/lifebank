@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
-import PDF, { Text, AddPage, Line, Image, Table, Html } from 'jspdf-react'
+import PDF, { Text, AddPage, Table } from 'jspdf-react'
 import { useTranslation } from 'react-i18next'
 import { useUser } from '../../context/user.context'
 import { GET_REPORT_QUERY } from '../../gql'
@@ -8,7 +8,7 @@ import { GET_REPORT_QUERY } from '../../gql'
 const TransactionReport = () => {
   const { t } = useTranslation('translations')
   const [currentUser] = useUser()
-  const properties = { header: 'Acme' }
+  const properties = { header: 'LIFEBANK' }
 
   const [headReceive, setHeadReceived] = useState()
   const [bodyReceive, setBodyReceive] = useState()
@@ -32,7 +32,6 @@ const TransactionReport = () => {
     if(!getReportResult) {
       getReportQuery()
     } else {
-      console.log('REPORT', getReportResult)
       if(currentUser && currentUser.role === 'lifebank') formatDataToLifebankReport()
       else if(currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
     }
