@@ -19,6 +19,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
 import Grid from '@material-ui/core/Grid'
+import PhoneNumber from 'material-ui-phone-number'
 
 import { VERIFY_USERNAME } from '../../gql'
 
@@ -122,8 +123,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
+    console.log(value)
     if (field === 'about') {
-      console.log(field)
       setValues({ ...values, [field]: value })
     }
   }
@@ -289,7 +290,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               />
             </Grid>
             <Grid item xs={4}>
-              <TextField
+              {/* <TextField
                 id="phoneNumber1"
                 style={{
                   display: isCompleting && user.address ? 'none' : ''
@@ -303,6 +304,14 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   shrink: true
                 }}
               //onChange={(event) => handleSetField('address', event.target.value)}
+              /> */}
+              <PhoneNumber
+                defaultCountry='cr'
+                fullWidth
+                label={t('signup.phoneNumber')}
+                id="phoneNumber1"
+                variant="filled"
+                onChange={(event) => handleSetField('phone', event)}
               />
             </Grid>
             <Grid item xs={4}>
