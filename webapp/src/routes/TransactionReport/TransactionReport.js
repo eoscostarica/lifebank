@@ -1,42 +1,57 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import Typography from '@material-ui/core/Typography'
-import { useHistory } from 'react-router-dom'
-
-import Alert from '@material-ui/lab/Alert'
-import { useTranslation } from 'react-i18next'
-import Snackbar from '@material-ui/core/Snackbar'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme, makeStyles } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
+import { useLazyQuery } from '@apollo/react-hooks'
 import PDF, { Text, AddPage, Line, Image, Table, Html } from 'jspdf-react'
+import { useTranslation } from 'react-i18next'
 
-import styles from './styles'
-
-const styleH1 = {
-  fontSize: '15px',
-  textAlign: 'center',
-  color: 'red'
-};
- 
-const invisibleStyle = {
-  display: 'none',
-};
+import { GET_REPORT_QUERY } from '../../gql'
 
 const TransactionReport = () => {
-  const [openAlert, setOpenAlert] = useState(false)
-  const [messegaAlert, setMessegaAlert] = useState("false")
-  const [severity] = useState("error")
+  const { t } = useTranslation('translations')
   const properties = { header: 'Acme' }
-  const head = [["ID", "Name", "Country"]]
-  const body = [
-      [1, "Shaw", "Tanzania"],
-      [2, "Nelson", "Kazakhstan"],
-      [3, "Garcia", "Madagascar"],
-  ]
 
-  const handleOpenAlert = () => setOpenAlert(!openAlert)
+  const headReceive = [["business", "date", "time", "tokens"]]
+  const [bodyReceive, setBodyReceive] = useState()
 
+  const headSent = [["donor", "date", "time", "tokens"]]
+  const [bodySent, setBodySent] = useState()
+
+  const [
+    getReportQuery,
+    { errorReport, data: { get_report: getReportResult } = {} }
+  ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
+
+
+  useEffect(() => {
+    if(!getReportResult) {
+      getReportQuery()
+    } else {
+      const receive = getReportResult.notifications.recieved.map(function(notification) {
+        return [
+          notification.business,
+          notification.created_at_date,
+          notification.created_at_time,
+          notification.tokens
+        ]
+      })
+
+      const sent = getReportResult.notifications.sent.map(function(notification) {
+        return [
+          notification.send_to,
+          notification.created_at_date,
+          notification.created_at_time,
+          notification.tokens
+        ]
+      })
+
+      setBodyReceive(receive)
+      setBodySent(sent)
+    }
+    console.log('GET-REPORT-RESULT', getReportResult)
+  }, [getReportResult])
+
+  useEffect(() => {
+    console.log('GET-REPORT-ERROR', errorReport)
+  }, [errorReport])
 
   return (
     <>
@@ -46,31 +61,20 @@ const TransactionReport = () => {
         preview={true}
         previewWidth="100%"
       >
-        <Text x={35} y={25} size={40}>Report</Text>
+        <Text x={35} y={25} size={40}>Receive tokens</Text>
         <Table
-          head={head}
-          body={body}
+          head={headReceive}
+          body={bodyReceive}
+        />
+
+        <AddPage />
+
+        <Text x={35} y={25} size={40}>Sent tokens</Text>
+        <Table
+          head={headSent}
+          body={bodySent}
         />
       </PDF>
-      <div id="page" style={invisibleStyle}>
-        <h1 style={styleH1}>Source Html</h1>
-          <p>
-            <strong>lorem ipsumLorem </strong>Ipsum is simply dummy text of the printing and
-            typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
-            since the 1500s, when an unknown printer took a galley of type and scrambled it to
-            make a type specimen book. It has survived not only five centuries, but also the
-            leap into electronic typesetting, remaining essentially unchanged. It was popularised
-            in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus PageMaker including
-            versions of Lorem Ipsum.
-          </p>
-      </div>
-      
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
-        <Alert onClose={handleOpenAlert} severity={severity}>
-          {messegaAlert}
-        </Alert>
-      </Snackbar>
     </>
   )
 }

@@ -110,7 +110,7 @@ const signup = async (account, profile) => {
   await historyApi.insert(addLifebankTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
 
-  await locationApi.insert({
+await locationApi.insert({
     account,
     name: profile.name,
     geolocation: {

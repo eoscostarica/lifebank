@@ -5,7 +5,7 @@ const { accountApi } = require('../../api')
 
 module.exports = async ({ auth: { credentials } }) => {
   try {
-    const response = await accountApi.getNotifications(credentials.sub)
+    const response = await accountApi.getReport(credentials.sub)
 
     console.log('RESPONSE', response)
 

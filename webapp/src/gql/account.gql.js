@@ -54,9 +54,9 @@ export const LOGIN_MUTATION = gql`
   }
 `
 
-export const GET_NOTIFICATIONS_QUERY = gql`
+export const GET_REPORT_QUERY = gql`
   query {
-    get_notifications {
+    get_report {
       notifications
     }
   }

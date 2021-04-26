@@ -93,7 +93,7 @@ type Query {
 
 
 type Query {
-  get_notifications : get_notifications_output
+  get_report : get_report_output
 }
 
 
@@ -301,5 +301,9 @@ type get_notifications_output {
 
 type redeem_offer_output {
   transaction_id : String!
+}
+
+type get_report_output {
+  notifications : jsonb!
 }
 

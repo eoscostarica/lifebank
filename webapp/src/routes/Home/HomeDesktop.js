@@ -24,7 +24,7 @@ import MapModal from '../../components/MapModal'
 import FilterHome from '../../components/FilterHome'
 import Signup from '../../components/Signup/Signup'
 import styles from './styles'
-import { REDEEM_OFFER_MUTATION, GET_NOTIFICATIONS_QUERY } from '../../gql'
+import { REDEEM_OFFER_MUTATION, GET_REPORT_QUERY } from '../../gql'
 
 const useStyles = makeStyles(styles)
 
@@ -41,9 +41,9 @@ const HomeDesktop = (props) => {
   ] = useMutation(REDEEM_OFFER_MUTATION)
 
   const [
-    getNotificationsQuery,
-    { loadingNotification, errorNotification, data: { get_notifications: getNotificationsResult } = {} }
-  ] = useLazyQuery(GET_NOTIFICATIONS_QUERY, { fetchPolicy: 'network-only' })
+    getReportQuery,
+    { loadingReport, errorReport, data: { get_report: getReportResult } = {} }
+  ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   const handleRecording = () => {
     if (!recording) {
@@ -58,7 +58,7 @@ const HomeDesktop = (props) => {
   }
 
   const redeemOfferHandler = () => {
-    getNotificationsQuery()
+    getReportQuery()
     // const payload = {
     //   to: 'spoxq4orqkoi',
     //   memo: 'testing',
@@ -76,12 +76,12 @@ const HomeDesktop = (props) => {
   }
 
   useEffect(() => {
-    console.log('GET-NOTIFICATIONS-RESULT', getNotificationsResult)
-  }, [getNotificationsResult])
+    console.log('GET-REPORT-RESULT', getReportResult)
+  }, [getReportResult])
 
   useEffect(() => {
-    console.log('GET-NOTIFICATIONS-ERROR', errorNotification)
-  }, [errorNotification])
+    console.log('GET-REPORT-ERROR', errorReport)
+  }, [errorReport])
 
   useEffect(() => {
     console.log('REDEEM-OFFER-RESULT', redeemOfferResult)

@@ -5,6 +5,7 @@ const { accountApi } = require('../../api')
 
 module.exports = async ({ auth: { credentials } }) => {
   try {
+    console.log('TERMS-AND-CONDITIONS')
     const { transaction_id } = await accountApi.grantConsent(credentials.sub)
 
     return {
