@@ -220,9 +220,9 @@ run_lifebank() {
     register_donor
     register_sponsor
     test_token_lifecycle
-    TO DO: update_sponsor
-    TO DO: update_lifebank
-    TO DO: update_donor
-    clear_tables
+    # TO DO: update_sponsor
+    # TO DO: update_lifebank
+    # TO DO: update_donor
+    # clear_tables
 }
 run_lifebank
