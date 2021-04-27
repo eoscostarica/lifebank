@@ -55,13 +55,11 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     about: profile.about,
     address: profile.address,
     website: profile.website,
-    benefit_description: profile.benefit_description,
     telephones:
       profile.telephones && profile.telephones !== '[]'
         ? JSON.parse(profile.telephones)
         : [],
     business_type: profile.business_type,
-    covid_impact: profile.covid_impact,
     geolocation: profile.location ? JSON.parse(profile.location) : null,
     schedule: profile.schedule,
     photos:
@@ -255,43 +253,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           className={classes.textField}
           fullWidth
           onChange={(event) => handleSetField('about', event.target.value)}
-        />
-
-        <TextField
-          id="covidImpact"
-          style={{ display: showOrHide(profile.covid_impact) }}
-          label={t('editProfile.covidImpact')}
-          variant="outlined"
-          placeholder={t('editProfile.covidImpactPlaceholder')}
-          defaultValue={user.covid_impact}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          multiline
-          fullWidth
-          rowsMax={10}
-          onChange={(event) =>
-            handleSetField('covid_impact', event.target.value)
-          }
-        />
-        <TextField
-          id="benefitDescription"
-          style={{ display: showOrHide(profile.benefit_description) }}
-          label={t('profile.benefitDescription')}
-          variant="outlined"
-          placeholder=""
-          defaultValue={user.benefit_description}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          multiline
-          fullWidth
-          rowsMax={10}
-          onChange={(event) =>
-            handleSetField('benefit_description', event.target.value)
-          }
         />
         <Box
           width="100%"

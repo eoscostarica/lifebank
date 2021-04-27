@@ -245,9 +245,7 @@ type ValidSponsor {
   social_media_links : String!
   photos : String!
   website : String!
-  covidImpact : String!
   businessType : String!
-  benefitDescription : String!
   userName : String!
   role : String!
 }

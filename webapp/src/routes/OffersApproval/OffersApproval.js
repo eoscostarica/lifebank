@@ -12,7 +12,6 @@ import Select from '@material-ui/core/Select'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
 
 import ShowOffersAproval from '../../components/ShowElements/ShowOffersAproval'
-
 import {
   GET_ALL_OFFERS_QUERY,
   GET_INFO
@@ -234,7 +233,7 @@ const OffersApproval = () => {
           />
         </Grid>
       )}
-      {category === 'freeProduct' && (
+      {category === '' && (
         <Grid
           container
           direction="row"
@@ -320,7 +319,6 @@ const OffersApproval = () => {
           alignItems="flex-start"
           spacing={0}
           className={classes.showOffers}
-          md={12}
         >
           {categories.includes(category) && (
             <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
@@ -330,15 +328,128 @@ const OffersApproval = () => {
           )}
           <Grid item md={12} >
             <Typography variant="h2" className={classes.SubtitleSection}>
-              {t('categories.badge')}
+              {t('categories.discount')}
             </Typography>
           </Grid>
           <ShowOffersAproval
             offers={badgeOffers}
             loading={loadingOffers}
           />
-        </Grid>
+        </Grid >
       )}
+      {
+        category === 'freeProduct' && (
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+            className={classes.showOffers}
+          >
+            {categories.includes(category) && (
+              <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+            )}
+            {!categories.includes(category) && (
+              <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+            )}
+            <Grid item md={12} >
+              <Typography variant="h2" className={classes.SubtitleSection}>
+                {t('categories.freeProduct')}
+              </Typography>
+            </Grid>
+            <ShowOffersAproval
+              offers={freeOffers}
+              loading={loadingOffers}
+            />
+          </Grid >
+        )
+      }
+      {
+        category === 'coupon' && (
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+            className={classes.showOffers}
+          >
+            {categories.includes(category) && (
+              <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+            )}
+            {!categories.includes(category) && (
+              <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+            )}
+            <Grid item md={12} >
+              <Typography variant="h2" className={classes.SubtitleSection}>
+                {t('categories.coupon')}
+              </Typography>
+            </Grid>
+            <ShowOffersAproval
+              offers={couponOffers}
+              loading={loadingOffers}
+            />
+          </Grid >
+        )
+      }
+      {
+        category === 'benefit' && (
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+            className={classes.showOffers}
+          >
+            {categories.includes(category) && (
+              <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+            )}
+            {!categories.includes(category) && (
+              <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+            )}
+            <Grid item md={12} >
+              <Typography variant="h2" className={classes.SubtitleSection}>
+                {t('categories.benefit')}
+              </Typography>
+            </Grid>
+            <ShowOffersAproval
+              offers={benefitsOffers}
+              loading={loadingOffers}
+            />
+          </Grid >
+        )
+      }
+      {
+        category === 'badge' && (
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+            className={classes.showOffers}
+            md={12}
+          >
+            {categories.includes(category) && (
+              <SnackbarContent className={classes.snackbar} message={t('offerApproval.message1')} />
+            )}
+            {!categories.includes(category) && (
+              <SnackbarContent className={classes.snackbar} message={t('offerApproval.message2')} />
+            )}
+            <Grid item md={12} >
+              <Typography variant="h2" className={classes.SubtitleSection}>
+                {t('categories.badge')}
+              </Typography>
+            </Grid>
+            <ShowOffersAproval
+              offers={badgeOffers}
+              loading={loadingOffers}
+            />
+          </Grid >
+        )
+      }
     </>
   )
 }

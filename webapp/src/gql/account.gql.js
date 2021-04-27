@@ -101,9 +101,7 @@ export const GET_VALID_SPONSORS_QUERY = gql`
       social_media_links
       photos
       website
-      covidImpact
       businessType
-      benefitDescription
       userName
       role
     }
