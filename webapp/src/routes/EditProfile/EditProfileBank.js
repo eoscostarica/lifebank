@@ -13,7 +13,6 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
-import Telephones from '../../components/Telephones'
 import Divider from '@material-ui/core/Divider'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
@@ -42,10 +41,14 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const classes = useStyles()
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
   const photoUrlValueRef = useRef(undefined)
-  const phoneValueRef = useRef(undefined)
+  const [phoneValue1, setPhoneValue1] = useState(profile.telephones ? JSON.parse(profile.telephones)[0] : [])
+  const [phoneValue2, setPhoneValue2] = useState(profile.telephones ? JSON.parse(profile.telephones)[1] : [])
+  const [address, setAddress] = useState(profile.address ? profile.address.split(',')[0] : '')
+  const [city, setCity] = useState(profile.address ? profile.address.split(',')[1] : '')
+  const [state, setState] = useState(profile.address ? profile.address.split(',')[2] : '')
+  const [country, setCountry] = useState(profile.address ? profile.address.split(',')[3] : '')
   const history = useHistory()
   const [severity] = useState('error')
-  const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [username, setUserName] = useState(userName.replaceAll('-', ' '))
   const [isValid, setIsvalid] = useState(true)
   const [isUnique, setIsUnique] = useState(true)
@@ -83,6 +86,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   })
 
   const isUsernameUnique = async () => {
+    addAddress()
     if (!profile.consent) {
       handleSnackbarClose()
     } else {
@@ -99,6 +103,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         setFirstRun(false)
       }
     }
+  }
+
+  const addAddress = () => {
+    let completeAddress = address.concat(',', city, ',', state, ',', country)
+    handleSetField('address', completeAddress)
   }
 
   const validUserName = (newUserName) => {
@@ -142,6 +151,16 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   }, [isUnique, firstRun])
 
+  useEffect(() => {
+    setUser({
+      ...user,
+      telephones: [
+        phoneValue1,
+        phoneValue2
+      ]
+    })
+  }, [phoneValue1, phoneValue2])
+
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
       e.preventDefault()
@@ -151,21 +170,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
       })
       photoUrlValueRef.current.value = ''
       setDisablePhotoUrlInput(true)
-    }
-  }
-
-  function executeAddTelephone(e) {
-    if (e.key === 'Enter' && (!disablePhoneInput)) {
-      e.preventDefault()
-      setUser({
-        ...user,
-        telephones: [
-          ...user.telephones,
-          phoneValueRef.current.value
-        ]
-      })
-      phoneValueRef.current.value = ''
-      setDisablePhoneInput(true)
     }
   }
 
@@ -200,12 +204,12 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           {t('signup.noConsentNoEdit')}
         </Alert>
       </Snackbar>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} xs={12}>
         <Grid container item xs={12} direction="column">
           <Typography className={classes.boldText} variant="h2">
             {t('editProfile.editTitleLifebank')}
           </Typography>
-          <Typography className={classes.text} variant="h5">
+          <Typography className={classes.text} variant="body1">
             {t('editProfile.information')}
           </Typography>
         </Grid>
@@ -217,7 +221,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             id="fullname"
             name="name"
             style={{ display: isCompleting && user.name ? 'none' : '' }}
-            //label={t('profile.organization')}
+            label={t('profile.organization')}
             fullWidth
             variant="filled"
             placeholder={t('editProfile.organizationPlaceholder')}
@@ -243,7 +247,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             style={{
               display: isCompleting && user.about ? 'none' : ''
             }}
-            //label={t('signup.about')}
+            label={t('signup.about')}
             fullWidth
             height="200px"
             variant="filled"
@@ -261,7 +265,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.boldText} variant="h4">
             {t('editProfile.contactInformation')}
           </Typography>
-          <Grid container item spacing={3}>
+          <Grid container item spacing={3} xs={12}>
             <Grid item xs={4}>
               <TextField
                 id="username"
@@ -290,83 +294,26 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               />
             </Grid>
             <Grid item xs={4}>
-              {/* <TextField
-                id="phoneNumber1"
-                style={{
-                  display: isCompleting && user.address ? 'none' : ''
-                }}
-                //label={t('signup.address')}
-                fullWidth
-                variant="filled"
-                placeholder={t("Phone Number 1")}
-                //defaultValue={user.address}
-                InputLabelProps={{
-                  shrink: true
-                }}
-              //onChange={(event) => handleSetField('address', event.target.value)}
-              /> */}
               <PhoneNumber
                 defaultCountry='cr'
+                value={user.telephones[0]}
                 fullWidth
                 label={t('signup.phoneNumber')}
                 id="phoneNumber1"
                 variant="filled"
-                onChange={(event) => handleSetField('phone', event)}
+                onChange={(event) => setPhoneValue1(event)}
               />
             </Grid>
             <Grid item xs={4}>
-              <TextField
-                id="telephone"
-                style={{ display: isCompleting && user.telephones ? 'none' : '' }}
-                label={t('signup.phoneNumber')}
-                variant="filled"
-                placeholder={t('signup.phoneNumberPlaceholder')}
+              <PhoneNumber
+                defaultCountry='cr'
                 fullWidth
-                inputRef={phoneValueRef}
-                onChange={(e) => setDisablePhoneInput(e.target.value.length === 0)}
-                onKeyPress={(event) =>
-                  executeAddTelephone(event)
-                }
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        disabled={disablePhoneInput}
-                        color="secondary"
-                        aria-label="toggle password visibility"
-                        onClick={() => {
-                          setUser({
-                            ...user,
-                            telephones: [
-                              ...user.telephones,
-                              phoneValueRef.current.value
-                            ]
-                          })
-                          phoneValueRef.current.value = ''
-                          setDisablePhoneInput(true)
-                        }}
-                      >
-                        <AddIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-                InputLabelProps={{
-                  shrink: true
-                }}
+                value={user.telephones[1]}
+                label={t('signup.phoneNumber')}
+                id="phoneNumber1"
+                variant="filled"
+                onChange={(event) => setPhoneValue2(event)}
               />
-              {user.telephones.length > 0 && (
-                <Telephones
-                  phones={user.telephones}
-                  showDelete
-                  deletePhone={(phone) =>
-                    setUser({
-                      ...user,
-                      telephones: user.telephones.filter((p) => p !== phone)
-                    })
-                  }
-                />
-              )}
             </Grid>
           </Grid>
         </Grid>
@@ -374,7 +321,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.boldText} variant="h4">
             {t('editProfile.addressInformation')}
           </Typography>
-          <Typography className={classes.text}>
+          <Typography className={classes.text} variant="body1">
             {t('editProfile.addressDescription')}
           </Typography>
           <Grid container xs={12} spacing={3}>
@@ -389,11 +336,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   fullWidth
                   variant="filled"
                   placeholder={t('signup.addressPlaceholder')}
-                  defaultValue={user.address}
+                  defaultValue={address}
                   InputLabelProps={{
                     shrink: true
                   }}
-                  onChange={(event) => handleSetField('address', event.target.value)}
+                  onChange={(event) => setAddress(event.target.value)}
                 />
               </Grid>
               <Grid
@@ -412,11 +359,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                       fullWidth
                       variant="filled"
                       placeholder={t('San José')}
-                      defaultValue={user.address}
+                      defaultValue={city}
                       InputLabelProps={{
                         shrink: true
                       }}
-                      onChange={(event) => handleSetField('address', event.target.value)}
+                      onChange={(event) => setCity(event.target.value)}
                     />
                   </Box>
                 </Grid>
@@ -431,11 +378,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                       fullWidth
                       variant="filled"
                       placeholder={t('Tibás')}
-                      defaultValue={user.address}
+                      defaultValue={state}
                       InputLabelProps={{
                         shrink: true
                       }}
-                      onChange={(event) => handleSetField('address', event.target.value)}
+                      onChange={(event) => setState(event.target.value)}
                     />
                   </Box>
                 </Grid>
@@ -450,11 +397,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   fullWidth
                   variant="filled"
                   placeholder={t('Costa Rica')}
-                  defaultValue={user.address}
+                  defaultValue={country}
                   InputLabelProps={{
                     shrink: true
                   }}
-                  onChange={(event) => handleSetField('address', event.target.value)}
+                  onChange={(event) => setCountry(event.target.value)}
                 />
               </Grid>
             </Grid>
@@ -477,7 +424,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Grid item xs={6}>
             <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
               <Divider className={classes.divider} />
-              <Typography className={classes.boldText} variant="subtitle1">{t('common.schedule')}</Typography>
+              <Typography className={classes.boldText} variant="h4">{t('common.schedule')}</Typography>
               <Schedule
                 buttonText={t('schedule.editSchedule')}
                 scheduleLoad={user.schedule}
@@ -491,7 +438,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Grid item xs={6}>
             <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
               <Divider className={classes.divider} />
-              <Typography className={classes.boldText} variant="subtitle1">{t('common.categories')}</Typography>
+              <Typography className={classes.boldText} variant="h4">{t('common.categories')}</Typography>
               <Typography variant="body1" className={classes.text}>
                 {t('categories.description')}
               </Typography>
@@ -512,7 +459,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.boldText} variant="h4">
             {t('editProfile.imagery')}
           </Typography>
-          <Typography className={classes.paper}>
+          <Typography className={classes.text} variant="body1">
             {t('editProfile.imageryDescription')}
           </Typography>
           <Grid container item xs={12} >
@@ -587,27 +534,29 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>
           </Grid>
         </Grid>
+        <Grid item xs={12} direction="column">
+          <Box className={classes.btnWrapper}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => isUsernameUnique()}
+              className={classes.saveBtn}
+            >
+              {t('common.save')}
+            </Button>
+            <Link to="/profile" className={classes.routerLink}>
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.cancelBtn}
+              >
+                {t('common.cancel')}
+              </Button>
+            </Link>
+            {loading && <CircularProgress />}
+          </Box>
+        </Grid>
       </Grid>
-      <Box className={classes.btnWrapper}>
-        <Link to="/profile" className={classes.routerLink}>
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.cancelBtn}
-          >
-            {t('common.cancel')}
-          </Button>
-        </Link>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => isUsernameUnique()}
-          className={classes.saveBtn}
-        >
-          {t('common.save')}
-        </Button>
-        {loading && <CircularProgress />}
-      </Box>
     </form>
   )
 }
