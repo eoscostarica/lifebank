@@ -8,6 +8,12 @@ actions:
   - role: guest
   - role: lifebank
   - role: sponsor
+- name: check_email_verified
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/check-email-verified
+  permissions:
+  - role: guest
 - name: check_username
   definition:
     kind: synchronous
@@ -113,6 +119,12 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
+- name: send_email
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/send-email
+  permissions:
+  - role: guest
 - name: signup
   definition:
     kind: synchronous
@@ -172,4 +184,6 @@ custom_types:
   - name: signup_method_output
   - name: create_account_lifebank_auth_output
   - name: create_account_auth_output
+  - name: send_email_output
+  - name: check_email_verified_output
   scalars: []

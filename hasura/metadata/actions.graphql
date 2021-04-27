@@ -9,6 +9,13 @@ type Mutation {
 
 
 type Mutation {
+  check_email_verified (
+    account: String!
+  ): check_email_verified_output
+}
+
+
+type Mutation {
   check_username (
     role: String!
     username: String!
@@ -122,6 +129,14 @@ type Query {
 
 type Mutation {
   revoke_consent : revoke_consent_output
+}
+
+
+type Mutation {
+  send_email (
+    account: String!
+    emailContent: jsonb!
+  ): send_email_output
 }
 
 
@@ -278,5 +293,13 @@ type create_account_auth_output {
   account : String!
   transaction_id : String!
   token : String!
+}
+
+type send_email_output {
+  success : Boolean!
+}
+
+type check_email_verified_output {
+  verified : Boolean!
 }
 

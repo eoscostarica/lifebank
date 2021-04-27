@@ -97,7 +97,10 @@
       "loginWithFacebook": "Login with Facebook",
       "loginWithGoogle": "Login with Google",
       "logout": "Logout",
-      "notAccount": "No account yet? Register here."
+      "notAccount": "No account yet? Register here.",
+      "verify": "Verify",
+      "textVerify": "We sent you a confirmation email to your inbox. If you can't find it, please check your spam folder. If you still don't find it, you can resend it.",
+      "resend": "Resend"
     },
     "map": {
       "findLifebank": "Find Lifebanks or Sponsors near you",

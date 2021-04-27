@@ -97,7 +97,10 @@
       "loginWithFacebook": "Iniciar sesión con Facebook",
       "loginWithGoogle": "Iniciar sesión con Google",
       "logout": "Cerrar sesión",
-      "notAccount": "¿No tienes cuenta aún? Registrarse aquí."
+      "notAccount": "¿No tienes cuenta aún? Registrarse aquí.",
+      "verify": "Verifique",
+      "textVerify": "Te enviamos un correo de confirmación. Si no lo puedes encontrar, revisa tu carpeta de spam. Si todavía no lo encuentras, puedes reenviarlo.",
+      "resend": "Reenviar"
     },
     "map": {
       "findLifebank": "Encontrar Bancos de Sangre o Comercios Afiliados cerca de ti",
