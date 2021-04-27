@@ -426,27 +426,6 @@ const ProfilePageSponsor = ({ profile }) => {
           </Box>
         </>
       }
-<<<<<<< HEAD
-=======
-      {profile.covid_impact &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('editProfile.covidImpact')}</Typography>
-            <Typography >{profile.covid_impact}</Typography>
-          </Box>
-        </>
-      }
-      {profile.benefit_description &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.benefitDescription')}</Typography>
-            <Typography >{profile.benefit_description}</Typography>
-          </Box>
-        </>
-      }
->>>>>>> master
       {images.length > 0 &&
         <>
           <Divider className={classes.divider} />
