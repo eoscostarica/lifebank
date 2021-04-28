@@ -314,9 +314,7 @@ const getValidSponsors = async () => {
         social_media_links: sponsorsAccounts[index].info.social_media_links,
         photos: sponsorsAccounts[index].info.photos,
         website: sponsorsAccounts[index].info.website,
-        covidImpact: sponsorsAccounts[index].info.covid_impact,
         businessType: sponsorsAccounts[index].info.business_type,
-        benefitDescription: sponsorsAccounts[index].info.benefit_description,
         userName: sponsorsAccounts[index].user.username,
         role: sponsorsAccounts[index].user.role
       })

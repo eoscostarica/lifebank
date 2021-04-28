@@ -12,6 +12,8 @@ const GET_ONE = `
       name
       token
       signup_method
+      verification_code
+      email_verified
     }
   }
 `

@@ -174,15 +174,6 @@ const ProfilePageSponsor = ({ profile }) => {
     if (!profile.schedule)
       pendingFieldsObject = { ...pendingFieldsObject, schedule: false }
 
-    if (!profile.covid_impact)
-      pendingFieldsObject = { ...pendingFieldsObject, covid_impact: false }
-
-    if (!profile.benefit_description)
-      pendingFieldsObject = {
-        ...pendingFieldsObject,
-        benefit_description: false
-      }
-
     if (!profile.location)
       pendingFieldsObject = { ...pendingFieldsObject, location: false }
 
@@ -334,7 +325,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('offersManagement.type')}</Typography>
-            <Typography variant="body1">{profile.business_type}</Typography>
+            <Typography variant="body1">{t(`sponsorTypes.${profile.business_type}`)}</Typography>
           </Box>
         </>
       }
@@ -432,24 +423,6 @@ const ProfilePageSponsor = ({ profile }) => {
           <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
             <Typography >{profile.about}</Typography>
-          </Box>
-        </>
-      }
-      {profile.covid_impact &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('editProfile.covidImpact')}</Typography>
-            <Typography >{profile.covid_impact}</Typography>
-          </Box>
-        </>
-      }
-      {profile.benefit_description &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.benefitDescription')}</Typography>
-            <Typography >{profile.benefit_description}</Typography>
           </Box>
         </>
       }

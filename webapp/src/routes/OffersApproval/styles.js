@@ -34,7 +34,6 @@ export default (theme) => ({
     paddingTop: 39,
     paddingLeft: 20,
     paddingRigth: 20,
-    paddingBottom: '15%',
     [theme.breakpoints.down('xs')]: {
       paddingLeft: 10
     }

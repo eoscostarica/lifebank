@@ -9,6 +9,13 @@ type Mutation {
 
 
 type Mutation {
+  check_email_verified (
+    account: String!
+  ): check_email_verified_output
+}
+
+
+type Mutation {
   check_username (
     role: String!
     username: String!
@@ -126,6 +133,14 @@ type Mutation {
 
 
 type Mutation {
+  send_email (
+    account: String!
+    emailContent: jsonb!
+  ): send_email_output
+}
+
+
+type Mutation {
   signup (
     profile: jsonb!
   ): signup_output
@@ -230,9 +245,7 @@ type ValidSponsor {
   social_media_links : String!
   photos : String!
   website : String!
-  covidImpact : String!
   businessType : String!
-  benefitDescription : String!
   userName : String!
   role : String!
 }
@@ -278,5 +291,13 @@ type create_account_auth_output {
   account : String!
   transaction_id : String!
   token : String!
+}
+
+type send_email_output {
+  success : Boolean!
+}
+
+type check_email_verified_output {
+  verified : Boolean!
 }
 
