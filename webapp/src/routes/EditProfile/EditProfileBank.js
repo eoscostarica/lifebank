@@ -132,7 +132,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
-    console.log(value)
     if (field === 'about') {
       setValues({ ...values, [field]: value })
     }
