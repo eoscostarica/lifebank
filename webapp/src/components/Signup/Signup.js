@@ -46,7 +46,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
   const [activeStep, setActiveStep] = useState(0)
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
-  const [open, setOpen] = useState(isModal ? true : false)
+  const [open, setOpen] = useState(!!isModal)
   const [openAlert, setOpenAlert] = useState(false)
   const [messegaAlert, setMessegaAlert] = useState("false")
   const [maxWidth] = useState('sm')
