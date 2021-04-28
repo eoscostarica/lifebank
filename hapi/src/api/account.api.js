@@ -500,22 +500,20 @@ const getReport = async (account) => {
 }
 
 const getReportSponsor = async (account) => {
-  const notifications = (
-    await notificationApi.getMany({
-      account_to: { _eq: account }
-    })
-  )
-  
-  const received = notifications? notifications.map(function (notification) {
-    return {
-      payerUser: notification.account_from,
-      created_at_date: notification.created_at.split('T')[0],
-      created_at_time: notification.created_at.split('T')[1].split('.')[0],
-      offer: notification.payload.offer
-    }
+  const notifications = await notificationApi.getMany({
+    account_to: { _eq: account }
   })
-  : []
 
+  const received = notifications
+    ? notifications.map(function (notification) {
+        return {
+          payerUser: notification.account_from,
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          offer: notification.payload.offer
+        }
+      })
+    : []
 
   return {
     notifications: {
@@ -525,40 +523,38 @@ const getReportSponsor = async (account) => {
 }
 
 const getReportLifebank = async (account) => {
-  const notificationsSent = (
-    await notificationApi.getMany({
-      account_from: { _eq: account }
-    })
-  )
-  const notificationsReceived = (
-    await notificationApi.getMany({
-      account_to: { _eq: account }
-    })
-  )
-
-  const sent = notificationsSent ? notificationsSent.map(function (notification) {
-    return {
-      created_at_date: notification.created_at.split('T')[0],
-      created_at_time: notification.created_at.split('T')[1].split('.')[0],
-      tokens:
-        parseInt(notification.payload.newBalance[0].split(' ')[0]) -
-        parseInt(notification.payload.currentBalance[0].split(' ')[0]),
-      send_to: notification.account_to
-    }
+  const notificationsSent = await notificationApi.getMany({
+    account_from: { _eq: account }
   })
-  : []
-
-  const received = notificationsReceived ? notificationsReceived.map(function (notification) {
-    return {
-      created_at_date: notification.created_at.split('T')[0],
-      created_at_time: notification.created_at.split('T')[1].split('.')[0],
-      tokens:
-        parseInt(notification.payload.newBalance[0].split(' ')[0]) -
-        parseInt(notification.payload.currentBalance[0].split(' ')[0]),
-      business: notification.account_from
-    }
+  const notificationsReceived = await notificationApi.getMany({
+    account_to: { _eq: account }
   })
-  : []
+
+  const sent = notificationsSent
+    ? notificationsSent.map(function (notification) {
+        return {
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          tokens:
+            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+          send_to: notification.account_to
+        }
+      })
+    : []
+
+  const received = notificationsReceived
+    ? notificationsReceived.map(function (notification) {
+        return {
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          tokens:
+            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+          business: notification.account_from
+        }
+      })
+    : []
 
   return {
     notifications: {
