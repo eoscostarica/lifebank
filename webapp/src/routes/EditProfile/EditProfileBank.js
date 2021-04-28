@@ -106,7 +106,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   }
 
   const addAddress = () => {
-    let completeAddress = address.concat(',', city, ',', state, ',', country)
+    const completeAddress = address.concat(',', city, ',', state, ',', country)
     handleSetField('address', completeAddress)
   }
 
