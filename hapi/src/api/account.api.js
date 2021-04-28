@@ -504,7 +504,9 @@ const getReportSponsor = async (account) => {
     await notificationApi.getMany({
       account_to: { _eq: account }
     })
-  ).map(function (notification) {
+  )
+  
+  const received = notifications? notifications.map(function (notification) {
     return {
       payerUser: notification.account_from,
       created_at_date: notification.created_at.split('T')[0],
@@ -512,22 +514,29 @@ const getReportSponsor = async (account) => {
       offer: notification.payload.offer
     }
   })
+  : []
 
-  if (!notifications) return { notifications: {} }
 
   return {
     notifications: {
-      recieved: notifications
+      received: received
     }
   }
 }
 
 const getReportLifebank = async (account) => {
-  const notificationsSend = (
+  const notificationsSent = (
     await notificationApi.getMany({
       account_from: { _eq: account }
     })
-  ).map(function (notification) {
+  )
+  const notificationsReceived = (
+    await notificationApi.getMany({
+      account_to: { _eq: account }
+    })
+  )
+
+  const sent = notificationsSent ? notificationsSent.map(function (notification) {
     return {
       created_at_date: notification.created_at.split('T')[0],
       created_at_time: notification.created_at.split('T')[1].split('.')[0],
@@ -537,12 +546,9 @@ const getReportLifebank = async (account) => {
       send_to: notification.account_to
     }
   })
+  : []
 
-  const notificationsRecieve = (
-    await notificationApi.getMany({
-      account_to: { _eq: account }
-    })
-  ).map(function (notification) {
+  const received = notificationsReceived ? notificationsReceived.map(function (notification) {
     return {
       created_at_date: notification.created_at.split('T')[0],
       created_at_time: notification.created_at.split('T')[1].split('.')[0],
@@ -552,11 +558,12 @@ const getReportLifebank = async (account) => {
       business: notification.account_from
     }
   })
+  : []
 
   return {
     notifications: {
-      sent: notificationsSend,
-      recieved: notificationsRecieve
+      sent: sent,
+      received: received
     }
   }
 }

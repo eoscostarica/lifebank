@@ -58,21 +58,23 @@ const HomeDesktop = (props) => {
   }
 
   const redeemOfferHandler = () => {
-    getReportQuery()
-    // const payload = {
-    //   to: 'spoxq4orqkoi',
-    //   memo: 'testing',
-    //   quantity: 10,
-    //   offer: {
-    //     id: 54,
-    //     name: 'OFFER TEST2'
-    //   }
-    // }
-    // redeemOffer({
-    //   variables: {
-    //     ...payload
-    //   }
-    // })
+    // getReportQuery()
+    const payload = {
+      to: 'spoxzcs3lstc',
+      memo: 'testing',
+      quantity: 2,
+      offer: {
+        id: 54,
+        offer_name: 'OFFER TEST2',
+        cost_in_tokens: 1,
+        description: 'brief offer description'
+      }
+    }
+    redeemOffer({
+      variables: {
+        ...payload
+      }
+    })
   }
 
   useEffect(() => {
@@ -128,12 +130,13 @@ const HomeDesktop = (props) => {
             >
               {t('contentToolbar.favorites')}
             </Button>
+
             <Button
               className={classes.buttonIconDesktop}
               startIcon={<StarIcon />}
               onClick={redeemOfferHandler}
             >
-              REDEEM OFFER
+              BUY OFFER
             </Button>
           </Box>
         </Grid>

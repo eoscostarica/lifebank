@@ -29,6 +29,7 @@ const TransactionReport = () => {
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   useEffect(() => {
+    console.log('REPORT-RESULT', getReportResult)
     if(!getReportResult) {
       getReportQuery()
     } else {
@@ -38,7 +39,7 @@ const TransactionReport = () => {
   }, [getReportResult])
 
   const formatDataToLifebankReport = () => {
-    const received = getReportResult.notifications.recieved.map(function(notification) {
+    const received = getReportResult.notifications.received.map(function(notification) {
       return [
         notification.business,
         notification.created_at_date,
@@ -70,13 +71,13 @@ const TransactionReport = () => {
   }
 
   const formatDataToSponsorReport = () => {
-    const received = getReportResult.notifications.recieved.map(function(notification) {
+    const received = getReportResult.notifications.received.map(function(notification) {
       return [
         notification.payerUser,
-        "",
+        notification.offer.offer_name,
         notification.created_at_date,
         notification.created_at_time,
-        notification.offer
+        notification.offer.cost_in_tokens
       ]
     })
 
@@ -95,26 +96,48 @@ const TransactionReport = () => {
   }
 
   return (
-    <PDF
-        filename="Report"
-        properties={properties}
-        preview={true}
-        previewWidth="100%"
-      >
-        <Text x={35} y={25} size={40}>{t('report.receivedTokens')}</Text>
-        <Table
-          head={headReceive}
-          body={bodyReceive}
-        />
+    <>
+      {currentUser && currentUser.role === 'lifebank' && (
+        <PDF
+          filename="Report"
+          properties={properties}
+          preview={true}
+          previewWidth="100%"
+        >
+          <Text x={35} y={25} size={40}>{t('report.receivedTokens')}</Text>
+          <Table
+            head={headReceive}
+            body={bodyReceive}
+          />
 
-        <AddPage />
+          <AddPage />
 
-        <Text x={35} y={25} size={40}>{t('report.sentTokens')}</Text>
-        <Table
-          head={headSent}
-          body={bodySent}
-        />
-      </PDF>
+          <Text x={35} y={25} size={40}>{t('report.sentTokens')}</Text>
+          <Table
+            head={headSent}
+            body={bodySent}
+          />
+        </PDF>
+      )
+      }
+
+      {currentUser && currentUser.role === 'sponsor' && (
+        <PDF
+          filename="Report"
+          properties={properties}
+          preview={true}
+          previewWidth="100%"
+        >
+          <Text x={35} y={25} size={40}>{t('report.receivedTokens')}</Text>
+          <Table
+            head={headReceive}
+            body={bodyReceive}
+          />
+        </PDF>
+      )
+      }
+    </>
+    
   )
 }
 
