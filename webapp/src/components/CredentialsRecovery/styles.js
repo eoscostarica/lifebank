@@ -8,6 +8,8 @@ export default (theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     paddingBottom: "24px",
+    paddingRight: "16px",
+    paddingLeft: "16px"
   },
   closeIcon: {
     position: 'absolute',

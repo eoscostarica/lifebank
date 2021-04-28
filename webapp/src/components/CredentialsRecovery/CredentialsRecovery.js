@@ -242,8 +242,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
 }
 
 CredentialsRecovery.propTypes = {
-  overrideBoxClass: PropTypes.any,
-  overrideLabelClass: PropTypes.any
+  onCloseCredentialsRecovery: PropTypes.func
 }
 
 export default CredentialsRecovery

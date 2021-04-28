@@ -452,6 +452,7 @@ Signup.propTypes = {
   isHome: PropTypes.bool,
   isModal: PropTypes.bool,
   isSideBar: PropTypes.bool,
+  onCloseSignUp: PropTypes.func
 }
 
 Signup.defaultProps = {
