@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/styles'
@@ -24,7 +23,6 @@ import MapModal from '../../components/MapModal'
 import FilterHome from '../../components/FilterHome'
 import Signup from '../../components/Signup/Signup'
 import styles from './styles'
-import { REDEEM_OFFER_MUTATION, GET_REPORT_QUERY } from '../../gql'
 
 const useStyles = makeStyles(styles)
 
@@ -34,16 +32,6 @@ const HomeDesktop = (props) => {
   const [currentUser] = useUser()
   const [recording, setRecording] = React.useState(false)
   const { transcript } = useSpeechRecognition()
-
-  const [
-    redeemOffer,
-    { loading, error, data: { redeem_offer: redeemOfferResult } = {} }
-  ] = useMutation(REDEEM_OFFER_MUTATION)
-
-  const [
-    getReportQuery,
-    { loadingReport, errorReport, data: { get_report: getReportResult } = {} }
-  ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   const handleRecording = () => {
     if (!recording) {
@@ -56,38 +44,6 @@ const HomeDesktop = (props) => {
       setRecording(false)
     }
   }
-
-  const redeemOfferHandler = () => {
-    // getReportQuery()
-    const payload = {
-      to: 'spoxzcs3lstc',
-      memo: 'testing',
-      quantity: 2,
-      offer: {
-        id: 54,
-        offer_name: 'OFFER TEST2',
-        cost_in_tokens: 1,
-        description: 'brief offer description'
-      }
-    }
-    redeemOffer({
-      variables: {
-        ...payload
-      }
-    })
-  }
-
-  useEffect(() => {
-    console.log('GET-REPORT-RESULT', getReportResult)
-  }, [getReportResult])
-
-  useEffect(() => {
-    console.log('GET-REPORT-ERROR', errorReport)
-  }, [errorReport])
-
-  useEffect(() => {
-    console.log('REDEEM-OFFER-RESULT', redeemOfferResult)
-  }, [redeemOfferResult])
 
   useEffect(() => {
     props.handleChangeSearch(transcript)
@@ -129,14 +85,6 @@ const HomeDesktop = (props) => {
               startIcon={<StarIcon />}
             >
               {t('contentToolbar.favorites')}
-            </Button>
-
-            <Button
-              className={classes.buttonIconDesktop}
-              startIcon={<StarIcon />}
-              onClick={redeemOfferHandler}
-            >
-              BUY OFFER
             </Button>
           </Box>
         </Grid>
