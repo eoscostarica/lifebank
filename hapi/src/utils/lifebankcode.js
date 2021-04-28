@@ -127,8 +127,6 @@ const addSponsor = async (
         data: {
           account,
           sponsor_name: name,
-          covid_impact: profile.covid_impact || '',
-          benefit_description: profile.benefit_description || '',
           name: profile.name || '',
           email: profile.email || '',
           website: profile.website || '',

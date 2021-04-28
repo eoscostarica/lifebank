@@ -95,11 +95,11 @@ const InfoPageMobile = () => {
   }, [location])
 
   const getOffers = async () => {
-    if(profile){
-      if(profile.role === 'sponsor'){
-      setLoadingOffers(true)
-      await getAllOffers()
-      await getSponsorID()
+    if (profile) {
+      if (profile.role === 'sponsor') {
+        setLoadingOffers(true)
+        await getAllOffers()
+        await getSponsorID()
       }
     }
   }
@@ -127,7 +127,7 @@ const InfoPageMobile = () => {
         const { data } = await getInfoProfile({
           username: url.replaceAll("-", " ")
         })
-        if(data){
+        if (data) {
           if (data.location.length > 0) {
             const objectTemp = data.location[0]
             if (objectTemp.type === "SPONSOR") {
@@ -135,9 +135,7 @@ const InfoPageMobile = () => {
                 {
                   "account": objectTemp.account,
                   "address": objectTemp.info.address,
-                  "benefitDescription": objectTemp.info.benefit_description,
                   "businessType": objectTemp.info.business_type,
-                  "covidImpact": objectTemp.info.covid_impact,
                   "description": objectTemp.info.about,
                   "email": objectTemp.info.email,
                   "location": JSON.stringify(objectTemp.info.geolocation),
@@ -196,8 +194,8 @@ const InfoPageMobile = () => {
 
   useEffect(() => {
     getInfo()
-    if(profile){
-      if(profile.role === 'sponsor'){
+    if (profile) {
+      if (profile.role === 'sponsor') {
         getOffers()
       }
     }
@@ -214,8 +212,8 @@ const InfoPageMobile = () => {
       if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
         && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
         getInfo()
-        if(profile){
-          if(profile.role === 'sponsor'){
+        if (profile) {
+          if (profile.role === 'sponsor') {
             getOffers()
           }
         }
@@ -385,56 +383,56 @@ const InfoPageMobile = () => {
             </Box>
             <Divider className={classes.divider} />
             {profile.role === 'sponsor' && (
-            <Box className={classes.headerDetailsOffers}>
-              <Button
-                className={classes.label}
-                startIcon={<LocalOfferIcon color="action" />}
-                onClick={handleClickOpenOffers}
-              >
-                {t('common.offers')}
-              </Button>
-              <Dialog
-                fullScreen
-                className={classes.modal}
-                open={openOffers}
-                onClose={handleCloseOffers}
-                TransitionComponent={Transition}
-              >
-                <Box className={classes.appBar}>
-                  <Toolbar>
-                    <IconButton
-                      className={classes.positionXIcon}
-                      onClick={handleCloseOffers}
-                      aria-label="close"
-                    >
-                      <CloseIcon color="secondary" />
-                    </IconButton>
-                  </Toolbar>
-                </Box>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="flex-start"
-                  spacing={0}
-                  className={classes.mainGridDesktop}
-                  md={12}
-                  xl={10}
+              <Box className={classes.headerDetailsOffers}>
+                <Button
+                  className={classes.label}
+                  startIcon={<LocalOfferIcon color="action" />}
+                  onClick={handleClickOpenOffers}
                 >
-                  <Grid item md={12}>
-                    <Typography variant="subtitle1" className={classes.boldText}>
-                      {t('offerView.lifebankOffers')}
-                    </Typography>
+                  {t('common.offers')}
+                </Button>
+                <Dialog
+                  fullScreen
+                  className={classes.modal}
+                  open={openOffers}
+                  onClose={handleCloseOffers}
+                  TransitionComponent={Transition}
+                >
+                  <Box className={classes.appBar}>
+                    <Toolbar>
+                      <IconButton
+                        className={classes.positionXIcon}
+                        onClick={handleCloseOffers}
+                        aria-label="close"
+                      >
+                        <CloseIcon color="secondary" />
+                      </IconButton>
+                    </Toolbar>
+                  </Box>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="flex-start"
+                    spacing={0}
+                    className={classes.mainGridDesktop}
+                    md={12}
+                    xl={10}
+                  >
+                    <Grid item md={12}>
+                      <Typography variant="subtitle1" className={classes.boldText}>
+                        {t('offerView.lifebankOffers')}
+                      </Typography>
 
+                    </Grid>
+                    <ShowOffersMobile
+                      className={classes.offerContainer}
+                      offers={offers}
+                      loading={loadingOffers}
+                    />
                   </Grid>
-                  <ShowOffersMobile
-                    className={classes.offerContainer}
-                    offers={offers}
-                    loading={loadingOffers}
-                  />
-                </Grid>
-              </Dialog>
-            </Box>
+                </Dialog>
+              </Box>
             )}
             <Box className={classes.bodyDetails}>
               <Divider className={classes.divider} />
@@ -484,19 +482,19 @@ const InfoPageMobile = () => {
                     )
                   )}
               </Box>
-              { profile.role === 'lifebank' && (
+              {profile.role === 'lifebank' && (
                 <Box className={classes.midLabel}>
-                <Typography className={classes.boldText} variant="subtitle1">
-                  {t('signup.requirement')}
-                </Typography>
-                <Typography
-                  style={{ marginTop: '4px' }}
-                  className={classes.text}
-                  variant="body1"
-                >
-                  {profile.requirement.replaceAll('\n', ', ')}
-                </Typography>
-              </Box>
+                  <Typography className={classes.boldText} variant="subtitle1">
+                    {t('signup.requirement')}
+                  </Typography>
+                  <Typography
+                    style={{ marginTop: '4px' }}
+                    className={classes.text}
+                    variant="body1"
+                  >
+                    {profile.requirement.replaceAll('\n', ', ')}
+                  </Typography>
+                </Box>
               )}
               <Divider className={classes.divider} />
               {profile.role === 'sponsor' && JSON.parse(profile.social_media_links).length > 0 && (
