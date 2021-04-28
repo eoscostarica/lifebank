@@ -100,6 +100,16 @@ const Topbar = ({ user, onLogout }) => {
           />
         </IconButton>
       )}
+      {user && isDesktop && (
+        <IconButton onClick={handleClick}>
+          <ShareIcon
+            alt="Report icon"
+            className={clsx(classes.userIcon, {
+              [classes.userIconTransparent]: useTransparentBG
+            })}
+          />
+        </IconButton>
+      )}
       {user && <Notification />}
       {user && (
         <>

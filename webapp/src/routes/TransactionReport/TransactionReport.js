@@ -29,7 +29,6 @@ const TransactionReport = () => {
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   useEffect(() => {
-    console.log('REPORT-RESULT', getReportResult)
     if(!getReportResult) {
       getReportQuery()
     } else {
@@ -103,6 +102,7 @@ const TransactionReport = () => {
           properties={properties}
           preview={true}
           previewWidth="100%"
+          save={true}
         >
           <Text x={35} y={25} size={40}>{t('report.receivedTokens')}</Text>
           <Table
