@@ -14,6 +14,7 @@ export const CREATE_OFFER_MUTATION = gql`
     $active: Boolean!
     $offer_name: String!
     $cost_in_tokens: Int!
+    $icon: String!
   ) {
     insert_offer_one(
       object: {
@@ -29,6 +30,7 @@ export const CREATE_OFFER_MUTATION = gql`
         active: $active
         offer_name: $offer_name
         cost_in_tokens: $cost_in_tokens
+        icon: $icon
       }
     ) {
       id
@@ -44,6 +46,7 @@ export const CREATE_OFFER_MUTATION = gql`
       offer_name
       cost_in_tokens
       active
+      icon
     }
   }
 `
@@ -82,6 +85,7 @@ export const UPDATE_OFFER_MUTATION = gql`
     $offer_name: String
     $cost_in_tokens: Int
     $id: Int!
+    $icon: String
   ) {
     update_offer(
       _set: {
@@ -96,6 +100,7 @@ export const UPDATE_OFFER_MUTATION = gql`
         active: $active
         offer_name: $offer_name
         cost_in_tokens: $cost_in_tokens
+        icon: $icon
       }
       where: { id: { _eq: $id } }
     ) {
@@ -142,6 +147,7 @@ export const GET_OFFERS_QUERY = gql`
       description
       cost_in_tokens
       active
+      icon
       user {
         account
         name

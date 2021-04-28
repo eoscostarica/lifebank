@@ -149,6 +149,7 @@
       - cost_in_tokens
       - description
       - end_date
+      - icon
       - id
       - images
       - limited
@@ -218,6 +219,7 @@
       - cost_in_tokens
       - description
       - end_date
+      - icon
       - id
       - images
       - limited
@@ -236,6 +238,7 @@
       - cost_in_tokens
       - description
       - end_date
+      - icon
       - id
       - images
       - limited

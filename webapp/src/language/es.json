@@ -414,6 +414,7 @@
       "offerName": "Nombre de oferta",
       "offerNamePlaceholder": "Ingresar el nombre aquí",
       "offerType": "Tipo de oferta",
+      "icon": "Icono",
       "type": "Tipo",
       "discount": "Descuento",
       "gift": "Regalo",
