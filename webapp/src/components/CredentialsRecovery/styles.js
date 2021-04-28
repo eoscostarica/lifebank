@@ -6,23 +6,8 @@ export default (theme) => ({
     padding: theme.spacing(2, 0),
     display: 'flex',
     flexDirection: 'column',
-    height: 200,
-    justifyContent: 'space-evenly'
-  },
-  recoveryButton: {
-    fontSize: '12px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.33,
-    letterSpacing: '0.4px',
-    color: '#000000'
-  },
-  recoveryBox: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center'
+    justifyContent: 'space-evenly',
+    paddingBottom: "24px",
   },
   closeIcon: {
     position: 'absolute',
@@ -35,6 +20,28 @@ export default (theme) => ({
       fontSize: 25,
       color: "rgba(0, 0, 0, 0.6)"
     }
+  },
+  title: {
+    fontFamily: "Roboto",
+    fontSize: "28px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.18",
+    letterSpacing: "0.25px",
+    textAlign: "center",
+    color: "rgba(0, 0, 0, 0.87)",
+    marginBottom: 15
+  },
+  text: {
+    lineHeight: '1.43',
+    letterSpacing: '0.25px',
+    textAlign: 'center',
+    color: 'rgba(0, 0, 0, 0.6)',
+  },
+  textBox: {
+    paddingLeft: "30px",
+    paddingRight: "30px",
   },
   loginBtn: {
     display: 'flex',
@@ -54,14 +61,16 @@ export default (theme) => ({
     color: 'rgba(0, 0, 0, 0.54)',
     fontSize: 20
   },
-  marginTop: {
+  inputStyle: {
+    color: "rgba(0, 0, 0, 0.6)",
+    width: '100%',
     marginTop: '6%'
   },
   marginTopBox: {
     marginTop: '16%'
   },
   button: {
-    marginTop: '6%',
+    marginTop: '15%',
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
     width: "100%",
@@ -77,13 +86,13 @@ export default (theme) => ({
     marginBottom: 10
   },
   dialog: {
-    paddingTop: "53px",
-    paddingLeft: "53px",
-    paddingRight: "53px",
-    paddingBottom: "60px",
+    width: '360px',
+    height: '600px',
+    paddingTop: "32px",
+    paddingBottom: "53px",
     [theme.breakpoints.down('md')]: {
-      paddingLeft: "21px",
-      paddingRight: "21px"
+      paddingLeft: "15px",
+      paddingRight: "15px"
     }
   }
 })

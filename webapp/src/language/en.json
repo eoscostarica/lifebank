@@ -357,7 +357,8 @@
       "saveChanges": "Save changes",
       "currentLanguage": "en-US",
       "near": "Near",
-      "offers": "Offers"
+      "offers": "Offers",
+      "registeredEmail": "Registered Email Address"
     },
     "claimReward": {
       "claimReward": "Claim Reward",
@@ -373,16 +374,16 @@
       "message2": "These offers aren't available because you unchecked this category. Change it anytime."
     },
     "credentialsRecovery": {
-      "credentialsRecovery": "Credentials Recovery",
+      "passwordRecovery": "Recover Password",
       "emailError": "The email entered is not associated with any account",
       "changePasswordInstructions": "To change your password, enter the email associated with your account, the current password and the new one",
       "changePassword": "Change Password",
       "currentPassword": "Current password",
       "errorPassword": "The current password does not match your email",
       "newPassword": "New password",
-      "instructionCredentialsRecovery": "Enter the email associated with your account to be able to recover it",
+      "instructionCredentialsRecovery": "Use your email address registered to Lifebank to recover your password. We’ll send you an email for you to set up a new password.",
       "checkYourEmail": "Check your email",
-      "recovery": "Recover",
+      "recovery": "Send",
       "passwordNotChangable": "Please, log in to your Facebook or Google account to change your password"
     },
     "emailVerification": {

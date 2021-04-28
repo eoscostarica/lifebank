@@ -20,11 +20,12 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 
-const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
+const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
   const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
+  const [open, setOpen] = useState(true)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
@@ -39,7 +40,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     changePassword,
     { loading: loadingChangePassword, error: errorChangePassword }
   ] = useMutation(CHANGE_PASSWORD)
-  const [open, setOpen] = useState(false)
 
   const [
     getAccountSignupMethod,
@@ -48,6 +48,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const handleOpen = () => {
     setOpen(!open)
+    onCloseCredentialsRecovery()
   }
   const handleCloseSnackBar = () => {
     if (errorMessage) {
@@ -148,11 +149,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   return (
     <>
-      <Box className={classes.recoveryBox}>
-        <Button color="secondary" className={classes.recoveryButton} onClick={handleOpen}>
-          {t('signup.forgetPassword')}
-        </Button>
-      </Box>
       <Dialog
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -180,26 +176,29 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
             <form autoComplete="off">
               <Box className={classes.textFieldWrapper}>
                 <Typography variant="h3" className={classes.title}>
-                  {t('credentialsRecovery.credentialsRecovery')}
+                  {t('credentialsRecovery.passwordRecovery')}
                 </Typography>
-                <Typography >
-                  {t('credentialsRecovery.instructionCredentialsRecovery')}
-                </Typography>
+                <Box className={classes.textBox}>
+                  <Typography className={classes.text} variant="body1">
+                    {t('credentialsRecovery.instructionCredentialsRecovery')}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box className={classes.textFieldWrapper}>
                 <TextField
                   id="email"
-                  label={t('common.email')}
+                  label={t('common.registeredEmail')}
                   variant="outlined"
                   InputLabelProps={{
                     shrink: true
                   }}
-                  value={user.email || ''}
                   onChange={(event) =>
                     handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))
                   }
                   onKeyPress={(event) =>
                     executeCredentialsRecovery(event)
                   }
-                  className={classes.marginTop}
+                  className={classes.inputStyle}
                 />
                 <Button
                   disabled={!validEmailFormat || loading}

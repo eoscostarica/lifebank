@@ -36,7 +36,7 @@ const SignupDonor = lazy(() => import('./SignupDonor'));
 const SignupLifeBank = lazy(() => import('./SignupLifeBank'));
 const SimpleRegisterForm = lazy(() => import('./SignupSponsor/SimpleRegisterForm'));
 
-const Signup = ({ isHome, isModal, isSideBar }) => {
+const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [user, setUser] = useReducer(
@@ -46,7 +46,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [activeStep, setActiveStep] = useState(0)
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(isModal ? true : false)
   const [openAlert, setOpenAlert] = useState(false)
   const [messegaAlert, setMessegaAlert] = useState("false")
   const [maxWidth] = useState('sm')
@@ -59,8 +59,10 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   const handleOpen = () => {
     setOpen(!open)
+    if (onCloseSignUp) {
+      onCloseSignUp()
+    }
   }
-
   const handleOpenAlert = () => {
     setOpenAlert(!openAlert)
   }
@@ -272,8 +274,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   }, [errorpreRegisterLifebank])
 
-  useEffect(()=>{
-    if(open){
+  useEffect(() => {
+    if (open) {
       handleSetField('email', ' ')
       setActiveStep(0)
     }
@@ -310,13 +312,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
         <Button color="secondary" className={classes.registerBtn} onClick={handleOpen}>
           {t('signup.register')}
         </Button>
-      }
-      {isModal && !currentUser &&
-        <Box className={classes.registerBoxModal}>
-          <Button color="secondary" className={classes.registerTextModal} onClick={handleOpen}>
-            {t('login.notAccount')}
-          </Button>
-        </Box>
       }
       {isSideBar && !currentUser &&
         <Box
