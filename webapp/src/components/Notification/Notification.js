@@ -13,7 +13,6 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
-<<<<<<< HEAD
 import Button from '@material-ui/core/Button'
 import { useSubscription } from '@apollo/react-hooks'
 import { useUser } from '../../context/user.context'
@@ -22,72 +21,11 @@ import NotificationStructure from '../NotificationStructure'
 import {
   NOTIFICATION_SUBSCRIPTION
 } from '../../gql'
-as
 
 
-
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    color: 'inherit'
-  },
-  notificationIcon: {
-    color: '#121212',
-    width: 24,
-    height: 24
-  },
-  notificationIconTransparent: {
-    color: '#ffffff'
-  },
-  appBar: {
-    position: 'relative',
-    width: '100%',
-    backgroundColor: '#ffffff',
-    boxShadow:
-      '0 2px 4px 0 rgba(0, 0, 0, 0.24), 0 4px 8px 0 rgba(0, 0, 0, 0.18)'
-
-  },
-  backIcon: {
-    color: '#121212'
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
-    fontSize: '20px',
-    fontWeight: '500'
-  },
-  box: {
-    justifyContent: 'flex-end',
-    marginLeft: '60%',
-
-  },
-  boxList: {
-    margin: '5%'
-
-  },
-  editBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "30%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
-    marginLeft: '35%',
-    position: 'absolute',
-    bottom: 0
-  }
-
-}))
-=======
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
->>>>>>> master
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />

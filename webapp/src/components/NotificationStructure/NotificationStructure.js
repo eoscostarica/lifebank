@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider'
 import NewNotificationIcon from '@material-ui/icons/Brightness1';
 import OldNotificationIcon from '@material-ui/icons/PanoramaFishEye';
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import { GET_NAME, EDIT_NOTIFICATION_STATE } from '../../gql'
+import { GET_ACCOUNT_NAME, EDIT_NOTIFICATION_STATE } from '../../gql'
 
 
 
@@ -41,7 +41,7 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
   const [name, setName] = useState()
 
 
-  const { refetch: getData } = useQuery(GET_NAME, {
+  const { refetch: getData } = useQuery(GET_ACCOUNT_NAME, {
     variables: {
       account: description.substring(5, 17)
     },
