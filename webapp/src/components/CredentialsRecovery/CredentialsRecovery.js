@@ -23,10 +23,9 @@ const useStyles = makeStyles(styles)
 const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [success, setSuccess] = useState(false)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
@@ -50,13 +49,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     setOpen(!open)
   }
   const handleCloseSnackBar = () => {
-    if (errorMessage) {
-      setErrorMessage(null)
-    } else {
-      setOpen(!open)
-      setUser({})
-      setSuccess(false)
-    }
+    setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
   const handleSetFieldEmail = (field, value) => {
@@ -68,7 +61,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const handleSubmit = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
-      setErrorMessage(null)
       credentialsRecovery({
         variables: {
           email: user.email,
@@ -82,12 +74,15 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         }
       })
       setValidEmailFormat(false)
-    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
+    } else setOpenSnackbar({
+      show: true,
+      message: t('credentialsRecovery.passwordNotChangable'),
+      severity: 'error'
+    })
   }
 
   const handleSubmitChangePassword = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
-      setErrorMessage(null)
       changePassword({
         variables: {
           ...user,
@@ -99,7 +94,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
         }
       })
       setValidEmailFormat(false)
-    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
+    } else setOpenSnackbar({
+      show: true,
+      message: t('credentialsRecovery.passwordNotChangable'),
+      severity: 'error'
+    })
   }
 
   useEffect(() => {
@@ -115,23 +114,43 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   useEffect(() => {
     if (error) {
       if (error.message === `GraphQL error: Cannot read property 'account' of undefined`)
-        setErrorMessage(t('credentialsRecovery.emailError'))
-      else setErrorMessage(error.message.replace('GraphQL error: ', ''))
+        setOpenSnackbar({
+          show: true,
+          message: t('credentialsRecovery.emailError'),
+          severity: 'error'
+        })
+      else setOpenSnackbar({
+        show: true,
+        message: error.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
     }
   }, [error, t])
 
   useEffect(() => {
     if (errorChangePassword) {
       if (errorChangePassword.message === `GraphQL error: Cannot read property 'secret' of null`)
-        setErrorMessage(t('credentialsRecovery.emailError'))
-      else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
+        setOpenSnackbar({
+          show: true,
+          message: t('credentialsRecovery.emailError'),
+          severity: 'error'
+        })
+      else setOpenSnackbar({
+        show: true,
+        message: errorChangePassword.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
     }
   }, [errorChangePassword, t])
 
 
   useEffect(() => {
     if (response) {
-      setSuccess(response.success)
+      setOpenSnackbar({
+        show: response.success,
+        message: t('credentialsRecovery.checkYourEmail'),
+        severity: 'success'
+      })
     }
   }, [response])
 
@@ -214,26 +233,14 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                   {loading && <CircularProgress />}
                 </Box>
               </Box>
-              {errorMessage && (
-                <Snackbar open={true} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                  <Alert
-                    className={classes.alert}
-                    severity="error"
-                  >
-                    {errorMessage}
-                  </Alert>
-                </Snackbar>
-              )}
-              {success && (
-                <Snackbar open={success} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                  <Alert
-                    className={classes.alert}
-                    severity="success"
-                  >
-                    {t('credentialsRecovery.checkYourEmail')}
-                  </Alert>
-                </Snackbar>
-              )}
+              <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+                <Alert
+                  className={classes.alert}
+                  severity={openSnackbar.severity}
+                >
+                  {openSnackbar.message}
+                </Alert>
+              </Snackbar>
             </form>
           </Box>
         </Box>

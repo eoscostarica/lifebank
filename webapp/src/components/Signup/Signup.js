@@ -64,6 +64,9 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const handleOpenAlert = () => {
     setOpenAlert(!openAlert)
   }
+  const handleOpenErrorAlert = () => {
+    setErrorMessage(null)
+  }
 
   const [
     createAccount,
@@ -272,8 +275,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   }, [errorpreRegisterLifebank])
 
-  useEffect(()=>{
-    if(open){
+  useEffect(() => {
+    if (open) {
       handleSetField('email', ' ')
       setActiveStep(0)
     }
@@ -283,22 +286,25 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
     return (
       <>
         {errorMessage && (
-          <Alert
-            className={classes.alert}
-            severity="error"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => setErrorMessage(null)}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            {errorMessage}
-          </Alert>
+          <Snackbar open={true} autoHideDuration={6000} onClose={handleOpenErrorAlert}>
+            <Alert
+              className={classes.alert}
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => setErrorMessage(null)}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              {errorMessage}
+            </Alert>
+          </Snackbar>
+
         )}
       </>
     )

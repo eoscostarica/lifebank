@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
+import Snackbar from '@material-ui/core/Snackbar'
 import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -144,26 +145,24 @@ const EditProfilePage = () => {
 
   return (
     <Box className={classes.wrapper}>
-      <Box className={classes.boxMessage}>
-        {showAlert && (
-          <Alert
-            severity="error"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => setShowAlert(false)}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            <AlertTitle>{t('editProfile.error')}</AlertTitle>
-            {t('editProfile.duringSaveProfileData')}
-          </Alert>
-        )}
-      </Box>
+      <Snackbar open={showAlert} autoHideDuration={4000} onClose={() => setShowAlert(false)}>
+        <Alert
+          severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          <AlertTitle>{t('editProfile.error')}</AlertTitle>
+          {t('editProfile.duringSaveProfileData')}
+        </Alert>
+      </Snackbar>
       <Typography variant="h1" className={classes.title}>
         {t('editProfile.editProfile')}
       </Typography>

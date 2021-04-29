@@ -1,5 +1,5 @@
 import React, { useState, useEffect, forwardRef } from 'react'
-import { useMutation, useLazyQuery , useSubscription } from '@apollo/react-hooks'
+import { useMutation, useLazyQuery, useSubscription } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { useHistory } from 'react-router-dom'
@@ -31,7 +31,7 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos'
 import Drawer from '@material-ui/core/Drawer'
 
-import { PROFILE_QUERY, TRANSFER_MUTATION, TOKEN_SUBSCRIPTION} from '../../gql'
+import { PROFILE_QUERY, TRANSFER_MUTATION, TOKEN_SUBSCRIPTION } from '../../gql'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -89,9 +89,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const [role] = useState(currentUser.role)
   const [account] = useState(currentUser.account)
   const classes = useStyles()
-  const [openAlert, setOpenAlert] = useState(false)
-  const [messegaAlert, setMessegaAlert] = useState("false")
-  const [severity] = useState("error")
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const [state, setState] = useState({
     bottom: false
   })
@@ -112,25 +110,30 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     TOKEN_SUBSCRIPTION, { variables: { account } }
   )
 
-  const handleOpenAlert = () => setOpenAlert(!openAlert)
+  const handleSnackbarClose = (_event, reason) => {
+    if (reason === 'clickaway') return
 
-  const handleSnackbarClose =  () => {
-    setSuccess(false)
-    setErrorMessage(null)
-    setAccountTo()
+    setOpenSnackbar({ ...openSnackbar, show: false })
   }
   useEffect(() => {
     if (!error)
       return
 
-    setErrorMessage(t('donations.donationsError'))
+    setOpenSnackbar({
+      show: true,
+      message: t('donations.donationsError'),
+      severity: 'error'
+    })
   }, [error])
 
   useEffect(() => {
     if (errroLoadProfile) {
       handleOpen()
-      setMessegaAlert(t('donations.donationsProfileError'))
-      handleOpenAlert()
+      setOpenSnackbar({
+        show: true,
+        message: t('donations.donationsProfileError'),
+        severity: 'error'
+      })
     }
 
   }, [errroLoadProfile])
@@ -139,7 +142,11 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     if (!transferResult)
       return
 
-    setSuccess(true)
+    setOpenSnackbar({
+      show: true,
+      message: t('donations.succesful'),
+      severity: 'success'
+    })
   }, [transferResult])
 
   useEffect(() => {
@@ -156,7 +163,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   }, [currentUser, history, client, loadProfile, state, open, transferResult])
 
   useEffect(() => {
-    if(tokenUser.user) {
+    if (tokenUser.user) {
       setTokens(parseInt(tokenUser.user[0].token))
     } else {
       setTokens(role === "donor" && profile?.balance.length ? profile.balance.join(',').split(' ')[0] : 0)
@@ -597,27 +604,11 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
           </Dialog>
         </>
       }
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
-        <Alert onClose={handleOpenAlert} severity={severity}>
-          {messegaAlert}
+      <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>
+        <Alert severity={openSnackbar.severity}>
+          {openSnackbar.message}
         </Alert>
       </Snackbar>
-      <Snackbar open={success} autoHideDuration={2000} onClose={handleSnackbarClose}>
-        <Alert
-          className={classes.alert}
-          severity="success">
-          {t('donations.succesful')}
-        </Alert>
-      </Snackbar>
-      {errorMessage && (
-         <Snackbar open={true} autoHideDuration={3000} onClose={handleSnackbarClose}>
-         <Alert
-           className={classes.alert}
-           severity="error">
-            {errorMessage}
-         </Alert>
-       </Snackbar>
-            )}
     </>
   )
 }
