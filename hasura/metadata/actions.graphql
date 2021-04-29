@@ -73,6 +73,16 @@ type Mutation {
 }
 
 type Mutation {
+  edit_notification_state (
+    id: Int
+  ): edit_notification_state_output
+}
+
+
+type Mutation {
+  edit_profile (
+    profile: jsonb!
+  ): edit_profile_output
   edit_profile(profile: jsonb!): edit_profile_output
 }
 
@@ -258,12 +268,10 @@ type redeem_offer_output {
   transaction_id: String!
 }
 
-<<<<<<< HEAD
 type edit_notification_state_output {
   success : Boolean!
 }
 
-=======
 type send_email_output {
   success: Boolean!
 }
@@ -271,4 +279,4 @@ type send_email_output {
 type check_email_verified_output {
   verified: Boolean!
 }
->>>>>>> master
+

@@ -375,3 +375,4 @@
 - table:
     schema: public
     name: vault
+    
