@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
-import PDF, { Text, AddPage, Table } from 'jspdf-react'
+import PropTypes from 'prop-types'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 import { useTranslation } from 'react-i18next'
 import { useUser } from '../../context/user.context'
 import { GET_REPORT_QUERY } from '../../gql'
 
-const TransactionReport = () => {
+const TransactionReport = ({saveReport, onReportSaved}) => {
   const { t } = useTranslation('translations')
   const [currentUser] = useUser()
-  const properties = { header: 'LIFEBANK' }
+  const doc = new jsPDF()
 
   const [headReceive, setHeadReceived] = useState()
   const [bodyReceive, setBodyReceive] = useState()
@@ -73,11 +75,10 @@ const TransactionReport = () => {
     const received = getReportResult.notifications.received.map(function(notification) {
       return [
         notification.payerUser,
-        notification.offer.offer_name,
+        notification.offer ? notification.offer.offer_name : '',
         notification.created_at_date,
         notification.created_at_time,
-        notification.offer.cost_in_tokens
-      ]
+        notification.offer ? notification.offer.cost_in_tokens : ''      ]
     })
 
     setHeadReceived([
@@ -94,51 +95,45 @@ const TransactionReport = () => {
     setBodyReceive(received)
   }
 
+  useEffect(() => {
+    if(saveReport) downloadReport()
+  }, [saveReport])
+
+  const downloadReport = () => {
+    if(currentUser && currentUser.role === 'lifebank') {
+      doc.autoTable({
+        head: headReceive,
+        body: bodyReceive,
+      })
+
+      doc.autoTable({
+        head: headSent,
+        body: bodySent,
+      })
+    } else if (currentUser && currentUser.role === 'sponsor') {
+      doc.autoTable({
+        head: headReceive,
+        body: bodyReceive,
+      })
+    }
+
+    doc.save('report.pdf')
+    onReportSaved()
+  }
+
   return (
     <>
-      {currentUser && currentUser.role === 'lifebank' && (
-        <PDF
-          filename="Report"
-          properties={properties}
-          preview={true}
-          previewWidth="100%"
-          save={true}
-        >
-          <Text x={35} y={25} size={40}>{t('report.receivedTokens')}</Text>
-          <Table
-            head={headReceive}
-            body={bodyReceive}
-          />
-
-          <AddPage />
-
-          <Text x={35} y={25} size={40}>{t('report.sentTokens')}</Text>
-          <Table
-            head={headSent}
-            body={bodySent}
-          />
-        </PDF>
-      )
-      }
-
-      {currentUser && currentUser.role === 'sponsor' && (
-        <PDF
-          filename="Report"
-          properties={properties}
-          preview={true}
-          previewWidth="100%"
-        >
-          <Text x={35} y={25} size={40}>{t('report.receivedTokens')}</Text>
-          <Table
-            head={headReceive}
-            body={bodyReceive}
-          />
-        </PDF>
-      )
-      }
     </>
-    
   )
+}
+
+TransactionReport.propTypes = {
+  saveReport: PropTypes.bool,
+  onReportSaved: PropTypes.func
+}
+
+TransactionReport.defaultProps = {
+  saveReport: false
 }
 
 export default TransactionReport

@@ -723,8 +723,6 @@ describe("Lifebank unit test", function () {
               data: {
                 account: "sponsor11111",
                 sponsor_name: "Sponsor Name",
-                covid_impact: "high",
-                benefit_description: "plasma producer",
                 website: "https://eoscostarica.io/",
                 telephone: "+(506)111111",
                 business_type: "it",
@@ -812,8 +810,6 @@ describe("Lifebank unit test", function () {
               data: {
                 account: "sponsor11111",
                 sponsor_name: "Sponsor Name",
-                covid_impact: "high",
-                benefit_description: "plasma producer",
                 website: "https://eoscostarica.io/",
                 telephone: "+(506)111111",
                 business_type: "it",

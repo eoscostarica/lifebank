@@ -61,6 +61,21 @@ export const GET_REPORT_QUERY = gql`
     }
   }
 `
+export const SEND_EMAIL_MUTATION = gql`
+  mutation($account: String!, $emailContent: jsonb!) {
+    send_email(account: $account, emailContent: $emailContent) {
+      success
+    }
+  }
+`
+
+export const CHECK_EMAIL_VERIFIED = gql`
+  mutation($account: String!) {
+    check_email_verified(account: $account) {
+      verified
+    }
+  }
+`
 
 export const GET_INFO = gql`
   query info($account: String!) {
@@ -93,9 +108,7 @@ export const GET_VALID_SPONSORS_QUERY = gql`
       social_media_links
       photos
       website
-      covidImpact
       businessType
-      benefitDescription
       userName
       role
     }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import PersonIcon from '@material-ui/icons/Person'
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Box from '@material-ui/core/Box'
 import { Link, useLocation, useHistory } from 'react-router-dom'
@@ -18,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import LanguageSelector from '../components/LanguageSelector'
 import Notification from '../components/Notification'
 import LoginModal from '../components/LoginModal'
+import TransactionReport from '../components/TransactionReport'
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -61,6 +63,7 @@ const Topbar = ({ user, onLogout }) => {
   const location = useLocation()
   const isHome = location.pathname === '/'
   const history = useHistory()
+  const [downloadReport, setDownloadReport] = useState(false)
 
   const trigger = useScrollTrigger({
     target: window || undefined,
@@ -87,6 +90,10 @@ const Topbar = ({ user, onLogout }) => {
     history.push('/')
   }
 
+  const onReportClick = () => {
+    setDownloadReport(!downloadReport)
+  }
+
   return (
     <Box className={classes.box}>
       <LanguageSelector />
@@ -100,9 +107,9 @@ const Topbar = ({ user, onLogout }) => {
           />
         </IconButton>
       )}
-      {user && isDesktop && (
-        <IconButton onClick={handleClick}>
-          <ShareIcon
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') && isDesktop && (
+        <IconButton onClick={onReportClick}>
+          <AssignmentIcon
             alt="Report icon"
             className={clsx(classes.userIcon, {
               [classes.userIconTransparent]: useTransparentBG
@@ -140,6 +147,9 @@ const Topbar = ({ user, onLogout }) => {
         </>
       )}
       <LoginModal isNavBar />
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
+        <TransactionReport saveReport={downloadReport} onReportSaved={onReportClick}/>
+      }
     </Box>
   )
 }

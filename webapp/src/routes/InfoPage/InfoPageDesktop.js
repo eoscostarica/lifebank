@@ -42,11 +42,11 @@ const InfoPage = () => {
   const [sponsorID, setSponsorID] = useState()
 
   const getOffers = async () => {
-    if(profile){
-      if(profile.role === 'sponsor'){
-      setLoadingOffers(true)
-      await getAllOffers()
-      await getSponsorID()
+    if (profile) {
+      if (profile.role === 'sponsor') {
+        setLoadingOffers(true)
+        await getAllOffers()
+        await getSponsorID()
       }
     }
   }
@@ -91,8 +91,8 @@ const InfoPage = () => {
 
   useEffect(() => {
     getInfo()
-    if(profile){
-      if(profile.role === 'sponsor'){
+    if (profile) {
+      if (profile.role === 'sponsor') {
         getOffers()
       }
     }
@@ -109,8 +109,8 @@ const InfoPage = () => {
       if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
         && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
         getInfo()
-        if(profile){
-          if(profile.role === 'sponsor'){
+        if (profile) {
+          if (profile.role === 'sponsor') {
             getOffers()
           }
         }
@@ -135,9 +135,7 @@ const InfoPage = () => {
               {
                 "account": objectTemp.account,
                 "address": objectTemp.info.address,
-                "benefitDescription": objectTemp.info.benefit_description,
                 "businessType": objectTemp.info.business_type,
-                "covidImpact": objectTemp.info.covid_impact,
                 "description": objectTemp.info.about,
                 "email": objectTemp.info.email,
                 "location": JSON.stringify(objectTemp.info.geolocation),
@@ -299,19 +297,19 @@ const InfoPage = () => {
                     )
                   )}
               </Box>
-              { profile.role === 'lifebank' && (
+              {profile.role === 'lifebank' && (
                 <Box className={classes.midLabel}>
-                <Typography className={classes.boldText} variant="subtitle1">
-                  {t('signup.requirement')}
-                </Typography>
-                <Typography
-                  style={{ marginTop: '4px' }}
-                  className={classes.text}
-                  variant="body1"
-                >
-                  {profile.requirement.replaceAll('\n', ', ')}
-                </Typography>
-              </Box>
+                  <Typography className={classes.boldText} variant="subtitle1">
+                    {t('signup.requirement')}
+                  </Typography>
+                  <Typography
+                    style={{ marginTop: '4px' }}
+                    className={classes.text}
+                    variant="body1"
+                  >
+                    {profile.requirement.replaceAll('\n', ', ')}
+                  </Typography>
+                </Box>
               )}
               {profile.role === 'lifebank' && (
                 <Box className={classes.midLabel}>
@@ -428,19 +426,19 @@ const InfoPage = () => {
             md={12}
             xl={10}
           >
-          {profile.role === 'sponsor' && (
-            <Grid item md={12}>
-              <Typography variant="subtitle1" className={classes.boldText}>
-                {t('offerView.lifebankOffers')}
-              </Typography>        
-              <ShowOffersDesktop
-              className={classes.offerContainer}
-              offers={offers}
-              loading={loadingOffers}
-            />
-            </Grid>
-          ) }
-            
+            {profile.role === 'sponsor' && (
+              <Grid item md={12}>
+                <Typography variant="subtitle1" className={classes.boldText}>
+                  {t('offerView.lifebankOffers')}
+                </Typography>
+                <ShowOffersDesktop
+                  className={classes.offerContainer}
+                  offers={offers}
+                  loading={loadingOffers}
+                />
+              </Grid>
+            )}
+
           </Grid>
         </Box>
       )}

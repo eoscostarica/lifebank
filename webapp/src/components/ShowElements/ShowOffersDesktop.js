@@ -102,7 +102,6 @@ const ShowOffers = ({ offers, loading }) => {
             {truncateString(props.offer.description)}
           </Typography>
         </CardContent>
-
         <Button
           color="primary"
           className={classes.cardActionButton}
