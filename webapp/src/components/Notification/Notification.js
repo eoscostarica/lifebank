@@ -22,7 +22,6 @@ import {
   NOTIFICATION_SUBSCRIPTION
 } from '../../gql'
 
-
 import styles from './styles'
 
 const useStyles = makeStyles(styles)

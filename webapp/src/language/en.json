@@ -357,7 +357,8 @@
       "saveChanges": "Save changes",
       "currentLanguage": "en-US",
       "near": "Near",
-      "offers": "Offers"
+      "offers": "Offers",
+      "loadMore": "Load More"
     },
     "claimReward": {
       "claimReward": "Claim Reward",

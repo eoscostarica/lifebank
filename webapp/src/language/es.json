@@ -362,7 +362,8 @@
       "saveChanges": "Guardar cambios",
       "currentLanguage": "es-CR",
       "near": "Cerca de",
-      "offers": "Ofertas"
+      "offers": "Ofertas",
+      "loadMore": "Ver más"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",
