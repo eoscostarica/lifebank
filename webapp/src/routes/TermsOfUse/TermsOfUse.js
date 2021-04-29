@@ -7,39 +7,9 @@ import Tab from '@material-ui/core/Tab'
 
 import RicardianContract from '../../components/RicardianContract'
 import { GET_CONTRACTS_QUERY } from '../../gql'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  tabsWrapper: {
-    margin: theme.spacing(4, 0, 4, 0),
-    [theme.breakpoints.down('sm')]: {
-      '& button': {
-        width: '33.3vw'
-      }
-    }
-  },
-  wrapper: {
-    minHeight:'100vh',
-    height: '95vh',
-    padding: theme.spacing(2, 1, 0, 1),
-    '& img': {
-      width: 80
-    },
-    '& p': {
-      color: theme.palette.primary.mediumEmphasizedBlackText,
-      fontSize: 16,
-      lineHeight: 1.75,
-      letterSpacing: '0.5px',
-      margin: theme.spacing(1, 0, 2, 0)
-    },
-    '& h1, & h2': {
-      textTransform: 'capitalize',
-      margin: 0
-    },
-    '& p a': {
-      wordBreak: 'break-all'
-    }
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const TermsOfUse = () => {
   const classes = useStyles()

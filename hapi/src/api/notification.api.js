@@ -4,7 +4,8 @@ const INSERT_NOTIFICATION = `
   mutation insert($notification: notification_insert_input!) {
     insert_notification_one(object: $notification) {
       id
-      account
+      account_from
+      account_to
       title
       description
       type

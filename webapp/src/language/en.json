@@ -26,21 +26,25 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Available Offers",
-      "moreInfo": "More info"
+      "availableOffers": "Offers",
+      "moreInfo": "More Info",
+      "approvedOffers": "Offers List"
     },
     "navigationDrawer": {
+      "homepage": "Home page",
+      "tools": "Tools",
       "yourDonations": "Your Donations",
       "information": "Information",
       "aboutLifebank": "About Lifebank",
       "useTerms": "Terms of Use",
-      "help": "Help"
+      "help": "Help",
+      "offersApproval": "Offers approval"
     },
     "signup": {
       "register": "Let's Start!",
       "registerText": "Choose the option that suits you best. ",
       "sucessfulPreregistration": "Thank you. Your information is now being validated.",
-      "sucessfulRegistration": "You're in! Thanks for your support.",
+      "sucessfulRegistration": "Please, check your inbox and verify your email to start using Lifebank.",
       "createAnewAccount": "Create a new account",
       "allYouNeed": "Please, type a valid email address and password to create an account.",
       "preRegisterAnewAccount": "We're almost there! Pre-register a new account",
@@ -56,10 +60,15 @@
       "signupWithGoogle": "Sign up using Google",
       "createAccount": "Create an account",
       "name": "Name",
+      "type": "Type",
+      "nameSponsor": "Business name",
+      "nameLifebank": "Lifebank name",
       "address": "Address",
       "addressPlaceholder": "Type your address here",
       "phoneNumber": "Phone Number",
       "phoneNumberPlaceholder": "Type your phone number here",
+      "requirement": "Requirements",
+      "requirementPlaceholder": "List requirements for donors",
       "invitationCode": "Invitation Code",
       "chooseYourLocation": "Choose your location",
       "asAdonor": "As a Donor",
@@ -70,7 +79,11 @@
       "aboutPlaceholder": "About the LifeBank",
       "consentGranted": "Ready! You can start using Lifebank",
       "consentRevoked": "Consent revoked",
-      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. "
+      "consentError": "Uh-oh! There was an error. Please, make sure you accepted our terms and conditions. ",
+      "noConsentNoEdit": "You must first accept the terms and conditions before changing anything.",
+      "noConsentNoEdit2": "Read it here",
+      "defaultUsername": "Your Profile",
+      "forgetPassword": "Forgot Password?"
     },
     "login": {
       "letsStarted": "Let's get started!",
@@ -84,7 +97,10 @@
       "loginWithFacebook": "Login with Facebook",
       "loginWithGoogle": "Login with Google",
       "logout": "Logout",
-      "notAccount": "No account yet? Register here."
+      "notAccount": "No account yet? Register here.",
+      "verify": "Verify",
+      "textVerify": "We sent you a confirmation email to your inbox. If you can't find it, please check your spam folder. If you still don't find it, you can resend it.",
+      "resend": "Resend"
     },
     "map": {
       "findLifebank": "Find Lifebanks or Sponsors near you",
@@ -141,14 +157,50 @@
       "noNear": "There aren’t any businesses or donation centers registered near this location. If you know any, refer them to Lifebank: "
     },
     "notFound": {
-      "404Error": "404: Oh... this isn't the page you're looking for. Please, try again!",
-      "notFoundMessage": "It seems like there is an error. Please, try using the navigation to find the page you're looking for. ",
-      "takeMeHome": "Take me to the home page"
+      "404Error": "Uh-oh, we couldn't find the page you were looking for. Please, go back to the ",
+      "404Error2": " and try again.",
+      "notFoundMessage": "Remember that Lifebank is an open-source, self-managed project. However, if you have any specific questions to the team, please contact us through our",
+      "notFoundMessage2": " or contact the",
+      "notFoundMessage3": " team directly. ",
+      "takeMeHome": "Take me to the home page",
+      "home": "home page",
+      "telegramChat": "Telegram chat",
+      "linkEOS": "EOS Costa Rica"
     },
     "internalError": {
       "500Error": "500: Oh... internal server error!",
       "errorMessage": "An error occurred and your request couldn't be completed",
       "takeMeHome": "Take me to the home page"
+    },
+    "sponsorTypes": {
+      "autoRepair": "Auto Repair",
+      "bank": "Bank or Financial Services",
+      "beautySalon": "Beauty Salon",
+      "dryCleaning": "Dry Cleaning Or Laundry",
+      "entertaiment": "Entertainment Business",
+      "gym": "Gym or Fitness Center",
+      "hospitality": "Hospitality or Leisure",
+      "medical": "Medical or Health Services",
+      "pharmacies": "Pharmacies",
+      "restaurant": "Restaurant or Food Shop",
+      "retail": "Retail Store",
+      "shopping": "Shopping Center",
+      "gas": "Transportation or Gas Station",
+      "travel": "Travel Agency",
+      "veterinarian": "Veterinarian",
+      "other": "Other"
+    },
+    "categories": {
+      "all": "All",
+      "discount": "Discounts",
+      "freeProduct": "Free Products",
+      "coupon": "Coupons",
+      "benefit": "Benefits",
+      "badge": "Badges",
+      "chooseYourCategories": "Choose Your Categories",
+      "addCategories": "Choose offer categories",
+      "editCategories": "Edit categories",
+      "description": "Choose the offer categories that you want to approve. This means that the life tokens obtained for donations at your facilities will be redeemable for offers in the approved categories."
     },
     "schedule": {
       "sunday": "Sunday",
@@ -180,7 +232,6 @@
       "consent": "Consent",
       "communityAsset": "Community Asset",
       "hasImmunityTest": "Has Immunity Test",
-      "benefitDescription": "Benefit Description",
       "location": "Location",
       "logo": "Logo",
       "urlSite": "URL site",
@@ -195,10 +246,10 @@
     "editProfile": {
       "editProfile": "Edit Profile",
       "error": "Error",
-      "duringSaveProfileData": "During save profile data -",
+      "duringSaveProfileData": "While saving profile information",
       "goToProfile": "Go to profile!",
       "success": "Success",
-      "profileWasUpdated": "Profile was updated - ",
+      "profileWasUpdated": "Profile was updated - Changes saved",
       "low": "Low",
       "medium": "Medium",
       "high": "High",
@@ -213,8 +264,6 @@
       "logoUrl": "Logo Url",
       "logoUrlPlaceholder": "Your logo url here",
       "sponsorNamePlaceholder": "Your Sponsor name here",
-      "covidImpact": "Covid Impact",
-      "covidImpactPlaceholder": "Description about covid impact here",
       "photoUrl": "Photo url",
       "photoUrlPlaceholder": "Your photo url here",
       "facebookProfileUrl": "Facebook profile url",
@@ -303,11 +352,12 @@
       "benefits": "Benefits",
       "bloodUrgency": "Blood urgency level",
       "schedule": "Schedule",
+      "categories": "Categories",
       "save": "Save",
       "saveChanges": "Save changes",
       "currentLanguage": "en-US",
       "near": "Near",
-      "loadMore": "Load more"
+      "offers": "Offers"
     },
     "claimReward": {
       "claimReward": "Claim Reward",
@@ -316,9 +366,15 @@
       "orYourUsername": "Or your username",
       "imDone": "I'm Done"
     },
+    "offerApproval": {
+      "description": "Here you can approve or reject the categories of redeemable offers.",
+      "description2": "If you think that a category doesn't represent your organization, feel free to uncheck it, and automatically the life tokens obtained at your center will not be redeemable in exchange for any of these offers.",
+      "message1": "These offers are available because you approved this category. Change it anytime.",
+      "message2": "These offers aren't available because you unchecked this category. Change it anytime."
+    },
     "credentialsRecovery": {
       "credentialsRecovery": "Credentials Recovery",
-      "emailError": "The email entered is not associated with any accoun",
+      "emailError": "The email entered is not associated with any account",
       "changePasswordInstructions": "To change your password, enter the email associated with your account, the current password and the new one",
       "changePassword": "Change Password",
       "currentPassword": "Current password",
@@ -326,7 +382,8 @@
       "newPassword": "New password",
       "instructionCredentialsRecovery": "Enter the email associated with your account to be able to recover it",
       "checkYourEmail": "Check your email",
-      "recovery": "Recover"
+      "recovery": "Recover",
+      "passwordNotChangable": "Please, log in to your Facebook or Google account to change your password"
     },
     "emailVerification": {
       "emailVerified": "Your email has been verified",
@@ -354,7 +411,7 @@
     },
     "offersManagement": {
       "offersManagement": "Offers Management",
-      "addOffer": "Add Offer",
+      "addOffer": "Add an Offer",
       "offerName": "Offer name",
       "offerNamePlaceholder": "Type the name here",
       "offerType": "Offer type",
@@ -400,16 +457,21 @@
       "active": "Active",
       "inactive": "Inactive",
       "noProvidedDate": "No provided date",
-      "youHaveNoAddedOffers": "You have no added offers",
+      "youHaveNoAddedOffers": "You have no offers available",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it",
-      "selectDateRange": "Select date range"
+      "selectDateRange": "Select date range",
+      "offerCreation": "Offer Created Successfully",
+      "offerStateActive": "Active Offers",
+      "offerStateInactive": "Inactive Offers",
+      "info": "First complete your profile to add an offer"
     },
     "offerView": {
       "selectedOffer": "Selected offer",
       "onlinePurchases": "This offer is only for online purchases.",
       "available": "Available from",
-      "to": "to"
+      "to": "to",
+      "lifebankOffers": "Offers"
     },
     "months": {
       "Jan": "January",

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import GoogleLogin from 'react-google-login'
@@ -7,31 +7,9 @@ import SvgIcon from '@material-ui/core/SvgIcon'
 import { useTranslation } from 'react-i18next'
 
 import { oAuthConfig } from '../../config'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  btnGoogle: {
-    border: 'solid 1px #e0e0e0',
-    display: 'flex',
-    backgroundColor: 'white',
-    borderRadius: '50px',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#757575',
-    padding: '10px',
-    marginBottom: 10,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
-  },
-  googleIcon: {
-    marginRight: 5
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const LoginWithGoogle = ({ onSubmit }) => {
   const { t } = useTranslation('translations')
@@ -95,4 +73,4 @@ LoginWithGoogle.propTypes = {
 
 LoginWithGoogle.defaultProps = {}
 
-export default LoginWithGoogle
+export default memo(LoginWithGoogle)

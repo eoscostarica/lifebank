@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
@@ -25,123 +25,19 @@ import {
   LOGIN_MUTATION,
   VALIDATE_EMAIL,
   GET_SECRET_BY_ACCOUNT,
+  SEND_EMAIL_MUTATION,
+  CHECK_EMAIL_VERIFIED
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
+import ResendComponent from '../ResendComponent'
 
-const useStyles = makeStyles((theme) => ({
-  alert: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  },
-  closeIcon: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 14,
-    right: 14,
-    margin: '0',
-    height: '5vh',
-    '& svg': {
-      fontSize: 25,
-      color: "rgba(0, 0, 0, 0.6)"
-    }
-  },
-  dialog: {
-    paddingTop: "48px",
-    paddingLeft: "48px",
-    paddingRight: "48px"
-  },
-  title: {
-    fontFamily: "Roboto",
-    fontSize: "34px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
-    lineHeight: "1.18",
-    letterSpacing: "0.25px",
-    textAlign: "left",
-    color: "rgba(0, 0, 0, 0.87)",
-    marginBottom: 15
-  },
-  subTitle: {
-    fontFamily: "Roboto",
-    fontSize: "14px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
-    lineHeight: "1.43",
-    letterSpacing: "0.25px",
-    textAlign: "left",
-    color: "rgba(0, 0, 0, 0.6)",
-    marginBottom: 30
-  },
-  inputStyle: {
-    color: "rgba(0, 0, 0, 0.6)",
-    width: '100%',
-    marginBottom: 15
-  },
-  formCheckBox: {
-    marginBottom: 20
-  },
-  centerBox: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  btnLogin: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 10,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
-  },
-  registerBox: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 30,
-    marginBottom: 10
-  },
-  btnLoginModal: {
-    borderRadius: '4px',
-    boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.24)',
-    backgroundColor: '#ffffff',
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#121212',
-    padding: '10px'
-  },
-  labelOption: {
-    color: `${theme.palette.primary.main} !important`,
-    marginLeft: theme.spacing(3),
-    fontSize: 14,
-    textTransform: 'capitalize'
-  },
-  iconOption: {
-    color: 'rgba(0, 0, 0, 0.54)',
-    fontSize: 20
-  },
-  registerBtnSideBar: {
-    display: 'flex',
-    alignItems: 'center',
-  }
-}))
+import CredentialsRecovery from '../CredentialsRecovery/CredentialsRecovery'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const LoginModal = ({ isNavBar, isSideBar }) => {
   const { t } = useTranslation('translations')
@@ -151,14 +47,59 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentUser, { login }] = useUser()
+
+
   const [
     loginMutation,
     { loading, error, data: { login: loginResult } = {} }
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
 
+  const [
+    checkEmailVerified,
+    {
+      error: errorCheckEmailVerified,
+      loading: checkEmailVerifiedLoading,
+      data: { check_email_verified: checkEmailVerifiedResult } = {}
+    }
+  ] = useMutation(CHECK_EMAIL_VERIFIED)
+
+  const [
+    sendEmail,
+    {
+      error: errorSendEmail,
+      loading: SendEmailLoading,
+      data: { send_email: sendEmailResult } = {}
+    }
+  ] = useMutation(SEND_EMAIL_MUTATION)
+
+  const handleSendEmail = () => {
+    handleOpen()
+    sendEmail({
+      variables: {
+        account: user.account,
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        }
+      }
+    })
+  }
+
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
+
+  const [openVerify, setopenVerify] = useState(false)
+
+  const handlerSetOpenVerify = () => {
+    setopenVerify(!openVerify)
+  }
+
+  const verify = () => {
+    setopenVerify(true)
+  }
 
   const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
     variables: {
@@ -183,59 +124,33 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   }
 
   const handleLogin = async () => {
-    setErrorMessage(null)
-    const bcrypt = require('bcryptjs')
-    const { data } = await getHash({ account: user.account })
-
-    if (data.user.length >= 1) {
-      const hash = data.user[0].secret
-
-      bcrypt.compare(user.secret, hash, function (err, res) {
-        if (!err && res) {
-          setErrorMessage(null)
-          loginMutation({
-            variables: {
-              account: user.account,
-              secret: hash
-            }
-          })
-        } else {
-          setErrorMessage(t('login.invalidAccountOrPassword'))
-        }
-      })
-    } else {
-      setErrorMessage(t('login.invalidAccountOrPassword'))
-    }
+    loginMutation({
+      variables: {
+        account: user.account,
+        password: user.secret
+      }
+    })
   }
 
   const handleLoginWithAuth = async (status, email, secret) => {
     if (status) {
-      const { data } = await checkEmail({ email })
-
-      if (data.user.length === 1) {
-        const bcrypt = require('bcryptjs')
-        const { data } = await getHash({ account: email })
-        const hash = data.user[0].secret
-
-        bcrypt.compare(secret, hash, function (err, res) {
-          if (!err && res) {
-            setErrorMessage(null)
-            loginMutation({
-              variables: {
-                account: email,
-                secret: hash
-              }
-            })
-          } else setErrorMessage(t('login.invalidAccountOrPassword'))
-
-        })
-      } else setErrorMessage(t('login.accountDoesntExist'))
+      loginMutation({
+        variables: {
+          account: email,
+          password: secret
+        }
+      })
     } else setErrorMessage(t('login.somethingHappenedWithAuth'))
   }
 
   useEffect(() => {
     if (error) {
       setErrorMessage(error.message.replace('GraphQL error: ', ''))
+      checkEmailVerified({
+        variables: {
+          account: user.account
+        }
+      })
     }
   }, [error])
 
@@ -244,8 +159,16 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       login(loginResult.token)
       setOpen(false)
     }
-
   }, [loginResult])
+
+  useEffect(() => {
+    if (checkEmailVerifiedResult && !checkEmailVerifiedResult.verified) {
+      verify()
+    }
+  }, [checkEmailVerifiedResult])
+
+  useEffect(() => {
+  }, [sendEmailResult])
 
   useEffect(() => {
     if (currentUser) {
@@ -256,8 +179,8 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 
   function executeLogin(e) {
     if (e.key === 'Enter' && (user.account && user.secret && !loading)) {
-        e.preventDefault()
-        handleLogin()
+      e.preventDefault()
+      handleLogin()
     }
   }
 
@@ -402,6 +325,14 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           <Box className={classes.registerBox}>
             <Signup isModal />
           </Box>
+          <ResendComponent
+            open={openVerify}
+            handlerOpen={handlerSetOpenVerify}
+            handlerSendEmail={handleSendEmail}
+          />
+          <Box className={classes.credentialsBox}>
+            <CredentialsRecovery />
+          </Box>
         </Box>
       </Dialog>
     </>
@@ -418,4 +349,4 @@ LoginModal.defaultProps = {
   isSideBar: false
 }
 
-export default LoginModal
+export default memo(LoginModal)

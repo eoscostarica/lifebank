@@ -13,6 +13,7 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
+<<<<<<< HEAD
 import Button from '@material-ui/core/Button'
 import { useSubscription } from '@apollo/react-hooks'
 import { useUser } from '../../context/user.context'
@@ -82,6 +83,11 @@ const useStyles = makeStyles((theme) => ({
   }
 
 }))
+=======
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
+>>>>>>> master
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />

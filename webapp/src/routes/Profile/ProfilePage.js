@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react'
+import React, { memo, useEffect, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/styles'
 import Box from '@material-ui/core/Box'
@@ -14,46 +14,14 @@ import {
   REVOKE_CONSENT_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const ProfilePageDonor = lazy(() => import('./ProfilePageDonor'));
 const ProfilePageGuest = lazy(() => import('./ProfilePageGuest'));
 const ProfilePageLifebank = lazy(() => import('./ProfilePageLifebank'));
 const ProfilePageSponsor = lazy(() => import('./ProfilePageSponsor'));
-
-const useStyles = makeStyles((theme) => ({
-  contentBody: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    minHeight: 'calc(100vh - 60px)',
-    width: '100%',
-    paddingTop: '60px',
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '35%',
-      paddingRight: '35%',
-    },
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
-    }
-  },
-  divider: {
-    width: '100%'
-  },
-  editBtn: {
-    marginTop: theme.spacing(4)
-  },
-  transactionLink: {
-    wordBreak: 'break-all'
-  }
-}))
 
 const ProfilePage = () => {
   const { t } = useTranslation('translations')
@@ -134,6 +102,14 @@ const ProfilePage = () => {
   ])
 
   useEffect(() => {
+    if (profile && !profile.consent) {
+      setSeverity("error")
+      setMessegaAlert(t('signup.noConsentNoEdit'))
+      handleOpenAlert()
+    }
+  }, [profile])
+
+  useEffect(() => {
     if (errorProfile) {
       if (errorProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
         logout()
@@ -195,7 +171,7 @@ const ProfilePage = () => {
       )}
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <Suspense fallback={<CircularProgress />}>
-          <ProfilePageLifebank profile={profile} />
+          <ProfilePageLifebank profile={profile}/>
         </Suspense>
       )}
       {!currentUser &&
@@ -208,4 +184,4 @@ const ProfilePage = () => {
   )
 }
 
-export default ProfilePage
+export default memo(ProfilePage)

@@ -125,9 +125,37 @@ export const GET_SPONSOR_OFFERS_QUERY = gql`
     }
   }
 `
+
 export const GET_OFFERS_QUERY = gql`
   query($active: Boolean!) {
     offer(where: { active: { _eq: $active } }) {
+      id
+      images
+      limited
+      offer_name
+      offer_type
+      online_only
+      quantity
+      sponsor_id
+      start_date
+      end_date
+      description
+      cost_in_tokens
+      active
+      user {
+        account
+        name
+        location {
+          info
+        }
+      }
+    }
+  }
+`
+
+export const GET_ALL_OFFERS_QUERY = gql`
+  query {
+    offer {
       id
       images
       limited
@@ -177,6 +205,42 @@ export const GET_OFFER_QUERY = gql`
           info
         }
       }
+    }
+  }
+`
+
+export const GET_OFFER_BY_SPONSOR_QUERY = gql`
+  query($active: Boolean!, $sponsor_id: Int!) {
+    offer(
+      where: { _and: [{ active: { _eq: $active } }, { sponsor_id: { _eq: $sponsor_id } }] }
+    ) {
+      id
+      images
+      limited
+      offer_name
+      offer_type
+      online_only
+      quantity
+      sponsor_id
+      start_date
+      end_date
+      description
+      cost_in_tokens
+      active
+      user {
+        account
+        name
+        location {
+          info
+        }
+      }
+    }
+  }
+`
+export const REDEEM_OFFER_MUTATION = gql`
+  mutation redeem_offer($to: String!, $memo: String!, $quantity: Int, $offer: jsonb!) {
+    redeem_offer(to: $to, memo: $memo, quantity: $quantity, offer: $offer) {
+      transaction_id
     }
   }
 `

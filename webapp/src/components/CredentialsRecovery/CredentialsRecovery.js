@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
-import clsx from 'clsx'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -14,92 +12,19 @@ import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Dialog from '@material-ui/core/Dialog'
-import LockIcon from '@material-ui/icons/Lock'
+import Snackbar from '@material-ui/core/Snackbar'
 import { useTranslation } from 'react-i18next'
 
-import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD } from '../../gql'
+import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  alert: {
-    marginTop: theme.spacing(4)
-  },
-  textFieldWrapper: {
-    padding: theme.spacing(2, 0),
-    display: 'flex',
-    flexDirection: 'column',
-    height: 200,
-    justifyContent: 'space-evenly'
-  },
-  closeIcon: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 14,
-    right: 14,
-    margin: '0',
-    height: '5vh',
-    '& svg': {
-      fontSize: 25,
-      color: "rgba(0, 0, 0, 0.6)"
-    }
-  },
-  loginBtn: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  labelOption: {
-    color: theme.palette.primary.main,
-    marginLeft: theme.spacing(3),
-    fontSize: 14,
-    cursor: "pointer"
-  },
-  bodyWrapper: {
-    height: '90%',
-    padding: theme.spacing(0, 2)
-  },
-  iconOption: {
-    color: 'rgba(0, 0, 0, 0.54)',
-    fontSize: 20
-  },
-  marginTop: {
-    marginTop: '6%'
-  },
-  marginTopBox: {
-    marginTop: '16%'
-  },
-  button: {
-    marginTop: '6%',
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "100%",
-    height: '40px',
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '15px',
-    marginBottom: 10
-  },
-  dialog: {
-    paddingTop: "53px",
-    paddingLeft: "53px",
-    paddingRight: "53px",
-    paddingBottom: "60px",
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: "21px",
-      paddingRight: "21px"
-    }
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
   const [success, setSuccess] = useState(false)
-  const [errorPassword, setErrorPassword] = useState(true)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
@@ -112,88 +37,103 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
   ] = useMutation(CREDENTIALS_RECOVERY)
   const [
     changePassword,
-    { loading: loadingChangePassword, error: errorChangePassword, data: { change_password: responseChangePassword } = {} }
+    { loading: loadingChangePassword, error: errorChangePassword }
   ] = useMutation(CHANGE_PASSWORD)
   const [open, setOpen] = useState(false)
+
+  const [
+    getAccountSignupMethod,
+    { data: { signup_method: getAccountSignupMethodResult } = {} }
+  ] = useMutation(GET_ACCOUNT_SIGNUP_METHOD)
 
   const handleOpen = () => {
     setOpen(!open)
   }
-
-  const handleSetField = (field, value) => {
-    setUser({ ...user, [field]: value })
+  const handleCloseSnackBar = () => {
+    if (errorMessage) {
+      setErrorMessage(null)
+    } else {
+      setOpen(!open)
+      setUser({})
+      setSuccess(false)
+    }
   }
 
   const handleSetFieldEmail = (field, value) => {
     const regularExpresion = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-    if(regularExpresion.test(value)) setValidEmailFormat(true)
+    if (regularExpresion.test(value)) setValidEmailFormat(true)
     else setValidEmailFormat(false)
     setUser({ ...user, [field]: value })
   }
 
-  const handleSubmit = () => {
-    setErrorMessage(null)
-    credentialsRecovery({
-      variables: {
-        email: user.email,
-        emailContent: {
-          subject: t('emailMessage.subjectCredentialsRecovery'),
-          title: t('emailMessage.titleCredentialsRecovery'),
-          message: t('emailMessage.messageCredentialsRecovery'),
-          account: t('common.account'),
-          password: t('signup.password')
+  const handleSubmit = async () => {
+    if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
+      setErrorMessage(null)
+      credentialsRecovery({
+        variables: {
+          email: user.email,
+          emailContent: {
+            subject: t('emailMessage.subjectCredentialsRecovery'),
+            title: t('emailMessage.titleCredentialsRecovery'),
+            message: t('emailMessage.messageCredentialsRecovery'),
+            account: t('common.account'),
+            password: t('signup.password')
+          }
         }
-      }
-    })
-    setValidEmailFormat(false)
+      })
+      setValidEmailFormat(false)
+    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
   }
 
-  const handleSubmitChangePassword = () => {
-    setErrorMessage(null)
-    changePassword({
-      variables: {
-        ...user,
-        emailContent: {
-          subject: t('emailMessage.subjectChangePassword'),
-          title: t('emailMessage.titleChangePassword'),
-          message: t('emailMessage.messageChangePassword')
+  const handleSubmitChangePassword = async () => {
+    if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
+      setErrorMessage(null)
+      changePassword({
+        variables: {
+          ...user,
+          emailContent: {
+            subject: t('emailMessage.subjectChangePassword'),
+            title: t('emailMessage.titleChangePassword'),
+            message: t('emailMessage.messageChangePassword')
+          }
         }
-      }
-    })
-    setValidEmailFormat(false)
+      })
+      setValidEmailFormat(false)
+    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
   }
+
+  useEffect(() => {
+    if (user.email) {
+      getAccountSignupMethod({
+        variables: {
+          email: user.email
+        }
+      })
+    }
+  }, [user])
 
   useEffect(() => {
     if (error) {
-      if(error.message === `GraphQL error: Cannot read property 'account' of undefined`)
+      if (error.message === `GraphQL error: Cannot read property 'account' of undefined`)
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(error.message.replace('GraphQL error: ', ''))
     }
-  }, [error])
+  }, [error, t])
 
   useEffect(() => {
     if (errorChangePassword) {
-      if(errorChangePassword.message === `GraphQL error: Cannot read property 'secret' of null`)
+      if (errorChangePassword.message === `GraphQL error: Cannot read property 'secret' of null`)
         setErrorMessage(t('credentialsRecovery.emailError'))
       else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
     }
-  }, [errorChangePassword])
+  }, [errorChangePassword, t])
 
 
   useEffect(() => {
     if (response) {
-      setUser({})
       setSuccess(response.success)
     }
   }, [response])
-
-  useEffect(() => {
-    if (responseChangePassword) {
-      setUser({})
-      setSuccess(responseChangePassword.success)
-      setErrorPassword(responseChangePassword.success)
-    }
-  }, [responseChangePassword])
 
   function executeCredentialsRecovery(e) {
     if (e.key === 'Enter' && ((user.newPassword && user.currentPassword && validEmailFormat) && !loadingChangePassword)) {
@@ -201,34 +141,25 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
       handleSubmitChangePassword()
     }
     else if (e.key === 'Enter' && (validEmailFormat && !loading)) {
-        e.preventDefault()
-        handleSubmit()
+      e.preventDefault()
+      handleSubmit()
     }
   }
 
   return (
     <>
-      <Box
-        className={clsx(classes.loginBtn, overrideBoxClass)}
-        onClick={handleOpen}
-      >
-        <LockIcon className={classes.iconOption} />
-        <Link to="/">
-          <Typography
-            variant="body1"
-            className={clsx(classes.labelOption, overrideLabelClass)}
-          >
-            {t('credentialsRecovery.credentialsRecovery')}
-          </Typography>
-        </Link>
+      <Box className={classes.recoveryBox}>
+        <Button color="secondary" className={classes.recoveryButton} onClick={handleOpen}>
+          {t('signup.forgetPassword')}
+        </Button>
       </Box>
       <Dialog
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
         onClose={handleOpen}
-        fullScreen = {!isDesktop}
-        maxWidth= 'xs'
+        fullScreen={!isDesktop}
+        maxWidth='xs'
         closeAfterTransition
         BackdropProps={{
           timeout: 500
@@ -246,11 +177,11 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
             </IconButton>
           </Box>
           <Box className={classes.bodyWrapper}>
-            <Typography variant="h3">
-              {t('credentialsRecovery.credentialsRecovery')}
-            </Typography>
             <form autoComplete="off">
               <Box className={classes.textFieldWrapper}>
+                <Typography variant="h3" className={classes.title}>
+                  {t('credentialsRecovery.credentialsRecovery')}
+                </Typography>
                 <Typography >
                   {t('credentialsRecovery.instructionCredentialsRecovery')}
                 </Typography>
@@ -279,108 +210,29 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
                 >
                   {t('credentialsRecovery.recovery')}
                 </Button>
-                {loading && <CircularProgress />}
-              </Box>
-              <Box className={clsx(classes.textFieldWrapper, classes.marginTopBox)}>
-                <Typography >
-                  {t('credentialsRecovery.changePasswordInstructions')}
-                </Typography>
-                <TextField
-                  id="currentPassword"
-                  label= {t('credentialsRecovery.currentPassword')}
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  value={user.currentPassword || ''}
-                  onChange={(event) =>
-                    handleSetField('currentPassword', event.target.value)
-                  }
-                  onKeyPress={(event) =>
-                    executeCredentialsRecovery(event)
-                  }
-                  className={classes.marginTop}
-                />
-                <TextField
-                  id="newPassword"
-                  label= {t('credentialsRecovery.newPassword')}
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  value={user.newPassword || ''}
-                  onChange={(event) =>
-                    handleSetField('newPassword', event.target.value)
-                  }
-                  onKeyPress={(event) =>
-                    executeCredentialsRecovery(event)
-                  }
-                  className={classes.marginTop}
-                />
-                <Button
-                  disabled={(!user.newPassword || !user.currentPassword || !validEmailFormat) || loadingChangePassword}
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleSubmitChangePassword}
-                  className={classes.button}
-                >
-                  {t('credentialsRecovery.changePassword')}
-                </Button>
-                {loadingChangePassword && <CircularProgress />}
+                <Box className={classes.recoveryBox}>
+                  {loading && <CircularProgress />}
+                </Box>
               </Box>
               {errorMessage && (
-                <Alert
-                  className={classes.alert}
-                  severity="error"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setErrorMessage(null)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  {errorMessage}
-                </Alert>
-              )}
-              {!errorPassword && (
-                <Alert
-                  className={classes.alert}
-                  severity="error"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setErrorPassword(true)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  {t('credentialsRecovery.errorPassword')}
-                </Alert>
+                <Snackbar open={true} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+                  <Alert
+                    className={classes.alert}
+                    severity="error"
+                  >
+                    {errorMessage}
+                  </Alert>
+                </Snackbar>
               )}
               {success && (
-                <Alert
-                  className={classes.alert}
-                  severity="success"
-                  action={
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => setSuccess(false)}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                  }
-                >
-                  {t('credentialsRecovery.checkYourEmail')}
-                </Alert>
+                <Snackbar open={success} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+                  <Alert
+                    className={classes.alert}
+                    severity="success"
+                  >
+                    {t('credentialsRecovery.checkYourEmail')}
+                  </Alert>
+                </Snackbar>
               )}
             </form>
           </Box>

@@ -27,112 +27,14 @@ import LogoUrlInput from '../../components/LogoUrlInput'
 import Telephones from '../../components/Telephones'
 import SocialMediaTextField from '../../components/SocialMediaTextField'
 import { constants } from '../../config'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const {
-  LOCATION_TYPES: { SPONSOR },
+  LOCATION_TYPES: { SPONSOR, PENDING_SPONSOR },
   SPONSOR_TYPES
 } = constants
-
-const useStyles = makeStyles((theme) => ({
-  form: {
-    width: '100%',
-    padding: theme.spacing(0, 2)
-  },
-  textFieldWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    '& > div.MuiFormControl-root': {
-      width: '100%'
-    }
-  },
-  boldText: {
-    fontWeight: 'bold',
-    width: "100%",
-    textAlign: "left",
-    marginBottom: '20px',
-  },
-  divider: {
-    marginTop: '30px',
-    marginBottom: '5px',
-    width: '100%'
-  },
-  textField: {
-    marginTop: theme.spacing(2),
-    height: 'auto',
-    overflowY: 'none',
-  },
-  btnWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: theme.spacing(2, 0)
-  },
-  labelBtn: {
-    color: theme.palette.white
-  },
-  logo: {
-    maxWidth: '100%',
-    maxHeight: 340
-  },
-  addBtn: {
-    color: 'white',
-    margin: theme.spacing(2, 0)
-  },
-  carouselContainer: {
-    marginTop: theme.spacing(2),
-    width: '100%',
-  },
-  socialMediaLinksContainer: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(2),
-    border: '1px dashed lightgray'
-  },
-  routerLink: {
-    width: "100%",
-    textDecoration: "none",
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  saveBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    },
-  },
-  cancelBtn: {
-    borderRadius: '50px',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 'normal',
-    letterSpacing: '1px',
-    textAlign: 'center',
-    padding: '12px',
-    border: 'solid 1px rgba(0, 0, 0, 0.54)',
-    backgroundColor: '#ffffff',
-    marginBottom: 20,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    },
-  },
-}))
 
 const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
@@ -146,19 +48,18 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       ? JSON.parse(profile.social_media_links)
       : []
   )
+
   const [user, setUser] = useState({
     logo_url: profile.logo_url,
     name: profile.name,
     about: profile.about,
     address: profile.address,
     website: profile.website,
-    benefit_description: profile.benefit_description,
     telephones:
       profile.telephones && profile.telephones !== '[]'
         ? JSON.parse(profile.telephones)
         : [],
     business_type: profile.business_type,
-    covid_impact: profile.covid_impact,
     geolocation: profile.location ? JSON.parse(profile.location) : null,
     schedule: profile.schedule,
     photos:
@@ -267,7 +168,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Box className={classes.textFieldWrapper}>
+      <Box className={classes.textFieldWrapperSponsor}>
         <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
           <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
         </Box>
@@ -306,7 +207,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           variant="outlined"
           className={classes.textField}
         >
-          <InputLabel id="bussines-type-label">Type</InputLabel>
+          <InputLabel id="bussines-type-label">{t('signup.type')}</InputLabel>
           <Select
             labelId="bussines-type-label"
             id="bussines-type"
@@ -314,11 +215,11 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             onChange={(event) =>
               handleSetField('business_type', event.target.value)
             }
-            label="Type"
+            label={t('signup.type')}
           >
             {SPONSOR_TYPES.map((option) => (
               <MenuItem key={`bussines-type-option-${option}`} value={option}>
-                {option}
+                {t(`sponsorTypes.${option}`)}
               </MenuItem>
             ))}
           </Select>
@@ -352,43 +253,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           className={classes.textField}
           fullWidth
           onChange={(event) => handleSetField('about', event.target.value)}
-        />
-
-        <TextField
-          id="covidImpact"
-          style={{ display: showOrHide(profile.covid_impact) }}
-          label={t('editProfile.covidImpact')}
-          variant="outlined"
-          placeholder={t('editProfile.covidImpactPlaceholder')}
-          defaultValue={user.covid_impact}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          multiline
-          fullWidth
-          rowsMax={10}
-          onChange={(event) =>
-            handleSetField('covid_impact', event.target.value)
-          }
-        />
-        <TextField
-          id="benefitDescription"
-          style={{ display: showOrHide(profile.benefit_description) }}
-          label={t('profile.benefitDescription')}
-          variant="outlined"
-          placeholder=""
-          defaultValue={user.benefit_description}
-          InputLabelProps={{
-            shrink: true
-          }}
-          className={classes.textField}
-          multiline
-          fullWidth
-          rowsMax={10}
-          onChange={(event) =>
-            handleSetField('benefit_description', event.target.value)
-          }
         />
         <Box
           width="100%"
@@ -610,23 +474,19 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         </Box>
         {(isCompleting && profile.location === '') ||
           (!isCompleting && profile.location !== '') ? (
-            <>
-              <Divider className={classes.divider} />
-              <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
-              <MapEditLocation
-                onGeolocationChange={handleOnGeolocationChange}
-                markerType={SPONSOR}
-                markerLocation={
-                  user.geolocation
-                    ? user.geolocation
-                    : { longitude: -84.0556371, latitude: 9.9195872 }
-                }
-                width="100%"
-                height={400}
-                mb={1}
-              />
-            </>
-          ) : null}
+          <>
+            <Divider className={classes.divider} />
+            <Typography className={classes.boldText} variant="subtitle1">{t('miscellaneous.location')}</Typography>
+            <MapEditLocation
+              onGeolocationChange={handleOnGeolocationChange}
+              markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
+              markerLocation={user.geolocation}
+              width="100%"
+              height={400}
+              mb={1}
+            />
+          </>
+        ) : null}
       </Box>
       <Box className={classes.btnWrapper}>
         <Link to="/profile" className={classes.routerLink}>

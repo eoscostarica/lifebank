@@ -10,6 +10,10 @@ const GET_ONE = `
       account
       email
       name
+      token
+      signup_method
+      verification_code
+      email_verified
     }
   }
 `
@@ -31,6 +35,14 @@ const INSERT = `
 const SET_EMAIL = `
   mutation ($where: user_bool_exp!, $email: String) {
     update_user(where: $where, _set: { email: $email }) {
+      affected_rows
+    }
+  }
+`
+
+const SET_TOKEN = `
+  mutation ($where: user_bool_exp!, $token: Int) {
+    update_user(where: $where, _set: { token: $token }) {
       affected_rows
     }
   }
@@ -78,6 +90,10 @@ const setEmail = (where, email) => {
   return hasuraUtils.request(SET_EMAIL, { where, email })
 }
 
+const setToken = (where, token) => {
+  return hasuraUtils.request(SET_TOKEN, { where, token })
+}
+
 const setName = (where, name) => {
   return hasuraUtils.request(SET_NAME, { where, name })
 }
@@ -94,6 +110,7 @@ module.exports = {
   getOne,
   insert,
   setEmail,
+  setToken,
   setName,
   verifyEmail,
   setSecret

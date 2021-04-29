@@ -21,6 +21,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import {
   CREATE_ACCOUNT_MUTATION,
+  CREATE_ACCOUNT_AUTH_MUTATION,
   CREATE_PRE_REGITER_LIFEBANK_MUTATION,
   VALIDATION_EMAIL
 } from '../../gql'
@@ -28,155 +29,12 @@ import { useUser } from '../../context/user.context'
 
 import SignupRoleSelector from './SignupRoleSelector'
 import ValidateEmail from './ValidateEmail'
+import styles from './styles'
 
+const useStyles = makeStyles(styles)
 const SignupDonor = lazy(() => import('./SignupDonor'));
 const SignupLifeBank = lazy(() => import('./SignupLifeBank'));
 const SimpleRegisterForm = lazy(() => import('./SignupSponsor/SimpleRegisterForm'));
-
-const useStyles = makeStyles((theme) => ({
-  closeIcon: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 14,
-    right: 14,
-    margin: '0',
-    height: '5vh',
-    '& svg': {
-      fontSize: 25,
-      color: "rgba(0, 0, 0, 0.6)"
-    }
-  },
-  dialog: {
-    paddingTop: "53px",
-    paddingLeft: "53px",
-    paddingRight: "53px",
-    paddingBottom: "38px",
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: "21px",
-      paddingRight: "21px",
-    }
-  },
-  register: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    height: '100%',
-  },
-  gridContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    padding: '5% 0'
-  },
-  goBack: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 14,
-    left: 14,
-    margin: '0',
-    height: '5vh',
-    '& svg': {
-      fontSize: 25,
-      color: "rgba(0, 0, 0, 0.6)"
-    }
-  },
-  registerBack: {
-    color: `${theme.palette.primary.main} !important`
-  },
-  stepperContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%',
-    marginBottom: theme.spacing(2)
-  },
-  titleRegister: {
-    fontSize: '34px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.18,
-    letterSpacing: '0.25px',
-    color: '#rgba(0, 0, 0, 0.87)',
-    marginBottom: 15
-  },
-  text: {
-    fontSize: '12px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.33,
-    letterSpacing: '0.4px',
-    color: '#000000',
-    marginBottom: 30
-  },
-  form: {
-    width: '100%',
-    padding: theme.spacing(0, 2),
-    marginTop: theme.spacing(3)
-  },
-  textFieldWrapper: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  textField: {
-    marginTop: theme.spacing(2),
-    width: '100%'
-  },
-  btnWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: theme.spacing(2, 0)
-  },
-  alert: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    width: '100%'
-  },
-  registerBtn: {
-    width: 180,
-    height: 49,
-    color: "#ffffff",
-    backgroundColor: 'transparent',
-    margin: theme.spacing(2, 0, 4, 0),
-    borderRadius: ' 2px',
-    border: 'solid 2px #ffffff'
-  },
-  registerBoxModal: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  registerTextModal: {
-    fontSize: '12px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.33,
-    letterSpacing: '0.4px',
-    color: '#000000',
-  },
-  labelOption: {
-    color: `${theme.palette.primary.main} !important`,
-    marginLeft: theme.spacing(3),
-    fontSize: 14,
-    textTransform: 'capitalize'
-  },
-  iconOption: {
-    color: 'rgba(0, 0, 0, 0.54)',
-    fontSize: 20
-  },
-  registerBtnSideBar: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-}))
 
 const Signup = ({ isHome, isModal, isSideBar }) => {
   const { t } = useTranslation('translations')
@@ -215,6 +73,16 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       data: { create_account: createAccountResult } = {}
     }
   ] = useMutation(CREATE_ACCOUNT_MUTATION)
+
+  const [
+    createAccountAuth,
+    {
+      error: errorcreateAccountAuth,
+      loading: createAccountLoadingAuth,
+      data: { create_account_auth: createAccountResultAuth } = {}
+    }
+  ] = useMutation(CREATE_ACCOUNT_AUTH_MUTATION)
+
   const [
     preRegisterLifebank,
     {
@@ -230,7 +98,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleSetField = useCallback((field, value) => {
-    setUser({ [field]: value})
+    setUser({ [field]: value })
   }, [])
 
   const handleGoBack = () => {
@@ -239,14 +107,31 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleCreateAccount = () => {
-    const { email, secret } = user
-    const name = 'undefined'
-    const bcrypt = require('bcryptjs')
-    const saltRounds = 10
+    const { email, name, passwordPlainText } = user
 
-    bcrypt.hash(secret, saltRounds, function (err, hash) {
-      if (!err) {
-        createAccount({
+    createAccount({
+      variables: {
+        role,
+        email,
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        },
+        name: name || t('signup.defaultUsername'),
+        passwordPlainText,
+        signup_method: 'lifebank'
+      }
+    })
+  }
+
+  const handleCreateAccountWithAuth = async (status, email, name, passwordPlainText, signupMethod) => {
+    if (status) {
+      const { data } = await checkEmail({ email: email })
+
+      if (data.user.length === 0) {
+        createAccountAuth({
           variables: {
             role,
             email,
@@ -257,31 +142,8 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
               button: t('emailMessage.verifyButton')
             },
             name,
-            secret: hash
-          }
-        })
-      }
-    })
-  }
-
-  const handleCreateAccountWithAuth = async (status, email, name, secret) => {
-    if (status) {
-      const { data } = await checkEmail({ email: email })
-
-      if (data.user.length === 0) {
-        const bcrypt = require('bcryptjs')
-        const saltRounds = 10
-
-        bcrypt.hash(secret, saltRounds, function (err, hash) {
-          if (!err) {
-            createAccount({
-              variables: {
-                role,
-                email,
-                name,
-                secret: hash
-              }
-            })
+            passwordPlainText,
+            signup_method: signupMethod
           }
         })
       } else {
@@ -296,10 +158,10 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       password,
       name,
       address,
-      schedule,
       phone,
       description,
-      coordinates
+      coordinates,
+      requirement
     } = user
     let { immunity_test, invitation_code, urgency_level } = user
 
@@ -309,32 +171,28 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
     if (urgency_level === undefined) urgency_level = 1
 
-    const bcrypt = require('bcryptjs')
-    const saltRounds = 10
+    const schedule = '[]'
 
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-      if (!err) {
-        preRegisterLifebank({
-          variables: {
-            email,
-            emailContent: {
-              subject: t('emailMessage.subjectVerificationCode'),
-              title: t('emailMessage.titleVerificationCode'),
-              message: t('emailMessage.messageVerificationCode'),
-              button: t('emailMessage.verifyButton')
-            },
-            password: hash,
-            name,
-            address,
-            schedule,
-            phone,
-            description,
-            urgency_level,
-            coordinates,
-            immunity_test,
-            invitation_code
-          }
-        })
+    preRegisterLifebank({
+      variables: {
+        email,
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        },
+        passwordPlainText: password,
+        name,
+        address,
+        schedule,
+        phone,
+        description,
+        urgency_level,
+        coordinates,
+        immunity_test,
+        invitation_code,
+        requirement
       }
     })
   }
@@ -384,10 +242,19 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
       handleOpen()
       setMessegaAlert(t('signup.sucessfulRegistration'))
       handleOpenAlert()
-      login(createAccountResult.token)
     }
 
   }, [createAccountResult])
+
+  useEffect(() => {
+    if (createAccountResultAuth) {
+      handleOpen()
+      setMessegaAlert(t('signup.sucessfulRegistration'))
+      handleOpenAlert()
+      login(createAccountResultAuth.token)
+    }
+
+  }, [createAccountResultAuth])
 
 
   useEffect(() => {
@@ -395,11 +262,22 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
   }, [errorcreateAccount])
 
+  useEffect(() => {
+    if (errorcreateAccountAuth) setErrorMessage(t('errors.authError'))
+
+  }, [errorcreateAccountAuth])
 
   useEffect(() => {
     if (errorpreRegisterLifebank) setErrorMessage(t('errors.authError'))
 
   }, [errorpreRegisterLifebank])
+
+  useEffect(()=>{
+    if(open){
+      handleSetField('email', ' ')
+      setActiveStep(0)
+    }
+  }, [open])
 
   const ErrorMessage = () => {
     return (
@@ -504,7 +382,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
                     <SignupDonor
                       onSubmit={handleCreateAccount}
                       onSubmitWithAuth={handleCreateAccountWithAuth}
-                      loading={createAccountLoading}
+                      loading={createAccountLoading || createAccountLoadingAuth}
                       setField={handleSetField}
                       isEmailValid={isEmailValid}
                     >

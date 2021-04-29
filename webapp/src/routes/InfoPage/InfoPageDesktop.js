@@ -16,160 +16,17 @@ import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
 import { useParams } from 'react-router'
+import Grid from '@material-ui/core/Grid'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
-import { GET_LOCATION_PROFILE } from '../../gql'
+import { GET_LOCATION_PROFILE, GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
 import Nearby from '../../components/Nearby/Nerby'
+import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  carruselImage: {
-    height: '100%',
-    width: '100%'
-  },
-  divider: {
-    width: '100%'
-  },
-  boldText: {
-    fontWeight: 'bold'
-  },
-  bloodDemand: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    marginBottom: theme.spacing(2)
-  },
-  markLabel: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    '& h4': {
-      fontSize: 18
-    }
-  },
-  slider: {
-    padding: theme.spacing(0, 2)
-  },
-  midLabel: {
-    marginRight: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    padding: theme.spacing(1),
-    [theme.breakpoints.down('md')]: {
-      marginLeft: theme.spacing(1)
-    }
-  },
-  contentBodyDesktop: {
-    width: '100%',
-    backgroundColor: '#FFFFFF',
-    paddingTop: '50px',
-    paddingLeft: '20%',
-    paddingRight: '20%',
-    height: 'auto'
-  },
-  imageSectionDesktop: {
-    width: '100%',
-    height: '380px'
-  },
-  carouselDesktop: {
-    height: '380px',
-    borderRadius: '10px'
-  },
-  desktopContainerImageDefault: {
-    width: '100%',
-    height: '380px',
-    backgroundColor: 'rgba(0, 0, 0, 0.04)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  desktopImageDefault: {
-    width: '50%',
-    height: '50%',
-    color: 'rgba(0, 0, 0, 0.87)',
-    borderRadius: '10px'
-  },
-  headerContentDesktop: {
-    position: 'relative',
-    width: '100%',
-    paddingTop: '30px',
-    paddingBottom: '25px'
-  },
-  avatarRoundDesktop: {
-    width: '60px',
-    height: '60px',
-    position: 'absolute',
-    top: 25,
-    left: 10
-  },
-  titleDesktop: {
-    width: '98%',
-    height: '40px',
-    fontFamily: 'Roboto',
-    fontSize: '34px',
-    fontWeight: 'bold',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.18',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.87)',
-    marginLeft: '10px',
-    marginTop: '10px',
-    marginBottom: '4px',
-    textAlign: 'center'
-  },
-  subtitleDesktop: {
-    position: 'absolute',
-    top: 20,
-    right: 10,
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    marginLeft: '10px',
-    paddingTop: '26px'
-  },
-  bodyContentDesktop: {
-    display: 'flex',
-    width: '100%',
-    paddingTop: '25px',
-    paddingBottom: '15px'
-  },
-  bodyContentMidLeft: {
-    width: '50%',
-    paddingRight: '20px'
-  },
-  bodyContentMidRigth: {
-    width: '50%',
-    paddingLeft: '20px'
-  },
-  mapStyle: {
-    borderRadius: '50px'
-  },
-  text: {
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    textAlign: 'left',
-    color: 'rgba(0, 0, 0, 0.6)'
-  },
-  socialIcon: {
-    color: 'rgba(0, 0, 0, 0.87)'
-  },
-  bodyContentDesktopCards: {
-    width: '100%',
-    paddingTop: '25px',
-    paddingBottom: '15px'
-  },
-  contentCards: {
-    marginTop: '10px',
-    marginBottom: '20px',
-    width: '100%'
-  }
-}))
-
+const useStyles = makeStyles(styles)
 
 const InfoPage = () => {
   const { t } = useTranslation('translations')
@@ -180,18 +37,88 @@ const InfoPage = () => {
   const history = useHistory()
   const [profile, setProfile] = useState()
   const { url } = useParams()
+  const [loadingOffers, setLoadingOffers] = useState(true)
+  const [offers, setOffers] = useState([])
+  const [sponsorID, setSponsorID] = useState()
+
+  const getOffers = async () => {
+    if (profile) {
+      if (profile.role === 'sponsor') {
+        setLoadingOffers(true)
+        await getAllOffers()
+        await getSponsorID()
+      }
+    }
+  }
 
   const { error: errorInfoProfile, refetch: getInfoProfile } = useQuery(GET_LOCATION_PROFILE, {
     variables: {
       username: url
-    },
-    skip: true
+    }
+  })
+
+  const { error: errorUsername, data: sponsor_id, refetch: getSponsorID } = useQuery(GET_ID, {
+    variables: {
+      username: url
+    }
+  })
+
+  const {
+    loading: loadingDataOffer,
+    error: allOffersError,
+    data: allOffers,
+    refetch: getAllOffers
+  } = useQuery(GET_OFFER_BY_SPONSOR_QUERY, {
+    variables: { active: true, sponsor_id: sponsorID },
+    fetchPolicy: 'cache-and-network'
   })
 
   useEffect(() => {
-    getInfo()
+    if (!loadingDataOffer) {
+      const dataOffers = allOffers.offer
+      setOffers(dataOffers)
+      setLoadingOffers(false)
+    }
+  }, [allOffers])
 
+  useEffect(() => {
+
+    if (sponsor_id) {
+      const sponsor = sponsor_id.user[0]
+      setSponsorID(sponsor.id)
+    }
+  }, [sponsor_id])
+
+  useEffect(() => {
+    getInfo()
+    if (profile) {
+      if (profile.role === 'sponsor') {
+        getOffers()
+      }
+    }
   }, [location])
+
+  useEffect(() => {
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+    if (errorUsername && errorInfoProfile) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired'
+        && errorUsername.message === 'Error: GraphQL error: expected a value for non-nullable variable') {
+        getInfo()
+        if (profile) {
+          if (profile.role === 'sponsor') {
+            getOffers()
+          }
+        }
+        logout()
+        history.push(`/info/${location.state.profile.account}`)
+      } else history.push('/internal-error')
+    }
+  }, [errorUsername, errorInfoProfile, allOffersError])
 
   const getInfo = async () => {
     if (location.state) setProfile(location.state.profile)
@@ -208,9 +135,7 @@ const InfoPage = () => {
               {
                 "account": objectTemp.account,
                 "address": objectTemp.info.address,
-                "benefitDescription": objectTemp.info.benefit_description,
                 "businessType": objectTemp.info.business_type,
-                "covidImpact": objectTemp.info.covid_impact,
                 "description": objectTemp.info.about,
                 "email": objectTemp.info.email,
                 "location": JSON.stringify(objectTemp.info.geolocation),
@@ -240,6 +165,7 @@ const InfoPage = () => {
                 "urgencyLevel": objectTemp.info.blood_urgency_level,
                 "telephone": objectTemp.info.telephones,
                 "userName": objectTemp.user.username,
+                "requirement": objectTemp.info.requirement
               })
           }
 
@@ -251,18 +177,6 @@ const InfoPage = () => {
 
     }
   }
-
-  useEffect(() => {
-    if (errorInfoProfile) {
-      if (errorInfoProfile.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
-        logout()
-        getInfo()
-      } else {
-        history.push('/internal-error')
-      }
-    }
-
-  }, [errorInfoProfile])
 
   return (
     <>
@@ -287,7 +201,7 @@ const InfoPage = () => {
                 {JSON.parse(profile.photos).map((url, key) => (
                   <img
                     className={classes.carruselImage}
-                    src={`//images.weserv.nl?url=${url}&h=300&dpr=2`}
+                    src={url ? `//images.weserv.nl?url=${url}&h=300&dpr=2` : ''}
                     key={key}
                     alt={`${key}`}
                   />
@@ -383,7 +297,20 @@ const InfoPage = () => {
                     )
                   )}
               </Box>
-
+              {profile.role === 'lifebank' && (
+                <Box className={classes.midLabel}>
+                  <Typography className={classes.boldText} variant="subtitle1">
+                    {t('signup.requirement')}
+                  </Typography>
+                  <Typography
+                    style={{ marginTop: '4px' }}
+                    className={classes.text}
+                    variant="body1"
+                  >
+                    {profile.requirement.replaceAll('\n', ', ')}
+                  </Typography>
+                </Box>
+              )}
               {profile.role === 'lifebank' && (
                 <Box className={classes.midLabel}>
                   <Divider className={classes.divider} />
@@ -479,15 +406,43 @@ const InfoPage = () => {
               variant="subtitle1"
             >{`${t('common.near')}  ${profile.name}`}</Typography>
             <Box className={classes.contentCards}>
-              <Nearby
-                location={JSON.parse(profile.location)}
-                searchDistance={1000}
-                account={profile.account}
-              />
+              {profile &&
+                <Nearby
+                  location={JSON.parse(profile.location)}
+                  searchDistance={1000}
+                  account={profile.account}
+                />
+              }
             </Box>
           </Box>
+          <Divider className={classes.divider} />
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+            spacing={0}
+            className={classes.mainGridDesktop}
+            md={12}
+            xl={10}
+          >
+            {profile.role === 'sponsor' && (
+              <Grid item md={12}>
+                <Typography variant="subtitle1" className={classes.boldText}>
+                  {t('offerView.lifebankOffers')}
+                </Typography>
+                <ShowOffersDesktop
+                  className={classes.offerContainer}
+                  offers={offers}
+                  loading={loadingOffers}
+                />
+              </Grid>
+            )}
+
+          </Grid>
         </Box>
       )}
+
     </>
   )
 }

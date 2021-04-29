@@ -56,6 +56,7 @@ const addLifebank = (
           blood_urgency_level: profile.blood_urgency_level || 1,
           schedule: JSON.stringify(profile.schedule),
           email: profile.email,
+          requirement: profile.requirement,
           social_media_links: profile.social_media_links || '[]',
           ...profile
         }
@@ -96,6 +97,7 @@ const upLifebank = (
           blood_urgency_level: profile.blood_urgency_level || 1,
           schedule: profile.schedule,
           email: profile.email,
+          requirement: profile.requirement,
           social_media_links: profile.social_media_links || '[]',
           ...profile
         }
@@ -125,8 +127,6 @@ const addSponsor = async (
         data: {
           account,
           sponsor_name: name,
-          covid_impact: profile.covid_impact || '',
-          benefit_description: profile.benefit_description || '',
           name: profile.name || '',
           email: profile.email || '',
           website: profile.website || '',

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
-import { Link as LinkRouter } from 'react-router-dom'
+import { Link as LinkRouter, useHistory, useLocation } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -12,115 +12,11 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  contentHeader: {
-    position: 'relative',
-    height: 'auto',
-    width: '100%',
-    marginBottom: '40px'
-  },
-  titleProfile: {
-    padding: theme.spacing(0, 2),
-    width: '65%',
-    fontFamily: 'Roboto',
-    fontSize: '34px',
-    fontWeight: 'bold',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.18',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.87)',
-    marginTop: '10px',
-    marginBottom: '4px',
-    textAlign: 'left',
-    [theme.breakpoints.down('md')]: {
-      fontSize: '24px',
-    }
-  },
-  subtitleProfile: {
-    padding: theme.spacing(0, 2),
-    width: '100%',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    textAlign: 'left'
-  },
-  avatarRoundDesktop: {
-    width: '80px',
-    height: '80px',
-    marginBottom: '5px'
-  },
-  heart: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    padding: 0,
-    width: '100px',
-    fontSize: 275,
-    animation: '$heartbeat 1.4s linear infinite',
-    [theme.breakpoints.up('md')]: {
-      width: '100px'
-    }
-  },
-  tokensBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: 'auto',
-    width: '100%',
-    alignItems: 'center',
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    padding: theme.spacing(2, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-    }
-  },
-  divider: {
-    width: '100%'
-  },
-  routerLink: {
-    width: "100%",
-    textDecoration: "none",
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  editBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
-  },
-  formGroup: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: theme.spacing(2) * -1
-  },
-  boxQr: {
-    marginTop: '20px',
-    marginBottom: '20px'
-  }
-}))
-
+const useStyles = makeStyles(styles)
 
 const EmptyHeartSVG = ({ balance }) => {
   const classes = useStyles()
@@ -164,6 +60,26 @@ EmptyHeartSVG.propTypes = {
 const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const location = useLocation()
+  const history = useHistory()
+
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') return
+
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
+
+  useEffect(() => {
+    if (location.state) {
+      history.replace({ state: false })
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.profileWasUpdated'),
+        severity: 'success'
+      })
+    }
+  }, [])
 
   return (
     <>
@@ -214,10 +130,17 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         <QRCode value={profile.account || 'n/a'} size={200} />
       </Box>
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: true, userName: '' } }} className={classes.routerLink} >
-        <Button variant="contained" className={classes.editBtn} color="primary">
+        <Button variant="contained" className={classes.editButton} color="secondary">
           {t('common.edit')}
         </Button>
       </LinkRouter>
+      <Snackbar
+        open={openSnackbar.show}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
+      </Snackbar>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react'
+import React, { memo, useEffect, useState, lazy, Suspense } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useTheme } from '@material-ui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -162,13 +162,13 @@ const Home = () => {
       if (valueSponsorCat !== 'All') {
         dataTemp = dataTemp.filter(
           (sponsor) =>
-          sponsor.businessType.toLowerCase() === valueSponsorCat.toLowerCase()
+            sponsor.businessType.toLowerCase() === valueSponsorCat.toLowerCase()
         )
       }
 
       if (searchValue !== '')
         dataTemp = dataTemp.filter((sponsor) =>
-        sponsor.name.toLowerCase().includes(searchValue.toLowerCase())
+          sponsor.name.toLowerCase().includes(searchValue.toLowerCase())
         )
 
       setSponsors(dataTemp)
@@ -273,4 +273,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default memo(Home)

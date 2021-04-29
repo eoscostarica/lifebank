@@ -32,68 +32,9 @@ import {
 
 import OfferDetails from './OfferDetails'
 import GenericOfferFormComponent from './GenericOfferFormComponent'
+import styles from './styles'
 
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(4),
-    display: 'flex',
-    height: 'calc(100vh - 60px)',
-    width: "90%",
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
-  },
-  title: {
-    fontSize: "34px",
-    fontWeight: "normal",
-    fontStretch: "normal",
-    fontStyle: "normal",
-    lineHeight: "1.18",
-    letterSpacing: "0.25px",
-    textAlign: "center",
-    color: "rgba(0, 0, 0, 0.87)",
-    marginBottom: 15
-  },
-  btnAction: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "50%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 10,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
-  },
-  content: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    width: "100%"
-  },
-  fab: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-    color: 'white'
-  },
-  formControl: {
-    width: '100%'
-  },
-  tableContent: {
-    paddingTop: "30px",
-    width: "100%"
-  }
-
-}))
+const useStyles = makeStyles(styles)
 
 const OffersManagement = () => {
   const { t } = useTranslation('translations')
@@ -109,14 +50,6 @@ const OffersManagement = () => {
   const [openGenericFormAddVariant, setOpenGenericFormAddVariant] = useState(
     false
   )
-  const columns = [
-    t('offersManagement.offerName'),
-    t('offersManagement.startDate'),
-    t('offersManagement.endDate'),
-    t('offersManagement.status'),
-    t('offersManagement.actions'),
-    t('offersManagement.details')
-  ]
   const [openGenericFormEditVariant, setOpenGenericFormEditVariant] = useState(
     false
   )
@@ -134,6 +67,52 @@ const OffersManagement = () => {
     skip: true
   })
 
+  const checkAvailableFields = () => {
+    let pendingFieldsObject = {}
+    if (!profile.address)
+      pendingFieldsObject = { ...pendingFieldsObject, address: false }
+
+    if (!profile.about)
+      pendingFieldsObject = { ...pendingFieldsObject, about: false }
+
+    if (!profile.logo_url)
+      pendingFieldsObject = { ...pendingFieldsObject, logo_url: false }
+
+    if (!profile.name)
+      pendingFieldsObject = { ...pendingFieldsObject, name: false }
+
+    if (!profile.telephones)
+      pendingFieldsObject = { ...pendingFieldsObject, telephones: false }
+
+    if (!profile.photos)
+      pendingFieldsObject = { ...pendingFieldsObject, photos: false }
+
+    if (!profile.social_media_links)
+      pendingFieldsObject = {
+        ...pendingFieldsObject,
+        social_media_links: false
+      }
+
+    if (!profile.website)
+      pendingFieldsObject = { ...pendingFieldsObject, website: false }
+
+    if (!profile.schedule)
+      pendingFieldsObject = { ...pendingFieldsObject, schedule: false }
+
+    if (!profile.location)
+      pendingFieldsObject = { ...pendingFieldsObject, location: false }
+
+    if (Object.keys(pendingFieldsObject).length > 0) {
+      setOpenGenericFormAddVariant(false)
+      setOpenSnackbar({
+        show: true,
+        message: t("offersManagement.info"),
+        severity: 'warning'
+      })
+    } else {
+      setOpenGenericFormAddVariant(true)
+    }
+  }
   const [
     loadProfileID,
     { data: { profile: { profile } = {} } = {} }
@@ -186,7 +165,6 @@ const OffersManagement = () => {
         break
     }
   }
-
   const Actions = (active, offer_id) => (
     <FormControl variant="filled" className={classes.formControl}>
       <InputLabel id="actions-selection-label">
@@ -213,6 +191,13 @@ const OffersManagement = () => {
     setOpen(true)
     setClickedOffer(offer)
   }
+  const handleCallback = () => {
+    setOpenSnackbar({
+      show: true,
+      message: t('offersManagement.offerCreation'),
+      severity: 'success'
+    })
+  }
 
   const handleClose = (_event, reason) => {
     if (reason === 'clickaway') return
@@ -231,6 +216,7 @@ const OffersManagement = () => {
         sponsor_id={profile.id}
         isEditing={editing}
         data={data}
+        offerNotification={handleCallback}
       />
     )
   }
@@ -246,7 +232,7 @@ const OffersManagement = () => {
     }
 
     if (profileIDLoaded) getOffers()
-  }, [getSponsorOffers, profileIDLoaded])
+  })
 
   useEffect(() => {
     loadProfileID()
@@ -292,15 +278,16 @@ const OffersManagement = () => {
                 title={t('offersManagement.tableTitle')}
                 data={offers.map((offer, key) => [
                   offer.offer_name,
+                  offer.active
+                    ? t('offersManagement.active')
+                    : t('offersManagement.inactive'),
                   offer.start_date
                     ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
                   offer.end_date
                     ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
-                  offer.active
-                    ? t('offersManagement.active')
-                    : t('offersManagement.inactive'),
+
                   Actions(offer.active, offer.id),
                   <IconButton
                     key={key}
@@ -310,15 +297,52 @@ const OffersManagement = () => {
                     <MoreHorizIcon />
                   </IconButton>
                 ])}
-                columns={columns}
+                columns={[
+                  {
+                    name: t('offersManagement.offerName'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.status'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.startDate'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.endDate'),
+                    options: {
+                      filter: true,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.actions'),
+                    options: {
+                      filter: false,
+                    }
+                  },
+                  {
+                    name: t('offersManagement.details'),
+                    options: {
+                      filter: false,
+                    }
+                  }
+                ]}
                 options={{
-                  filter: true,
                   print: false,
                   selectableRowsHideCheckboxes: true,
                   selectableRowsHeader: false,
                   download: false,
                 }}
               />
+
             </Box>
           }
           {offers.length === 0 &&
@@ -330,7 +354,7 @@ const OffersManagement = () => {
                 variant="contained"
                 color="secondary"
                 className={classes.btnAction}
-                onClick={() => setOpenGenericFormAddVariant(true)}
+                onClick={checkAvailableFields}
               >
                 {t('offersManagement.addOffer')}
               </Button>
@@ -346,7 +370,7 @@ const OffersManagement = () => {
         className={classes.fab}
         color="secondary"
         aria-label="add"
-        onClick={() => setOpenGenericFormAddVariant(true)}
+        onClick={checkAvailableFields}
       >
         <AddIcon />
       </Fab>
@@ -375,7 +399,7 @@ const OffersManagement = () => {
       </Dialog>
       <Snackbar
         open={openSnackbar.show}
-        autoHideDuration={5000}
+        autoHideDuration={2000}
         onClose={handleClose}
       >
         <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>

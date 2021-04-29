@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -119,7 +119,7 @@ const Topbar = ({ user, onLogout }) => {
             onClose={handleClose}
           >
             <Link to="/profile" className={classes.link}>
-              <MenuItem className={classes.menuItem}>{user.account}</MenuItem>
+              <MenuItem className={classes.menuItem} onClick={handleClose}>{user.account}</MenuItem>
             </Link>
             <Divider />
             <MenuItem onClick={handleLogout} className={classes.menuItem}>
@@ -139,4 +139,4 @@ Topbar.propTypes = {
   onLogout: PropTypes.func
 }
 
-export default Topbar
+export default memo(Topbar)

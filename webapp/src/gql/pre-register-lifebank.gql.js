@@ -4,7 +4,7 @@ export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
   mutation(
     $email: String!
     $emailContent: jsonb!
-    $password: String!
+    $passwordPlainText: String!
     $name: String!
     $address: String!
     $schedule: String!
@@ -14,11 +14,12 @@ export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
     $coordinates: String!
     $immunity_test: Boolean!
     $invitation_code: String!
+    $requirement: String!
   ) {
     create_pre_register_lifebank(
       email: $email
       emailContent: $emailContent
-      password: $password
+      passwordPlainText: $passwordPlainText
       name: $name
       address: $address
       schedule: $schedule
@@ -28,6 +29,7 @@ export const CREATE_PRE_REGITER_LIFEBANK_MUTATION = gql`
       coordinates: $coordinates
       immunity_test: $immunity_test
       invitation_code: $invitation_code
+      requirement: $requirement
     ) {
       resultRegister
     }

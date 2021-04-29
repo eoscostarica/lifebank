@@ -14,7 +14,8 @@ const INSERT_LIFEBANK = `
       coordinates
       immunity_test
       invitation_code,
-      verification_code
+      verification_code,
+      requirement
     }
   }
 `
@@ -54,6 +55,7 @@ const VALIDATION_VERIFICATION_CODE = `
 const GET_LIFEBANK_DATA = `
   query($where: preregister_lifebank_bool_exp!) {
     preregister_lifebank(where: $where, limit: 1) {
+      email
       address
       coordinates
       description
@@ -63,7 +65,10 @@ const GET_LIFEBANK_DATA = `
       phone
       schedule
       urgency_level,
-      state
+      state,
+      requirement,
+      verification_code,
+      email_verified
     }
   }
 `

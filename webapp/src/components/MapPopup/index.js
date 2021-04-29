@@ -160,19 +160,21 @@ const MapPopup = ({ id, info, username }) => {
         default:
           dd = 'Saturday'
       }
-
-      JSON.parse(info.schedule).forEach((element) => {
-        if (dd === element.day)
-          if (
-            hour >= parseInt(element.open, 10) &&
-            hour < parseInt(element.close, 10)
-          )
-            setOpen(true)
-      })
+      
+      if(info.schedule) {
+        JSON.parse(info.schedule).forEach((element) => {
+          if (dd === element.day)
+            if (
+              hour >= parseInt(element.open, 10) &&
+              hour < parseInt(element.close, 10)
+            )
+              setOpen(true)
+        })
+      }
     }
-  })
+  }, [dd, hour])
 
-  var isMobile = {
+  const isMobile = {
     platform: function () {
       return navigator.platform.match(
         /Android|Linux|iPhone|iPod|iPad|iPhone Simulator|iPod Simulator|iPad Simulator|Pike v7.6 release 92|Pike v7.8 release 517/i

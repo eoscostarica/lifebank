@@ -77,45 +77,47 @@
   - role: donor
     permission:
       columns:
-      - account
+      - account_from
+      - account_to
       - created_at
       - description
       - id
       - payload
-      - state
       - title
       - type
       - updated_at
       filter:
-        account:
+        account_to:
           _eq: X-Hasura-User-Id
   - role: lifebank
     permission:
       columns:
+      - account_from
+      - account_to
+      - created_at
+      - description
       - id
       - payload
-      - created_at
-      - updated_at
-      - account
-      - description
       - title
       - type
+      - updated_at
       filter:
-        account:
+        account_to:
           _eq: X-Hasura-User-Id
   - role: sponsor
     permission:
       columns:
+      - account_from
+      - account_to
+      - created_at
+      - description
       - id
       - payload
-      - created_at
-      - updated_at
-      - account
-      - description
       - title
       - type
+      - updated_at
       filter:
-        account:
+        account_to:
           _eq: X-Hasura-User-Id
 - table:
     schema: public
@@ -264,6 +266,7 @@
       - created_at
       - description
       - email
+      - email_verified
       - id
       - immunity_test
       - invitation_code
@@ -320,21 +323,23 @@
       - account
       - id
       - name
+      - token
       - username
       filter: {}
   - role: guest
     permission:
       columns:
-      - id
-      - role
-      - username
       - account
-      - secret
+      - created_at
       - email
       - email_verified
-      - created_at
-      - updated_at
+      - id
       - name
+      - role
+      - secret
+      - signup_method
+      - updated_at
+      - username
       filter: {}
   - role: lifebank
     permission:

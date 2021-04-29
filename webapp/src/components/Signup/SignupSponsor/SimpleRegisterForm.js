@@ -58,6 +58,7 @@ const SimpleRegisterForm = ({
 }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
+  const [name, setName] = useState()
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
   const [recaptchaValue, setRecaptchaValue] = useState('')
@@ -77,14 +78,25 @@ const SimpleRegisterForm = ({
       <Box className={classes.textFieldWrapper}>
         {children}
         <TextField
-          id="secret"
+          id="name"
+          label={t('signup.nameSponsor')}
+          variant="outlined"
+          fullWidth
+          className={classes.textField}
+          onChange={(event) => {
+            setField('name', event.target.value)
+            setName(event.target.value)
+          }}
+        />
+        <TextField
+          id="passwordPlainText"
           label={t('signup.password')}
           type="password"
           fullWidth
           variant="outlined"
           className={classes.textField}
           onChange={(event) => {
-            setField('secret', event.target.value)
+            setField('passwordPlainText', event.target.value)
             setPassword(event.target.value)
           }}
         />
@@ -109,6 +121,7 @@ const SimpleRegisterForm = ({
           className={classes.btnSignup}
           disabled={
             !isEmailValid ||
+            !name ||
             !password ||
             !confirmPassword ||
             !recaptchaValue ||
@@ -123,7 +136,7 @@ const SimpleRegisterForm = ({
         </Button>
         {loading && <CircularProgress />}
       </Box>
-    </form>
+    </form >
   )
 }
 

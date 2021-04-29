@@ -26,21 +26,25 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Ofertas disponibles",
-      "moreInfo": "Más información"
+      "availableOffers": "Ofertas",
+      "moreInfo": "Más Información",
+      "approvedOffers": "Lista de Ofertas"
     },
     "navigationDrawer": {
+      "homepage": "Página de inicio",
+      "tools": "Herramientas",
       "yourDonations": "Tus donaciones",
       "information": "Información",
       "aboutLifebank": "Acerca de Lifebank",
       "useTerms": "Términos de uso",
-      "help": "Ayuda"
+      "help": "Ayuda",
+      "offersApproval": "Aprobar ofertas"
     },
     "signup": {
       "register": "Registro",
       "registerText": "Elija la opción que más le convenga. ",
       "sucessfulPreregistration": "Pre-registro exitoso",
-      "sucessfulRegistration": "Registro exitoso",
+      "sucessfulRegistration": "Revisa tu bandeja de entrada y verifica tu email para comenzar a usar Lifebank.",
       "createAnewAccount": "Crear una nueva cuenta",
       "allYouNeed": "Para registrarte, lo único que tienes que poner es tu email y contraseña",
       "preRegisterAnewAccount": "Pre-registrar una nueva cuenta",
@@ -56,10 +60,15 @@
       "signupWithGoogle": "Registrarse con Google",
       "createAccount": "Crear cuenta",
       "name": "Nombre",
+      "type": "Tipo",
+      "nameSponsor": "Nombre del negocio",
+      "nameLifebank": "Nombre del Lifebank",
       "address": "Dirección",
       "addressPlaceholder": "Escribe tu dirección aquí",
       "phoneNumber": "Número de teléfono",
       "phoneNumberPlaceholder": "Escribe tu número aquí",
+      "requirement": "Requisitos",
+      "requirementPlaceholder": "Lista de requisitos para donantes",
       "invitationCode": "Código de invitación",
       "chooseYourLocation": "Escoge tu ubicación",
       "asAdonor": "Como Donador",
@@ -70,7 +79,11 @@
       "aboutPlaceholder": "Acerca del LifeBank",
       "consentGranted": "Consentimiento otorgado",
       "consentRevoked": "Consentimiento revocado",
-      "consentError": "Error al otorgar consentimiento"
+      "consentError": "Error al otorgar consentimiento",
+      "noConsentNoEdit": "Primero debes aceptar los términos y condiciones antes de hacer un cambio.",
+      "noConsentNoEdit2": "Léelo aquí",
+      "defaultUsername": "Tu perfil",
+      "forgetPassword": "¿Olvidaste la Contraseña?"
     },
     "login": {
       "letsStarted": "¡Empecemos!",
@@ -84,7 +97,10 @@
       "loginWithFacebook": "Iniciar sesión con Facebook",
       "loginWithGoogle": "Iniciar sesión con Google",
       "logout": "Cerrar sesión",
-      "notAccount": "¿No tienes cuenta aún? Registrarse aquí."
+      "notAccount": "¿No tienes cuenta aún? Registrarse aquí.",
+      "verify": "Verifique",
+      "textVerify": "Te enviamos un correo de confirmación. Si no lo puedes encontrar, revisa tu carpeta de spam. Si todavía no lo encuentras, puedes reenviarlo.",
+      "resend": "Reenviar"
     },
     "map": {
       "findLifebank": "Encontrar Bancos de Sangre o Comercios Afiliados cerca de ti",
@@ -141,14 +157,50 @@
       "noNear": "No hay negocios o centros de donación registrados cerca de esta ubicación. Si conoce alguno, refiéralos a Lifebank: "
     },
     "notFound": {
-      "404Error": "404: La página que buscas no existe",
-      "notFoundMessage": "O intentaste una ruta dudosa o viniste aquí por error. Sea lo que sea, intenta usar la navegación",
-      "takeMeHome": "Llévame al inicio"
+      "404Error": "No se pudo encontrar la página que buscabas. Por favor regresa a la ",
+      "404Error2": " e intenta de nuevo.",
+      "notFoundMessage": "Recuerda que Lifebank es un proyecto autogestionado de código abierto. Sin embargo, si tienes alguna pregunta específica para el equipo, comunícate con nosotros a través de nuestro",
+      "notFoundMessage2": " o contacta al equipo de ",
+      "notFoundMessage3": " directamente.",
+      "takeMeHome": "Llévame al inicio",
+      "home": "página de inicio",
+      "telegramChat": "Telegram",
+      "linkEOS": "EOS Costa Rica"
     },
     "internalError": {
       "500Error": "500: ¡Oh ... error interno del servidor!",
       "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
       "takeMeHome": "Llévame al inicio"
+    },
+    "sponsorTypes": {
+      "autoRepair": "Reparación de Automóviles",
+      "bank": "Servicios Bancarios o Financieros",
+      "beautySalon": "Salón de Belleza",
+      "dryCleaning": "Lavandería",
+      "entertaiment": "Negocio del Entretenimiento",
+      "gym": "Gym o Centro Fitness",
+      "hospitality": "Hospital",
+      "medical": "Servicios Médicos",
+      "pharmacies": "Farmacias",
+      "restaurant": "Restaurante o Tienda de Alimentos",
+      "retail": "Tienda Minorista",
+      "shopping": "Centro Comercial",
+      "gas": "Transporte o Gasolinera",
+      "travel": "Agencia de Viajes",
+      "veterinarian": "Veterinaria",
+      "other": "Otro"
+    },
+    "categories": {
+      "all": "Todos",
+      "discount": "Descuentos",
+      "freeProduct": "Productos Gratis",
+      "coupon": "Cupones",
+      "benefit": "Beneficios",
+      "badge": "Insignias",
+      "chooseYourCategories": "Escoge tus Categorías",
+      "addCategories": "Eliga categorías de ofertas",
+      "editCategories": "Editar categorías",
+      "description": "Elija las categorías de ofertas que desea aprobar. Esto quiere decir que los life tokens obtenidos por donaciones en su centro podrán ser redimidas por ofertas que calcen las categorías aprobadas."
     },
     "schedule": {
       "sunday": "Domingo",
@@ -180,7 +232,6 @@
       "consent": "Consentimiento",
       "communityAsset": "Activo de Comunidad",
       "hasImmunityTest": "Tiene test de inmunidad",
-      "benefitDescription": "Descripción del beneficio",
       "location": "Localización",
       "logo": "Logo",
       "urlSite": "URL del sitio",
@@ -192,13 +243,19 @@
       "authError": "Ha ocurrido un error con la autenticación",
       "tokenExpiration": "La sesión ha expirado"
     },
+    "offerApproval": {
+      "description": "Aquí puedes aprobar o rechazar las categorías de ofertas redimibles.",
+      "description2": "Si crees que una categoría no representa tu organización, puedes desmarcarla y automáticamente los life tokens obtenidos en tu centro no podrán ser redimidos por estas ofertas.",
+      "message1": "Estas ofertas están disponibles porque aprobaste esta categoría. Cámbialo en cualquier momento.",
+      "message2": "Estas ofertas no están disponibles porque desmarcaste esta categoría. Cámbialo en cualquier momento."
+    },
     "editProfile": {
       "editProfile": "Editar Perfil",
       "error": "Error",
-      "duringSaveProfileData": "Mientras se guardaba la información del perfil - ",
+      "duringSaveProfileData": "Mientras se guardaba la información del perfil",
       "goToProfile": "Ir al perfil!",
       "success": "Éxito",
-      "profileWasUpdated": "El perfil fue actualizado - ",
+      "profileWasUpdated": "El perfil fue actualizado - Cambios guardados",
       "low": "Bajo",
       "medium": "Medio",
       "high": "Alto",
@@ -206,15 +263,12 @@
       "namePlaceholder": "Ingrese su nombre",
       "urlWebsitePlaceHolder": "URL del sitio web",
       "bloodDemandLevel": "Nivel de demanda de sangre",
-      "dragOrtap": "Arrastre o toque el nivel de demanda que representa las necesidades reales de su Banco de Sangre. Puede establecer las recompensas simbólicas dependiendo de estos niveles.",
       "lowLevelReward": "Nivel bajo de urgencia",
       "mediumLevelReward": "Nivel medio de urgencia",
       "highLevelReward": "Alto nivel de urgencia",
       "logoUrl": "Dirección de imagen",
       "logoUrlPlaceholder": "La dirección de la imagen aquí",
       "sponsorNamePlaceholder": "El nombre de su comercio afiliado aquí",
-      "covidImpact": "Impacto de la pandemia provocada por el Covid-19",
-      "covidImpactPlaceholder": "Escribe el impacto que has tenido de la pandemia aquí",
       "photoUrl": "Dirección de foto",
       "photoUrlPlaceholder": "La dirección de la imagen aquí",
       "facebookProfileUrl": "Dirección del perfil de Facebook",
@@ -303,11 +357,12 @@
       "benefits": "Beneficios",
       "bloodUrgency": "Urgencia de sangre",
       "schedule": "Horario",
+      "categories": "Categorías",
       "save": "Guardar",
       "saveChanges": "Guardar cambios",
       "currentLanguage": "es-CR",
       "near": "Cerca de",
-      "loadMore": "Cargar más"
+      "offers": "Ofertas"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",
@@ -326,7 +381,8 @@
       "newPassword": "Nueva contraseña",
       "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
       "checkYourEmail": "Revisa tu correo",
-      "recovery": "Recuperar"
+      "recovery": "Recuperar",
+      "passwordNotChangable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
     },
     "emailVerification": {
       "emailVerified": "Tu correo ha sido verificado",
@@ -354,7 +410,7 @@
     },
     "offersManagement": {
       "offersManagement": "Manejo de ofertas",
-      "addOffer": "Añadir oferta",
+      "addOffer": "Agrega una oferta",
       "offerName": "Nombre de oferta",
       "offerNamePlaceholder": "Ingresar el nombre aquí",
       "offerType": "Tipo de oferta",
@@ -400,16 +456,21 @@
       "active": "Activa",
       "inactive": "Inactiva",
       "noProvidedDate": "Sin fecha",
-      "youHaveNoAddedOffers": "No tienes ofertas agregadas",
+      "youHaveNoAddedOffers": "No tienes ofertas disponibles",
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
       "yesDeleteIt": "Si, borrar",
-      "selectDateRange": "Seleccione el rango de fecha"
+      "selectDateRange": "Seleccione el rango de fecha",
+      "offerCreation": "Oferta creada correctamente",
+      "offerStateActive": "Ofertas Activas",
+      "offerStateInactive": "Ofertas Inactivas",
+      "info": "Primero completa tu perfil para agregar una oferta"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",
       "onlinePurchases": "Esta oferta es solo para compras en línea.",
       "available": "Disponible desde",
-      "to": "hasta"
+      "to": "hasta",
+      "lifebankOffers": "Ofertas"
     },
     "months": {
       "Jan": "Enero",

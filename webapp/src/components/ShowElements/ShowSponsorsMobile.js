@@ -12,49 +12,9 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import StorefrontIcon from '@material-ui/icons/Storefront'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%'
-  },
-  list: {
-    width: '100vw',
-    marginBottom: '25px',
-    backgroundColor: 'white'
-  },
-  listItem: {
-    width: '100%',
-    backgroundColor: 'white'
-  },
-  secondaryIconList: {
-    color: 'rgba(0, 0, 0, 0.6)',
-    width: 20,
-    height: 20
-  },
-  listItemPrimaryText: {
-    color: 'rgba(0, 0, 0, 0.87)',
-    fontFamily: 'Roboto',
-    fontSize: '16px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.5,
-    letterSpacing: '0.15px'
-  },
-  listItemSecondaryText: {
-    color: 'color: rgba(0, 0, 0, 0.6)',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.43,
-    letterSpacing: '0.25px'
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const ShowSponsorsMobile = ({ sponsors, loading }) => {
   const { t } = useTranslation('translations')

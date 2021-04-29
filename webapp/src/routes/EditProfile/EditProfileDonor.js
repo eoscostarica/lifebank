@@ -8,78 +8,9 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  form: {
-    width: '100%',
-    padding: theme.spacing(0, 2)
-  },
-  textFieldWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  textField: {
-    marginBottom: theme.spacing(2)
-  },
-  btnWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3)
-  },
-  labelBtn: {
-    color: theme.palette.white
-  },
-  noCapitalize: {
-    textTransform: 'none !important'
-  },
-  routerLink: {
-    width: "100%",
-    textDecoration: "none",
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  saveBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: theme.spacing(1),
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    },
-  },
-  cancelBtn: {
-    borderRadius: '50px',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 'normal',
-    letterSpacing: '1px',
-    textAlign: 'center',
-    padding: '12px',
-    border: 'solid 1px rgba(0, 0, 0, 0.54)',
-    backgroundColor: '#ffffff',
-    marginBottom: theme.spacing(1),
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    },
-  },
-}))
+const useStyles = makeStyles(styles)
 
 const EditProfileDonor = ({ profile, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
@@ -96,13 +27,12 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.textFieldWrapper}>
-        {console.log(user)}
         <TextField
           id="email"
           label={t('signup.name')}
           fullWidth
           placeholder={t('editProfile.namePlaceholder')}
-          defaultValue={user.name === "undefined" ? '' : user.name }
+          defaultValue={user.name === "undefined" ? '' : user.name}
           variant="outlined"
           InputLabelProps={{
             shrink: true

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Alert from '@material-ui/lab/Alert'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import { Link as LinkRouter, useHistory } from 'react-router-dom'
+import { Link as LinkRouter, useHistory, useLocation } from 'react-router-dom'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -17,182 +17,17 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import QRCode from 'qrcode.react'
+import Snackbar from '@material-ui/core/Snackbar'
 import '@brainhubeu/react-carousel/lib/style.css'
 
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
+import ViewCategories from '../../components/ViewCategories'
 import { GET_USERNAME } from '../../gql'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  contentHeader: {
-    position: 'relative',
-    height: 'auto',
-    width: '100%',
-    padding: theme.spacing(0, 2),
-    marginBottom: '40px'
-  },
-  titleProfile: {
-    width: '65%',
-    fontFamily: 'Roboto',
-    fontSize: '34px',
-    fontWeight: 'bold',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.18',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.87)',
-    marginTop: '10px',
-    marginBottom: '4px',
-    textAlign: 'left',
-    [theme.breakpoints.down('md')]: {
-      fontSize: '24px',
-    }
-  },
-  subtitleProfile: {
-    width: '100%',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    textAlign: 'left'
-  },
-  avatarRoundDesktop: {
-    position: 'absolute',
-    width: '90px',
-    height: '90px',
-    right: 10,
-    top: 0,
-    border: 'solid 2px rgba(0, 0, 0, 0.04)',
-    [theme.breakpoints.down('md')]: {
-      width: '70px',
-      height: '70px',
-    }
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    padding: theme.spacing(2, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-      textTransform: 'capitalize'
-    }
-  },
-  rowTitle: {
-    fontWeight: 'bold',
-    marginRight: '10px'
-  },
-  rowBoxLeft: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    padding: theme.spacing(2, 2),
-    alignItems: 'flex-start',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-      textTransform: 'capitalize'
-    }
-  },
-  element: {
-    height: '100%',
-    minWidth: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  divider: {
-    width: '100%'
-  },
-  dialogContent: {
-    padding: theme.spacing(5, 2),
-    marginTop: theme.spacing(10)
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    color: 'white',
-    flex: 1
-  },
-  img: {
-    marginTop: theme.spacing(1),
-    height: '30vh',
-    objectFit: 'cover',
-    overflow: 'hidden',
-    display: 'block',
-    width: '100%'
-  },
-  stepper: {
-    backgroundColor: '#ffffff'
-  },
-  socialIcon: {
-    color: 'rgba(0, 0, 0, 0.87)'
-  },
-  routerLinkUpdate: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  updateButton: {
-    maxWidth: '50%',
-  },
-  routerLink: {
-    width: "100%",
-    textDecoration: "none",
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  editBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
-  },
-  secondaryText: {
-    color: `${theme.palette.secondary.main} !important`
-  },
-  noCapitalize: {
-    textTransform: 'none !important'
-  },
-  customizedLinearProgress: {
-    height: 10,
-    borderRadius: 5
-  },
-  alertBox: {
-    width: "100%",
-    padding: theme.spacing(0, 2),
-    marginBottom: theme.spacing(2)
-  },
-  alert: {
-    width: "100%",
-
-    '& > div.MuiAlert-message': {
-      padding: 0,
-      margin: 0
-    },
-    '& > div.MuiAlert-action': {
-      maxHeight: 50
-    },
-  },
-  buttonContainer: {
-    width: "100%",
-    margin: theme.spacing(2, 0)
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const ProfilePageLifebank = ({ profile }) => {
   const { t } = useTranslation('translations')
@@ -200,11 +35,13 @@ const ProfilePageLifebank = ({ profile }) => {
   const [userName, setuserName] = useState()
   const [pendingFields, setPendingFields] = useState()
   const history = useHistory()
+  const location = useLocation()
   const [, { logout }] = useUser()
   const theme = useTheme()
-  const phones = JSON.parse(profile.telephones)
-  const images = JSON.parse(profile.photos)
+  const images = profile.photos ? JSON.parse(profile.photos) : {}
+  const phones = profile.telephones ? JSON.parse(profile.telephones) : {}
   const [activeStep, setActiveStep] = useState(0)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
@@ -213,10 +50,15 @@ const ProfilePageLifebank = ({ profile }) => {
     skip: true
   })
 
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') return
+
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
+
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
-
 
   useEffect(() => {
     const getUsername = async () => {
@@ -261,6 +103,9 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.schedule)
       pendingFieldsObject = { ...pendingFieldsObject, schedule: false }
 
+    if (!profile.categories)
+      pendingFieldsObject = { ...pendingFieldsObject, categories: false }
+
     if (!profile.location)
       pendingFieldsObject = { ...pendingFieldsObject, location: false }
 
@@ -270,11 +115,17 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.about)
       pendingFieldsObject = { ...pendingFieldsObject, about: false }
 
+    if (!profile.requirement)
+      pendingFieldsObject = { ...pendingFieldsObject, requirement: false }
+
     if (!profile.blood_urgency_level)
       pendingFieldsObject = {
         ...pendingFieldsObject,
         blood_urgency_level: false
       }
+
+    if (!profile.requirement)
+      pendingFieldsObject = { ...pendingFieldsObject, requirement: false }
 
     if (Object.keys(pendingFieldsObject).length > 0)
       setPendingFields(pendingFieldsObject)
@@ -284,8 +135,26 @@ const ProfilePageLifebank = ({ profile }) => {
     if (profile) checkAvailableFields()
   }, [profile])
 
+  useEffect(() => {
+    if (location.state) {
+      history.replace({ state: false })
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.profileWasUpdated'),
+        severity: 'success'
+      })
+    }
+  }, [])
+
   return (
     <>
+      <Snackbar
+        open={openSnackbar.show}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
+      </Snackbar>
       {pendingFields && (
         <Box className={classes.alertBox}>
           <Alert
@@ -421,39 +290,39 @@ const ProfilePageLifebank = ({ profile }) => {
           </Box>
         </>
       }
-      { profile.has_inmmunity_test &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.hasImmunityTest')}</Typography>
-            <Typography variant="body1" className={classes.secondaryText}>{profile.has_inmmunity_test}</Typography>
-          </Box>
-        </>
-      }
-      { profile.blood_urgency_level &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBox}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.bloodUrgency')}</Typography>
-            <Typography variant="body1" className={classes.secondaryText}>{profile.blood_urgency_level}</Typography>
-          </Box>
-        </>
-      }
       {profile.about &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
             <Typography >{profile.about}</Typography>
+          </Box>
+        </>
+      }
+      {profile.requirement &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.requirement')}</Typography>
+            <Typography >{profile.requirement.replaceAll("\n", ", ")}</Typography>
           </Box>
         </>
       }
       {profile.schedule &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
             <ViewSchedule schedule={profile.schedule} />
+          </Box>
+        </>
+      }
+      {profile.categories &&
+        <>
+          <Divider className={classes.divider} />
+          <Box className={classes.rowBox}>
+            <Typography className={classes.rowTitle} variant="subtitle1">{t('common.categories')}</Typography>
+            <ViewCategories categories={profile.categories} />
           </Box>
         </>
       }
@@ -500,8 +369,8 @@ const ProfilePageLifebank = ({ profile }) => {
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowLeft />
                     ) : (
-                        <KeyboardArrowRight />
-                      )}
+                      <KeyboardArrowRight />
+                    )}
                   </Button>
                 }
                 backButton={
@@ -513,8 +382,8 @@ const ProfilePageLifebank = ({ profile }) => {
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowRight />
                     ) : (
-                        <KeyboardArrowLeft />
-                      )}
+                      <KeyboardArrowLeft />
+                    )}
                     {t('common.prev')}
                   </Button>
                 }
@@ -544,7 +413,7 @@ const ProfilePageLifebank = ({ profile }) => {
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false, userName: userName } }}
         className={classes.routerLink}
       >
-        <Button variant="contained" color="primary" className={classes.editBtn}>{t('common.edit')}</Button>
+        <Button variant="contained" color="secondary" className={classes.editButton}>{t('common.edit')}</Button>
       </LinkRouter>
     </>
   )

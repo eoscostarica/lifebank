@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
@@ -18,60 +18,13 @@ import {
   SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
+import styles from './styles'
+
+const useStyles = makeStyles(styles)
 
 const EditProfileDonor = lazy(() => import('./EditProfileDonor'));
 const EditProfileBank = lazy(() => import('./EditProfileBank'));
 const EditProfileSponsor = lazy(() => import('./EditProfileSponsor'));
-
-
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    padding: theme.spacing(6, 1, 0, 1),
-    alignItems: 'center',
-    minHeight: 'calc(100vh - 60px)',
-    paddingTop: '60px',
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '35%',
-      paddingRight: '35%',
-    },
-  },
-  title: {
-    fontSize: 48,
-    marginBottom: theme.spacing(4)
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText
-    }
-  },
-  divider: {
-    width: '100%'
-  },
-  editBtn: {
-    marginTop: theme.spacing(4)
-  },
-  linkSuccess: {
-    textDecoration: 'none',
-    color: 'rgb(26, 64, 28)'
-  },
-  linkError: {
-    textDecoration: 'none',
-    color: 'rgb(91, 22, 21)'
-  },
-  boxMessage: {
-    width: '100%',
-    marginBottom: theme.spacing(2)
-  }
-}))
 
 const EditProfilePage = () => {
   const { t } = useTranslation('translations')
@@ -80,7 +33,7 @@ const EditProfilePage = () => {
   const history = useHistory()
   const [, { logout }] = useUser()
   const [currentUser] = useUser()
-  const [showAlert, setShowAlert] = useState({ error: false, success: false })
+  const [showAlert, setShowAlert] = useState(false)
   const [isCompleting, setIsCompleting] = useState()
   const [userName, setuserName] = useState()
   const [
@@ -117,24 +70,21 @@ const EditProfilePage = () => {
     profile?.consent ? revokeConsent() : grantConsent()
   }
 
-  const handleUpdateUser = useCallback(
-    (userEdited, userNameEdited, account) => {
-      editProfile({
+  const handleUpdateUser = (userEdited, userNameEdited, account) => {
+    editProfile({
+      variables: {
+        profile: userEdited
+      }
+    })
+    if (account && userNameEdited) {
+      setUsername({
         variables: {
-          profile: userEdited
+          account: account,
+          username: userNameEdited
         }
       })
-      if (account && userNameEdited) {
-        setUsername({
-          variables: {
-            account: account,
-            username: userNameEdited
-          }
-        })
-      }
-    },
-    [editProfile]
-  )
+    }
+  }
 
   useEffect(() => {
     if (!currentUser) {
@@ -156,12 +106,15 @@ const EditProfilePage = () => {
     const { success } = editProfileResult
 
     if (success) {
-      loadProfile()
-      setShowAlert({ error: false, success: true })
+      history.push({
+        pathname: '/profile',
+        state: true
+      })
+
     } else if (!success) {
-      setShowAlert({ error: true, success: false })
+      setShowAlert(true)
     }
-  }, [editProfileResult, loadProfile])
+  }, [editProfileResult])
 
   useEffect(() => {
     if (location.state) {
@@ -184,7 +137,7 @@ const EditProfilePage = () => {
   }, [errorProfile])
 
   useEffect(() => {
-    if (errorRevokeConsent || errorGrantConsent || errorEditResults) setShowAlert({ error: true, success: false })
+    if (errorRevokeConsent || errorGrantConsent || errorEditResults) setShowAlert(true)
 
   }, [errorRevokeConsent, errorGrantConsent, errorEditResults])
 
@@ -192,7 +145,7 @@ const EditProfilePage = () => {
   return (
     <Box className={classes.wrapper}>
       <Box className={classes.boxMessage}>
-        {showAlert.error && (
+        {showAlert && (
           <Alert
             severity="error"
             action={
@@ -200,7 +153,7 @@ const EditProfilePage = () => {
                 aria-label="close"
                 color="inherit"
                 size="small"
-                onClick={() => setShowAlert({ error: false, success: false })}
+                onClick={() => setShowAlert(false)}
               >
                 <CloseIcon fontSize="inherit" />
               </IconButton>
@@ -208,30 +161,6 @@ const EditProfilePage = () => {
           >
             <AlertTitle>{t('editProfile.error')}</AlertTitle>
             {t('editProfile.duringSaveProfileData')}
-            <Link to="/profile" className={classes.linkError}>
-              <strong>{t('donations.goToProfile')}</strong>
-            </Link>
-          </Alert>
-        )}
-        {showAlert.success && (
-          <Alert
-            severity="success"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => setShowAlert({ error: false, success: false })}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            <AlertTitle>{t('editProfile.success')}</AlertTitle>
-            {t('editProfile.profileWasUpdated')}
-            <Link to="/profile" className={classes.linkSuccess}>
-              <strong>{t('editProfile.goToProfile')}</strong>
-            </Link>
           </Alert>
         )}
       </Box>

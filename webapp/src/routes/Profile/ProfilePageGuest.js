@@ -1,27 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Divider from '@material-ui/core/Divider'
 import { useTranslation } from 'react-i18next'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    height: 40,
-    padding: theme.spacing(0, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-      textTransform: 'capitalize'
-    }
-  },
-  divider: {
-    width: '100%'
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const ProfilePageGuest = () => {
   const { t } = useTranslation('translations')
@@ -38,4 +23,4 @@ const ProfilePageGuest = () => {
   )
 }
 
-export default ProfilePageGuest
+export default memo(ProfilePageGuest)

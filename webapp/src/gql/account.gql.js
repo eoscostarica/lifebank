@@ -1,8 +1,18 @@
 import gql from 'graphql-tag'
 
 export const CREATE_ACCOUNT_MUTATION = gql`
-  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $secret: String!) {
-    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, secret: $secret) {
+  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $passwordPlainText: String!, $signup_method: String!) {
+    create_account(role: $role, email: $email, emailContent: $emailContent, name: $name, passwordPlainText: $passwordPlainText, signup_method: $name) {
+      account
+      token
+      transaction_id
+    }
+  }
+`
+
+export const CREATE_ACCOUNT_AUTH_MUTATION = gql`
+  mutation($role: String!, $email: String!, $emailContent: jsonb!, $name: String!, $passwordPlainText: String!, $signup_method: String) {
+    create_account_auth(role: $role, email: $email, emailContent: $emailContent, name: $name, passwordPlainText: $passwordPlainText, signup_method: $name) {
       account
       token
       transaction_id
@@ -37,9 +47,33 @@ export const CHECK_USERNAME_MUTATION = gql`
 `
 
 export const LOGIN_MUTATION = gql`
-  mutation($account: String!, $secret: String!) {
-    login(account: $account, secret: $secret) {
+  mutation($account: String!, $password: String!) {
+    login(account: $account, password: $password) {
       token
+    }
+  }
+`
+
+export const SEND_EMAIL_MUTATION = gql`
+  mutation($account: String!, $emailContent: jsonb!) {
+    send_email(account: $account, emailContent: $emailContent) {
+      success
+    }
+  }
+`
+
+export const CHECK_EMAIL_VERIFIED = gql`
+  mutation($account: String!) {
+    check_email_verified(account: $account) {
+      verified
+    }
+  }
+`
+
+export const GET_INFO = gql`
+  query info($account: String!) {
+    location(where: {account: {_eq: $account}}) {
+      info
     }
   }
 `
@@ -67,9 +101,7 @@ export const GET_VALID_SPONSORS_QUERY = gql`
       social_media_links
       photos
       website
-      covidImpact
       businessType
-      benefitDescription
       userName
       role
     }
@@ -92,6 +124,7 @@ export const GET_VALID_LIFEBANKS_QUERY = gql`
       userName
       photos
       urgencyLevel
+      requirement
     }
   }
 `
@@ -165,6 +198,14 @@ export const EDIT_NOTIFICATION_STATE = gql`
   }
 `
 
+export const TOKEN_SUBSCRIPTION = gql`
+  subscription ($account: String!) {
+    user(where: {account: {_eq: $account}}) {
+      token
+    }
+  }
+`
+
 export const EDIT_PROFILE_MUTATION = gql`
   mutation($profile: jsonb!) {
     edit_profile(profile: $profile) {
@@ -189,25 +230,25 @@ export const VALIDATE_EMAIL = gql`
   }
 `
 
+export const GET_ACCOUNT_SIGNUP_METHOD = gql`
+  mutation ($email: String!) {
+    signup_method(email: $email) {
+      password_changable
+    }
+  }
+`
+
 export const GET_SECRET_BY_ACCOUNT = gql`
-  query($account: String!) {
-    user(
-      where: {
-        _or: [
-          { account: { _eq: $account } }
-          { username: { _eq: $account } }
-          { email: { _eq: $account } }
-        ]
-      }
-    ) {
+  query ($account: String!) {
+    user(where: {_or: [{account: {_eq: $account}}, {username: {_eq: $account}}, {email: {_eq: $account}}], _and: {email_verified: {_eq: true}}}) {
       secret
     }
   }
 `
 
-export const GET_NAME = gql`
-  query($account: String!) {
-    user(where: { account: { _eq: $account } }) {
+export const GET_ACCOUNT_NAME = gql`
+  query ($account: String!) {
+    user(where: {account: {_eq: $account}}, limit: 1) {
       name
     }
   }
@@ -236,6 +277,14 @@ export const VERIFY_USERNAME = gql`
   query($account: String!, $username: String!) {
     user(where: {username: {_eq: $username}, account: {_neq: $account}}) {
       username
+    }
+  }
+`
+
+export const GET_ID = gql`
+  query($username: String!) {
+    user(where: { username: { _eq: $username } }) {
+      id
     }
   }
 `

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
-import { Link as LinkRouter, useHistory } from 'react-router-dom'
+import { Link as LinkRouter, useHistory, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import Alert from '@material-ui/lab/Alert'
 import Typography from '@material-ui/core/Typography'
@@ -21,181 +21,17 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
+import Snackbar from '@material-ui/core/Snackbar'
+import Grid from '@material-ui/core/Grid'
 
+import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
 import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import ViewSchedule from '../../components/ViewSchedule'
-import { GET_USERNAME } from '../../gql'
+import { GET_USERNAME, GET_SPONSOR_OFFERS_QUERY } from '../../gql'
+import styles from './styles'
 
-const useStyles = makeStyles((theme) => ({
-  contentHeader: {
-    position: 'relative',
-    height: 'auto',
-    width: '100%',
-    padding: theme.spacing(0, 2),
-    marginBottom: '40px'
-  },
-  titleProfile: {
-    width: '65%',
-    fontFamily: 'Roboto',
-    fontSize: '34px',
-    fontWeight: 'bold',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.18',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.87)',
-    marginTop: '10px',
-    marginBottom: '4px',
-    textAlign: 'left',
-    [theme.breakpoints.down('md')]: {
-      fontSize: '24px',
-    }
-  },
-  subtitleProfile: {
-    width: '100%',
-    fontFamily: 'Roboto',
-    fontSize: '14px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    color: 'rgba(0, 0, 0, 0.6)',
-    textAlign: 'left'
-  },
-  avatarRoundDesktop: {
-    position: 'absolute',
-    width: '90px',
-    height: '90px',
-    right: 10,
-    top: 0,
-    border: 'solid 2px rgba(0, 0, 0, 0.04)',
-    [theme.breakpoints.down('md')]: {
-      width: '70px',
-      height: '70px',
-    }
-  },
-  rowBox: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    padding: theme.spacing(2, 2),
-    alignItems: 'center',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-      textTransform: 'capitalize'
-    }
-  },
-  rowTitle: {
-    fontWeight: 'bold',
-    marginRight: '10px'
-  },
-  rowBoxLeft: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    padding: theme.spacing(2, 2),
-    alignItems: 'flex-start',
-    '& p': {
-      color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-      textTransform: 'capitalize'
-    }
-  },
-  element: {
-    height: '100%',
-    minWidth: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  divider: {
-    width: '100%'
-  },
-  dialogContent: {
-    padding: theme.spacing(5, 2),
-    marginTop: theme.spacing(10)
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    color: 'white',
-    flex: 1
-  },
-  img: {
-    marginTop: theme.spacing(1),
-    height: '30vh',
-    objectFit: 'cover',
-    overflow: 'hidden',
-    display: 'block',
-    width: '100%'
-  },
-  stepper: {
-    backgroundColor: '#ffffff'
-  },
-  socialIcon: {
-    color: 'rgba(0, 0, 0, 0.87)'
-  },
-  routerLink: {
-    width: "100%",
-    textDecoration: "none",
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  routerLinkUpdate: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  updateButton: {
-    maxWidth: '50%',
-  },
-  editBtn: {
-    borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
-    width: "70%",
-    fontSize: '14px',
-    fontWeight: 500,
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.14,
-    letterSpacing: '1px',
-    color: '#ffffff',
-    padding: '12px',
-    marginBottom: 20,
-  },
-  secondaryText: {
-    color: `${theme.palette.secondary.main} !important`
-  },
-  noCapitalize: {
-    textTransform: 'none !important'
-  },
-  customizedLinearProgress: {
-    height: 10,
-    borderRadius: 5
-  },
-  alertBox: {
-    width: "100%",
-    padding: theme.spacing(0, 2),
-    marginBottom: theme.spacing(2)
-  },
-  alert: {
-    width: "100%",
-
-    '& > div.MuiAlert-message': {
-      padding: 0,
-      margin: 0
-    },
-    '& > div.MuiAlert-action': {
-      maxHeight: 50
-    },
-  },
-  buttonContainer: {
-    width: "100%",
-    margin: theme.spacing(2, 0)
-  }
-}))
+const useStyles = makeStyles(styles)
 
 const ProfilePageSponsor = ({ profile }) => {
   const { t } = useTranslation('translations')
@@ -206,9 +42,35 @@ const ProfilePageSponsor = ({ profile }) => {
   const theme = useTheme()
   const history = useHistory()
   const [, { logout }] = useUser()
-  const images = profile.photos !== "" ? JSON.parse(profile.photos) : {}
-  const socialMedia = profile.social_media_links !== "" ? JSON.parse(profile.social_media_links) : {}
-  const phones = profile.telephones !== "" ? JSON.parse(profile.telephones) : {}
+  const images = profile.photos ? JSON.parse(profile.photos) : {}
+  const socialMedia = profile.social_media_links ? JSON.parse(profile.social_media_links) : {}
+  const phones = profile.telephones ? JSON.parse(profile.telephones) : {}
+  const location = useLocation()
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [loadingOffers, setLoadingOffers] = useState(true)
+  const [offers, setOffers] = useState([])
+  const [activeOffers, setActiveOffers] = useState([])
+  const [inactiveOffers, setInactiveOffers] = useState([])
+
+
+  const [state, setState] = useState({
+    bottom: false
+  })
+
+  const {
+    loading: loadingDataOffer,
+    error: allOffersError,
+    data: allOffers,
+    refetch: getAllOffers
+  } = useQuery(GET_SPONSOR_OFFERS_QUERY, {
+    variables: { sponsor_id: profile.id },
+    fetchPolicy: 'cache-and-network'
+  })
+
+  const getOffers = async () => {
+    setLoadingOffers(true)
+    await getAllOffers()
+  }
 
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
@@ -217,9 +79,39 @@ const ProfilePageSponsor = ({ profile }) => {
     skip: true
   })
 
+  const handleClose = (_event, reason) => {
+    if (reason === 'clickaway') return
+
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event) {
+      if (
+        event.type === 'keydown' &&
+        (event.key === 'Tab' || event.key === 'Shift')
+      )
+        return
+
+      setState({ ...state, [anchor]: open })
+    }
+  }
+
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
+
+  useEffect(() => {
+    getOffers()
+  }, [])
+
+  useEffect(() => {
+    if (!loadingDataOffer) {
+      const dataOffers = allOffers.offer
+      setOffers(dataOffers)
+      setLoadingOffers(false)
+    }
+  }, [allOffers])
 
   useEffect(() => {
     const getUsername = async () => {
@@ -231,7 +123,7 @@ const ProfilePageSponsor = ({ profile }) => {
     }
 
     if (!userName) getUsername()
-  })
+  }, [userName])
 
   useEffect(() => {
     if (errorUsername) {
@@ -240,8 +132,14 @@ const ProfilePageSponsor = ({ profile }) => {
         history.push('/')
       } else history.push('/internal-error')
     }
+    if (allOffersError) {
+      if (allOffersError.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+      } else history.push('/internal-error')
+    }
 
-  }, [errorUsername])
+  }, [errorUsername, allOffersError])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -276,15 +174,6 @@ const ProfilePageSponsor = ({ profile }) => {
     if (!profile.schedule)
       pendingFieldsObject = { ...pendingFieldsObject, schedule: false }
 
-    if (!profile.covid_impact)
-      pendingFieldsObject = { ...pendingFieldsObject, covid_impact: false }
-
-    if (!profile.benefit_description)
-      pendingFieldsObject = {
-        ...pendingFieldsObject,
-        benefit_description: false
-      }
-
     if (!profile.location)
       pendingFieldsObject = { ...pendingFieldsObject, location: false }
 
@@ -293,13 +182,48 @@ const ProfilePageSponsor = ({ profile }) => {
   }
 
   useEffect(() => {
+
+    const AOffers = []
+    const IOffers = []
+
+    offers.map((offer) => {
+      if (!offer.active)
+        IOffers.push(offer)
+      else
+        AOffers.push(offer)
+    })
+
+    setActiveOffers(AOffers)
+    setInactiveOffers(IOffers)
+
+  }, [offers])
+
+  useEffect(() => {
     if (profile) {
       checkAvailableFields()
     }
   }, [profile])
 
+  useEffect(() => {
+    if (location.state) {
+      history.replace({ state: false })
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.profileWasUpdated'),
+        severity: 'success'
+      })
+    }
+  }, [])
+
   return (
     <>
+      <Snackbar
+        open={openSnackbar.show}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert severity={openSnackbar.severity}>{openSnackbar.message}</Alert>
+      </Snackbar>
       {pendingFields && (
         <Box className={classes.alertBox}>
           <Alert
@@ -401,7 +325,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('offersManagement.type')}</Typography>
-            <Typography variant="body1">{profile.business_type}</Typography>
+            <Typography variant="body1">{t(`sponsorTypes.${profile.business_type}`)}</Typography>
           </Box>
         </>
       }
@@ -487,7 +411,7 @@ const ProfilePageSponsor = ({ profile }) => {
       {profile.schedule &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('common.schedule')}</Typography>
             <ViewSchedule schedule={profile.schedule} />
           </Box>
@@ -496,27 +420,9 @@ const ProfilePageSponsor = ({ profile }) => {
       {profile.about &&
         <>
           <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
+          <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.about')}</Typography>
             <Typography >{profile.about}</Typography>
-          </Box>
-        </>
-      }
-      {profile.covid_impact &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('editProfile.covidImpact')}</Typography>
-            <Typography >{profile.covid_impact}</Typography>
-          </Box>
-        </>
-      }
-      {profile.benefit_description &&
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
-            <Typography className={classes.rowTitle} variant="subtitle1">{t('profile.benefitDescription')}</Typography>
-            <Typography >{profile.benefit_description}</Typography>
           </Box>
         </>
       }
@@ -543,8 +449,8 @@ const ProfilePageSponsor = ({ profile }) => {
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowLeft />
                     ) : (
-                        <KeyboardArrowRight />
-                      )}
+                      <KeyboardArrowRight />
+                    )}
                   </Button>
                 }
                 backButton={
@@ -556,8 +462,8 @@ const ProfilePageSponsor = ({ profile }) => {
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowRight />
                     ) : (
-                        <KeyboardArrowLeft />
-                      )}
+                      <KeyboardArrowLeft />
+                    )}
                     {t('common.prev')}
                   </Button>
                 }
@@ -587,32 +493,82 @@ const ProfilePageSponsor = ({ profile }) => {
         </>
       )
       }
-      {
-        <>
-          <Divider className={classes.divider} />
-          <Box className={classes.rowBoxLeft}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              justifySelf="center"
-              className={classes.buttonContainer}
-            >
-              <QRCode value={profile.account} size={200} />
 
-            </Box>
+      <Divider className={classes.divider} />
+
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="flex-start"
+        spacing={0}
+        className={classes.mainGridDesktop}
+        md={12}
+        xl={10}
+      >
+        <Grid item md={12}>
+          <Typography variant="subtitle1" className={classes.rowTitle}>
+            {t('offersManagement.offerStateActive')}
+          </Typography>
+
+        </Grid>
+        <ShowOffersDesktop
+          className={classes.offerContainer}
+          offers={activeOffers}
+          loading={loadingOffers}
+        />
+      </Grid>
+      { inactiveOffers.length !== 0 && (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-start"
+          spacing={0}
+          className={classes.mainGridDesktop}
+          md={12}
+          xl={10}
+        >
+          <Grid item md={12}>
+            <Typography variant="subtitle1" className={classes.rowTitle}>
+              {t('offersManagement.offerStateInactive')}
+            </Typography>
+
+          </Grid>
+          <ShowOffersDesktop
+            className={classes.offerContainer}
+            offers={inactiveOffers}
+            loading={loadingOffers}
+          />
+        </Grid>
+      )}
+      <>
+        <Divider className={classes.divider} />
+        <Box className={classes.rowBoxLeft}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            justifySelf="center"
+            className={classes.buttonContainer}
+          >
+            <QRCode value={profile.account} size={200} />
+
           </Box>
-        </>
-      }
+        </Box>
+      </>
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
         className={classes.routerLink}
       >
-        <Button variant="contained" color="primary" className={classes.editBtn}>{t('common.edit')}</Button>
+        <Button className={classes.editButton} color="primary" variant="contained">
+          {t('common.edit')}
+        </Button>
       </LinkRouter>
     </>
   )
 }
+
 
 ProfilePageSponsor.propTypes = {
   profile: PropTypes.object
