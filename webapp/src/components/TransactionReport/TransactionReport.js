@@ -10,8 +10,6 @@ import { GET_REPORT_QUERY } from '../../gql'
 const TransactionReport = ({saveReport, onReportSaved}) => {
   const { t } = useTranslation('translations')
   const [currentUser] = useUser()
-  const doc = new jsPDF()
-
   const [headReceive, setHeadReceived] = useState()
   const [bodyReceive, setBodyReceive] = useState()
 
@@ -78,7 +76,7 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
         notification.offer ? notification.offer.offer_name : '',
         notification.created_at_date,
         notification.created_at_time,
-        notification.offer ? notification.offer.cost_in_tokens : ''      ]
+        notification.offer ? notification.offer.cost_in_tokens : '']
     })
 
     setHeadReceived([
@@ -100,21 +98,41 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
   }, [saveReport])
 
   const downloadReport = () => {
+    const doc = new jsPDF()
+    // doc.text("Hello world!", 10, 10);
+    var pageWidth = doc.internal.pageSize.getWidth()
+    var pageHeight = doc.internal.pageSize.getHeight()
+
+
     if(currentUser && currentUser.role === 'lifebank') {
       doc.autoTable({
+        margin: { top: 30, bottom: 30 },
+        pageBreak: 'auto',
         head: headReceive,
-        body: bodyReceive,
+        body: bodyReceive
       })
 
       doc.autoTable({
+        margin: { top: 30, bottom: 30 },
+        pageBreak: 'auto',
         head: headSent,
         body: bodySent,
       })
     } else if (currentUser && currentUser.role === 'sponsor') {
       doc.autoTable({
+        margin: { top: 30, bottom: 30 },
+        pageBreak: 'auto',
         head: headReceive,
         body: bodyReceive,
       })
+    }
+
+    for(var i = 1; i < doc.internal.pages.length; i++) {
+      doc.setPage(i)
+      doc.text("Name", pageWidth/2, 10, { align: 'center' })
+      doc.text("Date", pageWidth/2, 16, { align: 'center' })
+      doc.text(t('report.pdfHeader'), pageWidth/2, 22, { align: 'center' })
+      doc.text(t('report.pdfFooter'), pageWidth/2, pageHeight - 20, { align: 'center', maxWidth: pageWidth - 50 })
     }
 
     doc.save('report.pdf')
