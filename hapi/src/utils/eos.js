@@ -18,15 +18,13 @@ const createAccount = async accountName => {
   console.log('ACCOUNT-NAME', accountName)
   const password = await wallet.create(accountName)
   const key = await wallet.createKey(accountName)
-  console.log('KEY', key)
   try {
     await wallet.unlock(eosConfig.baseAccount, eosConfig.baseAccountPassword)
   } catch (error) { }
-  // const keys = await wallet.listKeys(
-  //   eosConfig.baseAccount,
-  //   eosConfig.baseAccountPassword
-  // )
-  const keys = ['5K1LmTQkxcrneSBNvJhXhUHDZ6q1Z7JsVdSZXAry5jWP3xBCNqi']
+  const keys = await wallet.listKeys(
+    eosConfig.baseAccount,
+    eosConfig.baseAccountPassword
+  )
   const api = new Api({
     rpc,
     textDecoder,
@@ -36,8 +34,7 @@ const createAccount = async accountName => {
   })
   const authorization = [
     {
-      // actor: eosConfig.baseAccount,
-      actor: 'lifebank',
+      actor: eosConfig.baseAccount,
       permission: 'active'
     }
   ]
@@ -83,9 +80,7 @@ const createAccount = async accountName => {
     }
   )
 
-  console.log('EOS-TRANSACTION', transaction)
-
-  // await wallet.lock(eosConfig.baseAccount)
+  await wallet.lock(eosConfig.baseAccount)
   return {
     password,
     transaction
