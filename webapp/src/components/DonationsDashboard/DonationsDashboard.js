@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef, useCallback } from 'react'
+import React, { useState, useEffect, forwardRef } from 'react'
 import { useMutation, useLazyQuery, useSubscription } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
@@ -81,8 +81,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const [maxWidthQr] = useState('xs')
   const [open, setOpen] = useState(false)
   const [accountTo, setAccountTo] = useState()
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [success, setSuccess] = useState(false)
   const [openModalQR, setOpenModalQR] = useState(false)
   const [scanValue, setScanValue] = useState()
   const [tokens, setTokens] = useState(0)
@@ -113,7 +111,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const handleSnackbarClose = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
     setAccountTo()
-
   }
 
   useEffect(() => {

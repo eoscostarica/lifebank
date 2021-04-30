@@ -382,7 +382,7 @@
       "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
       "checkYourEmail": "Revisa tu correo",
       "recovery": "Recuperar",
-      "passwordNotChangable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
+      "passwordNotChangeable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
     },
     "emailVerification": {
       "emailVerified": "Tu correo ha sido verificado",

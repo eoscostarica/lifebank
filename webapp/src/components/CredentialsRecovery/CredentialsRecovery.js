@@ -76,7 +76,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
       setValidEmailFormat(false)
     } else setOpenSnackbar({
       show: true,
-      message: t('credentialsRecovery.passwordNotChangable'),
+      message: t('credentialsRecovery.passwordNotChangeable'),
       severity: 'error'
     })
   }
@@ -96,7 +96,7 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
       setValidEmailFormat(false)
     } else setOpenSnackbar({
       show: true,
-      message: t('credentialsRecovery.passwordNotChangable'),
+      message: t('credentialsRecovery.passwordNotChangeable'),
       severity: 'error'
     })
   }

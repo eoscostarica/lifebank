@@ -259,7 +259,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                   aria-label="close"
                   color="inherit"
                   size="small"
-                  onClick={() => handleOpenAlert()}
+                  onClick={handleOpenAlert}
                 >
                   <CloseIcon fontSize="inherit" />
                 </IconButton>
