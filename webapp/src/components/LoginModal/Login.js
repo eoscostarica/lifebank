@@ -118,6 +118,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 
   const handleOpen = () => {
     setOpen(!open)
+    setActiveStep(0)
   }
 
   const handleOpenCredentialsRecovery = () => {

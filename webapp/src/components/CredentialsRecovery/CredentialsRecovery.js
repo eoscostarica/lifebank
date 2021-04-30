@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles, useTheme } from '@material-ui/styles'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -10,9 +9,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
-import Dialog from '@material-ui/core/Dialog'
 import Snackbar from '@material-ui/core/Snackbar'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { useTranslation } from 'react-i18next'
 
 import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
@@ -23,15 +21,11 @@ const useStyles = makeStyles(styles)
 const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
   const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [success, setSuccess] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const [open, setOpen] = useState(true)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
-    defaultMatches: true
-  })
   const [
     credentialsRecovery,
     { loading, error, data: { credentials_recovery: response } = {} }
@@ -50,14 +44,9 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
     setOpen(!open)
     onCloseCredentialsRecovery()
   }
+
   const handleCloseSnackBar = () => {
-    if (errorMessage) {
-      setErrorMessage(null)
-    } else {
-      setOpen(!open)
-      setUser({})
-      setSuccess(false)
-    }
+    setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
   const handleSetFieldEmail = (field, value) => {
@@ -69,7 +58,6 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
 
   const handleSubmit = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
-      setErrorMessage(null)
       credentialsRecovery({
         variables: {
           email: user.email,
@@ -83,12 +71,15 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
         }
       })
       setValidEmailFormat(false)
-    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
+    } else setOpenSnackbar({
+      show: true,
+      message: t('credentialsRecovery.passwordNotChangable'),
+      severity: 'error'
+    })
   }
 
   const handleSubmitChangePassword = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
-      setErrorMessage(null)
       changePassword({
         variables: {
           ...user,
@@ -100,7 +91,11 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
         }
       })
       setValidEmailFormat(false)
-    } else setErrorMessage(t('credentialsRecovery.passwordNotChangable'))
+    } else setOpenSnackbar({
+      show: true,
+      message: t('credentialsRecovery.passwordNotChangable'),
+      severity: 'error'
+    })
   }
 
   useEffect(() => {
@@ -116,23 +111,43 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
   useEffect(() => {
     if (error) {
       if (error.message === `GraphQL error: Cannot read property 'account' of undefined`)
-        setErrorMessage(t('credentialsRecovery.emailError'))
-      else setErrorMessage(error.message.replace('GraphQL error: ', ''))
+        setOpenSnackbar({
+          show: true,
+          message: t('credentialsRecovery.emailError'),
+          severity: 'error'
+        })
+      else setOpenSnackbar({
+        show: true,
+        message: error.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
     }
   }, [error, t])
 
   useEffect(() => {
     if (errorChangePassword) {
       if (errorChangePassword.message === `GraphQL error: Cannot read property 'secret' of null`)
-        setErrorMessage(t('credentialsRecovery.emailError'))
-      else setErrorMessage(errorChangePassword.message.replace('GraphQL error: ', ''))
+        setOpenSnackbar({
+          show: true,
+          message: t('credentialsRecovery.emailError'),
+          severity: 'error'
+        })
+      else setOpenSnackbar({
+        show: true,
+        message: errorChangePassword.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
     }
   }, [errorChangePassword, t])
 
 
   useEffect(() => {
     if (response) {
-      setSuccess(response.success)
+      setOpenSnackbar({
+        show: response.success,
+        message: t('credentialsRecovery.checkYourEmail'),
+        severity: 'success'
+      })
     }
   }, [response])
 
@@ -149,94 +164,64 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
 
   return (
     <>
-      <Dialog
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleOpen}
-        fullScreen={!isDesktop}
-        maxWidth='xs'
-        closeAfterTransition
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Box className={classes.dialog}>
-          <Box className={classes.closeIcon}>
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={handleOpen}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          </Box>
-          <Box className={classes.bodyWrapper}>
-            <form autoComplete="off">
-              <Box className={classes.textFieldWrapper}>
-                <Typography variant="h3" className={classes.title}>
-                  {t('credentialsRecovery.passwordRecovery')}
-                </Typography>
-                <Box className={classes.textBox}>
-                  <Typography className={classes.text} variant="body1">
-                    {t('credentialsRecovery.instructionCredentialsRecovery')}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box className={classes.textFieldWrapper}>
-                <TextField
-                  id="email"
-                  label={t('common.registeredEmail')}
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={(event) =>
-                    handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))
-                  }
-                  onKeyPress={(event) =>
-                    executeCredentialsRecovery(event)
-                  }
-                  className={classes.inputStyle}
-                />
-                <Button
-                  disabled={!validEmailFormat || loading}
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleSubmit}
-                  className={classes.button}
-                >
-                  {t('credentialsRecovery.recovery')}
-                </Button>
-                <Box className={classes.recoveryBox}>
-                  {loading && <CircularProgress />}
-                </Box>
-              </Box>
-              {errorMessage && (
-                <Snackbar open={true} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                  <Alert
-                    className={classes.alert}
-                    severity="error"
-                  >
-                    {errorMessage}
-                  </Alert>
-                </Snackbar>
-              )}
-              {success && (
-                <Snackbar open={success} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                  <Alert
-                    className={classes.alert}
-                    severity="success"
-                  >
-                    {t('credentialsRecovery.checkYourEmail')}
-                  </Alert>
-                </Snackbar>
-              )}
-            </form>
-          </Box>
+      <Box className={classes.dialog}>
+        <Box className={classes.goBack}>
+          <IconButton aria-label="go-back" onClick={handleOpen}>
+            <ArrowBackIcon color="primary" />
+          </IconButton>
         </Box>
-      </Dialog>
+        <Box className={classes.bodyWrapper}>
+          <form autoComplete="off">
+            <Box className={classes.textFieldWrapper}>
+              <Typography variant="h3" className={classes.title}>
+                {t('credentialsRecovery.passwordRecovery')}
+              </Typography>
+              <Box className={classes.textBox}>
+                <Typography className={classes.text} variant="body1">
+                  {t('credentialsRecovery.instructionCredentialsRecovery')}
+                </Typography>
+              </Box>
+            </Box>
+            <Box className={classes.textFieldWrapper}>
+              <TextField
+                id="email"
+                label={t('common.registeredEmail')}
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={(event) =>
+                  handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))
+                }
+                onKeyPress={(event) =>
+                  executeCredentialsRecovery(event)
+                }
+                className={classes.inputStyle}
+              />
+              <Button
+                disabled={!validEmailFormat || loading}
+                variant="contained"
+                color="secondary"
+                onClick={handleSubmit}
+                className={classes.button}
+              >
+                {t('credentialsRecovery.recovery')}
+              </Button>
+            </Box>
+            <Box className={classes.loadingBox}>
+              {loading && <CircularProgress />}
+            </Box>
+            <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+              <Alert
+                className={classes.alert}
+                severity={openSnackbar.severity}
+              >
+                {openSnackbar.message}
+              </Alert>
+            </Snackbar>
+          </form>
+        </Box>
+      </Box>
     </>
   )
 }

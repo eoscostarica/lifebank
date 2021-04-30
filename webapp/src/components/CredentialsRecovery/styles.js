@@ -14,10 +14,8 @@ export default (theme) => ({
   closeIcon: {
     position: 'absolute',
     zIndex: 1,
-    top: 14,
-    right: 14,
+    left: 14,
     margin: '0',
-    height: '5vh',
     '& svg': {
       fontSize: 25,
       color: "rgba(0, 0, 0, 0.6)"
@@ -63,6 +61,10 @@ export default (theme) => ({
     color: 'rgba(0, 0, 0, 0.54)',
     fontSize: 20
   },
+  loadingBox: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
   inputStyle: {
     color: "rgba(0, 0, 0, 0.6)",
     width: '100%',
@@ -90,7 +92,7 @@ export default (theme) => ({
   dialog: {
     width: '360px',
     height: '600px',
-    paddingTop: "32px",
+    paddingTop: "20px",
     paddingBottom: "53px",
     [theme.breakpoints.down('md')]: {
       paddingLeft: "15px",
