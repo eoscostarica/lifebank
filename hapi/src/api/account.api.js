@@ -449,8 +449,6 @@ const formatLifebankData = (lifebankData) => {
 }
 
 const verifyEmail = async ({ code }) => {
-  console.log('VERIFY-EMAIL')
-  console.log('CODE', code)
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })
