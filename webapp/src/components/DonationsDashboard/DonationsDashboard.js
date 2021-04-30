@@ -187,7 +187,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
 
   const hanndlerTransferTokens = (account) => {
-    setErrorMessage(null)
     setAccountTo(account)
   }
 
