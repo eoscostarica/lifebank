@@ -23,22 +23,28 @@ export default (theme) => ({
   },
   generalDescription: {
     marginTop: 10,
-    paddingLeft: 5
+    paddingLeft: 5,
+    paddingRigth: 20
   },
   description: {
-    marginBottom: 5
+    marginBottom: 5,
+    marginRight: 20
   },
   showOffers: {
     paddingTop: 39,
     paddingLeft: 20,
     paddingRigth: 20,
-    paddingBottom: '15%'
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: 10
+    }
   },
   boxSelect: {
     display: 'flex',
     width: '100%',
-    justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center'
+    }
   },
   formControl: {
     margin: theme.spacing(2),
@@ -50,7 +56,14 @@ export default (theme) => ({
   },
   snackbar: {
     marginRight: 100,
+    marginBottom: 40,
     backgroundColor: 'white',
-    color: 'black'
+    color: 'black',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+      marginRight: '20%',
+      marginLeft: '15%',
+      marginBottom: 40
+    }
   }
 })

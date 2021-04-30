@@ -102,19 +102,14 @@ const ShowOffers = ({ offers, loading }) => {
             {truncateString(props.offer.description)}
           </Typography>
         </CardContent>
-        <Divider />
-        <Box >
-          <Typography className={classes.categories}>
-            {t(`categories.${props.offer.offer_type}`)}
-          </Typography>
-          <Button
-            color="primary"
-            className={classes.cardActionButton}
-            onClick={() => handleOpenOfferView(props.offer)}
-          >
-            {t('cardsSection.moreInfo')}
-          </Button>
-        </Box>
+        <Button
+          color="primary"
+          className={classes.cardActionButton}
+          onClick={() => handleOpenOfferView(props.offer)}
+        >
+          {t('cardsSection.moreInfo')}
+        </Button>
+
       </Card>
     )
   }

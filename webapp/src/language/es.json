@@ -26,10 +26,9 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Ofertas disponibles",
-      "moreInfo": "Más información",
-      "approvedOffers": "Ofertas aprobadas",
-      "rejectedOffers": "Ofertas rechazadas"
+      "availableOffers": "Ofertas",
+      "moreInfo": "Más Información",
+      "approvedOffers": "Lista de Ofertas"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -61,6 +60,7 @@
       "signupWithGoogle": "Registrarse con Google",
       "createAccount": "Crear cuenta",
       "name": "Nombre",
+      "type": "Tipo",
       "nameSponsor": "Nombre del negocio",
       "nameLifebank": "Nombre del Lifebank",
       "address": "Dirección",
@@ -97,7 +97,10 @@
       "loginWithFacebook": "Iniciar sesión con Facebook",
       "loginWithGoogle": "Iniciar sesión con Google",
       "logout": "Cerrar sesión",
-      "notAccount": "¿No tienes cuenta aún? Registrarse aquí."
+      "notAccount": "¿No tienes cuenta aún? Registrarse aquí.",
+      "verify": "Verifique",
+      "textVerify": "Te enviamos un correo de confirmación. Si no lo puedes encontrar, revisa tu carpeta de spam. Si todavía no lo encuentras, puedes reenviarlo.",
+      "resend": "Reenviar"
     },
     "map": {
       "findLifebank": "Encontrar Bancos de Sangre o Comercios Afiliados cerca de ti",
@@ -169,7 +172,26 @@
       "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
       "takeMeHome": "Llévame al inicio"
     },
+    "sponsorTypes": {
+      "autoRepair": "Reparación de Automóviles",
+      "bank": "Servicios Bancarios o Financieros",
+      "beautySalon": "Salón de Belleza",
+      "dryCleaning": "Lavandería",
+      "entertaiment": "Negocio del Entretenimiento",
+      "gym": "Gym o Centro Fitness",
+      "hospitality": "Hospital",
+      "medical": "Servicios Médicos",
+      "pharmacies": "Farmacias",
+      "restaurant": "Restaurante o Tienda de Alimentos",
+      "retail": "Tienda Minorista",
+      "shopping": "Centro Comercial",
+      "gas": "Transporte o Gasolinera",
+      "travel": "Agencia de Viajes",
+      "veterinarian": "Veterinaria",
+      "other": "Otro"
+    },
     "categories": {
+      "all": "Todos",
       "discount": "Descuentos",
       "freeProduct": "Productos Gratis",
       "coupon": "Cupones",
@@ -210,7 +232,6 @@
       "consent": "Consentimiento",
       "communityAsset": "Activo de Comunidad",
       "hasImmunityTest": "Tiene test de inmunidad",
-      "benefitDescription": "Descripción del beneficio",
       "location": "Localización",
       "logo": "Logo",
       "urlSite": "URL del sitio",
@@ -248,8 +269,6 @@
       "logoUrl": "Dirección de imagen",
       "logoUrlPlaceholder": "La dirección de la imagen aquí",
       "sponsorNamePlaceholder": "El nombre de su comercio afiliado aquí",
-      "covidImpact": "Impacto de la pandemia provocada por el Covid-19",
-      "covidImpactPlaceholder": "Escribe el impacto que has tenido de la pandemia aquí",
       "photoUrl": "Dirección de foto",
       "photoUrlPlaceholder": "La dirección de la imagen aquí",
       "facebookProfileUrl": "Dirección del perfil de Facebook",

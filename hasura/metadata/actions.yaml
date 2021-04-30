@@ -1,175 +1,197 @@
 actions:
-- name: change_password
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/change-password
-  permissions:
-  - role: donor
-  - role: guest
-  - role: lifebank
-  - role: sponsor
-- name: check_username
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/check-username
-  permissions:
-  - role: guest
-- name: create_account
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/accounts
-  permissions:
-  - role: guest
-- name: create_account_auth
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/accounts-auth
-  permissions:
-  - role: guest
-- name: create_account_lifebank
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/create-account-lifebank
-  permissions:
-  - role: guest
-- name: create_pre_register_lifebank
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/pre-register
-  permissions:
-  - role: guest
-- name: credentials_recovery
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/credentials-recovery
-  permissions:
-  - role: guest
-- name: edit_profile
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/edit-profile
-    forward_client_headers: true
-  permissions:
-  - role: donor
-  - role: lifebank
-  - role: sponsor
-- name: get_contract
-  definition:
-    kind: ""
-    handler: http://hapi:9090/api/get-contract
-  permissions:
-  - role: donor
-  - role: guest
-  - role: lifebank
-  - role: sponsor
-- name: get_valid_lifebanks
-  definition:
-    kind: ""
-    handler: http://hapi:9090/api/get-valid-lifebanks
-  permissions:
-  - role: donor
-  - role: guest
-  - role: lifebank
-  - role: sponsor
-- name: get_valid_sponsors
-  definition:
-    kind: ""
-    handler: http://hapi:9090/api/get-valid-sponsors
-  permissions:
-  - role: donor
-  - role: guest
-  - role: lifebank
-  - role: sponsor
-- name: grant_consent
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/grant-consent
-    forward_client_headers: true
-  permissions:
-  - role: donor
-  - role: lifebank
-  - role: sponsor
-- name: login
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/login
-  permissions:
-  - role: guest
-- name: profile
-  definition:
-    kind: ""
-    handler: http://hapi:9090/api/profile
-    forward_client_headers: true
-  permissions:
-  - role: donor
-  - role: lifebank
-  - role: sponsor
-- name: revoke_consent
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/revoke-consent
-    forward_client_headers: true
-  permissions:
-  - role: donor
-  - role: lifebank
-  - role: sponsor
-- name: signup
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/signup
-    forward_client_headers: true
-  permissions:
-  - role: donor
-  - role: lifebank
-  - role: sponsor
-- name: signup_method
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/signup-method
-    forward_client_headers: true
-  permissions:
-  - role: guest
-- name: transfer
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/transfer
-    forward_client_headers: true
-  permissions:
-  - role: donor
-  - role: lifebank
-  - role: sponsor
-- name: verify_email
-  definition:
-    kind: synchronous
-    handler: http://hapi:9090/api/verify-email
-  permissions:
-  - role: donor
-  - role: guest
-  - role: lifebank
-  - role: sponsor
+  - name: change_password
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/change-password
+    permissions:
+      - role: donor
+      - role: guest
+      - role: lifebank
+      - role: sponsor
+  - name: check_email_verified
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/check-email-verified
+    permissions:
+      - role: guest
+  - name: check_username
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/check-username
+    permissions:
+      - role: guest
+  - name: create_account
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/accounts
+    permissions:
+      - role: guest
+  - name: create_account_auth
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/accounts-auth
+    permissions:
+      - role: guest
+  - name: create_account_lifebank
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/create-account-lifebank
+    permissions:
+      - role: guest
+  - name: create_pre_register_lifebank
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/pre-register
+    permissions:
+      - role: guest
+  - name: credentials_recovery
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/credentials-recovery
+    permissions:
+      - role: guest
+  - name: edit_profile
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/edit-profile
+      forward_client_headers: true
+    permissions:
+      - role: donor
+      - role: lifebank
+      - role: sponsor
+  - name: get_contract
+    definition:
+      kind: ""
+      handler: http://hapi:9090/api/get-contract
+    permissions:
+      - role: donor
+      - role: guest
+      - role: lifebank
+      - role: sponsor
+  - name: get_valid_lifebanks
+    definition:
+      kind: ""
+      handler: http://hapi:9090/api/get-valid-lifebanks
+    permissions:
+      - role: donor
+      - role: guest
+      - role: lifebank
+      - role: sponsor
+  - name: get_valid_sponsors
+    definition:
+      kind: ""
+      handler: http://hapi:9090/api/get-valid-sponsors
+    permissions:
+      - role: donor
+      - role: guest
+      - role: lifebank
+      - role: sponsor
+  - name: grant_consent
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/grant-consent
+      forward_client_headers: true
+    permissions:
+      - role: donor
+      - role: lifebank
+      - role: sponsor
+  - name: login
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/login
+    permissions:
+      - role: guest
+  - name: profile
+    definition:
+      kind: ""
+      handler: http://hapi:9090/api/profile
+      forward_client_headers: true
+    permissions:
+      - role: donor
+      - role: lifebank
+      - role: sponsor
+  - name: redeem_offer
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/redeem-offer
+      forward_client_headers: true
+    permissions:
+      - role: donor
+  - name: revoke_consent
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/revoke-consent
+      forward_client_headers: true
+    permissions:
+      - role: donor
+      - role: lifebank
+      - role: sponsor
+  - name: send_email
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/send-email
+    permissions:
+      - role: guest
+  - name: signup
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/signup
+      forward_client_headers: true
+    permissions:
+      - role: donor
+      - role: lifebank
+      - role: sponsor
+  - name: signup_method
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/signup-method
+      forward_client_headers: true
+    permissions:
+      - role: guest
+  - name: transfer
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/transfer
+      forward_client_headers: true
+    permissions:
+      - role: donor
+      - role: lifebank
+      - role: sponsor
+  - name: verify_email
+    definition:
+      kind: synchronous
+      handler: http://hapi:9090/api/verify-email
+    permissions:
+      - role: donor
+      - role: guest
+      - role: lifebank
+      - role: sponsor
 custom_types:
   enums: []
   input_objects: []
   objects:
-  - name: create_account_output
-  - name: get_abi_output
-  - name: login_output
-  - name: profile_output
-  - name: signup_output
-  - name: check_username_output
-  - name: revoke_consent_output
-  - name: grant_consent_output
-  - name: credentials_recovery_output
-  - name: transfer_output
-  - name: edit_profile_output
-  - name: get_contract_output
-  - name: create_pre_register_lifebank_output
-  - name: verify_email_output
-  - name: ValidSponsor
-  - name: ValidLifebank
-  - name: create_account_lifebank_output
-  - name: change_password_output
-  - name: signup_method_output
-  - name: create_account_lifebank_auth_output
-  - name: create_account_auth_output
+    - name: create_account_output
+    - name: get_abi_output
+    - name: login_output
+    - name: profile_output
+    - name: signup_output
+    - name: check_username_output
+    - name: revoke_consent_output
+    - name: grant_consent_output
+    - name: credentials_recovery_output
+    - name: transfer_output
+    - name: edit_profile_output
+    - name: get_contract_output
+    - name: create_pre_register_lifebank_output
+    - name: verify_email_output
+    - name: ValidSponsor
+    - name: ValidLifebank
+    - name: create_account_lifebank_output
+    - name: change_password_output
+    - name: signup_method_output
+    - name: create_account_lifebank_auth_output
+    - name: create_account_auth_output
+    - name: redeem_offer_output
+    - name: send_email_output
+    - name: check_email_verified_output
   scalars: []

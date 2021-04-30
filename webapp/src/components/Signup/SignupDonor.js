@@ -40,7 +40,7 @@ const DonorSignup = ({
   }, [confirmPassword])
 
   return (
-    <form autoComplete="off" className={classes.form}>
+    <form autoComplete="off" className={classes.formDonor}>
       <Box className={classes.textFieldWrapper}>
         {children}
         <TextField
@@ -49,7 +49,7 @@ const DonorSignup = ({
           type="password"
           fullWidth
           variant="outlined"
-          className={classes.textField}
+          className={classes.textFieldDonor}
           onChange={(event) => {
             setField('passwordPlainText', event.target.value)
             setPassword(event.target.value)
@@ -63,7 +63,7 @@ const DonorSignup = ({
           error={error}
           helperText={error && t('signup.passwordNotMatch')}
           variant="outlined"
-          className={classes.textField}
+          className={classes.textFieldDonor}
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
         <ReCAPTCHA

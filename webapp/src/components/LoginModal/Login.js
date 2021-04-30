@@ -25,11 +25,15 @@ import {
   LOGIN_MUTATION,
   VALIDATE_EMAIL,
   GET_SECRET_BY_ACCOUNT,
+  SEND_EMAIL_MUTATION,
+  CHECK_EMAIL_VERIFIED
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
+import ResendComponent from '../ResendComponent'
+
 import CredentialsRecovery from '../CredentialsRecovery/CredentialsRecovery'
 import styles from './styles'
 
@@ -43,14 +47,59 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentUser, { login }] = useUser()
+
+
   const [
     loginMutation,
     { loading, error, data: { login: loginResult } = {} }
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
 
+  const [
+    checkEmailVerified,
+    {
+      error: errorCheckEmailVerified,
+      loading: checkEmailVerifiedLoading,
+      data: { check_email_verified: checkEmailVerifiedResult } = {}
+    }
+  ] = useMutation(CHECK_EMAIL_VERIFIED)
+
+  const [
+    sendEmail,
+    {
+      error: errorSendEmail,
+      loading: SendEmailLoading,
+      data: { send_email: sendEmailResult } = {}
+    }
+  ] = useMutation(SEND_EMAIL_MUTATION)
+
+  const handleSendEmail = () => {
+    handleOpen()
+    sendEmail({
+      variables: {
+        account: user.account,
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        }
+      }
+    })
+  }
+
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
+
+  const [openVerify, setopenVerify] = useState(false)
+
+  const handlerSetOpenVerify = () => {
+    setopenVerify(!openVerify)
+  }
+
+  const verify = () => {
+    setopenVerify(true)
+  }
 
   const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
     variables: {
@@ -97,6 +146,11 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   useEffect(() => {
     if (error) {
       setErrorMessage(error.message.replace('GraphQL error: ', ''))
+      checkEmailVerified({
+        variables: {
+          account: user.account
+        }
+      })
     }
   }, [error])
 
@@ -106,6 +160,15 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       setOpen(false)
     }
   }, [loginResult])
+
+  useEffect(() => {
+    if (checkEmailVerifiedResult && !checkEmailVerifiedResult.verified) {
+      verify()
+    }
+  }, [checkEmailVerifiedResult])
+
+  useEffect(() => {
+  }, [sendEmailResult])
 
   useEffect(() => {
     if (currentUser) {
@@ -262,8 +325,13 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           <Box className={classes.registerBox}>
             <Signup isModal />
           </Box>
+          <ResendComponent
+            open={openVerify}
+            handlerOpen={handlerSetOpenVerify}
+            handlerSendEmail={handleSendEmail}
+          />
           <Box className={classes.credentialsBox}>
-            <CredentialsRecovery/>
+            <CredentialsRecovery />
           </Box>
         </Box>
       </Dialog>

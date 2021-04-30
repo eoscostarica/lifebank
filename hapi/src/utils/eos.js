@@ -26,7 +26,7 @@ const createAccount = async accountName => {
   //   eosConfig.baseAccount,
   //   eosConfig.baseAccountPassword
   // )
-  const keys = ['5KCn4daKGhPpeR7nRLcBUhmaR24YuDX2YsAYkaa927fMiNDgJ8o']
+  const keys = ['5K1LmTQkxcrneSBNvJhXhUHDZ6q1Z7JsVdSZXAry5jWP3xBCNqi']
   const api = new Api({
     rpc,
     textDecoder,
@@ -36,7 +36,8 @@ const createAccount = async accountName => {
   })
   const authorization = [
     {
-      actor: eosConfig.baseAccount,
+      // actor: eosConfig.baseAccount,
+      actor: 'lifebank',
       permission: 'active'
     }
   ]
@@ -59,7 +60,7 @@ const createAccount = async accountName => {
           account: 'eosio',
           name: 'newaccount',
           data: {
-            creator : "lbacccreator",
+            creator : "lifebank",
             name : accountName,
             active : {
                 "threshold":2,

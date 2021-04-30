@@ -26,10 +26,9 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Available Offers",
-      "moreInfo": "More info",
-      "approvedOffers": "Approved Offers",
-      "rejectedOffers": "Rejected Offers"
+      "availableOffers": "Offers",
+      "moreInfo": "More Info",
+      "approvedOffers": "Offers List"
     },
     "navigationDrawer": {
       "homepage": "Home page",
@@ -61,6 +60,7 @@
       "signupWithGoogle": "Sign up using Google",
       "createAccount": "Create an account",
       "name": "Name",
+      "type": "Type",
       "nameSponsor": "Business name",
       "nameLifebank": "Lifebank name",
       "address": "Address",
@@ -97,7 +97,10 @@
       "loginWithFacebook": "Login with Facebook",
       "loginWithGoogle": "Login with Google",
       "logout": "Logout",
-      "notAccount": "No account yet? Register here."
+      "notAccount": "No account yet? Register here.",
+      "verify": "Verify",
+      "textVerify": "We sent you a confirmation email to your inbox. If you can't find it, please check your spam folder. If you still don't find it, you can resend it.",
+      "resend": "Resend"
     },
     "map": {
       "findLifebank": "Find Lifebanks or Sponsors near you",
@@ -169,7 +172,26 @@
       "errorMessage": "An error occurred and your request couldn't be completed",
       "takeMeHome": "Take me to the home page"
     },
+    "sponsorTypes": {
+      "autoRepair": "Auto Repair",
+      "bank": "Bank or Financial Services",
+      "beautySalon": "Beauty Salon",
+      "dryCleaning": "Dry Cleaning Or Laundry",
+      "entertaiment": "Entertainment Business",
+      "gym": "Gym or Fitness Center",
+      "hospitality": "Hospitality or Leisure",
+      "medical": "Medical or Health Services",
+      "pharmacies": "Pharmacies",
+      "restaurant": "Restaurant or Food Shop",
+      "retail": "Retail Store",
+      "shopping": "Shopping Center",
+      "gas": "Transportation or Gas Station",
+      "travel": "Travel Agency",
+      "veterinarian": "Veterinarian",
+      "other": "Other"
+    },
     "categories": {
+      "all": "All",
       "discount": "Discounts",
       "freeProduct": "Free Products",
       "coupon": "Coupons",
@@ -210,7 +232,6 @@
       "consent": "Consent",
       "communityAsset": "Community Asset",
       "hasImmunityTest": "Has Immunity Test",
-      "benefitDescription": "Benefit Description",
       "location": "Location",
       "logo": "Logo",
       "urlSite": "URL site",
@@ -243,8 +264,6 @@
       "logoUrl": "Logo Url",
       "logoUrlPlaceholder": "Your logo url here",
       "sponsorNamePlaceholder": "Your Sponsor name here",
-      "covidImpact": "Covid Impact",
-      "covidImpactPlaceholder": "Description about covid impact here",
       "photoUrl": "Photo url",
       "photoUrlPlaceholder": "Your photo url here",
       "facebookProfileUrl": "Facebook profile url",
