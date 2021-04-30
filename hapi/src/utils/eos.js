@@ -20,7 +20,7 @@ const createAccount = async (accountName) => {
   const key = await wallet.createKey(accountName)
   try {
     await wallet.unlock(eosConfig.baseAccount, eosConfig.baseAccountPassword)
-  } catch (error) { }
+  } catch (error) {}
   const keys = await wallet.listKeys(
     eosConfig.baseAccount,
     eosConfig.baseAccountPassword
@@ -57,17 +57,29 @@ const createAccount = async (accountName) => {
           account: 'eosio',
           name: 'newaccount',
           data: {
-            creator : "lifebank",
-            name : accountName,
-            active : {
-                "threshold":2,
-                "keys":[ {"weight":1,"key":key}],
-                "accounts":[ {"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
+            creator: 'lifebank',
+            name: accountName,
+            active: {
+              threshold: 2,
+              keys: [{ weight: 1, key: key }],
+              accounts: [
+                {
+                  weight: 1,
+                  permission: { actor: 'writer', permission: 'access' }
+                }
+              ],
+              waits: []
             },
-            owner : {
-                "threshold":2,
-                "keys":[ {"weight":1,"key":key}],
-                "accounts":[{"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
+            owner: {
+              threshold: 2,
+              keys: [{ weight: 1, key: key }],
+              accounts: [
+                {
+                  weight: 1,
+                  permission: { actor: 'writer', permission: 'access' }
+                }
+              ],
+              waits: []
             },
             owner: {
               threshold: 2,
