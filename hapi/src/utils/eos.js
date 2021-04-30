@@ -20,20 +20,11 @@ const createAccount = async (accountName) => {
   const key = await wallet.createKey(accountName)
   try {
     await wallet.unlock(eosConfig.baseAccount, eosConfig.baseAccountPassword)
-<<<<<<< HEAD
   } catch (error) { }
   const keys = await wallet.listKeys(
     eosConfig.baseAccount,
     eosConfig.baseAccountPassword
   )
-=======
-  } catch (error) {}
-  // const keys = await wallet.listKeys(
-  //   eosConfig.baseAccount,
-  //   eosConfig.baseAccountPassword
-  // )
-  const keys = ['5KCn4daKGhPpeR7nRLcBUhmaR24YuDX2YsAYkaa927fMiNDgJ8o']
->>>>>>> d43b265e82bfa2245cd62ed47eb89f185819bd40
   const api = new Api({
     rpc,
     textDecoder,
