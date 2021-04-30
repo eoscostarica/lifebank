@@ -40,8 +40,7 @@ const Home = () => {
   const [valueSponsorCat, setValueSponsorCat] = useState('All')
   const [valueOfferCat, setValueOfferCat] = useState('All')
   const [valueTokenPrice, setValueTokenPrice] = useState('All')
-  const [openAlert, setOpenAlert] = useState(false)
-  const [messegaAlert, setMessegaAlert] = useState('')
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const history = useHistory()
 
   const {
@@ -66,15 +65,18 @@ const Home = () => {
     refetch: getAllSponsors
   } = useQuery(GET_VALID_SPONSORS_QUERY, { fetchPolicy: 'cache-and-network' })
 
-  const handleOpenAlert = () => setOpenAlert(!openAlert)
+  const handleClose = () => setOpenSnackbar({ ...openSnackbar, show: false })
 
   const typeError = async (errorMessege) => {
     setFetchError(true)
     if (errorMessege === 'GraphQL error: Could not verify JWT: JWTExpired') {
       if (allOffersError && allBanksError && allSponsorsError) {
         logout()
-        handleOpenAlert()
-        setMessegaAlert(t('errors.tokenExpiration'))
+        setOpenSnackbar({
+          show: true,
+          message: t('errors.tokenExpiration'),
+          severity: 'error'
+        })
         await getOffers()
         await getSponsors()
         await getLifebanks()
@@ -223,12 +225,12 @@ const Home = () => {
       )}
       <ConsetComponent />
       <Snackbar
-        open={openAlert}
-        autoHideDuration={6000}
-        onClose={handleOpenAlert}
+        open={openSnackbar.show}
+        autoHideDuration={4000}
+        onClose={handleClose}
       >
-        <Alert onClose={handleOpenAlert} severity="error">
-          {messegaAlert}
+        <Alert severity={openSnackbar.severity}>
+          {openSnackbar.message}
         </Alert>
       </Snackbar>
       {sponsors.length > 0 && (

@@ -57,6 +57,7 @@ const ConsetComponent = () => {
         profile
       }
     })
+    handleOpenConsent()
   }
 
   const handleCloseSnackbar = () => {

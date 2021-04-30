@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from 'react'
+import React, { useState, useEffect, forwardRef, useCallback } from 'react'
 import { useMutation, useLazyQuery, useSubscription } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
@@ -110,11 +110,12 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     TOKEN_SUBSCRIPTION, { variables: { account } }
   )
 
-  const handleSnackbarClose = (_event, reason) => {
-    if (reason === 'clickaway') return
-
+  const handleSnackbarClose = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
+    setAccountTo()
+
   }
+
   useEffect(() => {
     if (!error)
       return
@@ -604,7 +605,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
           </Dialog>
         </>
       }
-      <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>
+      <Snackbar open={openSnackbar.show} autoHideDuration={2000} onClose={handleSnackbarClose}>
         <Alert severity={openSnackbar.severity}>
           {openSnackbar.message}
         </Alert>

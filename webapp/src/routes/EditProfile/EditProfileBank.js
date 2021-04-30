@@ -41,13 +41,12 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const photoUrlValueRef = useRef(undefined)
   const phoneValueRef = useRef(undefined)
   const history = useHistory()
-  const [severity] = useState('error')
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [username, setUserName] = useState(userName.replaceAll('-', ' '))
   const [isValid, setIsvalid] = useState(true)
   const [isUnique, setIsUnique] = useState(true)
   const [firstRun, setFirstRun] = useState(true)
-  const [open, setOpen] = useState(false)
   const [user, setUser] = useState({
     about: profile.about,
     address: profile.address,
@@ -77,15 +76,19 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   })
 
   const isUsernameUnique = async () => {
-    if(!profile.consent) {
-      handleSnackbarClose()
+    if (!profile.consent) {
+      setOpenSnackbar({
+        show: true,
+        message: t('signup.noConsentNoEdit'),
+        severity: 'error'
+      })
     } else {
       if (profile && profile.consent) {
         const { data } = await checkUserName({
           username: username,
           account: profile.account
         })
-  
+
         if (data) {
           if (data.user.length !== 0) setIsUnique(false)
           else setIsUnique(true)
@@ -163,8 +166,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     history.push('/')
   }
 
-  const handleSnackbarClose = (event, reason) => {
-    if(event !== null) setOpen(!open)
+  const handleSnackbarClose = () => {
+    setOpenSnackbar({ ...openSnackbar, show: false })
   };
 
   const buttonCloseHandler = (
@@ -178,16 +181,16 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         size="small"
         onClick={handleSnackbarClose}
       >
-        <CloseIcon fontSize="inherit"/>
+        <CloseIcon fontSize="inherit" />
       </IconButton>
     </>
   );
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
-        <Alert severity={severity} action={buttonCloseHandler}>
-          {t('signup.noConsentNoEdit')}
+      <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>
+        <Alert severity={openSnackbar.severity} action={buttonCloseHandler}>
+          {openSnackbar.message}
         </Alert>
       </Snackbar>
 
