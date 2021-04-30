@@ -99,23 +99,17 @@ const OffersManagement = () => {
     if (!profile.schedule)
       pendingFieldsObject = { ...pendingFieldsObject, schedule: false }
 
-    if (!profile.benefit_description)
-      pendingFieldsObject = {
-        ...pendingFieldsObject,
-        benefit_description: false
-      }
-
     if (!profile.location)
       pendingFieldsObject = { ...pendingFieldsObject, location: false }
 
-    if(Object.keys(pendingFieldsObject).length > 0){
+    if (Object.keys(pendingFieldsObject).length > 0) {
       setOpenGenericFormAddVariant(false)
       setOpenSnackbar({
         show: true,
         message: t("offersManagement.info"),
         severity: 'warning'
       })
-    } else{
+    } else {
       setOpenGenericFormAddVariant(true)
     }
   }

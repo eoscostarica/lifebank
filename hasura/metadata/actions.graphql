@@ -1,5 +1,5 @@
 type Mutation {
-  change_password (
+  change_password(
     email: String!
     emailContent: jsonb!
     currentPassword: String!
@@ -7,17 +7,16 @@ type Mutation {
   ): change_password_output
 }
 
-
 type Mutation {
-  check_username (
-    role: String!
-    username: String!
-  ): check_username_output
+  check_email_verified(account: String!): check_email_verified_output
 }
 
+type Mutation {
+  check_username(role: String!, username: String!): check_username_output
+}
 
 type Mutation {
-  create_account (
+  create_account(
     role: String!
     email: String!
     emailContent: jsonb!
@@ -27,9 +26,8 @@ type Mutation {
   ): create_account_output
 }
 
-
 type Mutation {
-  create_account_auth (
+  create_account_auth(
     role: String!
     email: String!
     emailContent: jsonb!
@@ -39,9 +37,8 @@ type Mutation {
   ): create_account_auth_output
 }
 
-
 type Mutation {
-  create_account_lifebank (
+  create_account_lifebank(
     email: String!
     emailContent: jsonb!
     name: String!
@@ -50,9 +47,8 @@ type Mutation {
   ): create_account_lifebank_output
 }
 
-
 type Mutation {
-  create_pre_register_lifebank (
+  create_pre_register_lifebank(
     email: String!
     emailContent: jsonb!
     passwordPlainText: String!
@@ -69,214 +65,203 @@ type Mutation {
   ): create_pre_register_lifebank_output
 }
 
-
 type Mutation {
-  credentials_recovery (
+  credentials_recovery(
     email: String!
     emailContent: jsonb!
   ): credentials_recovery_output
 }
 
-
 type Mutation {
-  edit_profile (
-    profile: jsonb!
-  ): edit_profile_output
+  edit_profile(profile: jsonb!): edit_profile_output
 }
-
 
 type Query {
-  get_contract (
-    name: String!
-  ): get_contract_output
+  get_contract(name: String!): get_contract_output
 }
-
 
 type Query {
-  get_valid_lifebanks : [ValidLifebank]!
+  get_valid_lifebanks: [ValidLifebank]!
 }
-
 
 type Query {
-  get_valid_sponsors : [ValidSponsor]!
+  get_valid_sponsors: [ValidSponsor]!
 }
-
 
 type Mutation {
-  grant_consent : grant_consent_output
+  grant_consent: grant_consent_output
 }
-
 
 type Mutation {
-  login (
-    account: String!
-    password: String!
-  ): login_output
+  login(account: String!, password: String!): login_output
 }
-
 
 type Query {
-  profile : profile_output
+  profile: profile_output
 }
 
-
 type Mutation {
-  revoke_consent : revoke_consent_output
-}
-
-
-type Mutation {
-  signup (
-    profile: jsonb!
-  ): signup_output
-}
-
-
-type Mutation {
-  signup_method (
-    email: String!
-  ): signup_method_output
-}
-
-
-type Mutation {
-  transfer (
+  redeem_offer(
     to: String!
     memo: String!
     quantity: Int
-  ): transfer_output
+    offer: jsonb!
+  ): redeem_offer_output
 }
-
 
 type Mutation {
-  verify_email (
-    code: String!
-  ): verify_email_output
+  revoke_consent: revoke_consent_output
 }
 
+type Mutation {
+  send_email(account: String!, emailContent: jsonb!): send_email_output
+}
 
+type Mutation {
+  signup(profile: jsonb!): signup_output
+}
 
+type Mutation {
+  signup_method(email: String!): signup_method_output
+}
+
+type Mutation {
+  transfer(to: String!, memo: String!, quantity: Int): transfer_output
+}
+
+type Mutation {
+  verify_email(code: String!): verify_email_output
+}
 
 type create_account_output {
-  account : String!
-  transaction_id : String!
-  token : String!
+  account: String!
+  transaction_id: String!
+  token: String!
 }
 
 type get_abi_output {
-  abi : jsonb!
+  abi: jsonb!
 }
 
 type login_output {
-  token : String!
+  token: String!
 }
 
 type profile_output {
-  profile : jsonb!
+  profile: jsonb!
 }
 
 type signup_output {
-  success : Boolean!
+  success: Boolean!
 }
 
 type check_username_output {
-  is_valid : Boolean!
+  is_valid: Boolean!
 }
 
 type revoke_consent_output {
-  transaction_id : String!
+  transaction_id: String!
 }
 
 type grant_consent_output {
-  transaction_id : String!
+  transaction_id: String!
 }
 
 type credentials_recovery_output {
-  success : Boolean!
+  success: Boolean!
 }
 
 type transfer_output {
-  transaction_id : String!
+  transaction_id: String!
 }
 
 type edit_profile_output {
-  success : Boolean!
+  success: Boolean!
 }
 
 type get_contract_output {
-  name : String!
-  hash : String!
-  abi : jsonb!
+  name: String!
+  hash: String!
+  abi: jsonb!
 }
 
 type create_pre_register_lifebank_output {
-  resultRegister : String!
+  resultRegister: String!
 }
 
 type verify_email_output {
-  is_verified : Boolean!
+  is_verified: Boolean!
 }
 
 type ValidSponsor {
-  account : String!
-  name : String!
-  openingHours : String!
-  description : String!
-  address : String!
-  logo : String!
-  email : String!
-  location : String!
-  telephone : String!
-  social_media_links : String!
-  photos : String!
-  website : String!
-  covidImpact : String!
-  businessType : String!
-  benefitDescription : String!
-  userName : String!
-  role : String!
+  account: String!
+  name: String!
+  openingHours: String!
+  description: String!
+  address: String!
+  logo: String!
+  email: String!
+  location: String!
+  telephone: String!
+  social_media_links: String!
+  photos: String!
+  website: String!
+  businessType: String!
+  userName: String!
+  role: String!
 }
 
 type ValidLifebank {
-  account : String!
-  name : String!
-  openingHours : String!
-  address : String!
-  logo : String!
-  description : String!
-  email : String!
-  location : String!
-  telephone : String!
-  role : String!
-  userName : String!
-  photos : String!
-  urgencyLevel : Int!
-  requirement : String!
+  account: String!
+  name: String!
+  openingHours: String!
+  address: String!
+  logo: String!
+  description: String!
+  email: String!
+  location: String!
+  telephone: String!
+  role: String!
+  userName: String!
+  photos: String!
+  urgencyLevel: Int!
+  requirement: String!
 }
 
 type create_account_lifebank_output {
-  account : String!
-  transaction_id : String!
-  token : String!
+  account: String!
+  transaction_id: String!
+  token: String!
 }
 
 type change_password_output {
-  success : Boolean!
+  success: Boolean!
 }
 
 type signup_method_output {
-  password_changable : Boolean!
+  password_changable: Boolean!
 }
 
 type create_account_lifebank_auth_output {
-  account : String!
-  transaction_id : String!
-  token : String!
+  account: String!
+  transaction_id: String!
+  token: String!
 }
 
 type create_account_auth_output {
-  account : String!
-  transaction_id : String!
-  token : String!
+  account: String!
+  transaction_id: String!
+  token: String!
 }
 
+type redeem_offer_output {
+  transaction_id: String!
+}
+
+type send_email_output {
+  success: Boolean!
+}
+
+type check_email_verified_output {
+  verified: Boolean!
+}

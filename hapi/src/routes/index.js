@@ -8,6 +8,7 @@ const getcontractRoute = require('./get-contract/get-contract.route')
 const getValidSponsorsRoute = require('./get-valid-sponsors/get-valid-sponsors.route')
 const grantConsentRoute = require('./grant-consent/grant-consent.route')
 const loginRoute = require('./login/login.route')
+const sendEmailRoute = require('./send-email/send-email.route')
 const profileRoute = require('./profile/profile.route')
 const revokeConsentRoute = require('./revoke-consent/revoke-consent.route')
 const signupRoute = require('./signup/signup.route')
@@ -17,6 +18,8 @@ const registerLifebankRoute = require('./create-account-lifebank/create-account-
 const verifyEmailRouteRoute = require('./verify-email/verify-email.route')
 const getValidLifebanksRoute = require('./get-valid-lifebanks/get-valid-lifebanks.route')
 const checkSignupMethod = require('./signup-method/signup-method.route')
+const redeemOffer = require('./redeem-offer/redeem-offer.route')
+const checkEmailVerified = require('./check-email-verified/check-email-verified.route')
 
 module.exports = [
   changePasswordRoute,
@@ -29,6 +32,7 @@ module.exports = [
   getValidSponsorsRoute,
   grantConsentRoute,
   loginRoute,
+  sendEmailRoute,
   profileRoute,
   revokeConsentRoute,
   signupRoute,
@@ -37,5 +41,7 @@ module.exports = [
   registerLifebankRoute,
   verifyEmailRouteRoute,
   getValidLifebanksRoute,
-  checkSignupMethod
+  checkSignupMethod,
+  redeemOffer,
+  checkEmailVerified
 ]

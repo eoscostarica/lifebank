@@ -55,6 +55,7 @@ const VALIDATION_VERIFICATION_CODE = `
 const GET_LIFEBANK_DATA = `
   query($where: preregister_lifebank_bool_exp!) {
     preregister_lifebank(where: $where, limit: 1) {
+      email
       address
       coordinates
       description
@@ -65,7 +66,9 @@ const GET_LIFEBANK_DATA = `
       schedule
       urgency_level,
       state,
-      requirement
+      requirement,
+      verification_code,
+      email_verified
     }
   }
 `
