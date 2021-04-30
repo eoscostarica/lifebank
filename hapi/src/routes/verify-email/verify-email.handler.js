@@ -9,7 +9,6 @@ module.exports = async ({ payload: { input } }) => {
 
     return response
   } catch (error) {
-    console.log('ERROR', error)
     return Boom.boomify(error, { statusCode: INTERNAL_SERVER_ERROR })
   }
 }
