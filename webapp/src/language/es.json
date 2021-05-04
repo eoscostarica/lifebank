@@ -508,7 +508,8 @@
       "date": "Fecha",
       "time": "Hora",
       "tokens": "Tokens",
-      "offer": "Oferta"
+      "offer": "Oferta",
+      "reportDownloadName": "Reporte"
     }
   }
 }

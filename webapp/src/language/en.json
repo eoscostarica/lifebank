@@ -509,7 +509,8 @@
       "date": "Date",
       "time": "Time",
       "tokens": "Tokens",
-      "offer": "Offer"
+      "offer": "Offer",
+      "reportDownloadName": "Report"
     }
   }
 }

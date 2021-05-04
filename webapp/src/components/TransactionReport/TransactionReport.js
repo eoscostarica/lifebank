@@ -5,13 +5,17 @@ import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import { useTranslation } from 'react-i18next'
 import { useUser } from '../../context/user.context'
-import { GET_REPORT_QUERY } from '../../gql'
+import { GET_REPORT_QUERY, PROFILE_QUERY } from '../../gql'
 
 const TransactionReport = ({saveReport, onReportSaved}) => {
   const { t } = useTranslation('translations')
   const [currentUser] = useUser()
   const [headReceive, setHeadReceived] = useState()
   const [bodyReceive, setBodyReceive] = useState()
+  const [
+    loadProfile,
+    { error: errroLoadProfile, data: { profile: { profile } = {} } = {}, client }
+  ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const headSent = [
     [
@@ -27,6 +31,10 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
     getReportQuery,
     { errorReport, data: { get_report: getReportResult } = {} }
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
+
+  useEffect(() => {
+    if(!profile) loadProfile()
+  }, [profile])
 
   useEffect(() => {
     if(!getReportResult) {
@@ -99,7 +107,6 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
 
   const downloadReport = () => {
     const doc = new jsPDF()
-    // doc.text("Hello world!", 10, 10);
     var pageWidth = doc.internal.pageSize.getWidth()
     var pageHeight = doc.internal.pageSize.getHeight()
 
@@ -129,13 +136,14 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
 
     for(var i = 1; i < doc.internal.pages.length; i++) {
       doc.setPage(i)
-      doc.text("Name", pageWidth/2, 10, { align: 'center' })
-      doc.text("Date", pageWidth/2, 16, { align: 'center' })
+      doc.setFontSize(14)
+      doc.text(profile? profile.name : '', pageWidth/2, 10, { align: 'center' })
+      doc.text(new Date().toISOString().slice(0, 10), pageWidth/2, 16, { align: 'center' })
       doc.text(t('report.pdfHeader'), pageWidth/2, 22, { align: 'center' })
       doc.text(t('report.pdfFooter'), pageWidth/2, pageHeight - 20, { align: 'center', maxWidth: pageWidth - 50 })
     }
 
-    doc.save('report.pdf')
+    doc.save(t('report.reportDownloadName'))
     onReportSaved()
   }
 
