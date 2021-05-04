@@ -47,13 +47,11 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
   const [open, setOpen] = useState(false)
-  const [openAlert, setOpenAlert] = useState(false)
-  const [messegaAlert, setMessegaAlert] = useState("false")
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const [maxWidth] = useState('sm')
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const [errorMessage, setErrorMessage] = useState(null)
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
 
@@ -62,7 +60,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   }
 
   const handleOpenAlert = () => {
-    setOpenAlert(!openAlert)
+    setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
   const [
@@ -147,7 +145,11 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
           }
         })
       } else {
-        setErrorMessage(t('errors.authError'))
+        setOpenSnackbar({
+          show: true,
+          message: t('errors.authError'),
+          severity: 'error'
+        })
       }
     }
   }
@@ -231,26 +233,33 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   useEffect(() => {
     if (preRegisterLifebankResult) {
       handleOpen()
-      setMessegaAlert(t('signup.sucessfulPreregistration'))
-      handleOpenAlert()
-
+      setOpenSnackbar({
+        show: true,
+        message: t('signup.sucessfulPreregistration'),
+        severity: 'success'
+      })
     }
   }, [preRegisterLifebankResult])
 
   useEffect(() => {
     if (createAccountResult) {
       handleOpen()
-      setMessegaAlert(t('signup.sucessfulRegistration'))
-      handleOpenAlert()
+      setOpenSnackbar({
+        show: true,
+        message: t('signup.sucessfulRegistration'),
+        severity: 'success'
+      })
     }
-
   }, [createAccountResult])
 
   useEffect(() => {
     if (createAccountResultAuth) {
       handleOpen()
-      setMessegaAlert(t('signup.sucessfulRegistration'))
-      handleOpenAlert()
+      setOpenSnackbar({
+        show: true,
+        message: t('signup.sucessfulRegistration'),
+        severity: 'success'
+      })
       login(createAccountResultAuth.token)
     }
 
@@ -258,51 +267,38 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
 
 
   useEffect(() => {
-    if (errorcreateAccount) setErrorMessage(t('errors.authError'))
+    if (errorcreateAccount) setOpenSnackbar({
+      show: true,
+      message: t('errors.authError'),
+      severity: 'error'
+    })
 
   }, [errorcreateAccount])
 
   useEffect(() => {
-    if (errorcreateAccountAuth) setErrorMessage(t('errors.authError'))
+    if (errorcreateAccountAuth) setOpenSnackbar({
+      show: true,
+      message: t('errors.authError'),
+      severity: 'error'
+    })
 
   }, [errorcreateAccountAuth])
 
   useEffect(() => {
-    if (errorpreRegisterLifebank) setErrorMessage(t('errors.authError'))
+    if (errorpreRegisterLifebank) setOpenSnackbar({
+      show: true,
+      message: t('errors.authError'),
+      severity: 'error'
+    })
 
   }, [errorpreRegisterLifebank])
 
-  useEffect(()=>{
-    if(open){
+  useEffect(() => {
+    if (open) {
       handleSetField('email', ' ')
       setActiveStep(0)
     }
   }, [open])
-
-  const ErrorMessage = () => {
-    return (
-      <>
-        {errorMessage && (
-          <Alert
-            className={classes.alert}
-            severity="error"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => setErrorMessage(null)}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            {errorMessage}
-          </Alert>
-        )}
-      </>
-    )
-  }
 
   return (
     <>
@@ -386,7 +382,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
                       setField={handleSetField}
                       isEmailValid={isEmailValid}
                     >
-                      <ErrorMessage />
                       <ValidateEmail
                         isValid={isEmailValid}
                         loading={checkEmailLoading}
@@ -444,9 +439,9 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
           </Box>
         </Box>
       </Dialog>
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
-        <Alert onClose={handleOpenAlert} severity="success">
-          {messegaAlert}
+      <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleOpenAlert}>
+        <Alert severity={openSnackbar.severity}>
+          {openSnackbar.message}
         </Alert>
       </Snackbar>
     </>

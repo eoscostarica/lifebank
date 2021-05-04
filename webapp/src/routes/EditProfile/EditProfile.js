@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
+import Snackbar from '@material-ui/core/Snackbar'
 import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -33,7 +34,7 @@ const EditProfilePage = () => {
   const history = useHistory()
   const [, { logout }] = useUser()
   const [currentUser] = useUser()
-  const [showAlert, setShowAlert] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const [isCompleting, setIsCompleting] = useState()
   const [userName, setuserName] = useState()
   const [
@@ -85,7 +86,9 @@ const EditProfilePage = () => {
       })
     }
   }
-
+  const handleCloseSnackBar = () => {
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
   useEffect(() => {
     if (!currentUser) {
       return
@@ -112,7 +115,11 @@ const EditProfilePage = () => {
       })
 
     } else if (!success) {
-      setShowAlert(true)
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.duringSaveProfileData'),
+        severity: 'error'
+      })
     }
   }, [editProfileResult])
 
@@ -137,33 +144,37 @@ const EditProfilePage = () => {
   }, [errorProfile])
 
   useEffect(() => {
-    if (errorRevokeConsent || errorGrantConsent || errorEditResults) setShowAlert(true)
+    if (errorRevokeConsent || errorGrantConsent || errorEditResults) {
+      setOpenSnackbar({
+        show: true,
+        message: t('editProfile.duringSaveProfileData'),
+        severity: 'error'
+      })
+    }
 
   }, [errorRevokeConsent, errorGrantConsent, errorEditResults])
 
 
   return (
     <Box className={classes.wrapper}>
-      <Box className={classes.boxMessage}>
-        {showAlert && (
-          <Alert
-            severity="error"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => setShowAlert(false)}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            <AlertTitle>{t('editProfile.error')}</AlertTitle>
-            {t('editProfile.duringSaveProfileData')}
-          </Alert>
-        )}
-      </Box>
+      <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+        <Alert
+          severity={openSnackbar.severity}
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleCloseSnackBar}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          <AlertTitle>{t('editProfile.error')}</AlertTitle>
+          {openSnackbar.message}
+        </Alert>
+      </Snackbar>
       <Typography variant="h1" className={classes.title}>
         {t('editProfile.editProfile')}
       </Typography>
