@@ -107,8 +107,8 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
 
   const downloadReport = () => {
     const doc = new jsPDF()
-    var pageWidth = doc.internal.pageSize.getWidth()
-    var pageHeight = doc.internal.pageSize.getHeight()
+    const pageWidth = doc.internal.pageSize.getWidth()
+    const pageHeight = doc.internal.pageSize.getHeight()
 
 
     if(currentUser && currentUser.role === 'lifebank') {
@@ -134,7 +134,7 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
       })
     }
 
-    for(var i = 1; i < doc.internal.pages.length; i++) {
+    for(let i = 1; i < doc.internal.pages.length; i++) {
       doc.setPage(i)
       doc.setFontSize(14)
       doc.text(profile? profile.name : '', pageWidth/2, 10, { align: 'center' })
