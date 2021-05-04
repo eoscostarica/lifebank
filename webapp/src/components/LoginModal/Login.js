@@ -19,6 +19,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import Snackbar from '@material-ui/core/Snackbar'
 import FingerprintIcon from '@material-ui/icons/Fingerprint'
 
 import {
@@ -42,7 +43,7 @@ const useStyles = makeStyles(styles)
 const LoginModal = ({ isNavBar, isSideBar }) => {
   const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
@@ -140,12 +141,24 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           password: secret
         }
       })
-    } else setErrorMessage(t('login.somethingHappenedWithAuth'))
+    } else setOpenSnackbar({
+      show: true,
+      message: t('login.somethingHappenedWithAuth'),
+      severity: 'error'
+    })
+  }
+
+  const handleOpenAlert = () => {
+    setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(error.message.replace('GraphQL error: ', ''))
+      setOpenSnackbar({
+        show: true,
+        message: error.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
       checkEmailVerified({
         variables: {
           account: user.account
@@ -238,24 +251,23 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
               {t('login.subtitle')}
             </Typography>
           </Box>
-          {errorMessage && (
+          <Snackbar open={openSnackbar.show} autoHideDuration={6000} onClose={handleOpenAlert}>
             <Alert
-              className={classes.alert}
-              severity="error"
+              severity={openSnackbar.severity}
               action={
                 <IconButton
                   aria-label="close"
                   color="inherit"
                   size="small"
-                  onClick={() => setErrorMessage(null)}
+                  onClick={handleOpenAlert}
                 >
                   <CloseIcon fontSize="inherit" />
                 </IconButton>
               }
             >
-              {errorMessage}
+              {openSnackbar.message}
             </Alert>
-          )}
+          </Snackbar>
           <form autoComplete="off">
             <Box>
               <TextField
