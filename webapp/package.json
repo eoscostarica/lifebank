@@ -25,6 +25,7 @@
     "i18next-browser-languagedetector": "^4.1.1",
     "jwt-decode": "^2.2.0",
     "mapbox-gl": "^1.10.1",
+    "material-ui-phone-number": "^2.2.6",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "mui-datatables": "^3.4.1",

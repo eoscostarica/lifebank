@@ -73,7 +73,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
       setValidEmailFormat(false)
     } else setOpenSnackbar({
       show: true,
-      message: t('credentialsRecovery.passwordNotChangable'),
+      message: t('credentialsRecovery.passwordNotChangeable'),
       severity: 'error'
     })
   }
@@ -93,7 +93,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
       setValidEmailFormat(false)
     } else setOpenSnackbar({
       show: true,
-      message: t('credentialsRecovery.passwordNotChangable'),
+      message: t('credentialsRecovery.passwordNotChangeable'),
       severity: 'error'
     })
   }
@@ -220,8 +220,8 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
               </Alert>
             </Snackbar>
           </form>
-        </Box>
-      </Box>
+        </Box >
+      </Box >
     </>
   )
 }

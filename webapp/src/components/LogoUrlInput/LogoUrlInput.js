@@ -27,7 +27,7 @@ const LogoUrlInput = ({ handleSetField, logo, role }) => {
         id="logo-url"
         name="logo-input"
         label={t('editProfile.logoUrl')}
-        variant="outlined"
+        variant="filled"
         placeholder={t('editProfile.logoUrlPlaceholder')}
         defaultValue={logo}
         fullWidth
