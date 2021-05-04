@@ -48,7 +48,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const [state, setState] = useState(profile.address ? profile.address.split(',')[2] : '')
   const [country, setCountry] = useState(profile.address ? profile.address.split(',')[3] : '')
   const history = useHistory()
-  const [severity] = useState('error')
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [username, setUserName] = useState(userName.replaceAll('-', ' '))
   const [isValid, setIsvalid] = useState(true)
   const [isUnique, setIsUnique] = useState(true)
@@ -88,7 +89,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const isUsernameUnique = async () => {
     addAddress()
     if (!profile.consent) {
-      handleSnackbarClose()
+      setOpenSnackbar({
+        show: true,
+        message: t('signup.noConsentNoEdit'),
+        severity: 'error'
+      })
     } else {
       if (profile && profile.consent) {
         const { data } = await checkUserName({
@@ -176,8 +181,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     history.push('/')
   }
 
-  const handleSnackbarClose = (event, reason) => {
-    if (event !== null) setOpen(!open)
+  const handleSnackbarClose = () => {
+    setOpenSnackbar({ ...openSnackbar, show: false })
   };
 
   const buttonCloseHandler = (
@@ -198,9 +203,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
-        <Alert severity={severity} action={buttonCloseHandler}>
-          {t('signup.noConsentNoEdit')}
+      <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>
+        <Alert severity={openSnackbar.severity} action={buttonCloseHandler}>
+          {openSnackbar.message}
         </Alert>
       </Snackbar>
       <Grid container spacing={3} xs={12}>
