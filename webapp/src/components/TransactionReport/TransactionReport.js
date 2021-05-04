@@ -12,6 +12,8 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
   const [currentUser] = useUser()
   const [headReceive, setHeadReceived] = useState()
   const [bodyReceive, setBodyReceive] = useState()
+  const [bodySent, setBodySent] = useState()
+  
   const [
     loadProfile,
     { error: errroLoadProfile, data: { profile: { profile } = {} } = {}, client }
@@ -25,7 +27,6 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
       t('report.tokens')
     ]
   ]
-  const [bodySent, setBodySent] = useState()
 
   const [
     getReportQuery,
