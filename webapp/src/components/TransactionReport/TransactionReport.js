@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next'
 import { useUser } from '../../context/user.context'
 import { GET_REPORT_QUERY, PROFILE_QUERY } from '../../gql'
 
-const TransactionReport = ({dateFrom, dateTo, saveReport, onReportSaved}) => {
+const TransactionReport = ( {dateFrom, dateTo, saveReport, onReportSaved} ) => {
   const { t } = useTranslation('translations')
-  const [currentUser] = useUser()
-  const [headReceive, setHeadReceived] = useState()
-  const [bodyReceive, setBodyReceive] = useState()
-  const [bodySent, setBodySent] = useState()
+  const [ currentUser ] = useUser()
+  const [ headReceive, setHeadReceived ] = useState()
+  const [ bodyReceive, setBodyReceive ] = useState()
+  const [ bodySent, setBodySent ] = useState()
   
   const [
     loadProfile,
@@ -48,11 +48,12 @@ const TransactionReport = ({dateFrom, dateTo, saveReport, onReportSaved}) => {
     } else {
       if(currentUser && currentUser.role === 'lifebank') formatDataToLifebankReport()
       else if(currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
+      else return
     }
   }, [getReportResult])
 
   const formatDataToLifebankReport = () => {
-    const received = getReportResult.notifications.received.map(function(notification) {
+    const received = getReportResult.notifications.received.map((notification) => {
       return [
         notification.business,
         notification.created_at_date,
@@ -61,7 +62,7 @@ const TransactionReport = ({dateFrom, dateTo, saveReport, onReportSaved}) => {
       ]
     })
 
-    const sent = getReportResult.notifications.sent.map(function(notification) {
+    const sent = getReportResult.notifications.sent.map((notification) => {
       return [
         notification.send_to,
         notification.created_at_date,
@@ -84,7 +85,7 @@ const TransactionReport = ({dateFrom, dateTo, saveReport, onReportSaved}) => {
   }
 
   const formatDataToSponsorReport = () => {
-    const received = getReportResult.notifications.received.map(function(notification) {
+    const received = getReportResult.notifications.received.map((notification) => {
       return [
         notification.payerUser,
         notification.offer ? notification.offer.offer_name : '',
@@ -139,6 +140,7 @@ const TransactionReport = ({dateFrom, dateTo, saveReport, onReportSaved}) => {
         body: bodyReceive,
       })
     }
+    else return
 
     for(let i = 1; i < doc.internal.pages.length; i++) {
       doc.setPage(i)

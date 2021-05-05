@@ -510,7 +510,7 @@ const getReportSponsor = async ({ dateFrom, dateTo }, account) => {
   const notifications = await notificationApi.getMany(where)
 
   const received = notifications
-    ? notifications.map(function (notification) {
+    ? notifications.map((notification) => {
         return {
           payerUser: notification.account_from,
           created_at_date: notification.created_at.split('T')[0],
@@ -538,7 +538,7 @@ const getReportLifebank = async ({ dateFrom, dateTo }, account) => {
   })
 
   const sent = notificationsSent
-    ? notificationsSent.map(function (notification) {
+    ? notificationsSent.map((notification) => {
         return {
           created_at_date: notification.created_at.split('T')[0],
           created_at_time: notification.created_at.split('T')[1].split('.')[0],
@@ -551,7 +551,7 @@ const getReportLifebank = async ({ dateFrom, dateTo }, account) => {
     : []
 
   const received = notificationsReceived
-    ? notificationsReceived.map(function (notification) {
+    ? notificationsReceived.map((notification) => {
         return {
           created_at_date: notification.created_at.split('T')[0],
           created_at_time: notification.created_at.split('T')[1].split('.')[0],
