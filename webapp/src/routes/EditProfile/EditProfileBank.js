@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles , useTheme } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -20,7 +20,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import Grid from '@material-ui/core/Grid'
 import PhoneNumber from 'material-ui-phone-number'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme } from '@material-ui/styles'
+
 
 import { VERIFY_USERNAME } from '../../gql'
 
