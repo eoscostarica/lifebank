@@ -27,6 +27,17 @@ export default (theme) => ({
       color: theme.palette.secondary.onSecondaryMediumEmphasizedText
     }
   },
+  mobile: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    minHeight: 'calc(100vh - 60px)',
+    paddingTop: '20px',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '1%',
+      paddingRight: '1%',
+    },
+  },
   editBtn: {
     marginTop: theme.spacing(4)
   },
