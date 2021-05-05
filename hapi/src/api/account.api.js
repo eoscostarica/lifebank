@@ -481,7 +481,7 @@ const verifyEmail = async ({ code }) => {
   }
 }
 
-const getReport = async (account) => {
+const getReport = async (where, account) => {
   const user = await userApi.getOne({
     _or: [
       { email: { _eq: account } },
@@ -492,15 +492,14 @@ const getReport = async (account) => {
 
   if (!user) throw new Error('No valid account')
 
-  if (user.role === 'sponsor') return await getReportSponsor(user.account)
-  else if (user.role === 'lifebank')
-    return await getReportLifebank(user.account)
+  if (user.role === 'sponsor') return await getReportSponsor(where, user.account)
+  else if (user.role === 'lifebank') return await getReportLifebank(where, user.account)
 }
 
-const getReportSponsor = async (account) => {
-  const notifications = await notificationApi.getMany({
-    account_to: { _eq: account }
-  })
+const getReportSponsor = async ({ dateFrom, dateTo }, account) => {
+  const where = { account_to: { _eq: account } }
+  if(dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  const notifications = await notificationApi.getMany(where)
 
   const received = notifications
     ? notifications.map(function (notification) {
@@ -520,7 +519,9 @@ const getReportSponsor = async (account) => {
   }
 }
 
-const getReportLifebank = async (account) => {
+const getReportLifebank = async ({ dateFrom, dateTo }, account) => {
+  const where = { account_to: { _eq: account } }
+  if(dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
   const notificationsSent = await notificationApi.getMany({
     account_from: { _eq: account }
   })

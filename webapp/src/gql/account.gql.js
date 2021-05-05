@@ -55,8 +55,8 @@ export const LOGIN_MUTATION = gql`
 `
 
 export const GET_REPORT_QUERY = gql`
-  query {
-    get_report {
+  query($dateFrom: String, $dateTo: String) {
+    get_report(dateFrom: $dateFrom, dateTo: $dateTo) {
       notifications
     }
   }

@@ -499,6 +499,8 @@
       "Dec": "December"
     },
     "report": {
+      "from": "from",
+      "to": "to",
       "pdfHeader": "History of transactions",
       "pdfFooter": "Lifebank is an open-source platform that uses blockchain technology to incentivizeblood donations. For more information about Lifebank, go to http://lifebank.io/.",
       "sentTokens": "Sent tokens",

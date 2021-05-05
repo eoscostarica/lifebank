@@ -498,6 +498,8 @@
       "Dec": "Diciembre"
     },
     "report": {
+      "from": "de",
+      "to": "a",
       "pdfHeader": "Historial de transacciones",
       "pdfFooter": "Lifebank es una plataforma de código abierto que usa tecnología blockchain paraincentivar las donaciones de sangre. Para más información sobre Lifebank, visitehttp://lifebank.io/.",
       "sentTokens": "Tokens enviados",

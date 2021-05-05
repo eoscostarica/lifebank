@@ -3,9 +3,10 @@ const { BAD_REQUEST } = require('http-status-codes')
 
 const { accountApi } = require('../../api')
 
-module.exports = async ({ auth: { credentials } }) => {
+module.exports = async ({ auth: { credentials }, payload: { input } }) => {
   try {
-    const response = await accountApi.getReport(credentials.sub)
+    console.log('REPORT')
+    const response = await accountApi.getReport(input, credentials.sub)
 
     return response
   } catch (error) {

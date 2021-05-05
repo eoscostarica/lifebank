@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useUser } from '../../context/user.context'
 import { GET_REPORT_QUERY, PROFILE_QUERY } from '../../gql'
 
-const TransactionReport = ({saveReport, onReportSaved}) => {
+const TransactionReport = ({dateFrom, dateTo, saveReport, onReportSaved}) => {
   const { t } = useTranslation('translations')
   const [currentUser] = useUser()
   const [headReceive, setHeadReceived] = useState()
@@ -39,7 +39,12 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
 
   useEffect(() => {
     if(!getReportResult) {
-      getReportQuery()
+      getReportQuery({
+        variables: {
+          dateFrom: dateFrom,
+          dateTo: dateTo
+        }
+      })
     } else {
       if(currentUser && currentUser.role === 'lifebank') formatDataToLifebankReport()
       else if(currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
@@ -140,7 +145,12 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
       doc.setFontSize(14)
       doc.text(profile? profile.name : '', pageWidth/2, 10, { align: 'center' })
       doc.text(new Date().toISOString().slice(0, 10), pageWidth/2, 16, { align: 'center' })
-      doc.text(t('report.pdfHeader'), pageWidth/2, 22, { align: 'center' })
+      if(dateFrom && dateTo) {
+        doc.text(
+          t('report.pdfHeader').concat(' ', t('report.from'), ' ',  dateFrom, ' ', t('report.to'), ' ',  dateTo),
+          pageWidth/2, 22, { align: 'center' }
+        )
+      } else doc.text(t('report.pdfHeader'), pageWidth/2, 22, { align: 'center' })
       doc.text(t('report.pdfFooter'), pageWidth/2, pageHeight - 20, { align: 'center', maxWidth: pageWidth - 50 })
     }
 
@@ -155,11 +165,15 @@ const TransactionReport = ({saveReport, onReportSaved}) => {
 }
 
 TransactionReport.propTypes = {
+  dateFrom: PropTypes.string,
+  dateTo: PropTypes.string,
   saveReport: PropTypes.bool,
   onReportSaved: PropTypes.func
 }
 
 TransactionReport.defaultProps = {
+  dateFrom: null,
+  dateTo: null,
   saveReport: false
 }
 
