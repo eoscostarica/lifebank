@@ -26,6 +26,11 @@ export default (theme) => ({
       color: theme.palette.secondary.onSecondaryMediumEmphasizedText
     }
   },
+  titleBox: {
+    paddingTop: '10px',
+    display: 'flex',
+    justifyContent: 'center'
+  },
   mobile: {
     display: 'flex',
     flexDirection: 'column',
@@ -122,7 +127,7 @@ export default (theme) => ({
     fontWeight: 'bold',
     width: "100%",
     textAlign: "left",
-    marginBottom: '20px',
+    marginBottom: '15px',
   },
   divider: {
     marginTop: '30px',

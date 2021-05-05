@@ -36,6 +36,7 @@ const {
   LOCATION_TYPES: { LIFE_BANK }
 } = constants
 const CHARACTER_LIMIT = 512
+const SPACING = 2
 
 const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, userName }) => {
   const { t } = useTranslation('translations')
@@ -47,7 +48,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const [address, setAddress] = useState(profile.address ? profile.address.split(',')[0] : '')
   const [city, setCity] = useState(profile.address ? profile.address.split(',')[1] : '')
   const [state, setState] = useState(profile.address ? profile.address.split(',')[2] : '')
-  const [country, setCountry] = useState(profile.address ? profile.address.split(',')[3] : '')
+  const [country, setCountry] = useState(profile.address ? profile.address.split(',')[SPACING] : '')
   const history = useHistory()
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [username, setUserName] = useState(userName.replaceAll('-', ' '))
@@ -215,7 +216,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           {openSnackbar.message}
         </Alert>
       </Snackbar>
-      <Grid container spacing={3} xs={12}>
+      <Grid container spacing={SPACING} xs={12}>
         <Grid container item xs={12} direction="column">
           <Typography className={classes.boldText} variant="h2">
             {t('editProfile.editTitleLifebank')}
@@ -276,7 +277,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.boldText} variant="h4">
             {t('editProfile.contactInformation')}
           </Typography>
-          <Grid container item spacing={3} xs={12}>
+          <Grid container item spacing={SPACING} xs={12}>
             <Grid item xs={4}>
               <TextField
                 id="username"
@@ -329,7 +330,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.text} variant="body1">
             {t('editProfile.addressDescription')}
           </Typography>
-          <Grid container xs={12} spacing={3}>
+          <Grid container xs={12} spacing={SPACING}>
             <Grid container item xs={6}>
               <Grid item xs={12}>
                 <TextField
@@ -425,7 +426,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>
           </Grid>
         </Grid>
-        <Grid container item xs={12} spacing={3}>
+        <Grid container item xs={12} spacing={SPACING}>
           <Grid item xs={6}>
             <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
               <Divider className={classes.divider} />

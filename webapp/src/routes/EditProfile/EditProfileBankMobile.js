@@ -36,6 +36,7 @@ const {
   LOCATION_TYPES: { LIFE_BANK }
 } = constants
 const CHARACTER_LIMIT = 512
+const SPACING = 2
 
 const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, loading, userName }) => {
   const { t } = useTranslation('translations')
@@ -47,7 +48,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
   const [address, setAddress] = useState(profile.address ? profile.address.split(',')[0] : '')
   const [city, setCity] = useState(profile.address ? profile.address.split(',')[1] : '')
   const [state, setState] = useState(profile.address ? profile.address.split(',')[2] : '')
-  const [country, setCountry] = useState(profile.address ? profile.address.split(',')[3] : '')
+  const [country, setCountry] = useState(profile.address ? profile.address.split(',')[SPACING] : '')
   const history = useHistory()
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [username, setUserName] = useState(userName.replaceAll('-', ' '))
@@ -216,8 +217,8 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
         </Alert>
       </Snackbar>
       <Box className={classes.mobile}>
-        <Grid container spacing={3} xs={12}>
-          <Grid item xs={12} direction="column" spacing={3} >
+        <Grid container spacing={SPACING} xs={12}>
+          <Grid item xs={12} direction="column" spacing={SPACING} >
             <Typography className={classes.boldText} variant="h2">
               {t('editProfile.editTitleLifebank')}
             </Typography>
@@ -277,8 +278,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.contactInformation')}
             </Typography>
-          </Grid>
-          <Grid item xs={12}>
             <TextField
               id="username"
               name="username"
@@ -328,8 +327,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             <Typography className={classes.text} variant="body1">
               {t('editProfile.addressDescription')}
             </Typography>
-          </Grid>
-          <Grid item xs={12}>
             <TextField
               id="address"
               style={{
@@ -420,7 +417,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               />
             </Box>
           </Grid>
-          <Grid container item xs={12} spacing={3}>
+          <Grid container item xs={12} spacing={SPACING}>
             <Grid item xs={12}>
               <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
                 <Divider className={classes.divider} />
@@ -455,80 +452,79 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               </Box>
             </Grid>
           </Grid>
-          <Grid container item xs={12} direction="column">
+          <Grid item xs={12} >
+            <Divider className={classes.divider} />
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.imagery')}
             </Typography>
             <Typography className={classes.text} variant="body1">
               {t('editProfile.imageryDescription')}
             </Typography>
-            <Grid container item xs={12} >
-              <Grid item xs={12} >
-                <>
-                  {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
-                    <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
-                  )}
-                </>
-                <TextField
-                  id="image-url"
-                  style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
-                  label={t('offersManagement.imageUrl')}
-                  variant="filled"
-                  placeholder={t('offersManagement.imageUrl')}
-                  fullWidth
-                  inputRef={photoUrlValueRef}
-                  onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
-                  onKeyPress={(event) =>
-                    executeAddImage(event)
-                  }
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          color="secondary"
-                          aria-label="add photo url"
-                          disabled={disablePhotoUrlInput}
-                          onClick={() => {
-                            setUser({
-                              ...user,
-                              photos: [...user.photos, photoUrlValueRef.current.value]
-                            })
-                            photoUrlValueRef.current.value = ''
-                            setDisablePhotoUrlInput(true)
-                          }}
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  className={classes.textField}
-                />
-              </Grid>
-              <Grid item xs={12} >
-                <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
+          </Grid>
+          <Grid item xs={12} >
+            <>
+              {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
+                <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
+              )}
+            </>
+            <TextField
+              id="image-url"
+              style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
+              label={t('offersManagement.imageUrl')}
+              variant="filled"
+              placeholder={t('offersManagement.imageUrl')}
+              fullWidth
+              inputRef={photoUrlValueRef}
+              onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
+              onKeyPress={(event) =>
+                executeAddImage(event)
+              }
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      color="secondary"
+                      aria-label="add photo url"
+                      disabled={disablePhotoUrlInput}
+                      onClick={() => {
+                        setUser({
+                          ...user,
+                          photos: [...user.photos, photoUrlValueRef.current.value]
+                        })
+                        photoUrlValueRef.current.value = ''
+                        setDisablePhotoUrlInput(true)
+                      }}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              InputLabelProps={{
+                shrink: true
+              }}
+              className={classes.textField}
+            />
+          </Grid>
+          <Grid item xs={12} >
+            <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
+              {user.photos.length > 0 && (
+                <Box className={classes.carouselContainer}>
                   {user.photos.length > 0 && (
-                    <Box className={classes.carouselContainer}>
-                      {user.photos.length > 0 && (
-                        <Carousel
-                          deleteItem={(url) => {
-                            setUser({
-                              ...user,
-                              photos: user.photos.filter((p) => p !== url)
-                            })
-                          }}
-                          activeDeletion
-                          images={user.photos}
-                        />
-                      )}
-                    </Box>
+                    <Carousel
+                      deleteItem={(url) => {
+                        setUser({
+                          ...user,
+                          photos: user.photos.filter((p) => p !== url)
+                        })
+                      }}
+                      activeDeletion
+                      images={user.photos}
+                    />
                   )}
-                </div>
-              </Grid>
-            </Grid>
+                </Box>
+              )}
+            </div>
           </Grid>
           <Grid item xs={12} direction="column">
             <Box className={classes.btnWrapper}>
