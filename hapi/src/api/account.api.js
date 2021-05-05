@@ -492,13 +492,15 @@ const getReport = async (where, account) => {
 
   if (!user) throw new Error('No valid account')
 
-  if (user.role === 'sponsor') return await getReportSponsor(where, user.account)
-  else if (user.role === 'lifebank') return await getReportLifebank(where, user.account)
+  if (user.role === 'sponsor')
+    return await getReportSponsor(where, user.account)
+  else if (user.role === 'lifebank')
+    return await getReportLifebank(where, user.account)
 }
 
 const getReportSponsor = async ({ dateFrom, dateTo }, account) => {
   const where = { account_to: { _eq: account } }
-  if(dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
   const notifications = await notificationApi.getMany(where)
 
   const received = notifications
@@ -521,7 +523,7 @@ const getReportSponsor = async ({ dateFrom, dateTo }, account) => {
 
 const getReportLifebank = async ({ dateFrom, dateTo }, account) => {
   const where = { account_to: { _eq: account } }
-  if(dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
   const notificationsSent = await notificationApi.getMany({
     account_from: { _eq: account }
   })
