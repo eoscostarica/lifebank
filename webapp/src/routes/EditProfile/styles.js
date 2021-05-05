@@ -8,8 +8,7 @@ export default (theme) => ({
     minHeight: 'calc(100vh - 60px)',
     paddingTop: '60px',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '5%',
-      paddingRight: '5%',
+      padding: "0 5%"
     },
   },
   title: {
@@ -34,8 +33,7 @@ export default (theme) => ({
     minHeight: 'calc(100vh - 60px)',
     paddingTop: '20px',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '1%',
-      paddingRight: '1%',
+      padding: "0 1%"
     },
   },
   editBtn: {

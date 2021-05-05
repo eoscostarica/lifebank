@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
-import { makeStyles , useTheme } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -59,7 +59,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: false
   })
-  const [open, setOpen] = useState(false)
   const [values, setValues] = useState({
     about: ""
   });
@@ -112,6 +111,14 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         }
         setFirstRun(false)
       }
+    }
+  }
+
+  const helperTextvalidation = () => {
+    if (!isValid) return t('editProfile.noValidUrl')
+    else {
+      if (!isUnique) return t('editProfile.noUniqueUrl')
+      else return ''
     }
   }
 
@@ -292,13 +299,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   InputProps={{
                     startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
                   }}
-                  helperText={
-                    !isValid
-                      ? t('editProfile.noValidUrl')
-                      : !isUnique
-                        ? t('editProfile.noUniqueUrl')
-                        : ''
-                  }
+                  helperText={helperTextvalidation}
                   onChange={(event) => validUserName(event.target.value)}
                   error={!isValid || !isUnique}
                 />
@@ -549,7 +550,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => isUsernameUnique()}
+                onClick={isUsernameUnique}
                 className={classes.saveBtn}
               >
                 {t('common.save')}
@@ -648,13 +649,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                 InputProps={{
                   startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
                 }}
-                helperText={
-                  !isValid
-                    ? t('editProfile.noValidUrl')
-                    : !isUnique
-                      ? t('editProfile.noUniqueUrl')
-                      : ''
-                }
+                helperText={helperTextvalidation}
                 onChange={(event) => validUserName(event.target.value)}
                 error={!isValid || !isUnique}
               />
@@ -895,7 +890,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => isUsernameUnique()}
+                  onClick={isUsernameUnique}
                   className={classes.saveBtn}
                 >
                   {t('common.save')}
