@@ -391,7 +391,7 @@
       "currentPassword": "Contraseña actual",
       "errorPassword": "La contraseña actual no coinside con su correo",
       "newPassword": "Nueva contraseña",
-      "instructionCredentialsRecovery": "Use su correo electrónico registrado en Lifebank para recuperar su contraseña. Le enviaremos un correo para que cree una nueva.",
+      "instructionCredentialsRecovery": "Use su correo electrónico registrado en Lifebank para recuperar su contraseña. Le enviaremos un correo para que cree una nueva contraseña.",
       "checkYourEmail": "Revisa tu correo",
       "recovery": "Enviar",
       "passwordNotChangable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
