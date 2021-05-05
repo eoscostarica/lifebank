@@ -124,6 +124,7 @@ create_community() {
         "maximum_supply":"1000000 LIFE"
     }' -p lifebankcode@active
 }
+
 register_lifebank() {
     echo 'Register LifeBank'
     cleos -u $EOS_API_URL push action lifebankcode addlifebank \
@@ -210,61 +211,42 @@ clear_tables() {
     cleos -u $EOS_API_URL push action lifebankcoin clear '' -p lifebankcoin@active
 }
 
-deploy_lifebank_contracts_to_lacchain() {
-    echo 'Deploy Lifebankcode'
-    mkdir -p ./stdout/lifebankcode
-    TEMP_DIR=./stdout/lifebankcode
+consent_lacchain() {
+  echo 'Consent to Contracts'
+  mkdir -p ./stdout/consent
+  TEMP_DIR=./stdout/consent
 
-    echo '1. set lifebankcode smart contract code'
-    cleos -u $EOS_API_URL set contract lifebankcode -j -d -s ../lifebankcode/ >$TEMP_DIR/tx2.json
+  cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
+  cleos -u https://writer.eosio.cr push action -j -d -s consent2life consent '{"user": "lifebankcoin", "contract": "lifebankcode", "hash":""}' -p lifebankcoin@active >$TEMP_DIR/tx2.json
+  jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
+  jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
+  cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
+}
 
-    echo '2. writer auth'
+create_community_lacchain() {
+    echo 'Create Lifebank Community'
+    mkdir -p ./stdout/comm
+    TEMP_DIR=./stdout/comm
+
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-
-    echo '3. merge actions'
+    cleos -u https://writer.eosio.cr push action -j -d -s lifebankcode createcmm \
+    '{
+        "community_name":"LifeBank Costa Rica",
+        "community_asset":"0 LIFE",
+        "description":"LifeBank development Instance",
+        "logo":"https://raw.githubusercontent.com/eoscostarica/lifebank/master/docs/logos/2-OverWhite-lifebank-logo-v1-may25-2020-01.svg",
+        "maximum_supply":"1000000 LIFE"
+    }' -p lifebankcode@active >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
-
-    echo '4. merge transaction'
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-
-    echo '5. sign transaction'
     cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
-create_lifebank_acount_to_lacchain() {
-    WORK_DIR=/opt/application
-    mkdir -p ./stdout/account
-    TEMP_DIR=./stdout/account
-
-    cleos -u $EOS_API_URL push action -j -d -s eosio setram \
-        '{
-        "entity":"latamlink",
-        "account":"eosmechanics",
-        "ram_bytes": 200000
-    }' -p latamlink@writer >$TEMP_DIR/tx1.json
-
-#     cleos -u $EOS_API_URL push action -j eosio newaccount \
-#     '{
-#       "creator" : "costarica",
-#       "name" : "dongxudypk1m",
-#       "active" : {
-#           "threshold":2,
-#           "keys":[ {"weight":1,"key":"EOS75UWSDJ7XSsneG1YTuZuZKe3CQVucwnrLnyRPB2SDUAKuuqyRL"}],
-#           "accounts":[ {"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
-#       },
-#       "owner" : {
-#           "threshold":2,
-#           "keys":[ {"weight":1,"key":"EOS75UWSDJ7XSsneG1YTuZuZKe3CQVucwnrLnyRPB2SDUAKuuqyRL"}],
-#           "accounts":[{"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
-#       },
-#   }' -p costarica@writer >$TEMP_DIR/tx1.json
-}
 
 run_lifebank() {
     echo 'Installing LifeBank ...'
+    create_community_lacchain
     # create_lifebank_wallet
-    create_lifebank_acount_to_lacchain
-    # deploy_lifebank_contracts_to_lacchain
     # create_lifebank_accounts
     # assign_resources
     # deploy_lifebank_contracts
