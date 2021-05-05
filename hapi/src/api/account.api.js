@@ -496,6 +496,12 @@ const getReport = async (where, account) => {
     return await getReportSponsor(where, user.account)
   else if (user.role === 'lifebank')
     return await getReportLifebank(where, user.account)
+  else return {
+    notifications: {
+      sent: [],
+      received: []
+    }
+  }
 }
 
 const getReportSponsor = async ({ dateFrom, dateTo }, account) => {
