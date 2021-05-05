@@ -10,6 +10,8 @@ import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTranslation } from 'react-i18next'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useTheme } from '@material-ui/styles'
 
 import {
   PROFILE_QUERY,
@@ -25,6 +27,7 @@ const useStyles = makeStyles(styles)
 
 const EditProfileDonor = lazy(() => import('./EditProfileDonor'));
 const EditProfileBank = lazy(() => import('./EditProfileBank'));
+const EditProfileBankMobile = lazy(() => import('./EditProfileBankMobile'));
 const EditProfileSponsor = lazy(() => import('./EditProfileSponsor'));
 
 const EditProfilePage = () => {
@@ -37,6 +40,10 @@ const EditProfilePage = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [isCompleting, setIsCompleting] = useState()
   const [userName, setuserName] = useState()
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: false
+  })
   const [
     loadProfile,
     { error: errorProfile, loading, data: { profile: { profile } = {} } = {} }
@@ -199,9 +206,20 @@ const EditProfilePage = () => {
           />
         </Suspense>
       )}
-      {!loading && currentUser && profile?.role === 'lifebank' && (
+      {!loading && currentUser && isDesktop && profile?.role === 'lifebank' && (
         <Suspense fallback={<CircularProgress />}>
           <EditProfileBank
+            profile={profile}
+            userName={userName}
+            isCompleting={isCompleting}
+            onSubmit={handleUpdateUser}
+            loading={editLoading}
+          />
+        </Suspense>
+      )}
+      {!loading && currentUser && !isDesktop && profile?.role === 'lifebank' && (
+        <Suspense fallback={<CircularProgress />}>
+          <EditProfileBankMobile
             profile={profile}
             userName={userName}
             isCompleting={isCompleting}
