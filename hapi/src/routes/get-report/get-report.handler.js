@@ -5,7 +5,6 @@ const { accountApi } = require('../../api')
 
 module.exports = async ({ auth: { credentials }, payload: { input } }) => {
   try {
-    console.log('REPORT')
     const response = await accountApi.getReport(input, credentials.sub)
 
     return response
