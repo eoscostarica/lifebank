@@ -373,7 +373,8 @@
       "saveChanges": "Guardar cambios",
       "currentLanguage": "es-CR",
       "near": "Cerca de",
-      "offers": "Ofertas"
+      "offers": "Ofertas",
+      "registeredEmail": "Correo Registrado"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",
@@ -383,17 +384,17 @@
       "imDone": "Listo"
     },
     "credentialsRecovery": {
-      "credentialsRecovery": "Recuperación de credenciales",
+      "passwordRecovery": "Recuperación de Contraseña",
       "emailError": "El correo ingresado no esta asociado a ninguna cuenta",
       "changePasswordInstructions": "Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva",
       "changePassword": "Cambiar contraseña",
       "currentPassword": "Contraseña actual",
       "errorPassword": "La contraseña actual no coinside con su correo",
       "newPassword": "Nueva contraseña",
-      "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
+      "instructionCredentialsRecovery": "Use su correo electrónico registrado en Lifebank para recuperar su contraseña. Le enviaremos un correo para que cree una nueva contraseña.",
       "checkYourEmail": "Revisa tu correo",
-      "recovery": "Recuperar",
-      "passwordNotChangeable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
+      "recovery": "Enviar",
+      "passwordNotChangable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
     },
     "emailVerification": {
       "emailVerified": "Tu correo ha sido verificado",
