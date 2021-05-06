@@ -169,7 +169,7 @@ const GenericOfferFormComponent = ({
     }
   ] = useMutation(UPDATE_OFFER_MUTATION)
 
-  const [alignment, setAlignment] = useState('')
+  const [alignment, setAlignment] = useState('LocalOfferIcon')
 
   const handleSubmit = () => {
     const {
