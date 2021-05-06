@@ -143,6 +143,15 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     userToSubmit.social_media_links = JSON.stringify(user.social_media_links)
     onSubmit(userToSubmit)
   }
+  const handlePhotos = () => {
+    setUser({
+      ...user,
+      photos: [...user.photos, photoUrlValueRef.current.value]
+    })
+    photoUrlValueRef.current.value = ''
+    setDisablePhotoUrlInput(true)
+  }
+
 
   const showOrHide = (value) => {
     return isCompleting && value ? 'none' : ''
@@ -438,23 +447,24 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             </Grid>
           </Grid>
         </Grid>
+        <Divider className={classes.divider} />
         <Grid item xs={12}>
+          <Typography className={classes.boldText} variant="h4">
+            {t('common.schedule')}
+          </Typography>
           <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
+            className={classes.scheduleBoxWrp}
             style={{ display: showOrHide(profile.schedule) }}
-            width="100%"
           >
-            <Divider className={classes.divider} />
-            <Typography className={classes.boldText} variant="h4">
-              {t('common.schedule')}</Typography>
-            <Schedule
-              handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
-              data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
-              showSchedule
-            />
+            <Box className={classes.scheduleBox}>
+              <Schedule
+                handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
+                data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
+                showSchedule
+              />
+            </Box>
           </Box>
+
         </Grid>
         <Grid container item xs={12} spacing={3} direction="row">
           <Grid item xs={12}>
@@ -542,11 +552,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           <Grid container item xs={12} >
             <Grid item xs={6} >
               <Box className={classes.rightBox}>
-                <>
-                  {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
-                    <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
-                  )}
-                </>
+                <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
+                  <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
+                </Box>
                 <TextField
                   id="photo-url"
                   label={t('editProfile.photoUrl')}
@@ -567,14 +575,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                           disabled={disablePhotoUrlInput}
                           color="secondary"
                           aria-label="add photo url"
-                          onClick={() => {
-                            setUser({
-                              ...user,
-                              photos: [...user.photos, photoUrlValueRef.current.value]
-                            })
-                            photoUrlValueRef.current.value = ''
-                            setDisablePhotoUrlInput(true)
-                          }}
+                          onClick={handlePhotos}
                         >
                           <AddIcon />
                         </IconButton>
@@ -590,24 +591,22 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             </Grid>
             <Grid item xs={6} >
               <Box className={classes.rightBox}>
-                <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
-                  {user.photos && (
-                    <Box className={classes.carouselContainer}>
-                      {user.photos.length > 0 && (
-                        <Carousel
-                          deleteItem={(url) => {
-                            setUser({
-                              ...user,
-                              photos: user.photos.filter((p) => p !== url)
-                            })
-                          }}
-                          activeDeletion
-                          images={user.photos}
-                        />
-                      )}
-                    </Box>
-                  )}
-                </div>
+                {user.photos && (
+                  <Box className={classes.carouselContainer}>
+                    {user.photos.length > 0 && (
+                      <Carousel
+                        deleteItem={(url) => {
+                          setUser({
+                            ...user,
+                            photos: user.photos.filter((p) => p !== url)
+                          })
+                        }}
+                        activeDeletion
+                        images={user.photos}
+                      />
+                    )}
+                  </Box>
+                )}
               </Box>
             </Grid>
           </Grid>
@@ -619,7 +618,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 className={classes.saveBtn}
                 variant="contained"
                 color="secondary"
-                onClick={() => prepareDataForSubmitting()}
+                onClick={prepareDataForSubmitting}
               >
                 {t('common.save')}
               </Button>

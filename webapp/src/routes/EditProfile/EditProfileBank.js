@@ -544,7 +544,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => isUsernameUnique()}
+                onClick={isUsernameUnique}
                 className={classes.saveBtn}
               >
                 {t('common.save')}

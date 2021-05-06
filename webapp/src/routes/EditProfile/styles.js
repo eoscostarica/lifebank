@@ -131,6 +131,20 @@ export default (theme) => ({
     justifyContent: 'center',
     justifySelf: 'center'
   },
+  scheduleBoxWrp: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: theme.spacing(2, 0)
+  },
+  scheduleBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '234px'
+  },
   slider: {
     padding: theme.spacing(0, 2)
   },
