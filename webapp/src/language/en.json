@@ -244,7 +244,6 @@
       "tokenExpiration": "The session has expired"
     },
     "editProfile": {
-      "editProfile": "Edit Profile",
       "error": "Error",
       "duringSaveProfileData": "While saving profile information",
       "goToProfile": "Go to profile!",
@@ -274,17 +273,20 @@
       "twitterUsernamePlaceholder": "Your Twitter username here",
       "noValidUrl": "The link must not have special characters",
       "noUniqueUrl": "This link is associated with another account",
-      "editTitleLifebank": "Lifebank Account Profile",
-      "information": "Information found on this profile can be viewed from your Lifebank page. Make sure to include detailed information so donors can find you easily and contact you to proceed with the donation...",
+      "editTitleLifebank": "Edit Lifebank Page",
+      "editTitleSponsor": "Edit Sponsor Page",
+      "information": "The information on this page can be viewed on your info page. Please, include detailed and accurate information so donors can easily find you.",
       "officialName": "Official Name",
       "contactInformation": "Contact Information",
       "addressInformation": "Address Information",
-      "addressDescription": "Describe your Lifebank address and use the map to select the right location so the donors can get to you easily.",
+      "addressDescription": "Describe your address and use the map to select the right location so the donors can get to you easily.",
       "imagery": "Images",
-      "imageryDescription": "Type a link to your images so your Lifebank page is shown more atractive to your donors. You can upload images to IMGUR.com Logo or Avatar image must be a square image, no bigger than 500px or heavier than 250kb. Banner Image should be a horizontal image, no bigger than 1200px or heavier than 1mb.",
+      "imageryDescription": "Include images that are appealing to donors! Paste a link to an image you want to include in your profile. You can upload images using imgur.com for free. Your logo or avatar must be square-shaped and no larger than 500 px or bigger than 250 KB. The banner image should be horizontal, no larger than 1200 px wide or bigger than 1 MB",
       "city": "City",
       "stateProvince": "State/Province",
-      "country": "Country"
+      "country": "Country",
+      "typeOfSponsor": "Type of Sponsor",
+      "socialMedia": "Social Media"
     },
     "donations": {
       "donations": "Donations",

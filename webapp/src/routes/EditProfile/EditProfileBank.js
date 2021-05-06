@@ -540,15 +540,15 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         </Grid>
         <Grid item xs={12} direction="column">
           <Box className={classes.btnWrapper}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => isUsernameUnique()}
-              className={classes.saveBtn}
-            >
-              {t('common.save')}
-            </Button>
             <Link to="/profile" className={classes.routerLink}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => isUsernameUnique()}
+                className={classes.saveBtn}
+              >
+                {t('common.save')}
+              </Button>
               <Button
                 variant="outlined"
                 color="primary"
