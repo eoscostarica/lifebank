@@ -132,7 +132,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Typography>
           <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
             <EditIcon className={classes.iconOption} />
-            <Link to="/terms-of-useaa">
+            <Link to="/">
               <Typography variant="body1" className={classes.labelOption}>
                 {t('navigationDrawer.editPage')}
               </Typography>
