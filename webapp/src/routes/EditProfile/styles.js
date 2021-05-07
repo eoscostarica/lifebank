@@ -9,7 +9,20 @@ export default (theme) => ({
     paddingTop: '60px',
     [theme.breakpoints.up('md')]: {
       paddingLeft: '5%',
-      paddingRight: '5%',
+      paddingRight: '5%'
+    },
+  },
+  wrapperMobile: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '994px',
+    padding: theme.spacing(6, 1, 0, 1),
+    alignItems: 'center',
+    minHeight: 'calc(100vh - 60px)',
+    paddingTop: '10px',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '5%',
+      paddingRight: '5%'
     },
   },
   title: {
@@ -26,6 +39,21 @@ export default (theme) => ({
     '& p': {
       color: theme.palette.secondary.onSecondaryMediumEmphasizedText
     }
+  },
+  titleBox: {
+    paddingTop: '10px',
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  mobile: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    minHeight: 'calc(100vh - 60px)',
+    paddingTop: '20px',
+    [theme.breakpoints.up('md')]: {
+      padding: '0 1%'
+    },
   },
   editBtn: {
     marginTop: theme.spacing(4)
@@ -113,7 +141,7 @@ export default (theme) => ({
     fontWeight: 'bold',
     width: "100%",
     textAlign: "left",
-    marginBottom: '20px',
+    marginBottom: '15px',
   },
   divider: {
     marginTop: '30px',

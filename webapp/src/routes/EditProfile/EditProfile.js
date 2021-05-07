@@ -3,13 +3,15 @@ import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import Snackbar from '@material-ui/core/Snackbar'
 import { useLocation, useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTranslation } from 'react-i18next'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+
 
 import {
   PROFILE_QUERY,
@@ -25,6 +27,7 @@ const useStyles = makeStyles(styles)
 
 const EditProfileDonor = lazy(() => import('./EditProfileDonor'));
 const EditProfileBank = lazy(() => import('./EditProfileBank'));
+const EditProfileBankMobile = lazy(() => import('./EditProfileBankMobile'));
 const EditProfileSponsor = lazy(() => import('./EditProfileSponsor'));
 
 const EditProfilePage = () => {
@@ -37,6 +40,10 @@ const EditProfilePage = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [isCompleting, setIsCompleting] = useState()
   const [userName, setuserName] = useState()
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: false
+  })
   const [
     loadProfile,
     { error: errorProfile, loading, data: { profile: { profile } = {} } = {} }
@@ -156,7 +163,60 @@ const EditProfilePage = () => {
 
 
   return (
-    <Box className={classes.wrapper}>
+    <>
+      {isDesktop && (
+        <Box className={classes.wrapper}>
+          {loading && <CircularProgress />}
+          {!loading && currentUser && profile?.role === 'donor' && (
+            <Suspense fallback={<CircularProgress />}>
+              <EditProfileDonor
+                profile={profile}
+                onConsentChange={handleConsentChange}
+                loading={grantConsentLoading || revokeConsentLoading || editLoading}
+                onSubmit={handleUpdateUser}
+              />
+            </Suspense>
+          )}
+          {!loading && currentUser && profile?.role === 'sponsor' && (
+            <Suspense fallback={<CircularProgress />}>
+              <EditProfileSponsor
+                profile={profile}
+                isCompleting={isCompleting}
+                onSubmit={handleUpdateUser}
+                loading={editLoading}
+              />
+            </Suspense>
+          )}
+          {!loading && currentUser && profile?.role === 'lifebank' && (
+            <Suspense fallback={<CircularProgress />}>
+              <EditProfileBank
+                profile={profile}
+                userName={userName}
+                isCompleting={isCompleting}
+                onSubmit={handleUpdateUser}
+                loading={editLoading}
+              />
+            </Suspense>
+          )}
+        </Box >
+      )}
+
+      {!isDesktop && (
+        <Box className={classes.wrapperMobile}>
+          {loading && <CircularProgress />}
+          {!loading && currentUser && profile?.role === 'lifebank' && (
+            <Suspense fallback={<CircularProgress />}>
+              <EditProfileBankMobile
+                profile={profile}
+                userName={userName}
+                isCompleting={isCompleting}
+                onSubmit={handleUpdateUser}
+                loading={editLoading}
+              />
+            </Suspense>
+          )}
+        </Box >
+      )}
       <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
         <Alert
           severity={openSnackbar.severity}
@@ -175,42 +235,7 @@ const EditProfilePage = () => {
           {openSnackbar.message}
         </Alert>
       </Snackbar>
-      <Typography variant="h1" className={classes.title}>
-        {t('editProfile.editProfile')}
-      </Typography>
-      {loading && <CircularProgress />}
-      {!loading && currentUser && profile?.role === 'donor' && (
-        <Suspense fallback={<CircularProgress />}>
-          <EditProfileDonor
-            profile={profile}
-            onConsentChange={handleConsentChange}
-            loading={grantConsentLoading || revokeConsentLoading || editLoading}
-            onSubmit={handleUpdateUser}
-          />
-        </Suspense>
-      )}
-      {!loading && currentUser && profile?.role === 'sponsor' && (
-        <Suspense fallback={<CircularProgress />}>
-          <EditProfileSponsor
-            profile={profile}
-            isCompleting={isCompleting}
-            onSubmit={handleUpdateUser}
-            loading={editLoading}
-          />
-        </Suspense>
-      )}
-      {!loading && currentUser && profile?.role === 'lifebank' && (
-        <Suspense fallback={<CircularProgress />}>
-          <EditProfileBank
-            profile={profile}
-            userName={userName}
-            isCompleting={isCompleting}
-            onSubmit={handleUpdateUser}
-            loading={editLoading}
-          />
-        </Suspense>
-      )}
-    </Box>
+    </>
   )
 }
 

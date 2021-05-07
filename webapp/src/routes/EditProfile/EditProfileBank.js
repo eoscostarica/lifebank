@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -20,6 +20,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import Grid from '@material-ui/core/Grid'
 import PhoneNumber from 'material-ui-phone-number'
 
+
 import { VERIFY_USERNAME } from '../../gql'
 
 import Schedule from '../../components/Schedule'
@@ -35,6 +36,7 @@ const {
   LOCATION_TYPES: { LIFE_BANK }
 } = constants
 const CHARACTER_LIMIT = 512
+const SPACING = 2
 
 const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, userName }) => {
   const { t } = useTranslation('translations')
@@ -46,15 +48,13 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   const [address, setAddress] = useState(profile.address ? profile.address.split(',')[0] : '')
   const [city, setCity] = useState(profile.address ? profile.address.split(',')[1] : '')
   const [state, setState] = useState(profile.address ? profile.address.split(',')[2] : '')
-  const [country, setCountry] = useState(profile.address ? profile.address.split(',')[3] : '')
+  const [country, setCountry] = useState(profile.address ? profile.address.split(',')[SPACING] : '')
   const history = useHistory()
   const [openSnackbar, setOpenSnackbar] = useState(false)
-  const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [username, setUserName] = useState(userName.replaceAll('-', ' '))
   const [isValid, setIsvalid] = useState(true)
   const [isUnique, setIsUnique] = useState(true)
   const [firstRun, setFirstRun] = useState(true)
-  const [open, setOpen] = useState(false)
   const [values, setValues] = useState({
     about: ""
   });
@@ -107,6 +107,14 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         }
         setFirstRun(false)
       }
+    }
+  }
+
+  const helperTextvalidation = () => {
+    if (!isValid) return t('editProfile.noValidUrl')
+    else {
+      if (!isUnique) return t('editProfile.noUniqueUrl')
+      else return ''
     }
   }
 
@@ -208,7 +216,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           {openSnackbar.message}
         </Alert>
       </Snackbar>
-      <Grid container spacing={3} xs={12}>
+      <Grid container spacing={SPACING} xs={12}>
         <Grid container item xs={12} direction="column">
           <Typography className={classes.boldText} variant="h2">
             {t('editProfile.editTitleLifebank')}
@@ -269,7 +277,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.boldText} variant="h4">
             {t('editProfile.contactInformation')}
           </Typography>
-          <Grid container item spacing={3} xs={12}>
+          <Grid container item spacing={SPACING} xs={12}>
             <Grid item xs={4}>
               <TextField
                 id="username"
@@ -286,13 +294,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                 InputProps={{
                   startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
                 }}
-                helperText={
-                  !isValid
-                    ? t('editProfile.noValidUrl')
-                    : !isUnique
-                      ? t('editProfile.noUniqueUrl')
-                      : ''
-                }
+                helperText={helperTextvalidation}
                 onChange={(event) => validUserName(event.target.value)}
                 error={!isValid || !isUnique}
               />
@@ -328,7 +330,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.text} variant="body1">
             {t('editProfile.addressDescription')}
           </Typography>
-          <Grid container xs={12} spacing={3}>
+          <Grid container xs={12} spacing={SPACING}>
             <Grid container item xs={6}>
               <Grid item xs={12}>
                 <TextField
@@ -424,7 +426,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>
           </Grid>
         </Grid>
-        <Grid container item xs={12} spacing={3}>
+        <Grid container item xs={12} spacing={SPACING}>
           <Grid item xs={6}>
             <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
               <Divider className={classes.divider} />
@@ -543,7 +545,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => isUsernameUnique()}
+              onClick={isUsernameUnique}
               className={classes.saveBtn}
             >
               {t('common.save')}
