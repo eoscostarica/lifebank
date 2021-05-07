@@ -1,17 +1,19 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import LogoutIcon from '@material-ui/icons/ExitToApp'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import EditIcon from '@material-ui/icons/Edit';
 import InfoIcon from '@material-ui/icons/Info'
 import HomeIcon from '@material-ui/icons/Home'
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import Divider from '@material-ui/core/Divider'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import { useTranslation } from 'react-i18next'
-
+import TransactionReport from '../components/TransactionReport'
 import LoginModal from '../components/LoginModal'
 import Signup from '../components/Signup/Signup'
 
@@ -59,6 +61,11 @@ const useStyles = makeStyles((theme) => ({
 const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
+  const [downloadReport, setDownloadReport] = useState(false)
+
+  const onReportClick = () => {
+    setDownloadReport(!downloadReport)
+  }
 
   return (
     <Box className={classes.wrapper}>
@@ -117,6 +124,30 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Box>
         </>
       )}
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
+        <>
+          <Divider />
+          <Typography variant="body1" className={classes.infoLabel}>
+            {t('navigationDrawer.tools')}
+          </Typography>
+          <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
+            <EditIcon className={classes.iconOption} />
+            <Link to="/terms-of-useaa">
+              <Typography variant="body1" className={classes.labelOption}>
+                {t('navigationDrawer.editPage')}
+              </Typography>
+            </Link>
+          </Box>
+          <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
+            <CloudDownloadIcon className={classes.iconOption} />
+            <Link onClick={onReportClick}>
+              <Typography variant="body1" className={classes.labelOption}>
+                {t('navigationDrawer.downloadReport')}
+              </Typography>
+            </Link>
+          </Box>
+        </>
+      }
       <Divider />
       <Typography variant="body1" className={classes.infoLabel}>
         {t('navigationDrawer.information')}
@@ -145,6 +176,10 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Typography>
         </Link>
       </Box>
+
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
+        <TransactionReport saveReport={downloadReport} onReportSaved={onReportClick}/>
+      }
     </Box>
   )
 }
