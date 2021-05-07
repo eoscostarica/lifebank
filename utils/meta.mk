@@ -2,6 +2,7 @@
 
 VERSION=$(shell git rev-parse --short HEAD)
 IMAGE_NAME=""
+IMAGE_NAME_HAPI=lifebank-hapi
 DOCKER_REGISTRY=""
 
 MAKE_ENV += DOCKER_REGISTRY VERSION IMAGE_NAME

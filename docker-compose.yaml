@@ -25,6 +25,10 @@ services:
       - "9090:9090"
     volumes:
       - ./hapi:/usr/app
+      - type: bind
+        source: ./hapi
+        target: /app
+    working_dir: /app
     environment:
       SERVER_PORT: "${SERVER_PORT}"
       SERVER_ADDRESS: "${SERVER_ADDRESS}"
