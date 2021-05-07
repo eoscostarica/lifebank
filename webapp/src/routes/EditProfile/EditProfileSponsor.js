@@ -348,7 +348,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             {t('editProfile.addressDescription')}
           </Typography>
           <Grid container xs={12} spacing={2}>
-            <Grid container item xs={6} spacing={2}>
+            <Grid container item xs={6} spacing={2} justify="space-between">
               <Grid item xs={12}>
                 <TextField
                   id="address"
