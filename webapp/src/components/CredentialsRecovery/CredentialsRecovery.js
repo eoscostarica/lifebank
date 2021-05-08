@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { makeStyles, useTheme } from '@material-ui/styles'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -10,9 +9,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
 import Alert from '@material-ui/lab/Alert'
 import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
-import Dialog from '@material-ui/core/Dialog'
 import Snackbar from '@material-ui/core/Snackbar'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { useTranslation } from 'react-i18next'
 
 import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
@@ -20,16 +18,14 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 
-const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
+const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
   const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [open, setOpen] = useState(true)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
-  const [openSnackbar, setOpenSnackbar] = useState(false)
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
-    defaultMatches: true
-  })
   const [
     credentialsRecovery,
     { loading, error, data: { credentials_recovery: response } = {} }
@@ -38,7 +34,6 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
     changePassword,
     { loading: loadingChangePassword, error: errorChangePassword }
   ] = useMutation(CHANGE_PASSWORD)
-  const [open, setOpen] = useState(false)
 
   const [
     getAccountSignupMethod,
@@ -47,7 +42,9 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   const handleOpen = () => {
     setOpen(!open)
+    onCloseCredentialsRecovery()
   }
+
   const handleCloseSnackBar = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
@@ -167,91 +164,70 @@ const CredentialsRecovery = ({ overrideBoxClass, overrideLabelClass }) => {
 
   return (
     <>
-      <Box className={classes.recoveryBox}>
-        <Button color="secondary" className={classes.recoveryButton} onClick={handleOpen}>
-          {t('signup.forgetPassword')}
-        </Button>
-      </Box>
-      <Dialog
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleOpen}
-        fullScreen={!isDesktop}
-        maxWidth='xs'
-        closeAfterTransition
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Box className={classes.dialog}>
-          <Box className={classes.closeIcon}>
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={handleOpen}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          </Box>
-          <Box className={classes.bodyWrapper}>
-            <form autoComplete="off">
-              <Box className={classes.textFieldWrapper}>
-                <Typography variant="h3" className={classes.title}>
-                  {t('credentialsRecovery.credentialsRecovery')}
-                </Typography>
-                <Typography >
+      <Box className={classes.dialog}>
+        <Box className={classes.goBack}>
+          <IconButton aria-label="go-back" onClick={handleOpen}>
+            <ArrowBackIcon color="primary" />
+          </IconButton>
+        </Box>
+        <Box className={classes.bodyWrapper}>
+          <form autoComplete="off">
+            <Box className={classes.textFieldWrapper}>
+              <Typography variant="h3" className={classes.title}>
+                {t('credentialsRecovery.passwordRecovery')}
+              </Typography>
+              <Box className={classes.textBox}>
+                <Typography className={classes.text} variant="body1">
                   {t('credentialsRecovery.instructionCredentialsRecovery')}
                 </Typography>
-                <TextField
-                  id="email"
-                  label={t('common.email')}
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  value={user.email || ''}
-                  onChange={(event) =>
-                    handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))
-                  }
-                  onKeyPress={(event) =>
-                    executeCredentialsRecovery(event)
-                  }
-                  className={classes.marginTop}
-                />
-                <Button
-                  disabled={!validEmailFormat || loading}
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleSubmit}
-                  className={classes.button}
-                >
-                  {t('credentialsRecovery.recovery')}
-                </Button>
-                <Box className={classes.recoveryBox}>
-                  {loading && <CircularProgress />}
-                </Box>
               </Box>
-              <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                <Alert
-                  className={classes.alert}
-                  severity={openSnackbar.severity}
-                >
-                  {openSnackbar.message}
-                </Alert>
-              </Snackbar>
-            </form>
-          </Box>
-        </Box>
-      </Dialog>
+            </Box>
+            <Box className={classes.textFieldWrapper}>
+              <TextField
+                id="email"
+                label={t('common.registeredEmail')}
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={(event) =>
+                  handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))
+                }
+                onKeyPress={(event) =>
+                  executeCredentialsRecovery(event)
+                }
+                className={classes.inputStyle}
+              />
+              <Button
+                disabled={!validEmailFormat || loading}
+                variant="contained"
+                color="secondary"
+                onClick={handleSubmit}
+                className={classes.button}
+              >
+                {t('credentialsRecovery.recovery')}
+              </Button>
+            </Box>
+            <Box className={classes.loadingBox}>
+              {loading && <CircularProgress />}
+            </Box>
+            <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+              <Alert
+                className={classes.alert}
+                severity={openSnackbar.severity}
+              >
+                {openSnackbar.message}
+              </Alert>
+            </Snackbar>
+          </form>
+        </Box >
+      </Box >
     </>
   )
 }
 
 CredentialsRecovery.propTypes = {
-  overrideBoxClass: PropTypes.any,
-  overrideLabelClass: PropTypes.any
+  onCloseCredentialsRecovery: PropTypes.func
 }
 
 export default CredentialsRecovery
