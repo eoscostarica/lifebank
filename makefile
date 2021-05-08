@@ -89,8 +89,20 @@ push-docker-images:
 	@for dir in $(SUBDIRS); do \
 		$(MAKE) push-image -C $$dir; \
 	done
-
+	
 docker_images:
 docker_images: 
 	make build-docker-images
 	make push-docker-images
+
+K8S_BUILD_DIR ?= ./build_k8s
+K8S_FILES := $(shell find ./kubernetes -name '*.yaml' | sed 's:./kubernetes/::g')
+
+build-kubernetes: ##@devops Generate proper k8s files based on the templates
+build-kubernetes: ./kubernetes
+	@echo "Build kubernetes files..."
+	@rm -Rf $(K8S_BUILD_DIR) && mkdir -p $(K8S_BUILD_DIR)
+	@for file in $(K8S_FILES); do \
+		mkdir -p `dirname "$(K8S_BUILD_DIR)/$$file"`; \
+		$(SHELL_EXPORT) envsubst <./kubernetes/$$file >$(K8S_BUILD_DIR)/$$file; \
+	done
