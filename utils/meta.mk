@@ -1,6 +1,6 @@
 -include .env
 
-VERSION=$(shell git rev-parse --short HEAD)
+VERSION ?= $(shell git rev-parse --short HEAD)
 CURRENT_BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
 
 IMAGE_NAME_WEBAPP=lifebank-webapp

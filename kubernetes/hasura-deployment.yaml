@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: lifebank-hasura
+  name: lifebank-hasura
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lifebank-hasura
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lifebank-hasura
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - args:
+            - graphql-engine
+            - serve
+            - --enable-console
+          envFrom:
+            - configMapRef:
+                name: lifebank-hasura-config
+          image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HASURA}:${VERSION}
+          imagePullPolicy: "IfNotPresent"
+          name: "lifebank-hasura"
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
