@@ -126,6 +126,7 @@ export const GET_SPONSOR_OFFERS_QUERY = gql`
       end_date
       offer_name
       cost_in_tokens
+      icon
       active
     }
   }
@@ -174,6 +175,7 @@ export const GET_ALL_OFFERS_QUERY = gql`
       end_date
       description
       cost_in_tokens
+      icon
       active
       user {
         account
@@ -203,6 +205,7 @@ export const GET_OFFER_QUERY = gql`
       end_date
       description
       cost_in_tokens
+      icon
       active
       user {
         account
@@ -232,6 +235,7 @@ export const GET_OFFER_BY_SPONSOR_QUERY = gql`
       end_date
       description
       cost_in_tokens
+      icon
       active
       user {
         account

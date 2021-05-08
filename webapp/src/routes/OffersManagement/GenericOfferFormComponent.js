@@ -146,6 +146,7 @@ const GenericOfferFormComponent = ({
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const imgUrlValueRef = useRef(undefined)
   const [offer, setOffer] = useState()
+  const [alignment, setAlignment] = useState('')
   const [updatedOffer, setUpdatedOffer] = useState()
   const [openSnackbar, setOpenSnackbar] = useState({
     show: false,
@@ -169,7 +170,9 @@ const GenericOfferFormComponent = ({
     }
   ] = useMutation(UPDATE_OFFER_MUTATION)
 
-  const [alignment, setAlignment] = useState('LocalOfferIcon')
+
+
+
 
   const handleSubmit = () => {
     const {
@@ -189,6 +192,8 @@ const GenericOfferFormComponent = ({
 
     const images = JSON.stringify(offer.images)
 
+
+
     if (!isEditing)
       createOffer({
         variables: {
@@ -204,7 +209,7 @@ const GenericOfferFormComponent = ({
           sponsor_id,
           active: true,
           offer_name: offer_name,
-          icon: icon
+          icon: icon || 'LocalOfferIcon'
         }
       })
     else {
@@ -244,7 +249,7 @@ const GenericOfferFormComponent = ({
   }
 
   const handleAlignment = (event, newAlignment) => {
-    setOffer({ ...offer, icon: event.target.value })
+    setOffer({ ...offer, icon: newAlignment })
     setAlignment(newAlignment)
   }
 
@@ -379,7 +384,7 @@ const GenericOfferFormComponent = ({
                 </Select>
               </FormControl>
               <ToggleButtonGroup
-                id="icon"
+                id="offer-icon"
                 value={offer.icon || alignment}
                 exclusive
                 onChange={handleAlignment}
