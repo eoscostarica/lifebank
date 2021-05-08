@@ -32,6 +32,7 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 const CHARACTER_LIMIT = 512
+const SPACING = 2
 
 const {
   LOCATION_TYPES: { SPONSOR, PENDING_SPONSOR },
@@ -210,7 +211,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Grid container spacing={3} xs={12}>
+      <Grid container spacing={SPACING} xs={12}>
         <Grid container item xs={12} direction="column">
           <Typography className={classes.boldText} variant="h2">
             {t('editProfile.editTitleSponsor')}
@@ -300,7 +301,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           <Typography className={classes.boldText} variant="h4">
             {t('editProfile.contactInformation')}
           </Typography>
-          <Grid container item spacing={3} xs={12}>
+          <Grid container item spacing={SPACING} xs={12}>
             <Grid item xs={4}>
               <TextField
                 id="website"
@@ -466,7 +467,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           </Box>
 
         </Grid>
-        <Grid container item xs={12} spacing={3} direction="row">
+        <Grid container item xs={12} spacing={SPACING} direction="row">
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.socialMedia')}</Typography>
