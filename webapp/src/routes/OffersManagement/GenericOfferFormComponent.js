@@ -170,10 +170,6 @@ const GenericOfferFormComponent = ({
     }
   ] = useMutation(UPDATE_OFFER_MUTATION)
 
-
-
-
-
   const handleSubmit = () => {
     const {
       offer_type,
@@ -191,8 +187,6 @@ const GenericOfferFormComponent = ({
     } = offer
 
     const images = JSON.stringify(offer.images)
-
-
 
     if (!isEditing)
       createOffer({
@@ -383,27 +377,6 @@ const GenericOfferFormComponent = ({
                   <MenuItem value="benefit">{t('categories.benefit')}</MenuItem>
                 </Select>
               </FormControl>
-              <ToggleButtonGroup
-                id="offer-icon"
-                value={offer.icon || alignment}
-                exclusive
-                onChange={handleAlignment}
-                aria-label="text alignment"
-                className={classes.toggleIcons}
-              >
-                <ToggleButton value="LocalOfferIcon" className={classes.offerIcon}><LocalOfferIcon /></ToggleButton>
-                <ToggleButton value="CardGiftcardIcon" className={classes.offerIcon} ><CardGiftcardIcon /></ToggleButton>
-                <ToggleButton value="StarsIcon" className={classes.offerIcon}><StarsIcon /></ToggleButton>
-                <ToggleButton value="WhatshotIcon" className={classes.offerIcon}><WhatshotIcon /></ToggleButton>
-                <ToggleButton value="AccessTimeIcon" className={classes.offerIcon}><AccessTimeIcon /></ToggleButton>
-                <ToggleButton value="StorefrontIcon" className={classes.offerIcon}><StorefrontIcon /></ToggleButton>
-                <ToggleButton value="TagFacesIcon" className={classes.offerIcon}><TagFacesIcon /></ToggleButton>
-                <ToggleButton value="ShoppingBasketIcon" className={classes.offerIcon}><ShoppingBasketIcon /></ToggleButton>
-                <ToggleButton value="RestaurantIcon" className={classes.offerIcon}><RestaurantIcon /></ToggleButton>
-                <ToggleButton value="FilterVintageIcon" className={classes.offerIcon}><FilterVintageIcon /></ToggleButton>
-                <ToggleButton value="OutdoorGrillIcon" className={classes.offerIcon}><OutdoorGrillIcon /></ToggleButton>
-                <ToggleButton value="OfflineBoltIcon" className={classes.offerIcon}><OfflineBoltIcon /></ToggleButton>
-              </ToggleButtonGroup>
               <TextField
                 id="offer-description"
                 label={t('offersManagement.offerDescription')}
@@ -438,6 +411,27 @@ const GenericOfferFormComponent = ({
                 }
                 className={classes.textField}
               />
+              <ToggleButtonGroup
+                id="offer-icon"
+                value={offer.icon || alignment}
+                exclusive
+                onChange={handleAlignment}
+                aria-label="text alignment"
+                className={classes.toggleIcons}
+              >
+                <ToggleButton value="LocalOfferIcon" className={classes.offerIcon}><LocalOfferIcon /></ToggleButton>
+                <ToggleButton value="CardGiftcardIcon" className={classes.offerIcon} ><CardGiftcardIcon /></ToggleButton>
+                <ToggleButton value="StarsIcon" className={classes.offerIcon}><StarsIcon /></ToggleButton>
+                <ToggleButton value="WhatshotIcon" className={classes.offerIcon}><WhatshotIcon /></ToggleButton>
+                <ToggleButton value="AccessTimeIcon" className={classes.offerIcon}><AccessTimeIcon /></ToggleButton>
+                <ToggleButton value="StorefrontIcon" className={classes.offerIcon}><StorefrontIcon /></ToggleButton>
+                <ToggleButton value="TagFacesIcon" className={classes.offerIcon}><TagFacesIcon /></ToggleButton>
+                <ToggleButton value="ShoppingBasketIcon" className={classes.offerIcon}><ShoppingBasketIcon /></ToggleButton>
+                <ToggleButton value="RestaurantIcon" className={classes.offerIcon}><RestaurantIcon /></ToggleButton>
+                <ToggleButton value="FilterVintageIcon" className={classes.offerIcon}><FilterVintageIcon /></ToggleButton>
+                <ToggleButton value="OutdoorGrillIcon" className={classes.offerIcon}><OutdoorGrillIcon /></ToggleButton>
+                <ToggleButton value="OfflineBoltIcon" className={classes.offerIcon}><OfflineBoltIcon /></ToggleButton>
+              </ToggleButtonGroup>
               <FormControlLabel
                 control={
                   <Checkbox
