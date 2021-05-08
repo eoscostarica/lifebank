@@ -26,7 +26,7 @@
       }
     },
     "cardsSection": {
-      "availableOffers": "Ofertas Aprobadas",
+      "availableOffers": "Ofertas",
       "moreInfo": "Más Información",
       "approvedOffers": "Lista de Ofertas"
     },
@@ -60,6 +60,7 @@
       "signupWithGoogle": "Registrarse con Google",
       "createAccount": "Crear cuenta",
       "name": "Nombre",
+      "type": "Tipo",
       "nameSponsor": "Nombre del negocio",
       "nameLifebank": "Nombre del Lifebank",
       "address": "Dirección",
@@ -96,7 +97,10 @@
       "loginWithFacebook": "Iniciar sesión con Facebook",
       "loginWithGoogle": "Iniciar sesión con Google",
       "logout": "Cerrar sesión",
-      "notAccount": "¿No tienes cuenta aún? Registrarse aquí."
+      "notAccount": "¿No tienes cuenta aún? Registrarse aquí.",
+      "verify": "Verifique",
+      "textVerify": "Te enviamos un correo de confirmación. Si no lo puedes encontrar, revisa tu carpeta de spam. Si todavía no lo encuentras, puedes reenviarlo.",
+      "resend": "Reenviar"
     },
     "map": {
       "findLifebank": "Encontrar Bancos de Sangre o Comercios Afiliados cerca de ti",
@@ -168,6 +172,24 @@
       "errorMessage": "Se produjo un error y no se pudo completar su solicitud",
       "takeMeHome": "Llévame al inicio"
     },
+    "sponsorTypes": {
+      "autoRepair": "Reparación de Automóviles",
+      "bank": "Servicios Bancarios o Financieros",
+      "beautySalon": "Salón de Belleza",
+      "dryCleaning": "Lavandería",
+      "entertaiment": "Negocio del Entretenimiento",
+      "gym": "Gym o Centro Fitness",
+      "hospitality": "Hospital",
+      "medical": "Servicios Médicos",
+      "pharmacies": "Farmacias",
+      "restaurant": "Restaurante o Tienda de Alimentos",
+      "retail": "Tienda Minorista",
+      "shopping": "Centro Comercial",
+      "gas": "Transporte o Gasolinera",
+      "travel": "Agencia de Viajes",
+      "veterinarian": "Veterinaria",
+      "other": "Otro"
+    },
     "categories": {
       "all": "Todos",
       "discount": "Descuentos",
@@ -210,7 +232,6 @@
       "consent": "Consentimiento",
       "communityAsset": "Activo de Comunidad",
       "hasImmunityTest": "Tiene test de inmunidad",
-      "benefitDescription": "Descripción del beneficio",
       "location": "Localización",
       "logo": "Logo",
       "urlSite": "URL del sitio",
@@ -248,8 +269,6 @@
       "logoUrl": "Dirección de imagen",
       "logoUrlPlaceholder": "La dirección de la imagen aquí",
       "sponsorNamePlaceholder": "El nombre de su comercio afiliado aquí",
-      "covidImpact": "Impacto de la pandemia provocada por el Covid-19",
-      "covidImpactPlaceholder": "Escribe el impacto que has tenido de la pandemia aquí",
       "photoUrl": "Dirección de foto",
       "photoUrlPlaceholder": "La dirección de la imagen aquí",
       "facebookProfileUrl": "Dirección del perfil de Facebook",
@@ -259,7 +278,18 @@
       "twitterUsername": "Usuario de Twitter",
       "twitterUsernamePlaceholder": "El usuario de Twitter aquí",
       "noValidUrl": "La direccion no debe tener caracteres especiales",
-      "noUniqueUrl": "Esta direccion esta asociada a otra cuenta"
+      "noUniqueUrl": "Esta dirección esta asociada a otra cuenta",
+      "editTitleLifebank": "Perfil de la cuenta de Lifebank",
+      "information": "La información que se encuentra en este perfil se puede ver en su página de Lifebank. Asegúrese de incluir información detallada para que los donantes puedan encontrarlo fácilmente y contactarte para proceder con la donación...",
+      "officialName": "Nombre Oficial",
+      "contactInformation": "Información de Contacto",
+      "addressInformation": "Datos de Domicilio",
+      "addressDescription": "Describe tu dirección de Lifebank y usa el mapa para seleccionar la ubicación correcta para que los donantes puedan llegar a ti fácilmente.",
+      "imagery": "Imágenes",
+      "imageryDescription": "Escriba un enlace a sus imágenes para que su página de Lifebank se muestre más atractiva para sus donantes. Puede subir imágenes al logotipo de IMGUR.com o la imagen de avatar debe ser una imagen cuadrada, no mayor de 500px o más pesada de 250kb. La imagen del banner debe ser una imagen horizontal, no mayor a 1200px ni más pesada que 1mb.",
+      "city": "Ciudad",
+      "stateProvince": "Estado/Provincia",
+      "country": "País"
     },
     "donations": {
       "donations": "Donaciones",
@@ -343,7 +373,8 @@
       "saveChanges": "Guardar cambios",
       "currentLanguage": "es-CR",
       "near": "Cerca de",
-      "offers": "Ofertas"
+      "offers": "Ofertas",
+      "registeredEmail": "Correo Registrado"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",
@@ -353,16 +384,16 @@
       "imDone": "Listo"
     },
     "credentialsRecovery": {
-      "credentialsRecovery": "Recuperación de credenciales",
+      "passwordRecovery": "Recuperación de Contraseña",
       "emailError": "El correo ingresado no esta asociado a ninguna cuenta",
       "changePasswordInstructions": "Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva",
       "changePassword": "Cambiar contraseña",
       "currentPassword": "Contraseña actual",
       "errorPassword": "La contraseña actual no coinside con su correo",
       "newPassword": "Nueva contraseña",
-      "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
+      "instructionCredentialsRecovery": "Use su correo electrónico registrado en Lifebank para recuperar su contraseña. Le enviaremos un correo para que cree una nueva contraseña.",
       "checkYourEmail": "Revisa tu correo",
-      "recovery": "Recuperar",
+      "recovery": "Enviar",
       "passwordNotChangable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
     },
     "emailVerification": {
@@ -466,6 +497,22 @@
       "Oct": "Octubre",
       "Nov": "Noviembre",
       "Dec": "Diciembre"
+    },
+    "report": {
+      "from": "de",
+      "to": "a",
+      "pdfHeader": "Historial de transacciones",
+      "pdfFooter": "Lifebank es una plataforma de código abierto que usa tecnología blockchain para incentivar las donaciones de sangre. Para más información sobre Lifebank, visitehttp://lifebank.io/.",
+      "sentTokens": "Tokens enviados",
+      "receivedTokens": "Tokens recibidos",
+      "business": "Patrocinador",
+      "user": "Usuario",
+      "donor": "Donador",
+      "date": "Fecha",
+      "time": "Hora",
+      "tokens": "Tokens",
+      "offer": "Oferta",
+      "reportDownloadName": "Reporte"
     }
   }
 }

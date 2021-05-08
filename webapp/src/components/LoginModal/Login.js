@@ -20,16 +20,21 @@ import Checkbox from '@material-ui/core/Checkbox'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import FingerprintIcon from '@material-ui/icons/Fingerprint'
+import Snackbar from '@material-ui/core/Snackbar'
 
 import {
   LOGIN_MUTATION,
   VALIDATE_EMAIL,
   GET_SECRET_BY_ACCOUNT,
+  SEND_EMAIL_MUTATION,
+  CHECK_EMAIL_VERIFIED
 } from '../../gql'
 import { useUser } from '../../context/user.context'
 import LoginWithFacebook from './LoginWithFacebook'
 import LoginWithGoogle from './LoginWithGoogle'
 import Signup from '../Signup/Signup'
+import ResendComponent from '../ResendComponent'
+
 import CredentialsRecovery from '../CredentialsRecovery/CredentialsRecovery'
 import styles from './styles'
 
@@ -38,19 +43,65 @@ const useStyles = makeStyles(styles)
 const LoginModal = ({ isNavBar, isSideBar }) => {
   const { t } = useTranslation('translations')
   const [user, setUser] = useState({})
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const classes = useStyles()
+  const [activeStep, setActiveStep] = useState(0)
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentUser, { login }] = useUser()
+
+
   const [
     loginMutation,
     { loading, error, data: { login: loginResult } = {} }
   ] = useMutation(LOGIN_MUTATION, { fetchPolicy: 'no-cache' })
 
+  const [
+    checkEmailVerified,
+    {
+      error: errorCheckEmailVerified,
+      loading: checkEmailVerifiedLoading,
+      data: { check_email_verified: checkEmailVerifiedResult } = {}
+    }
+  ] = useMutation(CHECK_EMAIL_VERIFIED)
+
+  const [
+    sendEmail,
+    {
+      error: errorSendEmail,
+      loading: SendEmailLoading,
+      data: { send_email: sendEmailResult } = {}
+    }
+  ] = useMutation(SEND_EMAIL_MUTATION)
+
+  const handleSendEmail = () => {
+    handleOpen()
+    sendEmail({
+      variables: {
+        account: user.account,
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        }
+      }
+    })
+  }
+
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
+
+  const [openVerify, setopenVerify] = useState(false)
+
+  const handlerSetOpenVerify = () => {
+    setopenVerify(!openVerify)
+  }
+
+  const verify = () => {
+    setopenVerify(true)
+  }
 
   const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
     variables: {
@@ -68,6 +119,19 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 
   const handleOpen = () => {
     setOpen(!open)
+    setActiveStep(0)
+  }
+
+  const handleOpenCredentialsRecovery = () => {
+    setActiveStep(2)
+  }
+
+  const handleOpenSignUp = () => {
+    setActiveStep(1)
+  }
+
+  const handleOnCloseComponent = () => {
+    setActiveStep(0)
   }
 
   const handleSetField = (field, value) => {
@@ -91,12 +155,29 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           password: secret
         }
       })
-    } else setErrorMessage(t('login.somethingHappenedWithAuth'))
+    } else setOpenSnackbar({
+      show: true,
+      message: t('login.somethingHappenedWithAuth'),
+      severity: 'error'
+    })
+  }
+
+  const handleOpenAlert = () => {
+    setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(error.message.replace('GraphQL error: ', ''))
+      setOpenSnackbar({
+        show: true,
+        message: error.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
+      checkEmailVerified({
+        variables: {
+          account: user.account
+        }
+      })
     }
   }, [error])
 
@@ -106,6 +187,15 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       setOpen(false)
     }
   }, [loginResult])
+
+  useEffect(() => {
+    if (checkEmailVerifiedResult && !checkEmailVerifiedResult.verified) {
+      verify()
+    }
+  }, [checkEmailVerifiedResult])
+
+  useEffect(() => {
+  }, [sendEmailResult])
 
   useEffect(() => {
     if (currentUser) {
@@ -156,116 +246,133 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
           timeout: 500
         }}
       >
-        <Box className={classes.dialog}>
-          <Box className={classes.closeIcon}>
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={handleOpen}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          </Box>
-          <Box>
-            <Typography className={classes.title}>
-              {t('login.letsStarted')}
-            </Typography>
-            <Typography className={classes.subTitle}>
-              {t('login.subtitle')}
-            </Typography>
-          </Box>
-          {errorMessage && (
-            <Alert
-              className={classes.alert}
-              severity="error"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => setErrorMessage(null)}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
-            >
-              {errorMessage}
-            </Alert>
-          )}
-          <form autoComplete="off">
-            <Box>
-              <TextField
-                id="account"
-                label={t('common.email')}
-                variant="outlined"
-                className={classes.inputStyle}
-                onChange={(event) =>
-                  handleSetField('account', event.target.value.toLowerCase().replace(/\s/g, ''))
-                }
-                onKeyPress={(event) =>
-                  executeLogin(event)
-                }
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <AccountCircle />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <TextField
-                id="secret"
-                label={t('signup.password')}
-                type="password"
-                variant="outlined"
-                className={classes.inputStyle}
-                onChange={(event) =>
-                  handleSetField('secret', event.target.value)
-                }
-                onKeyPress={(event) =>
-                  executeLogin(event)
-                }
-              />
-            </Box>
-            <FormControlLabel
-              className={classes.formCheckBox}
-              control={
-                <Checkbox
-                  name="checkLogin"
-                />
-              }
-              label={t('login.loggedIn')}
-            />
-            <Box className={classes.centerBox}>
-              <Button
-                id="buttonLogin"
-                className={classes.btnLogin}
-                disabled={!user.account || !user.secret || loading}
-                variant="contained"
-                color="secondary"
-                onClick={handleLogin}
+        {activeStep === 0 && (
+          <Box className={classes.dialog}>
+            <Box className={classes.closeIcon}>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={handleOpen}
               >
-                {t('login.login')}
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            </Box>
+            <Box>
+              <Typography className={classes.title}>
+                {t('login.letsStarted')}
+              </Typography>
+              <Typography className={classes.subTitle}>
+                {t('login.subtitle')}
+              </Typography>
+            </Box>
+            <Snackbar open={openSnackbar.show} autoHideDuration={6000} onClose={handleOpenAlert}>
+              <Alert
+                severity={openSnackbar.severity}
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={handleOpenAlert}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                {openSnackbar.message}
+              </Alert>
+            </Snackbar>
+            <form autoComplete="off">
+              <Box>
+                <TextField
+                  id="account"
+                  label={t('common.email')}
+                  variant="outlined"
+                  className={classes.inputStyle}
+                  onChange={(event) =>
+                    handleSetField('account', event.target.value.toLowerCase().replace(/\s/g, ''))
+                  }
+                  onKeyPress={(event) =>
+                    executeLogin(event)
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  id="secret"
+                  label={t('signup.password')}
+                  type="password"
+                  variant="outlined"
+                  className={classes.inputStyle}
+                  onChange={(event) =>
+                    handleSetField('secret', event.target.value)
+                  }
+                  onKeyPress={(event) =>
+                    executeLogin(event)
+                  }
+                />
+              </Box>
+              <FormControlLabel
+                className={classes.formCheckBox}
+                control={
+                  <Checkbox
+                    name="checkLogin"
+                  />
+                }
+                label={t('login.loggedIn')}
+              />
+              <Box className={classes.centerBox}>
+                <Button
+                  id="buttonLogin"
+                  className={classes.btnLogin}
+                  disabled={!user.account || !user.secret || loading}
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleLogin}
+                >
+                  {t('login.login')}
+                </Button>
+              </Box>
+              <Box className={classes.centerBox}>
+                {loading && <CircularProgress />}
+              </Box>
+              <Box className={classes.centerBox}>
+                <LoginWithFacebook onSubmit={handleLoginWithAuth} />
+              </Box>
+              <Box className={classes.centerBox}>
+                <LoginWithGoogle onSubmit={handleLoginWithAuth} />
+              </Box>
+            </form>
+            <Box className={classes.registerBox}>
+              <Button color="secondary" className={classes.registerTextModal} onClick={handleOpenSignUp}>
+                {t('login.notAccount')}
               </Button>
             </Box>
-            <Box className={classes.centerBox}>
-              {loading && <CircularProgress />}
+            <ResendComponent
+              open={openVerify}
+              handlerOpen={handlerSetOpenVerify}
+              handlerSendEmail={handleSendEmail}
+            />
+            <Box className={classes.credentialsBox}>
+              <Button color="secondary" className={classes.recoveryButton} onClick={handleOpenCredentialsRecovery}>
+                {t('signup.forgetPassword')}
+              </Button>
             </Box>
-            <Box className={classes.centerBox}>
-              <LoginWithFacebook onSubmit={handleLoginWithAuth} />
-            </Box>
-            <Box className={classes.centerBox}>
-              <LoginWithGoogle onSubmit={handleLoginWithAuth} />
-            </Box>
-          </form>
-          <Box className={classes.registerBox}>
-            <Signup isModal />
           </Box>
-          <Box className={classes.credentialsBox}>
-            <CredentialsRecovery />
-          </Box>
-        </Box>
+        )}
+        {activeStep === 1 && (
+          <Signup isModal onCloseSignUp={handleOnCloseComponent} />
+        )}
+        {activeStep === 2 && (
+          <CredentialsRecovery onCloseCredentialsRecovery={handleOnCloseComponent} />
+        )}
+
       </Dialog>
     </>
   )

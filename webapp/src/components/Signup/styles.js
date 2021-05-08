@@ -89,21 +89,6 @@ export default (theme) => ({
     borderRadius: ' 2px',
     border: 'solid 2px #ffffff'
   },
-  registerBoxModal: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  registerTextModal: {
-    fontSize: '12px',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    fontStyle: 'normal',
-    lineHeight: 1.33,
-    letterSpacing: '0.4px',
-    color: '#000000',
-  },
   labelOption: {
     color: `${theme.palette.primary.main} !important`,
     marginLeft: theme.spacing(3),

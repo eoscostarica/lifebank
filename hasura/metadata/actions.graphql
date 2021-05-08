@@ -9,6 +9,13 @@ type Mutation {
 
 
 type Mutation {
+  check_email_verified (
+    account: String!
+  ): check_email_verified_output
+}
+
+
+type Mutation {
   check_username (
     role: String!
     username: String!
@@ -93,6 +100,14 @@ type Query {
 
 
 type Query {
+  get_report (
+    dateFrom: String
+    dateTo: String
+  ): get_report_output
+}
+
+
+type Query {
   get_valid_lifebanks : [ValidLifebank]!
 }
 
@@ -121,7 +136,25 @@ type Query {
 
 
 type Mutation {
+  redeem_offer (
+    to: String!
+    memo: String!
+    quantity: Int
+    offer: jsonb!
+  ): redeem_offer_output
+}
+
+
+type Mutation {
   revoke_consent : revoke_consent_output
+}
+
+
+type Mutation {
+  send_email (
+    account: String!
+    emailContent: jsonb!
+  ): send_email_output
 }
 
 
@@ -230,9 +263,7 @@ type ValidSponsor {
   social_media_links : String!
   photos : String!
   website : String!
-  covidImpact : String!
   businessType : String!
-  benefitDescription : String!
   userName : String!
   role : String!
 }
@@ -278,5 +309,25 @@ type create_account_auth_output {
   account : String!
   transaction_id : String!
   token : String!
+}
+
+type get_notifications_output {
+  notifications : jsonb!
+}
+
+type redeem_offer_output {
+  transaction_id : String!
+}
+
+type send_email_output {
+  success : Boolean!
+}
+
+type get_report_output {
+  notifications : jsonb!
+}
+
+type check_email_verified_output {
+  verified : Boolean!
 }
 

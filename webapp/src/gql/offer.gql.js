@@ -237,3 +237,10 @@ export const GET_OFFER_BY_SPONSOR_QUERY = gql`
     }
   }
 `
+export const REDEEM_OFFER_MUTATION = gql`
+  mutation redeem_offer($to: String!, $memo: String!, $quantity: Int, $offer: jsonb!) {
+    redeem_offer(to: $to, memo: $memo, quantity: $quantity, offer: $offer) {
+      transaction_id
+    }
+  }
+`

@@ -17,7 +17,6 @@ const locationApi = require('./location.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
-const verifyEmailHandler = require('../routes/verify-email/verify-email.handler')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
@@ -314,9 +313,7 @@ const getValidSponsors = async () => {
         social_media_links: sponsorsAccounts[index].info.social_media_links,
         photos: sponsorsAccounts[index].info.photos,
         website: sponsorsAccounts[index].info.website,
-        covidImpact: sponsorsAccounts[index].info.covid_impact,
         businessType: sponsorsAccounts[index].info.business_type,
-        benefitDescription: sponsorsAccounts[index].info.benefit_description,
         userName: sponsorsAccounts[index].user.username,
         role: sponsorsAccounts[index].user.role
       })
@@ -484,6 +481,97 @@ const verifyEmail = async ({ code }) => {
   }
 }
 
+const getReport = async (where, account) => {
+  const user = await userApi.getOne({
+    _or: [
+      { email: { _eq: account } },
+      { username: { _eq: account } },
+      { account: { _eq: account } }
+    ]
+  })
+
+  if (!user) throw new Error('No valid account')
+
+  if (user.role === 'sponsor')
+    return await getReportSponsor(where, user.account)
+  else if (user.role === 'lifebank')
+    return await getReportLifebank(where, user.account)
+  else
+    return {
+      notifications: {
+        sent: [],
+        received: []
+      }
+    }
+}
+
+const getReportSponsor = async ({ dateFrom, dateTo }, account) => {
+  const where = { account_to: { _eq: account } }
+  if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  const notifications = await notificationApi.getMany(where)
+
+  const received = notifications
+    ? notifications.map((notification) => {
+        return {
+          payerUser: notification.account_from,
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          offer: notification.payload.offer
+        }
+      })
+    : []
+
+  return {
+    notifications: {
+      received: received
+    }
+  }
+}
+
+const getReportLifebank = async ({ dateFrom, dateTo }, account) => {
+  const where = { account_to: { _eq: account } }
+  if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  const notificationsSent = await notificationApi.getMany({
+    account_from: { _eq: account }
+  })
+  const notificationsReceived = await notificationApi.getMany({
+    account_to: { _eq: account }
+  })
+
+  const sent = notificationsSent
+    ? notificationsSent.map((notification) => {
+        return {
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          tokens:
+            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+          send_to: notification.account_to
+        }
+      })
+    : []
+
+  const received = notificationsReceived
+    ? notificationsReceived.map((notification) => {
+        return {
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          tokens:
+            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+          business: notification.account_from
+        }
+      })
+    : []
+
+  return {
+    notifications: {
+      sent: sent,
+      received: received
+    }
+  }
+}
+
 const login = async ({ account, password }) => {
   const bcrypt = require('bcryptjs')
   const user = await userApi.getOne({
@@ -529,7 +617,7 @@ const revokeConsent = async (account) => {
   return consentTransaction
 }
 
-const transfer = async (from, details) => {
+const transfer = async (from, details, notification) => {
   const currentBalance = await lifebankcoinUtils.getbalance(details.to)
   const password = await vaultApi.getPassword(from)
   const user = await userApi.getOne({
@@ -569,17 +657,26 @@ const transfer = async (from, details) => {
 
   const newBalance = await lifebankcoinUtils.getbalance(details.to)
   await historyApi.insert(transaction)
-  await notificationApi.insert({
-    account: details.to,
-    title: 'New tokens',
-    description: `From ${from} ${details.memo}`,
-    type: 'new_tokens',
-    payload: {
-      currentBalance,
-      newBalance,
-      transaction: transaction.transaction_id
-    }
-  })
+
+  if (notification) {
+    notification.payload.currentBalance = currentBalance
+    notification.payload.newBalance = newBalance
+    notification.payload.transaction = transaction.transaction_id
+    await notificationApi.insert(notification)
+  } else {
+    await notificationApi.insert({
+      account_from: from,
+      account_to: details.to,
+      title: 'New tokens',
+      description: `From ${from} ${details.memo}`,
+      type: 'new_tokens',
+      payload: {
+        currentBalance,
+        newBalance,
+        transaction: transaction.transaction_id
+      }
+    })
+  }
 
   if (user.role === 'donor') {
     const tempDetail = {}
@@ -606,5 +703,6 @@ module.exports = {
   transfer,
   verifyEmail,
   getValidSponsors,
-  getValidLifebanks
+  getValidLifebanks,
+  getReport
 }

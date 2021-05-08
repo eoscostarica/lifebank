@@ -15,6 +15,24 @@ export default (theme) => ({
       color: "rgba(0, 0, 0, 0.6)"
     }
   },
+  recoveryButton: {
+    fontSize: '12px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.33,
+    letterSpacing: '0.4px',
+    color: '#000000'
+  },
+  registerTextModal: {
+    fontSize: '12px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.33,
+    letterSpacing: '0.4px',
+    color: '#000000',
+  },
   dialog: {
     paddingTop: "48px",
     paddingLeft: "48px",
