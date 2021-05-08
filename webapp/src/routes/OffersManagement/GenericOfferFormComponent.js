@@ -146,7 +146,7 @@ const GenericOfferFormComponent = ({
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const imgUrlValueRef = useRef(undefined)
   const [offer, setOffer] = useState()
-  const [alignment, setAlignment] = useState('')
+  const [alignment, setAlignment] = useState('LocalOfferIcon')
   const [updatedOffer, setUpdatedOffer] = useState()
   const [openSnackbar, setOpenSnackbar] = useState({
     show: false,
