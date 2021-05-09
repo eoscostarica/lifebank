@@ -93,6 +93,7 @@ const LimitationHandling = ({
         label={t('offersManagement.quantity')}
         type="number"
         fullWidth
+        min='1'
         placeholder={t('offersManagement.quantityPlaceholder')}
         variant="outlined"
         InputLabelProps={{
