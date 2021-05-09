@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import MUIDataTable from 'mui-datatables'
 import MenuItem from '@material-ui/core/MenuItem'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import IconButton from '@material-ui/core/IconButton'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -166,15 +166,16 @@ const OffersManagement = () => {
     }
   }
   const Actions = (active, offer_id) => (
-    <FormControl variant="filled" className={classes.formControl}>
-      <InputLabel id="actions-selection-label">
+    <FormControl variant="outlined" className={classes.formControl}>
+      <InputLabel id="demo-simple-select-outlined-label">
         {t('offersManagement.action')}
       </InputLabel>
       <Select
+        labelId="demo-simple-select-outlined-label"
+        id="demo-simple-select-outlined"
         value=""
         onClick={(e) => handleActionClick(e.target.value, active, offer_id)}
-        labelId="actions-selection"
-        id="action-select"
+        label={t('offersManagement.action')}
       >
         <MenuItem value="edit">{t('common.edit')}</MenuItem>
         <MenuItem value="delete">{t('common.delete')}</MenuItem>
@@ -294,7 +295,7 @@ const OffersManagement = () => {
                     onClick={() => handleOpenClick(offer)}
                     aria-label="delete"
                   >
-                    <MoreHorizIcon />
+                    <ExpandMoreIcon />
                   </IconButton>
                 ])}
                 columns={[
