@@ -9,7 +9,7 @@ module.exports = {
       address: Joi.string().required(),
       phone: Joi.string().required(),
       schedule: Joi.string().required(),
-      image: Joi.string().required(),
+      image: Joi.string().required()
     })
   }).options({ stripUnknown: true })
 }

@@ -26,9 +26,7 @@ const fastPreRegister = async ({
   phone,
   schedule,
   image
-}) => {
-  
-}
+}) => {}
 
 const preRegister = async ({
   email,
