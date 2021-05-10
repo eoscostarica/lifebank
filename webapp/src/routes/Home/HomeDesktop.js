@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import IconButton from '@material-ui/core/IconButton'
 import MicIcon from '@material-ui/icons/Mic'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import readXlsxFile from 'read-excel-file'
 
 import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
 import ShowLifebanksDesktop from '../../components/ShowElements/ShowLifebanksDesktop'
@@ -25,6 +26,8 @@ import FilterHome from '../../components/FilterHome'
 import Signup from '../../components/Signup/Signup'
 import styles from './styles'
 
+import { FAST_REGISTER_LIFEBANK_MUTATION } from '../../gql'
+
 const useStyles = makeStyles(styles)
 
 const HomeDesktop = (props) => {
@@ -33,6 +36,8 @@ const HomeDesktop = (props) => {
   const [currentUser] = useUser()
   const [recording, setRecording] = React.useState(false)
   const { transcript } = useSpeechRecognition()
+
+  const [fastRegisterLifebank, { error: errorFastRegisterLifebank }] = useMutation(FAST_REGISTER_LIFEBANK_MUTATION)
 
   const handleRecording = () => {
     if (!recording) {
@@ -44,6 +49,32 @@ const HomeDesktop = (props) => {
       props.handleChangeSearch(transcript)
       setRecording(false)
     }
+  }
+
+  const onReadExcelClicked = async () => {
+    const input = document.getElementById('input')
+
+    const data = (await readXlsxFile(input.files[0]))
+    data.shift()
+
+    const filteredData = data.map(lifebank => {
+      return {
+        name: lifebank[1],
+        email: lifebank[2],
+        description: lifebank[3],
+        address: lifebank[4],
+        phone: lifebank[5],
+        schedule: lifebank[6],
+        image: lifebank[8]
+      }
+    })
+
+    fastRegisterLifebank({
+      variables: filteredData[0]
+    })
+
+    console.log('DATA', data)
+    console.log('FILTERED-DATA', filteredData)
   }
 
   useEffect(() => {
@@ -86,6 +117,23 @@ const HomeDesktop = (props) => {
               startIcon={<StarIcon />}
             >
               {t('contentToolbar.favorites')}
+            </Button>
+          </Box>
+          <Box className={classes.boxIcons}>
+
+            <Button
+              component="label"
+              className={classes.buttonIconDesktop}
+              startIcon={<StarIcon />}
+            >
+              Upload File
+              <input
+                id="input"
+                onChange={onReadExcelClicked}
+                type="file"
+                accept=".xlsx"
+                hidden
+              />
             </Button>
           </Box>
         </Grid>

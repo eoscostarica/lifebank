@@ -92,6 +92,19 @@ type Mutation {
 }
 
 
+type Mutation {
+  fast_register_lifebank (
+    name: String!
+    email: String!
+    description: String!
+    address: String!
+    phone: String!
+    schedule: String!
+    image: String!
+  ): fast_register_lifebank_output
+}
+
+
 type Query {
   get_contract (
     name: String!
@@ -329,5 +342,9 @@ type get_report_output {
 
 type check_email_verified_output {
   verified : Boolean!
+}
+
+type fast_register_lifebank_output {
+  success : Boolean!
 }
 

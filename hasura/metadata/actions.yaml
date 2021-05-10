@@ -59,6 +59,15 @@ actions:
   - role: donor
   - role: lifebank
   - role: sponsor
+- name: fast_register_lifebank
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/fast-register-lifebank
+  permissions:
+  - role: donor
+  - role: guest
+  - role: lifebank
+  - role: sponsor
 - name: get_contract
   definition:
     kind: ""
@@ -204,4 +213,5 @@ custom_types:
   - name: send_email_output
   - name: get_report_output
   - name: check_email_verified_output
+  - name: fast_register_lifebank_output
   scalars: []

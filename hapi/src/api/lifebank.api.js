@@ -18,6 +18,18 @@ const {
 
 const LIFE_BANK_CODE = eosConfig.lifebankCodeContractName
 
+const fastPreRegister = async ({
+  name,
+  email,
+  description,
+  address,
+  phone,
+  schedule,
+  image
+}) => {
+  
+}
+
 const preRegister = async ({
   email,
   emailContent,
@@ -123,6 +135,7 @@ const signup = async (account, profile) => {
 }
 
 module.exports = {
+  fastPreRegister,
   preRegister,
   editProfile,
   signup
