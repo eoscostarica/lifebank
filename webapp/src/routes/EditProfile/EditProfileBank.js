@@ -217,61 +217,63 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         </Alert>
       </Snackbar>
       <Grid container spacing={SPACING} xs={12}>
-        <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h2">
-            {t('editProfile.editTitleLifebank')}
-          </Typography>
-          <Typography className={classes.text} variant="body1">
-            {t('editProfile.information')}
-          </Typography>
-        </Grid>
-        <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h4">
-            {t('editProfile.officialName')}
-          </Typography>
-          <TextField
-            id="fullname"
-            name="name"
-            style={{ display: isCompleting && user.name ? 'none' : '' }}
-            label={t('profile.organization')}
-            fullWidth
-            variant="filled"
-            placeholder={t('editProfile.organizationPlaceholder')}
-            defaultValue={user.name}
-            InputLabelProps={{
-              shrink: true
-            }}
-            onChange={(event) => handleSetField('name', event.target.value)}
-          />
-        </Grid>
-        <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h4">
-            {t('signup.about')}
-          </Typography>
-          <TextField
-            id="about"
-            multiline
-            rows={5}
-            inputProps={{
-              maxlength: CHARACTER_LIMIT
-            }}
-            helperText={`${values.about.length}/${CHARACTER_LIMIT}`}
-            style={{
-              display: isCompleting && user.about ? 'none' : ''
-            }}
-            label={t('signup.about')}
-            fullWidth
-            height="200px"
-            variant="filled"
-            placeholder={t('signup.aboutPlaceholder')}
-            defaultValue={user.about}
-            InputLabelProps={{
-              shrink: true
-            }}
-            onChange={(event) =>
-              handleSetField('about', event.target.value)
-            }
-          />
+        <Grid container item xs={12} spacing={SPACING} direction="column">
+          <Grid item xs={12}>
+            <Typography className={classes.boldText} variant="h2">
+              {t('editProfile.editTitleLifebank')}
+            </Typography>
+            <Typography className={classes.text} variant="body1">
+              {t('editProfile.information')}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('editProfile.officialName')}
+            </Typography>
+            <TextField
+              id="fullname"
+              name="name"
+              style={{ display: isCompleting && user.name ? 'none' : '' }}
+              label={t('profile.organization')}
+              fullWidth
+              variant="filled"
+              placeholder={t('editProfile.organizationPlaceholder')}
+              defaultValue={user.name}
+              InputLabelProps={{
+                shrink: true
+              }}
+              onChange={(event) => handleSetField('name', event.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('signup.about')}
+            </Typography>
+            <TextField
+              id="about"
+              multiline
+              rows={5}
+              inputProps={{
+                maxlength: CHARACTER_LIMIT
+              }}
+              helperText={`${values.about.length}/${CHARACTER_LIMIT}`}
+              style={{
+                display: isCompleting && user.about ? 'none' : ''
+              }}
+              label={t('signup.about')}
+              fullWidth
+              height="200px"
+              variant="filled"
+              placeholder={t('signup.aboutPlaceholder')}
+              defaultValue={user.about}
+              InputLabelProps={{
+                shrink: true
+              }}
+              onChange={(event) =>
+                handleSetField('about', event.target.value)
+              }
+            />
+          </Grid>
         </Grid>
         <Grid container item xs={12} direction="column">
           <Typography className={classes.boldText} variant="h4">
@@ -468,53 +470,59 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Typography className={classes.text} variant="body1">
             {t('editProfile.imageryDescription')}
           </Typography>
-          <Grid container item xs={12} >
-            <Grid item xs={6} >
-              <Box className={classes.rightBox}>
-                <>
-                  {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
-                    <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
-                  )}
-                </>
-                <TextField
-                  id="image-url"
-                  style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
-                  label={t('offersManagement.imageUrl')}
-                  variant="filled"
-                  placeholder={t('offersManagement.imageUrl')}
-                  fullWidth
-                  inputRef={photoUrlValueRef}
-                  onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
-                  onKeyPress={(event) =>
-                    executeAddImage(event)
-                  }
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          color="secondary"
-                          aria-label="add photo url"
-                          disabled={disablePhotoUrlInput}
-                          onClick={() => {
-                            setUser({
-                              ...user,
-                              photos: [...user.photos, photoUrlValueRef.current.value]
-                            })
-                            photoUrlValueRef.current.value = ''
-                            setDisablePhotoUrlInput(true)
-                          }}
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  className={classes.textField}
-                />
-              </Box>
+          <Grid container item xs={12}>
+            <Grid container item xs={6} spacing={SPACING}>
+              <Grid item xs={12}>
+                <Box className={classes.rightBox}>
+                  <>
+                    {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
+                      <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
+                    )}
+                  </>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Box className={classes.rightBox}>
+                  <TextField
+                    id="image-url"
+                    style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
+                    label={t('offersManagement.imageUrl')}
+                    variant="filled"
+                    placeholder={t('offersManagement.imageUrl')}
+                    fullWidth
+                    inputRef={photoUrlValueRef}
+                    onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
+                    onKeyPress={(event) =>
+                      executeAddImage(event)
+                    }
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            color="secondary"
+                            aria-label="add photo url"
+                            disabled={disablePhotoUrlInput}
+                            onClick={() => {
+                              setUser({
+                                ...user,
+                                photos: [...user.photos, photoUrlValueRef.current.value]
+                              })
+                              photoUrlValueRef.current.value = ''
+                              setDisablePhotoUrlInput(true)
+                            }}
+                          >
+                            <AddIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    className={classes.textField}
+                  />
+                </Box>
+              </Grid>
             </Grid>
             <Grid item xs={6} >
               <Box className={classes.rightBox}>
@@ -563,7 +571,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           </Box>
         </Grid>
       </Grid>
-    </form>
+    </form >
   )
 }
 

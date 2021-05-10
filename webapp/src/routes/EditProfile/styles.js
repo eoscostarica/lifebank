@@ -141,7 +141,7 @@ export default (theme) => ({
     fontWeight: 'bold',
     width: "100%",
     textAlign: "left",
-    marginBottom: '15px',
+    marginBottom: '8px',
   },
   divider: {
     marginTop: '30px',
@@ -253,9 +253,13 @@ export default (theme) => ({
     textTransform: 'none !important'
   },
   textField: {
-    marginTop: theme.spacing(2),
     height: 'auto',
     overflowY: 'none',
+  },
+  sponsorType: {
+    height: 'auto',
+    overflowY: 'none',
+    width: '100%'
   },
   logo: {
     maxWidth: '100%',

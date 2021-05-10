@@ -180,21 +180,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
     }
   }
 
-  function executeAddTelephone(e) {
-    if (e.key === 'Enter' && (!disablePhoneInput)) {
-      e.preventDefault()
-      setUser({
-        ...user,
-        telephones: [
-          ...user.telephones,
-          phoneValueRef.current.value
-        ]
-      })
-      phoneValueRef.current.value = ''
-      setDisablePhoneInput(true)
-    }
-  }
-
   useEffect(() => {
     addAddress()
   }, [address, city, state, country])
@@ -221,7 +206,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               {t('editProfile.information')}
             </Typography>
           </Grid>
-          <Grid item xs={12} direction="column">
+          <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.officialName')}
             </Typography>
@@ -278,7 +263,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <FormControl
               style={{ display: showOrHide(profile.business_type) }}
               variant="filled"
-              className={classes.textField}
+              className={classes.sponsorType}
             >
               <InputLabel id="bussines-type-label">{t('signup.type')}</InputLabel>
               <Select
@@ -314,6 +299,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
                 shrink: true
               }}
               onChange={(event) => handleSetField('website', event.target.value)}
+              className={classes.textField}
             />
           </Grid>
           <Grid item xs={12}>
@@ -439,94 +425,96 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               ) : null
             }
           </Grid>
-          <Grid container item xs={12} spacing={SPACING}>
-            <Grid item xs={12}>
-              <Typography className={classes.boldText} variant="h4">
-                {t('common.schedule')}
-              </Typography>
-              <Box
-                className={classes.scheduleBoxWrp}
-                style={{ display: showOrHide(profile.schedule) }}
-              >
-                <Box className={classes.scheduleBox}>
-                  <Schedule
-                    handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
-                    data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
-                    showSchedule
-                  />
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider className={classes.divider} />
-              <Typography className={classes.boldText} variant="h4">
-                {t('editProfile.socialMedia')}
-              </Typography>
-              <Box
-                width="100%"
-                style={{ display: showOrHideSocialMedia('instagram') }}
-              >
-                <SocialMediaTextField
-                  textFieldClass={classes.textField}
-                  idText="instagram-username"
-                  name="instagram"
-                  label={t('editProfile.instagramUsername')}
-                  defaultValue={
-                    socialMedia.find((social) => social.name === 'instagram')
-                      ? socialMedia.find((social) => social.name === 'instagram')
-                        .url
-                      : undefined
-                  }
-                  placeholder={t('editProfile.instagramUsernamePlaceholder')}
-                  icon={<InstagramIcon />}
-                  onChangeSocialMediaTextField={(url) =>
-                    handleOnSocialMediaTextFieldChange('instagram', url)
-                  }
+          <Grid item xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('common.schedule')}
+            </Typography>
+            <Box
+              className={classes.scheduleBoxWrp}
+              style={{ display: showOrHide(profile.schedule) }}
+            >
+              <Box className={classes.scheduleBox}>
+                <Schedule
+                  handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
+                  data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
+                  showSchedule
                 />
               </Box>
-              <Box
-                width="100%"
-                style={{ display: showOrHideSocialMedia('facebook') }}
-              >
-                <SocialMediaTextField
-                  textFieldClass={classes.textField}
-                  idText="facebook-profile-url"
-                  name="facebook"
-                  label={t('editProfile.facebookProfileUrl')}
-                  defaultValue={
-                    socialMedia.find((social) => social.name === 'facebook')
-                      ? socialMedia.find((social) => social.name === 'facebook').url
-                      : undefined
-                  }
-                  placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
-                  icon={<FacebookIcon />}
-                  onChangeSocialMediaTextField={(url) =>
-                    handleOnSocialMediaTextFieldChange('facebook', url)
-                  }
-                />
-              </Box>
-              <Box
-                width="100%"
-                style={{ display: showOrHideSocialMedia('twitter') }}
-              >
-                <SocialMediaTextField
-                  textFieldClass={classes.textField}
-                  idText="twitter-username"
-                  name="twitter"
-                  label={t('editProfile.twitterUsername')}
-                  defaultValue={
-                    socialMedia.find((social) => social.name === 'twitter')
-                      ? socialMedia.find((social) => social.name === 'twitter').url
-                      : undefined
-                  }
-                  placeholder={t('editProfile.twitterUsernamePlaceholder')}
-                  icon={<TwitterIcon />}
-                  onChangeSocialMediaTextField={(url) =>
-                    handleOnSocialMediaTextFieldChange('twitter', url)
-                  }
-                />
-              </Box>
-            </Grid>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider className={classes.divider} />
+            <Typography className={classes.boldText} variant="h4">
+              {t('editProfile.socialMedia')}
+            </Typography>
+            <Box
+              width="100%"
+              style={{ display: showOrHideSocialMedia('instagram') }}
+            >
+              <SocialMediaTextField
+                textFieldClass={classes.textField}
+                idText="instagram-username"
+                name="instagram"
+                label={t('editProfile.instagramUsername')}
+                defaultValue={
+                  socialMedia.find((social) => social.name === 'instagram')
+                    ? socialMedia.find((social) => social.name === 'instagram')
+                      .url
+                    : undefined
+                }
+                placeholder={t('editProfile.instagramUsernamePlaceholder')}
+                icon={<InstagramIcon />}
+                onChangeSocialMediaTextField={(url) =>
+                  handleOnSocialMediaTextFieldChange('instagram', url)
+                }
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              width="100%"
+              style={{ display: showOrHideSocialMedia('facebook') }}
+            >
+              <SocialMediaTextField
+                textFieldClass={classes.textField}
+                idText="facebook-profile-url"
+                name="facebook"
+                label={t('editProfile.facebookProfileUrl')}
+                defaultValue={
+                  socialMedia.find((social) => social.name === 'facebook')
+                    ? socialMedia.find((social) => social.name === 'facebook').url
+                    : undefined
+                }
+                placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
+                icon={<FacebookIcon />}
+                onChangeSocialMediaTextField={(url) =>
+                  handleOnSocialMediaTextFieldChange('facebook', url)
+                }
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              width="100%"
+              style={{ display: showOrHideSocialMedia('twitter') }}
+            >
+              <SocialMediaTextField
+                textFieldClass={classes.textField}
+                idText="twitter-username"
+                name="twitter"
+                label={t('editProfile.twitterUsername')}
+                defaultValue={
+                  socialMedia.find((social) => social.name === 'twitter')
+                    ? socialMedia.find((social) => social.name === 'twitter').url
+                    : undefined
+                }
+                placeholder={t('editProfile.twitterUsernamePlaceholder')}
+                icon={<TwitterIcon />}
+                onChangeSocialMediaTextField={(url) =>
+                  handleOnSocialMediaTextFieldChange('twitter', url)
+                }
+              />
+            </Box>
           </Grid>
           <Grid item xs={12} >
             <Divider className={classes.divider} />
@@ -541,6 +529,8 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
               <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
             </Box>
+          </Grid>
+          <Grid item xs={12} >
             <TextField
               id="photo-url"
               label={t('editProfile.photoUrl')}
@@ -616,7 +606,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
           </Grid>
         </Grid>
       </Box>
-    </form>
+    </form >
   )
 }
 
