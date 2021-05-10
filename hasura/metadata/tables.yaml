@@ -134,6 +134,7 @@
       - active
       - description
       - end_date
+      - icon
       - id
       - images
       - limited
@@ -171,6 +172,7 @@
       - cost_in_tokens
       - description
       - end_date
+      - icon
       - id
       - images
       - limited
@@ -184,36 +186,38 @@
   - role: guest
     permission:
       columns:
-      - limited
-      - online_only
-      - quantity
-      - offer_type
-      - description
-      - start_date
-      - end_date
-      - images
-      - sponsor_id
-      - id
-      - offer_name
       - active
       - cost_in_tokens
+      - description
+      - end_date
+      - icon
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
       filter: {}
   - role: lifebank
     permission:
       columns:
-      - limited
-      - online_only
-      - quantity
-      - offer_type
-      - description
-      - start_date
-      - end_date
-      - images
-      - sponsor_id
-      - id
-      - offer_name
       - active
       - cost_in_tokens
+      - description
+      - end_date
+      - icon
+      - id
+      - images
+      - limited
+      - offer_name
+      - offer_type
+      - online_only
+      - quantity
+      - sponsor_id
+      - start_date
       filter: {}
   - role: sponsor
     permission:
