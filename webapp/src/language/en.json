@@ -262,7 +262,7 @@
       "highLevelReward": "High Level Reward",
       "logoUrl": "Logo Url",
       "logoUrlPlaceholder": "Your logo url here",
-      "sponsorNamePlaceholder": "Your Sponsor name here",
+      "sponsorNamePlaceholder": "Your Business name here",
       "photoUrl": "Photo url",
       "photoUrlPlaceholder": "Your photo url here",
       "facebookProfileUrl": "Facebook profile url",
@@ -274,7 +274,7 @@
       "noValidUrl": "The link must not have special characters",
       "noUniqueUrl": "This link is associated with another account",
       "editTitleLifebank": "Edit Lifebank Page",
-      "editTitleSponsor": "Edit Sponsor Page",
+      "editTitleSponsor": "Edit Business Page",
       "information": "The information on this page can be viewed on your info page. Please, include detailed and accurate information so donors can easily find you.",
       "officialName": "Official Name",
       "contactInformation": "Contact Information",
@@ -285,7 +285,7 @@
       "city": "City",
       "stateProvince": "State/Province",
       "country": "Country",
-      "typeOfSponsor": "Type of Sponsor",
+      "typeOfSponsor": "Type of Business",
       "socialMedia": "Social Media"
     },
     "donations": {

@@ -135,13 +135,17 @@ export default (theme) => ({
   },
   text: {
     color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-    margin: theme.spacing(2, 0)
   },
   boldText: {
     fontWeight: 'bold',
     width: "100%",
     textAlign: "left",
     marginBottom: '8px',
+  },
+  boldTextSocialMedia: {
+    fontWeight: 'bold',
+    width: "100%",
+    textAlign: "left",
   },
   divider: {
     marginTop: '30px',

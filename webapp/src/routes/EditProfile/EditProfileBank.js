@@ -333,7 +333,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             {t('editProfile.addressDescription')}
           </Typography>
           <Grid container xs={12} spacing={SPACING}>
-            <Grid container item xs={6}>
+            <Grid container item xs={6} spacing={SPACING} justify="space-between">
               <Grid item xs={12}>
                 <TextField
                   id="address"
