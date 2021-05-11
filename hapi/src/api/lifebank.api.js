@@ -107,7 +107,6 @@ const preRegister = async ({
       emailContent.button
     )
   } catch (error) {
-    console.log('ERROR', error)
     return {
       resultRegister: 'error'
     }

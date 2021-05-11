@@ -80,9 +80,6 @@ const HomeDesktop = (props) => {
         lifebanks: filteredData
       }
     })
-
-    console.log('DATA', data)
-    console.log('FILTERED-DATA', filteredData)
   }
 
   useEffect(() => {
