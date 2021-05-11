@@ -36,7 +36,7 @@ const SignupDonor = lazy(() => import('./SignupDonor'));
 const SignupLifeBank = lazy(() => import('./SignupLifeBank'));
 const SimpleRegisterForm = lazy(() => import('./SignupSponsor/SimpleRegisterForm'));
 
-const Signup = ({ isHome, isModal, isSideBar }) => {
+const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [user, setUser] = useReducer(
@@ -46,17 +46,19 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
   const [activeStep, setActiveStep] = useState(0)
   const [role, setRole] = useState()
   const [currentUser, { login }] = useUser()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(!!isModal)
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [maxWidth] = useState('sm')
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
-
   const [isEmailValid, setEmailValid] = useState(false)
   const [checkEmailLoading, setcheckEmailLoaded] = useState(false)
 
   const handleOpen = () => {
     setOpen(!open)
+    if (onCloseSignUp) {
+      onCloseSignUp()
+    }
   }
 
   const handleOpenAlert = () => {
@@ -238,6 +240,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
         message: t('signup.sucessfulPreregistration'),
         severity: 'success'
       })
+
     }
   }, [preRegisterLifebankResult])
 
@@ -250,6 +253,7 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
         severity: 'success'
       })
     }
+
   }, [createAccountResult])
 
   useEffect(() => {
@@ -306,13 +310,6 @@ const Signup = ({ isHome, isModal, isSideBar }) => {
         <Button color="secondary" className={classes.registerBtn} onClick={handleOpen}>
           {t('signup.register')}
         </Button>
-      }
-      {isModal && !currentUser &&
-        <Box className={classes.registerBoxModal}>
-          <Button color="secondary" className={classes.registerTextModal} onClick={handleOpen}>
-            {t('login.notAccount')}
-          </Button>
-        </Box>
       }
       {isSideBar && !currentUser &&
         <Box
@@ -452,6 +449,7 @@ Signup.propTypes = {
   isHome: PropTypes.bool,
   isModal: PropTypes.bool,
   isSideBar: PropTypes.bool,
+  onCloseSignUp: PropTypes.func
 }
 
 Signup.defaultProps = {

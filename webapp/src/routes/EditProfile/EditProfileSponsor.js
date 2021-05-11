@@ -43,6 +43,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   const photoUrlValueRef = useRef(undefined)
   const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
+  const [error, setError] = useState(false)
   const [socialMedia] = useState(
     profile.social_media_links && profile.social_media_links !== '[]'
       ? JSON.parse(profile.social_media_links)
@@ -181,6 +182,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           placeholder={t('editProfile.sponsorNamePlaceholder')}
           value={user.name}
           fullWidth
+          required
           InputLabelProps={{
             shrink: true
           }}
@@ -193,6 +195,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           style={{ display: showOrHide(profile.address) }}
           label={t('signup.address')}
           variant="outlined"
+          required
           placeholder={t('signup.addressPlaceholder')}
           value={user.address}
           fullWidth
@@ -350,6 +353,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             variant="outlined"
             placeholder={t('editProfile.photoUrlPlaceholder')}
             fullWidth
+            required
             inputRef={photoUrlValueRef}
             onChange={(e) =>
               setDisablePhotoUrlInput(e.target.value.length === 0)
@@ -499,6 +503,15 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           </Button>
         </Link>
         <Button
+          disabled={
+            !user.name ||
+            !user.address ||
+            !user.business_type ||
+            !user.schedule ||
+            !user.photos ||
+            !user.geolocation ||
+            error
+          }
           className={classes.saveBtn}
           variant="contained"
           color="secondary"
