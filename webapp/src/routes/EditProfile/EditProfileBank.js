@@ -453,8 +453,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                 />
               </Box>
             </Box>
-          </Grid>
-          <Grid item xs={12}>
             <Divider className={classes.divider} />
             <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.scheduleBoxWrp} width="100%">
               <Typography className={classes.boldText} variant="h4">{t('common.categories')}</Typography>

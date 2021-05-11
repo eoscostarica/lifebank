@@ -53,6 +53,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     about: ""
   });
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
+  const [error, setError] = useState(false)
   const [socialMedia] = useState(
     profile.social_media_links !== '[]'
       ? JSON.parse(profile.social_media_links)
