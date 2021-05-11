@@ -411,6 +411,21 @@ const GenericOfferFormComponent = ({
                 }
                 className={classes.textField}
               />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={offer.online_only}
+                    onChange={(event) =>
+                      setOffer({ ...offer, online_only: event.target.checked })
+                    }
+                    name="checkedB"
+                    color="primary"
+                  />
+                }
+                label={t('offersManagement.onlineOnly')}
+              />
+              <Divider className={classes.divider} />
+              <Typography className={classes.boldText} variant="subtitle1">{t('offersManagement.chooseIcon')}</Typography>
               <ToggleButtonGroup
                 id="offer-icon"
                 value={offer.icon || alignment}
@@ -432,19 +447,6 @@ const GenericOfferFormComponent = ({
                 <ToggleButton value="OutdoorGrillIcon" className={classes.offerIcon}><OutdoorGrillIcon /></ToggleButton>
                 <ToggleButton value="OfflineBoltIcon" className={classes.offerIcon}><OfflineBoltIcon /></ToggleButton>
               </ToggleButtonGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={offer.online_only}
-                    onChange={(event) =>
-                      setOffer({ ...offer, online_only: event.target.checked })
-                    }
-                    name="checkedB"
-                    color="primary"
-                  />
-                }
-                label={t('offersManagement.onlineOnly')}
-              />
               <Divider className={classes.divider} />
               <Typography className={classes.boldText} variant="subtitle1">{t('offersManagement.redeemAvailability')}</Typography>
               <FormControl component="fieldset" className={classes.radioGroup}>
