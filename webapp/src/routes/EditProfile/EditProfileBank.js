@@ -233,7 +233,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               id="fullname"
               name="name"
               style={{ display: isCompleting && user.name ? 'none' : '' }}
-              label={t('profile.organization')}
               fullWidth
               variant="filled"
               placeholder={t('editProfile.organizationPlaceholder')}
@@ -260,7 +259,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               style={{
                 display: isCompleting && user.about ? 'none' : ''
               }}
-              label={t('signup.about')}
               fullWidth
               height="200px"
               variant="filled"
@@ -276,10 +274,10 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           </Grid>
         </Grid>
         <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h4">
-            {t('editProfile.contactInformation')}
-          </Typography>
           <Grid container item spacing={SPACING} xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('editProfile.contactInformation')}
+            </Typography>
             <Grid item xs={4}>
               <TextField
                 className={classes.textField}
@@ -437,7 +435,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         </Grid>
         <Grid container item xs={12} spacing={SPACING}>
           <Grid item xs={12}>
-            <Divider className={classes.divider} />
             <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} className={classes.scheduleBoxWrp} width="100%" >
               <Typography className={classes.boldText} variant="h4">{t('common.schedule')}</Typography>
               <Box className={classes.scheduleBox}>
@@ -451,7 +448,8 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                 />
               </Box>
             </Box>
-            <Divider className={classes.divider} />
+          </Grid>
+          <Grid item xs={12}>
             <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.scheduleBoxWrp} width="100%">
               <Typography className={classes.boldText} variant="h4">{t('common.categories')}</Typography>
               <Typography variant="body1" className={classes.text}>

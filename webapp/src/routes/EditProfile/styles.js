@@ -80,7 +80,7 @@ export default (theme) => ({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     '& .MuiTextField-root': {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(1)
     }
   },
   textFieldWrapperSponsor: {
@@ -135,6 +135,7 @@ export default (theme) => ({
   },
   text: {
     color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
+    margin: theme.spacing(1, 0)
   },
   boldText: {
     fontWeight: 'bold',
@@ -168,7 +169,6 @@ export default (theme) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: theme.spacing(2, 0)
   },
   scheduleBox: {
     display: 'flex',
@@ -259,7 +259,6 @@ export default (theme) => ({
     textTransform: 'none !important'
   },
   textField: {
-    height: 'auto',
     overflowY: 'none',
     margin: theme.spacing(2, 0)
   },
@@ -281,8 +280,8 @@ export default (theme) => ({
   sponsorType: {
     height: 'auto',
     overflowY: 'none',
-    margin: theme.spacing(2, 0),
-    width: '100%'
+    width: '100%',
+    paddingBottom: '4px'
   },
   logo: {
     maxWidth: '100%',

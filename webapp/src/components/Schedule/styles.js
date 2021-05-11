@@ -88,8 +88,6 @@ export default (theme) => ({
     }
   },
   scheduleListResult: {
-    marginTop: '10px',
-    marginBottom: '10px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

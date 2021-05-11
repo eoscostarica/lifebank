@@ -13,7 +13,6 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
-import Divider from '@material-ui/core/Divider'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
@@ -235,7 +234,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               id="fullname"
               name="name"
               style={{ display: isCompleting && user.name ? 'none' : '' }}
-              label={t('profile.organization')}
               fullWidth
               variant="filled"
               placeholder={t('editProfile.organizationPlaceholder')}
@@ -262,7 +260,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               style={{
                 display: isCompleting && user.about ? 'none' : ''
               }}
-              label={t('signup.about')}
               fullWidth
               height="200px"
               variant="filled"
@@ -414,7 +411,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             />
           </Grid>
           <Grid item xs={12}>
-            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
+            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} paddingTop='4px' width="100%">
               <MapEditLocation
                 style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
                 onGeolocationChange={handleOnGeolocationChange}
@@ -429,7 +426,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
           <Grid container item xs={12} spacing={SPACING}>
             <Grid item xs={12}>
               <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
-                <Divider className={classes.divider} />
                 <Typography className={classes.boldText} variant="h4">{t('common.schedule')}</Typography>
                 <Schedule
                   buttonText={t('schedule.editSchedule')}
@@ -443,7 +439,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             </Grid>
             <Grid item xs={12}>
               <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
-                <Divider className={classes.divider} />
                 <Typography className={classes.boldText} variant="h4">{t('common.categories')}</Typography>
                 <Typography variant="body1" className={classes.text}>
                   {t('categories.description')}
@@ -462,7 +457,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             </Grid>
           </Grid>
           <Grid item xs={12} >
-            <Divider className={classes.divider} />
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.imagery')}
             </Typography>

@@ -15,7 +15,6 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
-import Divider from '@material-ui/core/Divider'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
@@ -221,7 +220,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               id="name"
               name="name"
               style={{ display: showOrHide(profile.name) }}
-              label={t('signup.name')}
               variant="filled"
               placeholder={t('editProfile.sponsorNamePlaceholder')}
               value={user.name}
@@ -240,7 +238,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               className={classes.mobileTextField}
               id="about"
               style={{ display: showOrHide(profile.about) }}
-              label={t('signup.about')}
               multiline
               rows={5}
               inputProps={{
@@ -262,16 +259,17 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               onChange={(event) => handleSetField('about', event.target.value)}
             />
           </Grid>
-          <Grid container item xs={12}>
+          <Grid item xs={12} >
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.typeOfSponsor')}
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
             <FormControl
               style={{ display: showOrHide(profile.business_type) }}
               variant="filled"
               className={classes.sponsorType}
             >
-              <InputLabel id="bussines-type-label">{t('signup.type')}</InputLabel>
               <Select
                 labelId="bussines-type-label"
                 id="bussines-type"
@@ -293,6 +291,8 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.contactInformation')}
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
             <TextField
               className={classes.mobileTextField}
               id="website"
@@ -421,21 +421,16 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             />
           </Grid>
           <Grid item xs={12}>
-            {
-              (isCompleting && profile.location === '') ||
-                (!isCompleting && profile.location !== '') ? (
-                <>
-                  <MapEditLocation
-                    onGeolocationChange={handleOnGeolocationChange}
-                    markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
-                    markerLocation={user.geolocation}
-                    width="100%"
-                    height={287}
-                    mb={1}
-                  />
-                </>
-              ) : null
-            }
+            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} paddingTop='4px' width="100%">
+              <MapEditLocation
+                onGeolocationChange={handleOnGeolocationChange}
+                markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
+                markerLocation={user.geolocation}
+                width="100%"
+                height={287}
+                mb={1}
+              />
+            </Box>
           </Grid>
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
@@ -455,7 +450,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Divider className={classes.divider} />
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.socialMedia')}
             </Typography>
@@ -516,7 +510,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             </Box>
           </Grid>
           <Grid item xs={12} >
-            <Divider className={classes.divider} />
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.imagery')}
             </Typography>
@@ -604,7 +597,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             </Box>
           </Grid>
         </Grid>
-      </Box>
+      </Box >
     </form >
   )
 }

@@ -219,7 +219,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               id="name"
               name="name"
               style={{ display: showOrHide(profile.name) }}
-              label={t('signup.name')}
               variant="filled"
               placeholder={t('editProfile.sponsorNamePlaceholder')}
               value={user.name}
@@ -238,7 +237,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <TextField
               id="about"
               style={{ display: showOrHide(profile.about) }}
-              label={t('signup.about')}
               multiline
               rows={5}
               inputProps={{
@@ -265,12 +263,13 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.typeOfSponsor')}
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
             <FormControl
               style={{ display: showOrHide(profile.business_type) }}
               variant="filled"
               className={classes.sponsorType}
             >
-              <InputLabel id="bussines-type-label">{t('signup.type')}</InputLabel>
               <Select
                 labelId="bussines-type-label"
                 id="bussines-type"
