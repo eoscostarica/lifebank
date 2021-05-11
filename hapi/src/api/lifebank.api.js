@@ -19,20 +19,17 @@ const {
 
 const LIFE_BANK_CODE = eosConfig.lifebankCodeContractName
 
-const fastPreRegister = async ({
-  lifebanks
-}) => {
+const fastPreRegister = async ({ lifebanks }) => {
   let added = 0
   let failed = 0
-  lifebanks.forEach(async lifebank => {
+  lifebanks.forEach(async (lifebank) => {
     const preLifebank = await preregisterApi.getOne({
       email: { _eq: lifebank.email }
     })
 
-    if(preLifebank.preregister_lifebank.lenght) {
+    if (preLifebank.preregister_lifebank.lenght) {
       failed += 1
-    }
-    else {
+    } else {
       added += 1
       const tempPassword = crypto.randomBytes(8).toString('hex')
       const secret = await bcryptjs.createPasswordHash(tempPassword)
@@ -45,7 +42,8 @@ const fastPreRegister = async ({
         schedule: '[]',
         urgency_level: 1,
         address: lifebank.address,
-        coordinates: '{"longitude": -84.07916749095011, "latitude": 9.909844117235366}',
+        coordinates:
+          '{"longitude": -84.07916749095011, "latitude": 9.909844117235366}',
         name: lifebank.name,
         passwordPlainText: secret,
         description: lifebank.description,
