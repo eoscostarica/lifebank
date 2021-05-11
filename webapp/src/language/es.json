@@ -290,6 +290,9 @@
       "city": "Ciudad",
       "stateProvince": "Estado/Provincia",
       "country": "País",
+      "cityPlaceholder": "San José",
+      "stateProvincePlaceholder": "San José",
+      "countryPlaceholder": "Costa Rica",
       "typeOfSponsor": "Tipo de Patrocinador",
       "socialMedia": "Redes Sociales"
     },

@@ -285,6 +285,9 @@
       "city": "City",
       "stateProvince": "State/Province",
       "country": "Country",
+      "cityPlaceholder": "New York",
+      "stateProvincePlaceholder": "New York",
+      "countryPlaceholder": "United States",
       "typeOfSponsor": "Type of Business",
       "socialMedia": "Social Media"
     },

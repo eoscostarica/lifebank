@@ -54,7 +54,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
   });
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
   const [socialMedia] = useState(
-    profile.social_media_links && profile.social_media_links !== '[]'
+    profile.social_media_links !== '[]'
       ? JSON.parse(profile.social_media_links)
       : []
   )
@@ -129,7 +129,13 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         : [...user.social_media_links, { name: name, url: url }]
     })
   }
-
+  const socialMediaValue = (social) => {
+    if (socialMedia.find((socialMediaList) => socialMediaList.name === social))
+      return socialMedia.find((socialMediaList) => socialMediaList.name === social).url
+    else {
+      return undefined
+    }
+  }
   const addAddress = () => {
     const completeAddress = address.concat(',', city, ',', state, ',', country)
     handleSetField('address', completeAddress)
@@ -373,7 +379,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                     label={t('editProfile.city')}
                     fullWidth
                     variant="filled"
-                    placeholder={t('San José')}
+                    placeholder={t('editProfile.cityPlaceholder')}
                     defaultValue={city}
                     InputLabelProps={{
                       shrink: true
@@ -393,7 +399,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                     label={t('editProfile.stateProvince')}
                     fullWidth
                     variant="filled"
-                    placeholder={t('Tibás')}
+                    placeholder={t('editProfile.stateProvincePlaceholder')}
                     defaultValue={state}
                     InputLabelProps={{
                       shrink: true
@@ -413,7 +419,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 label={t('editProfile.country')}
                 fullWidth
                 variant="filled"
-                placeholder={t('Costa Rica')}
+                placeholder={t('editProfile.countryPlaceholder')}
                 defaultValue={country}
                 InputLabelProps={{
                   shrink: true
@@ -475,12 +481,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 idText="instagram-username"
                 name="instagram"
                 label={t('editProfile.instagramUsername')}
-                defaultValue={
-                  socialMedia.find((social) => social.name === 'instagram')
-                    ? socialMedia.find((social) => social.name === 'instagram')
-                      .url
-                    : undefined
-                }
+                defaultValue={socialMediaValue('instagram')}
                 placeholder={t('editProfile.instagramUsernamePlaceholder')}
                 icon={<InstagramIcon />}
                 onChangeSocialMediaTextField={(url) =>
@@ -499,11 +500,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 idText="facebook-profile-url"
                 name="facebook"
                 label={t('editProfile.facebookProfileUrl')}
-                defaultValue={
-                  socialMedia.find((social) => social.name === 'facebook')
-                    ? socialMedia.find((social) => social.name === 'facebook').url
-                    : undefined
-                }
+                defaultValue={socialMediaValue('facebook')}
                 placeholder={t('editProfile.facebookProfileUrlPlaceholder')}
                 icon={<FacebookIcon />}
                 onChangeSocialMediaTextField={(url) =>
@@ -522,11 +519,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 idText="twitter-username"
                 name="twitter"
                 label={t('editProfile.twitterUsername')}
-                defaultValue={
-                  socialMedia.find((social) => social.name === 'twitter')
-                    ? socialMedia.find((social) => social.name === 'twitter').url
-                    : undefined
-                }
+                defaultValue={socialMediaValue('twitter')}
                 placeholder={t('editProfile.twitterUsernamePlaceholder')}
                 icon={<TwitterIcon />}
                 onChangeSocialMediaTextField={(url) =>
@@ -622,7 +615,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               className={classes.saveBtn}
               variant="contained"
               color="secondary"
-              onClick={() => prepareDataForSubmitting()}
+              onClick={prepareDataForSubmitting}
             >
               {t('common.save')}
             </Button>

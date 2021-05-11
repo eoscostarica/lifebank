@@ -365,7 +365,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
                   label={t('editProfile.city')}
                   fullWidth
                   variant="filled"
-                  placeholder={t('San José')}
+                  placeholder={t('editProfile.cityPlaceholder')}
                   defaultValue={city}
                   InputLabelProps={{
                     shrink: true
@@ -385,7 +385,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
                   label={t('editProfile.stateProvince')}
                   fullWidth
                   variant="filled"
-                  placeholder={t('Tibás')}
+                  placeholder={t('editProfile.stateProvincePlaceholder')}
                   defaultValue={state}
                   InputLabelProps={{
                     shrink: true
@@ -405,7 +405,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               label={t('editProfile.country')}
               fullWidth
               variant="filled"
-              placeholder={t('Costa Rica')}
+              placeholder={t('editProfile.countryPlaceholder')}
               defaultValue={country}
               InputLabelProps={{
                 shrink: true

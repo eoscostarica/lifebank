@@ -273,7 +273,6 @@ export default (theme) => ({
     overflowY: 'none',
   },
   mapField: {
-    height: 'auto',
     overflowY: 'none',
     margin: theme.spacing(2, 0),
     width: '100%',
