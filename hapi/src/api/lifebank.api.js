@@ -42,7 +42,7 @@ const fastPreRegister = async ({
         emailContent: lifebank.emailContent,
         phone: lifebank.phone.toString(),
         immunity_test: false,
-        schedule: lifebank.schedule,
+        schedule: '[]',
         urgency_level: 1,
         address: lifebank.address,
         coordinates: '{"longitude": -84.07916749095011, "latitude": 9.909844117235366}',
