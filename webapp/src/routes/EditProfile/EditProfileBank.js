@@ -231,6 +231,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               {t('editProfile.officialName')}
             </Typography>
             <TextField
+              className={classes.textField}
               id="fullname"
               name="name"
               style={{ display: isCompleting && user.name ? 'none' : '' }}
@@ -250,6 +251,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               {t('signup.about')}
             </Typography>
             <TextField
+              className={classes.textField}
               id="about"
               multiline
               rows={5}
@@ -282,6 +284,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Grid container item spacing={SPACING} xs={12}>
             <Grid item xs={4}>
               <TextField
+                className={classes.textField}
                 id="username"
                 name="username"
                 style={{ display: isCompleting && userName ? 'none' : '' }}
@@ -303,6 +306,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>
             <Grid item xs={4}>
               <PhoneNumber
+                className={classes.textField}
                 defaultCountry='cr'
                 value={user.telephones[0]}
                 fullWidth
@@ -314,6 +318,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>
             <Grid item xs={4}>
               <PhoneNumber
+                className={classes.textField}
                 defaultCountry='cr'
                 fullWidth
                 value={user.telephones[1]}
@@ -325,140 +330,148 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h4">
-            {t('editProfile.addressInformation')}
-          </Typography>
-          <Typography className={classes.text} variant="body1">
-            {t('editProfile.addressDescription')}
-          </Typography>
-          <Grid container xs={12} spacing={SPACING}>
-            <Grid container item xs={6} spacing={SPACING} justify="space-between">
-              <Grid item xs={12}>
-                <TextField
-                  id="address"
-                  style={{
-                    display: isCompleting && user.address ? 'none' : ''
-                  }}
-                  label={t('signup.address')}
-                  fullWidth
-                  variant="filled"
-                  placeholder={t('signup.addressPlaceholder')}
-                  defaultValue={address}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={(event) => setAddress(event.target.value)}
-                />
+        <Grid container item xs={12} direction="row" spacing={SPACING} justify="space-between">
+          <Grid item xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('editProfile.addressInformation')}
+            </Typography>
+            <Typography className={classes.text} variant="body1">
+              {t('editProfile.addressDescription')}
+            </Typography>
+          </Grid>
+          <Grid container item xs={6} spacing={SPACING} >
+            <Grid item xs={12}>
+              <TextField
+                className={classes.textField}
+                id="address"
+                style={{
+                  display: isCompleting && user.address ? 'none' : ''
+                }}
+                label={t('signup.address')}
+                fullWidth
+                variant="filled"
+                placeholder={t('signup.addressPlaceholder')}
+                defaultValue={address}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={(event) => setAddress(event.target.value)}
+              />
+            </Grid>
+            <Grid
+              container
+              item xs={12}
+              justify="space-between"
+            >
+              <Grid item xs={6}>
+                <Box className={classes.leftBox}>
+                  <TextField
+                    className={classes.textField}
+                    id="city"
+                    style={{
+                      display: isCompleting && user.address ? 'none' : ''
+                    }}
+                    label={t('editProfile.city')}
+                    fullWidth
+                    variant="filled"
+                    placeholder={t('San José')}
+                    defaultValue={city}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    onChange={(event) => setCity(event.target.value)}
+                  />
+                </Box>
               </Grid>
-              <Grid
-                container
-                item xs={12}
-                justify="space-between"
-              >
-                <Grid item xs={6}>
-                  <Box className={classes.leftBox}>
-                    <TextField
-                      id="city"
-                      style={{
-                        display: isCompleting && user.address ? 'none' : ''
-                      }}
-                      label={t('editProfile.city')}
-                      fullWidth
-                      variant="filled"
-                      placeholder={t('San José')}
-                      defaultValue={city}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      onChange={(event) => setCity(event.target.value)}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box className={classes.rightBox}>
-                    <TextField
-                      id="state"
-                      style={{
-                        display: isCompleting && user.address ? 'none' : ''
-                      }}
-                      label={t('editProfile.stateProvince')}
-                      fullWidth
-                      variant="filled"
-                      placeholder={t('Tibás')}
-                      defaultValue={state}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      onChange={(event) => setState(event.target.value)}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="country"
-                  style={{
-                    display: isCompleting && user.address ? 'none' : ''
-                  }}
-                  label={t('editProfile.country')}
-                  fullWidth
-                  variant="filled"
-                  placeholder={t('Costa Rica')}
-                  defaultValue={country}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={(event) => setCountry(event.target.value)}
-                />
+              <Grid item xs={6}>
+                <Box className={classes.rightBox}>
+                  <TextField
+                    className={classes.textField}
+                    id="state"
+                    style={{
+                      display: isCompleting && user.address ? 'none' : ''
+                    }}
+                    label={t('editProfile.stateProvince')}
+                    fullWidth
+                    variant="filled"
+                    placeholder={t('Tibás')}
+                    defaultValue={state}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    onChange={(event) => setState(event.target.value)}
+                  />
+                </Box>
               </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
-                <MapEditLocation
-                  style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
-                  onGeolocationChange={handleOnGeolocationChange}
-                  markerLocation={user.geolocation}
-                  markerType={LIFE_BANK}
-                  width="100%"
-                  height={287}
-                  mb={1}
-                />
-              </Box>
+            <Grid item xs={12}>
+              <TextField
+                className={classes.textField}
+                id="country"
+                style={{
+                  display: isCompleting && user.address ? 'none' : ''
+                }}
+                label={t('editProfile.country')}
+                fullWidth
+                variant="filled"
+                placeholder={t('Costa Rica')}
+                defaultValue={country}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={(event) => setCountry(event.target.value)}
+              />
             </Grid>
           </Grid>
-        </Grid>
-        <Grid container item xs={12} spacing={SPACING}>
           <Grid item xs={6}>
-            <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
-              <Divider className={classes.divider} />
-              <Typography className={classes.boldText} variant="h4">{t('common.schedule')}</Typography>
-              <Schedule
-                buttonText={t('schedule.editSchedule')}
-                scheduleLoad={user.schedule}
-                loading
-                handleOnAddSchedule={handleOnAddSchedule}
-                data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
-                showSchedule
+            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
+              <MapEditLocation
+                style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
+                onGeolocationChange={handleOnGeolocationChange}
+                markerLocation={user.geolocation}
+                markerType={LIFE_BANK}
+                width="100%"
+                height={287}
+                mb={1}
               />
             </Box>
           </Grid>
-          <Grid item xs={6}>
-            <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
-              <Divider className={classes.divider} />
+        </Grid>
+        <Grid container item xs={12} spacing={SPACING}>
+          <Grid item xs={12}>
+            <Divider className={classes.divider} />
+            <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} className={classes.scheduleBoxWrp} width="100%" >
+              <Typography className={classes.boldText} variant="h4">{t('common.schedule')}</Typography>
+              <Box className={classes.scheduleBox}>
+                <Schedule
+                  buttonText={t('schedule.editSchedule')}
+                  scheduleLoad={user.schedule}
+                  loading
+                  handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
+                  data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
+                  showSchedule
+                />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider className={classes.divider} />
+            <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.scheduleBoxWrp} width="100%">
               <Typography className={classes.boldText} variant="h4">{t('common.categories')}</Typography>
               <Typography variant="body1" className={classes.text}>
                 {t('categories.description')}
               </Typography>
-              <Box className={classes.boxCenter}>
-                <Categories
-                  buttonText={t('categories.editCategories')}
-                  categoriesLoad={user.categories}
-                  loading
-                  handleOnAddCategories={handleOnAddCategories}
-                  data={user.categories ? JSON.parse(user.categories || '[]') : []}
-                  showCategories
-                />
+              <Box className={classes.scheduleBox}>
+                <Box className={classes.boxCenter}>
+                  <Categories
+                    buttonText={t('categories.editCategories')}
+                    categoriesLoad={user.categories}
+                    loading
+                    handleOnAddCategories={(value) => handleOnAddCategories(value)}
+                    data={user.categories ? JSON.parse(user.categories || '[]') : []}
+                    showCategories
+                  />
+                </Box>
               </Box>
             </Box>
           </Grid>
@@ -471,58 +484,53 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             {t('editProfile.imageryDescription')}
           </Typography>
           <Grid container item xs={12}>
-            <Grid container item xs={6} spacing={SPACING}>
-              <Grid item xs={12}>
-                <Box className={classes.rightBox}>
-                  <>
-                    {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
-                      <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
-                    )}
-                  </>
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                <Box className={classes.rightBox}>
-                  <TextField
-                    id="image-url"
-                    style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
-                    label={t('offersManagement.imageUrl')}
-                    variant="filled"
-                    placeholder={t('offersManagement.imageUrl')}
-                    fullWidth
-                    inputRef={photoUrlValueRef}
-                    onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
-                    onKeyPress={(event) =>
-                      executeAddImage(event)
-                    }
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            color="secondary"
-                            aria-label="add photo url"
-                            disabled={disablePhotoUrlInput}
-                            onClick={() => {
-                              setUser({
-                                ...user,
-                                photos: [...user.photos, photoUrlValueRef.current.value]
-                              })
-                              photoUrlValueRef.current.value = ''
-                              setDisablePhotoUrlInput(true)
-                            }}
-                          >
-                            <AddIcon />
-                          </IconButton>
-                        </InputAdornment>
-                      )
-                    }}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    className={classes.textField}
-                  />
-                </Box>
-              </Grid>
+            <Grid item xs={6} spacing={SPACING}>
+              <Box className={classes.leftBox}>
+                <>
+                  {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
+                    <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
+                  )}
+                </>
+                <TextField
+                  className={classes.textField}
+                  id="image-url"
+                  style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
+                  label={t('offersManagement.imageUrl')}
+                  variant="filled"
+                  placeholder={t('offersManagement.imageUrl')}
+                  fullWidth
+                  inputRef={photoUrlValueRef}
+                  onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
+                  onKeyPress={(event) =>
+                    executeAddImage(event)
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          color="secondary"
+                          aria-label="add photo url"
+                          disabled={disablePhotoUrlInput}
+                          onClick={() => {
+                            setUser({
+                              ...user,
+                              photos: [...user.photos, photoUrlValueRef.current.value]
+                            })
+                            photoUrlValueRef.current.value = ''
+                            setDisablePhotoUrlInput(true)
+                          }}
+                        >
+                          <AddIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  className={classes.textField}
+                />
+              </Box>
             </Grid>
             <Grid item xs={6} >
               <Box className={classes.rightBox}>
@@ -550,15 +558,15 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         </Grid>
         <Grid item xs={12} direction="column">
           <Box className={classes.btnWrapper}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={isUsernameUnique}
+              className={classes.saveBtn}
+            >
+              {t('common.save')}
+            </Button>
             <Link to="/profile" className={classes.routerLink}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={isUsernameUnique}
-                className={classes.saveBtn}
-              >
-                {t('common.save')}
-              </Button>
               <Button
                 variant="outlined"
                 color="primary"

@@ -42,9 +42,7 @@ const {
 const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const phoneValueRef = useRef(undefined)
   const photoUrlValueRef = useRef(undefined)
-  const [disablePhoneInput, setDisablePhoneInput] = useState(true)
   const [phoneValue1, setPhoneValue1] = useState(profile.telephones ? JSON.parse(profile.telephones)[0] : [])
   const [phoneValue2, setPhoneValue2] = useState(profile.telephones ? JSON.parse(profile.telephones)[1] : [])
   const [address, setAddress] = useState(profile.address ? profile.address.split(',')[0] : '')
@@ -211,6 +209,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               {t('editProfile.officialName')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="name"
               name="name"
               style={{ display: showOrHide(profile.name) }}
@@ -222,7 +221,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               InputLabelProps={{
                 shrink: true
               }}
-              className={classes.textField}
               onChange={(event) => handleSetField('name', event.target.value)}
             />
           </Grid>
@@ -231,6 +229,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               {t('signup.about')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="about"
               style={{ display: showOrHide(profile.about) }}
               label={t('signup.about')}
@@ -251,7 +250,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               InputLabelProps={{
                 shrink: true
               }}
-              className={classes.textField}
               fullWidth
               onChange={(event) => handleSetField('about', event.target.value)}
             />
@@ -288,6 +286,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               {t('editProfile.contactInformation')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="website"
               style={{ display: showOrHide(profile.website) }}
               label={t('common.website')}
@@ -299,11 +298,11 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
                 shrink: true
               }}
               onChange={(event) => handleSetField('website', event.target.value)}
-              className={classes.textField}
             />
           </Grid>
           <Grid item xs={12}>
             <PhoneNumber
+              className={classes.mobileTextField}
               defaultCountry='cr'
               value={user.telephones[0]}
               fullWidth
@@ -315,6 +314,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
           </Grid>
           <Grid item xs={12}>
             <PhoneNumber
+              className={classes.mobileTextField}
               defaultCountry='cr'
               fullWidth
               value={user.telephones[1]}
@@ -332,6 +332,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               {t('editProfile.addressDescription')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="address"
               style={{
                 display: isCompleting && user.address ? 'none' : ''
@@ -355,6 +356,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <Grid item xs={6}>
               <Box className={classes.leftBox}>
                 <TextField
+                  className={classes.mobileTextField}
                   id="city"
                   style={{
                     display: isCompleting && user.address ? 'none' : ''
@@ -374,6 +376,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <Grid item xs={6}>
               <Box className={classes.rightBox}>
                 <TextField
+                  className={classes.mobileTextField}
                   id="state"
                   style={{
                     display: isCompleting && user.address ? 'none' : ''
@@ -393,6 +396,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
           </Grid>
           <Grid item xs={12}>
             <TextField
+              className={classes.mobileTextField}
               id="country"
               style={{
                 display: isCompleting && user.address ? 'none' : ''
@@ -452,7 +456,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               style={{ display: showOrHideSocialMedia('instagram') }}
             >
               <SocialMediaTextField
-                textFieldClass={classes.textField}
+                textFieldClass={classes.mobileTextField}
                 idText="instagram-username"
                 name="instagram"
                 label={t('editProfile.instagramUsername')}
@@ -476,7 +480,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               style={{ display: showOrHideSocialMedia('facebook') }}
             >
               <SocialMediaTextField
-                textFieldClass={classes.textField}
+                textFieldClass={classes.mobileTextField}
                 idText="facebook-profile-url"
                 name="facebook"
                 label={t('editProfile.facebookProfileUrl')}
@@ -499,7 +503,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               style={{ display: showOrHideSocialMedia('twitter') }}
             >
               <SocialMediaTextField
-                textFieldClass={classes.textField}
+                textFieldClass={classes.mobileTextField}
                 idText="twitter-username"
                 name="twitter"
                 label={t('editProfile.twitterUsername')}
@@ -561,7 +565,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               InputLabelProps={{
                 shrink: true
               }}
-              className={classes.textField}
+              className={classes.mobileTextField}
             />
           </Grid>
           <Grid item xs={12} >
@@ -586,14 +590,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <Box className={classes.btnWrapper}>
               <Link to="/profile" className={classes.routerLink}>
                 <Button
-                  className={classes.saveBtn}
-                  variant="contained"
-                  color="secondary"
-                  onClick={prepareDataForSubmitting}
-                >
-                  {t('common.save')}
-                </Button>
-                <Button
                   variant="outlined"
                   color="primary"
                   className={classes.cancelBtn}
@@ -601,6 +597,14 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
                   {t('common.cancel')}
                 </Button>
               </Link>
+              <Button
+                className={classes.saveBtn}
+                variant="contained"
+                color="secondary"
+                onClick={() => prepareDataForSubmitting()}
+              >
+                {t('common.save')}
+              </Button>
               {loading && <CircularProgress />}
             </Box>
           </Grid>

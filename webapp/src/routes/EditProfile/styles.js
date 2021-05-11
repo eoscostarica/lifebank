@@ -230,9 +230,11 @@ export default (theme) => ({
     },
   },
   rightBox: {
+    width: '100%',
     paddingLeft: '8px'
   },
   leftBox: {
+    width: '100%',
     paddingRight: '8px'
   },
   cancelBtn: {
@@ -259,10 +261,28 @@ export default (theme) => ({
   textField: {
     height: 'auto',
     overflowY: 'none',
+    margin: theme.spacing(2, 0)
+  },
+  mobileTextField: {
+    height: 'auto',
+    overflowY: 'none',
+    margin: theme.spacing('4px', 0)
+  },
+  textFieldSocialMedia: {
+    height: 'auto',
+    overflowY: 'none',
+  },
+  mapField: {
+    height: 'auto',
+    overflowY: 'none',
+    margin: theme.spacing(2, 0),
+    width: '100%',
+    height: '287px'
   },
   sponsorType: {
     height: 'auto',
     overflowY: 'none',
+    margin: theme.spacing(2, 0),
     width: '100%'
   },
   logo: {
