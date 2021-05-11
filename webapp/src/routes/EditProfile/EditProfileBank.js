@@ -273,60 +273,60 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             />
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction="column">
-          <Grid container item spacing={SPACING} xs={12}>
-            <Typography className={classes.boldText} variant="h4">
+        <Grid container item spacing={SPACING} xs={12}>
+          <Grid item xs={12}>
+            <Typography className={classes.boldTextVariant} variant="h4">
               {t('editProfile.contactInformation')}
             </Typography>
-            <Grid item xs={4}>
-              <TextField
-                className={classes.textField}
-                id="username"
-                name="username"
-                style={{ display: isCompleting && userName ? 'none' : '' }}
-                label={t('editProfile.urlWebsitePlaceHolder')}
-                fullWidth
-                variant="filled"
-                placeholder={t('editProfile.urlWebsitePlaceHolder')}
-                defaultValue={username}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
-                }}
-                helperText={helperTextvalidation}
-                onChange={(event) => validUserName(event.target.value)}
-                error={!isValid || !isUnique}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <PhoneNumber
-                className={classes.textField}
-                defaultCountry='cr'
-                value={user.telephones[0]}
-                fullWidth
-                label={t('signup.phoneNumber')}
-                id="phoneNumber1"
-                variant="filled"
-                onChange={(event) => setPhoneValue1(event)}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <PhoneNumber
-                className={classes.textField}
-                defaultCountry='cr'
-                fullWidth
-                value={user.telephones[1]}
-                label={t('signup.phoneNumber')}
-                id="phoneNumber1"
-                variant="filled"
-                onChange={(event) => setPhoneValue2(event)}
-              />
-            </Grid>
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              className={classes.textField}
+              id="username"
+              name="username"
+              style={{ display: isCompleting && userName ? 'none' : '' }}
+              label={t('editProfile.urlWebsitePlaceHolder')}
+              fullWidth
+              variant="filled"
+              placeholder={t('editProfile.urlWebsitePlaceHolder')}
+              defaultValue={username}
+              InputLabelProps={{
+                shrink: true
+              }}
+              InputProps={{
+                startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
+              }}
+              helperText={helperTextvalidation}
+              onChange={(event) => validUserName(event.target.value)}
+              error={!isValid || !isUnique}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <PhoneNumber
+              className={classes.textField}
+              defaultCountry='cr'
+              value={user.telephones[0]}
+              fullWidth
+              label={t('signup.phoneNumber')}
+              id="phoneNumber1"
+              variant="filled"
+              onChange={(event) => setPhoneValue1(event)}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <PhoneNumber
+              className={classes.textField}
+              defaultCountry='cr'
+              fullWidth
+              value={user.telephones[1]}
+              label={t('signup.phoneNumber')}
+              id="phoneNumber1"
+              variant="filled"
+              onChange={(event) => setPhoneValue2(event)}
+            />
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction="row" spacing={SPACING} justify="space-between">
+        <Grid container item xs={12} spacing={SPACING} justify="space-between">
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.addressInformation')}
@@ -335,7 +335,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               {t('editProfile.addressDescription')}
             </Typography>
           </Grid>
-          <Grid container item xs={6} spacing={SPACING} >
+          <Grid container item xs={6} spacing={SPACING}>
             <Grid item xs={12}>
               <TextField
                 className={classes.textField}
@@ -435,9 +435,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         </Grid>
         <Grid container item xs={12} spacing={SPACING}>
           <Grid item xs={12}>
-            <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} className={classes.scheduleBoxWrp} width="100%" >
+            <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} className={classes.componentBoxWrp} width="100%" >
               <Typography className={classes.boldText} variant="h4">{t('common.schedule')}</Typography>
-              <Box className={classes.scheduleBox}>
+              <Box className={classes.componentBox}>
                 <Schedule
                   buttonText={t('schedule.editSchedule')}
                   scheduleLoad={user.schedule}
@@ -450,12 +450,12 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.scheduleBoxWrp} width="100%">
+            <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.componentBoxWrp} width="100%">
               <Typography className={classes.boldText} variant="h4">{t('common.categories')}</Typography>
               <Typography variant="body1" className={classes.text}>
                 {t('categories.description')}
               </Typography>
-              <Box className={classes.scheduleBox}>
+              <Box className={classes.componentBox}>
                 <Box className={classes.boxCenter}>
                   <Categories
                     buttonText={t('categories.editCategories')}
@@ -470,14 +470,16 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Box>
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h4">
-            {t('editProfile.imagery')}
-          </Typography>
-          <Typography className={classes.text} variant="body1">
-            {t('editProfile.imageryDescription')}
-          </Typography>
+        <Grid container item xs={12} direction="column" spacing={SPACING}>
           <Grid container item xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('editProfile.imagery')}
+            </Typography>
+            <Typography className={classes.text} variant="body1">
+              {t('editProfile.imageryDescription')}
+            </Typography>
+          </Grid>
+          <Grid container item xs={12} justify="space-between">
             <Grid item xs={6} spacing={SPACING}>
               <Box className={classes.leftBox}>
                 <>

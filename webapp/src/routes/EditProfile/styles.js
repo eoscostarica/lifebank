@@ -143,7 +143,7 @@ export default (theme) => ({
     textAlign: "left",
     marginBottom: '8px',
   },
-  boldTextSocialMedia: {
+  boldTextVariant: {
     fontWeight: 'bold',
     width: "100%",
     textAlign: "left",
@@ -164,13 +164,13 @@ export default (theme) => ({
     justifyContent: 'center',
     justifySelf: 'center'
   },
-  scheduleBoxWrp: {
+  componentBoxWrp: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
   },
-  scheduleBox: {
+  componentBox: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -260,7 +260,7 @@ export default (theme) => ({
   },
   textField: {
     overflowY: 'none',
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(1, 0)
   },
   mobileTextField: {
     height: 'auto',

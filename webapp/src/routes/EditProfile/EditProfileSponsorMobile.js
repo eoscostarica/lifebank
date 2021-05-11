@@ -437,10 +437,10 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               {t('common.schedule')}
             </Typography>
             <Box
-              className={classes.scheduleBoxWrp}
+              className={classes.componentBoxWrp}
               style={{ display: showOrHide(profile.schedule) }}
             >
-              <Box className={classes.scheduleBox}>
+              <Box className={classes.componentBox}>
                 <Schedule
                   handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
                   data={user.schedule ? JSON.parse(user.schedule || '[]') : []}

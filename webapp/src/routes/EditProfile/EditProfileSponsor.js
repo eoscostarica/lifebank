@@ -452,10 +452,10 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               {t('common.schedule')}
             </Typography>
             <Box
-              className={classes.scheduleBoxWrp}
+              className={classes.componentBoxWrp}
               style={{ display: showOrHide(profile.schedule) }}
             >
-              <Box className={classes.scheduleBox}>
+              <Box className={classes.componentBox}>
                 <Schedule
                   handleOnAddSchedule={(value) => handleOnAddSchedule(value)}
                   data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
@@ -467,7 +467,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         </Grid>
         <Grid container item xs={12} direction="row" spacing={SPACING}>
           <Grid item xs={12}>
-            <Typography className={classes.boldTextSocialMedia} variant="h4">
+            <Typography className={classes.boldTextVariant} variant="h4">
               {t('editProfile.socialMedia')}
             </Typography>
           </Grid>
@@ -530,7 +530,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           </Grid>
         </Grid>
         <Grid container item xs={12} direction="column" spacing={SPACING}>
-          <Grid item xs={12}>
+          <Grid container item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.imagery')}
             </Typography>
@@ -538,8 +538,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               {t('editProfile.imageryDescription')}
             </Typography>
           </Grid>
-          <Grid container item xs={12} >
-            <Grid container item xs={6} spacing={SPACING}>
+          <Grid container item xs={12} justify="space-between">
+            <Grid item xs={6} spacing={SPACING}>
               <Box className={classes.leftBox}>
                 <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
                   <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
