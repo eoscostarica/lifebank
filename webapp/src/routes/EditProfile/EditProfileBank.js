@@ -134,13 +134,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   }
 
   const handleOnAddSchedule = useCallback(
-    (data) => handleSetField('schedule', JSON.stringify(data)),
-    [setField]
+    (data) => handleSetField('schedule', JSON.stringify(data))
   )
 
   const handleOnAddCategories = useCallback(
-    (data) => handleSetField('categories', JSON.stringify(data)),
-    [setField]
+    (data) => handleSetField('categories', JSON.stringify(data))
   )
 
   const handleSetField = (field, value) => {
