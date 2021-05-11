@@ -225,7 +225,7 @@ const Schedule = ({
                 )
               })}
             </TextField>
-            <Box className={classes.scheduleBox}>
+            <Box className={classes.componentBox}>
               <TextField
                 id="outlined-select-currency"
                 select
