@@ -94,13 +94,7 @@ type Mutation {
 
 type Mutation {
   fast_register_lifebank (
-    name: String!
-    email: String!
-    description: String!
-    address: String!
-    phone: String!
-    schedule: String!
-    image: String!
+    lifebanks: jsonb!
   ): fast_register_lifebank_output
 }
 
@@ -346,5 +340,7 @@ type check_email_verified_output {
 
 type fast_register_lifebank_output {
   success : Boolean!
+  added : Int!
+  failed : Int!
 }
 

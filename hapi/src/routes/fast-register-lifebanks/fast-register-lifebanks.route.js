@@ -4,5 +4,8 @@ const fastRegisterLifebankValidation = require('./fast-register-lifebanks.valida
 module.exports = {
   method: 'POST',
   path: '/api/fast-register-lifebank',
-  handler: fastRegisterLifebankHandler
+  handler: fastRegisterLifebankHandler,
+  options: {
+    auth: false
+  }
 }

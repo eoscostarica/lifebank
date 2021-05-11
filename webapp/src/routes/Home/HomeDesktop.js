@@ -65,12 +65,20 @@ const HomeDesktop = (props) => {
         address: lifebank[4],
         phone: lifebank[5],
         schedule: lifebank[6],
-        image: lifebank[8]
+        image: lifebank[8],
+        emailContent: {
+          subject: t('emailMessage.subjectVerificationCode'),
+          title: t('emailMessage.titleVerificationCode'),
+          message: t('emailMessage.messageVerificationCode'),
+          button: t('emailMessage.verifyButton')
+        }
       }
     })
 
     fastRegisterLifebank({
-      variables: filteredData[0]
+      variables: {
+        lifebanks: filteredData
+      }
     })
 
     console.log('DATA', data)

@@ -1,6 +1,7 @@
 const { lifebankcodeUtils, bcryptjs } = require('../utils')
 const { eosConfig } = require('../config')
 
+const crypto = require('crypto')
 const accountApi = require('./account.api')
 const historyApi = require('./history.api')
 const userApi = require('./user.api')
@@ -19,15 +20,52 @@ const {
 const LIFE_BANK_CODE = eosConfig.lifebankCodeContractName
 
 const fastPreRegister = async ({
-  name,
-  email,
-  description,
-  address,
-  phone,
-  schedule,
-  image
+  lifebanks
 }) => {
-  
+  let added = 0
+  let failed = 0
+  lifebanks.forEach(async lifebank => {
+    const preLifebank = await preregisterApi.getOne({
+      email: { _eq: lifebank.email }
+    })
+
+    console.log('PRE-LIFEBANK', preLifebank)
+
+    if(preLifebank.preregister_lifebank.lenght) {
+      console.log('YES')
+      failed += 1
+    }
+    else {
+      console.log('NO')
+      added += 1
+      const tempPassword = crypto.randomBytes(8).toString('hex')
+      const secret = await bcryptjs.createPasswordHash(tempPassword)
+
+      const lifebankData = {
+        email: lifebank.email,
+        emailContent: lifebank.emailContent,
+        phone: lifebank.phone.toString(),
+        immunity_test: false,
+        schedule: lifebank.schedule,
+        urgency_level: 1,
+        address: lifebank.address,
+        coordinates: '{"longitude": -84.07916749095011, "latitude": 9.909844117235366}',
+        name: lifebank.name,
+        passwordPlainText: secret,
+        description: lifebank.description,
+        invitation_code: '',
+        requirement: ''
+      }
+      const result = await preRegister(lifebankData)
+      console.log('RESULT', result)
+    }
+  })
+
+  return {
+    success: true,
+    added,
+    failed
+  }
 }
 
 const preRegister = async ({
@@ -76,6 +114,7 @@ const preRegister = async ({
       emailContent.button
     )
   } catch (error) {
+    console.log('ERROR', error)
     return {
       resultRegister: 'error'
     }

@@ -31,9 +31,11 @@ export const CREATE_ACCOUNT_LIFEBANK_MUTATION = gql`
 `
 
 export const FAST_REGISTER_LIFEBANK_MUTATION = gql`
-  mutation($name: String!, $email: String!, $description: String!, $address: String!, $phone: String!, $schedule: String!, $image: String!) {
-    fast_register_lifebank (name: $name, email: $email, description: $description, address: $address, phone: $phone, schedule: $schedule, image: $image){
+  mutation($lifebanks: jsonb!) {
+    fast_register_lifebank (lifebanks: $lifebanks){
       success
+      added
+      failed
     }
   }
 `

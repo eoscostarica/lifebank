@@ -48,6 +48,7 @@
     "react-speech-recognition": "^3.2.3",
     "react-structured-data": "^0.0.14",
     "react-swipeable-views": "^0.13.9",
+    "read-excel-file": "^5.1.0",
     "subscriptions-transport-ws": "^0.9.16",
     "typeface-roboto": "^1.1.13"
   },
