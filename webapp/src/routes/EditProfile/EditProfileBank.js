@@ -77,7 +77,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     (geolocation) => handleSetField('geolocation', geolocation),
     [setField]
   )
-
   const { refetch: checkUserName } = useQuery(VERIFY_USERNAME, {
     variables: {
       username: username,
@@ -134,13 +133,11 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
   }
 
   const handleOnAddSchedule = useCallback(
-    (data) => handleSetField('schedule', JSON.stringify(data)),
-    [setField]
+    (data) => handleSetField('schedule', JSON.stringify(data))
   )
 
   const handleOnAddCategories = useCallback(
-    (data) => handleSetField('categories', JSON.stringify(data)),
-    [setField]
+    (data) => handleSetField('categories', JSON.stringify(data))
   )
 
   const handleSetField = (field, value) => {
@@ -435,9 +432,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                 buttonText={t('schedule.editSchedule')}
                 scheduleLoad={user.schedule}
                 loading
-                handleOnAddSchedule={handleOnAddSchedule}
+                handleOnAddSchedule={(data) => handleOnAddSchedule(data)}
                 data={user.schedule ? JSON.parse(user.schedule || '[]') : []}
-                showSchedule
+                showSchedule={true}
               />
             </Box>
           </Grid>
@@ -453,9 +450,9 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   buttonText={t('categories.editCategories')}
                   categoriesLoad={user.categories}
                   loading
-                  handleOnAddCategories={handleOnAddCategories}
+                  handleOnAddCategories={(data) => handleOnAddCategories(data)}
                   data={user.categories ? JSON.parse(user.categories || '[]') : []}
-                  showCategories
+                  showCategories={true}
                 />
               </Box>
             </Box>
