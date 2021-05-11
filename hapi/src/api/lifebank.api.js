@@ -29,14 +29,10 @@ const fastPreRegister = async ({
       email: { _eq: lifebank.email }
     })
 
-    console.log('PRE-LIFEBANK', preLifebank)
-
     if(preLifebank.preregister_lifebank.lenght) {
-      console.log('YES')
       failed += 1
     }
     else {
-      console.log('NO')
       added += 1
       const tempPassword = crypto.randomBytes(8).toString('hex')
       const secret = await bcryptjs.createPasswordHash(tempPassword)
@@ -57,7 +53,6 @@ const fastPreRegister = async ({
         requirement: ''
       }
       const result = await preRegister(lifebankData)
-      console.log('RESULT', result)
     }
   })
 
