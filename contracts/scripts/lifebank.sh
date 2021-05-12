@@ -239,7 +239,7 @@ create_community_lacchain() {
     }' -p lifebankcode@active >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-    cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
+    cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
 grant_lifebankcode_permission_in_lifebankcoin() {
@@ -248,10 +248,22 @@ grant_lifebankcode_permission_in_lifebankcoin() {
     TEMP_DIR=./stdout/permission
 
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr set account permission lifebankcoin active permission.json owner -j -d -s -p lifebankcoin >$TEMP_DIR/tx2.json
+    cleos -u https://writer.eosio.cr set account permission lifebankcoin active permission_lifebankcoin.json owner -j -d -s -p lifebankcoin >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-    cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -f -p costarica@writer -p lifebankcoin@active
+    cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcoin@active
+}
+
+grant_lifebankcode_permission_in_lifebankcode() {
+    echo 'Create Permission for Lifebankcode in Lifebankcoin'
+    mkdir -p ./stdout/permission
+    TEMP_DIR=./stdout/permission
+
+    cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
+    cleos -u https://writer.eosio.cr set account permission lifebankcode active permission_lifebankcode.json owner -j -d -s -p lifebankcode >$TEMP_DIR/tx2.json
+    jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
+    jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
+    cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
 change_active_permission() {
@@ -263,15 +275,14 @@ change_active_permission() {
     cleos -u https://lacchain.eosio.cr set account permission lifebankcoin active EOS53M2oyoGpt7oVRNywoASZ1gLXDHJfbNoL6LDXew2CbCtus2Zht -j -d -s -p lifebankcoin@owner >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-    cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -f -p costarica@writer -p lifebankcoin@owner
+    cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcoin@owner
 }
-
 
 run_lifebank() {
     echo 'Installing LifeBank ...'
-    change_active_permission
-    # grant_lifebankcode_permission_in_lifebankcoin
-    # create_community_lacchain
+    # change_active_permission
+    # grant_lifebankcode_permission_in_lifebankcode
+    create_community_lacchain
     # create_lifebank_wallet
     # create_lifebank_accounts
     # assign_resources
