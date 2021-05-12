@@ -1,54 +1,63 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
-  name: lifebank-webapp-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/cors-allow-methods: "*"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-    nginx.ingress.kubernetes.io/add-base-url: "true"
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: http
 spec:
-  tls:
-    - hosts:
-        - lifebank.io
-        - "*.lifebank.io"
-      secretName: tls-secret
-  rules:
-    - host: lifebank.io
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: lifebank-webapp
-              servicePort: 80
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`${INGRESS_HOST}`)
+    services:
+    - kind: Service
+      name: lifebank-webapp
+      port: 80
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
-  name: lifebank-hasura-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/cors-allow-methods: "*"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-    nginx.ingress.kubernetes.io/add-base-url: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: https
 spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`${INGRESS_HOST}`)
+    services:
+    - kind: Service
+      name: lifebank-webapp
+      port: 80
   tls:
-    - hosts:
-        - graphql.lifebank.io
-        - "*.graphql.lifebank.io"
-      secretName: tls-secret
-  rules:
-    - host: graphql.lifebank.io
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: lifebank-hasura
-              servicePort: 8080
+    secretName: tls-secret
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hasura-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`${INGRESS_GRAPHQL_HOST}`)
+    services:
+    - kind: Service
+      name: lifebank-hasura
+      port: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hasura-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`${INGRESS_GRAPHQL_HOST}`)
+    services:
+    - kind: Service
+      name: lifebank-hasura
+      port: 8080
+  tls:
+    secretName: tls-secret

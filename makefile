@@ -112,18 +112,12 @@ deploy-kubernetes: $(K8S_BUILD_DIR)
 	@echo "Creating SSL certificates..."
 	@kubectl create secret tls \
 		tls-secret \
-		--key ./ssl/ggoods.io.priv.key \
-		--cert ./ssl/ggoods.io.crt \
+		--key ./ssl/lifebank.io.key \
+		--cert ./ssl/lifebank.io.crt \
 		-n $(NAMESPACE)  || echo "SSL cert already configured.";
 	@echo "Creating configmaps..."
-	@kubectl create configmap \
-		wallet-seeds \
-		--from-file wallet/seeds/ \
-		--dry-run=client \
-		-o yaml | \
-		kubectl -n $(NAMESPACE) apply -f - || echo "Wallet seeds already created.";
 	@kubectl create configmap -n $(NAMESPACE) \
-	ggoods-wallet-config \
+	lifebank-wallet-config \
 	--from-file wallet/config/ || echo "Wallet configuration already created.";
 	@echo "Applying kubernetes files..."
 	@for file in $(shell find $(K8S_BUILD_DIR) -name '*.yaml' | sed 's:$(K8S_BUILD_DIR)/::g'); do \
