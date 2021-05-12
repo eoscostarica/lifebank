@@ -32,6 +32,21 @@ const EDIT_NOTIFICATION_STATE = `
   }
 `
 
+const GET_ONE = `
+  query ($where: notification_bool_exp) {
+    notification(where: $where, limit: 1) {
+      id
+      account_to
+      account_from
+      title
+      description
+      type
+      payload
+      created_at
+    }
+  }
+`
+
 
 /*const EDIT_NOTIFICATION_STATE = `
   mutation edit_state($where: user_bool_exp!) {
@@ -41,6 +56,21 @@ const EDIT_NOTIFICATION_STATE = `
   }
 `
 */
+const GET_MANY = `
+  query ($where: notification_bool_exp) {
+    notification(where: $where) {
+      id
+      account_to
+      account_from
+      title
+      description
+      type
+      payload
+      created_at
+    }
+  }
+`
+
 const insert = notification => {
   return hasuraUtils.request(INSERT_NOTIFICATION, { notification })
 }
@@ -49,7 +79,25 @@ const edit_state = where => {
   return hasuraUtils.request(EDIT_NOTIFICATION_STATE, { where })
 }
 
+const getOne = async (where = {}) => {
+  const { notification } = await hasuraUtils.request(GET_ONE, { where })
+
+  if (notification && notification.length > 0) return notification[0]
+
+  return null
+}
+
+const getMany = async (where = {}) => {
+  const { notification } = await hasuraUtils.request(GET_MANY, { where })
+
+  if (notification && notification.length > 0) return notification
+
+  return null
+}
+
 module.exports = {
   insert,
-  edit_state
+  edit_state,
+  getOne,
+  getMany
 }

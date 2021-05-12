@@ -7,12 +7,12 @@ export default (theme) => ({
     width: '100%',
     paddingTop: '60px',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '23%',
-      paddingRight: '23%',
+      paddingLeft: '10%',
+      paddingRight: '10%',
     },
   },
   rowBox: {
-    display: 'flex',
+    flexDirection: "column",
     width: '100%',
     justifyContent: 'space-between',
     padding: theme.spacing(2, 2),
@@ -75,6 +75,16 @@ export default (theme) => ({
     color: '#ffffff',
     backgroundColor: '#ba0d0d'
   },
+  donateButton: {
+    borderRadius: 50,
+    height: 60,
+    padding: 20,
+    bottom: 20,
+    right: 20,
+    margin: '0',
+    color: '#ffffff',
+    backgroundColor: '#ba0d0d'
+  },
   formGroup: {
     display: 'flex',
     alignItems: 'center',
@@ -107,6 +117,16 @@ export default (theme) => ({
   customizedLinearProgress: {
     height: 10,
     borderRadius: 5
+  },
+  hero: {
+    width: '100%',
+    height: '350px'
+
+  },
+  heroBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative'
   },
   alertBox: {
     width: "100%",
@@ -158,7 +178,6 @@ export default (theme) => ({
     height: '90px',
     right: 10,
     top: 0,
-    border: 'solid 2px rgba(0, 0, 0, 0.04)',
     [theme.breakpoints.down('md')]: {
       width: '70px',
       height: '70px',
@@ -172,6 +191,7 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+    height: '100%',
     padding: theme.spacing(2, 2),
     alignItems: 'flex-start',
     '& p': {

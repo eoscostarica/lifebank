@@ -34,6 +34,8 @@
       "homepage": "Página de inicio",
       "tools": "Herramientas",
       "yourDonations": "Tus donaciones",
+      "downloadReport": "Descargar reporte",
+      "editPage": "Editar página",
       "information": "Información",
       "aboutLifebank": "Acerca de Lifebank",
       "useTerms": "Términos de uso",
@@ -250,7 +252,6 @@
       "message2": "Estas ofertas no están disponibles porque desmarcaste esta categoría. Cámbialo en cualquier momento."
     },
     "editProfile": {
-      "editProfile": "Editar Perfil",
       "error": "Error",
       "duringSaveProfileData": "Mientras se guardaba la información del perfil",
       "goToProfile": "Ir al perfil!",
@@ -278,7 +279,24 @@
       "twitterUsername": "Usuario de Twitter",
       "twitterUsernamePlaceholder": "El usuario de Twitter aquí",
       "noValidUrl": "La direccion no debe tener caracteres especiales",
-      "noUniqueUrl": "Esta direccion esta asociada a otra cuenta"
+      "noUniqueUrl": "Esta dirección esta asociada a otra cuenta",
+      "editTitleLifebank": "Editar cuenta de Banco de Sangre",
+      "editTitleSponsor": "Editar cuenta de Patrocinador",
+      "information": "La información que se encuentra en este perfil se puede ver en su página de Lifebank. Asegúrese de incluir información detallada para que los donantes puedan encontrarlo fácilmente y contactarte para proceder con la donación...",
+      "officialName": "Nombre Oficial",
+      "contactInformation": "Información de Contacto",
+      "addressInformation": "Datos de Domicilio",
+      "addressDescription": "Describe tu dirección de Lifebank y usa el mapa para seleccionar la ubicación correcta para que los donantes puedan llegar a ti fácilmente.",
+      "imagery": "Imágenes",
+      "imageryDescription": "Escriba un enlace a sus imágenes para que su página de Lifebank se muestre más atractiva para sus donantes. Puede subir imágenes al logotipo de IMGUR.com o la imagen de avatar debe ser una imagen cuadrada, no mayor de 500px o más pesada de 250kb. La imagen del banner debe ser una imagen horizontal, no mayor a 1200px ni más pesada que 1mb.",
+      "city": "Ciudad",
+      "stateProvince": "Estado/Provincia",
+      "country": "País",
+      "cityPlaceholder": "San José",
+      "stateProvincePlaceholder": "San José",
+      "countryPlaceholder": "Costa Rica",
+      "typeOfSponsor": "Tipo de Patrocinador",
+      "socialMedia": "Redes Sociales"
     },
     "donations": {
       "donations": "Donaciones",
@@ -363,7 +381,8 @@
       "currentLanguage": "es-CR",
       "near": "Cerca de",
       "offers": "Ofertas",
-      "loadMore": "Ver más"
+      "loadMore": "Ver más",
+      "registeredEmail": "Correo Registrado"
     },
     "claimReward": {
       "claimReward": "Reclamar recompensa",
@@ -373,16 +392,16 @@
       "imDone": "Listo"
     },
     "credentialsRecovery": {
-      "credentialsRecovery": "Recuperación de credenciales",
+      "passwordRecovery": "Recuperación de Contraseña",
       "emailError": "El correo ingresado no esta asociado a ninguna cuenta",
       "changePasswordInstructions": "Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva",
       "changePassword": "Cambiar contraseña",
       "currentPassword": "Contraseña actual",
       "errorPassword": "La contraseña actual no coinside con su correo",
       "newPassword": "Nueva contraseña",
-      "instructionCredentialsRecovery": "Ingrese el correo asociado a su cuenta para poder recuperarla",
+      "instructionCredentialsRecovery": "Use su correo electrónico registrado en Lifebank para recuperar su contraseña. Le enviaremos un correo para que cree una nueva contraseña.",
       "checkYourEmail": "Revisa tu correo",
-      "recovery": "Recuperar",
+      "recovery": "Enviar",
       "passwordNotChangable": "Ingrese a su cuenta de Facebook o Google para cambiar la contraseña"
     },
     "emailVerification": {
@@ -486,6 +505,22 @@
       "Oct": "Octubre",
       "Nov": "Noviembre",
       "Dec": "Diciembre"
+    },
+    "report": {
+      "from": "de",
+      "to": "a",
+      "pdfHeader": "Historial de transacciones",
+      "pdfFooter": "Lifebank es una plataforma de código abierto que usa tecnología blockchain para incentivar las donaciones de sangre. Para más información sobre Lifebank, visitehttp://lifebank.io/.",
+      "sentTokens": "Tokens enviados",
+      "receivedTokens": "Tokens recibidos",
+      "business": "Patrocinador",
+      "user": "Usuario",
+      "donor": "Donador",
+      "date": "Fecha",
+      "time": "Hora",
+      "tokens": "Tokens",
+      "offer": "Oferta",
+      "reportDownloadName": "Reporte"
     }
   }
 }

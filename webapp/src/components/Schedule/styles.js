@@ -8,7 +8,7 @@ export default (theme) => ({
       marginBottom: theme.spacing(3)
     }
   },
-  scheduleBox: {
+  componentBox: {
     margin: theme.spacing(2, 0),
     display: 'flex',
     justifyContent: 'space-between',
@@ -88,8 +88,6 @@ export default (theme) => ({
     }
   },
   scheduleListResult: {
-    marginTop: '10px',
-    marginBottom: '10px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
