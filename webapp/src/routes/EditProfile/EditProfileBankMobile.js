@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -13,7 +13,6 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
-import Divider from '@material-ui/core/Divider'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
@@ -231,10 +230,10 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               {t('editProfile.officialName')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="fullname"
               name="name"
               style={{ display: isCompleting && user.name ? 'none' : '' }}
-              label={t('profile.organization')}
               fullWidth
               variant="filled"
               placeholder={t('editProfile.organizationPlaceholder')}
@@ -250,6 +249,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               {t('signup.about')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="about"
               multiline
               rows={5}
@@ -260,7 +260,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               style={{
                 display: isCompleting && user.about ? 'none' : ''
               }}
-              label={t('signup.about')}
               fullWidth
               height="200px"
               variant="filled"
@@ -279,6 +278,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               {t('editProfile.contactInformation')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="username"
               name="username"
               style={{ display: isCompleting && userName ? 'none' : '' }}
@@ -300,6 +300,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
           </Grid>
           <Grid item xs={12}>
             <PhoneNumber
+              className={classes.mobileTextField}
               defaultCountry='cr'
               value={user.telephones[0]}
               fullWidth
@@ -311,6 +312,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
           </Grid>
           <Grid item xs={12}>
             <PhoneNumber
+              className={classes.mobileTextField}
               defaultCountry='cr'
               fullWidth
               value={user.telephones[1]}
@@ -328,6 +330,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               {t('editProfile.addressDescription')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="address"
               style={{
                 display: isCompleting && user.address ? 'none' : ''
@@ -351,6 +354,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             <Grid item xs={6}>
               <Box className={classes.leftBox}>
                 <TextField
+                  className={classes.mobileTextField}
                   id="city"
                   style={{
                     display: isCompleting && user.address ? 'none' : ''
@@ -358,7 +362,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
                   label={t('editProfile.city')}
                   fullWidth
                   variant="filled"
-                  placeholder={t('San José')}
+                  placeholder={t('editProfile.cityPlaceholder')}
                   defaultValue={city}
                   InputLabelProps={{
                     shrink: true
@@ -370,6 +374,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             <Grid item xs={6}>
               <Box className={classes.rightBox}>
                 <TextField
+                  className={classes.mobileTextField}
                   id="state"
                   style={{
                     display: isCompleting && user.address ? 'none' : ''
@@ -377,7 +382,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
                   label={t('editProfile.stateProvince')}
                   fullWidth
                   variant="filled"
-                  placeholder={t('Tibás')}
+                  placeholder={t('editProfile.stateProvincePlaceholder')}
                   defaultValue={state}
                   InputLabelProps={{
                     shrink: true
@@ -389,6 +394,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
           </Grid>
           <Grid item xs={12}>
             <TextField
+              className={classes.mobileTextField}
               id="country"
               style={{
                 display: isCompleting && user.address ? 'none' : ''
@@ -396,7 +402,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               label={t('editProfile.country')}
               fullWidth
               variant="filled"
-              placeholder={t('Costa Rica')}
+              placeholder={t('editProfile.countryPlaceholder')}
               defaultValue={country}
               InputLabelProps={{
                 shrink: true
@@ -405,7 +411,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             />
           </Grid>
           <Grid item xs={12}>
-            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
+            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} paddingTop='4px' width="100%">
               <MapEditLocation
                 style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
                 onGeolocationChange={handleOnGeolocationChange}
@@ -420,7 +426,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
           <Grid container item xs={12} spacing={SPACING}>
             <Grid item xs={12}>
               <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} width="100%" >
-                <Divider className={classes.divider} />
                 <Typography className={classes.boldText} variant="h4">{t('common.schedule')}</Typography>
                 <Schedule
                   buttonText={t('schedule.editSchedule')}
@@ -434,7 +439,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             </Grid>
             <Grid item xs={12}>
               <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} width="100%">
-                <Divider className={classes.divider} />
                 <Typography className={classes.boldText} variant="h4">{t('common.categories')}</Typography>
                 <Typography variant="body1" className={classes.text}>
                   {t('categories.description')}
@@ -453,7 +457,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             </Grid>
           </Grid>
           <Grid item xs={12} >
-            <Divider className={classes.divider} />
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.imagery')}
             </Typography>
@@ -468,6 +471,7 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               )}
             </>
             <TextField
+              className={classes.mobileTextField}
               id="image-url"
               style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
               label={t('offersManagement.imageUrl')}
@@ -527,6 +531,15 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
             </div>
           </Grid>
           <Grid item xs={12} direction="column">
+            <Link to="/profile" className={classes.routerLink}>
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.cancelBtn}
+              >
+                {t('common.cancel')}
+              </Button>
+            </Link>
             <Box className={classes.btnWrapper}>
               <Button
                 variant="contained"
@@ -536,15 +549,6 @@ const EditProfileBankMobile = ({ profile, isCompleting, onSubmit, setField, load
               >
                 {t('common.save')}
               </Button>
-              <Link to="/profile" className={classes.routerLink}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.cancelBtn}
-                >
-                  {t('common.cancel')}
-                </Button>
-              </Link>
               {loading && <CircularProgress />}
             </Box>
           </Grid>
