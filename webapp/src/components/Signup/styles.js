@@ -12,6 +12,8 @@ export default (theme) => ({
     }
   },
   dialog: {
+    width: '480px',
+    height: '605px',
     paddingTop: "53px",
     paddingLeft: "53px",
     paddingRight: "53px",

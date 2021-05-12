@@ -90,8 +90,8 @@ export default (theme) => ({
     marginBottom: 10
   },
   dialog: {
-    width: '360px',
-    height: '600px',
+    width: '480px',
+    height: '605px',
     paddingTop: "20px",
     paddingBottom: "53px",
     [theme.breakpoints.down('md')]: {

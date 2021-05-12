@@ -34,6 +34,8 @@ export default (theme) => ({
     color: '#000000',
   },
   dialog: {
+    width: '480px',
+    height: '605px',
     paddingTop: "48px",
     paddingLeft: "48px",
     paddingRight: "48px"
