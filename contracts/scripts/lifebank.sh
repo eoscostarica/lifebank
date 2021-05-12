@@ -242,10 +242,23 @@ create_community_lacchain() {
     cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
+grant_lifebankcode_permission_in_lifebankcoin() {
+    echo 'Create Permission for Lifebankcode in Lifebankcoin'
+    mkdir -p ./stdout/permission
+    TEMP_DIR=./stdout/permission
+
+    cleos -u https://writer.eosio.cr push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
+    cleos -u https://writer.eosio.cr set account permission lifebankcoin active permission.json owner -j -d -s -p lifebankcoin >$TEMP_DIR/tx2.json
+    jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
+    jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
+    cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcoin@active
+}
+
 
 run_lifebank() {
     echo 'Installing LifeBank ...'
-    create_community_lacchain
+    grant_lifebankcode_permission_in_lifebankcoin
+    # create_community_lacchain
     # create_lifebank_wallet
     # create_lifebank_accounts
     # assign_resources

@@ -1,0 +1,23 @@
+{
+  "expiration": "2021-05-12T14:37:05",
+  "ref_block_num": 11906,
+  "ref_block_prefix": 1718737544,
+  "max_net_usage_words": 0,
+  "max_cpu_usage_ms": 0,
+  "delay_sec": 0,
+  "context_free_actions": [],
+  "actions": [{
+      "account": "writer",
+      "name": "run",
+      "authorization": [{
+          "actor": "costarica",
+          "permission": "writer"
+        }
+      ],
+      "data": ""
+    }
+  ],
+  "transaction_extensions": [],
+  "signatures": [],
+  "context_free_data": []
+}

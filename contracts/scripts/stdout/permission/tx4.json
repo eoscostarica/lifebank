@@ -1,0 +1,36 @@
+{
+  "expiration": "2021-05-12T14:37:05",
+  "ref_block_num": 11906,
+  "ref_block_prefix": 1718737544,
+  "max_net_usage_words": 0,
+  "max_cpu_usage_ms": 0,
+  "delay_sec": 0,
+  "context_free_actions": [],
+  "actions": [
+    {
+      "account": "writer",
+      "name": "run",
+      "authorization": [
+        {
+          "actor": "costarica",
+          "permission": "writer"
+        }
+      ],
+      "data": ""
+    },
+    {
+      "account": "eosio",
+      "name": "updateauth",
+      "authorization": [
+        {
+          "actor": "lifebankcoin",
+          "permission": "active"
+        }
+      ],
+      "data": "301d45709aa3968b00000000a8ed32320000000080ab26a701000000010002948d9276d4d3b0bc70d90bbc56c326e231295caccb15679644e98b5f59eee90f010001301d45709aa3968b00804a1401ea3055010000"
+    }
+  ],
+  "transaction_extensions": [],
+  "signatures": [],
+  "context_free_data": []
+}

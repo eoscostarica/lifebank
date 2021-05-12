@@ -1,0 +1,24 @@
+[
+  {
+    "account": "writer",
+    "name": "run",
+    "authorization": [
+      {
+        "actor": "costarica",
+        "permission": "writer"
+      }
+    ],
+    "data": ""
+  },
+  {
+    "account": "lifebankcode",
+    "name": "createcmm",
+    "authorization": [
+      {
+        "actor": "lifebankcode",
+        "permission": "active"
+      }
+    ],
+    "data": "134c69666542616e6b20436f73746120526963610000000000000000004c4946450000001d4c69666542616e6b20646576656c6f706d656e7420496e7374616e63657868747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f656f73636f737461726963612f6c69666562616e6b2f6d61737465722f646f63732f6c6f676f732f322d4f76657257686974652d6c69666562616e6b2d6c6f676f2d76312d6d617932352d323032302d30312e73766740420f0000000000004c494645000000"
+  }
+]

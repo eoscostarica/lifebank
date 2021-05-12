@@ -1,0 +1,24 @@
+[
+  {
+    "account": "writer",
+    "name": "run",
+    "authorization": [
+      {
+        "actor": "costarica",
+        "permission": "writer"
+      }
+    ],
+    "data": ""
+  },
+  {
+    "account": "eosio",
+    "name": "updateauth",
+    "authorization": [
+      {
+        "actor": "lifebankcoin",
+        "permission": "active"
+      }
+    ],
+    "data": "301d45709aa3968b00000000a8ed32320000000080ab26a701000000010002948d9276d4d3b0bc70d90bbc56c326e231295caccb15679644e98b5f59eee90f010001301d45709aa3968b00804a1401ea3055010000"
+  }
+]
