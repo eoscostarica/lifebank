@@ -1,7 +1,7 @@
 {
-  "expiration": "2021-05-12T18:00:39",
-  "ref_block_num": 36336,
-  "ref_block_prefix": 1133815806,
+  "expiration": "2021-05-12T18:02:47",
+  "ref_block_num": 36588,
+  "ref_block_prefix": 1594016486,
   "max_net_usage_words": 0,
   "max_cpu_usage_ms": 0,
   "delay_sec": 0,
@@ -24,10 +24,10 @@
       "authorization": [
         {
           "actor": "lifebankcoin",
-          "permission": "active"
+          "permission": "owner"
         }
       ],
-      "data": "301d45709aa3968b00000000a8ed32320000000080ab26a701000000010002948d9276d4d3b0bc70d90bbc56c326e231295caccb15679644e98b5f59eee90f010001301d45709aa3968b00804a1401ea3055010000"
+      "data": "301d45709aa3968b00000000a8ed32320000000080ab26a701000000010002141c1d381bcb27a798d6e72d29a2a362c0be39d5bc59880fa6ba2882293e248601000000"
     }
   ],
   "transaction_extensions": [],
