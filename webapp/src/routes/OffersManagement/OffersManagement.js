@@ -5,16 +5,13 @@ import Alert from '@material-ui/lab/Alert'
 import { makeStyles } from '@material-ui/core/styles'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
-import Select from '@material-ui/core/Select'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import MUIDataTable from 'mui-datatables'
+import Menu from '@material-ui/core/Menu'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import MenuItem from '@material-ui/core/MenuItem'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import IconButton from '@material-ui/core/IconButton'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -165,27 +162,39 @@ const OffersManagement = () => {
         break
     }
   }
+
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  };
+
+  const handleClose1 = () => {
+    setAnchorEl(null)
+  };
+
   const Actions = (active, offer_id) => (
-    <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel id="demo-simple-select-outlined-label">
-        {t('offersManagement.action')}
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-outlined-label"
-        id="demo-simple-select-outlined"
+    <div>
+      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        <MoreHorizIcon />
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
         value=""
-        onClick={(e) => handleActionClick(e.target.value, active, offer_id)}
-        label={t('offersManagement.action')}
+        open={Boolean(anchorEl)}
+        onClose={handleClose1}
       >
-        <MenuItem value="edit">{t('common.edit')}</MenuItem>
-        <MenuItem value="delete">{t('common.delete')}</MenuItem>
-        <MenuItem value={active ? 'deactivate' : 'activate'}>
+        <MenuItem onClick={(e) => handleActionClick("edit", active, offer_id)}>{t('common.edit')}</MenuItem>
+        <MenuItem onClick={(e) => handleActionClick("delete", active, offer_id)}>{t('common.delete')}</MenuItem>
+        <MenuItem onClick={(e) => handleActionClick(active ? 'deactivate' : 'activate', active, offer_id)}>
           {active
             ? t('offersManagement.deactivate')
             : t('offersManagement.activate')}
         </MenuItem>
-      </Select>
-    </FormControl>
+      </Menu>
+    </div>
   )
 
   const handleOpenClick = (offer) => {
@@ -278,7 +287,14 @@ const OffersManagement = () => {
               <MUIDataTable
                 title={t('offersManagement.tableTitle')}
                 data={offers.map((offer, key) => [
-                  offer.offer_name,
+                  <Button
+                    key={key}
+                    className={classes.offerName}
+                    onClick={() => handleOpenClick(offer)}
+                    aria-label="delete"
+                  >
+                    {offer.offer_name}
+                  </Button>,
                   offer.active
                     ? t('offersManagement.active')
                     : t('offersManagement.inactive'),
@@ -288,15 +304,7 @@ const OffersManagement = () => {
                   offer.end_date
                     ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
-
                   Actions(offer.active, offer.id),
-                  <IconButton
-                    key={key}
-                    onClick={() => handleOpenClick(offer)}
-                    aria-label="delete"
-                  >
-                    <ExpandMoreIcon />
-                  </IconButton>
                 ])}
                 columns={[
                   {
@@ -328,12 +336,6 @@ const OffersManagement = () => {
                     options: {
                       filter: false,
                     }
-                  },
-                  {
-                    name: t('offersManagement.details'),
-                    options: {
-                      filter: false,
-                    }
                   }
                 ]}
                 options={{
@@ -343,7 +345,6 @@ const OffersManagement = () => {
                   download: false,
                 }}
               />
-
             </Box>
           }
           {offers.length === 0 &&

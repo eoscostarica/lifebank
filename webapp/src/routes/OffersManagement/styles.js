@@ -186,5 +186,8 @@ export default (theme) => ({
   tableContent: {
     paddingTop: "30px",
     width: "100%"
+  },
+  offerName: {
+    textTransform: 'initial'
   }
 })
