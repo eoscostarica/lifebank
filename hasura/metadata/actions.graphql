@@ -328,6 +328,7 @@ type get_report_output {
 }
 
 type check_email_verified_output {
+  exist : Boolean!
   verified : Boolean!
 }
 
