@@ -89,7 +89,7 @@ const LimitationHandling = ({
   return (
     <Box className={classes.limitationHandlingPaper}>
       <TextField
-        id="cost-in-tokens"
+        id="quantity"
         label={t('offersManagement.quantity')}
         fullWidth
         min='1'
