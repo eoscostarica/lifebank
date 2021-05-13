@@ -12,15 +12,11 @@ export default (theme) => ({
     }
   },
   dialog: {
-    width: '480px',
-    height: '605px',
-    paddingTop: "53px",
-    paddingLeft: "53px",
-    paddingRight: "53px",
-    paddingBottom: "38px",
+    paddingTop: '48px',
+    paddingLeft: '48px',
+    paddingRight: '48px',
     [theme.breakpoints.down('md')]: {
-      paddingLeft: "21px",
-      paddingRight: "21px",
+      width: "100%",
     }
   },
   register: {

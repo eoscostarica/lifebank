@@ -15,6 +15,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
 import Backdrop from '@material-ui/core/Backdrop'
 import Snackbar from '@material-ui/core/Snackbar'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -48,7 +49,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
   const [currentUser, { login }] = useUser()
   const [open, setOpen] = useState(!!isModal)
   const [openSnackbar, setOpenSnackbar] = useState(false)
-  const [maxWidth] = useState('sm')
+  const [maxWidth] = useState('md')
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [isEmailValid, setEmailValid] = useState(false)
@@ -330,7 +331,6 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       <Dialog
         fullScreen={fullScreen}
         maxWidth={maxWidth}
-        fullWidth
         open={open}
         onClose={handleOpen}
         aria-labelledby="transition-modal-title"
@@ -341,99 +341,101 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
           timeout: 500
         }}
       >
-        <Box className={classes.dialog}>
-          <Box className={classes.closeIcon}>
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              onClick={handleOpen}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          </Box>
-          {activeStep !== 0 && (
-            <Box className={classes.goBack}>
-              <IconButton aria-label="go-back" onClick={handleGoBack}>
-                <ArrowBackIcon color="primary" />
+        <Box classname={classes.dialog}>
+          <DialogContent style={{ width: 550, height: 600 }}>
+            <Box className={classes.closeIcon}>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                onClick={handleOpen}
+              >
+                <CloseIcon fontSize="inherit" />
               </IconButton>
             </Box>
-          )}
-          <Box className={classes.register}>
-            <Box className={classes.stepperContent}>
-              {activeStep === 0 && (
-                <>
-                  <Typography className={classes.titleRegister}>{t('signup.register')}</Typography>
-                  <Typography className={classes.text}>{t('signup.registerText')}</Typography>
-                  <SignupRoleSelector onSubmit={handleRoleChange} />
-                </>
-              )}
-              {activeStep === 1 && role === 'donor' && (
-                <>
-                  <Typography className={classes.titleRegister}>{t('signup.asAdonor')}</Typography>
-                  <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
-                  <Suspense fallback={<CircularProgress />}>
-                    <SignupDonor
-                      onSubmit={handleCreateAccount}
-                      onSubmitWithAuth={handleCreateAccountWithAuth}
-                      loading={createAccountLoading || createAccountLoadingAuth}
-                      setField={handleSetField}
-                      isEmailValid={isEmailValid}
-                    >
-                      <ValidateEmail
-                        isValid={isEmailValid}
-                        loading={checkEmailLoading}
+            {activeStep !== 0 && (
+              <Box className={classes.goBack}>
+                <IconButton aria-label="go-back" onClick={handleGoBack}>
+                  <ArrowBackIcon color="primary" />
+                </IconButton>
+              </Box>
+            )}
+            <Box className={classes.register}>
+              <Box className={classes.stepperContent}>
+                {activeStep === 0 && (
+                  <>
+                    <Typography className={classes.titleRegister}>{t('signup.register')}</Typography>
+                    <Typography className={classes.text}>{t('signup.registerText')}</Typography>
+                    <SignupRoleSelector onSubmit={handleRoleChange} />
+                  </>
+                )}
+                {activeStep === 1 && role === 'donor' && (
+                  <>
+                    <Typography className={classes.titleRegister}>{t('signup.asAdonor')}</Typography>
+                    <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
+                    <Suspense fallback={<CircularProgress />}>
+                      <SignupDonor
+                        onSubmit={handleCreateAccount}
+                        onSubmitWithAuth={handleCreateAccountWithAuth}
+                        loading={createAccountLoading || createAccountLoadingAuth}
+                        setField={handleSetField}
+                        isEmailValid={isEmailValid}
+                      >
+                        <ValidateEmail
+                          isValid={isEmailValid}
+                          loading={checkEmailLoading}
+                          setField={handleSetField}
+                          user={user}
+                        />
+                      </SignupDonor>
+                    </Suspense>
+                  </>
+                )}
+                {activeStep === 1 && role === 'sponsor' && (
+                  <>
+                    <Typography className={classes.titleRegister}>{t('signup.asAsponsor')}</Typography>
+                    <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
+                    <Suspense fallback={<CircularProgress />}>
+                      <SimpleRegisterForm
+                        onSubmit={handleCreateAccount}
+                        loading={createAccountLoading}
+                        setField={handleSetField}
+                        isEmailValid={isEmailValid}
+                      >
+                        <ValidateEmail
+                          isValid={isEmailValid}
+                          loading={checkEmailLoading}
+                          user={user}
+                          setField={handleSetField}
+                        />
+                      </SimpleRegisterForm>
+                    </Suspense>
+                  </>
+                )}
+                {activeStep === 1 && role === 'lifebank' && (
+                  <>
+                    <Typography className={classes.titleRegister}>{t('signup.asAbank')}</Typography>
+                    <Typography variant="body1" className={classes.text}>{t('signup.preRegistrationRequirement')}</Typography>
+                    <Suspense fallback={<CircularProgress />}>
+                      <SignupLifeBank
+                        onSubmit={handlePreRegisterLifebank}
+                        loading={preRegisterLifebankLoading}
                         setField={handleSetField}
                         user={user}
-                      />
-                    </SignupDonor>
-                  </Suspense>
-                </>
-              )}
-              {activeStep === 1 && role === 'sponsor' && (
-                <>
-                  <Typography className={classes.titleRegister}>{t('signup.asAsponsor')}</Typography>
-                  <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
-                  <Suspense fallback={<CircularProgress />}>
-                    <SimpleRegisterForm
-                      onSubmit={handleCreateAccount}
-                      loading={createAccountLoading}
-                      setField={handleSetField}
-                      isEmailValid={isEmailValid}
-                    >
-                      <ValidateEmail
-                        isValid={isEmailValid}
-                        loading={checkEmailLoading}
-                        user={user}
-                        setField={handleSetField}
-                      />
-                    </SimpleRegisterForm>
-                  </Suspense>
-                </>
-              )}
-              {activeStep === 1 && role === 'lifebank' && (
-                <>
-                  <Typography className={classes.titleRegister}>{t('signup.asAbank')}</Typography>
-                  <Typography variant="body1" className={classes.text}>{t('signup.preRegistrationRequirement')}</Typography>
-                  <Suspense fallback={<CircularProgress />}>
-                    <SignupLifeBank
-                      onSubmit={handlePreRegisterLifebank}
-                      loading={preRegisterLifebankLoading}
-                      setField={handleSetField}
-                      user={user}
-                      isEmailValid={isEmailValid}
-                    >
-                      <ValidateEmail
-                        isValid={isEmailValid}
-                        loading={checkEmailLoading}
-                        user={user}
-                        setField={handleSetField}
-                      />
-                    </SignupLifeBank>
-                  </Suspense>
-                </>
-              )}
+                        isEmailValid={isEmailValid}
+                      >
+                        <ValidateEmail
+                          isValid={isEmailValid}
+                          loading={checkEmailLoading}
+                          user={user}
+                          setField={handleSetField}
+                        />
+                      </SignupLifeBank>
+                    </Suspense>
+                  </>
+                )}
+              </Box>
             </Box>
-          </Box>
+          </DialogContent>
         </Box>
       </Dialog>
       <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleOpenAlert}>

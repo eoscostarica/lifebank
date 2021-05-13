@@ -34,11 +34,14 @@ export default (theme) => ({
     color: '#000000',
   },
   dialog: {
-    width: '480px',
-    height: '605px',
-    paddingTop: "48px",
-    paddingLeft: "48px",
-    paddingRight: "48px"
+    width: '200',
+    height: '600',
+    paddingTop: '48px',
+    paddingLeft: '48px',
+    paddingRight: '48px',
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+    }
   },
   title: {
     fontFamily: "Roboto",
