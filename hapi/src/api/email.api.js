@@ -63,16 +63,20 @@ const checkEmailVerified = async ({ account }) => {
     ]
   })
 
-  if (user) return { verified: user.email_verified }
+  if (user) return { exist: true, verified: user.email_verified }
 
   const preRegisterUser = await preRegisterLifebankApi.getOne({
     email: { _eq: account }
   })
 
   if (preRegisterUser.preregister_lifebank.length > 0)
-    return { verified: preRegisterUser.preregister_lifebank[0].email_verified }
+    return {
+      exist: true,
+      verified: preRegisterUser.preregister_lifebank[0].email_verified
+    }
 
   return {
+    exist: false,
     verified: false
   }
 }

@@ -123,7 +123,6 @@ const Categories = ({
                 </Box>
                 <Box className={classes.CategoriesListResult}>
                   <Typography variant="h6">{t(`categories.${CategoriesItem.category}`)}</Typography>
-
                 </Box>
                 <Box className={classes.boxDivider}>
 
