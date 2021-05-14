@@ -225,7 +225,17 @@ const EditProfilePage = () => {
               />
             </Suspense>
           )}
-        </Box >
+          {!loading && currentUser && profile?.role === 'donor' && (
+            <Suspense fallback={<CircularProgress />}>
+              <EditProfileDonor
+                profile={profile}
+                onConsentChange={handleConsentChange}
+                loading={grantConsentLoading || revokeConsentLoading || editLoading}
+                onSubmit={handleUpdateUser}
+              />
+            </Suspense>
+          )}
+        </Box>
       )}
       <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
         <Alert
