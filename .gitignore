@@ -1,6 +1,7 @@
 .DS_Store
 .env*
 !.env.example
+!.envk8s
 db_data
 wallet_data
 certificates
