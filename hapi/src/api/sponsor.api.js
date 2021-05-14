@@ -55,7 +55,8 @@ const editProfile = async (account, profile) => {
 }
 
 const signup = async (account, profile) => {
-  await accountApi.grantConsent(account)
+  const resultConsent = await accountApi.grantConsent(account)
+  console.log('RESULT-CONSENT', resultConsent)
 
   const password = await vaultApi.getPassword(account)
   const addSponsorTransaction = await lifebankcodeUtils.addSponsor(
@@ -63,6 +64,8 @@ const signup = async (account, profile) => {
     password,
     profile
   )
+
+  console.log('ADD-SPONSOR-TRANSACTION', addSponsorTransaction)
 
   await historyApi.insert(addSponsorTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)

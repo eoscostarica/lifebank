@@ -75,7 +75,7 @@ create_lifebank_acount_to_lacchain() {
 
 run_lifebank() {
     echo 'Installing LifeBank ...'
-    consent
+    deploy_lifebank_contracts_to_lacchain
 }
 
 run_lifebank

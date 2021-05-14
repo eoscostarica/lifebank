@@ -113,7 +113,7 @@ const addSponsor = async (
   password,
   { name, geolocation, ...profile }
 ) => {
-  const response = await eosUtil.transact(
+  return await eosUtil.transact(
     [
       {
         authorization: [
@@ -125,30 +125,29 @@ const addSponsor = async (
         account: CONTRACT_NAME,
         name: 'addsponsor',
         data: {
-          account,
-          sponsor_name: name,
-          name: profile.name || '',
-          email: profile.email || '',
-          website: profile.website || '',
-          telephones: profile.telephones || '',
-          business_type: profile.business_type || '',
-          schedule: profile.schedule || '',
-          longitude: profile.longitude || '',
-          location: JSON.stringify(geolocation),
-          logo_url: profile.logo_url || '',
-          about: profile.about || '',
-          address: profile.address || '',
-          photos: profile.photos || '',
-          social_media_links: profile.social_media_links || '',
-          ...profile,
-          community_asset: COMMUNITY_ASSET
+          account
+          // sponsor_name: name || '',
+          // name: profile.name || '',
+          // email: profile.email || '',
+          // website: profile.website || '',
+          // telephones: profile.telephones || '',
+          // business_type: profile.business_type || '',
+          // schedule: profile.schedule || '',
+          // longitude: profile.longitude || '',
+          // location: geolocation? JSON.stringify(geolocation): '',
+          // logo_url: profile.logo_url || '',
+          // about: profile.about || '',
+          // address: profile.address || '',
+          // photos: profile.photos || '',
+          // social_media_links: profile.social_media_links || '',
+          // community_asset: COMMUNITY_ASSET,
+          // ...profile
         }
       }
     ],
     account,
     password
   )
-  return response
 }
 
 const getDonor = async account => {

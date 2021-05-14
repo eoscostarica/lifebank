@@ -148,6 +148,8 @@ const getTableRows = (options) =>
   eosApi.getTableRows({ json: true, ...options })
 
 const transact = async (actions, account, password) => {
+  console.log('ACCOUNT', account)
+  console.log('PASSWORD', password)
   try {
     await wallet.unlock(account, password)
   } catch (error) {}
@@ -159,15 +161,34 @@ const transact = async (actions, account, password) => {
     chainId: eosConfig.chainId,
     signatureProvider: new JsSignatureProvider(keys)
   })
+  actions.unshift(
+    {
+      authorization: [
+        {
+          actor: 'costarica',
+          permission: 'writer'
+        }
+      ],
+      account: 'writer',
+      name: 'run',
+      data: {}
+    }
+  )
+
+  console.log('ACTIONS', actions)
+  
   const transaction = await api.transact(
     {
       actions
     },
     {
       blocksBehind: 3,
-      expireSeconds: 30
+      expireSeconds: 30,
+      sign: true
     }
   )
+
+  console.log('FINISHED-TRANSACTION')
   await wallet.lock(account)
   return transaction
 }
