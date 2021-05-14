@@ -467,7 +467,7 @@
       "activate": "Activar",
       "active": "Activa",
       "inactive": "Inactiva",
-      "noProvidedDate": "Sin fecha",
+      "noProvidedDate": "*",
       "youHaveNoAddedOffers": "No tienes ofertas disponibles",
       "deleteOfferConfirmation": "La oferta se eliminará, ¿desea proseguir?",
       "yesDeleteIt": "Si, borrar",

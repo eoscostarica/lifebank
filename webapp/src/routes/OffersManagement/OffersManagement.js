@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import MUIDataTable from 'mui-datatables'
 import Menu from '@material-ui/core/Menu'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 import MenuItem from '@material-ui/core/MenuItem'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -176,7 +176,7 @@ const OffersManagement = () => {
   const Actions = (active, offer_id) => (
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        <MoreHorizIcon />
+        <MoreVertIcon />
       </Button>
       <Menu
         id="simple-menu"

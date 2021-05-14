@@ -188,6 +188,11 @@ export default (theme) => ({
     width: "100%"
   },
   offerName: {
-    textTransform: 'initial'
+    textTransform: 'initial',
+    textAlign: 'right',
+    width: "100%"
+  },
+  column: {
+    textAlign: 'center'
   }
 })
