@@ -93,11 +93,7 @@ const LimitationHandling = ({
         label={t('offersManagement.quantity')}
         type="number"
         fullWidth
-        placeholder={t('offersManagement.quantityPlaceholder')}
         variant="outlined"
-        InputLabelProps={{
-          shrink: true
-        }}
         className={classes.textField}
         onChange={(event) => setQuantity(Number(event.target.value))}
       />
@@ -321,15 +317,11 @@ const GenericOfferFormComponent = ({
                 id="offer-name"
                 label={t('offersManagement.offerName')}
                 variant="outlined"
-                placeholder={t('offersManagement.offerNamePlaceholder')}
                 value={offer.offer_name || undefined}
                 fullWidth
                 onChange={(event) =>
                   setOffer({ ...offer, offer_name: event.target.value })
                 }
-                InputLabelProps={{
-                  shrink: true
-                }}
                 className={classes.textField}
               />
               <FormControl variant="outlined" className={classes.textField}>
@@ -356,15 +348,11 @@ const GenericOfferFormComponent = ({
                 id="offer-description"
                 label={t('offersManagement.offerDescription')}
                 variant="outlined"
-                placeholder={t('offersManagement.offerDescriptionPlaceholder')}
                 value={offer.description || undefined}
                 fullWidth
                 onChange={(event) =>
                   setOffer({ ...offer, description: event.target.value })
                 }
-                InputLabelProps={{
-                  shrink: true
-                }}
                 className={classes.textField}
               />
               <TextField
@@ -372,12 +360,8 @@ const GenericOfferFormComponent = ({
                 label={t('offersManagement.costInTokens')}
                 variant="outlined"
                 onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
-                placeholder={t('offersManagement.costInTokensPlaceholder')}
                 value={offer.cost_in_tokens || undefined}
                 fullWidth
-                InputLabelProps={{
-                  shrink: true
-                }}
                 InputProps={{
                   inputComponent: NumberFormatCustom,
                 }}
@@ -424,6 +408,7 @@ const GenericOfferFormComponent = ({
                   <LimitationHandling
                     setQuantity={(val) => setOffer({ ...offer, quantity: val })}
                     initialDates={[offer.start_date, offer.end_date]}
+                    fullWidth
                     setDates={(dates) =>
                       setOffer({
                         ...offer,
@@ -431,7 +416,7 @@ const GenericOfferFormComponent = ({
                         end_date: dates[1]
                       })
                     }
-                    classes={classes}
+                    borderRadius='15%'
                   />
                 )}
               </FormControl>
@@ -441,12 +426,8 @@ const GenericOfferFormComponent = ({
                 id="image-url"
                 label={t('offersManagement.imageUrl')}
                 variant="outlined"
-                placeholder={t('offersManagement.imageUrlPlaceholder')}
                 fullWidth
                 inputRef={imgUrlValueRef}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 onChange={(e) => setDisableUrlInput(e.target.value.length < 1)}
                 className={classes.textField}
                 onKeyPress={(event) =>
