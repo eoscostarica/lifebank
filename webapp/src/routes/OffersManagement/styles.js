@@ -186,9 +186,5 @@ export default (theme) => ({
   tableContent: {
     paddingTop: "30px",
     width: "100%"
-  },
-  limitationHandling: {
-    borderRadius: 15,
-    width: "100%"
   }
 })

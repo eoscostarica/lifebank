@@ -416,7 +416,7 @@ const GenericOfferFormComponent = ({
                         end_date: dates[1]
                       })
                     }
-                    borderRadius='15%'
+                    classes={classes}
                   />
                 )}
               </FormControl>
