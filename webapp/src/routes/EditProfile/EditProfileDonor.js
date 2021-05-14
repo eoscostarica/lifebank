@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
 import { useTranslation } from 'react-i18next'
+import Grid from '@material-ui/core/Grid'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -26,44 +27,56 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Box className={classes.textFieldWrapper}>
-        <TextField
-          id="email"
-          label={t('signup.name')}
-          fullWidth
-          placeholder={t('editProfile.namePlaceholder')}
-          defaultValue={user.name === "undefined" ? '' : user.name}
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => handleSetField('name', event.target.value)}
-          className={classes.textField}
-        />
-      </Box>
-      <Typography variant="body1">{t('about.weDontRequest')}</Typography>
-      <Box className={classes.btnWrapper}>
-        <Link to="/profile" className={classes.routerLink}>
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.cancelBtn}
-          >
-            {t('common.cancel')}
-          </Button>
-        </Link>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => onSubmit(user)}
-          className={classes.saveBtn}
-        >
-          {t('common.save')}
-        </Button>
-        {loading && <CircularProgress />}
-      </Box>
-
-    </form>
+      <Grid container spacing={2} xs={12}>
+        <Grid item xs={12}>
+          <Typography className={classes.boldText} variant="h2">
+            {t('editProfile.editDonorsInformation')}
+          </Typography>
+          <Typography className={classes.text} variant="body1">
+            {t('about.weDontRequest')}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Box className={classes.textFieldWrapper}>
+            <TextField
+              id="email"
+              label={t('signup.name')}
+              fullWidth
+              placeholder={t('editProfile.namePlaceholder')}
+              defaultValue={user.name === "undefined" ? '' : user.name}
+              variant="filled"
+              InputLabelProps={{
+                shrink: true
+              }}
+              onChange={(event) => handleSetField('name', event.target.value)}
+              className={classes.textField}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box className={classes.btnWrapper}>
+            <Link to="/profile" className={classes.routerLink}>
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.cancelBtn}
+              >
+                {t('common.cancel')}
+              </Button>
+            </Link>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => onSubmit(user)}
+              className={classes.saveBtn}
+            >
+              {t('common.save')}
+            </Button>
+            {loading && <CircularProgress />}
+          </Box>
+        </Grid>
+      </Grid>
+    </form >
   )
 }
 
