@@ -72,6 +72,7 @@ export const SEND_EMAIL_MUTATION = gql`
 export const CHECK_EMAIL_VERIFIED = gql`
   mutation($account: String!) {
     check_email_verified(account: $account) {
+      exist
       verified
     }
   }
