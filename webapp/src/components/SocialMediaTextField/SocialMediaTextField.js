@@ -13,27 +13,27 @@ const SocialMediaTextField = ({
   defaultValue,
   onChangeSocialMediaTextField
 }) => (
-    <TextField
-      id={idText}
-      label={label}
-      variant="outlined"
-      placeholder={placeholder}
-      value={defaultValue}
-      fullWidth
-      onChange={(e) => onChangeSocialMediaTextField(e.target.value)}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            {icon}
-          </InputAdornment>
-        )
-      }}
-      InputLabelProps={{
-        shrink: true
-      }}
-      className={textFieldClass}
-    />
-  )
+  <TextField
+    id={idText}
+    label={label}
+    variant="filled"
+    placeholder={placeholder}
+    value={defaultValue}
+    fullWidth
+    onChange={(e) => onChangeSocialMediaTextField(e.target.value)}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          {icon}
+        </InputAdornment>
+      )
+    }}
+    InputLabelProps={{
+      shrink: true
+    }}
+    className={textFieldClass}
+  />
+)
 
 SocialMediaTextField.propTypes = {
   idText: PropTypes.string,

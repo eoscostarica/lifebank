@@ -34,6 +34,8 @@
       "homepage": "Home page",
       "tools": "Tools",
       "yourDonations": "Your Donations",
+      "downloadReport": "Download report",
+      "editPage": "Edit page",
       "information": "Information",
       "aboutLifebank": "About Lifebank",
       "useTerms": "Terms of Use",
@@ -244,7 +246,6 @@
       "tokenExpiration": "The session has expired"
     },
     "editProfile": {
-      "editProfile": "Edit Profile",
       "error": "Error",
       "duringSaveProfileData": "While saving profile information",
       "goToProfile": "Go to profile!",
@@ -263,7 +264,7 @@
       "highLevelReward": "High Level Reward",
       "logoUrl": "Logo Url",
       "logoUrlPlaceholder": "Your logo url here",
-      "sponsorNamePlaceholder": "Your Sponsor name here",
+      "sponsorNamePlaceholder": "Your Business name here",
       "photoUrl": "Photo url",
       "photoUrlPlaceholder": "Your photo url here",
       "facebookProfileUrl": "Facebook profile url",
@@ -273,7 +274,24 @@
       "twitterUsername": "Twitter username",
       "twitterUsernamePlaceholder": "Your Twitter username here",
       "noValidUrl": "The link must not have special characters",
-      "noUniqueUrl": "This link is associated with another account"
+      "noUniqueUrl": "This link is associated with another account",
+      "editTitleLifebank": "Edit Lifebank Page",
+      "editTitleSponsor": "Edit Business Page",
+      "information": "The information on this page can be viewed on your info page. Please, include detailed and accurate information so donors can easily find you.",
+      "officialName": "Official Name",
+      "contactInformation": "Contact Information",
+      "addressInformation": "Address Information",
+      "addressDescription": "Describe your address and use the map to select the right location so the donors can get to you easily.",
+      "imagery": "Images",
+      "imageryDescription": "Include images that are appealing to donors! Paste a link to an image you want to include in your profile. You can upload images using imgur.com for free. Your logo or avatar must be square-shaped and no larger than 500 px or bigger than 250 KB. The banner image should be horizontal, no larger than 1200 px wide or bigger than 1 MB",
+      "city": "City",
+      "stateProvince": "State/Province",
+      "country": "Country",
+      "cityPlaceholder": "New York",
+      "stateProvincePlaceholder": "New York",
+      "countryPlaceholder": "United States",
+      "typeOfSponsor": "Type of Business",
+      "socialMedia": "Social Media"
     },
     "donations": {
       "donations": "Donations",
@@ -357,7 +375,8 @@
       "saveChanges": "Save changes",
       "currentLanguage": "en-US",
       "near": "Near",
-      "offers": "Offers"
+      "offers": "Offers",
+      "registeredEmail": "Registered Email Address"
     },
     "claimReward": {
       "claimReward": "Claim Reward",
@@ -373,16 +392,16 @@
       "message2": "These offers aren't available because you unchecked this category. Change it anytime."
     },
     "credentialsRecovery": {
-      "credentialsRecovery": "Credentials Recovery",
+      "passwordRecovery": "Recover Password",
       "emailError": "The email entered is not associated with any account",
       "changePasswordInstructions": "To change your password, enter the email associated with your account, the current password and the new one",
       "changePassword": "Change Password",
       "currentPassword": "Current password",
       "errorPassword": "The current password does not match your email",
       "newPassword": "New password",
-      "instructionCredentialsRecovery": "Enter the email associated with your account to be able to recover it",
+      "instructionCredentialsRecovery": "Use your email address registered to Lifebank to recover your password. We’ll send you an email for you to set up a new password.",
       "checkYourEmail": "Check your email",
-      "recovery": "Recover",
+      "recovery": "Send",
       "passwordNotChangable": "Please, log in to your Facebook or Google account to change your password"
     },
     "emailVerification": {
@@ -488,6 +507,22 @@
       "Oct": "October",
       "Nov": "November",
       "Dec": "December"
+    },
+    "report": {
+      "from": "from",
+      "to": "to",
+      "pdfHeader": "History of transactions",
+      "pdfFooter": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations. For more information about Lifebank, go to http://lifebank.io/.",
+      "sentTokens": "Sent tokens",
+      "receivedTokens": "Received tokens",
+      "business": "Business",
+      "user": "User",
+      "donor": "Donor",
+      "date": "Date",
+      "time": "Time",
+      "tokens": "Tokens",
+      "offer": "Offer",
+      "reportDownloadName": "Report"
     }
   }
 }

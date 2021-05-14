@@ -54,6 +54,13 @@ export const LOGIN_MUTATION = gql`
   }
 `
 
+export const GET_REPORT_QUERY = gql`
+  query($dateFrom: String, $dateTo: String) {
+    get_report(dateFrom: $dateFrom, dateTo: $dateTo) {
+      notifications
+    }
+  }
+`
 export const SEND_EMAIL_MUTATION = gql`
   mutation($account: String!, $emailContent: jsonb!) {
     send_email(account: $account, emailContent: $emailContent) {
@@ -65,6 +72,7 @@ export const SEND_EMAIL_MUTATION = gql`
 export const CHECK_EMAIL_VERIFIED = gql`
   mutation($account: String!) {
     check_email_verified(account: $account) {
+      exist
       verified
     }
   }

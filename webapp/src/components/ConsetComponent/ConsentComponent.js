@@ -26,9 +26,7 @@ const ConsetComponent = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [openConsent, setOpenConsent] = useState(false)
-  const [openAlert, setOpenAlert] = useState(false)
-  const [messegaAlert, setMessegaAlert] = useState("false")
-  const [severity, setSeverity] = useState("success")
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [maxWidthConset] = useState('sm')
@@ -59,10 +57,11 @@ const ConsetComponent = () => {
         profile
       }
     })
+    handleOpenConsent()
   }
 
-  const handleOpenAlert = () => {
-    setOpenAlert(!openAlert)
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
   useEffect(() => {
@@ -79,24 +78,29 @@ const ConsetComponent = () => {
   useEffect(() => {
     if (signupResult) {
       if (signupResult.success) {
-        if(profile.role === 'sponsor') updateProfile()
-        setSeverity("success")
-        setMessegaAlert(t('signup.consentGranted'))
-        handleOpenAlert()
-        handleOpenConsent()
+        if (profile.role === 'sponsor') updateProfile()
+        setOpenSnackbar({
+          show: true,
+          message: t('signup.consentGranted'),
+          severity: 'success'
+        })
       } else {
-        setSeverity("error")
-        setMessegaAlert(t('signup.consentError'))
-        handleOpenAlert()
+        setOpenSnackbar({
+          show: true,
+          message: t('signup.consentError'),
+          severity: 'error'
+        })
       }
     }
   }, [signupResult])
 
   useEffect(() => {
     if (errorSignup || errorProfile) {
-      setSeverity("error")
-      setMessegaAlert(t('signup.consentError'))
-      handleOpenAlert()
+      setOpenSnackbar({
+        show: true,
+        message: t('signup.consentError'),
+        severity: 'error'
+      })
     }
   }, [errorSignup, errorProfile])
 
@@ -148,9 +152,9 @@ const ConsetComponent = () => {
           </Box>
         </Box>
       </Dialog>
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
-        <Alert onClose={handleOpenAlert} severity={severity}>
-          {messegaAlert}
+      <Snackbar open={openSnackbar.show} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert severity={openSnackbar.severity}>
+          {openSnackbar.message}
         </Alert>
       </Snackbar>
     </>
