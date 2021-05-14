@@ -15,7 +15,6 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
-import Divider from '@material-ui/core/Divider'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import InstagramIcon from '@material-ui/icons/Instagram'
@@ -32,14 +31,14 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 const CHARACTER_LIMIT = 512
-const SPACING = 2
+const SPACING = 1
 
 const {
   LOCATION_TYPES: { SPONSOR, PENDING_SPONSOR },
   SPONSOR_TYPES
 } = constants
 
-const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
+const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const photoUrlValueRef = useRef(undefined)
@@ -53,7 +52,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     about: ""
   });
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
-  const [error, setError] = useState(false)
   const [socialMedia] = useState(
     profile.social_media_links !== '[]'
       ? JSON.parse(profile.social_media_links)
@@ -130,6 +128,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
         : [...user.social_media_links, { name: name, url: url }]
     })
   }
+
   const socialMediaValue = (social) => {
     if (socialMedia.find((socialMediaList) => socialMediaList.name === social))
       return socialMedia.find((socialMediaList) => socialMediaList.name === social).url
@@ -137,6 +136,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
       return undefined
     }
   }
+
   const addAddress = () => {
     const completeAddress = address.concat(',', city, ',', state, ',', country)
     handleSetField('address', completeAddress)
@@ -201,9 +201,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Grid container spacing={SPACING} xs={12}>
-        <Grid container item xs={12} spacing={SPACING} direction="column">
-          <Grid item xs={12}>
+      <Box className={classes.mobile}>
+        <Grid container spacing={SPACING} xs={12}>
+          <Grid item xs={12} direction="column" spacing={SPACING} >
             <Typography className={classes.boldText} variant="h2">
               {t('editProfile.editTitleSponsor')}
             </Typography>
@@ -211,11 +211,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               {t('editProfile.information')}
             </Typography>
           </Grid>
-          <Grid item xs={12} >
+          <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.officialName')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="name"
               name="name"
               style={{ display: showOrHide(profile.name) }}
@@ -226,15 +227,15 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               InputLabelProps={{
                 shrink: true
               }}
-              className={classes.textField}
               onChange={(event) => handleSetField('name', event.target.value)}
             />
           </Grid>
-          <Grid item xs={12} >
+          <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('signup.about')}
             </Typography>
             <TextField
+              className={classes.mobileTextField}
               id="about"
               style={{ display: showOrHide(profile.about) }}
               multiline
@@ -254,7 +255,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               InputLabelProps={{
                 shrink: true
               }}
-              className={classes.textField}
               fullWidth
               onChange={(event) => handleSetField('about', event.target.value)}
             />
@@ -287,55 +287,51 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               </Select>
             </FormControl>
           </Grid>
-        </Grid>
-        <Grid container item xs={12} direction="column">
-          <Typography className={classes.boldText} variant="h4">
-            {t('editProfile.contactInformation')}
-          </Typography>
-          <Grid container item spacing={SPACING} xs={12}>
-            <Grid item xs={4}>
-              <TextField
-                id="website"
-                style={{ display: showOrHide(profile.website) }}
-                label={t('common.website')}
-                variant="filled"
-                placeholder="Website"
-                defaultValue={user.website}
-                fullWidth
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                onChange={(event) => handleSetField('website', event.target.value)}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <PhoneNumber
-                className={classes.textField}
-                defaultCountry='cr'
-                value={user.telephones[0]}
-                fullWidth
-                label={t('signup.phoneNumber')}
-                id="phoneNumber1"
-                variant="filled"
-                onChange={(event) => setPhoneValue1(event)}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <PhoneNumber
-                className={classes.textField}
-                defaultCountry='cr'
-                fullWidth
-                value={user.telephones[1]}
-                label={t('signup.phoneNumber')}
-                id="phoneNumber1"
-                variant="filled"
-                onChange={(event) => setPhoneValue2(event)}
-              />
-            </Grid>
+          <Grid item xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('editProfile.contactInformation')}
+            </Typography>
           </Grid>
-        </Grid>
-        <Grid container item xs={12} spacing={SPACING} direction="row" justify="space-between">
+          <Grid item xs={12}>
+            <TextField
+              className={classes.mobileTextField}
+              id="website"
+              style={{ display: showOrHide(profile.website) }}
+              label={t('common.website')}
+              variant="filled"
+              placeholder="Website"
+              defaultValue={user.website}
+              fullWidth
+              InputLabelProps={{
+                shrink: true
+              }}
+              onChange={(event) => handleSetField('website', event.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <PhoneNumber
+              className={classes.mobileTextField}
+              defaultCountry='cr'
+              value={user.telephones[0]}
+              fullWidth
+              label={t('signup.phoneNumber')}
+              id="phoneNumber1"
+              variant="filled"
+              onChange={(event) => setPhoneValue1(event)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <PhoneNumber
+              className={classes.mobileTextField}
+              defaultCountry='cr'
+              fullWidth
+              value={user.telephones[1]}
+              label={t('signup.phoneNumber')}
+              id="phoneNumber1"
+              variant="filled"
+              onChange={(event) => setPhoneValue2(event)}
+            />
+          </Grid>
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.addressInformation')}
@@ -343,110 +339,99 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <Typography className={classes.text} variant="body1">
               {t('editProfile.addressDescription')}
             </Typography>
+            <TextField
+              className={classes.mobileTextField}
+              id="address"
+              style={{
+                display: isCompleting && user.address ? 'none' : ''
+              }}
+              label={t('signup.address')}
+              fullWidth
+              variant="filled"
+              placeholder={t('signup.addressPlaceholder')}
+              defaultValue={address}
+              InputLabelProps={{
+                shrink: true
+              }}
+              onChange={(event) => setAddress(event.target.value)}
+            />
           </Grid>
-          <Grid container item xs={6} spacing={SPACING}>
-            <Grid item xs={12}>
-              <TextField
-                id="address"
-                style={{
-                  display: isCompleting && user.address ? 'none' : ''
-                }}
-                className={classes.textField}
-                label={t('signup.address')}
-                fullWidth
-                variant="filled"
-                placeholder={t('signup.addressPlaceholder')}
-                defaultValue={address}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                onChange={(event) => setAddress(event.target.value)}
+          <Grid
+            container
+            item xs={12}
+            justify="space-between"
+          >
+            <Grid item xs={6}>
+              <Box className={classes.leftBox}>
+                <TextField
+                  className={classes.mobileTextField}
+                  id="city"
+                  style={{
+                    display: isCompleting && user.address ? 'none' : ''
+                  }}
+                  label={t('editProfile.city')}
+                  fullWidth
+                  variant="filled"
+                  placeholder={t('editProfile.cityPlaceholder')}
+                  defaultValue={city}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onChange={(event) => setCity(event.target.value)}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box className={classes.rightBox}>
+                <TextField
+                  className={classes.mobileTextField}
+                  id="state"
+                  style={{
+                    display: isCompleting && user.address ? 'none' : ''
+                  }}
+                  label={t('editProfile.stateProvince')}
+                  fullWidth
+                  variant="filled"
+                  placeholder={t('editProfile.stateProvincePlaceholder')}
+                  defaultValue={state}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  onChange={(event) => setState(event.target.value)}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              className={classes.mobileTextField}
+              id="country"
+              style={{
+                display: isCompleting && user.address ? 'none' : ''
+              }}
+              label={t('editProfile.country')}
+              fullWidth
+              variant="filled"
+              placeholder={t('editProfile.countryPlaceholder')}
+              defaultValue={country}
+              InputLabelProps={{
+                shrink: true
+              }}
+              onChange={(event) => setCountry(event.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} paddingTop='4px' width="100%">
+              <MapEditLocation
+                onGeolocationChange={handleOnGeolocationChange}
+                markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
+                markerLocation={user.geolocation}
+                width="100%"
+                height={287}
+                mb={1}
               />
-            </Grid>
-            <Grid
-              container
-              item xs={12}
-              justify="space-between"
-            >
-              <Grid item xs={6}>
-                <Box className={classes.leftBox}>
-                  <TextField
-                    className={classes.textField}
-                    id="city"
-                    style={{
-                      display: isCompleting && user.address ? 'none' : ''
-                    }}
-                    label={t('editProfile.city')}
-                    fullWidth
-                    variant="filled"
-                    placeholder={t('editProfile.cityPlaceholder')}
-                    defaultValue={city}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    onChange={(event) => setCity(event.target.value)}
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Box className={classes.rightBox}>
-                  <TextField
-                    className={classes.textField}
-                    id="state"
-                    style={{
-                      display: isCompleting && user.address ? 'none' : ''
-                    }}
-                    label={t('editProfile.stateProvince')}
-                    fullWidth
-                    variant="filled"
-                    placeholder={t('editProfile.stateProvincePlaceholder')}
-                    defaultValue={state}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    onChange={(event) => setState(event.target.value)}
-                  />
-                </Box>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className={classes.textField}
-                id="country"
-                style={{
-                  display: isCompleting && user.address ? 'none' : ''
-                }}
-                label={t('editProfile.country')}
-                fullWidth
-                variant="filled"
-                placeholder={t('editProfile.countryPlaceholder')}
-                defaultValue={country}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                onChange={(event) => setCountry(event.target.value)}
-              />
-            </Grid>
+            </Box>
           </Grid>
-          <Grid item xs={6}>
-            {
-              (isCompleting && profile.location === '') ||
-                (!isCompleting && profile.location !== '') ? (
-                <>
-                  <MapEditLocation
-                    onGeolocationChange={handleOnGeolocationChange}
-                    markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
-                    markerLocation={user.geolocation}
-                    className={classes.mapField}
-                    mb={1}
-                  />
-                </>
-              ) : null
-            }
-          </Grid>
-        </Grid>
-        <Grid container item xs={12} spacing={SPACING}>
-          <Divider className={classes.divider} />
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('common.schedule')}
@@ -464,20 +449,16 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               </Box>
             </Box>
           </Grid>
-        </Grid>
-        <Grid container item xs={12} direction="row" spacing={SPACING}>
           <Grid item xs={12}>
-            <Typography className={classes.boldTextVariant} variant="h4">
+            <Typography className={classes.boldText} variant="h4">
               {t('editProfile.socialMedia')}
             </Typography>
-          </Grid>
-          <Grid item xs={4}>
             <Box
               width="100%"
               style={{ display: showOrHideSocialMedia('instagram') }}
             >
               <SocialMediaTextField
-                textFieldClass={classes.textFieldSocialMedia}
+                textFieldClass={classes.mobileTextField}
                 idText="instagram-username"
                 name="instagram"
                 label={t('editProfile.instagramUsername')}
@@ -490,13 +471,13 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               />
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12}>
             <Box
               width="100%"
               style={{ display: showOrHideSocialMedia('facebook') }}
             >
               <SocialMediaTextField
-                textFieldClass={classes.textFieldSocialMedia}
+                textFieldClass={classes.mobileTextField}
                 idText="facebook-profile-url"
                 name="facebook"
                 label={t('editProfile.facebookProfileUrl')}
@@ -509,13 +490,13 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               />
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12}>
             <Box
               width="100%"
               style={{ display: showOrHideSocialMedia('twitter') }}
             >
               <SocialMediaTextField
-                textFieldClass={classes.textFieldSocialMedia}
+                textFieldClass={classes.mobileTextField}
                 idText="twitter-username"
                 name="twitter"
                 label={t('editProfile.twitterUsername')}
@@ -528,9 +509,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               />
             </Box>
           </Grid>
-        </Grid>
-        <Grid container item xs={12} direction="column" spacing={SPACING}>
-          <Grid container item xs={12}>
+          <Grid item xs={12} >
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.imagery')}
             </Typography>
@@ -538,100 +517,96 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               {t('editProfile.imageryDescription')}
             </Typography>
           </Grid>
-          <Grid container item xs={12} justify="space-between">
-            <Grid item xs={6} spacing={SPACING}>
-              <Box className={classes.leftBox}>
-                <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
-                  <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
-                </Box>
-                <TextField
-                  id="photo-url"
-                  label={t('editProfile.photoUrl')}
-                  variant="filled"
-                  placeholder={t('editProfile.photoUrlPlaceholder')}
-                  fullWidth
-                  inputRef={photoUrlValueRef}
-                  onChange={(e) =>
-                    setDisablePhotoUrlInput(e.target.value.length === 0)
-                  }
-                  onKeyPress={(event) =>
-                    executeAddImage(event)
-                  }
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          disabled={disablePhotoUrlInput}
-                          color="secondary"
-                          aria-label="add photo url"
-                          onClick={handlePhotos}
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  className={classes.textField}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={6} >
-              <Box className={classes.rightBox}>
-                {user.photos && (
-                  <Box className={classes.carouselContainer}>
-                    {user.photos.length > 0 && (
-                      <Carousel
-                        deleteItem={(url) => {
-                          setUser({
-                            ...user,
-                            photos: user.photos.filter((p) => p !== url)
-                          })
-                        }}
-                        activeDeletion
-                        images={user.photos}
-                      />
-                    )}
-                  </Box>
+          <Grid item xs={12} >
+            <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
+              <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
+            </Box>
+          </Grid>
+          <Grid item xs={12} >
+            <TextField
+              id="photo-url"
+              label={t('editProfile.photoUrl')}
+              variant="filled"
+              placeholder={t('editProfile.photoUrlPlaceholder')}
+              fullWidth
+              inputRef={photoUrlValueRef}
+              onChange={(e) =>
+                setDisablePhotoUrlInput(e.target.value.length === 0)
+              }
+              onKeyPress={(event) =>
+                executeAddImage(event)
+              }
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      disabled={disablePhotoUrlInput}
+                      color="secondary"
+                      aria-label="add photo url"
+                      onClick={handlePhotos}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              InputLabelProps={{
+                shrink: true
+              }}
+              className={classes.mobileTextField}
+            />
+          </Grid>
+          <Grid item xs={12} >
+            {user.photos && (
+              <Box className={classes.carouselContainer}>
+                {user.photos.length > 0 && (
+                  <Carousel
+                    deleteItem={(url) => {
+                      setUser({
+                        ...user,
+                        photos: user.photos.filter((p) => p !== url)
+                      })
+                    }}
+                    activeDeletion
+                    images={user.photos}
+                  />
                 )}
               </Box>
-            </Grid>
+            )}
+          </Grid>
+          <Grid item xs={12} direction="column">
+            <Box className={classes.btnWrapper}>
+              <Link to="/profile" className={classes.routerLink}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.cancelBtn}
+                >
+                  {t('common.cancel')}
+                </Button>
+              </Link>
+              <Button
+                className={classes.saveBtn}
+                variant="contained"
+                color="secondary"
+                onClick={prepareDataForSubmitting}
+              >
+                {t('common.save')}
+              </Button>
+              {loading && <CircularProgress />}
+            </Box>
           </Grid>
         </Grid>
-        <Grid item xs={12} direction="column">
-          <Box className={classes.btnWrapper}>
-            <Link to="/profile" className={classes.routerLink}>
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.cancelBtn}
-              >
-                {t('common.cancel')}
-              </Button>
-            </Link>
-            <Button
-              className={classes.saveBtn}
-              variant="contained"
-              color="secondary"
-              onClick={prepareDataForSubmitting}
-            >
-              {t('common.save')}
-            </Button>
-            {loading && <CircularProgress />}
-          </Box>
-        </Grid>
-      </Grid>
+      </Box >
     </form >
   )
 }
 
-EditProfileSponsor.propTypes = {
+EditProfileSponsorMobile.propTypes = {
   profile: PropTypes.object,
   isCompleting: PropTypes.bool,
   onSubmit: PropTypes.func,
   loading: PropTypes.bool
 }
 
-export default EditProfileSponsor
+export default EditProfileSponsorMobile

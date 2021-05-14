@@ -80,7 +80,7 @@ export default (theme) => ({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     '& .MuiTextField-root': {
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(1)
     }
   },
   textFieldWrapperSponsor: {
@@ -135,13 +135,18 @@ export default (theme) => ({
   },
   text: {
     color: theme.palette.secondary.onSecondaryMediumEmphasizedText,
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(1, 0)
   },
   boldText: {
     fontWeight: 'bold',
     width: "100%",
     textAlign: "left",
-    marginBottom: '15px',
+    marginBottom: '8px',
+  },
+  boldTextVariant: {
+    fontWeight: 'bold',
+    width: "100%",
+    textAlign: "left",
   },
   divider: {
     marginTop: '30px',
@@ -158,6 +163,19 @@ export default (theme) => ({
   carouselComponent: {
     justifyContent: 'center',
     justifySelf: 'center'
+  },
+  componentBoxWrp: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  componentBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '234px'
   },
   slider: {
     padding: theme.spacing(0, 2)
@@ -212,9 +230,11 @@ export default (theme) => ({
     },
   },
   rightBox: {
+    width: '100%',
     paddingLeft: '8px'
   },
   leftBox: {
+    width: '100%',
     paddingRight: '8px'
   },
   cancelBtn: {
@@ -239,9 +259,29 @@ export default (theme) => ({
     textTransform: 'none !important'
   },
   textField: {
-    marginTop: theme.spacing(2),
+    overflowY: 'none',
+    margin: theme.spacing(1, 0)
+  },
+  mobileTextField: {
     height: 'auto',
     overflowY: 'none',
+    margin: theme.spacing('4px', 0)
+  },
+  textFieldSocialMedia: {
+    height: 'auto',
+    overflowY: 'none',
+  },
+  mapField: {
+    overflowY: 'none',
+    margin: theme.spacing(2, 0),
+    width: '100%',
+    height: '287px'
+  },
+  sponsorType: {
+    height: 'auto',
+    overflowY: 'none',
+    width: '100%',
+    paddingBottom: '4px'
   },
   logo: {
     maxWidth: '100%',
