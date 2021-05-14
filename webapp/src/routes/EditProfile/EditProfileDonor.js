@@ -37,21 +37,19 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Box className={classes.textFieldWrapper}>
-            <TextField
-              id="email"
-              label={t('signup.name')}
-              fullWidth
-              placeholder={t('editProfile.namePlaceholder')}
-              defaultValue={user.name === "undefined" ? '' : user.name}
-              variant="filled"
-              InputLabelProps={{
-                shrink: true
-              }}
-              onChange={(event) => handleSetField('name', event.target.value)}
-              className={classes.textField}
-            />
-          </Box>
+          <TextField
+            id="email"
+            label={t('signup.name')}
+            fullWidth
+            placeholder={t('editProfile.namePlaceholder')}
+            defaultValue={user.name === "undefined" ? '' : user.name}
+            variant="filled"
+            InputLabelProps={{
+              shrink: true
+            }}
+            onChange={(event) => handleSetField('name', event.target.value)}
+            className={classes.textField}
+          />
         </Grid>
         <Grid item xs={12}>
           <Box className={classes.btnWrapper}>
