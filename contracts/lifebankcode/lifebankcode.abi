@@ -124,64 +124,12 @@
         {
             "name": "addsponsor",
             "base": "",
-            "fields": [
-                {
-                    "name": "account",
-                    "type": "name"
-                },
-                {
-                    "name": "sponsor_name",
-                    "type": "string"
-                },
-                {
-                    "name": "website",
-                    "type": "string"
-                },
-                {
-                    "name": "telephones",
-                    "type": "string"
-                },
-                {
-                    "name": "business_type",
-                    "type": "string"
-                },
-                {
-                    "name": "schedule",
-                    "type": "string"
-                },
-                {
-                    "name": "email",
-                    "type": "string"
-                },
-                {
-                    "name": "community_asset",
-                    "type": "asset"
-                },
-                {
-                    "name": "location",
-                    "type": "string"
-                },
-                {
-                    "name": "address",
-                    "type": "string"
-                },
-                {
-                    "name": "logo_url",
-                    "type": "string"
-                },
-                {
-                    "name": "about",
-                    "type": "string"
-                },
-                {
-                    "name": "social_media_links",
-                    "type": "string"
-                },
-                {
-                    "name": "photos",
-                    "type": "string"
-                }
-            ]
+            "fields": []
+        },
+        {
+            "name": "addtest",
+            "base": "",
+            "fields": []
         },
         {
             "name": "clear",
@@ -508,6 +456,11 @@
         {
             "name": "addsponsor",
             "type": "addsponsor",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "addtest",
+            "type": "addtest",
             "ricardian_contract": ""
         },
         {

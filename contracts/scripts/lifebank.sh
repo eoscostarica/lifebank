@@ -297,7 +297,7 @@ deploy_lifebank_contracts_to_lacchain() {
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
 
     echo '5. sign transaction'
-    cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
+    cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
 consent_lacchain() {
@@ -319,23 +319,7 @@ register_sponsor_lacchain() {
     TEMP_DIR=./stdout/register
 
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr push action -j -d -s lifebankcode addsponsor \
-    '{
-        "account":"sponsprueba1",
-        "sponsor_name":"Ferreteria McGyver",
-        "website":"https://garberhardware.com/",
-        "telephones":"[\"134123\", \"09090032\"]",
-        "business_type":"Construction",
-        "schedule":"[{\"day\":\"Sunday\",\"open\":\"06:00\",\"close\":\"16:00\"},{\"day\":\"Friday\",\"open\":\"06:00\",\"close\":\"16:00\"},{\"day\":\"Saturday\",\"open\":\"06:00\",\"close\":\"16:00\"}]",
-        "email":"garber@lifebank.io",
-        "community_asset":"0 LIFE",
-        "location":"{\"latitude\":40.746434642148586,\"longitude\":-74.00169825211302}",
-        "address": "CQ San Carlos",
-        "logo_url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
-        "about": "Toilets for free only here",
-        "social_media_links": "[{\"name\":\"facebook\",\"url\":\"https://jsonformatter.curiousconcept.com\"},{\"name\":\"instragram\",\"url\":\"https://jsonformatter.curiousconcept.com\"},{\"name\":\"twitter\",\"url\":\"https://jsonformatter.curiousconcept.com\"}]",
-        "photos": "[\"https://static.hosteltur.com/app/public/uploads/img/articles/2020/04/10/M_110203_costa-rica.jpg\",\"https://www.larepublica.net/storage/images/2019/07/30/20190730091248.cr-3.jpg\"]"
-    }' -p sponsprueba1@active >$TEMP_DIR/tx2.json
+    cleos -u https://writer.eosio.cr push action -j -d -s lifebankcode addsponsor '{}' -p sponsprueba1@active >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
     cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p sponsprueba1@active
@@ -344,8 +328,8 @@ register_sponsor_lacchain() {
 run_lifebank() {
     echo 'Installing LifeBank ...'
     # consent_lacchain
-    register_sponsor_lacchain
-    # deploy_lifebank_contracts_to_lacchain
+    # register_sponsor_lacchain
+    deploy_lifebank_contracts_to_lacchain
     # change_active_permission
     # grant_lifebankcode_permission_in_lifebankcode
     # create_community_lacchain

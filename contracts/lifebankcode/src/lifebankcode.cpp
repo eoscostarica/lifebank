@@ -212,20 +212,21 @@ ACTION lifebankcode::uplifebank(
 }
 
 ACTION lifebankcode::addsponsor(
-    name account,
-    string sponsor_name,
-    string website,
-    string telephones,
-    string business_type,
-    string schedule,
-    string email,
-    eosio::asset community_asset,
-    string location,
-    string address,
-    string logo_url,
-    string about,
-    string social_media_links,
-    string photos)
+    // name account,
+    // string sponsor_name,
+    // string website,
+    // string telephones,
+    // string business_type,
+    // string schedule,
+    // string email,
+    // eosio::asset community_asset,
+    // string location,
+    // string address,
+    // string logo_url,
+    // string about,
+    // string social_media_links,
+    // string photos
+    )
 {
   // require_auth(account);
   // check_consent(account);
@@ -256,6 +257,8 @@ ACTION lifebankcode::addsponsor(
   //   });
   // }
 }
+
+ACTION lifebankcode::addtest(){}
 
 ACTION lifebankcode::unsubscribe(name user, eosio::asset community_asset)
 {
