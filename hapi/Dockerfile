@@ -1,20 +1,16 @@
-FROM node:12.16.2
+# ---------- Base ----------
+FROM node:12.16.2 as base
+WORKDIR /app
 
-# Create app directory
-WORKDIR /usr/app
+# ---------- Builder ----------
+FROM base AS builder
+COPY package.json yarn.lock ./
+RUN yarn --ignore-optional
+COPY ./src ./src
 
-# Install dev tools
-
-# Install nodemon for dev
-RUN yarn --ignore-optional --frozen-lockfile global add nodemon
-
-# Install app dependencies
-COPY package*.json ./
-COPY yarn.lock ./
-RUN yarn
-
-# Bundle app source
-COPY . .
-
-EXPOSE 9090
-CMD nodemon -L src/index.js
+# ---------- Release ----------
+FROM base AS release
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/src ./src
+USER node
+CMD ["node", "./src/index.js"]

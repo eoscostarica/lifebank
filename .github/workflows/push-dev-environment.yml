@@ -1,0 +1,91 @@
+name: Build images from latest dev branch
+on:
+  push:
+    branches:
+      - master
+jobs:
+  create-dev-image:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Build new images and push
+        run: |
+          make \
+            build-docker-images \
+            push-docker-images
+        env:
+          # global
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          EOS_PRIV_KEY: ${{ secrets.EOS_PRIV }}
+          HAPI_MAIL_PASSWORD: ${{ secrets.MAIL_SECRET }}
+          NAMESPACE: lifebank
+          STAGE: dev
+          APP_NAME: lifebank
+          INGRESS_HOST: lifebank.io
+          INGRESS_GRAPHQL_HOST: graphql.lifebank.io
+          #postgres
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_SECRET }}
+          #webapp
+          PORT: 80
+          REACT_APP_VERSION: $npm_package_version
+          REACT_APP_NAME: $npm_package_name
+          REACT_APP_TITLE: LifeBank App
+          REACT_APP_EOS_API_HOST: lifebank.eosio.cr
+          REACT_APP_EOS_API_PORT: 443
+          REACT_APP_EOS_API_PROTOCOL: https
+          REACT_APP_EOS_CHAIN_ID: ${{ secrets.REACT_APP_EOS_CHAIN_ID }}
+          REACT_APP_HASURA_URL: https://graphql.lifebank.io:8080/v1/graphql
+          REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
+          REACT_CAPTCHA_KEY: ${{ secrets.CAPTCHA_SECRET }}
+          REACT_APP_LOGO: https://raw.githubusercontent.com/eoscostarica/design-assets/master/logos/eosCR/fullColor-vertiall-transparent-white.png
+
+      - name: Build kubernetes files
+        id: build_kubernetes_files
+        run: |
+          make \
+            build-kubernetes
+        env:
+          # global
+          NAMESPACE: lifebank
+          STAGE: dev
+          APP_NAME: lifebank
+          INGRESS_HOST: lifebank.io
+          INGRESS_GRAPHQL_HOST: graphql.lifebank.io
+          # wallet
+          WALLET_DATA: ./wallet_data
+          # postgres
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_DATA: ${{ secrets.POSTGRES_DATA }}
+          # hasura
+          HASURA_GRAPHQL_ENABLE_CONSOLE: true
+          HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
+          HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
+          HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${{ secrets.HASURA_GRAPHQL_UNAUTHORIZED_ROLE }}
+          HASURA_GRAPHQL_ACTION_BASE_URL: ${{ secrets.HASURA_GRAPHQL_ACTION_BASE_URL }}
+          # hapi
+          HAPI_SERVER_PORT: 9090
+          HAPI_SERVER_ADDRESS: hapi
+          HAPI_EOS_API_ENDPOINT: https://lifebank.eosio.cr
+          HAPI_EOS_API_CHAIN_ID: 3ba28e6d66769dd9723431d138aefe8cfb379f0f1a5885a17a2a826b71e31997
+          HAPI_EOS_BASE_ACCOUNT: ${{ secrets.HAPI_EOS_BASE_ACCOUNT }}
+          HAPI_EOS_BASE_ACCOUNT_PASSWORD: ${{ secrets.HAPI_EOS_BASE_ACCOUNT_PASSWORD }}
+          HAPI_EOS_WALLET_URL: http://lifebank-wallet:8888
+          HAPI_HASURA_URL: http://lifebank-hasura:8080/v1/graphql
+          HAPI_HASURA_ADMIN_SECRET: ${{ secrets.HAPI_HASURA_ADMIN_SECRET }}
+          HAPI_JWT_SECRET: ${{ secrets.HAPI_JWT_SECRET }}
+          HAPI_JWT_ALGORITHM: ${{ secrets.HAPI_JWT_ALGORITHM }}
+          HAPI_JWT_ISS: ${{ secrets.HAPI_JWT_ISS }}
+
+      - name: Setup and deploy kubernetes environment
+        uses: steebchen/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+          NAMESPACE: lifebank
+          K8S_BUILD_DIR: build_k8s
+        with:
+          args: version && make deploy-kubernetes

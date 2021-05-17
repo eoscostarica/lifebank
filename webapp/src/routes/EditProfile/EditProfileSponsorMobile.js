@@ -53,7 +53,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
   });
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
   const [socialMedia] = useState(
-    profile.social_media_links !== '[]'
+    profile.social_media_links && profile.social_media_links !== '[]'
       ? JSON.parse(profile.social_media_links)
       : []
   )

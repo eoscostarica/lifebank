@@ -190,7 +190,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   }, [loginResult])
 
   useEffect(() => {
-    if (checkEmailVerifiedResult && !checkEmailVerifiedResult.verified) {
+    if (checkEmailVerifiedResult && checkEmailVerifiedResult.exist && !checkEmailVerifiedResult.verified) {
       verify()
     }
   }, [checkEmailVerifiedResult])
