@@ -52,7 +52,8 @@ jobs:
           NAMESPACE: lifebank
           STAGE: dev
           APP_NAME: lifebank
-          INGRESS_HOST: lifebank.eosio.cr
+          INGRESS_HOST: lifebank.io
+          INGRESS_HOST_EOSIO: lifebank.eosio.cr
           INGRESS_GRAPHQL_HOST: graphql.lifebank.io
           LIFBANKCODE_CONTRACTNAME: lifebankcode
           LIFBANKCOIN_CONTRACTNAME: lifebankcoin
