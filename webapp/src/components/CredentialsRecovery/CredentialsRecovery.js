@@ -163,65 +163,63 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
 
   return (
     <>
-      <Box classname={classes.dialog}>
-        <Box style={{ width: 550, height: 600 }}>
-          <Box className={classes.goBack}>
-            <IconButton aria-label="go-back" onClick={handleOpen}>
-              <ArrowBackIcon color="primary" />
-            </IconButton>
-          </Box>
-          <Box className={classes.bodyWrapper}>
-            <form autoComplete="off">
-              <Box className={classes.textFieldWrapper}>
-                <Typography variant="h3" className={classes.title}>
-                  {t('credentialsRecovery.passwordRecovery')}
-                </Typography>
-                <Box className={classes.textBox}>
-                  <Typography className={classes.text} variant="body1">
-                    {t('credentialsRecovery.instructionCredentialsRecovery')}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box className={classes.textFieldWrapper}>
-                <TextField
-                  id="email"
-                  label={t('common.registeredEmail')}
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={(event) =>
-                    handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))
-                  }
-                  onKeyPress={(event) =>
-                    executeCredentialsRecovery(event)
-                  }
-                  className={classes.inputStyle}
-                />
-                <Button
-                  disabled={!validEmailFormat || loading}
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleSubmit}
-                  className={classes.button}
-                >
-                  {t('credentialsRecovery.recovery')}
-                </Button>
-              </Box>
-              <Box className={classes.loadingBox}>
-                {loading && <CircularProgress />}
-              </Box>
-              <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                <Alert
-                  className={classes.alert}
-                  severity={openSnackbar.severity}
-                >
-                  {openSnackbar.message}
-                </Alert>
-              </Snackbar>
-            </form>
-          </Box >
+      <Box className={classes.dimensions}>
+        <Box className={classes.goBack}>
+          <IconButton aria-label="go-back" onClick={handleOpen}>
+            <ArrowBackIcon color="primary" />
+          </IconButton>
         </Box>
+        <Box className={classes.bodyWrapper}>
+          <form autoComplete="off">
+            <Box className={classes.textFieldWrapper}>
+              <Typography variant="h3" className={classes.title}>
+                {t('credentialsRecovery.passwordRecovery')}
+              </Typography>
+              <Box className={classes.textBox}>
+                <Typography className={classes.text} variant="body1">
+                  {t('credentialsRecovery.instructionCredentialsRecovery')}
+                </Typography>
+              </Box>
+            </Box>
+            <Box className={classes.textFieldWrapper}>
+              <TextField
+                id="email"
+                label={t('common.registeredEmail')}
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                onChange={(event) =>
+                  handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))
+                }
+                onKeyPress={(event) =>
+                  executeCredentialsRecovery(event)
+                }
+                className={classes.inputStyle}
+              />
+              <Button
+                disabled={!validEmailFormat || loading}
+                variant="contained"
+                color="secondary"
+                onClick={handleSubmit}
+                className={classes.button}
+              >
+                {t('credentialsRecovery.recovery')}
+              </Button>
+            </Box>
+            <Box className={classes.loadingBox}>
+              {loading && <CircularProgress />}
+            </Box>
+            <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+              <Alert
+                className={classes.alert}
+                severity={openSnackbar.severity}
+              >
+                {openSnackbar.message}
+              </Alert>
+            </Snackbar>
+          </form>
+        </Box >
       </Box>
     </>
   )

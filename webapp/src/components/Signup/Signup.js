@@ -306,7 +306,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
   }, [open])
 
   return (
-    <>
+    <Box classname={classes.dialog}>
       {isHome && !currentUser &&
         <Button color="secondary" className={classes.registerBtn} onClick={handleOpen}>
           {t('signup.register')}
@@ -341,109 +341,107 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
           timeout: 500
         }}
       >
-        <Box classname={classes.dialog}>
-          <DialogContent style={{ width: 550, height: 600 }}>
-            <Box className={classes.closeIcon}>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                onClick={handleOpen}
-              >
-                <CloseIcon fontSize="inherit" />
+        <DialogContent className={classes.dimensions} >
+          <Box className={classes.closeIcon}>
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              onClick={handleOpen}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
+          {activeStep !== 0 && (
+            <Box className={classes.goBack}>
+              <IconButton aria-label="go-back" onClick={handleGoBack}>
+                <ArrowBackIcon color="primary" />
               </IconButton>
             </Box>
-            {activeStep !== 0 && (
-              <Box className={classes.goBack}>
-                <IconButton aria-label="go-back" onClick={handleGoBack}>
-                  <ArrowBackIcon color="primary" />
-                </IconButton>
-              </Box>
-            )}
-            <Box className={classes.register}>
-              <Box className={classes.stepperContent}>
-                {activeStep === 0 && (
-                  <>
-                    <Typography className={classes.titleRegister}>{t('signup.register')}</Typography>
-                    <Typography className={classes.text}>{t('signup.registerText')}</Typography>
-                    <SignupRoleSelector onSubmit={handleRoleChange} />
-                  </>
-                )}
-                {activeStep === 1 && role === 'donor' && (
-                  <>
-                    <Typography className={classes.titleRegister}>{t('signup.asAdonor')}</Typography>
-                    <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
-                    <Suspense fallback={<CircularProgress />}>
-                      <SignupDonor
-                        onSubmit={handleCreateAccount}
-                        onSubmitWithAuth={handleCreateAccountWithAuth}
-                        loading={createAccountLoading || createAccountLoadingAuth}
-                        setField={handleSetField}
-                        isEmailValid={isEmailValid}
-                      >
-                        <ValidateEmail
-                          isValid={isEmailValid}
-                          loading={checkEmailLoading}
-                          setField={handleSetField}
-                          user={user}
-                        />
-                      </SignupDonor>
-                    </Suspense>
-                  </>
-                )}
-                {activeStep === 1 && role === 'sponsor' && (
-                  <>
-                    <Typography className={classes.titleRegister}>{t('signup.asAsponsor')}</Typography>
-                    <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
-                    <Suspense fallback={<CircularProgress />}>
-                      <SimpleRegisterForm
-                        onSubmit={handleCreateAccount}
-                        loading={createAccountLoading}
-                        setField={handleSetField}
-                        isEmailValid={isEmailValid}
-                      >
-                        <ValidateEmail
-                          isValid={isEmailValid}
-                          loading={checkEmailLoading}
-                          user={user}
-                          setField={handleSetField}
-                        />
-                      </SimpleRegisterForm>
-                    </Suspense>
-                  </>
-                )}
-                {activeStep === 1 && role === 'lifebank' && (
-                  <>
-                    <Typography className={classes.titleRegister}>{t('signup.asAbank')}</Typography>
-                    <Typography variant="body1" className={classes.text}>{t('signup.preRegistrationRequirement')}</Typography>
-                    <Suspense fallback={<CircularProgress />}>
-                      <SignupLifeBank
-                        onSubmit={handlePreRegisterLifebank}
-                        loading={preRegisterLifebankLoading}
+          )}
+          <Box className={classes.register}>
+            <Box className={classes.stepperContent}>
+              {activeStep === 0 && (
+                <>
+                  <Typography className={classes.titleRegisterRoleSelector}>{t('signup.register')}</Typography>
+                  <Typography className={classes.registerText}>{t('signup.registerText')}</Typography>
+                  <SignupRoleSelector onSubmit={handleRoleChange} />
+                </>
+              )}
+              {activeStep === 1 && role === 'donor' && (
+                <>
+                  <Typography className={classes.titleRegister}>{t('signup.asAdonor')}</Typography>
+                  <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
+                  <Suspense fallback={<CircularProgress />}>
+                    <SignupDonor
+                      onSubmit={handleCreateAccount}
+                      onSubmitWithAuth={handleCreateAccountWithAuth}
+                      loading={createAccountLoading || createAccountLoadingAuth}
+                      setField={handleSetField}
+                      isEmailValid={isEmailValid}
+                    >
+                      <ValidateEmail
+                        isValid={isEmailValid}
+                        loading={checkEmailLoading}
                         setField={handleSetField}
                         user={user}
-                        isEmailValid={isEmailValid}
-                      >
-                        <ValidateEmail
-                          isValid={isEmailValid}
-                          loading={checkEmailLoading}
-                          user={user}
-                          setField={handleSetField}
-                        />
-                      </SignupLifeBank>
-                    </Suspense>
-                  </>
-                )}
-              </Box>
+                      />
+                    </SignupDonor>
+                  </Suspense>
+                </>
+              )}
+              {activeStep === 1 && role === 'sponsor' && (
+                <>
+                  <Typography className={classes.titleRegister}>{t('signup.asAsponsor')}</Typography>
+                  <Typography className={classes.text}>{t('signup.allYouNeed')}</Typography>
+                  <Suspense fallback={<CircularProgress />}>
+                    <SimpleRegisterForm
+                      onSubmit={handleCreateAccount}
+                      loading={createAccountLoading}
+                      setField={handleSetField}
+                      isEmailValid={isEmailValid}
+                    >
+                      <ValidateEmail
+                        isValid={isEmailValid}
+                        loading={checkEmailLoading}
+                        user={user}
+                        setField={handleSetField}
+                      />
+                    </SimpleRegisterForm>
+                  </Suspense>
+                </>
+              )}
+              {activeStep === 1 && role === 'lifebank' && (
+                <>
+                  <Typography className={classes.titleRegister}>{t('signup.asAbank')}</Typography>
+                  <Typography variant="body1" className={classes.text}>{t('signup.preRegistrationRequirement')}</Typography>
+                  <Suspense fallback={<CircularProgress />}>
+                    <SignupLifeBank
+                      onSubmit={handlePreRegisterLifebank}
+                      loading={preRegisterLifebankLoading}
+                      setField={handleSetField}
+                      user={user}
+                      isEmailValid={isEmailValid}
+                    >
+                      <ValidateEmail
+                        isValid={isEmailValid}
+                        loading={checkEmailLoading}
+                        user={user}
+                        setField={handleSetField}
+                      />
+                    </SignupLifeBank>
+                  </Suspense>
+                </>
+              )}
             </Box>
-          </DialogContent>
-        </Box>
+          </Box>
+        </DialogContent>
       </Dialog>
       <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleOpenAlert}>
         <Alert severity={openSnackbar.severity}>
           {openSnackbar.message}
         </Alert>
       </Snackbar>
-    </>
+    </Box>
   )
 }
 
