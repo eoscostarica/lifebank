@@ -107,10 +107,6 @@ const LimitationHandling = ({
         id="quantity"
         label={t('offersManagement.quantity')}
         fullWidth
-<<<<<<< HEAD
-        variant="outlined"
-        className={classes.textField}
-=======
         min='1'
         placeholder={t('offersManagement.quantityPlaceholder')}
         variant="outlined"
@@ -120,7 +116,6 @@ const LimitationHandling = ({
         InputProps={{
           inputComponent: NumberFormatCustom,
         }}
->>>>>>> ee1c6e8089146924a28e9415f6d6645de53ae2e8
         onChange={(event) => setQuantity(Number(event.target.value))}
         className={classes.textField}
       />
@@ -131,7 +126,7 @@ const LimitationHandling = ({
           minDate={new Date()}
           value={dates}
           onChange={onChange}
-          className={classes.textField}
+          className={classes.textFieldLimit}
         />
       </Box>
     </Box>
