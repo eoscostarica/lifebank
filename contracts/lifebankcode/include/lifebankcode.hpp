@@ -105,7 +105,7 @@ public:
    */
   ACTION addlifebank(
       name account,
-      string lifebank_name,
+      // string lifebank_name,
       string about,
       string address,
       string location,
@@ -182,7 +182,7 @@ public:
    *
    */
   ACTION addsponsor(
-      // name account,
+      name account
       // string sponsor_name,
       // string website,
       // string telephones,
@@ -198,7 +198,7 @@ public:
       // string photos
       );
 
-  ACTION addtest();
+  ACTION addtest(name account);
 
   /**
    *

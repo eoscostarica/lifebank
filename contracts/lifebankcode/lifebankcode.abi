@@ -26,10 +26,6 @@
                     "type": "name"
                 },
                 {
-                    "name": "lifebank_name",
-                    "type": "string"
-                },
-                {
                     "name": "about",
                     "type": "string"
                 },
@@ -124,12 +120,22 @@
         {
             "name": "addsponsor",
             "base": "",
-            "fields": []
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
         },
         {
             "name": "addtest",
             "base": "",
-            "fields": []
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
         },
         {
             "name": "clear",

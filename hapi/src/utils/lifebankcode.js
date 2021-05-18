@@ -44,7 +44,7 @@ const addLifebank = (
         name: 'addlifebank',
         data: {
           account,
-          lifebank_name: name,
+          // lifebank_name: name,
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),

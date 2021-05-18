@@ -78,6 +78,38 @@
             ]
         },
         {
+            "name": "redeem_offer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "donor_name",
+                    "type": "name"
+                },
+                {
+                    "name": "offer_comm_id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "redeemoffer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "offer_comm_id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "donor_name",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "transfer",
             "base": "",
             "fields": [
@@ -126,33 +158,45 @@
         {
             "name": "clear",
             "type": "clear",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Clear table\nsummary: The intent of the `{{ clear }}` action is to delete all table records and is used for development purposes on test-nets and must not be published to mainnet.\nicon: https://lifebank.io/icons/admin.png"
+            "ricardian_contract": ""
         },
         {
             "name": "create",
             "type": "create",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Create Token\nsummary: The intent of the `{{ create }}` action is to allow the `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created..\nicon: https://lifebank.io/icons/token.png"
+            "ricardian_contract": ""
         },
         {
             "name": "issue",
             "type": "issue",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Issue Token\nsummary: The intent of the `{{ issue }}` action issues tokens for a `donor` account that just donated blood.\nicon: https://lifebank.io/icons/token.png"
+            "ricardian_contract": ""
+        },
+        {
+            "name": "redeemoffer",
+            "type": "redeemoffer",
+            "ricardian_contract": ""
         },
         {
             "name": "transfer",
             "type": "transfer",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Transfer Token\nsummary: The intent of the `{{ tranfer }}` action is to allow `from` account to transfer to `to` account the `quantity` tokens. One account is debited and the other is credited with quantity tokens.\nicon: https://lifebank.io/icons/transfer.png"
+            "ricardian_contract": ""
         },
         {
             "name": "transferlife",
             "type": "transferlife",
-            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Transfer Token\nsummary: The intent of the `{{ transferlife }}` action is an in-line action that transfers newly minted tokens to a `donor` account.\nicon: https://lifebank.io/icons/transfer.png"
+            "ricardian_contract": ""
         }
     ],
     "tables": [
         {
             "name": "accounts",
             "type": "account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "redeemoffer",
+            "type": "redeem_offer",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
@@ -165,27 +209,6 @@
             "key_types": []
         }
     ],
-    "ricardian_clauses": [
-        {
-            "id": "Data Storage",
-            "body": "---\nspec-version: 0.1.0\ntitle: General Data Storage\nsummary: The Lifebank application values the security of personal data. We may process only minimal user data as much as it is necessary to maintain the Lifebank application running. We only receive and store any information you knowingly provide to us when you create an account, or fill using the app. When required, this information may include the following:\nPersonal details such as name.\nContact information, such as email addresses.\nAccount details, such as user name and password.\nGeolocation data of the mobile device, such as latitude and longitude.\nicon: https://lifebank.io/icons/account.png"
-        },
-        {
-            "id": "Data Usage",
-            "body": "---\nspec-version: 0.1.0\ntitle: General Data Use\nsummary: This smart contract will process user data to keep the Lifebank application running. Any of the information we collect from you may be used for these purposes:\n - Create and manage user accounts.\n - Run and operate the Lifebank application.\n - Share information with the authorized blood donation centers and sponsors for issuing and transferring life tokens.\nProcessing your personal information depends on how you interact with the Lifebank application, your current location, and if one of the following applies: (i) You have given your consent for one or more specific purposes. However, this does not apply, if the processing of personal information is subject to California Consumer Privacy Act or European data protection law; (ii) Provision of information is necessary for the performance of an agreement with you and/or for any pre-contractual obligations thereof; (iii) Processing is necessary for compliance with a legal obligation to which you are subject; (iv) Processing is related to a task that is carried out in the public interest or in the exercise of official authority vested in us; (v) Processing is necessary for the purposes of the legitimate interests pursued by us or by a third party.\nicon: https://lifebank.io/icons/account.png"
-        },
-        {
-            "id": "Data Ownership",
-            "body": "---\nspec-version: 0.1.0\ntitle: Data Ownership\nsummary: The user of this smart contract verifies that the smart contract owns the data and that it can use the data in accordance with the terms defined in the Ricardian contract.\nYou can delete certain personal information you shared with the Lifebank application. When you delete personal information, we may maintain a copy of the unrevised personal information in our records for the duration necessary to comply with our obligations to our affiliates and partners, and for the purposes described below. If you would like to delete your personal information or permanently delete your account, you can do so on your account's profile page in the Lifebank application.\nWe will retain and use your personal information for the period necessary to comply with our legal obligations, resolve disputes, and enforce our agreements unless a more extended retention period is required or permitted by law. We may use any aggregated data derived from or incorporating your personal information after you update or delete it, but not in a manner that would identify you personally. Once the retention period expires, personal information shall be deleted. \nData Distribution\nicon: https://lifebank.io/icons/account.png"
-        },
-        {
-            "id": "Data Distribution",
-            "body": "---\nspec-version: 0.1.0\ntitle: Data Distribution\nsummary: The smart contract promises not actively to share or distribute the address data. The smart contract user understands that data stored in a multi-index table is not private and can be accessed by any user of the blockchain.\nDepending on your location, data transfers may involve transferring and storing your information in a country other than your own. Moreover, to keep Lifebank running, we must share necessary personal data such as your name with the authorized blood donation centers and sponsors. We do not store any information regarding your blood type, health conditions, or any other confidential information between you and the donation centers.\nicon: https://lifebank.io/icons/account.png"
-        },
-        {
-            "id": "Data Future",
-            "body": "---\nspec-version: 0.1.0\ntitle: Data Future\nsummary: The smart contract promises to only use the data following the terms defined in the Ricardian contract, now and at all future dates. You may exercise certain rights regarding your information processed by us. In particular, you have the right to do the following: (i) you have the right to withdraw consent where you have previously given your consent to the processing of your information; (ii) you have the right to object to the processing of your information if the processing is carried out on a legal basis other than consent; (iii) you have the right to learn if information is being processed by us, obtain disclosure regarding certain aspects of the processing and obtain a copy of the information undergoing processing; (iv) you have the right to verify the accuracy of your information and ask for it to be updated or corrected; (v) you have the right, under certain circumstances, to restrict the processing of your information, in which case, we will not process your information for any purpose other than storing it; (vi) you have the right, under certain circumstances, to obtain the erasure of your Personal Information from us; (vii) you have the right to receive your information in a structured, commonly used and machine readable format and, if technically feasible, to have it transmitted to another controller without any hindrance. This provision is applicable provided that your information is processed by automated means and that the processing is based on your consent, on a contract you are part of or on pre-contractual obligations thereof\nicon:  https://lifebank.io/icons/account.png"
-        }
-    ],
+    "ricardian_clauses": [],
     "variants": []
 }
