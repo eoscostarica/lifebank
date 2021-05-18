@@ -212,54 +212,51 @@ ACTION lifebankcode::uplifebank(
 }
 
 ACTION lifebankcode::addsponsor(
-    name account
-    // string sponsor_name,
-    // string website,
-    // string telephones,
-    // string business_type,
-    // string schedule,
-    // string email,
-    // eosio::asset community_asset,
-    // string location,
-    // string address,
-    // string logo_url,
-    // string about,
-    // string social_media_links,
-    // string photos
+    name account,
+    string sponsor_name,
+    string website,
+    string telephones,
+    string business_type,
+    string schedule,
+    string email,
+    eosio::asset community_asset,
+    string location,
+    string address,
+    string logo_url,
+    string about,
+    string social_media_links,
+    string photos
     )
 {
-  // require_auth(account);
-  // check_consent(account);
+  require_auth(account);
+  check_consent(account);
 
-  // check(is_donor(account), "Account already belogs to donor");
-  // check(is_lifebank(account), "Account already belogs to lifebank");
+  check(is_donor(account), "Account already belogs to donor");
+  check(is_lifebank(account), "Account already belogs to lifebank");
 
-  // sponsors_table _sponsors(get_self(), get_self().value);
-  // check(sponsor_name.size() <= 64, "Name has more than 64 bytes");
-  // auto sponsor_itr = _sponsors.find(account.value);
-  // if (sponsor_itr == _sponsors.end())
-  // {
-  //   _sponsors.emplace(get_self(), [&](auto &row) {
-  //     row.account = account;
-  //     row.tx = get_tx();
-  //   });
-  //   action(
-  //       permission_level{get_self(), "active"_n},
-  //       get_self(),
-  //       "link"_n,
-  //       std::make_tuple(community_asset, account))
-  //       .send();
-  // }
-  // else
-  // {
-  //   _sponsors.modify(sponsor_itr, get_self(), [&](auto &row) {
-  //     row.tx = get_tx();
-  //   });
-  // }
+  sponsors_table _sponsors(get_self(), get_self().value);
+  check(sponsor_name.size() <= 64, "Name has more than 64 bytes");
+  auto sponsor_itr = _sponsors.find(account.value);
+  if (sponsor_itr == _sponsors.end())
+  {
+    _sponsors.emplace(get_self(), [&](auto &row) {
+      row.account = account;
+      row.tx = get_tx();
+    });
+    action(
+        permission_level{get_self(), "active"_n},
+        get_self(),
+        "link"_n,
+        std::make_tuple(community_asset, account))
+        .send();
+  }
+  else
+  {
+    _sponsors.modify(sponsor_itr, get_self(), [&](auto &row) {
+      row.tx = get_tx();
+    });
+  }
 }
-
-
-ACTION lifebankcode::addtest(name account){}
 
 ACTION lifebankcode::unsubscribe(name user, eosio::asset community_asset)
 {
