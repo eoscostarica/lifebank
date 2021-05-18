@@ -28,7 +28,22 @@ import Divider from '@material-ui/core/Divider'
 import { useTranslation } from 'react-i18next'
 import '@brainhubeu/react-carousel/lib/style.css'
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
-import NumberFormat from 'react-number-format';
+import NumberFormat from 'react-number-format'
+
+import ToggleButton from '@material-ui/lab/ToggleButton'
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import LocalOfferIcon from '@material-ui/icons/LocalOffer'
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
+import StarsIcon from '@material-ui/icons/Stars'
+import WhatshotIcon from '@material-ui/icons/Whatshot'
+import AccessTimeIcon from '@material-ui/icons/AccessTime'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import TagFacesIcon from '@material-ui/icons/TagFaces'
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
+import RestaurantIcon from '@material-ui/icons/Restaurant'
+import FilterVintageIcon from '@material-ui/icons/FilterVintage'
+import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill'
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt'
 
 import { CREATE_OFFER_MUTATION, UPDATE_OFFER_MUTATION } from '../../gql'
 
@@ -131,6 +146,7 @@ const GenericOfferFormComponent = ({
   const [disableUrlInput, setDisableUrlInput] = useState(true)
   const imgUrlValueRef = useRef(undefined)
   const [offer, setOffer] = useState()
+  const [alignment, setAlignment] = useState('LocalOfferIcon')
   const [updatedOffer, setUpdatedOffer] = useState()
   const [openSnackbar, setOpenSnackbar] = useState({
     show: false,
@@ -166,7 +182,8 @@ const GenericOfferFormComponent = ({
       offer_name,
       id,
       active,
-      cost_in_tokens
+      cost_in_tokens,
+      icon
     } = offer
 
     const images = JSON.stringify(offer.images)
@@ -185,7 +202,8 @@ const GenericOfferFormComponent = ({
           images,
           sponsor_id,
           active: true,
-          offer_name: offer_name
+          offer_name: offer_name,
+          icon: icon || 'LocalOfferIcon'
         }
       })
     else {
@@ -202,6 +220,7 @@ const GenericOfferFormComponent = ({
           images,
           offer_name,
           id,
+          icon,
           active
         }
       })
@@ -217,9 +236,15 @@ const GenericOfferFormComponent = ({
         images,
         offer_name,
         id,
+        icon,
         active
       })
     }
+  }
+
+  const handleAlignment = (event, newAlignment) => {
+    setOffer({ ...offer, icon: newAlignment })
+    setAlignment(newAlignment)
   }
 
   useEffect(() => {
@@ -399,6 +424,29 @@ const GenericOfferFormComponent = ({
                 }
                 label={t('offersManagement.onlineOnly')}
               />
+              <Divider className={classes.divider} />
+              <Typography className={classes.boldText} variant="subtitle1">{t('offersManagement.chooseIcon')}</Typography>
+              <ToggleButtonGroup
+                id="offer-icon"
+                value={offer.icon || alignment}
+                exclusive
+                onChange={handleAlignment}
+                aria-label="text alignment"
+                className={classes.toggleIcons}
+              >
+                <ToggleButton value="LocalOfferIcon" className={classes.offerIcon}><LocalOfferIcon /></ToggleButton>
+                <ToggleButton value="CardGiftcardIcon" className={classes.offerIcon} ><CardGiftcardIcon /></ToggleButton>
+                <ToggleButton value="StarsIcon" className={classes.offerIcon}><StarsIcon /></ToggleButton>
+                <ToggleButton value="WhatshotIcon" className={classes.offerIcon}><WhatshotIcon /></ToggleButton>
+                <ToggleButton value="AccessTimeIcon" className={classes.offerIcon}><AccessTimeIcon /></ToggleButton>
+                <ToggleButton value="StorefrontIcon" className={classes.offerIcon}><StorefrontIcon /></ToggleButton>
+                <ToggleButton value="TagFacesIcon" className={classes.offerIcon}><TagFacesIcon /></ToggleButton>
+                <ToggleButton value="ShoppingBasketIcon" className={classes.offerIcon}><ShoppingBasketIcon /></ToggleButton>
+                <ToggleButton value="RestaurantIcon" className={classes.offerIcon}><RestaurantIcon /></ToggleButton>
+                <ToggleButton value="FilterVintageIcon" className={classes.offerIcon}><FilterVintageIcon /></ToggleButton>
+                <ToggleButton value="OutdoorGrillIcon" className={classes.offerIcon}><OutdoorGrillIcon /></ToggleButton>
+                <ToggleButton value="OfflineBoltIcon" className={classes.offerIcon}><OfflineBoltIcon /></ToggleButton>
+              </ToggleButtonGroup>
               <Divider className={classes.divider} />
               <Typography className={classes.boldText} variant="subtitle1">{t('offersManagement.redeemAvailability')}</Typography>
               <FormControl component="fieldset" className={classes.radioGroup}>

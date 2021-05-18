@@ -434,6 +434,7 @@
       "offerName": "Nombre de oferta",
       "offerNamePlaceholder": "Ingresar el nombre aquí",
       "offerType": "Tipo de oferta",
+      "icon": "Ícono",
       "type": "Tipo",
       "discount": "Descuento",
       "gift": "Regalo",
@@ -483,7 +484,8 @@
       "offerCreation": "Oferta creada correctamente",
       "offerStateActive": "Ofertas Activas",
       "offerStateInactive": "Ofertas Inactivas",
-      "info": "Primero completa tu perfil para agregar una oferta"
+      "info": "Primero completa tu perfil para agregar una oferta",
+      "chooseIcon": "Elije un ícono"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",

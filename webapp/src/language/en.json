@@ -435,6 +435,7 @@
       "offerName": "Offer name",
       "offerNamePlaceholder": "Type the name here",
       "offerType": "Offer type",
+      "icon": "Icon",
       "type": "Type",
       "discount": "Discount",
       "gift": "Gift",
@@ -484,7 +485,8 @@
       "offerCreation": "Offer Created Successfully",
       "offerStateActive": "Active Offers",
       "offerStateInactive": "Inactive Offers",
-      "info": "First complete your profile to add an offer"
+      "info": "First complete your profile to add an offer",
+      "chooseIcon": "Choose an icon"
     },
     "offerView": {
       "selectedOffer": "Selected offer",
