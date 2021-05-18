@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: lifebank-wallet
+  name: lifebank-wallet
+spec:
+  ports:
+    - name: lifebank-wallet
+      port: 8888
+      targetPort: 8888
+  selector:
+    app: lifebank-wallet

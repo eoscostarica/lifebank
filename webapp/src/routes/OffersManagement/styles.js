@@ -190,6 +190,25 @@ export default (theme) => ({
   offerName: {
     textTransform: 'initial',
     textAlign: 'left'
+  },
+  toggleIcons: {
+    width: '100%',
+  },
+  offerIcon: {
+    padding: 7.8,
+    marginTop: 15,
+    marginBottom: 5,
+    width: '100%',
+    [theme.breakpoints.down('md')]: {
+      padding: 4
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: 2
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: 1
+    }
+
   }
 
 })

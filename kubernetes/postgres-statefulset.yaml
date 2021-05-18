@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: lifebank-postgres
+    version: ${VERSION}
+  name: lifebank-postgres
+spec:
+  serviceName: lifebank-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lifebank-postgres
+      version: ${VERSION}
+  template:
+    metadata:
+      labels:
+        app: lifebank-postgres
+        version: ${VERSION}
+    spec:
+      imagePullSecrets:
+          - name: regcred
+      containers:
+      - image: postgres:11.5-alpine
+        imagePullPolicy: "Always"
+        name: lifebank-postgres
+        envFrom:
+        - configMapRef:
+            name: lifebank-postgres-config
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres
+          subPath: postgres
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: lifebank-storage
+        resources:
+          requests:
+            storage: 100Gi 
