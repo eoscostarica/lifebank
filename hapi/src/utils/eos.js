@@ -161,22 +161,20 @@ const transact = async (actions, account, password) => {
     chainId: eosConfig.chainId,
     signatureProvider: new JsSignatureProvider(keys)
   })
-  actions.unshift(
-    {
-      authorization: [
-        {
-          actor: 'costarica',
-          permission: 'writer'
-        }
-      ],
-      account: 'writer',
-      name: 'run',
-      data: {}
-    }
-  )
+  actions.unshift({
+    authorization: [
+      {
+        actor: 'costarica',
+        permission: 'writer'
+      }
+    ],
+    account: 'writer',
+    name: 'run',
+    data: {}
+  })
 
   console.log('ACTIONS', actions)
-  
+
   const transaction = await api.transact(
     {
       actions
