@@ -11,14 +11,15 @@ export default (theme) => ({
       color: "rgba(0, 0, 0, 0.6)"
     }
   },
-  dialog: {
-    paddingTop: "53px",
-    paddingLeft: "53px",
-    paddingRight: "53px",
-    paddingBottom: "38px",
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: "21px",
-      paddingRight: "21px",
+  dimensions: {
+    width: 500,
+    height: 620,
+    paddingTop: '48px',
+    paddingLeft: '48px',
+    paddingRight: '48px',
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      height: "100%"
     }
   },
   register: {
@@ -53,6 +54,7 @@ export default (theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
+    height: '100%',
     marginBottom: theme.spacing(2)
   },
   titleRegister: {
@@ -63,7 +65,17 @@ export default (theme) => ({
     lineHeight: 1.18,
     letterSpacing: '0.25px',
     color: '#rgba(0, 0, 0, 0.87)',
-    marginBottom: 15
+    marginTop: 32
+  },
+  titleRegisterRoleSelector: {
+    fontSize: '34px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.18,
+    letterSpacing: '0.25px',
+    color: '#rgba(0, 0, 0, 0.87)',
+    marginTop: 56
   },
   text: {
     fontSize: '12px',
@@ -73,7 +85,19 @@ export default (theme) => ({
     lineHeight: 1.33,
     letterSpacing: '0.4px',
     color: '#000000',
-    marginBottom: 30
+    marginTop: 16,
+    marginBottom: 24
+  },
+  registerText: {
+    marginBottom: 48,
+    fontSize: '12px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.33,
+    letterSpacing: '0.4px',
+    color: '#000000',
+    marginTop: 32
   },
   alert: {
     marginTop: theme.spacing(2),
@@ -246,14 +270,13 @@ export default (theme) => ({
   wrapperRoleSelector: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
     width: '100%',
+    height: '100%'
   },
   btn: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
-    width: "60%",
+    width: "100%",
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
@@ -262,7 +285,7 @@ export default (theme) => ({
     letterSpacing: '1px',
     color: '#ffffff',
     padding: '15px',
-    marginBottom: 10,
+    marginBottom: 20,
     [theme.breakpoints.down('md')]: {
       width: "100%",
     }

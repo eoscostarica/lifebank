@@ -15,6 +15,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
 import Backdrop from '@material-ui/core/Backdrop'
 import Snackbar from '@material-ui/core/Snackbar'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -48,7 +49,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
   const [currentUser, { login }] = useUser()
   const [open, setOpen] = useState(!!isModal)
   const [openSnackbar, setOpenSnackbar] = useState(false)
-  const [maxWidth] = useState('sm')
+  const [maxWidth] = useState('md')
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [isEmailValid, setEmailValid] = useState(false)
@@ -305,7 +306,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
   }, [open])
 
   return (
-    <>
+    <Box classname={classes.dialog}>
       {isHome && !currentUser &&
         <Button color="secondary" className={classes.registerBtn} onClick={handleOpen}>
           {t('signup.register')}
@@ -330,7 +331,6 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       <Dialog
         fullScreen={fullScreen}
         maxWidth={maxWidth}
-        fullWidth
         open={open}
         onClose={handleOpen}
         aria-labelledby="transition-modal-title"
@@ -341,7 +341,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
           timeout: 500
         }}
       >
-        <Box className={classes.dialog}>
+        <DialogContent className={classes.dimensions} >
           <Box className={classes.closeIcon}>
             <IconButton
               aria-label="close"
@@ -362,8 +362,8 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
             <Box className={classes.stepperContent}>
               {activeStep === 0 && (
                 <>
-                  <Typography className={classes.titleRegister}>{t('signup.register')}</Typography>
-                  <Typography className={classes.text}>{t('signup.registerText')}</Typography>
+                  <Typography className={classes.titleRegisterRoleSelector}>{t('signup.register')}</Typography>
+                  <Typography className={classes.registerText}>{t('signup.registerText')}</Typography>
                   <SignupRoleSelector onSubmit={handleRoleChange} />
                 </>
               )}
@@ -434,14 +434,14 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
               )}
             </Box>
           </Box>
-        </Box>
+        </DialogContent>
       </Dialog>
       <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleOpenAlert}>
         <Alert severity={openSnackbar.severity}>
           {openSnackbar.message}
         </Alert>
       </Snackbar>
-    </>
+    </Box>
   )
 }
 

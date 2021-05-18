@@ -33,10 +33,16 @@ export default (theme) => ({
     letterSpacing: '0.4px',
     color: '#000000',
   },
-  dialog: {
-    paddingTop: "48px",
-    paddingLeft: "48px",
-    paddingRight: "48px"
+  dimensions: {
+    width: 500,
+    height: 625,
+    paddingTop: '48px',
+    paddingLeft: '48px',
+    paddingRight: '48px',
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      height: "100%"
+    }
   },
   title: {
     fontFamily: "Roboto",
@@ -48,7 +54,8 @@ export default (theme) => ({
     letterSpacing: "0.25px",
     textAlign: "left",
     color: "rgba(0, 0, 0, 0.87)",
-    marginBottom: 15
+    marginBottom: 16,
+    marginTop: 16
   },
   subTitle: {
     fontFamily: "Roboto",
