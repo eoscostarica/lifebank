@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: lifebank-wallet
+    version: ${VERSION}
+  name: lifebank-wallet
+spec:
+  serviceName: lifebank-wallet
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lifebank-wallet
+      version: ${VERSION}
+  template:
+    metadata:
+      labels:
+        app: lifebank-wallet
+        version: ${VERSION}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - image: ${DOCKER_REGISTRY}/${IMAGE_NAME_WALLET}:${VERSION}
+          imagePullPolicy: "Always"
+          name: "lifebank-wallet"
+          env:
+            - name: DATA_DIR
+              value: /opt/application/data
+            - name: CONFIG_DIR
+              value: /opt/application/config
+          ports:
+            - containerPort: 8888
+          volumeMounts:
+            - mountPath: /opt/application/data
+              subPath: data
+              name: data-directory
+            - mountPath: /opt/application/config
+              name: config-directory
+            - mountPath: /opt/application/seeds
+              name: wallet-seeds
+      restartPolicy: Always
+      volumes:
+        - name: config-directory
+          configMap:
+            name: lifebank-wallet-config
+        - name: wallet-seeds
+          configMap:
+            name: wallet-seeds
+  volumeClaimTemplates:
+    - metadata:
+        name: data-directory
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: lifebank-storage
+        resources:
+          requests:
+            storage: 50Gi

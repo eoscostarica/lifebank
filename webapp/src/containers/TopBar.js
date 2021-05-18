@@ -9,7 +9,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom'
 import Divider from '@material-ui/core/Divider'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import ShareIcon from '@material-ui/icons/Share'
+import SettingsIcon from '@material-ui/icons/Settings';
 import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -90,16 +90,6 @@ const Topbar = ({ user, onLogout }) => {
   return (
     <Box className={classes.box}>
       <LanguageSelector />
-      {user && isDesktop && (
-        <IconButton onClick={handleClick}>
-          <ShareIcon
-            alt="User icon"
-            className={clsx(classes.userIcon, {
-              [classes.userIconTransparent]: useTransparentBG
-            })}
-          />
-        </IconButton>
-      )}
       {user && <Notification />}
       {user && (
         <>
@@ -118,19 +108,16 @@ const Topbar = ({ user, onLogout }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <Link to="/profile" className={classes.link}>
-              <MenuItem className={classes.menuItem} onClick={handleClose}>{user.account}</MenuItem>
-            </Link>
-            <Divider />
             <MenuItem onClick={handleLogout} className={classes.menuItem}>
               <ExitToAppIcon alt="User icon" className={classes.logoutIcon} />
               {t('login.logout')}
             </MenuItem>
           </Menu>
         </>
-      )}
+      )
+      }
       <LoginModal isNavBar />
-    </Box>
+    </Box >
   )
 }
 
