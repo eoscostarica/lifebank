@@ -2,12 +2,13 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: lifebank-storage
-  annotations:
-    storageclass.beta.kubernetes.io/is-default-class: "true"
-provisioner: kubernetes.io/gce-pd
+  labels:
+    version: ${VERSION}
+provisioner: driver.longhorn.io
 volumeBindingMode: WaitForFirstConsumer
 parameters:
-  type: pd-standard
-  fsType: ext4
+  numberOfReplicas: "1"
+  staleReplicaTimeout: "2880"
+  fromBackup: ""
 reclaimPolicy: Retain
 allowVolumeExpansion: true
