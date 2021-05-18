@@ -44,7 +44,7 @@ const addLifebank = (
         name: 'addlifebank',
         data: {
           account,
-          // lifebank_name: name,
+          lifebank_name: name,
           has_immunity_test: has_immunity_test || false,
           community_asset: COMMUNITY_ASSET,
           location: JSON.stringify(geolocation),
@@ -108,12 +108,12 @@ const upLifebank = (
   )
 }
 
-const addSponsor = async (
+const addSponsor = (
   account,
   password,
   { name, geolocation, ...profile }
 ) => {
-  return await eosUtil.transact(
+  return eosUtil.transact(
     [
       {
         authorization: [
@@ -125,23 +125,23 @@ const addSponsor = async (
         account: CONTRACT_NAME,
         name: 'addsponsor',
         data: {
-          account
-          // sponsor_name: name || '',
-          // name: profile.name || '',
-          // email: profile.email || '',
-          // website: profile.website || '',
-          // telephones: profile.telephones || '',
-          // business_type: profile.business_type || '',
-          // schedule: profile.schedule || '',
-          // longitude: profile.longitude || '',
-          // location: geolocation? JSON.stringify(geolocation): '',
-          // logo_url: profile.logo_url || '',
-          // about: profile.about || '',
-          // address: profile.address || '',
-          // photos: profile.photos || '',
-          // social_media_links: profile.social_media_links || '',
-          // community_asset: COMMUNITY_ASSET,
-          // ...profile
+          account,
+          sponsor_name: name || '',
+          name: profile.name || '',
+          email: profile.email || '',
+          website: profile.website || '',
+          telephones: profile.telephones || '',
+          business_type: profile.business_type || '',
+          schedule: profile.schedule || '',
+          longitude: profile.longitude || '',
+          location: geolocation? JSON.stringify(geolocation): '',
+          logo_url: profile.logo_url || '',
+          about: profile.about || '',
+          address: profile.address || '',
+          photos: profile.photos || '',
+          social_media_links: profile.social_media_links || '',
+          community_asset: COMMUNITY_ASSET,
+          ...profile
         }
       }
     ],

@@ -284,11 +284,11 @@ deploy_lifebank_contracts_to_lacchain() {
     mkdir -p ./stdout/lifebankcode
     TEMP_DIR=./stdout/lifebankcode
 
-    cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u $EOS_API_URL set contract lifebankcode -j -d -s ../lifebankcode/ >$TEMP_DIR/tx2.json
+    cleos -u $HAPI_EOS_API_ENDPOINT push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
+    cleos -u $HAPI_EOS_API_ENDPOINT set contract lifebankcode -j -d -s ../lifebankcode/ >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-    cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p lifebankcode@active
+    cleos -u $HAPI_EOS_API_ENDPOINT -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p lifebankcode@active
 }
 
 consent_lacchain() {
@@ -321,9 +321,9 @@ test_func() {
     mkdir -p ./stdout/register
     TEMP_DIR=./stdout/register
 
-    cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
+    cleos -u $HAPI_EOS_API_ENDPOINT push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
     cleos -u https://writer.eosio.cr push action -j -d -s lifebankcode addsponsor '{
-        "account":"sponsprueba1",
+        "account":"sposfxpfwh55",
         "sponsor_name":"Ferreteria McGyver",
         "benefit_description":"10% off toilet seats",
         "website":"https://garberhardware.com/",
@@ -338,10 +338,10 @@ test_func() {
         "about": "Toilets for free only here",
         "social_media_links": "[{\"name\":\"facebook\",\"url\":\"https://jsonformatter.curiousconcept.com\"},{\"name\":\"instragram\",\"url\":\"https://jsonformatter.curiousconcept.com\"},{\"name\":\"twitter\",\"url\":\"https://jsonformatter.curiousconcept.com\"}]",
         "photos": "[\"https://static.hosteltur.com/app/public/uploads/img/articles/2020/04/10/M_110203_costa-rica.jpg\",\"https://www.larepublica.net/storage/images/2019/07/30/20190730091248.cr-3.jpg\"]"
-    }' -p sponsprueba1@active >$TEMP_DIR/tx2.json
+    }' -p sposfxpfwh55@active >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-    cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p sponsprueba1@active
+    cleos -u $HAPI_EOS_API_ENDPOINT -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p sposfxpfwh55@active
 }
 
 set_code() {
@@ -361,8 +361,8 @@ run_lifebank() {
     # set_code
     # consent_lacchain
     # register_sponsor_lacchain
-    test_func
-    # deploy_lifebank_contracts_to_lacchain
+    # test_func
+    deploy_lifebank_contracts_to_lacchain
     # change_active_permission
     # grant_lifebankcode_permission_in_lifebankcode
     # create_community_lacchain
