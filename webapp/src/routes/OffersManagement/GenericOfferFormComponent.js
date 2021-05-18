@@ -104,17 +104,20 @@ const LimitationHandling = ({
   return (
     <Box className={classes.limitationHandlingPaper}>
       <TextField
-        id="secret"
+        id="quantity"
         label={t('offersManagement.quantity')}
-        type="number"
         fullWidth
+        min='1'
         placeholder={t('offersManagement.quantityPlaceholder')}
         variant="outlined"
         InputLabelProps={{
           shrink: true
         }}
-        className={classes.textField}
+        InputProps={{
+          inputComponent: NumberFormatCustom,
+        }}
         onChange={(event) => setQuantity(Number(event.target.value))}
+        className={classes.textField}
       />
       <Box className={classes.dateContainer}>
         <br />
