@@ -189,10 +189,7 @@ export default (theme) => ({
   },
   offerName: {
     textTransform: 'initial',
-    textAlign: 'right',
-    width: "100%"
-  },
-  column: {
-    textAlign: 'center'
+    textAlign: 'left'
   }
+
 })
