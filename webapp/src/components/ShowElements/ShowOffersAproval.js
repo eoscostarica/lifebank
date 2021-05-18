@@ -11,8 +11,18 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { useTranslation } from 'react-i18next'
-import Divider from '@material-ui/core/Divider'
 import OfferView from '../../components/OfferView'
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
+import StarsIcon from '@material-ui/icons/Stars'
+import WhatshotIcon from '@material-ui/icons/Whatshot'
+import AccessTimeIcon from '@material-ui/icons/AccessTime'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import TagFacesIcon from '@material-ui/icons/TagFaces'
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
+import RestaurantIcon from '@material-ui/icons/Restaurant'
+import FilterVintageIcon from '@material-ui/icons/FilterVintage'
+import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill'
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -216,7 +226,42 @@ const ShowOffers = ({ offers, loading }) => {
               {props.offer.offer_name}
             </Typography>
           </Box>
-          <LocalOfferIcon className={classes.cardIconOffer} />
+          {props.offer.icon === 'LocalOfferIcon' && (
+            <LocalOfferIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'CardGiftcardIcon' && (
+            <CardGiftcardIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'StarsIcon' && (
+            <StarsIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'WhatshotIcon' && (
+            <WhatshotIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'AccessTimeIcon' && (
+            <AccessTimeIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'StorefrontIcon' && (
+            <StorefrontIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'TagFacesIcon' && (
+            <TagFacesIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'ShoppingBasketIcon' && (
+            <ShoppingBasketIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'RestaurantIcon' && (
+            <RestaurantIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'FilterVintageIcon' && (
+            <FilterVintageIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'OutdoorGrillIcon' && (
+            <OutdoorGrillIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'OfflineBoltIcon' && (
+            <OfflineBoltIcon className={classes.cardIconOffer} />
+          )}
         </Box>
         <CardContent className={classes.cardContent}>
           <Typography paragraph className={classes.cardContentText}>

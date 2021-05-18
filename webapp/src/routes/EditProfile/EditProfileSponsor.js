@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import MenuItem from '@material-ui/core/MenuItem'
-import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -53,9 +52,8 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     about: ""
   });
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
-  const [error, setError] = useState(false)
   const [socialMedia] = useState(
-    profile.social_media_links !== '[]'
+    profile.social_media_links && profile.social_media_links !== '[]'
       ? JSON.parse(profile.social_media_links)
       : []
   )
