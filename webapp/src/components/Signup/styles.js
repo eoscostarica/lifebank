@@ -276,7 +276,7 @@ export default (theme) => ({
   btn: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
-    width: "60%",
+    width: "100%",
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
