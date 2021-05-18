@@ -1,2 +1,1 @@
-ALTER TABLE ONLY "public"."offer" ALTER COLUMN "icon" SET DEFAULT '"LocalOfferIcon"';
-ALTER TABLE "public"."offer" ALTER COLUMN "icon" SET NOT NULL;
+ALTER TABLE "public"."offer" ADD COLUMN "icon" varchar NOT NULL DEFAULT 'LocalOfferIcon';

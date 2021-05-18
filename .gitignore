@@ -7,6 +7,6 @@ wallet_data
 certificates
 node_modules
 stdout
-ssl/
+ssl/git 
 build_k8s/
 secrets
