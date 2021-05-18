@@ -277,6 +277,7 @@
       "noUniqueUrl": "This link is associated with another account",
       "editTitleLifebank": "Edit Lifebank Page",
       "editTitleSponsor": "Edit Business Page",
+      "editDonorsInformation": "Edit Donors Information",
       "information": "The information on this page can be viewed on your info page. Please, include detailed and accurate information so donors can easily find you.",
       "officialName": "Official Name",
       "contactInformation": "Contact Information",
@@ -434,6 +435,7 @@
       "offerName": "Offer name",
       "offerNamePlaceholder": "Type the name here",
       "offerType": "Offer type",
+      "icon": "Icon",
       "type": "Type",
       "discount": "Discount",
       "gift": "Gift",
@@ -483,7 +485,8 @@
       "offerCreation": "Offer Created Successfully",
       "offerStateActive": "Active Offers",
       "offerStateInactive": "Inactive Offers",
-      "info": "First complete your profile to add an offer"
+      "info": "First complete your profile to add an offer",
+      "chooseIcon": "Choose an icon"
     },
     "offerView": {
       "selectedOffer": "Selected offer",

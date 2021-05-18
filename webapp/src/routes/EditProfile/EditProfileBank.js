@@ -77,7 +77,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
     (geolocation) => handleSetField('geolocation', geolocation),
     [setField]
   )
-
   const { refetch: checkUserName } = useQuery(VERIFY_USERNAME, {
     variables: {
       username: username,
