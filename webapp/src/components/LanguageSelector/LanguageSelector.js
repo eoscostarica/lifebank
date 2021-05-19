@@ -56,33 +56,70 @@ const LanguageSelector = ({ alt }) => {
 
   return (
     <>
-      <IconButton className={classes.wrapper} onClick={handleClick}>
-        <LanguageIcon
-          alt={alt}
-          className={clsx(classes.iconLanguage, {
-            [classes.iconLanguageTransparent]: useTransparentBG
-          })}
-        />
-        <Typography
-          variant="h5"
-          className={clsx(classes.languageText, {
-            [classes.languageTextTransparent]: useTransparentBG
-          })}
-        >
-          {(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
-        </Typography>
-      </IconButton>
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        {languages.length &&
-          languages.map((item) => (
-            <MenuItem
-              key={`language-menu-${item.label}`}
-              onClick={() => handleClose(item.value)}
+      {alt && (
+        <>
+          <IconButton className={classes.wrapperSettings} onClick={handleClick}>
+            <LanguageIcon
+              alt={alt}
+              className={clsx(classes.iconLanguage, {
+                [classes.iconLanguageTransparent]: useTransparentBG
+              })}
+            />
+            <Typography
+              variant="h5"
+              className={clsx(classes.iconLanguage, {
+                [classes.iconLanguageTransparent]: useTransparentBG
+              })}
             >
-              {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
-            </MenuItem>
-          ))}
-      </Menu>
+              {(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
+            </Typography>
+          </IconButton>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+            {languages.length &&
+              languages.map((item) => (
+                <MenuItem
+                  key={`language-menu-${item.label}`}
+                  onClick={() => handleClose(item.value)}
+                >
+                  {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
+                </MenuItem>
+              ))}
+          </Menu>
+        </>
+      )
+      }
+      {!alt && (
+        <>
+          <IconButton className={classes.wrapper} onClick={handleClick}>
+            <LanguageIcon
+              alt={alt}
+              className={clsx(classes.iconLanguage, {
+                [classes.iconLanguageTransparent]: useTransparentBG
+              })}
+            />
+            <Typography
+              variant="h5"
+              className={clsx(classes.languageText, {
+                [classes.languageTextTransparent]: useTransparentBG
+              })}
+            >
+              {(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
+            </Typography>
+          </IconButton>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+            {languages.length &&
+              languages.map((item) => (
+                <MenuItem
+                  key={`language-menu-${item.label}`}
+                  onClick={() => handleClose(item.value)}
+                >
+                  {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
+                </MenuItem>
+              ))}
+          </Menu>
+        </>
+      )
+      }
     </>
   )
 }

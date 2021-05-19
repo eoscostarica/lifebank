@@ -30,6 +30,12 @@
       "moreInfo": "Más Información",
       "approvedOffers": "Lista de Ofertas"
     },
+    "setting": {
+      "setting": "Configuraciones",
+      "language": "Idioma:",
+      "password": "Contraseña",
+      "changePassword": "Cambiar Contraseña:"
+    },
     "navigationDrawer": {
       "homepage": "Página de inicio",
       "tools": "Herramientas",

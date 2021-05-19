@@ -43,6 +43,12 @@
       "help": "Help",
       "offersApproval": "Offers approval"
     },
+    "setting": {
+      "setting": "Settings",
+      "language": "Language:",
+      "password": "Password",
+      "changePassword": "Change Password:"
+    },
     "signup": {
       "register": "Let's Start!",
       "registerText": "Choose the option that suits you best. ",

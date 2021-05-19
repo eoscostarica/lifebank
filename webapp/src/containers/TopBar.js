@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import Divider from '@material-ui/core/Divider'
 import EditIcon from '@material-ui/icons/Edit'
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -18,6 +17,7 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 
+import LanguageSelector from '../components/LanguageSelector'
 import Settings from '../components/Settings'
 import Notification from '../components/Notification'
 import LoginModal from '../components/LoginModal'
@@ -93,10 +93,15 @@ const Topbar = ({ user, onLogout }) => {
 
   const openSettingsEvent = () => {
     setOpenSettings(!openSettings)
+    handleClose()
   }
 
-  const handleClose = (menu) => {
+  const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleOnCloseSetting = () => {
+    setOpenSettings(!openSettings)
   }
 
   const handleLogout = () => {
@@ -107,6 +112,7 @@ const Topbar = ({ user, onLogout }) => {
 
   return (
     <Box className={classes.box}>
+      {!user && <LanguageSelector />}
       {user && <Notification />}
       {user && (
         <>
@@ -144,7 +150,7 @@ const Topbar = ({ user, onLogout }) => {
                 {user.account}
               </Typography>
             </MenuItem>
-            <MenuItem className={classes.menuItem}>
+            <MenuItem onClick={handleClose} className={classes.menuItem}>
               <Link to="/profile" className={classes.link}>
                 <EditIcon alt="Edit icon" className={classes.icon} />
                 <Typography
@@ -177,7 +183,7 @@ const Topbar = ({ user, onLogout }) => {
         </>
       )
       }
-      {user && openSettings && < Settings />}
+      {user && openSettings && < Settings onCloseSetting={handleOnCloseSetting} />}
       <LoginModal isNavBar />
     </Box >
   )
