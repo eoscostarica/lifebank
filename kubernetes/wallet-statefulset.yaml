@@ -37,16 +37,11 @@ spec:
               name: data-directory
             - mountPath: /opt/application/config
               name: config-directory
-            - mountPath: /opt/application/seeds
-              name: wallet-seeds
       restartPolicy: Always
       volumes:
         - name: config-directory
           configMap:
             name: lifebank-wallet-config
-        - name: wallet-seeds
-          configMap:
-            name: wallet-seeds
   volumeClaimTemplates:
     - metadata:
         name: data-directory
