@@ -71,9 +71,7 @@ const Settings = ({ onCloseSetting }) => {
                   <Typography variant="h3" className={classes.text}>
                     {t('setting.language')}
                   </Typography>
-                  <Box className={classes.box}>
-                    <LanguageSelector alt="settings" />
-                  </Box>
+                  <LanguageSelector alt="settings" />
                 </Box>
               </Grid>
               <Grid item xs={12}>
@@ -81,7 +79,7 @@ const Settings = ({ onCloseSetting }) => {
                   <Typography variant="h3" className={classes.text}>
                     {t('setting.changePassword')}
                   </Typography>
-                  <Button className={classes.button}>
+                  <Button color="secondary" className={classes.button}>
                     {t('setting.password')}
                   </Button>
                 </Box>
