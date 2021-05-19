@@ -34,6 +34,8 @@
       "homepage": "Página de inicio",
       "tools": "Herramientas",
       "yourDonations": "Tus donaciones",
+      "downloadReport": "Descargar reporte",
+      "editPage": "Editar página",
       "information": "Información",
       "aboutLifebank": "Acerca de Lifebank",
       "useTerms": "Términos de uso",
@@ -250,7 +252,6 @@
       "message2": "Estas ofertas no están disponibles porque desmarcaste esta categoría. Cámbialo en cualquier momento."
     },
     "editProfile": {
-      "editProfile": "Editar Perfil",
       "error": "Error",
       "duringSaveProfileData": "Mientras se guardaba la información del perfil",
       "goToProfile": "Ir al perfil!",
@@ -279,7 +280,9 @@
       "twitterUsernamePlaceholder": "El usuario de Twitter aquí",
       "noValidUrl": "La direccion no debe tener caracteres especiales",
       "noUniqueUrl": "Esta dirección esta asociada a otra cuenta",
-      "editTitleLifebank": "Perfil de la cuenta de Lifebank",
+      "editTitleLifebank": "Editar cuenta de Banco de Sangre",
+      "editTitleSponsor": "Editar cuenta de Patrocinador",
+      "editDonorsInformation": "Editar Información del Donador",
       "information": "La información que se encuentra en este perfil se puede ver en su página de Lifebank. Asegúrese de incluir información detallada para que los donantes puedan encontrarlo fácilmente y contactarte para proceder con la donación...",
       "officialName": "Nombre Oficial",
       "contactInformation": "Información de Contacto",
@@ -289,7 +292,12 @@
       "imageryDescription": "Escriba un enlace a sus imágenes para que su página de Lifebank se muestre más atractiva para sus donantes. Puede subir imágenes al logotipo de IMGUR.com o la imagen de avatar debe ser una imagen cuadrada, no mayor de 500px o más pesada de 250kb. La imagen del banner debe ser una imagen horizontal, no mayor a 1200px ni más pesada que 1mb.",
       "city": "Ciudad",
       "stateProvince": "Estado/Provincia",
-      "country": "País"
+      "country": "País",
+      "cityPlaceholder": "San José",
+      "stateProvincePlaceholder": "San José",
+      "countryPlaceholder": "Costa Rica",
+      "typeOfSponsor": "Tipo de Patrocinador",
+      "socialMedia": "Redes Sociales"
     },
     "donations": {
       "donations": "Donaciones",
@@ -426,6 +434,7 @@
       "offerName": "Nombre de oferta",
       "offerNamePlaceholder": "Ingresar el nombre aquí",
       "offerType": "Tipo de oferta",
+      "icon": "Ícono",
       "type": "Tipo",
       "discount": "Descuento",
       "gift": "Regalo",
@@ -475,7 +484,8 @@
       "offerCreation": "Oferta creada correctamente",
       "offerStateActive": "Ofertas Activas",
       "offerStateInactive": "Ofertas Inactivas",
-      "info": "Primero completa tu perfil para agregar una oferta"
+      "info": "Primero completa tu perfil para agregar una oferta",
+      "chooseIcon": "Elije un ícono"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",

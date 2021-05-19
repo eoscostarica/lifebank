@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: lifebank-webapp
+  name: lifebank-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lifebank-webapp
+  template:
+    metadata:
+      labels:
+        app: lifebank-webapp
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - image: ${DOCKER_REGISTRY}/${IMAGE_NAME_WEBAPP}:${VERSION}
+          imagePullPolicy: "Always"
+          name: lifebank-webapp
+          envFrom:
+            - configMapRef:
+                name: lifebank-webapp-config
+          ports:
+            - containerPort: 80
+      restartPolicy: Always

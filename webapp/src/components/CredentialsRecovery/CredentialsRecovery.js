@@ -25,7 +25,6 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
   const [open, setOpen] = useState(true)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const classes = useStyles()
-  const theme = useTheme()
   const [
     credentialsRecovery,
     { loading, error, data: { credentials_recovery: response } = {} }
@@ -164,7 +163,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
 
   return (
     <>
-      <Box className={classes.dialog}>
+      <Box className={classes.dimensions}>
         <Box className={classes.goBack}>
           <IconButton aria-label="go-back" onClick={handleOpen}>
             <ArrowBackIcon color="primary" />
@@ -221,7 +220,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
             </Snackbar>
           </form>
         </Box >
-      </Box >
+      </Box>
     </>
   )
 }
