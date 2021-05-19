@@ -12,6 +12,17 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Avatar from '@material-ui/core/Avatar'
 import LocalOfferIcon from '@material-ui/icons/LocalOffer'
 import { useTranslation } from 'react-i18next'
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
+import StarsIcon from '@material-ui/icons/Stars'
+import WhatshotIcon from '@material-ui/icons/Whatshot'
+import AccessTimeIcon from '@material-ui/icons/AccessTime'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import TagFacesIcon from '@material-ui/icons/TagFaces'
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
+import RestaurantIcon from '@material-ui/icons/Restaurant'
+import FilterVintageIcon from '@material-ui/icons/FilterVintage'
+import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill'
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt'
 
 import OfferView from '../../components/OfferView'
 import styles from './styles'
@@ -88,7 +99,6 @@ const ShowOffersMobile = ({ offers, loading }) => {
                 : ''
             }
           >
-            <LocalOfferIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
@@ -112,7 +122,42 @@ const ShowOffersMobile = ({ offers, loading }) => {
           }
         />
         <ListItemSecondaryAction>
-          <LocalOfferIcon className={classes.secondaryIconList} />
+          {props.offer.icon === 'LocalOfferIcon' && (
+            <LocalOfferIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'CardGiftcardIcon' && (
+            <CardGiftcardIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'StarsIcon' && (
+            <StarsIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'WhatshotIcon' && (
+            <WhatshotIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'AccessTimeIcon' && (
+            <AccessTimeIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'StorefrontIcon' && (
+            <StorefrontIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'TagFacesIcon' && (
+            <TagFacesIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'ShoppingBasketIcon' && (
+            <ShoppingBasketIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'RestaurantIcon' && (
+            <RestaurantIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'FilterVintageIcon' && (
+            <FilterVintageIcon className={classes.secondaryIconList} />
+          )}
+          {props.offer.icon === 'OutdoorGrillIcon' && (
+            <OutdoorGrillIcon className={classes.cardIconOffer} />
+          )}
+          {props.offer.icon === 'OfflineBoltIcon' && (
+            <OfflineBoltIcon className={classes.cardIconOffer} />
+          )}
         </ListItemSecondaryAction>
       </ListItem>
     )

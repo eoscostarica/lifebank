@@ -282,6 +282,7 @@
       "noUniqueUrl": "Esta dirección esta asociada a otra cuenta",
       "editTitleLifebank": "Editar cuenta de Banco de Sangre",
       "editTitleSponsor": "Editar cuenta de Patrocinador",
+      "editDonorsInformation": "Editar Información del Donador",
       "information": "La información que se encuentra en este perfil se puede ver en su página de Lifebank. Asegúrese de incluir información detallada para que los donantes puedan encontrarlo fácilmente y contactarte para proceder con la donación...",
       "officialName": "Nombre Oficial",
       "contactInformation": "Información de Contacto",
@@ -434,6 +435,7 @@
       "offerName": "Nombre de oferta",
       "offerNamePlaceholder": "Ingresar el nombre aquí",
       "offerType": "Tipo de oferta",
+      "icon": "Ícono",
       "type": "Tipo",
       "discount": "Descuento",
       "gift": "Regalo",
@@ -483,7 +485,8 @@
       "offerCreation": "Oferta creada correctamente",
       "offerStateActive": "Ofertas Activas",
       "offerStateInactive": "Ofertas Inactivas",
-      "info": "Primero completa tu perfil para agregar una oferta"
+      "info": "Primero completa tu perfil para agregar una oferta",
+      "chooseIcon": "Elije un ícono"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",
