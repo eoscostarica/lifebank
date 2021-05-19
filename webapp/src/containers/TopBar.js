@@ -7,13 +7,17 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Box from '@material-ui/core/Box'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import Divider from '@material-ui/core/Divider'
+import EditIcon from '@material-ui/icons/Edit'
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from '@material-ui/icons/Settings'
+import Typography from '@material-ui/core/Typography'
 import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
+import { Language as LanguageIcon } from '@material-ui/icons'
 
 import LanguageSelector from '../components/LanguageSelector'
 import Notification from '../components/Notification'
@@ -44,23 +48,39 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'normal',
     lineHeight: 1.14,
     letterSpacing: '1px',
-    color: '#121212'
+    color: '#121212',
+    height: '32px'
   },
   box: {
     display: 'flex',
     justifyContent: 'flex-end',
     flex: 1
-  }
+  },
+  languageText: {
+    color: '#121212',
+    fontSize: '1rem',
+    marginLeft: 3,
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'inline'
+    }
+  },
 }))
 
 const Topbar = ({ user, onLogout }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorSettings, setAnchorSettings] = useState(null)
   const theme = useTheme()
   const location = useLocation()
   const isHome = location.pathname === '/'
   const history = useHistory()
+  const [downloadReport, setDownloadReport] = useState(false)
+
+  const onReportClick = () => {
+    setDownloadReport(!downloadReport)
+  }
 
   const trigger = useScrollTrigger({
     target: window || undefined,
@@ -77,8 +97,15 @@ const Topbar = ({ user, onLogout }) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleClickSettings = (event) => {
+    setAnchorSettings(event.currentTarget)
+  }
+
+  const handleClose = (menu) => {
+    if (menu === 1)
+      setAnchorEl(null)
+    else
+      setAnchorSettings(null)
   }
 
   const handleLogout = () => {
@@ -89,8 +116,63 @@ const Topbar = ({ user, onLogout }) => {
 
   return (
     <Box className={classes.box}>
-      <LanguageSelector />
       {user && <Notification />}
+      {user && (
+        <>
+          <IconButton onClick={handleClickSettings}>
+            <SettingsIcon
+              alt="User icon"
+              className={clsx(classes.userIcon, {
+                [classes.userIconTransparent]: useTransparentBG
+              })}
+            />
+          </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorSettings}
+            keepMounted
+            open={Boolean(anchorSettings)}
+            onClose={() => handleClose(2)}
+            elevation={0}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+          >
+            <MenuItem className={classes.menuItem}>
+              <Link to="/profile">
+                <EditIcon alt="Edit icon" className={classes.logoutIcon} />
+                <Typography
+                  variant="h5"
+                  className={classes.languageText}
+                >
+                  {t('navigationDrawer.editPage')}
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem className={classes.menuItem}>
+              <CloudDownloadIcon className={classes.iconOption} />
+              <Link onClick={onReportClick}>
+                <Typography variant="body1" className={classes.labelOption}>
+                  {t('navigationDrawer.downloadReport')}
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem className={classes.menuItem}>
+              <LanguageIcon
+                className={classes.logoutIcon}
+              />
+              <LanguageSelector />
+            </MenuItem>
+          </Menu>
+        </>
+      )
+      }
       {user && (
         <>
           <IconButton onClick={handleClick}>
@@ -106,11 +188,26 @@ const Topbar = ({ user, onLogout }) => {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            onClose={() => handleClose(1)}
+            elevation={0}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
           >
             <MenuItem onClick={handleLogout} className={classes.menuItem}>
               <ExitToAppIcon alt="User icon" className={classes.logoutIcon} />
-              {t('login.logout')}
+              <Typography
+                variant="h5"
+                className={classes.languageText}
+              >
+                {t('login.logout')}
+              </Typography>
             </MenuItem>
           </Menu>
         </>
