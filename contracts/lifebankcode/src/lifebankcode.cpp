@@ -131,7 +131,7 @@ ACTION lifebankcode::adddonor(name account, eosio::asset community_asset)
 
 ACTION lifebankcode::addlifebank(
     name account,
-    // string lifebank_name,
+    string lifebank_name,
     string about,
     string address,
     string location,

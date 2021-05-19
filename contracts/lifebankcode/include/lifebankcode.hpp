@@ -105,7 +105,7 @@ public:
    */
   ACTION addlifebank(
       name account,
-      // string lifebank_name,
+      string lifebank_name,
       string about,
       string address,
       string location,
