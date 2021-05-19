@@ -10,10 +10,10 @@ spec:
         spec:
           containers:
             - name: hello
-              image: dev-lifebank-hapi
+              image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HAPI}:${VERSION}
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/sh
                 - -c
-                - "node /usr/app/src/cron-jobs/monthly-transaction.js"
+                - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
