@@ -21,6 +21,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import FingerprintIcon from '@material-ui/icons/Fingerprint'
 import Snackbar from '@material-ui/core/Snackbar'
+import DialogContent from '@material-ui/core/DialogContent'
 
 import {
   LOGIN_MUTATION,
@@ -247,7 +248,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
         }}
       >
         {activeStep === 0 && (
-          <Box className={classes.dialog}>
+          <DialogContent className={classes.dimensions} >
             <Box className={classes.closeIcon}>
               <IconButton
                 aria-label="close"
@@ -266,23 +267,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                 {t('login.subtitle')}
               </Typography>
             </Box>
-            <Snackbar open={openSnackbar.show} autoHideDuration={6000} onClose={handleOpenAlert}>
-              <Alert
-                severity={openSnackbar.severity}
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={handleOpenAlert}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-              >
-                {openSnackbar.message}
-              </Alert>
-            </Snackbar>
             <form autoComplete="off">
               <Box>
                 <TextField
@@ -348,23 +332,23 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
               <Box className={classes.centerBox}>
                 <LoginWithGoogle onSubmit={handleLoginWithAuth} />
               </Box>
+              <Box className={classes.registerBox}>
+                <Button color="secondary" className={classes.registerTextModal} onClick={handleOpenSignUp}>
+                  {t('login.notAccount')}
+                </Button>
+              </Box>
+              <ResendComponent
+                open={openVerify}
+                handlerOpen={handlerSetOpenVerify}
+                handlerSendEmail={handleSendEmail}
+              />
+              <Box className={classes.credentialsBox}>
+                <Button color="secondary" className={classes.recoveryButton} onClick={handleOpenCredentialsRecovery}>
+                  {t('signup.forgetPassword')}
+                </Button>
+              </Box>
             </form>
-            <Box className={classes.registerBox}>
-              <Button color="secondary" className={classes.registerTextModal} onClick={handleOpenSignUp}>
-                {t('login.notAccount')}
-              </Button>
-            </Box>
-            <ResendComponent
-              open={openVerify}
-              handlerOpen={handlerSetOpenVerify}
-              handlerSendEmail={handleSendEmail}
-            />
-            <Box className={classes.credentialsBox}>
-              <Button color="secondary" className={classes.recoveryButton} onClick={handleOpenCredentialsRecovery}>
-                {t('signup.forgetPassword')}
-              </Button>
-            </Box>
-          </Box>
+          </DialogContent>
         )}
         {activeStep === 1 && (
           <Signup isModal onCloseSignUp={handleOnCloseComponent} />
@@ -372,7 +356,23 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
         {activeStep === 2 && (
           <CredentialsRecovery onCloseCredentialsRecovery={handleOnCloseComponent} />
         )}
-
+        <Snackbar open={openSnackbar.show} autoHideDuration={6000} onClose={handleOpenAlert}>
+          <Alert
+            severity={openSnackbar.severity}
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={handleOpenAlert}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            {openSnackbar.message}
+          </Alert>
+        </Snackbar>
       </Dialog>
     </>
   )
