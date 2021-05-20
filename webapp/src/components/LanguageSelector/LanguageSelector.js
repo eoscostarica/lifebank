@@ -11,6 +11,9 @@ import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useLocation } from 'react-router-dom'
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -58,7 +61,35 @@ const LanguageSelector = ({ alt }) => {
     <>
       {alt && (
         <>
-          <IconButton className={classes.wrapperSettings} onClick={handleClick}>
+          <FormControl
+            variant="filled"
+            className={classes.selector}
+          >
+            <InputLabel id="select-label">
+              <LanguageIcon
+                alt={alt}
+                className={classes.iconLanguage}
+              />
+              {(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
+            </InputLabel>
+            <Select
+              labelId="bussines-type-label"
+              id="bussines-type"
+              label={(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
+              onChange={handleClick}
+            >
+              {languages.length &&
+                languages.map((item) => (
+                  <MenuItem
+                    key={`language-menu-${item.label}`}
+                    onClick={() => handleClose(item.value)}
+                  >
+                    {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+          {/* <IconButton className={classes.wrapperSettings} onClick={handleClick}>
             <LanguageIcon
               alt={alt}
               className={clsx(classes.iconLanguage, {
@@ -84,7 +115,7 @@ const LanguageSelector = ({ alt }) => {
                   {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
                 </MenuItem>
               ))}
-          </Menu>
+          </Menu> */}
         </>
       )
       }

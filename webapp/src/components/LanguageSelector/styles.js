@@ -18,6 +18,12 @@ export default (theme) => ({
   wrapper: {
     color: 'inherit'
   },
+  selector: {
+    height: 'auto',
+    overflowY: 'none',
+    width: '100%',
+    paddingBottom: '4px'
+  },
   languageText: {
     color: '#121212',
     fontSize: '1rem',

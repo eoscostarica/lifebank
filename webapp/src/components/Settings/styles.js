@@ -46,9 +46,7 @@ export default (theme) => ({
     color: "rgba(0, 0, 0, 0.6)",
   },
   box: {
-    marginTop: '10px',
-    paddingLeft: '30px',
-    paddingRight: '30px',
+    marginTop: '20px',
     width: '100%'
   },
   loginBtn: {
