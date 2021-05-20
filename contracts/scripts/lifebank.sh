@@ -267,6 +267,18 @@ grant_lifebankcode_permission_in_lifebankcode() {
     cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
+grant_consent2life_permission() {
+    echo 'Create Permission for consent2life'
+    mkdir -p ./stdout/permission
+    TEMP_DIR=./stdout/permission
+
+    cleos -u $HAPI_EOS_API_ENDPOINT push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
+    cleos -u https://writer.eosio.cr set account permission consent2life active permission_consent2life.json owner -j -d -s -p consent2life >$TEMP_DIR/tx2.json
+    jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
+    jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
+    cleos -u $HAPI_EOS_API_ENDPOINT -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p consent2life@active
+}
+
 change_active_permission() {
     echo 'Change Active Permission for Lifebankcoin'
     mkdir -p ./stdout/permission_active
@@ -338,7 +350,7 @@ test_func() {
 
     cleos -u $HAPI_EOS_API_ENDPOINT push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
     cleos -u https://writer.eosio.cr push action -j -d -s lifebankcode addsponsor '{
-        "account":"spotvgchxtgu",
+        "account":"spo333yaqsoj",
         "sponsor_name":"Ferreteria McGyver",
         "benefit_description":"10% off toilet seats",
         "website":"https://garberhardware.com/",
@@ -353,10 +365,10 @@ test_func() {
         "about": "Toilets for free only here",
         "social_media_links": "[{\"name\":\"facebook\",\"url\":\"https://jsonformatter.curiousconcept.com\"},{\"name\":\"instragram\",\"url\":\"https://jsonformatter.curiousconcept.com\"},{\"name\":\"twitter\",\"url\":\"https://jsonformatter.curiousconcept.com\"}]",
         "photos": "[\"https://static.hosteltur.com/app/public/uploads/img/articles/2020/04/10/M_110203_costa-rica.jpg\",\"https://www.larepublica.net/storage/images/2019/07/30/20190730091248.cr-3.jpg\"]"
-    }' -p spotvgchxtgu@active >$TEMP_DIR/tx2.json
+    }' -p spo333yaqsoj@active >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-    cleos -u $HAPI_EOS_API_ENDPOINT -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p spotvgchxtgu@active
+    cleos -u $HAPI_EOS_API_ENDPOINT -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p spo333yaqsoj@active
 }
 
 set_code() {
@@ -373,12 +385,13 @@ set_code() {
 
 run_lifebank() {
     echo 'Installing LifeBank ...'
+    # grant_consent2life_permission
     # set_code
     # consent_lacchain
     # register_sponsor_lacchain
-    # test_func
+    test_func
     # add_donor_lacchain
-    deploy_lifebank_contracts_to_lacchain
+    # deploy_lifebank_contracts_to_lacchain
     # change_active_permission
     # grant_lifebankcode_permission_in_lifebankcode
     # create_community_lacchain

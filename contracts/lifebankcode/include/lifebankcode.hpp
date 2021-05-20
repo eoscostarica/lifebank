@@ -195,8 +195,7 @@ public:
       string logo_url,
       string about,
       string social_media_links,
-      string photos
-      );
+      string photos);
 
   /**
    *
