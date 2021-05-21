@@ -117,7 +117,7 @@ const Topbar = ({ user, onLogout }) => {
       {user && (
         <>
           <IconButton onClick={handleClick}>
-            <PersonIcon
+            <SettingsIcon
               alt="User icon"
               className={clsx(classes.userIcon, {
                 [classes.userIconTransparent]: useTransparentBG
