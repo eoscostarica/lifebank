@@ -10,12 +10,8 @@ import Divider from '@material-ui/core/Divider'
 import EditIcon from '@material-ui/icons/Edit'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-<<<<<<< HEAD
 import SettingsIcon from '@material-ui/icons/Settings'
 import Typography from '@material-ui/core/Typography'
-=======
-import SettingsIcon from '@material-ui/icons/Settings';
->>>>>>> 228ddb4592cf6c0c6b91cd855440fea6b358b991
 import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -121,7 +117,7 @@ const Topbar = ({ user, onLogout }) => {
       {user && (
         <>
           <IconButton onClick={handleClick}>
-            <SettingsIcon
+            <PersonIcon
               alt="User icon"
               className={clsx(classes.userIcon, {
                 [classes.userIconTransparent]: useTransparentBG
@@ -145,63 +141,50 @@ const Topbar = ({ user, onLogout }) => {
               horizontal: 'center',
             }}
           >
-<<<<<<< HEAD
-          <MenuItem className={classes.menuItem}>
-            <PersonIcon alt="User icon" className={classes.icon} />
-            <Typography
-              variant="h5"
-              className={classes.languageText}
-            >
-              {user.account}
-            </Typography>
-          </MenuItem>
-          <MenuItem onClick={handleClose} className={classes.menuItem}>
-            <Link to="/profile" className={classes.link}>
-              <EditIcon alt="Edit icon" className={classes.icon} />
+            <MenuItem className={classes.menuItem}>
+              <PersonIcon alt="User icon" className={classes.icon} />
               <Typography
                 variant="h5"
                 className={classes.languageText}
               >
-                {t('navigationDrawer.editPage')}
+                {user.account}
               </Typography>
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={openSettingsEvent} className={classes.menuItem}>
-            <SettingsIcon alt="Settings icon" className={classes.icon} />
-            <Typography
-              variant="h5"
-              className={classes.languageText}
-            >
-              {t('navigationDrawer.settings')}
-            </Typography>
-          </MenuItem>
-=======
-            <Link to="/profile" className={classes.link}>
-            <MenuItem onClick={handleClose} className={classes.menuItem}>
-              <PersonIcon alt="User icon" className={classes.logoutIcon} />
-              {user.account}
             </MenuItem>
-          </Link>
-          <Divider />
->>>>>>> 228ddb4592cf6c0c6b91cd855440fea6b358b991
-          <MenuItem onClick={handleLogout} className={classes.menuItem}>
-            <ExitToAppIcon alt="Logout icon" className={classes.icon} />
-            <Typography
-              variant="h5"
-              className={classes.languageText}
-            >
-              {t('login.logout')}
-            </Typography>
-          </MenuItem>
-        </Menu>
+            <MenuItem onClick={handleClose} className={classes.menuItem}>
+              <Link to="/profile" className={classes.link}>
+                <EditIcon alt="Edit icon" className={classes.icon} />
+                <Typography
+                  variant="h5"
+                  className={classes.languageText}
+                >
+                  {t('navigationDrawer.editPage')}
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={openSettingsEvent} className={classes.menuItem}>
+              <SettingsIcon alt="Settings icon" className={classes.icon} />
+              <Typography
+                variant="h5"
+                className={classes.languageText}
+              >
+                {t('navigationDrawer.settings')}
+              </Typography>
+            </MenuItem>
+            <MenuItem onClick={handleLogout} className={classes.menuItem}>
+              <ExitToAppIcon alt="Logout icon" className={classes.icon} />
+              <Typography
+                variant="h5"
+                className={classes.languageText}
+              >
+                {t('login.logout')}
+              </Typography>
+            </MenuItem>
+          </Menu>
         </>
-  )
-}
-<<<<<<< HEAD
-{ user && openSettings && < Settings onCloseSetting={handleOnCloseSetting} /> }
-=======
->>>>>>> 228ddb4592cf6c0c6b91cd855440fea6b358b991
-<LoginModal isNavBar />
+      )
+      }
+      { user && openSettings && < Settings onCloseSetting={handleOnCloseSetting} />}
+      <LoginModal isNavBar />
     </Box >
   )
 }
