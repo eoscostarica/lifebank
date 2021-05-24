@@ -52,7 +52,8 @@
       "errorPassword": "The current password does not match your email",
       "newPassword": "New Password",
       "confirmPassword": "Confirm Password",
-      "confirmPasswordError": "The new password is not confirm properly - Try again"
+      "confirmPasswordError": "The new password is not confirm properly - Try again",
+      "passwordChanged": "Password Changed Successfully - We sent you an email"
     },
     "signup": {
       "register": "Let's Start!",

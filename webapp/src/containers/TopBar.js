@@ -10,7 +10,6 @@ import EditIcon from '@material-ui/icons/Edit'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import SettingsIcon from '@material-ui/icons/Settings'
-import Typography from '@material-ui/core/Typography'
 import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -44,10 +43,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontStretch: 'normal',
     fontStyle: 'normal',
-    lineHeight: 1.14,
     letterSpacing: '1px',
     color: '#121212',
-    height: '32px',
   },
   box: {
     display: 'flex',
@@ -133,7 +130,7 @@ const Topbar = ({ user, onLogout }) => {
             keepMounted
             open={Boolean(anchorEl)}
             onClose={() => handleClose(1)}
-            elevation={0}
+            elevation={12}
             getContentAnchorEl={null}
             anchorOrigin={{
               vertical: 'bottom',

@@ -7,15 +7,15 @@ export default (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    paddingTop: "24px",
-    marginBottom: 30
+    paddingTop: "10px",
+    marginBottom: 16
   },
   closeIcon: {
     position: 'absolute',
     zIndex: 1,
     left: 14,
-    paddingTop: "24px",
-    margin: '10px',
+    paddingTop: "10px",
+    marginBottom: 16,
     '& svg': {
       fontSize: 25,
       color: "rgba(0, 0, 0, 0.6)"
@@ -23,7 +23,7 @@ export default (theme) => ({
   },
   title: {
     fontFamily: "Roboto",
-    fontSize: "34px",
+    fontSize: "28px",
     fontWeight: "normal",
     fontStretch: "normal",
     fontStyle: "normal",
@@ -60,7 +60,7 @@ export default (theme) => ({
   },
   bodyWrapper: {
     height: '100%',
-    padding: theme.spacing(0, 4)
+    padding: theme.spacing(0, 2)
   },
   iconOption: {
     color: 'rgba(0, 0, 0, 0.54)',
@@ -68,7 +68,8 @@ export default (theme) => ({
   },
   loadingBox: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: '10px'
   },
   inputStyle: {
     color: "rgba(0, 0, 0, 0.6)",
@@ -97,8 +98,9 @@ export default (theme) => ({
   dimensions: {
     width: 500,
     height: 625,
-    [theme.breakpoints.down('md')]: {
-      width: '100%'
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      height: "100%"
     }
   }
 })

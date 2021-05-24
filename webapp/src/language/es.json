@@ -39,7 +39,9 @@
       "errorPassword": "La contraseña actual no coinside con su correo",
       "newPassword": "Nueva Contraseña",
       "confirmPassword": "Confirmar Constraseña",
-      "confirmPasswordError": "La constraseña nueva no esta confirmada adecuadamente - Intenta de nuevo"
+      "confirmPasswordError": "La constraseña nueva no esta confirmada adecuadamente - Intenta de nuevo",
+      "passwordChanged": "Constraseña cambiada exitosamente - Te enviamos un correo",
+      "passwordError": "Error en el cambio de contraseña - Intenta de nuevo"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",

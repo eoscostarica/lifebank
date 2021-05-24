@@ -13,7 +13,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { useTranslation } from 'react-i18next'
 
-import { CREDENTIALS_RECOVERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
+import { CREDENTIALS_RECOVERY, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -29,10 +29,6 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
     credentialsRecovery,
     { loading, error, data: { credentials_recovery: response } = {} }
   ] = useMutation(CREDENTIALS_RECOVERY)
-  const [
-    changePassword,
-    { loading: loadingChangePassword, error: errorChangePassword }
-  ] = useMutation(CHANGE_PASSWORD)
 
   const [
     getAccountSignupMethod,
@@ -77,26 +73,6 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
     })
   }
 
-  const handleSubmitChangePassword = async () => {
-    if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
-      changePassword({
-        variables: {
-          ...user,
-          emailContent: {
-            subject: t('emailMessage.subjectChangePassword'),
-            title: t('emailMessage.titleChangePassword'),
-            message: t('emailMessage.messageChangePassword')
-          }
-        }
-      })
-      setValidEmailFormat(false)
-    } else setOpenSnackbar({
-      show: true,
-      message: t('credentialsRecovery.passwordNotChangeable'),
-      severity: 'error'
-    })
-  }
-
   useEffect(() => {
     if (user.email) {
       getAccountSignupMethod({
@@ -124,23 +100,6 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
   }, [error, t])
 
   useEffect(() => {
-    if (errorChangePassword) {
-      if (errorChangePassword.message === `GraphQL error: Cannot read property 'secret' of null`)
-        setOpenSnackbar({
-          show: true,
-          message: t('credentialsRecovery.emailError'),
-          severity: 'error'
-        })
-      else setOpenSnackbar({
-        show: true,
-        message: errorChangePassword.message.replace('GraphQL error: ', ''),
-        severity: 'error'
-      })
-    }
-  }, [errorChangePassword, t])
-
-
-  useEffect(() => {
     if (response) {
       setOpenSnackbar({
         show: response.success,
@@ -151,11 +110,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
   }, [response])
 
   function executeCredentialsRecovery(e) {
-    if (e.key === 'Enter' && ((user.newPassword && user.currentPassword && validEmailFormat) && !loadingChangePassword)) {
-      e.preventDefault()
-      handleSubmitChangePassword()
-    }
-    else if (e.key === 'Enter' && (validEmailFormat && !loading)) {
+    if (e.key === 'Enter' && (validEmailFormat && !loading)) {
       e.preventDefault()
       handleSubmit()
     }

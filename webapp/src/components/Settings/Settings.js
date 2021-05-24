@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -19,11 +19,13 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import TextField from '@material-ui/core/TextField'
 import Divider from '@material-ui/core/Divider'
-import InputLabel from '@material-ui/core/InputLabel';
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import DialogContent from '@material-ui/core/DialogContent'
+import InputLabel from '@material-ui/core/InputLabel'
 
 import LanguageSelector from '../LanguageSelector'
 
-import { PROFILE_QUERY, CHANGE_PASSWORD } from '../../gql'
+import { PROFILE_QUERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
 import { useUser } from '../../context/user.context'
 import styles from './styles'
 
@@ -32,11 +34,14 @@ const useStyles = makeStyles(styles)
 const Settings = ({ onCloseSetting }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
+  const theme = useTheme()
   const [user, setUser] = useState({})
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [open, setOpen] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
+  const [showNewPassword, setShowNewPassword] = useState(false)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [currentUser] = useUser()
   const [
     loadProfile,
@@ -60,6 +65,11 @@ const Settings = ({ onCloseSetting }) => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)
   }
+
+  const handleClickShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword)
+  }
+
   const handleSetField = (field, value) => {
     setUser({ ...user, [field]: value })
   }
@@ -85,12 +95,8 @@ const Settings = ({ onCloseSetting }) => {
         severity: 'error'
       })
     }
-    // } else setOpenSnackbar({
-    //   show: true,
-    //   message: t('credentialsRecovery.passwordNotChangeable'),
-    //   severity: 'error'
-    // })
   }
+
   useEffect(() => {
     if (errorProfile)
       setOpenSnackbar({
@@ -99,6 +105,23 @@ const Settings = ({ onCloseSetting }) => {
         severity: 'error'
       })
   }, [errorProfile, t])
+
+  useEffect(() => {
+    if (responseChangePassword) {
+      if (responseChangePassword.success)
+        setOpenSnackbar({
+          show: true,
+          message: t('setting.passwordChanged'),
+          severity: 'success'
+        })
+      else
+        setOpenSnackbar({
+          show: true,
+          message: t('setting.passwordError'),
+          severity: 'error'
+        })
+    }
+  }, [responseChangePassword])
 
   useEffect(() => {
     if (errorChangePassword) {
@@ -139,178 +162,167 @@ const Settings = ({ onCloseSetting }) => {
         onClose={handleOpen}
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        fullScreen={false}
+        fullScreen={fullScreen}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500
         }}
       >
-        <Box className={classes.dimensions}>
+        <DialogContent className={classes.dimensions} >
+          <Box className={classes.closeIcon}>
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleOpen}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </Box>
+          <Box className={classes.textFieldWrapper}>
+            <Typography variant="h3" className={classes.title}>
+              {t('setting.setting')}
+            </Typography>
+            <Divider />
+          </Box>
           <form autoComplete="off">
-            <Box className={classes.closeIcon}>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={handleOpen}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            </Box>
-            <Box className={classes.bodyWrapper}>
-              <Grid container >
-                <Grid item xs={12}>
-                  <Box className={classes.textFieldWrapper}>
-                    <Typography variant="h3" className={classes.title}>
-                      {t('setting.setting')}
-                    </Typography>
-                    <Divider />
-                  </Box>
-                  <Box className={classes.box}>
-                    <Typography variant="h3" className={classes.text}>
-                      {t('setting.language')}
-                    </Typography>
-                  </Box>
-                  <Box className={classes.box}>
-                    <LanguageSelector alt="settings" />
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Box className={classes.box}>
-                    <Typography variant="h3" className={classes.text}>
-                      {t('setting.changePassword')}
-                    </Typography>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="currentPassword"
-                        variant="filled"
-                        type={showPassword ? 'text' : 'password'}
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{
-                          endAdornment: (
-                            <>
-                              <InputLabel id="select-label">
-                                {t('setting.currentPassword')}
-                              </InputLabel>
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={handleClickShowPassword}
-                                  edge="end"
-                                >
-                                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                              </InputAdornment>
-                            </>
-                          )
-                        }}
-                        value={user.currentPassword || ''}
-                        onChange={(event) =>
-                          handleSetField('currentPassword', event.target.value)
-                        }
-                        onKeyPress={(event) =>
-                          executeCredentialsRecovery(event)
-                        }
-                        className={classes.box}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="newPassword"
-                        type={showPassword ? 'text' : 'password'}
-                        variant="filled"
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{
-                          endAdornment: (
-                            <>
-                              <InputLabel id="select-label">
-                                {t('setting.newPassword')}
-                              </InputLabel>
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={handleClickShowPassword}
-                                  edge="end"
-                                >
-                                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                              </InputAdornment>
-                            </>
-                          )
-                        }}
-                        value={user.newPassword || ''}
-                        onChange={(event) =>
-                          handleSetField('newPassword', event.target.value)
-                        }
-                        onKeyPress={(event) =>
-                          executeCredentialsRecovery(event)
-                        }
-                        className={classes.box}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="confirmPassword"
-                        type={showPassword ? 'text' : 'password'}
-                        variant="filled"
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{
-                          endAdornment: (
-                            <>
-                              <InputLabel id="select-label">
-                                {t('setting.confirmPassword')}
-                              </InputLabel>
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={handleClickShowPassword}
-                                  edge="end"
-                                >
-                                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                              </InputAdornment>
-                            </>
-                          )
-                        }}
-                        value={user.confirmPassword || ''}
-                        onChange={(event) =>
-                          handleSetField('confirmPassword', event.target.value)
-                        }
-                        onKeyPress={(event) =>
-                          executeCredentialsRecovery(event)
-                        }
-                        className={classes.box}
-                      />
-                    </Grid>
-                    <Box className={classes.box}>
-                      <Button
-                        disabled={(!user.newPassword || !user.currentPassword)}
-                        variant="contained"
-                        color="secondary"
-                        onClick={handleSubmitChangePassword}
-                        className={classes.button}
-                      >
-                        {t('setting.changePassword')}
-                      </Button>
-                    </Box>
-                    <Box className={classes.loadingBox}>
-                      {loading && <CircularProgress />}
-                    </Box>
-                  </Box>
-                </Grid>
+            <Grid container >
+              <Grid item xs={12}>
+                <Box className={classes.box}>
+                  <Typography variant="h3" className={classes.text}>
+                    {t('setting.language')}
+                  </Typography>
+                </Box>
+                <Box className={classes.box}>
+                  <LanguageSelector alt="settings" />
+                </Box>
               </Grid>
-              <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
-                <Alert
-                  className={classes.alert}
-                  severity={openSnackbar.severity}
-                >
-                  {openSnackbar.message}
-                </Alert>
-              </Snackbar>
-            </Box>
+              <Grid item xs={12}>
+                <Box className={classes.box}>
+                  <Typography variant="h3" className={classes.text}>
+                    {t('setting.changePassword')}
+                  </Typography>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="currentPassword"
+                      variant="filled"
+                      type={showPassword ? 'text' : 'password'}
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{
+                        endAdornment: (
+                          <>
+                            <InputLabel id="select-label">
+                              {t('setting.currentPassword')}
+                            </InputLabel>
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                edge="end"
+                              >
+                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
+                            </InputAdornment>
+                          </>
+                        )
+                      }}
+                      value={user.currentPassword || ''}
+                      onChange={(event) =>
+                        handleSetField('currentPassword', event.target.value)
+                      }
+                      onKeyPress={(event) =>
+                        executeCredentialsRecovery(event)
+                      }
+                      className={classes.box}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="newPassword"
+                      type={showNewPassword ? 'text' : 'password'}
+                      variant="filled"
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{
+                        endAdornment: (
+                          <>
+                            <InputLabel id="select-label">
+                              {t('setting.newPassword')}
+                            </InputLabel>
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowNewPassword}
+                                edge="end"
+                              >
+                                {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
+                            </InputAdornment>
+                          </>
+                        )
+                      }}
+                      value={user.newPassword || ''}
+                      onChange={(event) =>
+                        handleSetField('newPassword', event.target.value)
+                      }
+                      onKeyPress={(event) =>
+                        executeCredentialsRecovery(event)
+                      }
+                      className={classes.box}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="confirmPassword"
+                      type={showNewPassword ? 'text' : 'password'}
+                      variant="filled"
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{
+                        endAdornment: (
+                          <>
+                            <InputLabel id="select-label">
+                              {t('setting.confirmPassword')}
+                            </InputLabel>
+                          </>
+                        )
+                      }}
+                      value={user.confirmPassword || ''}
+                      onChange={(event) =>
+                        handleSetField('confirmPassword', event.target.value)
+                      }
+                      onKeyPress={(event) =>
+                        executeCredentialsRecovery(event)
+                      }
+                      className={classes.box}
+                    />
+                  </Grid>
+                  <Box className={classes.box}>
+                    <Button
+                      disabled={(!user.newPassword || !user.currentPassword || !user.confirmPassword) || loadingChangePassword}
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleSubmitChangePassword}
+                      className={classes.button}
+                    >
+                      {t('setting.changePassword')}
+                    </Button>
+                  </Box>
+                  <Box className={classes.loadingBox}>
+                    {loadingChangePassword && <CircularProgress />}
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
           </form>
-        </Box>
+        </DialogContent>
+        <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
+          <Alert
+            className={classes.alert}
+            severity={openSnackbar.severity}
+          >
+            {openSnackbar.message}
+          </Alert>
+        </Snackbar>
       </Dialog>
     </>
   )
