@@ -8,14 +8,13 @@ export default (theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     paddingTop: "24px",
-    paddingRight: "16px",
-    paddingLeft: "16px",
     marginBottom: 30
   },
   closeIcon: {
     position: 'absolute',
     zIndex: 1,
     left: 14,
+    paddingTop: "24px",
     margin: '10px',
     '& svg': {
       fontSize: 25,
@@ -98,9 +97,8 @@ export default (theme) => ({
   dimensions: {
     width: 500,
     height: 625,
-    [theme.breakpoints.down('sm')]: {
-      width: "100%",
-      height: "100%"
+    [theme.breakpoints.down('md')]: {
+      width: '100%'
     }
   }
 })

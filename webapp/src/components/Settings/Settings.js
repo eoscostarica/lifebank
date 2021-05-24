@@ -18,6 +18,8 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import TextField from '@material-ui/core/TextField'
+import Divider from '@material-ui/core/Divider'
+import InputLabel from '@material-ui/core/InputLabel';
 
 import LanguageSelector from '../LanguageSelector'
 
@@ -63,24 +65,32 @@ const Settings = ({ onCloseSetting }) => {
   }
 
   const handleSubmitChangePassword = async () => {
-    changePassword({
-      variables: {
-        email: profile.email,
-        ...user,
-        emailContent: {
-          subject: t('emailMessage.subjectChangePassword'),
-          title: t('emailMessage.titleChangePassword'),
-          message: t('emailMessage.messageChangePassword')
+    if (user.newPassword === user.confirmPassword) {
+      changePassword({
+        variables: {
+          email: profile.email,
+          newPassword: user.newPassword,
+          currentPassword: user.currentPassword,
+          emailContent: {
+            subject: t('emailMessage.subjectChangePassword'),
+            title: t('emailMessage.titleChangePassword'),
+            message: t('emailMessage.messageChangePassword')
+          }
         }
-      }
-    })
+      })
+    } else {
+      setOpenSnackbar({
+        show: true,
+        message: t('setting.confirmPasswordError'),
+        severity: 'error'
+      })
+    }
     // } else setOpenSnackbar({
     //   show: true,
     //   message: t('credentialsRecovery.passwordNotChangeable'),
     //   severity: 'error'
     // })
   }
-
   useEffect(() => {
     if (errorProfile)
       setOpenSnackbar({
@@ -155,11 +165,14 @@ const Settings = ({ onCloseSetting }) => {
                     <Typography variant="h3" className={classes.title}>
                       {t('setting.setting')}
                     </Typography>
+                    <Divider />
                   </Box>
                   <Box className={classes.box}>
                     <Typography variant="h3" className={classes.text}>
                       {t('setting.language')}
                     </Typography>
+                  </Box>
+                  <Box className={classes.box}>
                     <LanguageSelector alt="settings" />
                   </Box>
                 </Grid>
@@ -171,21 +184,25 @@ const Settings = ({ onCloseSetting }) => {
                     <Grid item xs={12}>
                       <TextField
                         id="currentPassword"
-                        label={t('credentialsRecovery.currentPassword')}
                         variant="filled"
                         type={showPassword ? 'text' : 'password'}
                         InputLabelProps={{ shrink: true }}
                         InputProps={{
                           endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                edge="end"
-                              >
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                              </IconButton>
-                            </InputAdornment>
+                            <>
+                              <InputLabel id="select-label">
+                                {t('setting.currentPassword')}
+                              </InputLabel>
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>
+                            </>
                           )
                         }}
                         value={user.currentPassword || ''}
@@ -201,21 +218,25 @@ const Settings = ({ onCloseSetting }) => {
                     <Grid item xs={12}>
                       <TextField
                         id="newPassword"
-                        label={t('credentialsRecovery.newPassword')}
                         type={showPassword ? 'text' : 'password'}
                         variant="filled"
                         InputLabelProps={{ shrink: true }}
                         InputProps={{
                           endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                edge="end"
-                              >
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                              </IconButton>
-                            </InputAdornment>
+                            <>
+                              <InputLabel id="select-label">
+                                {t('setting.newPassword')}
+                              </InputLabel>
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>
+                            </>
                           )
                         }}
                         value={user.newPassword || ''}
@@ -228,15 +249,51 @@ const Settings = ({ onCloseSetting }) => {
                         className={classes.box}
                       />
                     </Grid>
-                    <Button
-                      disabled={(!user.newPassword || !user.currentPassword)}
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleSubmitChangePassword}
-                      className={classes.button}
-                    >
-                      {t('credentialsRecovery.changePassword')}
-                    </Button>
+                    <Grid item xs={12}>
+                      <TextField
+                        id="confirmPassword"
+                        type={showPassword ? 'text' : 'password'}
+                        variant="filled"
+                        InputLabelProps={{ shrink: true }}
+                        InputProps={{
+                          endAdornment: (
+                            <>
+                              <InputLabel id="select-label">
+                                {t('setting.confirmPassword')}
+                              </InputLabel>
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>
+                            </>
+                          )
+                        }}
+                        value={user.confirmPassword || ''}
+                        onChange={(event) =>
+                          handleSetField('confirmPassword', event.target.value)
+                        }
+                        onKeyPress={(event) =>
+                          executeCredentialsRecovery(event)
+                        }
+                        className={classes.box}
+                      />
+                    </Grid>
+                    <Box className={classes.box}>
+                      <Button
+                        disabled={(!user.newPassword || !user.currentPassword)}
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleSubmitChangePassword}
+                        className={classes.button}
+                      >
+                        {t('setting.changePassword')}
+                      </Button>
+                    </Box>
                     <Box className={classes.loadingBox}>
                       {loading && <CircularProgress />}
                     </Box>

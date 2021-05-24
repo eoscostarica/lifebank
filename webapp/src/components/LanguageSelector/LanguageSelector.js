@@ -66,16 +66,11 @@ const LanguageSelector = ({ alt }) => {
             className={classes.selector}
           >
             <InputLabel id="select-label">
-              <LanguageIcon
-                alt={alt}
-                className={classes.iconLanguage}
-              />
-              {(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
+              {((i18n.language || '').toLocaleUpperCase() === "EN") ? "English" : "Español"}
             </InputLabel>
             <Select
               labelId="bussines-type-label"
               id="bussines-type"
-              label={(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
               onChange={handleClick}
             >
               {languages.length &&

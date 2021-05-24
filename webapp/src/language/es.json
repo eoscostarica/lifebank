@@ -32,9 +32,14 @@
     },
     "setting": {
       "setting": "Configuraciones",
-      "language": "Idioma:",
+      "language": "Idioma Preferido:",
       "password": "Contraseña",
-      "changePassword": "Cambiar Contraseña:"
+      "changePassword": "Cambiar Contraseña:",
+      "currentPassword": "Contraseña Actual",
+      "errorPassword": "La contraseña actual no coinside con su correo",
+      "newPassword": "Nueva Contraseña",
+      "confirmPassword": "Confirmar Constraseña",
+      "confirmPasswordError": "La constraseña nueva no esta confirmada adecuadamente - Intenta de nuevo"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -402,10 +407,6 @@
       "passwordRecovery": "Recuperación de Contraseña",
       "emailError": "El correo ingresado no esta asociado a ninguna cuenta",
       "changePasswordInstructions": "Para cambiar su contraseña ingrese el correo asociado a su cuenta, la contraseña la actual y la nueva",
-      "changePassword": "Cambiar contraseña",
-      "currentPassword": "Contraseña actual",
-      "errorPassword": "La contraseña actual no coinside con su correo",
-      "newPassword": "Nueva contraseña",
       "instructionCredentialsRecovery": "Use su correo electrónico registrado en Lifebank para recuperar su contraseña. Le enviaremos un correo para que cree una nueva contraseña.",
       "checkYourEmail": "Revisa tu correo",
       "recovery": "Enviar",

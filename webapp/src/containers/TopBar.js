@@ -6,7 +6,6 @@ import PersonIcon from '@material-ui/icons/Person'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Box from '@material-ui/core/Box'
 import { Link, useLocation, useHistory } from 'react-router-dom'
-import Divider from '@material-ui/core/Divider'
 import EditIcon from '@material-ui/icons/Edit'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -48,12 +47,16 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.14,
     letterSpacing: '1px',
     color: '#121212',
-    height: '32px'
+    height: '32px',
   },
   box: {
     display: 'flex',
     justifyContent: 'flex-end',
-    flex: 1
+    flex: 1,
+    [theme.breakpoints.down('md')]: {
+      height: '100%',
+      width: '100%'
+    }
   },
   languageText: {
     color: '#121212',
@@ -117,8 +120,8 @@ const Topbar = ({ user, onLogout }) => {
       {user && (
         <>
           <IconButton onClick={handleClick}>
-            <SettingsIcon
-              alt="User icon"
+            <PersonIcon
+              alt="UserBar icon"
               className={clsx(classes.userIcon, {
                 [classes.userIconTransparent]: useTransparentBG
               })}
@@ -143,41 +146,21 @@ const Topbar = ({ user, onLogout }) => {
           >
             <MenuItem className={classes.menuItem}>
               <PersonIcon alt="User icon" className={classes.icon} />
-              <Typography
-                variant="h5"
-                className={classes.languageText}
-              >
-                {user.account}
-              </Typography>
+              {user.account}
             </MenuItem>
-            <MenuItem onClick={handleClose} className={classes.menuItem}>
-              <Link to="/profile" className={classes.link}>
+            <Link to="/profile" className={classes.link}>
+              <MenuItem onClick={handleClose} className={classes.menuItem}>
                 <EditIcon alt="Edit icon" className={classes.icon} />
-                <Typography
-                  variant="h5"
-                  className={classes.languageText}
-                >
-                  {t('navigationDrawer.editPage')}
-                </Typography>
-              </Link>
-            </MenuItem>
+                {t('navigationDrawer.editPage')}
+              </MenuItem>
+            </Link>
             <MenuItem onClick={openSettingsEvent} className={classes.menuItem}>
               <SettingsIcon alt="Settings icon" className={classes.icon} />
-              <Typography
-                variant="h5"
-                className={classes.languageText}
-              >
-                {t('navigationDrawer.settings')}
-              </Typography>
+              {t('navigationDrawer.settings')}
             </MenuItem>
             <MenuItem onClick={handleLogout} className={classes.menuItem}>
               <ExitToAppIcon alt="Logout icon" className={classes.icon} />
-              <Typography
-                variant="h5"
-                className={classes.languageText}
-              >
-                {t('login.logout')}
-              </Typography>
+              {t('login.logout')}
             </MenuItem>
           </Menu>
         </>
