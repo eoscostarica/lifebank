@@ -184,6 +184,7 @@ public:
   ACTION addsponsor(
       name account,
       string sponsor_name,
+      string covid_impact,
       string website,
       string telephones,
       string business_type,

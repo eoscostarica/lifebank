@@ -134,6 +134,10 @@
                     "type": "string"
                 },
                 {
+                    "name": "covid_impact",
+                    "type": "string"
+                },
+                {
                     "name": "website",
                     "type": "string"
                 },
