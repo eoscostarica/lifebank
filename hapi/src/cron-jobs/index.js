@@ -62,6 +62,34 @@ const generateLifebanksTransactionReports = async() => {
   })
 }
 
+const generateNewSponsorAndOfferReportToDonors = async () => {
+  var today = new Date()
+  var monthAgo = new Date()
+  monthAgo.setMonth(monthAgo.getMonth() - 1)
+
+  const donors = await userApi.getMany({
+    role: { _eq: 'donor' },
+  })
+
+  const newSponsors = await userApi.getMany({
+    role: { _eq: 'sponsor' },
+    created_at: { _gte: monthAgo, _lte: today }
+  })
+
+  const newOffers = await offerApi.getMany({
+    created_at: { _gte: monthAgo, _lte: today }
+  })
+
+  donors.forEach(async (lifebank) => {
+    mailApi.sendNewSponsorAndOfferReport(
+      lifebank.email,
+      'Monthly new sponsors and offer report',
+      'Report',
+      'We have '.concat(newSponsors? newSponsors.length : 0, ' new sponsors and ', newOffers? newOffers.length : 0, ' new offers until last month')
+    )
+  })
+}
+
 const generateNewSponsorAndOfferReportToLifebanks = async () => {
   var today = new Date()
   var weekAgo = new Date()
@@ -116,5 +144,6 @@ module.exports = {
   generateDonorsTransactionReports,
   generateSponsorsTransactionReports,
   generateLifebanksTransactionReports,
+  generateNewSponsorAndOfferReportToDonors,
   generateNewSponsorAndOfferReportToLifebanks,
 }

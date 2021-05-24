@@ -6,14 +6,16 @@ const {
   generateDonorsTransactionReports,
   generateSponsorsTransactionReports,
   generateLifebanksTransactionReports,
+  generateNewSponsorAndOfferReportToDonors,
   generateNewSponsorAndOfferReportToLifebanks
 } = require('../../cron-jobs')
 
 module.exports = async () => {
   try {
     
-    // sendEmail()
-    generateDonorsTransactionReports()
+    sendEmail()
+    // generateDonorsTransactionReports()
+    // generateNewSponsorAndOfferReportToDonors()
     // generateNewSponsorAndOfferReportToLifebanks()
 
 
