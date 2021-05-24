@@ -9,6 +9,7 @@ const locationApi = require('./location.api')
 const preregisterApi = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+const notificationApi = require('./notification.api')
 
 const {
   constants: {
@@ -123,13 +124,15 @@ const signup = async (account, profile) => {
 }
 
 const getReport = async ({ dateFrom, dateTo }, account) => {
-  const where = { account_to: { _eq: account } }
+  const where = { }
   if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
   const notificationsSent = await notificationApi.getMany({
-    account_from: { _eq: account }
+    account_from: { _eq: account },
+    ...where
   })
   const notificationsReceived = await notificationApi.getMany({
-    account_to: { _eq: account }
+    account_to: { _eq: account },
+    ...where
   })
 
   const sent = notificationsSent

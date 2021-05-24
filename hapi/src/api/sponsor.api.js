@@ -5,6 +5,7 @@ const historyApi = require('./history.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
+const notificationApi = require('./notification.api')
 
 const {
   constants: {
@@ -82,7 +83,31 @@ const signup = async (account, profile) => {
     })
 }
 
+const getReport = async ({ dateFrom, dateTo }, account) => {
+  const where = { account_to: { _eq: account } }
+  if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  const notifications = await notificationApi.getMany(where)
+
+  const received = notifications
+    ? notifications.map((notification) => {
+        return {
+          payerUser: notification.account_from,
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          offer: notification.payload.offer
+        }
+      })
+    : []
+
+  return {
+    notifications: {
+      received: received
+    }
+  }
+}
+
 module.exports = {
   editProfile,
-  signup
+  signup,
+  getReport
 }
