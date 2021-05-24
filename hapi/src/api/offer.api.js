@@ -1,5 +1,36 @@
+const { hasuraUtils } = require('../utils')
 const accountApi = require('./account.api')
 const userApi = require('./user.api')
+
+const GET_MANY = `
+  query ($where: offer_bool_exp) {
+    offer(where: $where) {
+      active
+      cost_in_tokens
+      created_at
+      description
+      end_date
+      icon
+      id
+      images
+      limited
+      offer_name
+      offer_type
+      online_only
+      quantity
+      sponsor_id
+      start_date
+      updated_at
+    }
+  }
+`
+
+
+const getMany = async (where = {}) => {
+  const { offer } = await hasuraUtils.request(GET_MANY, { where })
+
+  return offer && offer.length > 0? user : null
+}
 
 const redeem = async (from, details) => {
   const user = await userApi.getOne({
@@ -33,5 +64,6 @@ const redeem = async (from, details) => {
 }
 
 module.exports = {
+  getMany,
   redeem
 }

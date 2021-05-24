@@ -18,7 +18,7 @@ const GET_ONE = `
   }
 `
 
-const GET_ONE_MANY = `
+const GET_MANY = `
   query ($where: user_bool_exp) {
     user(where: $where) {
       id
@@ -101,7 +101,7 @@ const getOne = async (where = {}) => {
 }
 
 const getMany = async (where = {}) => {
-  const { user } = await hasuraUtils.request(GET_ONE_MANY, { where })
+  const { user } = await hasuraUtils.request(GET_MANY, { where })
 
   return user && user.length > 0? user : null
 }
