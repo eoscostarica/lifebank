@@ -80,12 +80,12 @@ const generateLifebanksTransactionReports = async () => {
 }
 
 const generateNewSponsorAndOfferReportToDonors = async () => {
-  var today = new Date()
-  var monthAgo = new Date()
+  const today = new Date()
+  const monthAgo = new Date()
   monthAgo.setMonth(monthAgo.getMonth() - 1)
 
   const donors = await userApi.getMany({
-    role: { _eq: 'donor' },
+    role: { _eq: 'donor' }
   })
 
   const newSponsors = await userApi.getMany({
@@ -102,7 +102,12 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
       lifebank.email,
       'Monthly new sponsors and offer report',
       'Report',
-      'We have '.concat(newSponsors? newSponsors.length : 0, ' new sponsors and ', newOffers? newOffers.length : 0, ' new offers until last month')
+      'We have '.concat(
+        newSponsors ? newSponsors.length : 0,
+        ' new sponsors and ',
+        newOffers ? newOffers.length : 0,
+        ' new offers until last month'
+      )
     )
   })
 }
@@ -166,5 +171,5 @@ module.exports = {
   generateSponsorsTransactionReports,
   generateLifebanksTransactionReports,
   generateNewSponsorAndOfferReportToDonors,
-  generateNewSponsorAndOfferReportToLifebanks,
+  generateNewSponsorAndOfferReportToLifebanks
 }
