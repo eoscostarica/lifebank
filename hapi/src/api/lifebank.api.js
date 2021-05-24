@@ -124,7 +124,7 @@ const signup = async (account, profile) => {
 }
 
 const getReport = async ({ dateFrom, dateTo }, account) => {
-  const where = { }
+  const where = {}
   if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
   const notificationsSent = await notificationApi.getMany({
     account_from: { _eq: account },

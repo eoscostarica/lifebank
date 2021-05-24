@@ -103,10 +103,10 @@ const getOne = async (where = {}) => {
 const getMany = async (where = {}) => {
   const { user } = await hasuraUtils.request(GET_MANY, { where })
 
-  return user && user.length > 0? user : null
+  return user && user.length > 0 ? user : null
 }
 
-const insert = user => {
+const insert = (user) => {
   return hasuraUtils.request(INSERT, { user })
 }
 

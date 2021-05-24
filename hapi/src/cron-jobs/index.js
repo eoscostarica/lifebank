@@ -1,63 +1,80 @@
 const mailApi = require('../utils/mail')
-const {
-  sponsorApi,
-  lifebankApi,
-  userApi,
-  offerApi
-} = require('../api')
+const { sponsorApi, lifebankApi, userApi, offerApi } = require('../api')
 
-const generateDonorsTransactionReports = async() => {
-  var today = new Date()
-  var yearAgo = new Date()
+const generateDonorsTransactionReports = async () => {
+  const today = new Date()
+  const yearAgo = new Date()
   yearAgo.setMonth(yearAgo.getMonth() - 12)
   const users = await userApi.getMany({
     role: { _eq: 'donor' }
   })
   users.forEach(async (donor) => {
-    const report = await lifebankApi.getReport( { dateFrom: yearAgo, dateTo: today }, donor.account )
+    const report = await lifebankApi.getReport(
+      { dateFrom: yearAgo, dateTo: today },
+      donor.account
+    )
     mailApi.sendTransactionReport(
       donor.email,
       'Yearly report',
       'Report',
-      'You have '.concat(report.notifications.sent.length,' sent transactions and ', report.notifications.received.length, ' received tokens by blood donation')
+      'You have '.concat(
+        report.notifications.sent.length,
+        ' sent transactions and ',
+        report.notifications.received.length,
+        ' received tokens by blood donation'
+      )
     )
   })
 }
 
-const generateSponsorsTransactionReports = async() => {
-  var today = new Date()
-  var monthAgo = new Date()
+const generateSponsorsTransactionReports = async () => {
+  const today = new Date()
+  const monthAgo = new Date()
   monthAgo.setMonth(monthAgo.getMonth() - 1)
   const users = await userApi.getMany({
     role: { _eq: 'sponsor' }
   })
   users.forEach(async (sponsor) => {
-    const report = await sponsorApi.getReport( { dateFrom: monthAgo, dateFrom: today }, sponsor.account )
+    const report = await sponsorApi.getReport(
+      { dateFrom: monthAgo, dateFrom: today },
+      sponsor.account
+    )
     mailApi.sendTransactionReport(
       sponsor.email,
       'Monthly report',
       'Report',
-      'You have '.concat(report.notifications.received.length, ' received transactions')
+      'You have '.concat(
+        report.notifications.received.length,
+        ' received transactions'
+      )
     )
   })
 }
 
-const generateLifebanksTransactionReports = async() => {
-  var today = new Date()
-  var monthAgo = new Date()
+const generateLifebanksTransactionReports = async () => {
+  const today = new Date()
+  const monthAgo = new Date()
   monthAgo.setMonth(monthAgo.getMonth() - 1)
-  
+
   const users = await userApi.getMany({
     role: { _eq: 'lifebank' }
   })
 
   users.forEach(async (lifebank) => {
-    const report = await lifebankApi.getReport( { dateFrom: monthAgo, dateTo: today }, lifebank.account )
+    const report = await lifebankApi.getReport(
+      { dateFrom: monthAgo, dateTo: today },
+      lifebank.account
+    )
     mailApi.sendTransactionReport(
       lifebank.email,
       'Monthly report',
       'Report',
-      'You have '.concat(report.notifications.sent.length,' sent transactions and ', report.notifications.received.length, ' received transactions')
+      'You have '.concat(
+        report.notifications.sent.length,
+        ' sent transactions and ',
+        report.notifications.received.length,
+        ' received transactions'
+      )
     )
   })
 }
@@ -91,12 +108,12 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
 }
 
 const generateNewSponsorAndOfferReportToLifebanks = async () => {
-  var today = new Date()
-  var weekAgo = new Date()
+  const today = new Date()
+  const weekAgo = new Date()
   weekAgo.setDate(weekAgo.getDate() - 7)
 
   const lifebanks = await userApi.getMany({
-    role: { _eq: 'lifebank' },
+    role: { _eq: 'lifebank' }
   })
 
   const newSponsors = await userApi.getMany({
@@ -113,14 +130,18 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
       lifebank.email,
       'Weekly new sponsors and offer report',
       'Report',
-      'We have '.concat(newSponsors? newSponsors.length : 0, ' new sponsors and ', newOffers? newOffers.length : 0, ' new offers until last week')
+      'We have '.concat(
+        newSponsors ? newSponsors.length : 0,
+        ' new sponsors and ',
+        newOffers ? newOffers.length : 0,
+        ' new offers until last week'
+      )
     )
   })
 }
 
-const sendEmail = async() => {
+const sendEmail = async () => {
   try {
-    
     await mailApi.sendConfirmMessage(
       'leisterac.1997@gmail.com',
       'SUBJECT',

@@ -18,7 +18,6 @@ module.exports = async () => {
     // generateNewSponsorAndOfferReportToDonors()
     // generateNewSponsorAndOfferReportToLifebanks()
 
-
     return {
       successful: true
     }
