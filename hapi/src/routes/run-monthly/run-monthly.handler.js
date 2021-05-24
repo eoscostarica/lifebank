@@ -6,7 +6,6 @@ const { sendEmail } = require('../../cron-jobs/monthly')
 
 module.exports = async () => {
   try {
-    
     sendEmail()
     // const response = await accountApi.login(input)
 

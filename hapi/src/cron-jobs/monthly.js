@@ -1,17 +1,10 @@
 const mailApi = require('../utils/mail')
-const {
-  lifebankApi,
-  userApi
-} = require('../api')
+const { lifebankApi, userApi } = require('../api')
 
+const getReport = async () => {}
 
-const getReport = async() => {
-  
-}
-
-const sendEmail = async() => {
+const sendEmail = async () => {
   try {
-    
     await mailApi.sendConfirmMessage(
       'leisterac.1997@gmail.com',
       'SUBJECT',
