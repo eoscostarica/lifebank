@@ -6,14 +6,15 @@ import 'jspdf-autotable'
 import { useTranslation } from 'react-i18next'
 import { useUser } from '../../context/user.context'
 import { GET_REPORT_QUERY, PROFILE_QUERY } from '../../gql'
+import { TextField } from '@material-ui/core'
 
-const TransactionReport = ( {dateFrom, dateTo, saveReport, onReportSaved} ) => {
+const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved, report }) => {
   const { t } = useTranslation('translations')
-  const [ currentUser ] = useUser()
-  const [ headReceive, setHeadReceived ] = useState()
-  const [ bodyReceive, setBodyReceive ] = useState()
-  const [ bodySent, setBodySent ] = useState()
-  
+  const [currentUser] = useUser()
+  const [headReceive, setHeadReceived] = useState()
+  const [bodyReceive, setBodyReceive] = useState()
+  const [bodySent, setBodySent] = useState()
+
   const [
     loadProfile,
     { error: errroLoadProfile, data: { profile: { profile } = {} } = {}, client }
@@ -34,11 +35,11 @@ const TransactionReport = ( {dateFrom, dateTo, saveReport, onReportSaved} ) => {
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   useEffect(() => {
-    if(!profile) loadProfile()
+    if (!profile) loadProfile()
   }, [profile])
 
   useEffect(() => {
-    if(!getReportResult) {
+    if (!getReportResult) {
       getReportQuery({
         variables: {
           dateFrom: dateFrom,
@@ -46,11 +47,18 @@ const TransactionReport = ( {dateFrom, dateTo, saveReport, onReportSaved} ) => {
         }
       })
     } else {
-      if(currentUser && currentUser.role === 'lifebank') formatDataToLifebankReport()
-      else if(currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
+      if (currentUser && currentUser.role === 'lifebank') formatDataToLifebankReport()
+      else if (currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
       else return
     }
+
   }, [getReportResult])
+
+  const report = () => {
+    return
+    console.log("prueba")
+  }
+
 
   const formatDataToLifebankReport = () => {
     const received = getReportResult.notifications.received.map((notification) => {
@@ -72,13 +80,13 @@ const TransactionReport = ( {dateFrom, dateTo, saveReport, onReportSaved} ) => {
     })
 
     setHeadReceived([
-        [
-          t('report.business'),
-          t('report.date'),
-          t('report.time'),
-          t('report.tokens')
-        ]
+      [
+        t('report.business'),
+        t('report.date'),
+        t('report.time'),
+        t('report.tokens')
       ]
+    ]
     )
     setBodyReceive(received)
     setBodySent(sent)
@@ -103,13 +111,13 @@ const TransactionReport = ( {dateFrom, dateTo, saveReport, onReportSaved} ) => {
         t('report.tokens')
       ]
     ]
-  )
+    )
 
     setBodyReceive(received)
   }
 
   useEffect(() => {
-    if(saveReport) downloadReport()
+    if (saveReport) downloadReport()
   }, [saveReport])
 
   const downloadReport = () => {
@@ -118,7 +126,7 @@ const TransactionReport = ( {dateFrom, dateTo, saveReport, onReportSaved} ) => {
     const pageHeight = doc.internal.pageSize.getHeight()
 
 
-    if(currentUser && currentUser.role === 'lifebank') {
+    if (currentUser && currentUser.role === 'lifebank') {
       doc.autoTable({
         margin: { top: 30, bottom: 30 },
         pageBreak: 'auto',
@@ -142,18 +150,18 @@ const TransactionReport = ( {dateFrom, dateTo, saveReport, onReportSaved} ) => {
     }
     else return
 
-    for(let i = 1; i < doc.internal.pages.length; i++) {
+    for (let i = 1; i < doc.internal.pages.length; i++) {
       doc.setPage(i)
       doc.setFontSize(14)
-      doc.text(profile? profile.name : '', pageWidth/2, 10, { align: 'center' })
-      doc.text(new Date().toISOString().slice(0, 10), pageWidth/2, 16, { align: 'center' })
-      if(dateFrom && dateTo) {
+      doc.text(profile ? profile.name : '', pageWidth / 2, 10, { align: 'center' })
+      doc.text(new Date().toISOString().slice(0, 10), pageWidth / 2, 16, { align: 'center' })
+      if (dateFrom && dateTo) {
         doc.text(
-          t('report.pdfHeader').concat(' ', t('report.from'), ' ',  dateFrom, ' ', t('report.to'), ' ',  dateTo),
-          pageWidth/2, 22, { align: 'center' }
+          t('report.pdfHeader').concat(' ', t('report.from'), ' ', dateFrom, ' ', t('report.to'), ' ', dateTo),
+          pageWidth / 2, 22, { align: 'center' }
         )
-      } else doc.text(t('report.pdfHeader'), pageWidth/2, 22, { align: 'center' })
-      doc.text(t('report.pdfFooter'), pageWidth/2, pageHeight - 20, { align: 'center', maxWidth: pageWidth - 50 })
+      } else doc.text(t('report.pdfHeader'), pageWidth / 2, 22, { align: 'center' })
+      doc.text(t('report.pdfFooter'), pageWidth / 2, pageHeight - 20, { align: 'center', maxWidth: pageWidth - 50 })
     }
 
     doc.save(t('report.reportDownloadName'))
@@ -170,7 +178,8 @@ TransactionReport.propTypes = {
   dateFrom: PropTypes.string,
   dateTo: PropTypes.string,
   saveReport: PropTypes.bool,
-  onReportSaved: PropTypes.func
+  onReportSaved: PropTypes.func,
+  report: PropTypes.func
 }
 
 TransactionReport.defaultProps = {

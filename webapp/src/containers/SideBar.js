@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 import TransactionReport from '../components/TransactionReport'
 import LoginModal from '../components/LoginModal'
 import Signup from '../components/Signup/Signup'
+import ListIcon from '@material-ui/icons/List'
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -124,7 +125,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Box>
         </>
       )}
-      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') &&
         <>
           <Divider />
           <Typography variant="body1" className={classes.infoLabel}>
@@ -135,6 +136,14 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
             <Link to="/profile">
               <Typography variant="body1" className={classes.labelOption}>
                 {t('navigationDrawer.editPage')}
+              </Typography>
+            </Link>
+          </Box>
+          <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
+            <ListIcon className={classes.iconOption} />
+            <Link to="/history-dashboard">
+              <Typography variant="body1" className={classes.labelOption}>
+                {t('navigationDrawer.historyDashboard')}
               </Typography>
             </Link>
           </Box>
@@ -177,8 +186,8 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
         </Link>
       </Box>
 
-      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
-        <TransactionReport saveReport={downloadReport} onReportSaved={onReportClick}/>
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') &&
+        <TransactionReport saveReport={downloadReport} onReportSaved={onReportClick} />
       }
     </Box>
   )

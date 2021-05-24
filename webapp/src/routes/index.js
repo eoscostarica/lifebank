@@ -2,6 +2,7 @@ import NotFound from './NotFound'
 import InternalError from './InternalError'
 import Profile from './Profile'
 import EditProfile from './EditProfile'
+import HistoryDashboard from './HistoryDashboard'
 import About from './About'
 import TermsOfUse from './TermsOfUse'
 import Help from './Help'
@@ -79,5 +80,10 @@ export default [
     name: 'register-lifebank',
     path: '/register-lifebank/:code',
     component: RegisterLifebank
+  },
+  {
+    name: 'history-dashboard',
+    path: '/history-dashboard',
+    component: HistoryDashboard
   }
 ]
