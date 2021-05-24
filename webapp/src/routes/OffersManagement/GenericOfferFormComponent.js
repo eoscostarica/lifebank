@@ -398,19 +398,6 @@ const GenericOfferFormComponent = ({
                 }
                 className={classes.textField}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={offer.online_only}
-                    onChange={(event) =>
-                      setOffer({ ...offer, online_only: event.target.checked })
-                    }
-                    name="checkedB"
-                    color="primary"
-                  />
-                }
-                label={t('offersManagement.onlineOnly')}
-              />
               <Divider className={classes.divider} />
               <Typography className={classes.boldText} variant="subtitle1">{t('offersManagement.chooseIcon')}</Typography>
               <ToggleButtonGroup
