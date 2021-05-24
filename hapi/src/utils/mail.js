@@ -397,6 +397,7 @@ const sendCredentialsRecovery = async (
   accountText,
   password
 ) => {
+
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,

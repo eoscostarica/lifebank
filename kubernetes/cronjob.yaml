@@ -14,5 +14,5 @@ spec:
               args:
                 - /bin/sh
                 - -c
-                - node "/app/src/cron-jobs/monthly-transaction.js"
+                - curl -v http://localhost:9090/api/run-monthly
           restartPolicy: OnFailure
