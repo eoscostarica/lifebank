@@ -23,7 +23,7 @@ export default (theme) => ({
   },
   title: {
     fontFamily: "Roboto",
-    fontSize: "28px",
+    fontSize: "34px",
     fontWeight: "normal",
     fontStretch: "normal",
     fontStyle: "normal",
@@ -34,10 +34,16 @@ export default (theme) => ({
     marginBottom: 15
   },
   text: {
-    lineHeight: '1.43',
-    letterSpacing: '0.25px',
-    textAlign: 'center',
-    color: 'rgba(0, 0, 0, 0.6)',
+    fontFamily: "Roboto",
+    fontSize: "14px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.43",
+    letterSpacing: "0.25px",
+    textAlign: "left",
+    color: "rgba(0, 0, 0, 0.6)",
+    marginBottom: 30
   },
   textBox: {
     paddingLeft: "30px",
@@ -89,14 +95,12 @@ export default (theme) => ({
     padding: '15px',
     marginBottom: 10
   },
-  dialog: {
-    width: '360px',
-    height: '600px',
-    paddingTop: "20px",
-    paddingBottom: "53px",
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: "15px",
-      paddingRight: "15px"
+  dimensions: {
+    width: 500,
+    height: 625,
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      height: "100%"
     }
   }
 })

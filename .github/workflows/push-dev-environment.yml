@@ -20,7 +20,7 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_HUB_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
           EOS_PRIV_KEY: ${{ secrets.EOS_PRIV }}
-          HAPI_MAIL_PASSWORD: ${{ secrets.MAIL_SECRET }}
+          HAPI_MAIL_PASSWORD: ${{ secrets.HAPI_MAIL_PASSWORD }}
           NAMESPACE: lifebank
           STAGE: dev
           APP_NAME: lifebank
