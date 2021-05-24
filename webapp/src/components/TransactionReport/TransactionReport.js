@@ -6,9 +6,8 @@ import 'jspdf-autotable'
 import { useTranslation } from 'react-i18next'
 import { useUser } from '../../context/user.context'
 import { GET_REPORT_QUERY, PROFILE_QUERY } from '../../gql'
-import { TextField } from '@material-ui/core'
 
-const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved, report }) => {
+const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved }) => {
   const { t } = useTranslation('translations')
   const [currentUser] = useUser()
   const [headReceive, setHeadReceived] = useState()
@@ -51,14 +50,7 @@ const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved, report
       else if (currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
       else return
     }
-
   }, [getReportResult])
-
-  const report = () => {
-    return
-    console.log("prueba")
-  }
-
 
   const formatDataToLifebankReport = () => {
     const received = getReportResult.notifications.received.map((notification) => {
@@ -178,8 +170,7 @@ TransactionReport.propTypes = {
   dateFrom: PropTypes.string,
   dateTo: PropTypes.string,
   saveReport: PropTypes.bool,
-  onReportSaved: PropTypes.func,
-  report: PropTypes.func
+  onReportSaved: PropTypes.func
 }
 
 TransactionReport.defaultProps = {
