@@ -11,11 +11,9 @@ const {
 
 module.exports = async () => {
   try {
-    
     // sendEmail()
     generateDonorsTransactionReports()
     // generateNewSponsorAndOfferReportToLifebanks()
-
 
     return {
       successful: true
