@@ -20,7 +20,7 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_HUB_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
           EOS_PRIV_KEY: ${{ secrets.EOS_PRIV }}
-          HAPI_MAIL_PASSWORD: ${{ secrets.MAIL_SECRET }}
+          HAPI_MAIL_PASSWORD: ${{ secrets.HAPI_MAIL_PASSWORD }}
           NAMESPACE: lifebank
           STAGE: dev
           APP_NAME: lifebank
@@ -73,7 +73,6 @@ jobs:
           HASURA_GRAPHQL_UNAUTHORIZED_ROLE: ${{ secrets.HASURA_GRAPHQL_UNAUTHORIZED_ROLE }}
           HASURA_GRAPHQL_ACTION_BASE_URL: ${{ secrets.HASURA_GRAPHQL_ACTION_BASE_URL }}
           HASURA_GRAPHQL_JWT_SECRET: ${{secrets.HASURA_GRAPHQL_JWT_SECRET}}
-          HASURA_GRAPHQL_ENABLED_LOG_TYPES: "[]"
           # hapi
           HAPI_SERVER_PORT: 9090
           HAPI_SERVER_ADDRESS: 0.0.0.0
