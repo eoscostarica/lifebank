@@ -512,13 +512,13 @@ const getReportSponsor = async ({ dateFrom, dateTo }, account) => {
 
   const received = notifications
     ? notifications.map((notification) => {
-      return {
-        payerUser: notification.account_from,
-        created_at_date: notification.created_at.split('T')[0],
-        created_at_time: notification.created_at.split('T')[1].split('.')[0],
-        offer: notification.payload.offer
-      }
-    })
+        return {
+          payerUser: notification.account_from,
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          offer: notification.payload.offer
+        }
+      })
     : []
 
   return {
@@ -540,28 +540,28 @@ const getReportLifebank = async ({ dateFrom, dateTo }, account) => {
 
   const sent = notificationsSent
     ? notificationsSent.map((notification) => {
-      return {
-        created_at_date: notification.created_at.split('T')[0],
-        created_at_time: notification.created_at.split('T')[1].split('.')[0],
-        tokens:
-          parseInt(notification.payload.newBalance[0].split(' ')[0]) -
-          parseInt(notification.payload.currentBalance[0].split(' ')[0]),
-        send_to: notification.account_to
-      }
-    })
+        return {
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          tokens:
+            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+          send_to: notification.account_to
+        }
+      })
     : []
 
   const received = notificationsReceived
     ? notificationsReceived.map((notification) => {
-      return {
-        created_at_date: notification.created_at.split('T')[0],
-        created_at_time: notification.created_at.split('T')[1].split('.')[0],
-        tokens:
-          parseInt(notification.payload.newBalance[0].split(' ')[0]) -
-          parseInt(notification.payload.currentBalance[0].split(' ')[0]),
-        business: notification.account_from
-      }
-    })
+        return {
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          tokens:
+            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+          business: notification.account_from
+        }
+      })
     : []
 
   return {
