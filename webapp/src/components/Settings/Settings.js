@@ -25,7 +25,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 
 import LanguageSelector from '../LanguageSelector'
 
-import { PROFILE_QUERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
+import { PROFILE_QUERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD, GET_EMAIL } from '../../gql'
 import { useUser } from '../../context/user.context'
 import styles from './styles'
 
@@ -53,6 +53,11 @@ const Settings = ({ onCloseSetting }) => {
     { loading: loadingChangePassword, error: errorChangePassword, data: { change_password: responseChangePassword } = {} }
   ] = useMutation(CHANGE_PASSWORD)
 
+  const [
+    getAccountSignupMethod,
+    { data: { signup_method: getAccountSignupMethodResult } = {} }
+  ] = useMutation(GET_ACCOUNT_SIGNUP_METHOD)
+
   const handleCloseSnackBar = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
@@ -75,28 +80,33 @@ const Settings = ({ onCloseSetting }) => {
   }
 
   const handleSubmitChangePassword = async () => {
-    if (user.newPassword === user.confirmPassword) {
-      changePassword({
-        variables: {
-          email: profile.email,
-          newPassword: user.newPassword,
-          currentPassword: user.currentPassword,
-          emailContent: {
-            subject: t('emailMessage.subjectChangePassword'),
-            title: t('emailMessage.titleChangePassword'),
-            message: t('emailMessage.messageChangePassword')
+    if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
+      if (user.newPassword === user.confirmPassword) {
+        changePassword({
+          variables: {
+            email: profile.email,
+            newPassword: user.newPassword,
+            currentPassword: user.currentPassword,
+            emailContent: {
+              subject: t('emailMessage.subjectChangePassword'),
+              title: t('emailMessage.titleChangePassword'),
+              message: t('emailMessage.messageChangePassword')
+            }
           }
-        }
-      })
-    } else {
-      setOpenSnackbar({
-        show: true,
-        message: t('setting.confirmPasswordError'),
-        severity: 'error'
-      })
-    }
+        })
+      } else {
+        setOpenSnackbar({
+          show: true,
+          message: t('setting.confirmPasswordError'),
+          severity: 'error'
+        })
+      }
+    } else setOpenSnackbar({
+      show: true,
+      message: t('credentialsRecovery.passwordNotChangeable'),
+      severity: 'error'
+    })
   }
-
   useEffect(() => {
     if (errorProfile)
       setOpenSnackbar({
@@ -146,6 +156,16 @@ const Settings = ({ onCloseSetting }) => {
 
     loadProfile()
   }, [currentUser, loadProfile])
+
+  useEffect(() => {
+    if (profile) {
+      getAccountSignupMethod({
+        variables: {
+          email: profile.email
+        }
+      })
+    }
+  }, [profile])
 
   function executeCredentialsRecovery(e) {
     if (e.key === 'Enter' && (user.newPassword && user.currentPassword)) {
