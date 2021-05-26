@@ -622,11 +622,12 @@ const donate = async (from, { to, memo, quantity, emailContent }) => {
     account: { _eq: to }
   })
 
-  if(userTo.role !== 'donor') throw new Error('Destination account must be a donor')
+  if (userTo.role !== 'donor')
+    throw new Error('Destination account must be a donor')
 
-  const transferResult = await transfer(from, {to, memo, quantity})
+  const transferResult = await transfer(from, { to, memo, quantity })
 
-  if(transferResult) {
+  if (transferResult) {
     try {
       mailApi.sendCongratulationsOnDonation(
         userTo.email,
