@@ -68,7 +68,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
       setValidEmailFormat(false)
     } else setOpenSnackbar({
       show: true,
-      message: t('credentialsRecovery.passwordNotChangeable'),
+      message: t('setting.passwordNotChangeable'),
       severity: 'error'
     })
   }

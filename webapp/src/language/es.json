@@ -41,7 +41,8 @@
       "confirmPassword": "Confirmar Constraseña",
       "confirmPasswordError": "La constraseña nueva no esta confirmada adecuadamente - Intenta de nuevo",
       "passwordChanged": "Constraseña cambiada exitosamente - Te enviamos un correo",
-      "passwordError": "Error en el cambio de contraseña - Intenta de nuevo"
+      "passwordError": "Error en el cambio de contraseña - Intenta de nuevo",
+      "passwordNotChangeable": "Error tu cuenta esta asociada a Facebook o Google"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",

@@ -103,10 +103,11 @@ const Settings = ({ onCloseSetting }) => {
       }
     } else setOpenSnackbar({
       show: true,
-      message: t('credentialsRecovery.passwordNotChangeable'),
+      message: t('setting.passwordNotChangeable'),
       severity: 'error'
     })
   }
+
   useEffect(() => {
     if (errorProfile)
       setOpenSnackbar({
