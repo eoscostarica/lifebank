@@ -50,6 +50,13 @@ actions:
     handler: http://hapi:9090/api/credentials-recovery
   permissions:
   - role: guest
+- name: donate
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/donate
+    forward_client_headers: true
+  permissions:
+  - role: donor
 - name: edit_profile
   definition:
     kind: synchronous
@@ -204,4 +211,5 @@ custom_types:
   - name: send_email_output
   - name: get_report_output
   - name: check_email_verified_output
+  - name: donate_output
   scalars: []

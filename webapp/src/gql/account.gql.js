@@ -185,6 +185,14 @@ export const TRANSFER_MUTATION = gql`
   }
 `
 
+export const DONATE_MUTATION = gql`
+  mutation donate($to: String!, $memo: String!, $quantity: Int, $emailContent: jsonb!) {
+    donate(to: $to, memo: $memo, quantity: $quantity, emailContent: $emailContent) {
+      transaction_id
+    }
+  }
+`
+
 export const NOTIFICATION_SUBSCRIPTION = gql`
   subscription {
     notification(order_by: { created_at: desc }, limit: 1) {
