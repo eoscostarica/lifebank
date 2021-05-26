@@ -214,7 +214,6 @@ ACTION lifebankcode::uplifebank(
 ACTION lifebankcode::addsponsor(
     name account,
     string sponsor_name,
-    string covid_impact,
     string website,
     string telephones,
     string business_type,
@@ -226,7 +225,8 @@ ACTION lifebankcode::addsponsor(
     string logo_url,
     string about,
     string social_media_links,
-    string photos
+    string photos,
+    string covid_impact
     )
 {
   // require_auth(account);
