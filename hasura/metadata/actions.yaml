@@ -56,7 +56,7 @@ actions:
     handler: http://hapi:9090/api/donate
     forward_client_headers: true
   permissions:
-  - role: donor
+  - role: lifebank
 - name: edit_profile
   definition:
     kind: synchronous
