@@ -116,45 +116,84 @@ const createLifebank = async ({
 }) => {
   const role = 'lifebank'
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
-  const { password, transaction } = await eosUtils.createAccount(account)
-  const username = account
-  const token = jwtUtils.create({ role, username, account })
+  // const { password, transaction } = await eosUtils.createAccount(account)
+  // const username = account
+  // const token = jwtUtils.create({ role, username, account })
 
-  await userApi.insert({
-    role,
-    username,
-    account,
-    email,
-    secret,
-    name,
-    verification_code,
-    email_verified: true,
-    token: 1000000
-  })
+  // await userApi.insert({
+  //   role,
+  //   username,
+  //   account,
+  //   email,
+  //   secret,
+  //   name,
+  //   verification_code,
+  //   email_verified: true,
+  //   token: 1000000
+  // })
 
-  await vaultApi.insert({
-    account,
-    password
-  })
+  // await vaultApi.insert({
+  //   account,
+  //   password
+  // })
 
-  await historyApi.insert(transaction)
+  // await historyApi.insert(transaction)
 
-  try {
-    mailApi.sendConfirmMessage(
-      email,
-      emailContent.subject,
-      emailContent.title,
-      emailContent.message
-    )
-  } catch (error) {
-    console.log(error)
-  }
+  // try {
+  //   mailApi.sendConfirmMessage(
+  //     email,
+  //     emailContent.subject,
+  //     emailContent.title,
+  //     emailContent.message
+  //   )
+  // } catch (error) {
+  //   console.log(error)
+  // }
+
+  notifyNewLifebank(account, name)
 
   return {
     account,
-    token,
-    transaction_id: transaction.transaction_id
+    token: 'token',
+    transaction_id: 'transaction_id'
   }
+}
+
+const notifyNewLifebank = async (lifebankAccount, lifebankName) => {
+  const donors = await userApi.getMany({
+    role: { _eq: 'donor' }
+  })
+
+  const donorsUpdated = await getDonorsCoordinates(donors)
+  
+  const sponsors = await userApi.getOne({
+    role: { _eq: 'sponsor' }
+  })
+}
+
+const getDonorsCoordinates = async (donorList) => {
+  console.log('DONOR-LIST', donorList)
+  let newDolorList = []
+  donorList.forEach(async (donor) => {
+    const lastDonorTransaction = await getLastDonorTransaction(donor)
+    if(lastDonorTransaction) {
+      console.log('LAST-DONOR-TRANSACTION', lastDonorTransaction)
+    }
+    return
+  })
+  return
+}
+
+const getLastDonorTransaction = async (donor) => {
+  const notification = await notificationApi.getOne(
+    {
+      _or: [
+        { account_to: { _eq: donor.account } },
+        { account_from: { _eq: donor.account } }
+      ]
+    }
+  )
+  return notification
 }
 
 const getProfile = async (account) => {

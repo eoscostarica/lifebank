@@ -18,6 +18,24 @@ const GET_ONE = `
   }
 `
 
+const GET_MANY = `
+  query ($where: user_bool_exp) {
+    user(where: $where) {
+      id
+      role
+      username
+      secret
+      account
+      email
+      name
+      token
+      signup_method
+      verification_code
+      email_verified
+    }
+  }
+`
+
 const INSERT = `
   mutation ($user: user_insert_input!) {
     insert_user_one(object: $user) {
@@ -82,6 +100,14 @@ const getOne = async (where = {}) => {
   return null
 }
 
+const getMany = async (where = {}) => {
+  const { user } = await hasuraUtils.request(GET_MANY, { where })
+
+  if (user && user.length > 0) return user
+
+  return null
+}
+
 const insert = user => {
   return hasuraUtils.request(INSERT, { user })
 }
@@ -108,6 +134,7 @@ const verifyEmail = (where) => {
 
 module.exports = {
   getOne,
+  getMany,
   insert,
   setEmail,
   setToken,
