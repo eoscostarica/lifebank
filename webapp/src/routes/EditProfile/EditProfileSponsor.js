@@ -39,7 +39,7 @@ const {
   SPONSOR_TYPES
 } = constants
 
-const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
+const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const photoUrlValueRef = useRef(undefined)
@@ -623,7 +623,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
 EditProfileSponsor.propTypes = {
   profile: PropTypes.object,
-  isCompleting: PropTypes.bool,
   onSubmit: PropTypes.func,
   loading: PropTypes.bool
 }

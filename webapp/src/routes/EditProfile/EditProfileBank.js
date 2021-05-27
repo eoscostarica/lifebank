@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
-import Divider from '@material-ui/core/Divider'
+import InputLabel from '@material-ui/core/InputLabel'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import CloseIcon from '@material-ui/icons/Close'
@@ -38,7 +38,7 @@ const {
 const CHARACTER_LIMIT = 512
 const SPACING = 2
 
-const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, userName }) => {
+const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [disablePhotoUrlInput, setDisablePhotoUrlInput] = useState(true)
@@ -99,7 +99,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           username: username,
           account: profile.account
         })
-
         if (data) {
           if (data.user.length !== 0) setIsUnique(false)
           else setIsUnique(true)
@@ -153,6 +152,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         const userToSubmit = { ...user }
         userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
         userToSubmit.photos = JSON.stringify(user.photos)
+        console.log(userToSubmit)
         onSubmit(userToSubmit, username, profile.account)
       }
       else document.getElementById("username").focus()
@@ -213,7 +213,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           {openSnackbar.message}
         </Alert>
       </Snackbar>
-      <Grid container spacing={SPACING} xs={12}>
+      <Grid container spacing={SPACING}>
         <Grid container item xs={12} spacing={SPACING} direction="column">
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h2">
@@ -231,13 +231,18 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               className={classes.textField}
               id="fullname"
               name="name"
-              style={{ display: isCompleting && user.name ? 'none' : '' }}
               fullWidth
               variant="filled"
-              placeholder={t('editProfile.organizationPlaceholder')}
               defaultValue={user.name}
               InputLabelProps={{
                 shrink: true
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('editProfile.organizationPlaceholder')}
+                  </InputLabel>
+                ),
               }}
               onChange={(event) => handleSetField('name', event.target.value)}
             />
@@ -251,20 +256,20 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               id="about"
               multiline
               rows={5}
-              inputProps={{
-                maxlength: CHARACTER_LIMIT
-              }}
               helperText={`${values.about.length}/${CHARACTER_LIMIT}`}
-              style={{
-                display: isCompleting && user.about ? 'none' : ''
-              }}
               fullWidth
-              height="200px"
               variant="filled"
-              placeholder={t('signup.aboutPlaceholder')}
               defaultValue={user.about}
               InputLabelProps={{
                 shrink: true
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('signup.aboutPlaceholder')}
+                  </InputLabel>
+                ),
+                maxLength: CHARACTER_LIMIT
               }}
               onChange={(event) =>
                 handleSetField('about', event.target.value)
@@ -281,19 +286,21 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
           <Grid item xs={4}>
             <TextField
               className={classes.textField}
-              id="username"
-              name="username"
-              style={{ display: isCompleting && userName ? 'none' : '' }}
-              label={t('editProfile.urlWebsitePlaceHolder')}
+              id="conctactInformacion"
+              name="conctactInformacion"
               fullWidth
               variant="filled"
-              placeholder={t('editProfile.urlWebsitePlaceHolder')}
               defaultValue={username}
               InputLabelProps={{
                 shrink: true
               }}
               InputProps={{
                 startAdornment: <InputAdornment position="start">https://lifebank.io/info/</InputAdornment>,
+                endAdornment: (
+                  <InputLabel >
+                    {t('editProfile.urlWebsitePlaceHolder')}
+                  </InputLabel>
+                ),
               }}
               helperText={helperTextvalidation}
               onChange={(event) => validUserName(event.target.value)}
@@ -339,16 +346,18 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               <TextField
                 className={classes.textField}
                 id="address"
-                style={{
-                  display: isCompleting && user.address ? 'none' : ''
-                }}
-                label={t('signup.address')}
                 fullWidth
                 variant="filled"
-                placeholder={t('signup.addressPlaceholder')}
                 defaultValue={address}
                 InputLabelProps={{
                   shrink: true
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputLabel >
+                      {t('signup.addressPlaceholder')}
+                    </InputLabel>
+                  ),
                 }}
                 onChange={(event) => setAddress(event.target.value)}
               />
@@ -363,16 +372,18 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   <TextField
                     className={classes.textField}
                     id="city"
-                    style={{
-                      display: isCompleting && user.address ? 'none' : ''
-                    }}
-                    label={t('editProfile.city')}
                     fullWidth
                     variant="filled"
-                    placeholder={t('editProfile.cityPlaceholder')}
                     defaultValue={city}
                     InputLabelProps={{
                       shrink: true
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputLabel >
+                          {t('editProfile.city')}
+                        </InputLabel>
+                      ),
                     }}
                     onChange={(event) => setCity(event.target.value)}
                   />
@@ -383,16 +394,18 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   <TextField
                     className={classes.textField}
                     id="state"
-                    style={{
-                      display: isCompleting && user.address ? 'none' : ''
-                    }}
-                    label={t('editProfile.stateProvince')}
                     fullWidth
                     variant="filled"
-                    placeholder={t('editProfile.stateProvincePlaceholder')}
                     defaultValue={state}
                     InputLabelProps={{
                       shrink: true
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputLabel >
+                          {t('editProfile.stateProvince')}
+                        </InputLabel>
+                      ),
                     }}
                     onChange={(event) => setState(event.target.value)}
                   />
@@ -403,25 +416,26 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
               <TextField
                 className={classes.textField}
                 id="country"
-                style={{
-                  display: isCompleting && user.address ? 'none' : ''
-                }}
-                label={t('editProfile.country')}
                 fullWidth
                 variant="filled"
-                placeholder={t('editProfile.countryPlaceholder')}
                 defaultValue={country}
                 InputLabelProps={{
                   shrink: true
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputLabel >
+                      {t('editProfile.country')}
+                    </InputLabel>
+                  ),
                 }}
                 onChange={(event) => setCountry(event.target.value)}
               />
             </Grid>
           </Grid>
           <Grid item xs={6}>
-            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} width="100%">
+            <Box width="100%">
               <MapEditLocation
-                style={{ display: isCompleting && user.geolocation ? 'none' : '' }}
                 onGeolocationChange={handleOnGeolocationChange}
                 markerLocation={user.geolocation}
                 markerType={LIFE_BANK}
@@ -434,7 +448,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
         </Grid>
         <Grid container item xs={12} spacing={SPACING}>
           <Grid item xs={12}>
-            <Box style={{ display: isCompleting && user.schedule ? 'none' : '' }} className={classes.componentBoxWrp} width="100%" >
+            <Box className={classes.componentBoxWrp} width="100%" >
               <Typography className={classes.boldText} variant="h4">{t('common.schedule')}</Typography>
               <Box className={classes.componentBox}>
                 <Schedule
@@ -449,7 +463,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Box style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.componentBoxWrp} width="100%">
+            <Box className={classes.componentBoxWrp} width="100%">
               <Typography className={classes.boldText} variant="h4">{t('common.categories')}</Typography>
               <Typography variant="body1" className={classes.text}>
                 {t('categories.description')}
@@ -479,20 +493,15 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Typography>
           </Grid>
           <Grid container item xs={12} justify="space-between">
-            <Grid item xs={6} spacing={SPACING}>
+            <Grid item xs={6}>
               <Box className={classes.leftBox}>
                 <>
-                  {((isCompleting && profile.logo_url.length === 0) || (!isCompleting)) && (
-                    <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
-                  )}
+                  <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="lifebank" />
                 </>
                 <TextField
                   className={classes.textField}
                   id="image-url"
-                  style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }}
-                  label={t('offersManagement.imageUrl')}
                   variant="filled"
-                  placeholder={t('offersManagement.imageUrl')}
                   fullWidth
                   inputRef={photoUrlValueRef}
                   onChange={(e) => setDisablePhotoUrlInput(e.target.value.length < 1)}
@@ -501,23 +510,28 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
                   }
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          color="secondary"
-                          aria-label="add photo url"
-                          disabled={disablePhotoUrlInput}
-                          onClick={() => {
-                            setUser({
-                              ...user,
-                              photos: [...user.photos, photoUrlValueRef.current.value]
-                            })
-                            photoUrlValueRef.current.value = ''
-                            setDisablePhotoUrlInput(true)
-                          }}
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </InputAdornment>
+                      <>
+                        <InputLabel >
+                          {t('offersManagement.imageUrl')}
+                        </InputLabel>
+                        <InputAdornment position="end">
+                          <IconButton
+                            color="secondary"
+                            aria-label="add photo url"
+                            disabled={disablePhotoUrlInput}
+                            onClick={() => {
+                              setUser({
+                                ...user,
+                                photos: [...user.photos, photoUrlValueRef.current.value]
+                              })
+                              photoUrlValueRef.current.value = ''
+                              setDisablePhotoUrlInput(true)
+                            }}
+                          >
+                            <AddIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      </>
                     )
                   }}
                   InputLabelProps={{
@@ -529,7 +543,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>
             <Grid item xs={6} >
               <Box className={classes.rightBox}>
-                <div style={{ display: isCompleting && JSON.parse(profile.photos).length > 0 ? 'none' : '' }} className={classes.carouselDiv}>
+                <div className={classes.carouselDiv}>
                   {user.photos.length > 0 && (
                     <Box className={classes.carouselContainer}>
                       {user.photos.length > 0 && (
@@ -551,7 +565,7 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} direction="column">
+        <Grid item xs={12}>
           <Box className={classes.btnWrapper}>
             <Button
               variant="contained"
@@ -580,7 +594,6 @@ const EditProfileBank = ({ profile, isCompleting, onSubmit, setField, loading, u
 
 EditProfileBank.propTypes = {
   profile: PropTypes.object,
-  isCompleting: PropTypes.bool,
   onSubmit: PropTypes.func,
   setField: PropTypes.func,
   loading: PropTypes.bool,

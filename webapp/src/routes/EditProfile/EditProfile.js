@@ -132,9 +132,6 @@ const EditProfilePage = () => {
 
   useEffect(() => {
     if (location.state) {
-      location.state
-        ? setIsCompleting(location.state.isCompleting)
-        : setIsCompleting(false)
       setuserName(location.state.userName)
     } else history.push('/profile')
 
@@ -181,7 +178,6 @@ const EditProfilePage = () => {
             <Suspense fallback={<CircularProgress />}>
               <EditProfileSponsor
                 profile={profile}
-                isCompleting={isCompleting}
                 onSubmit={handleUpdateUser}
                 loading={editLoading}
               />
@@ -192,7 +188,6 @@ const EditProfilePage = () => {
               <EditProfileBank
                 profile={profile}
                 userName={userName}
-                isCompleting={isCompleting}
                 onSubmit={handleUpdateUser}
                 loading={editLoading}
               />
@@ -209,7 +204,6 @@ const EditProfilePage = () => {
               <EditProfileBankMobile
                 profile={profile}
                 userName={userName}
-                isCompleting={isCompleting}
                 onSubmit={handleUpdateUser}
                 loading={editLoading}
               />
@@ -219,7 +213,6 @@ const EditProfilePage = () => {
             <Suspense fallback={<CircularProgress />}>
               <EditProfileSponsorMobile
                 profile={profile}
-                isCompleting={isCompleting}
                 onSubmit={handleUpdateUser}
                 loading={editLoading}
               />

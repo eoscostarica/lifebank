@@ -28,6 +28,7 @@ import { GET_USERNAME } from '../../gql'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
+const FIELDS = 12
 
 const ProfilePageLifebank = ({ profile }) => {
   const { t } = useTranslation('translations')
@@ -118,12 +119,6 @@ const ProfilePageLifebank = ({ profile }) => {
     if (!profile.requirement)
       pendingFieldsObject = { ...pendingFieldsObject, requirement: false }
 
-    if (!profile.blood_urgency_level)
-      pendingFieldsObject = {
-        ...pendingFieldsObject,
-        blood_urgency_level: false
-      }
-
     if (!profile.requirement)
       pendingFieldsObject = { ...pendingFieldsObject, requirement: false }
 
@@ -188,7 +183,7 @@ const ProfilePageLifebank = ({ profile }) => {
                   color="secondary"
                   className={classes.customizedLinearProgress}
                   value={
-                    ((15 - Object.keys(pendingFields).length) * 100) / 15
+                    ((FIELDS - Object.keys(pendingFields).length) * 100) / FIELDS
                   }
                 />
               </Box>
@@ -197,7 +192,7 @@ const ProfilePageLifebank = ({ profile }) => {
                   variant="body2"
                   color="textSecondary"
                 >{`${Math.round(
-                  ((15 - Object.keys(pendingFields).length) * 100) / 15
+                  ((FIELDS - Object.keys(pendingFields).length) * 100) / FIELDS
                 )}%`}</Typography>
               </Box>
             </Box>
