@@ -297,7 +297,7 @@ const OffersManagement = () => {
                   </Button>,
                   offer.active
                     ? t('offersManagement.active')
-                    : t('offersManagement.inactive'),
+                    : t('offersManagement.inac  tive'),
                   offer.start_date
                     ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
