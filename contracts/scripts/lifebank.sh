@@ -390,9 +390,9 @@ run_lifebank() {
     # set_code
     # consent_lacchain
     # register_sponsor_lacchain
-    test_func
+    # test_func
     # add_donor_lacchain
-    # deploy_lifebank_contracts_to_lacchain
+    deploy_lifebank_contracts_to_lacchain
     # change_active_permission
     # grant_lifebankcode_permission_in_lifebankcode
     # create_community_lacchain
