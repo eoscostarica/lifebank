@@ -180,10 +180,6 @@
                 {
                     "name": "photos",
                     "type": "string"
-                },
-                {
-                    "name": "covid_impact",
-                    "type": "string"
                 }
             ]
         },

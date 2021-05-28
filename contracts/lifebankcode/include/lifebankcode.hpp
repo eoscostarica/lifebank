@@ -195,9 +195,7 @@ public:
       string logo_url,
       string about,
       string social_media_links,
-      string photos,
-      string covid_impact);
-
+      string photos);
   /**
    *
    *  Saves the info related with an offer
