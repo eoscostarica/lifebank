@@ -21,7 +21,7 @@ spec:
       imagePullSecrets:
           - name: regcred
       containers:
-      - image: postgres:11.5-alpine
+      - image: mdillon/postgis:11
         imagePullPolicy: "Always"
         name: lifebank-postgres
         envFrom:
