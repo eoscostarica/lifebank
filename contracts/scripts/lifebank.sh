@@ -386,26 +386,17 @@ set_code() {
 
 run_lifebank() {
     echo 'Installing LifeBank ...'
-    # grant_consent2life_permission
-    # set_code
-    # consent_lacchain
-    # register_sponsor_lacchain
-    # test_func
-    # add_donor_lacchain
-    deploy_lifebank_contracts_to_lacchain
-    # change_active_permission
-    # grant_lifebankcode_permission_in_lifebankcode
-    # create_community_lacchain
-    # create_lifebank_wallet
-    # create_lifebank_accounts
-    # assign_resources
-    # deploy_lifebank_contracts
-    # consent
-    # create_community
-    # register_lifebank
-    # register_donor
-    # register_sponsor
-    # test_token_lifecycle
+    create_community_lacchain
+    create_lifebank_wallet
+    create_lifebank_accounts
+    assign_resources
+    deploy_lifebank_contracts
+    consent
+    create_community
+    register_lifebank
+    register_donor
+    register_sponsor
+    test_token_lifecycle
     # TO DO: update_sponsor
     # TO DO: update_lifebank
     # TO DO: update_donor
