@@ -108,14 +108,6 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
     }
   }
 
-  const helperTextvalidation = () => {
-    if (!isValid) return t('editProfile.noValidUrl')
-    else {
-      if (!isUnique) return t('editProfile.noUniqueUrl')
-      else return ''
-    }
-  }
-
   const addAddress = () => {
     const completeAddress = address.concat(',', city, ',', state, ',', country)
     handleSetField('address', completeAddress)
@@ -152,7 +144,6 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
         const userToSubmit = { ...user }
         userToSubmit.telephones = JSON.stringify(userToSubmit.telephones)
         userToSubmit.photos = JSON.stringify(user.photos)
-        console.log(userToSubmit)
         onSubmit(userToSubmit, username, profile.account)
       }
       else document.getElementById("username").focus()
@@ -302,7 +293,12 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
                   </InputLabel>
                 ),
               }}
-              helperText={helperTextvalidation}
+              helperText={
+              (!isValid) ? t('editProfile.noValidUrl')
+              :
+                (!isUnique) ?  t('editProfile.noUniqueUrl')
+                : ''
+              }
               onChange={(event) => validUserName(event.target.value)}
               error={!isValid || !isUnique}
             />

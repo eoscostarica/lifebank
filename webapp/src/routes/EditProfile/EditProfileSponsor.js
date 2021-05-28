@@ -305,7 +305,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
               <PhoneNumber
                 className={classes.textField}
                 defaultCountry='cr'
-                value={user.telephones[0]}
+                value= {phoneValue1 === [] ? '' : phoneValue1}
                 fullWidth
                 label={t('signup.phoneNumber')}
                 id="phoneNumber1"
@@ -318,9 +318,9 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
                 className={classes.textField}
                 defaultCountry='cr'
                 fullWidth
-                value={user.telephones[1]}
+                value= {phoneValue2 === [] ? '' : phoneValue2}
                 label={t('signup.phoneNumber')}
-                id="phoneNumber1"
+                id="phoneNumber2"
                 variant="filled"
                 onChange={(event) => setPhoneValue2(event)}
               />

@@ -69,8 +69,6 @@ const HomeDesktop = (props) => {
         alignItems="flex-start"
         spacing={0}
         className={classes.mainGridControlsDesktop}
-        md={12}
-        xl={10}
       >
         <Grid item md={7} lg={6} className={classes.boxControls}>
           <Box className={classes.boxIcons}>
@@ -119,8 +117,6 @@ const HomeDesktop = (props) => {
         alignItems="flex-start"
         spacing={0}
         className={classes.mainGridDesktop}
-        md={12}
-        xl={10}
       >
         <Grid item md={12}>
           <Typography variant="h2" className={classes.titleMainSection}>

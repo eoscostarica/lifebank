@@ -217,7 +217,7 @@ const EditProfileBankMobile = ({ profile, onSubmit, setField, loading, userName 
         </Alert>
       </Snackbar>
       <Box className={classes.mobile}>
-        <Grid container spacing={SPACING} xs={12}>
+        <Grid container spacing={SPACING}>
           <Grid item xs={12} direction="column" spacing={SPACING} >
             <Typography className={classes.boldText} variant="h2">
               {t('editProfile.editTitleLifebank')}
