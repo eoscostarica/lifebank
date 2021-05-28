@@ -123,7 +123,6 @@ const addSponsor = (account, password, { name, geolocation, ...profile }) => {
         data: {
           account,
           sponsor_name: name || '',
-          covid_impact: profile.covid_impact || '',
           name: profile.name || '',
           email: profile.email || '',
           website: profile.website || '',
@@ -138,6 +137,7 @@ const addSponsor = (account, password, { name, geolocation, ...profile }) => {
           photos: profile.photos || '',
           social_media_links: profile.social_media_links || '',
           community_asset: COMMUNITY_ASSET,
+          covid_impact: profile.covid_impact || '',
           ...profile
         }
       }

@@ -225,8 +225,9 @@ ACTION lifebankcode::addsponsor(
     string logo_url,
     string about,
     string social_media_links,
-    string photos
-  )
+    string photos,
+    string covid_impact
+    )
 {
   require_auth(account);
   check_consent(account);
