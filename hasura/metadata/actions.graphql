@@ -86,6 +86,16 @@ type Mutation {
 
 
 type Mutation {
+  donate (
+    to: String!
+    memo: String!
+    quantity: Int
+    emailContent: jsonb!
+  ): donate_output
+}
+
+
+type Mutation {
   edit_profile (
     profile: jsonb!
   ): edit_profile_output
@@ -330,5 +340,9 @@ type get_report_output {
 type check_email_verified_output {
   exist : Boolean!
   verified : Boolean!
+}
+
+type donate_output {
+  transaction_id : String!
 }
 
