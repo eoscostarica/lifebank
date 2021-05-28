@@ -171,8 +171,14 @@ const notifyNewLifebank = async (lifebankAccount) => {
   })
 
   donorsWithLocation.forEach((donor) => {
-    if(isCoordinateInsideBox(lifebankLocation, donor.location))
-      mailApi.sendNewLifebankRegistered(donor.email, 'New lifebank near you!', 'There’s a new lifebank near you! Check it’s profile <a href="http://lifebank/info/' + lifebankAccount + '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications here.')
+    if (isCoordinateInsideBox(lifebankLocation, donor.location))
+      mailApi.sendNewLifebankRegistered(
+        donor.email,
+        'New lifebank near you!',
+        'There’s a new lifebank near you! Check it’s profile <a href="http://lifebank/info/' +
+          lifebankAccount +
+          '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications here.'
+      )
   })
 
   sponsors.forEach(async (lifebankLocation, sponsor) => {
@@ -180,8 +186,17 @@ const notifyNewLifebank = async (lifebankAccount) => {
       account: { _eq: sponsor.account }
     })
 
-    if(sponsorProfile.location && isCoordinateInsideBox(lifebankLocation, sponsorProfile.location))
-      mailApi.sendNewLifebankRegistered(sponsorProfile.email, 'New lifebank near you!', 'There’s a new lifebank near you! Check it’s profile <a href="http://lifebank/info/' + lifebankAccount + '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications here.')
+    if (
+      sponsorProfile.location &&
+      isCoordinateInsideBox(lifebankLocation, sponsorProfile.location)
+    )
+      mailApi.sendNewLifebankRegistered(
+        sponsorProfile.email,
+        'New lifebank near you!',
+        'There’s a new lifebank near you! Check it’s profile <a href="http://lifebank/info/' +
+          lifebankAccount +
+          '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications here.'
+      )
   })
 }
 
@@ -195,15 +210,17 @@ const isCoordinateInsideBox = (mainPoint, checkerPoint) => {
   console.log('MAX-LONG', mainPoint.longitude + KM20)
   console.log('MIN-LONG', mainPoint.longitude - KM20)
 
-  return ((mainPoint.latitude + KM20 >= checkerPoint.latitude &&
-      mainPoint.latitude - KM20 <= checkerPoint.latitude) &&
-    (mainPoint.longitude + KM20 >= checkerPoint.longitude &&
-      mainPoint.longitude - KM20 <= checkerPoint.longitude))
+  return (
+    mainPoint.latitude + KM20 >= checkerPoint.latitude &&
+    mainPoint.latitude - KM20 <= checkerPoint.latitude &&
+    mainPoint.longitude + KM20 >= checkerPoint.longitude &&
+    mainPoint.longitude - KM20 <= checkerPoint.longitude
+  )
 }
 
 const getDonorsCoordinates = async (donorList) => {
-  let newDonorList = []
-  for(index = 0; index < donorList.length; index++) {
+  const newDonorList = []
+  for (index = 0; index < donorList.length; index++) {
     const donor = donorList[index]
     const lastDonorTransaction = await notificationApi.getOne({
       _or: [
@@ -211,14 +228,15 @@ const getDonorsCoordinates = async (donorList) => {
         { account_from: { _eq: donor.account } }
       ]
     })
-    if(lastDonorTransaction) {
+    if (lastDonorTransaction) {
       const otherUserTransaction = await getProfile(
-        donor.account === lastDonorTransaction.account_from ?
-        lastDonorTransaction.account_to : lastDonorTransaction.account_from
+        donor.account === lastDonorTransaction.account_from
+          ? lastDonorTransaction.account_to
+          : lastDonorTransaction.account_from
       )
       newDonorList.push({
-          email: donor.email,
-          location: JSON.parse(otherUserTransaction.location)
+        email: donor.email,
+        location: JSON.parse(otherUserTransaction.location)
       })
     }
   }
