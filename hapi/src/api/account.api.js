@@ -187,14 +187,6 @@ const notifyNewLifebank = async (lifebankAccount) => {
 
 const isCoordinateInsideBox = (mainPoint, checkerPoint) => {
   const KM20 = 0.18
-  console.log('MAIN-POINT', mainPoint)
-  console.log('CHECKER-POINT', checkerPoint)
-
-  console.log('MAX-LAT', mainPoint.latitude + KM20)
-  console.log('MIN-LAT', mainPoint.latitude - KM20)
-  console.log('MAX-LONG', mainPoint.longitude + KM20)
-  console.log('MIN-LONG', mainPoint.longitude - KM20)
-
   return ((mainPoint.latitude + KM20 >= checkerPoint.latitude &&
       mainPoint.latitude - KM20 <= checkerPoint.latitude) &&
     (mainPoint.longitude + KM20 >= checkerPoint.longitude &&
