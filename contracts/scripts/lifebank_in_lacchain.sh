@@ -55,22 +55,6 @@ create_lifebank_acount_to_lacchain() {
         "account":"eosmechanics",
         "ram_bytes": 200000
     }' -p latamlink@writer >$TEMP_DIR/tx1.json
-
-#     cleos -u $EOS_API_URL push action -j eosio newaccount \
-#     '{
-#       "creator" : "costarica",
-#       "name" : "dongxudypk1m",
-#       "active" : {
-#           "threshold":2,
-#           "keys":[ {"weight":1,"key":"EOS75UWSDJ7XSsneG1YTuZuZKe3CQVucwnrLnyRPB2SDUAKuuqyRL"}],
-#           "accounts":[ {"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
-#       },
-#       "owner" : {
-#           "threshold":2,
-#           "keys":[ {"weight":1,"key":"EOS75UWSDJ7XSsneG1YTuZuZKe3CQVucwnrLnyRPB2SDUAKuuqyRL"}],
-#           "accounts":[{"weight":1, "permission" :{"actor":"writer", "permission":"access"}}], "waits":[]
-#       },
-#   }' -p costarica@writer >$TEMP_DIR/tx1.json
 }
 
 run_lifebank() {
