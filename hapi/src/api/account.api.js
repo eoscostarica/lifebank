@@ -116,84 +116,113 @@ const createLifebank = async ({
 }) => {
   const role = 'lifebank'
   const account = await eosUtils.generateRandomAccountName(role.substring(0, 3))
-  // const { password, transaction } = await eosUtils.createAccount(account)
-  // const username = account
-  // const token = jwtUtils.create({ role, username, account })
+  const { password, transaction } = await eosUtils.createAccount(account)
+  const username = account
+  const token = jwtUtils.create({ role, username, account })
 
-  // await userApi.insert({
-  //   role,
-  //   username,
-  //   account,
-  //   email,
-  //   secret,
-  //   name,
-  //   verification_code,
-  //   email_verified: true,
-  //   token: 1000000
-  // })
+  await userApi.insert({
+    role,
+    username,
+    account,
+    email,
+    secret,
+    name,
+    verification_code,
+    email_verified: true,
+    token: 1000000
+  })
 
-  // await vaultApi.insert({
-  //   account,
-  //   password
-  // })
+  await vaultApi.insert({
+    account,
+    password
+  })
 
-  // await historyApi.insert(transaction)
+  await historyApi.insert(transaction)
 
-  // try {
-  //   mailApi.sendConfirmMessage(
-  //     email,
-  //     emailContent.subject,
-  //     emailContent.title,
-  //     emailContent.message
-  //   )
-  // } catch (error) {
-  //   console.log(error)
-  // }
+  try {
+    mailApi.sendConfirmMessage(
+      email,
+      emailContent.subject,
+      emailContent.title,
+      emailContent.message
+    )
+  } catch (error) {
+    console.log(error)
+  }
 
-  notifyNewLifebank(account, name)
+  await notifyNewLifebank(account)
 
   return {
     account,
-    token: 'token',
-    transaction_id: 'transaction_id'
+    token,
+    transaction_id: transaction.transaction_id
   }
 }
 
-const notifyNewLifebank = async (lifebankAccount, lifebankName) => {
+const notifyNewLifebank = async (lifebankAccount) => {
+  const lifebank = await getProfile(lifebankAccount)
+  const lifebankLocation = JSON.parse(lifebank.location)
   const donors = await userApi.getMany({
     role: { _eq: 'donor' }
   })
-
-  const donorsUpdated = await getDonorsCoordinates(donors)
-  
-  const sponsors = await userApi.getOne({
+  const donorsWithLocation = await getDonorsCoordinates(donors)
+  const sponsors = await userApi.getMany({
     role: { _eq: 'sponsor' }
   })
+
+  donorsWithLocation.forEach((donor) => {
+    if(isCoordinateInsideBox(lifebankLocation, donor.location))
+      mailApi.sendNewLifebankRegistered(donor.email, 'New lifebank near you!', 'There’s a new lifebank near you! Check it’s profile <a href="http://lifebank/info/' + lifebankAccount + '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications here.')
+  })
+
+  sponsors.forEach(async (lifebankLocation, sponsor) => {
+    const sponsorProfile = await userApi.getOne({
+      account: { _eq: sponsor.account }
+    })
+
+    if(sponsorProfile.location && isCoordinateInsideBox(lifebankLocation, sponsorProfile.location))
+      mailApi.sendNewLifebankRegistered(sponsorProfile.email, 'New lifebank near you!', 'There’s a new lifebank near you! Check it’s profile <a href="http://lifebank/info/' + lifebankAccount + '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications here.')
+  })
+}
+
+const isCoordinateInsideBox = (mainPoint, checkerPoint) => {
+  const KM20 = 0.18
+  console.log('MAIN-POINT', mainPoint)
+  console.log('CHECKER-POINT', checkerPoint)
+
+  console.log('MAX-LAT', mainPoint.latitude + KM20)
+  console.log('MIN-LAT', mainPoint.latitude - KM20)
+  console.log('MAX-LONG', mainPoint.longitude + KM20)
+  console.log('MIN-LONG', mainPoint.longitude - KM20)
+
+  return ((mainPoint.latitude + KM20 >= checkerPoint.latitude &&
+      mainPoint.latitude - KM20 <= checkerPoint.latitude) &&
+    (mainPoint.longitude + KM20 >= checkerPoint.longitude &&
+      mainPoint.longitude - KM20 <= checkerPoint.longitude))
 }
 
 const getDonorsCoordinates = async (donorList) => {
-  console.log('DONOR-LIST', donorList)
-  let newDolorList = []
-  donorList.forEach(async (donor) => {
-    const lastDonorTransaction = await getLastDonorTransaction(donor)
-    if(lastDonorTransaction) {
-      console.log('LAST-DONOR-TRANSACTION', lastDonorTransaction)
-    }
-    return
-  })
-  return
-}
-
-const getLastDonorTransaction = async (donor) => {
-  const notification = await notificationApi.getOne(
-    {
+  let newDonorList = []
+  for(index = 0; index < donorList.length; index++) {
+    const donor = donorList[index]
+    const lastDonorTransaction = await notificationApi.getOne({
       _or: [
         { account_to: { _eq: donor.account } },
         { account_from: { _eq: donor.account } }
       ]
+    })
+    if(lastDonorTransaction) {
+      const otherUserTransaction = await getProfile(
+        donor.account === lastDonorTransaction.account_from ?
+        lastDonorTransaction.account_to : lastDonorTransaction.account_from
+      )
+      newDonorList.push({
+          email: donor.email,
+          location: JSON.parse(otherUserTransaction.location)
+      })
     }
-  )
-  return notification
+  }
+  return newDonorList
 }
 
 const getProfile = async (account) => {
