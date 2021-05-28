@@ -15,7 +15,6 @@ const eosApi = EosApi({
 })
 
 const createAccount = async (accountName) => {
-  console.log('ACCOUNT-NAME', accountName)
   const password = await wallet.create(accountName)
   const key = await wallet.createKey(accountName)
   try {
@@ -148,8 +147,6 @@ const getTableRows = (options) =>
   eosApi.getTableRows({ json: true, ...options })
 
 const transact = async (actions, account, password) => {
-  console.log('ACCOUNT', account)
-  console.log('PASSWORD', password)
   try {
     await wallet.unlock(account, password)
   } catch (error) {}
@@ -173,8 +170,6 @@ const transact = async (actions, account, password) => {
     data: {}
   })
 
-  console.log('ACTIONS', actions)
-
   const transaction = await api.transact(
     {
       actions
@@ -186,7 +181,6 @@ const transact = async (actions, account, password) => {
     }
   )
 
-  console.log('FINISHED-TRANSACTION')
   await wallet.lock(account)
   return transaction
 }
