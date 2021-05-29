@@ -88,22 +88,18 @@ const insert = user => {
 }
 
 const setEmail = (where, email) => {
-  console.log(where, user)
   return hasuraUtils.request(SET_EMAIL, { where, email })
 }
 
 const setToken = (where, token) => {
-  console.log(where, user)
   return hasuraUtils.request(SET_TOKEN, { where, token })
 }
 
 const setName = (where, name) => {
-  console.log(where, user)
   return hasuraUtils.request(SET_NAME, { where, name })
 }
 
 const setSecret = (where, secret) => {
-  console.log(where, user)
   return hasuraUtils.request(SET_SECRET, { where, secret })
 }
 
