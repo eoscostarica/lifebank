@@ -424,6 +424,18 @@
       "messageVerificationCode": "Gracias por ser parte de la comunidad de lifebank, haga clic en el botón para verificar y validar su cuenta.",
       "verifyButton": "Verificar"
     },
+    "emailDonorCongratulation": {
+      "subject": "¡Gracias por su donación!",
+      "hi": "Hola",
+      "youComplete": "Completaste una donación en",
+      "receivedTokens": "y recibiste",
+      "lifeTokens": "Life Token",
+      "lifeTokensMany": "Life Tokens.",
+      "thanksYou": "¡Queremos agradecerte por participar en Lifebank! Tus donaciones nos ayudan a salvar muchas vidas.",
+      "growingCommunity": "Lifebank necesita crecer la comunidad de donantes para continuar operando. Ayúdanos a comunicar nuestra misión compartiendo esta insignia con tus amistades. Mientras más personas estén donando a través de Lifebank, más vidas podremos salvar.",
+      "downloadBadge": "¡Descárgala o toma un screenshot y compártelo en tus redes sociales!",
+      "thanksAgain": "Gracias de nuevo por ser parte de este proyecto. ¡Eres un verdadero héroe!"
+    },
     "approveAccount": {
       "accountapprove": "Esta cuenta ha sido aprobada",
       "somethingHappened": "Algo sucedió al intentar aprobar esta cuenta"
