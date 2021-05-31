@@ -145,12 +145,12 @@ const Topbar = ({ user, onLogout }) => {
               <PersonIcon alt="User icon" className={classes.icon} />
               {user.account}
             </MenuItem>
-            <Link to="/profile" className={classes.link}>
-              <MenuItem onClick={handleClose} className={classes.menuItem}>
-                <EditIcon alt="Edit icon" className={classes.icon} />
-                {t('navigationDrawer.editPage')}
-              </MenuItem>
-            </Link>
+              <Link to='/edit-profile'  className={classes.link}>
+                <MenuItem onClick={handleClose} className={classes.menuItem}>
+                  <EditIcon alt="Edit icon" className={classes.icon} />
+                  {t('navigationDrawer.editPage')}
+                </MenuItem>
+              </Link>
             <MenuItem onClick={openSettingsEvent} className={classes.menuItem}>
               <SettingsIcon alt="Settings icon" className={classes.icon} />
               {t('navigationDrawer.settings')}

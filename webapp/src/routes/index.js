@@ -1,7 +1,7 @@
 import NotFound from './NotFound'
 import InternalError from './InternalError'
 import Profile from './Profile'
-import EditProfile from './EditProfile'
+import EditProfilePage from './EditProfile'
 import About from './About'
 import TermsOfUse from './TermsOfUse'
 import Help from './Help'
@@ -53,7 +53,7 @@ export default [
   {
     name: 'editProfile',
     path: '/edit-profile',
-    component: EditProfile
+    component: EditProfilePage
   },
   {
     name: 'about',
