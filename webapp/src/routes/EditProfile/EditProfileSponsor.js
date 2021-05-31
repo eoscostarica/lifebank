@@ -336,7 +336,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
               {t('editProfile.addressDescription')}
             </Typography>
           </Grid>
-          <Grid container item xs={6} spacing={SPACING}>
+          <Grid container item xs={6}>
             <Grid item xs={12}>
               <TextField
                 id="address"
@@ -428,7 +428,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
               />
             </Grid>
           </Grid>
-          <Grid item xs={6}>
+          <Grid container item xs={6}>
             <>
               <MapEditLocation
                 onGeolocationChange={handleOnGeolocationChange}

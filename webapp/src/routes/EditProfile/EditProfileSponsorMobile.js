@@ -539,7 +539,6 @@ const EditProfileSponsorMobile = ({ profile, onSubmit, loading }) => {
                       <IconButton
                         disabled={disablePhotoUrlInput}
                         color="secondary"
-                        aria-label="add photo url"
                         onClick={handlePhotos}
                       >
                         <AddIcon />

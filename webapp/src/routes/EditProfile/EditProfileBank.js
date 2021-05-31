@@ -435,8 +435,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
                 onGeolocationChange={handleOnGeolocationChange}
                 markerLocation={user.geolocation}
                 markerType={LIFE_BANK}
-                width="100%"
-                height={287}
+                className={classes.mapField}
                 mb={1}
               />
             </Box>

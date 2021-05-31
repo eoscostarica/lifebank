@@ -104,7 +104,6 @@ const setSecret = (where, secret) => {
 }
 
 const verifyEmail = (where) => {
-  console.log(where)
   return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
 }
 
