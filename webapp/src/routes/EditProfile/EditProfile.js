@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState, lazy, Suspense } from 'react'
+import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import Snackbar from '@material-ui/core/Snackbar'
@@ -130,12 +130,6 @@ const EditProfilePage = () => {
     }
   }, [editProfileResult])
 
-  useEffect(() => {
-    if (location.state) {
-      setuserName(location.state.userName)
-    } else history.push('/profile')
-
-  }, [location])
 
   useEffect(() => {
     if (errorProfile) {

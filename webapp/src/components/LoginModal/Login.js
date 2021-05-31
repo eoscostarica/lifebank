@@ -47,6 +47,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
+  const [changePassword, setChangePassword] = useState()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentUser, { login }] = useUser()
