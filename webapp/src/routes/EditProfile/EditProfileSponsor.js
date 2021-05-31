@@ -43,8 +43,8 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const photoUrlValueRef = useRef(undefined)
-  const [phoneValue1, setPhoneValue1] = useState(profile.telephones ? JSON.parse(profile.telephones)[0] : [])
-  const [phoneValue2, setPhoneValue2] = useState(profile.telephones ? JSON.parse(profile.telephones)[1] : [])
+  const [phoneValue1, setPhoneValue1] = useState(profile.telephones ? JSON.parse(profile.telephones)[0] : '')
+  const [phoneValue2, setPhoneValue2] = useState(profile.telephones ? JSON.parse(profile.telephones)[1] : '')
   const [address, setAddress] = useState(profile.address ? profile.address.split(',')[0] : '')
   const [city, setCity] = useState(profile.address ? profile.address.split(',')[1] : '')
   const [state, setState] = useState(profile.address ? profile.address.split(',')[2] : '')
@@ -305,7 +305,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
               <PhoneNumber
                 className={classes.textField}
                 defaultCountry='cr'
-                value= {phoneValue1 === [] ? '' : phoneValue1}
+                value= {phoneValue1}
                 fullWidth
                 label={t('signup.phoneNumber')}
                 id="phoneNumber1"
@@ -318,7 +318,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
                 className={classes.textField}
                 defaultCountry='cr'
                 fullWidth
-                value= {phoneValue2 === [] ? '' : phoneValue2}
+                value= {phoneValue2}
                 label={t('signup.phoneNumber')}
                 id="phoneNumber2"
                 variant="filled"
