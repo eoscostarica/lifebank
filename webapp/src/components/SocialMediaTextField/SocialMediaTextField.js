@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import InputLabel from '@material-ui/core/InputLabel'
 
 const SocialMediaTextField = ({
   idText,
@@ -15,18 +16,22 @@ const SocialMediaTextField = ({
 }) => (
   <TextField
     id={idText}
-    label={label}
     variant="filled"
-    placeholder={placeholder}
     value={defaultValue}
     fullWidth
+    placeholder={placeholder}
     onChange={(e) => onChangeSocialMediaTextField(e.target.value)}
     InputProps={{
-      startAdornment: (
+      startAdornment:(
         <InputAdornment position="start">
           {icon}
         </InputAdornment>
-      )
+      ),
+      endAdornment: (
+        <InputLabel >
+          {label}
+        </InputLabel>
+      ),
     }}
     InputLabelProps={{
       shrink: true
