@@ -24,7 +24,7 @@ jobs:
           NAMESPACE: lifebank
           STAGE: dev
           APP_NAME: lifebank
-          INGRESS_HOST: lifebank.eosio.cr
+          INGRESS_HOST: lifebank.io
           INGRESS_GRAPHQL_HOST: graphql.lifebank.io
           #postgres
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_SECRET }}
@@ -33,7 +33,7 @@ jobs:
           REACT_APP_VERSION: $npm_package_version
           REACT_APP_NAME: $npm_package_name
           REACT_APP_TITLE: LifeBank App
-          REACT_APP_EOS_API_HOST: lifebank.eosio.cr
+          REACT_APP_EOS_API_HOST: lacchain.eosio.cr
           REACT_APP_EOS_API_PORT: 443
           REACT_APP_EOS_API_PROTOCOL: https
           REACT_APP_EOS_CHAIN_ID: ${{ secrets.REACT_APP_EOS_CHAIN_ID }}
@@ -53,7 +53,6 @@ jobs:
           STAGE: dev
           APP_NAME: lifebank
           INGRESS_HOST: lifebank.io
-          INGRESS_HOST_EOSIO: lifebank.eosio.cr
           INGRESS_GRAPHQL_HOST: graphql.lifebank.io
           LIFBANKCODE_CONTRACTNAME: lifebankcode
           LIFBANKCOIN_CONTRACTNAME: lifebankcoin
@@ -76,7 +75,7 @@ jobs:
           # hapi
           HAPI_SERVER_PORT: 9090
           HAPI_SERVER_ADDRESS: 0.0.0.0
-          HAPI_EOS_API_ENDPOINT: https://lifebank.eosio.cr
+          HAPI_EOS_API_ENDPOINT: https://lacchain.eosio.cr
           HAPI_EOS_API_CHAIN_ID: 3ba28e6d66769dd9723431d138aefe8cfb379f0f1a5885a17a2a826b71e31997
           HAPI_EOS_BASE_ACCOUNT: ${{ secrets.HAPI_EOS_BASE_ACCOUNT }}
           HAPI_EOS_BASE_ACCOUNT_PASSWORD: ${{ secrets.HAPI_EOS_BASE_ACCOUNT_PASSWORD }}
