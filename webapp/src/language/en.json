@@ -435,6 +435,18 @@
       "messageVerificationCode": "Thank you for wanting to be part of the lifebank community, click on the button to verify and validate your account",
       "verifyButton": "Verify"
     },
+    "emailDonorCongratulation": {
+      "subject": "Thank you for your donation!",
+      "hi": "Hi",
+      "youComplete": "You completed a donation at",
+      "receivedTokens": "and received",
+      "lifeTokens": "Life Token.",
+      "lifeTokensMany": "Life Tokens.",
+      "thanksYou": "We all want to thank you for taking part in Lifebank! Your donations help save many lives.",
+      "growingCommunity": "Lifebank needs a growing community of donors to continue operating. Help us spread the word by sharing this badge with your friends. The more people donating through Lifebank, the more we can help save lives.",
+      "downloadBadge": "Download it or take a screenshot and share it on your social media accounts!",
+      "thanksAgain": "Thank you again for being part of this project. You’re a true hero!"
+    },
     "approveAccount": {
       "accountapprove": "This account has been approved",
       "somethingHappened": "Something happened when trying approve this account"

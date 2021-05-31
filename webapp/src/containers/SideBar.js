@@ -140,7 +140,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Box>
           <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
             <CloudDownloadIcon className={classes.iconOption} />
-            <Link onClick={onReportClick}>
+            <Link to={window.location.pathname} onClick={onReportClick}>
               <Typography variant="body1" className={classes.labelOption}>
                 {t('navigationDrawer.downloadReport')}
               </Typography>

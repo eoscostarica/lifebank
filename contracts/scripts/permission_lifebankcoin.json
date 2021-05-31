@@ -1,0 +1,18 @@
+{
+  "threshold": 1,
+  "keys": [
+    {
+      "key": "EOS61uwXyFwVkJpPfNSaHNmzDNBa9u3CP965omxc6hLx7FGFYuuD2",
+      "weight": 1
+    }
+  ],
+  "accounts": [
+    {
+      "permission": {
+        "actor": "lifebankcoin",
+        "permission": "eosio.code"
+      },
+      "weight": 1
+    }
+  ]
+}
