@@ -54,7 +54,11 @@
       "confirmPassword": "Confirm Password",
       "confirmPasswordError": "The new password is not confirm properly - Try again",
       "passwordChanged": "Password Changed Successfully - We sent you an email",
-      "passwordNotChangeable": "Error your account is linked to Facebook or Google"
+      "passwordNotChangeable": "Error your account is linked to Facebook or Google",
+      "suscribeSection": "Suscribe and get emails:",
+      "checkBoxSuscribe": "Suscription",
+      "changeEmail": "Change Email",
+      "email": "Email"
     },
     "signup": {
       "register": "Let's Start!",

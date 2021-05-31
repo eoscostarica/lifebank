@@ -22,6 +22,8 @@ import Divider from '@material-ui/core/Divider'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import DialogContent from '@material-ui/core/DialogContent'
 import InputLabel from '@material-ui/core/InputLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import LanguageSelector from '../LanguageSelector'
 
@@ -37,6 +39,7 @@ const Settings = ({ onCloseSetting }) => {
   const theme = useTheme()
   const [user, setUser] = useState({})
   const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [checked, setChecked] = useState(false)
   const [open, setOpen] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
@@ -79,6 +82,13 @@ const Settings = ({ onCloseSetting }) => {
     setUser({ ...user, [field]: value })
   }
 
+  const handleSetFieldEmail = (field, value) => {
+    const regularExpresion = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    if (regularExpresion.test(value)) setValidEmailFormat(true)
+    else setValidEmailFormat(false)
+    setUser({ ...user, [field]: value })
+  }
+
   const handleSubmitChangePassword = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
         changePassword({
@@ -98,6 +108,15 @@ const Settings = ({ onCloseSetting }) => {
       message: t('setting.passwordNotChangeable'),
       severity: 'error'
     })
+  }
+
+  const handleSubmitChangeEmail = async () => {
+    console.log(user.email)
+  }
+
+  const handleChangeCheckBox = (event) => {
+    console.log(checked)
+    setChecked(event.target.checked)
   }
 
   useEffect(() => {
@@ -168,6 +187,16 @@ const Settings = ({ onCloseSetting }) => {
       e.preventDefault()
     }
   }
+
+  function executeEmailChange(e) {
+    if (e.key === 'Enter' && validEmailFormat) {
+      e.preventDefault()
+    }
+    else if (e.key === 'Enter' && (!loading)) {
+      e.preventDefault()
+    }
+  }
+
   return (
     <>
       <Dialog
@@ -197,22 +226,91 @@ const Settings = ({ onCloseSetting }) => {
             <Typography variant="h3" className={classes.title}>
               {t('setting.setting')}
             </Typography>
-            <Divider />
+            <Divider className={classes.divider}/>
           </Box>
           <form autoComplete="off">
-            <Grid container >
-              <Grid item xs={12}>
-                <Box className={classes.box}>
+            <Grid container>
+              <Grid container spacing = {2}>
+                <Grid item xs={6}>
+                  <Box className={classes.boxSecondVersion}>
+                    <Typography variant="h3" className={classes.text}>
+                      {t('setting.language')}
+                    </Typography>
+                  </Box>
+                  <Box className={classes.boxSecondVersion}>
+                    <LanguageSelector alt="settings" />
+                  </Box>
+                </Grid>
+                <Divider orientation="vertical" flexItem/>
+                <Grid item xs={5}>
+                  <Box className={classes.boxSecondVersion}>
+                    <Typography variant="h3" className={classes.text}>
+                      {t('setting.suscribeSection')}
+                    </Typography>
+                  </Box>
+                  <Box className={classes.checkBox}>
+                    <FormControlLabel
+                      checked = {checked}
+                      control={
+                      <Checkbox 
+                        color="primary" 
+                        onChange={handleChangeCheckBox}
+                      />
+                      }
+                      label={t('setting.checkBoxSuscribe')}
+                      labelPlacement="start"
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid container item xs={12}>
+                <Box className={classes.boxSecondVersion}>
                   <Typography variant="h3" className={classes.text}>
-                    {t('setting.language')}
+                    {t('setting.changeEmail')}
                   </Typography>
-                </Box>
-                <Box className={classes.box}>
-                  <LanguageSelector alt="settings" />
+                  <Grid item xs={12}>
+                    <TextField
+                      id="currentEmail"
+                      variant="filled"
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{
+                        endAdornment: (
+                          <>
+                            <InputLabel id="select-label">
+                              {profile ? profile.email:''}
+                            </InputLabel>
+                          </>
+                        )
+                      }}
+                      onChange={(event) =>
+                        handleSetFieldEmail('email', event.target.value)
+                      }
+                      onKeyPress={(event) =>
+                        executeEmailChange(event)
+                      }
+                      className={classes.box}
+                    >
+                    </TextField>
+                  </Grid>
+                  <Box className={classes.box}>
+                    <Button
+                      disabled={!validEmailFormat}
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleSubmitChangeEmail}
+                      className={classes.button}
+                    >
+                      {t('setting.changeEmail')}
+                    </Button>
+                  </Box>
+                  <Box className={classes.loadingBox}>
+                    {loadingChangePassword && <CircularProgress />}
+                  </Box>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
+              <Grid container item xs={12}>
                 <Box className={classes.box}>
+                  <Divider className={classes.dividerSecondVersion}/>
                   <Typography variant="h3" className={classes.text}>
                     {t('setting.changePassword')}
                   </Typography>
