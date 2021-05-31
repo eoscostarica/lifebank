@@ -425,6 +425,12 @@
       "messageVerificationCode": "Thank you for wanting to be part of the lifebank community, click on the button to verify and validate your account",
       "verifyButton": "Verify"
     },
+    "emailSubscription": {
+      "cancelMessage": "Are you sure you want to stop hearing our awesome lifebank news?",
+      "successfulCancel": "The email sending has been successfully cancel for yor account.",
+      "cancel": "Stop receiving emails",
+      "error": "Failed to cancel email subscription"
+    },
     "emailDonorCongratulation": {
       "subject": "Thank you for your donation!",
       "hi": "Hi",

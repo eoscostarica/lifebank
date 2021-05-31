@@ -374,6 +374,12 @@
       - email_subscription
       filter: {}
       check: null
+  - role: guest
+    permission:
+      columns:
+      - email_subscription
+      filter: {}
+      check: null
   - role: lifebank
     permission:
       columns:
