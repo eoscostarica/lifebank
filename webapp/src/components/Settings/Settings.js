@@ -81,7 +81,6 @@ const Settings = ({ onCloseSetting }) => {
 
   const handleSubmitChangePassword = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
-      if (user.newPassword === user.confirmPassword) {
         changePassword({
           variables: {
             email: profile.email,
@@ -94,13 +93,6 @@ const Settings = ({ onCloseSetting }) => {
             }
           }
         })
-      } else {
-        setOpenSnackbar({
-          show: true,
-          message: t('setting.confirmPasswordError'),
-          severity: 'error'
-        })
-      }
     } else setOpenSnackbar({
       show: true,
       message: t('setting.passwordNotChangeable'),
@@ -292,34 +284,9 @@ const Settings = ({ onCloseSetting }) => {
                       className={classes.box}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      id="confirmPassword"
-                      type={showNewPassword ? 'text' : 'password'}
-                      variant="filled"
-                      InputLabelProps={{ shrink: true }}
-                      InputProps={{
-                        endAdornment: (
-                          <>
-                            <InputLabel id="select-label">
-                              {t('setting.confirmPassword')}
-                            </InputLabel>
-                          </>
-                        )
-                      }}
-                      value={user.confirmPassword || ''}
-                      onChange={(event) =>
-                        handleSetField('confirmPassword', event.target.value)
-                      }
-                      onKeyPress={(event) =>
-                        executeCredentialsRecovery(event)
-                      }
-                      className={classes.box}
-                    />
-                  </Grid>
                   <Box className={classes.box}>
                     <Button
-                      disabled={(!user.newPassword || !user.currentPassword || !user.confirmPassword) || loadingChangePassword}
+                      disabled={(!user.newPassword || !user.currentPassword) || loadingChangePassword}
                       variant="contained"
                       color="secondary"
                       onClick={handleSubmitChangePassword}
