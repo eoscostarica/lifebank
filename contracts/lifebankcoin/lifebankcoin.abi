@@ -78,6 +78,38 @@
             ]
         },
         {
+            "name": "redeem_offer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "donor_name",
+                    "type": "name"
+                },
+                {
+                    "name": "offer_comm_id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "redeemoffer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "offer_comm_id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "donor_name",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "transfer",
             "base": "",
             "fields": [
@@ -139,6 +171,11 @@
             "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Issue Token\nsummary: The intent of the `{{ issue }}` action issues tokens for a `donor` account that just donated blood.\nicon: https://lifebank.io/icons/token.png"
         },
         {
+            "name": "redeemoffer",
+            "type": "redeemoffer",
+            "ricardian_contract": ""
+        },
+        {
             "name": "transfer",
             "type": "transfer",
             "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Transfer Token\nsummary: The intent of the `{{ tranfer }}` action is to allow `from` account to transfer to `to` account the `quantity` tokens. One account is debited and the other is credited with quantity tokens.\nicon: https://lifebank.io/icons/transfer.png"
@@ -153,6 +190,13 @@
         {
             "name": "accounts",
             "type": "account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "redeemoffer",
+            "type": "redeem_offer",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

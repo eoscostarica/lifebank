@@ -1,0 +1,632 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [],
+    "structs": [
+        {
+            "name": "adddonor",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "addlifebank",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "lifebank_name",
+                    "type": "string"
+                },
+                {
+                    "name": "about",
+                    "type": "string"
+                },
+                {
+                    "name": "address",
+                    "type": "string"
+                },
+                {
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "name": "telephones",
+                    "type": "string"
+                },
+                {
+                    "name": "has_immunity_test",
+                    "type": "bool"
+                },
+                {
+                    "name": "blood_urgency_level",
+                    "type": "uint8"
+                },
+                {
+                    "name": "schedule",
+                    "type": "string"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "photos",
+                    "type": "string"
+                },
+                {
+                    "name": "logo_url",
+                    "type": "string"
+                },
+                {
+                    "name": "social_media_links",
+                    "type": "string"
+                },
+                {
+                    "name": "requirement",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "addoffer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "offer_name",
+                    "type": "name"
+                },
+                {
+                    "name": "sponsor_name",
+                    "type": "name"
+                },
+                {
+                    "name": "category",
+                    "type": "string"
+                },
+                {
+                    "name": "beginning_date",
+                    "type": "string"
+                },
+                {
+                    "name": "ending_date",
+                    "type": "string"
+                },
+                {
+                    "name": "cost",
+                    "type": "asset"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "restriction",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "addsponsor",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "sponsor_name",
+                    "type": "string"
+                },
+                {
+                    "name": "website",
+                    "type": "string"
+                },
+                {
+                    "name": "telephones",
+                    "type": "string"
+                },
+                {
+                    "name": "business_type",
+                    "type": "string"
+                },
+                {
+                    "name": "schedule",
+                    "type": "string"
+                },
+                {
+                    "name": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "name": "address",
+                    "type": "string"
+                },
+                {
+                    "name": "logo_url",
+                    "type": "string"
+                },
+                {
+                    "name": "about",
+                    "type": "string"
+                },
+                {
+                    "name": "social_media_links",
+                    "type": "string"
+                },
+                {
+                    "name": "photos",
+                    "type": "string"
+                },
+                {
+                    "name": "covid_impact",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "clear",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "community",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                },
+                {
+                    "name": "creator",
+                    "type": "name"
+                },
+                {
+                    "name": "community_name",
+                    "type": "string"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "logo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "createcmm",
+            "base": "",
+            "fields": [
+                {
+                    "name": "community_name",
+                    "type": "string"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "logo",
+                    "type": "string"
+                },
+                {
+                    "name": "maximum_supply",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "donor",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "tx",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "lifebank",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "community",
+                    "type": "symbol"
+                },
+                {
+                    "name": "blood_urgency_level",
+                    "type": "uint8"
+                },
+                {
+                    "name": "tx",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "lifebank_offers",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "offer_name",
+                    "type": "name"
+                },
+                {
+                    "name": "community",
+                    "type": "symbol"
+                }
+            ]
+        },
+        {
+            "name": "link",
+            "base": "",
+            "fields": [
+                {
+                    "name": "community_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "new_user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "linkoffer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "offer_name",
+                    "type": "name"
+                },
+                {
+                    "name": "community",
+                    "type": "symbol"
+                }
+            ]
+        },
+        {
+            "name": "network",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "community",
+                    "type": "symbol"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "offers",
+            "base": "",
+            "fields": [
+                {
+                    "name": "offer_name",
+                    "type": "name"
+                },
+                {
+                    "name": "sponsor_name",
+                    "type": "name"
+                },
+                {
+                    "name": "category",
+                    "type": "string"
+                },
+                {
+                    "name": "beginning_date",
+                    "type": "string"
+                },
+                {
+                    "name": "ending_date",
+                    "type": "string"
+                },
+                {
+                    "name": "cost",
+                    "type": "asset"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "rmlinkoffer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "rmoffer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "offer_name",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "sponsor",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "tx",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "unsubscribe",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "uplifebank",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                },
+                {
+                    "name": "lifebank_name",
+                    "type": "string"
+                },
+                {
+                    "name": "about",
+                    "type": "string"
+                },
+                {
+                    "name": "address",
+                    "type": "string"
+                },
+                {
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "name": "telephones",
+                    "type": "string"
+                },
+                {
+                    "name": "has_immunity_test",
+                    "type": "bool"
+                },
+                {
+                    "name": "blood_urgency_level",
+                    "type": "uint8"
+                },
+                {
+                    "name": "schedule",
+                    "type": "string"
+                },
+                {
+                    "name": "community_asset",
+                    "type": "asset"
+                },
+                {
+                    "name": "email",
+                    "type": "string"
+                },
+                {
+                    "name": "photos",
+                    "type": "string"
+                },
+                {
+                    "name": "logo_url",
+                    "type": "string"
+                },
+                {
+                    "name": "social_media_links",
+                    "type": "string"
+                },
+                {
+                    "name": "requirement",
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "adddonor",
+            "type": "adddonor",
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Add Donor\nsummary: The intent of the `{{ adddonor }}` action is to register a new donor in a community.\nicon: https://lifebank.io/icons/multisig.png"
+        },
+        {
+            "name": "addlifebank",
+            "type": "addlifebank",
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Add LifeBank Donation Center\nsummary: The intent of the `{{ addlifebank }}` action is to register a new donation center in a community.\nicon: https://lifebank.io/icons/multisig.png"
+        },
+        {
+            "name": "addoffer",
+            "type": "addoffer",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "addsponsor",
+            "type": "addsponsor",
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Add Sponsor\nsummary: The intent of the `{{ addsponsor }}` action is to register a new sponsor in a community.\nicon: https://lifebank.io/icons/multisig.png"
+        },
+        {
+            "name": "clear",
+            "type": "clear",
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Clear table\nsummary: The intent of the `{{ clear }}` action is to delete all table records and is used for development purposes on test-nets and must not be published to mainnet.\nicon: https://lifebank.io/icons/admin.png"
+        },
+        {
+            "name": "createcmm",
+            "type": "createcmm",
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Create new community\nsummary: The intent of the `{{ createcmm }}` action is to create a new community on LifeBank. It requires you to send: `cmm_asset`, `creator`, `logo`, `name`, `description` and `lifebank location`. A LifeBank community is closely tied to a LifeBank Token. A community allows a group of people with common goals and objectives to connect and allow the creation of incentives to reach those objectives.\nicon: https://lifebank.io/icons/multisig.png"
+        },
+        {
+            "name": "link",
+            "type": "link",
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle:  Invites a new account to a given community \nsummary: The intent of the `{{ revoke }}` action is to revoke a previous informed consent to a contract by deleting the record.\nicon: https://lifebank.io/icons/multisig.png"
+        },
+        {
+            "name": "linkoffer",
+            "type": "linkoffer",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "rmlinkoffer",
+            "type": "rmlinkoffer",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "rmoffer",
+            "type": "rmoffer",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "unsubscribe",
+            "type": "unsubscribe",
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Unsubscribe\nsummary: The intent of the `{{ unsubscribe }}` action is to delete all table records that belong to a specific account in order for a user to have a way to opt-out.\nicon: https://lifebank.io/icons/admin.png"
+        },
+        {
+            "name": "uplifebank",
+            "type": "uplifebank",
+            "ricardian_contract": "---\nspec-version: 0.1.0\ntitle: Update LifeBank Donation Center\nsummary: The intent of the `{{ uplifebank }}` action is to update an existing donation center in a community.\nicon: https://lifebank.io/icons/multisig.png"
+        }
+    ],
+    "tables": [
+        {
+            "name": "commoffer",
+            "type": "lifebank_offers",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "community",
+            "type": "community",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "donors",
+            "type": "donor",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "lifebanks",
+            "type": "lifebank",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "network",
+            "type": "network",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "offers",
+            "type": "offers",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "sponsors",
+            "type": "sponsor",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [
+        {
+            "id": "Data Storage",
+            "body": "---\nspec-version: 0.1.0\ntitle: General Data Storage\nsummary: The Lifebank application values the security of personal data. We may process only minimal user data as much as it is necessary to maintain the Lifebank application running. We only receive and store any information you knowingly provide to us when you create an account, or fill using the app. When required, this information may include the following:\nPersonal details such as name.\nContact information, such as email addresses.\nAccount details, such as user name and password.\nGeolocation data of the mobile device, such as latitude and longitude.\nicon: https://lifebank.io/icons/account.png"
+        },
+        {
+            "id": "Data Usage",
+            "body": "---\nspec-version: 0.1.0\ntitle: General Data Use\nsummary: This smart contract will process user data to keep the Lifebank application running. Any of the information we collect from you may be used for these purposes:\n - Create and manage user accounts.\n - Run and operate the Lifebank application.\n - Share information with the authorized blood donation centers and sponsors for issuing and transferring life tokens.\nProcessing your personal information depends on how you interact with the Lifebank application, your current location, and if one of the following applies: (i) You have given your consent for one or more specific purposes. However, this does not apply, if the processing of personal information is subject to California Consumer Privacy Act or European data protection law; (ii) Provision of information is necessary for the performance of an agreement with you and/or for any pre-contractual obligations thereof; (iii) Processing is necessary for compliance with a legal obligation to which you are subject; (iv) Processing is related to a task that is carried out in the public interest or in the exercise of official authority vested in us; (v) Processing is necessary for the purposes of the legitimate interests pursued by us or by a third party.\nicon: https://lifebank.io/icons/account.png"
+        },
+        {
+            "id": "Data Ownership",
+            "body": "---\nspec-version: 0.1.0\ntitle: Data Ownership\nsummary: The user of this smart contract verifies that the smart contract owns the data and that it can use the data in accordance with the terms defined in the Ricardian contract.\nYou can delete certain personal information you shared with the Lifebank application. When you delete personal information, we may maintain a copy of the unrevised personal information in our records for the duration necessary to comply with our obligations to our affiliates and partners, and for the purposes described below. If you would like to delete your personal information or permanently delete your account, you can do so on your account's profile page in the Lifebank application.\nWe will retain and use your personal information for the period necessary to comply with our legal obligations, resolve disputes, and enforce our agreements unless a more extended retention period is required or permitted by law. We may use any aggregated data derived from or incorporating your personal information after you update or delete it, but not in a manner that would identify you personally. Once the retention period expires, personal information shall be deleted. \nData Distribution\nicon: https://lifebank.io/icons/account.png"
+        },
+        {
+            "id": "Data Distribution",
+            "body": "---\nspec-version: 0.1.0\ntitle: Data Distribution\nsummary: The smart contract promises not actively to share or distribute the address data. The smart contract user understands that data stored in a multi-index table is not private and can be accessed by any user of the blockchain.\nDepending on your location, data transfers may involve transferring and storing your information in a country other than your own. Moreover, to keep Lifebank running, we must share necessary personal data such as your name with the authorized blood donation centers and sponsors. We do not store any information regarding your blood type, health conditions, or any other confidential information between you and the donation centers.\nicon: https://lifebank.io/icons/account.png"
+        },
+        {
+            "id": "Data Future",
+            "body": "---\nspec-version: 0.1.0\ntitle: Data Future\nsummary: The smart contract promises to only use the data following the terms defined in the Ricardian contract, now and at all future dates. You may exercise certain rights regarding your information processed by us. In particular, you have the right to do the following: (i) you have the right to withdraw consent where you have previously given your consent to the processing of your information; (ii) you have the right to object to the processing of your information if the processing is carried out on a legal basis other than consent; (iii) you have the right to learn if information is being processed by us, obtain disclosure regarding certain aspects of the processing and obtain a copy of the information undergoing processing; (iv) you have the right to verify the accuracy of your information and ask for it to be updated or corrected; (v) you have the right, under certain circumstances, to restrict the processing of your information, in which case, we will not process your information for any purpose other than storing it; (vi) you have the right, under certain circumstances, to obtain the erasure of your Personal Information from us; (vii) you have the right to receive your information in a structured, commonly used and machine readable format and, if technically feasible, to have it transmitted to another controller without any hindrance. This provision is applicable provided that your information is processed by automated means and that the processing is based on your consent, on a contract you are part of or on pre-contractual obligations thereof\nicon:  https://lifebank.io/icons/account.png"
+        }
+    ],
+    "variants": []
+}
