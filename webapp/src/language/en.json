@@ -426,8 +426,8 @@
       "verifyButton": "Verify"
     },
     "emailSubscription": {
-      "cancelMessage": "Are you sure you want to stop hearing our awesome lifebank news?",
-      "successfulCancel": "The email sending has been successfully cancel for yor account.",
+      "cancelMessage": "Confirm you wish to stop receiving emails from Lifebank.",
+      "successfulCancel": "You will no longer receive emails from Lifebank. If you wish to change this, go to Settings.",
       "cancel": "Stop receiving emails",
       "error": "Failed to cancel email subscription"
     },

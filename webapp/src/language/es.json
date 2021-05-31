@@ -425,10 +425,10 @@
       "verifyButton": "Verificar"
     },
     "emailSubscription": {
-      "cancelMessage": "¿Estás seguro de que quieres para de escuchar nuestras interensantes notificias de Lifebank?",
-      "successfulCancel": "El envío de correos ha sido cancelado exitosamente para tu cuenta.",
-      "cancel": "Dejar de recibir correos",
-      "error": "Tuvimos un error al cancelar la subscripción de correo"
+      "cancelMessage": "Confirma que deseas dejar de recibir correos de Lifebank.",
+      "successfulCancel": "Ya no recibirás más correos de Lifebank. Para cambiar esto, ve a Configuración.",
+      "cancel": "No recibir más correos",
+      "error": "Fallo en cancelación de correos"
     },
     "emailDonorCongratulation": {
       "subject": "¡Gracias por su donación!",
