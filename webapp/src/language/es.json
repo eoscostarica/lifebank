@@ -34,7 +34,7 @@
       "setting": "Configuraciones",
       "language": "Idioma Preferido:",
       "password": "Contraseña",
-      "changePassword": "Cambiar Contraseña:",
+      "changePassword": "Cambiar Contraseña",
       "currentPassword": "Contraseña Actual",
       "errorPassword": "La contraseña actual no coinside con su correo",
       "newPassword": "Nueva Contraseña",

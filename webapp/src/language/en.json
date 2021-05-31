@@ -47,7 +47,7 @@
       "setting": "Settings",
       "language": "Preferred Language:",
       "password": "Password",
-      "changePassword": "Change Password:",
+      "changePassword": "Change Password",
       "currentPassword": "Current Password",
       "errorPassword": "The current password does not match your email",
       "newPassword": "New Password",
