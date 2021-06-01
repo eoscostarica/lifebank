@@ -3,7 +3,7 @@ const resources = require('../language')
 
 i18n.init({
   resources,
-  lng: "en"
+  lng: 'en'
 })
 
 module.exports = i18n
