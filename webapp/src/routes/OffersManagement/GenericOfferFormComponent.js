@@ -108,11 +108,7 @@ const LimitationHandling = ({
         label={t('offersManagement.quantity')}
         fullWidth
         min='1'
-        placeholder={t('offersManagement.quantityPlaceholder')}
         variant="outlined"
-        InputLabelProps={{
-          shrink: true
-        }}
         InputProps={{
           inputComponent: NumberFormatCustom,
         }}
@@ -126,7 +122,7 @@ const LimitationHandling = ({
           minDate={new Date()}
           value={dates}
           onChange={onChange}
-          className={classes.textField}
+          className={classes.textFieldLimit}
         />
       </Box>
     </Box>
@@ -349,15 +345,11 @@ const GenericOfferFormComponent = ({
                 id="offer-name"
                 label={t('offersManagement.offerName')}
                 variant="outlined"
-                placeholder={t('offersManagement.offerNamePlaceholder')}
                 value={offer.offer_name || undefined}
                 fullWidth
                 onChange={(event) =>
                   setOffer({ ...offer, offer_name: event.target.value })
                 }
-                InputLabelProps={{
-                  shrink: true
-                }}
                 className={classes.textField}
               />
               <FormControl variant="outlined" className={classes.textField}>
@@ -384,15 +376,11 @@ const GenericOfferFormComponent = ({
                 id="offer-description"
                 label={t('offersManagement.offerDescription')}
                 variant="outlined"
-                placeholder={t('offersManagement.offerDescriptionPlaceholder')}
                 value={offer.description || undefined}
                 fullWidth
                 onChange={(event) =>
                   setOffer({ ...offer, description: event.target.value })
                 }
-                InputLabelProps={{
-                  shrink: true
-                }}
                 className={classes.textField}
               />
               <TextField
@@ -400,12 +388,8 @@ const GenericOfferFormComponent = ({
                 label={t('offersManagement.costInTokens')}
                 variant="outlined"
                 onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
-                placeholder={t('offersManagement.costInTokensPlaceholder')}
                 value={offer.cost_in_tokens || undefined}
                 fullWidth
-                InputLabelProps={{
-                  shrink: true
-                }}
                 InputProps={{
                   inputComponent: NumberFormatCustom,
                 }}
@@ -413,19 +397,6 @@ const GenericOfferFormComponent = ({
                   setOffer({ ...offer, cost_in_tokens: event.target.value })
                 }
                 className={classes.textField}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={offer.online_only}
-                    onChange={(event) =>
-                      setOffer({ ...offer, online_only: event.target.checked })
-                    }
-                    name="checkedB"
-                    color="primary"
-                  />
-                }
-                label={t('offersManagement.onlineOnly')}
               />
               <Divider className={classes.divider} />
               <Typography className={classes.boldText} variant="subtitle1">{t('offersManagement.chooseIcon')}</Typography>
@@ -475,6 +446,7 @@ const GenericOfferFormComponent = ({
                   <LimitationHandling
                     setQuantity={(val) => setOffer({ ...offer, quantity: val })}
                     initialDates={[offer.start_date, offer.end_date]}
+                    fullWidth
                     setDates={(dates) =>
                       setOffer({
                         ...offer,
@@ -492,12 +464,8 @@ const GenericOfferFormComponent = ({
                 id="image-url"
                 label={t('offersManagement.imageUrl')}
                 variant="outlined"
-                placeholder={t('offersManagement.imageUrlPlaceholder')}
                 fullWidth
                 inputRef={imgUrlValueRef}
-                InputLabelProps={{
-                  shrink: true
-                }}
                 onChange={(e) => setDisableUrlInput(e.target.value.length < 1)}
                 className={classes.textField}
                 onKeyPress={(event) =>

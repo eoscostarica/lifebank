@@ -1,6 +1,28 @@
 export default (theme) => ({
+  wrapperSettings: {
+    marginTop: '10px',
+    paddingLeft: '30px',
+    paddingRight: '30px',
+    borderRadius: '50px',
+    backgroundColor: '#ba0d0d',
+    width: "100%",
+    height: '40px',
+    fontSize: '14px',
+    fontWeight: 500,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 1.14,
+    letterSpacing: '1px',
+    color: '#ffffff',
+  },
   wrapper: {
     color: 'inherit'
+  },
+  selector: {
+    height: 'auto',
+    overflowY: 'none',
+    width: '100%',
+    paddingBottom: '4px'
   },
   languageText: {
     color: '#121212',
@@ -17,6 +39,11 @@ export default (theme) => ({
   iconLanguage: {
     color: '#121212',
     width: 24,
+    height: 24
+  },
+  iconLanguageSettings: {
+    color: '#121212',
+    width: '100%',
     height: 24
   },
   iconLanguageTransparent: {
