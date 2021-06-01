@@ -1,4 +1,5 @@
 const { eosConfig } = require('../config')
+const i18n = require('i18next')
 const {
   eosUtils,
   jwtUtils,
@@ -449,6 +450,7 @@ const formatLifebankData = (lifebankData) => {
 }
 
 const verifyEmail = async ({ code }) => {
+  console.log('WELCOME MESSAGE', i18n.t('welcome'))
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })

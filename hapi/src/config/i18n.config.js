@@ -1,17 +1,9 @@
 const i18n = require('i18next')
+const resources = require('../language')
 
 i18n.init({
-  resources: {
-    en: {
-      translation: {
-        app_name: ''
-      }
-    }
-  },
-  fallbackLng: 'en',
-  interpolation: {
-    escapeValue: false
-  }
+  resources,
+  lng: "en"
 })
 
 module.exports = i18n
