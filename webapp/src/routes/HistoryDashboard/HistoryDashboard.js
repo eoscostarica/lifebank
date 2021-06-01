@@ -56,8 +56,6 @@ const HistoryDashboard = (user) => {
 
   return (
     <>
-
-
     </>
   )
 }

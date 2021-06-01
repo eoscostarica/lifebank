@@ -1,3 +1,4 @@
+const { user } = require('../config/mail.config')
 const { hasuraUtils } = require('../utils')
 
 const GET_ONE = `
