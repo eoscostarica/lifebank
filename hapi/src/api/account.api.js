@@ -195,7 +195,7 @@ const notifyNewLifebank = async (lifebankAccount) => {
         mailApi.sendNewLifebankRegistered(
           sponsorProfile.email,
           'New lifebank near you!',
-          'There’s a new lifebank near you! Check its profile <a href="http://lifebank/info/' +
+          'There’s a new lifebank near you! Check its profile <a href="https://lifebank/info/' +
             lifebankAccount +
             '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications <a href="http://lifebank/cancel-email-subscription/' +
             lifebankAccount +
