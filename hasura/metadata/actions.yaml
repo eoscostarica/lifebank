@@ -1,4 +1,8 @@
 actions:
+- name: change_email
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/change-email
 - name: change_password
   definition:
     kind: synchronous
@@ -215,4 +219,5 @@ custom_types:
   - name: get_report_output
   - name: check_email_verified_output
   - name: donate_output
+  - name: change_email_output
   scalars: []

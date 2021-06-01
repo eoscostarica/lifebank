@@ -27,7 +27,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import LanguageSelector from '../LanguageSelector'
 
-import { PROFILE_QUERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD, GET_EMAIL } from '../../gql'
+import { PROFILE_QUERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD, CHANGE_EMAIL } from '../../gql'
 import { useUser } from '../../context/user.context'
 import styles from './styles'
 
@@ -55,6 +55,12 @@ const Settings = ({ onCloseSetting }) => {
     changePassword,
     { loading: loadingChangePassword, error: errorChangePassword, data: { change_password: responseChangePassword } = {} }
   ] = useMutation(CHANGE_PASSWORD)
+
+  const [
+    changeEmail,
+    { loading: loadingChangeEmail, error: errorChangeEmail, data: { change_email: responseChangeEmail } = {} }
+  ] = useMutation(CHANGE_EMAIL)
+
 
   const [
     getAccountSignupMethod,
@@ -111,7 +117,13 @@ const Settings = ({ onCloseSetting }) => {
   }
 
   const handleSubmitChangeEmail = async () => {
-    console.log(user.email)
+    changeEmail({
+      variables: {
+        account: profile.account,
+        email: user.email,
+      }
+    })
+    console.log(user.email, profile.account)
   }
 
   const handleChangeCheckBox = (event) => {
