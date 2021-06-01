@@ -452,32 +452,25 @@ const verifyEmail = async ({ code }) => {
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })
+  if(resUser) return { is_verified: true }
+
   const resLifebank = await preRegLifebank.verifyEmail({
     verification_code: { _eq: code }
   })
-  let result = false
+  if(!resLifebank) return { is_verified: false }
+  const lifebankProfile = formatLifebankData(resLifebank)
 
-  if (
-    resUser.update_user.affected_rows !== 0 ||
-    resLifebank.update_preregister_lifebank.affected_rows !== 0
-  ) {
-    if (resLifebank.update_preregister_lifebank.affected_rows !== 0) {
-      resLifebank.update_preregister_lifebank.returning[0] = formatLifebankData(
-        resLifebank.update_preregister_lifebank.returning[0]
-      )
-      try {
-        mailApi.sendRegistrationRequest(
-          MAIL_APPROVE_LIFEBANNK,
-          resLifebank.update_preregister_lifebank.returning[0]
-        )
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    result = true
+  try {
+    mailApi.sendRegistrationRequest(
+      MAIL_APPROVE_LIFEBANNK,
+      lifebankProfile
+    )
+  } catch (error) {
+    console.log(error)
   }
+
   return {
-    is_verified: result
+    is_verified: true
   }
 }
 

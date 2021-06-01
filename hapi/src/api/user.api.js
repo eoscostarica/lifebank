@@ -103,8 +103,9 @@ const setSecret = (where, secret) => {
   return hasuraUtils.request(SET_SECRET, { where, secret })
 }
 
-const verifyEmail = (where) => {
-  return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+const verifyEmail = async (where) => {
+  const { update_user } = await hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+  return update_user.affected_rows > 0 ? true : false
 }
 
 module.exports = {
