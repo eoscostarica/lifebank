@@ -169,12 +169,13 @@ const OffersManagement = () => {
     setAnchorEl(event.currentTarget)
   };
 
-  const handleClose1 = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null)
   };
 
   const Actions = (active, offer_id) => (
     <div>
+      {console.log(offer_id)}
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
         <MoreVertIcon />
       </Button>
@@ -184,7 +185,7 @@ const OffersManagement = () => {
         keepMounted
         value=""
         open={Boolean(anchorEl)}
-        onClose={handleClose1}
+        onClose={handleCloseMenu}
       >
         <MenuItem onClick={(e) => handleActionClick("edit", active, offer_id)}>{t('common.edit')}</MenuItem>
         <MenuItem onClick={(e) => handleActionClick("delete", active, offer_id)}>{t('common.delete')}</MenuItem>
@@ -297,7 +298,7 @@ const OffersManagement = () => {
                   </Button>,
                   offer.active
                     ? t('offersManagement.active')
-                    : t('offersManagement.inac  tive'),
+                    : t('offersManagement.inactive'),
                   offer.start_date
                     ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
                     : t('offersManagement.noProvidedDate'),
