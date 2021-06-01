@@ -3,12 +3,15 @@ export default (theme) => ({
     marginTop: theme.spacing(4)
   },
   textFieldWrapper: {
+    position: 'relative',
+    zIndex: 2,
+    width: '100%',
     padding: theme.spacing(2, 0),
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    paddingTop: "10px",
-    marginBottom: 16
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.24)',
   },
   divider: {
     marginTop: "25px",
@@ -18,9 +21,9 @@ export default (theme) => ({
   },
   closeIcon: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 3,
     left: 14,
-    paddingTop: "10px",
+    padding: theme.spacing(2, 0),
     '& svg': {
       fontSize: 25,
       color: "rgba(0, 0, 0, 0.6)"
@@ -111,8 +114,9 @@ export default (theme) => ({
     color: '#ffffff',
   },
   dimensions: {
+    paddingTop: '32px',
     width: 500,
-    height: 680,
+    height: 640,
     [theme.breakpoints.down('sm')]: {
       width: "100%",
       height: "100%"

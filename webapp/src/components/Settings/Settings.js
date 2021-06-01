@@ -211,23 +211,22 @@ const Settings = ({ onCloseSetting }) => {
           timeout: 500
         }}
       >
+        <Box className={classes.closeIcon}>
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={handleOpen}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        </Box>
+        <Box className={classes.textFieldWrapper}>
+          <Typography variant="h3" className={classes.title}>
+            {t('setting.setting')}
+          </Typography>
+        </Box>
         <DialogContent className={classes.dimensions} >
-          <Box className={classes.closeIcon}>
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={handleOpen}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          </Box>
-          <Box className={classes.textFieldWrapper}>
-            <Typography variant="h3" className={classes.title}>
-              {t('setting.setting')}
-            </Typography>
-            <Divider className={classes.divider}/>
-          </Box>
           <form autoComplete="off">
             <Grid container>
               <Grid container spacing = {2}>
