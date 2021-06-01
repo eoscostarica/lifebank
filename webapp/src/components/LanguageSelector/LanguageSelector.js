@@ -11,6 +11,9 @@ import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useLocation } from 'react-router-dom'
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -56,33 +59,66 @@ const LanguageSelector = ({ alt }) => {
 
   return (
     <>
-      <IconButton className={classes.wrapper} onClick={handleClick}>
-        <LanguageIcon
-          alt={alt}
-          className={clsx(classes.iconLanguage, {
-            [classes.iconLanguageTransparent]: useTransparentBG
-          })}
-        />
-        <Typography
-          variant="h5"
-          className={clsx(classes.languageText, {
-            [classes.languageTextTransparent]: useTransparentBG
-          })}
-        >
-          {(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
-        </Typography>
-      </IconButton>
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        {languages.length &&
-          languages.map((item) => (
-            <MenuItem
-              key={`language-menu-${item.label}`}
-              onClick={() => handleClose(item.value)}
+      {alt && (
+        <>
+          <FormControl
+            variant="filled"
+            className={classes.selector}
+          >
+            <InputLabel id="select-label">
+              {((i18n.language || '').toLocaleUpperCase() === "EN") ? "English" : "Español"}
+            </InputLabel>
+            <Select
+              labelId="bussines-type-label"
+              id="bussines-type"
+              onChange={handleClick}
             >
-              {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
-            </MenuItem>
-          ))}
-      </Menu>
+              {languages.length &&
+                languages.map((item) => (
+                  <MenuItem
+                    key={`language-menu-${item.label}`}
+                    onClick={() => handleClose(item.value)}
+                  >
+                    {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+        </>
+      )
+      }
+      {!alt && (
+        <>
+          <IconButton className={classes.wrapper} onClick={handleClick}>
+            <LanguageIcon
+              alt={alt}
+              className={clsx(classes.iconLanguage, {
+                [classes.iconLanguageTransparent]: useTransparentBG
+              })}
+            />
+            <Typography
+              variant="h5"
+              className={clsx(classes.languageText, {
+                [classes.languageTextTransparent]: useTransparentBG
+              })}
+            >
+              {(i18n.language || '').toLocaleUpperCase().substring(0, 2)}
+            </Typography>
+          </IconButton>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+            {languages.length &&
+              languages.map((item) => (
+                <MenuItem
+                  key={`language-menu-${item.label}`}
+                  onClick={() => handleClose(item.value)}
+                >
+                  {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
+                </MenuItem>
+              ))}
+          </Menu>
+        </>
+      )
+      }
     </>
   )
 }

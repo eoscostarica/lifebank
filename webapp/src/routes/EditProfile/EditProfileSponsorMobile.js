@@ -38,7 +38,7 @@ const {
   SPONSOR_TYPES
 } = constants
 
-const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) => {
+const EditProfileSponsorMobile = ({ profile, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const photoUrlValueRef = useRef(undefined)
@@ -158,21 +158,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
     setDisablePhotoUrlInput(true)
   }
 
-
-  const showOrHide = (value) => {
-    return isCompleting && value ? 'none' : ''
-  }
-
-  const showOrHideSocialMedia = (platform) => {
-    return isCompleting &&
-      profile.social_media_links &&
-      JSON.parse(profile.social_media_links).find(
-        (social) => social.name === platform
-      )
-      ? 'none'
-      : ''
-  }
-
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
       e.preventDefault()
@@ -202,8 +187,8 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
   return (
     <form autoComplete="off" className={classes.form}>
       <Box className={classes.mobile}>
-        <Grid container spacing={SPACING} xs={12}>
-          <Grid item xs={12} direction="column" spacing={SPACING} >
+        <Grid container spacing={SPACING}>
+          <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h2">
               {t('editProfile.editTitleSponsor')}
             </Typography>
@@ -219,13 +204,18 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               className={classes.mobileTextField}
               id="name"
               name="name"
-              style={{ display: showOrHide(profile.name) }}
               variant="filled"
-              placeholder={t('editProfile.sponsorNamePlaceholder')}
               value={user.name}
               fullWidth
               InputLabelProps={{
                 shrink: true
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('editProfile.sponsorNamePlaceholder')}
+                  </InputLabel>
+                ),
               }}
               onChange={(event) => handleSetField('name', event.target.value)}
             />
@@ -237,21 +227,19 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <TextField
               className={classes.mobileTextField}
               id="about"
-              style={{ display: showOrHide(profile.about) }}
               multiline
               rows={5}
-              inputProps={{
-                maxlength: CHARACTER_LIMIT
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('signup.aboutBusiness')}
+                  </InputLabel>
+                ),
+                maxLength: CHARACTER_LIMIT
               }}
               helperText={`${values.about.length}/${CHARACTER_LIMIT}`}
-              style={{
-                display: isCompleting && user.about ? 'none' : ''
-              }}
               variant="filled"
-              placeholder={t('signup.aboutBusiness')}
               defaultValue={user.about}
-              multiline
-              rowsMax={10}
               InputLabelProps={{
                 shrink: true
               }}
@@ -266,10 +254,12 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
           </Grid>
           <Grid item xs={12}>
             <FormControl
-              style={{ display: showOrHide(profile.business_type) }}
               variant="filled"
               className={classes.sponsorType}
             >
+              <InputLabel >
+                {t('signup.type')}
+              </InputLabel>
               <Select
                 labelId="bussines-type-label"
                 id="bussines-type"
@@ -296,14 +286,18 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <TextField
               className={classes.mobileTextField}
               id="website"
-              style={{ display: showOrHide(profile.website) }}
-              label={t('common.website')}
               variant="filled"
-              placeholder="Website"
               defaultValue={user.website}
               fullWidth
               InputLabelProps={{
                 shrink: true
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('common.website')}
+                  </InputLabel>
+                ),
               }}
               onChange={(event) => handleSetField('website', event.target.value)}
             />
@@ -342,16 +336,18 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <TextField
               className={classes.mobileTextField}
               id="address"
-              style={{
-                display: isCompleting && user.address ? 'none' : ''
-              }}
-              label={t('signup.address')}
               fullWidth
               variant="filled"
-              placeholder={t('signup.addressPlaceholder')}
               defaultValue={address}
               InputLabelProps={{
                 shrink: true
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('signup.address')}
+                  </InputLabel>
+                ),
               }}
               onChange={(event) => setAddress(event.target.value)}
             />
@@ -366,16 +362,18 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
                 <TextField
                   className={classes.mobileTextField}
                   id="city"
-                  style={{
-                    display: isCompleting && user.address ? 'none' : ''
-                  }}
-                  label={t('editProfile.city')}
                   fullWidth
                   variant="filled"
-                  placeholder={t('editProfile.cityPlaceholder')}
                   defaultValue={city}
                   InputLabelProps={{
                     shrink: true
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputLabel >
+                        {t('editProfile.city')}
+                      </InputLabel>
+                    ),
                   }}
                   onChange={(event) => setCity(event.target.value)}
                 />
@@ -386,16 +384,18 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
                 <TextField
                   className={classes.mobileTextField}
                   id="state"
-                  style={{
-                    display: isCompleting && user.address ? 'none' : ''
-                  }}
-                  label={t('editProfile.stateProvince')}
                   fullWidth
                   variant="filled"
-                  placeholder={t('editProfile.stateProvincePlaceholder')}
                   defaultValue={state}
                   InputLabelProps={{
                     shrink: true
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputLabel >
+                        {t('editProfile.stateProvince')}
+                      </InputLabel>
+                    ),
                   }}
                   onChange={(event) => setState(event.target.value)}
                 />
@@ -406,22 +406,24 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             <TextField
               className={classes.mobileTextField}
               id="country"
-              style={{
-                display: isCompleting && user.address ? 'none' : ''
-              }}
-              label={t('editProfile.country')}
               fullWidth
               variant="filled"
-              placeholder={t('editProfile.countryPlaceholder')}
               defaultValue={country}
               InputLabelProps={{
                 shrink: true
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('editProfile.country')}
+                  </InputLabel>
+                ),
               }}
               onChange={(event) => setCountry(event.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
-            <Box style={{ display: isCompleting && user.geolocation ? 'none' : '' }} paddingTop='4px' width="100%">
+            <Box paddingTop='4px' width="100%">
               <MapEditLocation
                 onGeolocationChange={handleOnGeolocationChange}
                 markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
@@ -438,7 +440,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             </Typography>
             <Box
               className={classes.componentBoxWrp}
-              style={{ display: showOrHide(profile.schedule) }}
             >
               <Box className={classes.componentBox}>
                 <Schedule
@@ -455,7 +456,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             </Typography>
             <Box
               width="100%"
-              style={{ display: showOrHideSocialMedia('instagram') }}
             >
               <SocialMediaTextField
                 textFieldClass={classes.mobileTextField}
@@ -474,7 +474,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
           <Grid item xs={12}>
             <Box
               width="100%"
-              style={{ display: showOrHideSocialMedia('facebook') }}
             >
               <SocialMediaTextField
                 textFieldClass={classes.mobileTextField}
@@ -493,7 +492,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
           <Grid item xs={12}>
             <Box
               width="100%"
-              style={{ display: showOrHideSocialMedia('twitter') }}
             >
               <SocialMediaTextField
                 textFieldClass={classes.mobileTextField}
@@ -518,16 +516,14 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
             </Typography>
           </Grid>
           <Grid item xs={12} >
-            <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
+            <Box width="100%">
               <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
             </Box>
           </Grid>
           <Grid item xs={12} >
             <TextField
               id="photo-url"
-              label={t('editProfile.photoUrl')}
               variant="filled"
-              placeholder={t('editProfile.photoUrlPlaceholder')}
               fullWidth
               inputRef={photoUrlValueRef}
               onChange={(e) =>
@@ -538,16 +534,20 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               }
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      disabled={disablePhotoUrlInput}
-                      color="secondary"
-                      aria-label="add photo url"
-                      onClick={handlePhotos}
-                    >
-                      <AddIcon />
-                    </IconButton>
-                  </InputAdornment>
+                  <>
+                    <InputAdornment position="end">
+                      <IconButton
+                        disabled={disablePhotoUrlInput}
+                        color="secondary"
+                        onClick={handlePhotos}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </InputAdornment>
+                    <InputLabel >
+                      {t('editProfile.photoUrl')}
+                    </InputLabel>
+                  </>
                 )
               }}
               InputLabelProps={{
@@ -574,7 +574,7 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
               </Box>
             )}
           </Grid>
-          <Grid item xs={12} direction="column">
+          <Grid item xs={12}>
             <Box className={classes.btnWrapper}>
               <Link to="/profile" className={classes.routerLink}>
                 <Button
@@ -604,7 +604,6 @@ const EditProfileSponsorMobile = ({ profile, isCompleting, onSubmit, loading }) 
 
 EditProfileSponsorMobile.propTypes = {
   profile: PropTypes.object,
-  isCompleting: PropTypes.bool,
   onSubmit: PropTypes.func,
   loading: PropTypes.bool
 }

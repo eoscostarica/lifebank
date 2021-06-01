@@ -6,16 +6,17 @@ import PersonIcon from '@material-ui/icons/Person'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Box from '@material-ui/core/Box'
 import { Link, useLocation, useHistory } from 'react-router-dom'
-import Divider from '@material-ui/core/Divider'
+import EditIcon from '@material-ui/icons/Edit'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import ShareIcon from '@material-ui/icons/Share'
+import SettingsIcon from '@material-ui/icons/Settings'
 import clsx from 'clsx'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTranslation } from 'react-i18next'
 
 import LanguageSelector from '../components/LanguageSelector'
+import Settings from '../components/Settings'
 import Notification from '../components/Notification'
 import LoginModal from '../components/LoginModal'
 
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   userIconTransparent: {
     color: '#ffffff'
   },
-  logoutIcon: {
+  icon: {
     color: '#121212',
     width: 20,
     height: 20,
@@ -42,21 +43,34 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontStretch: 'normal',
     fontStyle: 'normal',
-    lineHeight: 1.14,
     letterSpacing: '1px',
-    color: '#121212'
+    color: '#121212',
   },
   box: {
     display: 'flex',
     justifyContent: 'flex-end',
-    flex: 1
-  }
+    flex: 1,
+    [theme.breakpoints.down('md')]: {
+      height: '100%',
+      width: '100%'
+    }
+  },
+  languageText: {
+    color: '#121212',
+    fontSize: '1rem',
+    marginLeft: 3,
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'inline'
+    }
+  },
 }))
 
 const Topbar = ({ user, onLogout }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
+  const [openSettings, setOpenSettings] = useState(false)
   const theme = useTheme()
   const location = useLocation()
   const isHome = location.pathname === '/'
@@ -77,8 +91,17 @@ const Topbar = ({ user, onLogout }) => {
     setAnchorEl(event.currentTarget)
   }
 
+  const openSettingsEvent = () => {
+    setOpenSettings(!openSettings)
+    handleClose()
+  }
+
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleOnCloseSetting = () => {
+    setOpenSettings(!openSettings)
   }
 
   const handleLogout = () => {
@@ -89,23 +112,13 @@ const Topbar = ({ user, onLogout }) => {
 
   return (
     <Box className={classes.box}>
-      <LanguageSelector />
-      {user && isDesktop && (
-        <IconButton onClick={handleClick}>
-          <ShareIcon
-            alt="User icon"
-            className={clsx(classes.userIcon, {
-              [classes.userIconTransparent]: useTransparentBG
-            })}
-          />
-        </IconButton>
-      )}
+      {!user && <LanguageSelector />}
       {user && <Notification />}
       {user && (
         <>
           <IconButton onClick={handleClick}>
             <PersonIcon
-              alt="User icon"
+              alt="UserBar icon"
               className={clsx(classes.userIcon, {
                 [classes.userIconTransparent]: useTransparentBG
               })}
@@ -116,21 +129,43 @@ const Topbar = ({ user, onLogout }) => {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            onClose={() => handleClose(1)}
+            elevation={12}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
           >
-            <Link to="/profile" className={classes.link}>
-              <MenuItem className={classes.menuItem} onClick={handleClose}>{user.account}</MenuItem>
-            </Link>
-            <Divider />
+            <MenuItem className={classes.menuItem}>
+              <PersonIcon alt="User icon" className={classes.icon} />
+              {user.account}
+            </MenuItem>
+              <Link to='/edit-profile'  className={classes.link}>
+                <MenuItem onClick={handleClose} className={classes.menuItem}>
+                  <EditIcon alt="Edit icon" className={classes.icon} />
+                  {t('navigationDrawer.editPage')}
+                </MenuItem>
+              </Link>
+            <MenuItem onClick={openSettingsEvent} className={classes.menuItem}>
+              <SettingsIcon alt="Settings icon" className={classes.icon} />
+              {t('navigationDrawer.settings')}
+            </MenuItem>
             <MenuItem onClick={handleLogout} className={classes.menuItem}>
-              <ExitToAppIcon alt="User icon" className={classes.logoutIcon} />
+              <ExitToAppIcon alt="Logout icon" className={classes.icon} />
               {t('login.logout')}
             </MenuItem>
           </Menu>
         </>
-      )}
+      )
+      }
+      { user && openSettings && < Settings onCloseSetting={handleOnCloseSetting} />}
       <LoginModal isNavBar />
-    </Box>
+    </Box >
   )
 }
 

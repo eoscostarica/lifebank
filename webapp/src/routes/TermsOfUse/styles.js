@@ -1,14 +1,15 @@
 export default (theme) => ({
   tabsWrapper: {
-    margin: theme.spacing(4, 0, 4, 0),
+    margin: theme.spacing(2, 0, 4, 0),
     [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(0, 0, 4, 0),
       '& button': {
         width: '33.3vw'
       }
     }
   },
   wrapper: {
-    minHeight:'100vh',
+    minHeight: '100vh',
     height: '95vh',
     padding: theme.spacing(2, 1, 0, 1),
     '& img': {

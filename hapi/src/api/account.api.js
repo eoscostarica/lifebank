@@ -617,6 +617,31 @@ const revokeConsent = async (account) => {
   return consentTransaction
 }
 
+const donate = async (from, { to, memo, quantity, emailContent }) => {
+  const userTo = await userApi.getOne({
+    account: { _eq: to }
+  })
+
+  if (userTo.role !== 'donor')
+    throw new Error('Destination account must be a donor')
+
+  const transferResult = await transfer(from, { to, memo, quantity })
+
+  if (transferResult) {
+    try {
+      mailApi.sendCongratulationsOnDonation(
+        userTo.email,
+        emailContent.subject,
+        emailContent.message
+      )
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return transferResult
+}
+
 const transfer = async (from, details, notification) => {
   const currentBalance = await lifebankcoinUtils.getbalance(details.to)
   const password = await vaultApi.getPassword(from)
@@ -704,5 +729,6 @@ module.exports = {
   verifyEmail,
   getValidSponsors,
   getValidLifebanks,
-  getReport
+  getReport,
+  donate
 }

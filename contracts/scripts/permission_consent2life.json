@@ -1,0 +1,18 @@
+{
+  "threshold": 1,
+  "keys": [
+    {
+      "key": "EOS4ygQ6tCFRsSVVCgXvSExbFt38a3yiKtDVZY1jvzZTcJtdHYBba",
+      "weight": 1
+    }
+  ],
+  "accounts": [
+    {
+      "permission": {
+        "actor": "consent2life",
+        "permission": "eosio.code"
+      },
+      "weight": 1
+    }
+  ]
+}

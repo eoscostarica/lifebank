@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import InputLabel from '@material-ui/core/InputLabel'
 import { useTranslation } from 'react-i18next'
 import Divider from '@material-ui/core/Divider'
 import FacebookIcon from '@material-ui/icons/Facebook'
@@ -38,12 +39,12 @@ const {
   SPONSOR_TYPES
 } = constants
 
-const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
+const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const photoUrlValueRef = useRef(undefined)
-  const [phoneValue1, setPhoneValue1] = useState(profile.telephones ? JSON.parse(profile.telephones)[0] : [])
-  const [phoneValue2, setPhoneValue2] = useState(profile.telephones ? JSON.parse(profile.telephones)[1] : [])
+  const [phoneValue1, setPhoneValue1] = useState(profile.telephones ? JSON.parse(profile.telephones)[0] : '')
+  const [phoneValue2, setPhoneValue2] = useState(profile.telephones ? JSON.parse(profile.telephones)[1] : '')
   const [address, setAddress] = useState(profile.address ? profile.address.split(',')[0] : '')
   const [city, setCity] = useState(profile.address ? profile.address.split(',')[1] : '')
   const [state, setState] = useState(profile.address ? profile.address.split(',')[2] : '')
@@ -156,21 +157,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
     setDisablePhotoUrlInput(true)
   }
 
-
-  const showOrHide = (value) => {
-    return isCompleting && value ? 'none' : ''
-  }
-
-  const showOrHideSocialMedia = (platform) => {
-    return isCompleting &&
-      profile.social_media_links &&
-      JSON.parse(profile.social_media_links).find(
-        (social) => social.name === platform
-      )
-      ? 'none'
-      : ''
-  }
-
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {
       e.preventDefault()
@@ -199,7 +185,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Grid container spacing={SPACING} xs={12}>
+      <Grid container spacing={SPACING}>
         <Grid container item xs={12} spacing={SPACING} direction="column">
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h2">
@@ -216,13 +202,18 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <TextField
               id="name"
               name="name"
-              style={{ display: showOrHide(profile.name) }}
               variant="filled"
-              placeholder={t('editProfile.sponsorNamePlaceholder')}
               value={user.name}
               fullWidth
               InputLabelProps={{
                 shrink: true
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('editProfile.sponsorNamePlaceholder')}
+                  </InputLabel>
+                ),
               }}
               className={classes.textField}
               onChange={(event) => handleSetField('name', event.target.value)}
@@ -234,24 +225,22 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             </Typography>
             <TextField
               id="about"
-              style={{ display: showOrHide(profile.about) }}
-              multiline
               rows={5}
-              inputProps={{
-                maxlength: CHARACTER_LIMIT
-              }}
-              helperText={`${values.about.length}/${CHARACTER_LIMIT}`}
-              style={{
-                display: isCompleting && user.about ? 'none' : ''
-              }}
-              variant="filled"
-              placeholder={t('signup.aboutBusiness')}
-              defaultValue={user.about}
               multiline
-              rowsMax={10}
               InputLabelProps={{
                 shrink: true
               }}
+              InputProps={{
+                endAdornment: (
+                  <InputLabel >
+                    {t('signup.aboutBusiness')}
+                  </InputLabel>
+                ),
+                maxLength: CHARACTER_LIMIT
+              }}
+              helperText={`${values.about.length}/${CHARACTER_LIMIT}`}
+              variant="filled"
+              defaultValue={user.about}
               className={classes.textField}
               fullWidth
               onChange={(event) => handleSetField('about', event.target.value)}
@@ -264,10 +253,12 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           </Grid>
           <Grid item xs={12}>
             <FormControl
-              style={{ display: showOrHide(profile.business_type) }}
               variant="filled"
               className={classes.sponsorType}
             >
+              <InputLabel >
+                {t('signup.type')}
+              </InputLabel>
               <Select
                 labelId="bussines-type-label"
                 id="bussines-type"
@@ -275,7 +266,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 onChange={(event) =>
                   handleSetField('business_type', event.target.value)
                 }
-                label={t('signup.type')}
               >
                 {SPONSOR_TYPES.map((option) => (
                   <MenuItem key={`bussines-type-option-${option}`} value={option}>
@@ -294,15 +284,19 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             <Grid item xs={4}>
               <TextField
                 id="website"
-                style={{ display: showOrHide(profile.website) }}
-                label={t('common.website')}
                 variant="filled"
-                placeholder="Website"
                 defaultValue={user.website}
                 fullWidth
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputLabel >
+                      {t('common.website')}
+                    </InputLabel>
+                  ),
                 }}
                 onChange={(event) => handleSetField('website', event.target.value)}
               />
@@ -311,7 +305,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               <PhoneNumber
                 className={classes.textField}
                 defaultCountry='cr'
-                value={user.telephones[0]}
+                value= {phoneValue1}
                 fullWidth
                 label={t('signup.phoneNumber')}
                 id="phoneNumber1"
@@ -324,9 +318,9 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                 className={classes.textField}
                 defaultCountry='cr'
                 fullWidth
-                value={user.telephones[1]}
+                value= {phoneValue2}
                 label={t('signup.phoneNumber')}
-                id="phoneNumber1"
+                id="phoneNumber2"
                 variant="filled"
                 onChange={(event) => setPhoneValue2(event)}
               />
@@ -342,21 +336,23 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               {t('editProfile.addressDescription')}
             </Typography>
           </Grid>
-          <Grid container item xs={6} spacing={SPACING}>
+          <Grid container item xs={6}>
             <Grid item xs={12}>
               <TextField
                 id="address"
-                style={{
-                  display: isCompleting && user.address ? 'none' : ''
-                }}
                 className={classes.textField}
-                label={t('signup.address')}
                 fullWidth
                 variant="filled"
-                placeholder={t('signup.addressPlaceholder')}
                 defaultValue={address}
                 InputLabelProps={{
                   shrink: true
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputLabel >
+                      {t('signup.address')}
+                    </InputLabel>
+                  ),
                 }}
                 onChange={(event) => setAddress(event.target.value)}
               />
@@ -371,16 +367,18 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                   <TextField
                     className={classes.textField}
                     id="city"
-                    style={{
-                      display: isCompleting && user.address ? 'none' : ''
-                    }}
-                    label={t('editProfile.city')}
                     fullWidth
                     variant="filled"
-                    placeholder={t('editProfile.cityPlaceholder')}
                     defaultValue={city}
                     InputLabelProps={{
                       shrink: true
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputLabel >
+                          {t('editProfile.city')}
+                        </InputLabel>
+                      ),
                     }}
                     onChange={(event) => setCity(event.target.value)}
                   />
@@ -391,16 +389,18 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                   <TextField
                     className={classes.textField}
                     id="state"
-                    style={{
-                      display: isCompleting && user.address ? 'none' : ''
-                    }}
-                    label={t('editProfile.stateProvince')}
                     fullWidth
                     variant="filled"
-                    placeholder={t('editProfile.stateProvincePlaceholder')}
                     defaultValue={state}
                     InputLabelProps={{
                       shrink: true
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputLabel >
+                          {t('editProfile.stateProvince')}
+                        </InputLabel>
+                      ),
                     }}
                     onChange={(event) => setState(event.target.value)}
                   />
@@ -411,36 +411,33 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
               <TextField
                 className={classes.textField}
                 id="country"
-                style={{
-                  display: isCompleting && user.address ? 'none' : ''
-                }}
-                label={t('editProfile.country')}
                 fullWidth
                 variant="filled"
-                placeholder={t('editProfile.countryPlaceholder')}
                 defaultValue={country}
                 InputLabelProps={{
                   shrink: true
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputLabel >
+                      {t('editProfile.country')}
+                    </InputLabel>
+                  ),
                 }}
                 onChange={(event) => setCountry(event.target.value)}
               />
             </Grid>
           </Grid>
-          <Grid item xs={6}>
-            {
-              (isCompleting && profile.location === '') ||
-                (!isCompleting && profile.location !== '') ? (
-                <>
-                  <MapEditLocation
-                    onGeolocationChange={handleOnGeolocationChange}
-                    markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
-                    markerLocation={user.geolocation}
-                    className={classes.mapField}
-                    mb={1}
-                  />
-                </>
-              ) : null
-            }
+          <Grid container item xs={6}>
+            <>
+              <MapEditLocation
+                onGeolocationChange={handleOnGeolocationChange}
+                markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
+                markerLocation={user.geolocation}
+                className={classes.mapField}
+                mb={1}
+              />
+            </>
           </Grid>
         </Grid>
         <Grid container item xs={12} spacing={SPACING}>
@@ -451,7 +448,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             </Typography>
             <Box
               className={classes.componentBoxWrp}
-              style={{ display: showOrHide(profile.schedule) }}
             >
               <Box className={classes.componentBox}>
                 <Schedule
@@ -472,7 +468,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           <Grid item xs={4}>
             <Box
               width="100%"
-              style={{ display: showOrHideSocialMedia('instagram') }}
             >
               <SocialMediaTextField
                 textFieldClass={classes.textFieldSocialMedia}
@@ -491,7 +486,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           <Grid item xs={4}>
             <Box
               width="100%"
-              style={{ display: showOrHideSocialMedia('facebook') }}
             >
               <SocialMediaTextField
                 textFieldClass={classes.textFieldSocialMedia}
@@ -510,7 +504,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
           <Grid item xs={4}>
             <Box
               width="100%"
-              style={{ display: showOrHideSocialMedia('twitter') }}
             >
               <SocialMediaTextField
                 textFieldClass={classes.textFieldSocialMedia}
@@ -537,16 +530,14 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             </Typography>
           </Grid>
           <Grid container item xs={12} justify="space-between">
-            <Grid item xs={6} spacing={SPACING}>
+            <Grid item xs={6}>
               <Box className={classes.leftBox}>
-                <Box style={{ display: showOrHide(profile.logo_url) }} width="100%">
+                <Box width="100%">
                   <LogoUrlInput handleSetField={handleSetField} logo={user.logo_url} role="sponsor" />
                 </Box>
                 <TextField
                   id="photo-url"
-                  label={t('editProfile.photoUrl')}
                   variant="filled"
-                  placeholder={t('editProfile.photoUrlPlaceholder')}
                   fullWidth
                   inputRef={photoUrlValueRef}
                   onChange={(e) =>
@@ -557,16 +548,21 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
                   }
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          disabled={disablePhotoUrlInput}
-                          color="secondary"
-                          aria-label="add photo url"
-                          onClick={handlePhotos}
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </InputAdornment>
+                      <>
+                        <InputAdornment position="end">
+                          <IconButton
+                            disabled={disablePhotoUrlInput}
+                            color="secondary"
+                            aria-label="add photo url"
+                            onClick={handlePhotos}
+                          >
+                            <AddIcon />
+                          </IconButton>
+                        </InputAdornment>
+                        <InputLabel >
+                          {t('editProfile.photoUrl')}
+                        </InputLabel>
+                      </>
                     )
                   }}
                   InputLabelProps={{
@@ -598,7 +594,7 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} direction="column">
+        <Grid item xs={12}>
           <Box className={classes.btnWrapper}>
             <Link to="/profile" className={classes.routerLink}>
               <Button
@@ -627,7 +623,6 @@ const EditProfileSponsor = ({ profile, isCompleting, onSubmit, loading }) => {
 
 EditProfileSponsor.propTypes = {
   profile: PropTypes.object,
-  isCompleting: PropTypes.bool,
   onSubmit: PropTypes.func,
   loading: PropTypes.bool
 }

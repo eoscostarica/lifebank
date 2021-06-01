@@ -20,6 +20,11 @@ export default (theme) => ({
     marginTop: theme.spacing(2),
     width: '100%'
   },
+  textFieldLimit: {
+    marginTop: theme.spacing(2),
+    width: '100%',
+    borderRadius: '10%'
+  },
   boldText: {
     fontWeight: 'bold',
     width: '100%',

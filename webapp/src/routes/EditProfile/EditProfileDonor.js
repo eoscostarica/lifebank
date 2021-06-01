@@ -27,7 +27,7 @@ const EditProfileDonor = ({ profile, onSubmit, loading }) => {
 
   return (
     <form autoComplete="off" className={classes.form}>
-      <Grid container spacing={2} xs={12}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography className={classes.boldText} variant="h2">
             {t('editProfile.editDonorsInformation')}

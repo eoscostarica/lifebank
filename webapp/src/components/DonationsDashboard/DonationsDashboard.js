@@ -31,7 +31,7 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos'
 import Drawer from '@material-ui/core/Drawer'
 
-import { PROFILE_QUERY, TRANSFER_MUTATION, TOKEN_SUBSCRIPTION } from '../../gql'
+import { PROFILE_QUERY, DONATE_MUTATION, TOKEN_SUBSCRIPTION } from '../../gql'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -100,9 +100,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const [
-    transfer,
-    { loading, error, data: { transfer: transferResult } = {} }
-  ] = useMutation(TRANSFER_MUTATION)
+    donate,
+    { loading, error, data: { donate: donateResult } = {} }
+  ] = useMutation(DONATE_MUTATION)
 
   const { data: tokenUser = {} } = useSubscription(
     TOKEN_SUBSCRIPTION, { variables: { account } }
@@ -137,7 +137,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
   }, [errroLoadProfile])
 
   useEffect(() => {
-    if (!transferResult)
+    if (!donateResult)
       return
 
     setOpenSnackbar({
@@ -145,7 +145,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
       message: t('donations.succesful'),
       severity: 'success'
     })
-  }, [transferResult])
+  }, [donateResult])
 
   useEffect(() => {
     if (!currentUser) {
@@ -158,7 +158,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     if (state.bottom === true || open === true)
       loadProfile()
 
-  }, [currentUser, history, client, loadProfile, state, open, transferResult])
+  }, [currentUser, history, client, loadProfile, state, open, donateResult])
 
   useEffect(() => {
     if (tokenUser.user) {
@@ -196,8 +196,42 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
       if (role === "donor") tempMemo = t("donations.memoDonor")
       else tempMemo = t("donations.memoLifebank")
 
-      const payload = { to: accountTo.toLowerCase().replace(/\s/g, ''), memo: tempMemo, quantity: 1 }
-      transfer({
+      const tokensQuantity = 1
+
+      const payload = {
+        to: accountTo.toLowerCase().replace(/\s/g, ''),
+        memo: tempMemo,
+        quantity: tokensQuantity,
+        emailContent: {
+          'subject': t('emailDonorCongratulation.subject'),
+          'message': t('emailDonorCongratulation.hi').concat(
+            ' ',
+            accountTo,
+            ', ',
+            '<br><br>',
+            t('emailDonorCongratulation.youComplete'),
+            ' ',
+            profile.name,
+            ' ',
+            t('emailDonorCongratulation.receivedTokens'),
+            ' ',
+            tokensQuantity,
+            ' ',
+            tokensQuantity > 1? t('emailDonorCongratulation.lifeTokensMany'): t('emailDonorCongratulation.lifeTokens'),
+            ' ',
+            t('emailDonorCongratulation.thanksYou'),
+            '<br><br>',
+            t('emailDonorCongratulation.growingCommunity'),
+            '<br><br>',
+            '[BADGE]',
+            '<br><br>',
+            t('emailDonorCongratulation.downloadBadge'),
+            '<br><br>',
+            t('emailDonorCongratulation.thanksAgain')
+          )
+        }
+      }
+      donate({
         variables: {
           ...payload
         }

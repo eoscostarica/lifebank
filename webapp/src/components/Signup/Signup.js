@@ -306,7 +306,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
   }, [open])
 
   return (
-    <Box classname={classes.dialog}>
+    <Box className={classes.dialog}>
       {isHome && !currentUser &&
         <Button color="secondary" className={classes.registerBtn} onClick={handleOpen}>
           {t('signup.register')}
