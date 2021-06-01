@@ -164,12 +164,12 @@ const notifyNewLifebank = async (lifebankAccount) => {
   const donors = await userApi.getMany({
     role: { _eq: 'donor' }
   })
-  const donorsWithLocation = await getDonorsCoordinates(donors ? donors : [])
+  const donorsWithLocation = await getDonorsCoordinates(donors || [])
   const sponsors = await userApi.getMany({
     role: { _eq: 'sponsor' }
   })
 
-  if(donorsWithLocation && donorsWithLocation.length > 0) {
+  if (donorsWithLocation && donorsWithLocation.length > 0) {
     donorsWithLocation.forEach((donor) => {
       if (isCoordinateInsideBox(lifebank.geolocation, donor.location))
         mailApi.sendNewLifebankRegistered(
@@ -184,13 +184,16 @@ const notifyNewLifebank = async (lifebankAccount) => {
     })
   }
 
-  if(sponsors && sponsors.length > 0) {
+  if (sponsors && sponsors.length > 0) {
     sponsors.forEach(async (sponsor) => {
       const sponsorProfile = await getProfile(sponsor.account)
 
       if (
         sponsorProfile.location &&
-        isCoordinateInsideBox(lifebank.geolocation, JSON.parse(sponsorProfile.location))
+        isCoordinateInsideBox(
+          lifebank.geolocation,
+          JSON.parse(sponsorProfile.location)
+        )
       )
         mailApi.sendNewLifebankRegistered(
           sponsorProfile.email,
@@ -208,10 +211,12 @@ const notifyNewLifebank = async (lifebankAccount) => {
 const isCoordinateInsideBox = (mainPoint, checkerPoint) => {
   const KM20 = 0.18
 
-  return ((mainPoint.latitude - KM20 <= checkerPoint.latitude &&
-      checkerPoint.latitude <= mainPoint.latitude + KM20) &&
-    (mainPoint.longitude - KM20 <= checkerPoint.longitude &&
-      checkerPoint.longitude <= mainPoint.longitude + KM20))
+  return (
+    mainPoint.latitude - KM20 <= checkerPoint.latitude &&
+    checkerPoint.latitude <= mainPoint.latitude + KM20 &&
+    mainPoint.longitude - KM20 <= checkerPoint.longitude &&
+    checkerPoint.longitude <= mainPoint.longitude + KM20
+  )
 }
 
 const getDonorsCoordinates = async (donorList) => {
