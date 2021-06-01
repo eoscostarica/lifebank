@@ -60,4 +60,4 @@ spec:
           name: lifebank-hasura
           port: 8080
   tls:
-    secretName: tls-secret
+    secretName: hasura-tls-secret
