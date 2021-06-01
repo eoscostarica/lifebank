@@ -83,7 +83,7 @@ const getOne = async (where = {}) => {
   return null
 }
 
-const insert = user => {
+const insert = (user) => {
   return hasuraUtils.request(INSERT, { user })
 }
 
@@ -104,8 +104,10 @@ const setSecret = (where, secret) => {
 }
 
 const verifyEmail = async (where) => {
-  const { update_user } = await hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
-  return update_user.affected_rows > 0 ? true : false
+  const { update_user } = await hasuraUtils.request(SET_EMAIL_VERIFIED, {
+    where
+  })
+  return update_user.affected_rows > 0
 }
 
 module.exports = {

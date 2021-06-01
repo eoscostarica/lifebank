@@ -452,19 +452,16 @@ const verifyEmail = async ({ code }) => {
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })
-  if(resUser) return { is_verified: true }
+  if (resUser) return { is_verified: true }
 
   const resLifebank = await preRegLifebank.verifyEmail({
     verification_code: { _eq: code }
   })
-  if(!resLifebank) return { is_verified: false }
+  if (!resLifebank) return { is_verified: false }
   const lifebankProfile = formatLifebankData(resLifebank)
 
   try {
-    mailApi.sendRegistrationRequest(
-      MAIL_APPROVE_LIFEBANNK,
-      lifebankProfile
-    )
+    mailApi.sendRegistrationRequest(MAIL_APPROVE_LIFEBANNK, lifebankProfile)
   } catch (error) {
     console.log(error)
   }
