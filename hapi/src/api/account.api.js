@@ -1,3 +1,5 @@
+const i18n = require('i18next')
+
 const { eosConfig } = require('../config')
 const {
   eosUtils,
@@ -171,16 +173,24 @@ const notifyNewLifebank = async (lifebankAccount) => {
 
   if (donorsWithLocation && donorsWithLocation.length > 0) {
     donorsWithLocation.forEach((donor) => {
-      if (isCoordinateInsideBox(lifebank.geolocation, donor.location))
+      if (isCoordinateInsideBox(lifebank.geolocation, donor.location)) {
         mailApi.sendNewLifebankRegistered(
           donor.email,
-          'New lifebank near you!',
-          'There’s a new lifebank near you! Check its profile <a href="https://lifebank/info/' +
-            lifebankAccount +
-            '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications <a href="http://lifebank/cancel-email-subscription/' +
-            lifebankAccount +
-            '">here</a>.'
+          i18n.t('newLifebankForDonor.subject'),
+          i18n
+            .t('newLifebankForDonor.content')
+            .concat(
+              lifebankAccount,
+              i18n.t('newLifebankForDonor.content2'),
+              lifebankAccount,
+              i18n.t('newLifebankForDonor.content3'),
+              '<br><br>',
+              i18n.t('mailUnsubscribe.content'),
+              lifebankAccount,
+              i18n.t('mailUnsubscribe.content2')
+            )
         )
+      }
     })
   }
 
@@ -197,12 +207,17 @@ const notifyNewLifebank = async (lifebankAccount) => {
       )
         mailApi.sendNewLifebankRegistered(
           sponsorProfile.email,
-          'New lifebank near you!',
-          'There’s a new lifebank near you! Check its profile <a href="https://lifebank/info/' +
-            lifebankAccount +
-            '">here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications <a href="http://lifebank/cancel-email-subscription/' +
-            lifebankAccount +
-            '">here</a>.'
+          i18n.t('newLifebankForSponsor.subject'),
+          i18n
+            .t('newLifebankForSponsor.content')
+            .concat(
+              lifebankAccount,
+              i18n.t('newLifebankForSponsor.content2'),
+              '<br><br>',
+              i18n.t('mailUnsubscribe.content'),
+              lifebankAccount,
+              i18n.t('mailUnsubscribe.content2')
+            )
         )
     })
   }
@@ -539,32 +554,38 @@ const verifyEmail = async ({ code }) => {
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })
+
+  if (resUser) {
+    await sendOnboarding(code)
+    return { is_verified: true }
+  }
+
   const resLifebank = await preRegLifebank.verifyEmail({
     verification_code: { _eq: code }
   })
-  let result = false
 
-  if (
-    resUser.update_user.affected_rows !== 0 ||
-    resLifebank.update_preregister_lifebank.affected_rows !== 0
-  ) {
-    if (resLifebank.update_preregister_lifebank.affected_rows !== 0) {
-      resLifebank.update_preregister_lifebank.returning[0] = formatLifebankData(
-        resLifebank.update_preregister_lifebank.returning[0]
-      )
-      try {
-        mailApi.sendRegistrationRequest(
-          MAIL_APPROVE_LIFEBANNK,
-          resLifebank.update_preregister_lifebank.returning[0]
-        )
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    result = true
+  const lifebankProfile = formatLifebankData(resLifebank)
+
+  try {
+    mailApi.sendRegistrationRequest(MAIL_APPROVE_LIFEBANNK, lifebankProfile)
+  } catch (error) {
+    console.log(error)
   }
+
   return {
-    is_verified: result
+    is_verified: true
+  }
+}
+
+const sendOnboarding = async (userVerificationCode) => {
+  const user = await userApi.getOne({
+    verification_code: { _eq: userVerificationCode }
+  })
+
+  try {
+    await mailApi.sendLifebankOnboarding(user.email, user.language, user.role)
+  } catch (error) {
+    console.log(error)
   }
 }
 

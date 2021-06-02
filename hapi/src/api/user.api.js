@@ -15,6 +15,8 @@ const GET_ONE = `
       signup_method
       verification_code
       email_verified
+      email_subscription
+      language
     }
   }
 `
@@ -109,7 +111,7 @@ const getMany = async (where = {}) => {
   return null
 }
 
-const insert = user => {
+const insert = (user) => {
   return hasuraUtils.request(INSERT, { user })
 }
 
@@ -129,8 +131,11 @@ const setSecret = (where, secret) => {
   return hasuraUtils.request(SET_SECRET, { where, secret })
 }
 
-const verifyEmail = (where) => {
-  return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+const verifyEmail = async (where) => {
+  const { update_user } = await hasuraUtils.request(SET_EMAIL_VERIFIED, {
+    where
+  })
+  return update_user.affected_rows > 0
 }
 
 module.exports = {
