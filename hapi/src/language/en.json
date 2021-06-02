@@ -26,6 +26,30 @@
       "item3": "You then can scan this QR code using a mobile phone or type the code directly into the space provided. This will automatically send thedonor a token thanking them for their donation.",
       "paragraph5": "What are Life Tokens? Life Tokens are a receipt that you can send donors once they complete a blood donation. As a lifebank, your center can issue a maximum of 10,000 Life Tokens. Donors can redeem these tokens at any participating local business in exchange for promotions, discounts, or bonuses. Further, the local businesses will then return them to the lifebanks, keeping the token cycle running. For more information about Lifebank and how it works, visit https://lifebank.io/about.",
       "paragraph6": "Thanks for your support!"
+    },
+    "sponsorOnboarding": {
+      "subject": "Welcome to Lifebank",
+      "paragraph": "Hello,",
+      "paragraph2": "Thank you for verifying your email address! You’re now ready to start using Lifebank.",
+      "paragraph3": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors.",
+      "paragraph4": "As a business, your role is to redeem Life Tokens from qualifying donors that completed a donation. Here’s an overview of the steps:",
+      "item": "As a business registered on Lifebank, you can now create an offer on the Offers tab. These offers can either be a discount, free product, benefit, badge, or coupon. To see the complete list, <a href='https://lifebank/offers-management'>go here</a>. Try to be as specific as possible. You can restrict these offers by amount or time frame.",
+      "item2": "A donor can ask to redeem their Life Tokens in exchange for the offer you created by showing the QR code in their Lifebank app.",
+      "item3": "You then can scan this QR code using a mobile phone or type the code directly into the space provided. This will automatically redeem the donor’s token.",
+      "paragraph5": "What are Life Tokens? Life Tokens are a receipt that donors receive from lifebanks once they complete a blood donation. Donors can redeem these tokens at any participating local business in exchange for promotions, discounts, or bonuses. As a participating business, you may need to explain these instructions to your personnel. For more information about Lifebank and how it works, visit https://lifebank.io/about.",
+      "paragraph6": "Thanks for your support!"
+    },
+    "donorOnboarding": {
+      "subject": "Welcome to Lifebank",
+      "paragraph": "Hello,",
+      "paragraph2": "Thank you for verifying your email address! You’re now ready to start using Lifebank.",
+      "paragraph3": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors.",
+      "paragraph4": "As a donor, you can now receive and redeem Life Tokens. Here’s an overview of the steps:",
+      "item": "You must visit a participating lifebank (blood bank) and quality for a donation. Please, confirm with the personnel that they have Lifebank available.",
+      "item2": "Once you complete the donation, you must show the QR code in your Lifebank app. The person in charge will scan or type your code to automatically send you a token in exchange for your donation.",
+      "item3": "You can then visit a participating local business to redeem your Life Token for offers such as discounts, coupons, or benefits. <a href='https://lifebank.io'>See the full list</a> on your Lifebank app. Show them your QR code to redeem your token.",
+      "paragraph5": "What are Life Tokens? Life Tokens are a receipt that you receive from a lifebank once you complete a blood donation. You can then redeem these tokens at any participating local business in exchange for promotions, discounts, or bonuses. For more information about Lifebank and how it works, visit https://lifebank.io/about.",
+      "paragraph6": "Thanks for your support!"
     }
   }
 }

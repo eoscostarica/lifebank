@@ -15,6 +15,8 @@ const GET_ONE = `
       signup_method
       verification_code
       email_verified
+      email_subscription
+      language
     }
   }
 `

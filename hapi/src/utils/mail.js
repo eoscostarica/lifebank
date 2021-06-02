@@ -1361,7 +1361,11 @@ const sendNewLifebankRegistered = async (to, subject, content) => {
   })
 }
 
-const sendLifebankOnboarding = async (to, language) => {
+const sendLifebankOnboarding = async (to, language, role) => {
+  let textTag = 'donorOnboarding'
+  if(role === 'sponsor') textTag = 'sponsorOnboarding'
+  else textTag = 'lifebankOnboarding'
+
   i18n.changeLanguage(language)
   const subject = i18n.t('lifebankOnboarding.subject')
 
@@ -1501,22 +1505,22 @@ const sendLifebankOnboarding = async (to, language) => {
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
                       <p style="margin: 0;">
-                        ${i18n.t('lifebankOnboarding.paragraph')}
-                        <br>
-                        ${i18n.t('lifebankOnboarding.paragraph2')}
-                        <br>
-                        ${i18n.t('lifebankOnboarding.paragraph3')}
-                        <br>
-                        ${i18n.t('lifebankOnboarding.paragraph4')}
+                        ${i18n.t(textTag + '.paragraph')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph2')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph3')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph4')}
                         <ol>
-                          <li>${i18n.t('lifebankOnboarding.item')}</li>
-                          <li>${i18n.t('lifebankOnboarding.item2')}</li>
-                          <li>${i18n.t('lifebankOnboarding.item3')}</li>
+                          <li>${i18n.t(textTag + '.item')}</li>
+                          <li>${i18n.t(textTag + '.item2')}</li>
+                          <li>${i18n.t(textTag + '.item3')}</li>
                         </ol>
-                        <br>
-                        ${i18n.t('lifebankOnboarding.paragraph5')}
-                        <br>
-                        ${i18n.t('lifebankOnboarding.paragraph6')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph5')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph6')}
                       </p>
                       </td>
                     </tr>

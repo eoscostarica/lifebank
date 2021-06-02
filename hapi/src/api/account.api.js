@@ -550,12 +550,16 @@ const verifyEmail = async ({ code }) => {
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })
-  if (resUser) return { is_verified: true }
+  
+  if (resUser) {
+    await sendOnboarding(code)
+    return { is_verified: true }
+  }
 
   const resLifebank = await preRegLifebank.verifyEmail({
     verification_code: { _eq: code }
   })
-  if (!resLifebank) return { is_verified: false }
+  
   const lifebankProfile = formatLifebankData(resLifebank)
 
   try {
@@ -564,14 +568,20 @@ const verifyEmail = async ({ code }) => {
     console.log(error)
   }
 
+  return {
+    is_verified: true
+  }
+}
+
+const sendOnboarding = async (userVerificationCode) => {
   const user = await userApi.getOne({
     verification_code: { _eq: userVerificationCode }
   })
 
-  await mailApi.sendOnboardingEmail(user.email, user.email_subscription)
-
-  return {
-    is_verified: true
+  try {
+    await mailApi.sendLifebankOnboarding(user.email, user.language, user.role)
+  } catch (error) {
+    console.log(error)
   }
 }
 
