@@ -32,6 +32,7 @@ import { GET_USERNAME, GET_SPONSOR_OFFERS_QUERY } from '../../gql'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
+const FIELDS = 10
 
 const ProfilePageSponsor = ({ profile }) => {
   const { t } = useTranslation('translations')
@@ -257,7 +258,7 @@ const ProfilePageSponsor = ({ profile }) => {
                   color="secondary"
                   className={classes.customizedLinearProgress}
                   value={
-                    ((15 - Object.keys(pendingFields).length) * 100) / 15
+                    ((FIELDS - Object.keys(pendingFields).length) * 100) / FIELDS
                   }
                 />
               </Box>
@@ -266,7 +267,7 @@ const ProfilePageSponsor = ({ profile }) => {
                   variant="body2"
                   color="textSecondary"
                 >{`${Math.round(
-                  ((15 - Object.keys(pendingFields).length) * 100) / 15
+                  ((FIELDS - Object.keys(pendingFields).length) * 100) / FIELDS
                 )}%`}</Typography>
               </Box>
             </Box>
@@ -503,8 +504,6 @@ const ProfilePageSponsor = ({ profile }) => {
         alignItems="flex-start"
         spacing={0}
         className={classes.mainGridDesktop}
-        md={12}
-        xl={10}
       >
         <Grid item md={12}>
           <Typography variant="subtitle1" className={classes.rowTitle}>
@@ -558,7 +557,7 @@ const ProfilePageSponsor = ({ profile }) => {
           </Box>
         </Box>
       </>
-      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: false } }}
+      <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: true } }}
         className={classes.routerLink}
       >
         <Button className={classes.editButton} color="primary" variant="contained">

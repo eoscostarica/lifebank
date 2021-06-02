@@ -1,3 +1,4 @@
+const { user } = require('../config/mail.config')
 const { hasuraUtils } = require('../utils')
 
 const GET_ONE = `
@@ -14,6 +15,8 @@ const GET_ONE = `
       signup_method
       verification_code
       email_verified
+      email_subscription
+      language
     }
   }
 `
@@ -126,8 +129,11 @@ const setSecret = (where, secret) => {
   return hasuraUtils.request(SET_SECRET, { where, secret })
 }
 
-const verifyEmail = (where) => {
-  return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+const verifyEmail = async (where) => {
+  const { update_user } = await hasuraUtils.request(SET_EMAIL_VERIFIED, {
+    where
+  })
+  return update_user.affected_rows > 0
 }
 
 module.exports = {

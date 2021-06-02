@@ -77,8 +77,14 @@ const insertLifebank = (preregister_lifebank) => {
   return hasuraUtils.request(INSERT_LIFEBANK, { preregister_lifebank })
 }
 
-const verifyEmail = (where) => {
-  return hasuraUtils.request(SET_EMAIL_VERIFIED, { where })
+const verifyEmail = async (where) => {
+  const { update_preregister_lifebank } = await hasuraUtils.request(
+    SET_EMAIL_VERIFIED,
+    { where }
+  )
+  return update_preregister_lifebank.affected_rows > 0
+    ? update_preregister_lifebank.returning[0]
+    : false
 }
 
 const getOne = (where) => {

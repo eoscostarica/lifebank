@@ -8,6 +8,7 @@ import StorefrontIcon from '@material-ui/icons/Storefront'
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital'
 import Avatar from '@material-ui/core/Avatar'
 import styles from './styles'
+import InputLabel from '@material-ui/core/InputLabel'
 
 const useStyles = makeStyles(styles)
 
@@ -26,13 +27,18 @@ const LogoUrlInput = ({ handleSetField, logo, role }) => {
       <TextField
         id="logo-url"
         name="logo-input"
-        label={t('editProfile.logoUrl')}
         variant="filled"
-        placeholder={t('editProfile.logoUrlPlaceholder')}
         defaultValue={logo}
         fullWidth
         InputLabelProps={{
           shrink: true
+        }}
+        InputProps={{
+          endAdornment: (
+            <InputLabel >
+              {t('editProfile.logoUrl')}
+            </InputLabel>
+          ),
         }}
         className={classes.textField}
         onChange={(event) => {

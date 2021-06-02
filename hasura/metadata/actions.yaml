@@ -162,7 +162,10 @@ actions:
     handler: http://hapi:9090/api/signup-method
     forward_client_headers: true
   permissions:
+  - role: donor
   - role: guest
+  - role: lifebank
+  - role: sponsor
 - name: transfer
   definition:
     kind: synchronous

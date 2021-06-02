@@ -1,3 +1,4 @@
+const i18n = require('i18next')
 const nodemailer = require('nodemailer')
 
 const { mailConfig } = require('../config')
@@ -1204,7 +1205,7 @@ const sendCongratulationsOnDonation = async (to, subject, content) => {
   })
 }
 
-const sendTransactionReport = async (to, subject, title, content) => {
+const sendNewLifebankRegistered = async (to, subject, content) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -1226,7 +1227,6 @@ const sendTransactionReport = async (to, subject, title, content) => {
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>${title}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -1338,12 +1338,7 @@ const sendTransactionReport = async (to, subject, title, content) => {
                 <td align="center" bgcolor="#f6f6f6">
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
-                      <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${title}</h1>
-                      </td>
                     </tr>
-                    <tr>
-                  </tr>
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
                       <p style="margin: 0;">${content}</p>
@@ -1357,7 +1352,7 @@ const sendTransactionReport = async (to, subject, title, content) => {
                 </td>
               </tr>
               <tr>
-                <td align="center" bgcolor="#f6f6f6" style="padding: 24px;">                
+                <td align="center" bgcolor="#f6f6f6" style="padding: 24px;">
                 </td>
               </tr>
             </table>
@@ -1366,7 +1361,14 @@ const sendTransactionReport = async (to, subject, title, content) => {
   })
 }
 
-const sendNewSponsorAndOfferReport = async (to, subject, title, content) => {
+const sendLifebankOnboarding = async (to, language, role) => {
+  let textTag = 'donorOnboarding'
+  if (role === 'sponsor') textTag = 'sponsorOnboarding'
+  else textTag = 'lifebankOnboarding'
+
+  i18n.changeLanguage(language)
+  const subject = i18n.t('lifebankOnboarding.subject')
+
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -1388,7 +1390,6 @@ const sendNewSponsorAndOfferReport = async (to, subject, title, content) => {
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>${title}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -1500,15 +1501,27 @@ const sendNewSponsorAndOfferReport = async (to, subject, title, content) => {
                 <td align="center" bgcolor="#f6f6f6">
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
-                      <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${title}</h1>
-                      </td>
                     </tr>
                     <tr>
-                  </tr>
-                    <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                      <p style="margin: 0;">${content}</p>
+                      <p style="margin: 0;">
+                        ${i18n.t(textTag + '.paragraph')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph2')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph3')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph4')}
+                        <ol>
+                          <li>${i18n.t(textTag + '.item')}</li>
+                          <li>${i18n.t(textTag + '.item2')}</li>
+                          <li>${i18n.t(textTag + '.item3')}</li>
+                        </ol>
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph5')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph6')}
+                      </p>
                       </td>
                     </tr>
                     <tr>
@@ -1519,7 +1532,7 @@ const sendNewSponsorAndOfferReport = async (to, subject, title, content) => {
                 </td>
               </tr>
               <tr>
-                <td align="center" bgcolor="#f6f6f6" style="padding: 24px;">                
+                <td align="center" bgcolor="#f6f6f6" style="padding: 24px;">
                 </td>
               </tr>
             </table>
@@ -1535,5 +1548,7 @@ module.exports = {
   sendConfirmMessage,
   sendTransactionReport,
   sendNewSponsorAndOfferReport,
-  sendCongratulationsOnDonation
+  sendCongratulationsOnDonation,
+  sendNewLifebankRegistered,
+  sendLifebankOnboarding
 }
