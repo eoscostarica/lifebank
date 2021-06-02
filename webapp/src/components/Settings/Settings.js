@@ -27,7 +27,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import LanguageSelector from '../LanguageSelector'
 
-import { PROFILE_QUERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD, CHANGE_EMAIL } from '../../gql'
+import { PROFILE_QUERY, 
+          CHANGE_PASSWORD, 
+          GET_ACCOUNT_SIGNUP_METHOD,
+          CHANGE_EMAIL, 
+          UPDATE_EMAIL_SUBSCRIPTION_MUTATION 
+        }
+from '../../gql'
+
 import { useUser } from '../../context/user.context'
 import styles from './styles'
 
@@ -39,7 +46,6 @@ const Settings = ({ onCloseSetting }) => {
   const theme = useTheme()
   const [user, setUser] = useState({})
   const [openSnackbar, setOpenSnackbar] = useState(false)
-  const [checked, setChecked] = useState(false)
   const [open, setOpen] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
@@ -61,6 +67,10 @@ const Settings = ({ onCloseSetting }) => {
     { loading: loadingChangeEmail, error: errorChangeEmail, data: { change_email: responseChangeEmail } = {} }
   ] = useMutation(CHANGE_EMAIL)
 
+  const [
+    updateEmailSubscription,
+    { error: errorUpdateEmailSubscription, loading: updateEmailSubscriptionLoading, data: { update_user: updateEmailSubscriptionResult } = {} }
+  ] = useMutation(UPDATE_EMAIL_SUBSCRIPTION_MUTATION)
 
   const [
     getAccountSignupMethod,
@@ -129,10 +139,18 @@ const Settings = ({ onCloseSetting }) => {
   }
   
   const handleChangeCheckBox = (event) => {
-    console.log(checked)
-    setChecked(event.target.checked)
+    updateEmailSubscription({
+      variables: {
+        account: profile.account,
+        state: event.target.checked
+      }
+    })
   }
 
+  useEffect(() => {
+      loadProfile()
+  }, [updateEmailSubscriptionResult])
+  
   useEffect(() => {
     if (errorProfile)
       setOpenSnackbar({
@@ -258,10 +276,6 @@ const Settings = ({ onCloseSetting }) => {
         </Box>
         <DialogContent className={classes.dimensions} >
           <form autoComplete="off">
-          <Box className={classes.loadingBox}>
-            {loading && <CircularProgress />}
-          </Box>
-          {!loading  &&
             <Grid container>
               <Grid container spacing = {2}>
                 <Grid item xs={6}>
@@ -283,10 +297,11 @@ const Settings = ({ onCloseSetting }) => {
                   </Box>
                   <Box className={classes.checkBox}>
                     <FormControlLabel
-                      checked = {checked}
+                      disabled= {loading}
+                      checked = {profile ? profile.email_subscription : true}
                       control={
                       <Checkbox 
-                        color="primary" 
+                        color="primary"
                         onChange={handleChangeCheckBox}
                       />
                       }
@@ -297,7 +312,8 @@ const Settings = ({ onCloseSetting }) => {
                 </Grid>
               </Grid>
               <Grid container item xs={12}>
-                <Box className={classes.boxSecondVersion}>
+                <Box className={classes.boxThirdVersion}>
+                  <Divider className={classes.dividerSecondVersion}/>  
                   <Typography variant="h3" className={classes.text}>
                     {t('setting.changeEmail')}
                   </Typography>
@@ -327,7 +343,7 @@ const Settings = ({ onCloseSetting }) => {
                   </Grid>
                   <Box className={classes.box}>
                     <Button
-                      disabled={(!validEmailFormat  || !user.email) || loadingChangeEmail}
+                      disabled={(!validEmailFormat  || !user.email) || loadingChangeEmail || loading}
                       variant="contained"
                       color="secondary"
                       onClick={handleSubmitChangeEmail}
@@ -415,7 +431,7 @@ const Settings = ({ onCloseSetting }) => {
                       className={classes.box}
                     />
                   </Grid>
-                  <Box className={classes.box}>
+                  <Box>
                     <Button
                       disabled={(!user.newPassword || !user.currentPassword) || loadingChangePassword}
                       variant="contained"
@@ -428,11 +444,11 @@ const Settings = ({ onCloseSetting }) => {
                   </Box>
                   <Box className={classes.loadingBox}>
                     {loadingChangePassword && <CircularProgress />}
+                    {loading && <CircularProgress />}
                   </Box>
                 </Box>
               </Grid>
             </Grid>
-          }
           </form>
         </DialogContent>
 

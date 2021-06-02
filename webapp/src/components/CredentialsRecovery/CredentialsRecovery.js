@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Snackbar from '@material-ui/core/Snackbar'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { useTranslation } from 'react-i18next'
+import InputLabel from '@material-ui/core/InputLabel'
 
 import { CREDENTIALS_RECOVERY, GET_ACCOUNT_SIGNUP_METHOD } from '../../gql'
 import styles from './styles'
@@ -139,10 +140,16 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
             <Box className={classes.textFieldWrapper}>
               <TextField
                 id="email"
-                label={t('common.registeredEmail')}
-                variant="outlined"
+                variant="filled"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: false
+                }}
+                InputProps={{
+                  endAdornment: (
+                  <InputLabel id="select-label">
+                    {t('common.registeredEmail')}
+                  </InputLabel>
+                  )
                 }}
                 onChange={(event) =>
                   handleSetFieldEmail('email', event.target.value.toLowerCase().replace(/\s/g, ''))

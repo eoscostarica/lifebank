@@ -17,7 +17,7 @@ export default (theme) => ({
     marginTop: "25px",
   },
   dividerSecondVersion: {
-    marginBottom: "25px",
+    marginBottom: "20px",
   },
   closeIcon: {
     position: 'absolute',
@@ -59,8 +59,11 @@ export default (theme) => ({
   boxSecondVersion:{
     width: '100%',
     marginBottom: '20px'
-  }
-  ,
+  },
+  boxThirdVersion: {
+    width: '100%',
+    marginTop: '20px'
+  },
   checkBox: {
     display: 'flex',
     marginBottom: '20px',
@@ -94,9 +97,6 @@ export default (theme) => ({
     color: "rgba(0, 0, 0, 0.6)",
     width: '100%',
     marginTop: '6%'
-  },
-  marginTopBox: {
-    marginTop: '16%'
   },
   button: {
     paddingLeft: '30px',
