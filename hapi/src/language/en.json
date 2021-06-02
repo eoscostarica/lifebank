@@ -1,5 +1,31 @@
 {
   "translation": {
-    "welcome": "Welcome to Lifebank"
+    "newLifebankForDonor": {
+      "subject": "New lifebank near you!",
+      "content": "There’s a new lifebank near you! Check its profile <a href='https://lifebank/info/",
+      "content2": "'>here</a>. Visit them soon and help save lives!<br><br>You can unsubscribe anytime from receiving these communications <a href='http://lifebank/cancel-email-subscription/",
+      "content3": "'>here</a>."
+    },
+    "newLifebankForSponsor": {
+      "subject": "New lifebank near you!",
+      "content": "There’s a new lifebank near you! Check its profile <a href='https://lifebank/info/",
+      "content2": "Help them out by <a href='https://lifebank/offers-management'>creating a new offer</a>. It’s very likely that having more offers available in your area will attract new donors to donate blood at this lifebank"
+    },
+    "mailUnsubscribe": {
+      "content": "You can unsubscribe anytime from receiving these communications <a href='http://lifebank/cancel-email-subscription/",
+      "content2": "'>here</a>."
+    },
+    "lifebankOnboarding": {
+      "subject": "Welcome to Lifebank",
+      "paragraph": "Hello,",
+      "paragraph2": "Thank you for verifying your email address! You’re now ready to start using Lifebank.",
+      "paragraph3": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors.",
+      "paragraph4": "As a lifebank, your role is to grant Life Tokens to qualifying donors that complete a donation. Here’s an overview of the steps:",
+      "item": "A donor must qualify and register at your facilities.",
+      "item2": "Once they complete their donation, the donor should show the QR code in their Lifebank app.",
+      "item3": "You then can scan this QR code using a mobile phone or type the code directly into the space provided. This will automatically send thedonor a token thanking them for their donation.",
+      "paragraph5": "What are Life Tokens? Life Tokens are a receipt that you can send donors once they complete a blood donation. As a lifebank, your center can issue a maximum of 10,000 Life Tokens. Donors can redeem these tokens at any participating local business in exchange for promotions, discounts, or bonuses. Further, the local businesses will then return them to the lifebanks, keeping the token cycle running. For more information about Lifebank and how it works, visit https://lifebank.io/about.",
+      "paragraph6": "Thanks for your support!"
+    }
   }
 }
