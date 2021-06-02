@@ -1363,7 +1363,7 @@ const sendNewLifebankRegistered = async (to, subject, content) => {
 
 const sendLifebankOnboarding = async (to, language, role) => {
   let textTag = 'donorOnboarding'
-  if(role === 'sponsor') textTag = 'sponsorOnboarding'
+  if (role === 'sponsor') textTag = 'sponsorOnboarding'
   else textTag = 'lifebankOnboarding'
 
   i18n.changeLanguage(language)

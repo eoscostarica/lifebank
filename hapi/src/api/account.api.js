@@ -554,7 +554,7 @@ const verifyEmail = async ({ code }) => {
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })
-  
+
   if (resUser) {
     await sendOnboarding(code)
     return { is_verified: true }
@@ -563,7 +563,7 @@ const verifyEmail = async ({ code }) => {
   const resLifebank = await preRegLifebank.verifyEmail({
     verification_code: { _eq: code }
   })
-  
+
   const lifebankProfile = formatLifebankData(resLifebank)
 
   try {
