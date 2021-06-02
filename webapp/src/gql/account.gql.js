@@ -38,6 +38,14 @@ export const SIGNUP_MUTATION = gql`
   }
 `
 
+export const UPDATE_EMAIL_SUBSCRIPTION_MUTATION = gql`
+  mutation($account: String!, $state: Boolean) {
+    update_user(where: {account: {_eq: $account}}, _set: {email_subscription: $state}) {
+      affected_rows
+    }
+  }
+`
+
 export const CHECK_USERNAME_MUTATION = gql`
   mutation($role: String!, $username: String!) {
     check_username(role: $role, username: $username) {
