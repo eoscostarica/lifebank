@@ -109,7 +109,7 @@ const getMany = async (where = {}) => {
   return null
 }
 
-const insert = user => {
+const insert = (user) => {
   return hasuraUtils.request(INSERT, { user })
 }
 
