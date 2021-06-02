@@ -177,16 +177,18 @@ const notifyNewLifebank = async (lifebankAccount) => {
         mailApi.sendNewLifebankRegistered(
           donor.email,
           i18n.t('newLifebankForDonor.subject'),
-          i18n.t('newLifebankForDonor.content').concat(
-            lifebankAccount,
-            i18n.t('newLifebankForDonor.content2'),
-            lifebankAccount,
-            i18n.t('newLifebankForDonor.content3'),
-            '<br><br>',
-            i18n.t('mailUnsubscribe.content'),
-            lifebankAccount,
-            i18n.t('mailUnsubscribe.content2')
-          )
+          i18n
+            .t('newLifebankForDonor.content')
+            .concat(
+              lifebankAccount,
+              i18n.t('newLifebankForDonor.content2'),
+              lifebankAccount,
+              i18n.t('newLifebankForDonor.content3'),
+              '<br><br>',
+              i18n.t('mailUnsubscribe.content'),
+              lifebankAccount,
+              i18n.t('mailUnsubscribe.content2')
+            )
         )
       }
     })
@@ -206,14 +208,16 @@ const notifyNewLifebank = async (lifebankAccount) => {
         mailApi.sendNewLifebankRegistered(
           sponsorProfile.email,
           i18n.t('newLifebankForSponsor.subject'),
-          i18n.t('newLifebankForSponsor.content').concat(
-            lifebankAccount,
-            i18n.t('newLifebankForSponsor.content2'),
-            '<br><br>',
-            i18n.t('mailUnsubscribe.content'),
-            lifebankAccount,
-            i18n.t('mailUnsubscribe.content2')
-          )
+          i18n
+            .t('newLifebankForSponsor.content')
+            .concat(
+              lifebankAccount,
+              i18n.t('newLifebankForSponsor.content2'),
+              '<br><br>',
+              i18n.t('mailUnsubscribe.content'),
+              lifebankAccount,
+              i18n.t('mailUnsubscribe.content2')
+            )
         )
     })
   }
