@@ -161,7 +161,7 @@ const getProfile = async (account) => {
   const user = await userApi.getOne({
     account: { _eq: account }
   })
-
+  
   let data = {}
 
   switch (user.role) {
@@ -181,6 +181,7 @@ const getProfile = async (account) => {
   return {
     account,
     role: user.role,
+    username: user.username,
     id: user.id,
     ...data
   }
