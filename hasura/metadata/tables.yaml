@@ -368,15 +368,34 @@
       - username
       filter: {}
   update_permissions:
+  - role: donor
+    permission:
+      columns:
+      - email_subscription
+      filter: {}
+      check: null
+  - role: guest
+    permission:
+      columns:
+      - email_subscription
+      filter: {}
+      check: null
   - role: lifebank
     permission:
       columns:
       - email
+      - email_subscription
       - email_verified
       - name
       - secret
       - updated_at
       - username
+      filter: {}
+      check: null
+  - role: sponsor
+    permission:
+      columns:
+      - email_subscription
       filter: {}
       check: null
 - table:
