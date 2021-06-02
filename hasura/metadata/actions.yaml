@@ -3,6 +3,10 @@ actions:
   definition:
     kind: synchronous
     handler: http://hapi:9090/api/change-email
+  permissions:
+  - role: donor
+  - role: lifebank
+  - role: sponsor
 - name: change_password
   definition:
     kind: synchronous

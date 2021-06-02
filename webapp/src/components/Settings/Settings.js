@@ -117,15 +117,17 @@ const Settings = ({ onCloseSetting }) => {
   }
 
   const handleSubmitChangeEmail = async () => {
-    changeEmail({
-      variables: {
-        account: profile.account,
-        email: user.email,
-      }
-    })
-    console.log(user.email, profile.account)
+    if(user, profile){
+      changeEmail({
+        variables: {
+          account: profile.account,
+          email: user.email,
+        }
+      })
+      user.email = null
+    }
   }
-
+  
   const handleChangeCheckBox = (event) => {
     console.log(checked)
     setChecked(event.target.checked)
@@ -139,6 +141,22 @@ const Settings = ({ onCloseSetting }) => {
         severity: 'error'
       })
   }, [errorProfile, t])
+
+  useEffect(() => {
+    if (errorChangeEmail)
+      setOpenSnackbar({
+        show: true,
+        message: t('setting.emailError'),
+        severity: 'error'
+      })
+      if(responseChangeEmail)
+      setOpenSnackbar({
+        show: true,
+        message: t('setting.emailChanged'),
+        severity: 'success'
+      })
+      loadProfile()
+  }, [changeEmail,errorChangeEmail,responseChangeEmail])
 
   useEffect(() => {
     if (responseChangePassword) {
@@ -222,7 +240,7 @@ const Settings = ({ onCloseSetting }) => {
         BackdropProps={{
           timeout: 500
         }}
-      >
+      >  
         <Box className={classes.closeIcon}>
           <IconButton
             aria-label="close"
@@ -240,6 +258,10 @@ const Settings = ({ onCloseSetting }) => {
         </Box>
         <DialogContent className={classes.dimensions} >
           <form autoComplete="off">
+          <Box className={classes.loadingBox}>
+            {loading && <CircularProgress />}
+          </Box>
+          {!loading  &&
             <Grid container>
               <Grid container spacing = {2}>
                 <Grid item xs={6}>
@@ -305,7 +327,7 @@ const Settings = ({ onCloseSetting }) => {
                   </Grid>
                   <Box className={classes.box}>
                     <Button
-                      disabled={!validEmailFormat}
+                      disabled={(!validEmailFormat  || !user.email) || loadingChangeEmail}
                       variant="contained"
                       color="secondary"
                       onClick={handleSubmitChangeEmail}
@@ -315,7 +337,7 @@ const Settings = ({ onCloseSetting }) => {
                     </Button>
                   </Box>
                   <Box className={classes.loadingBox}>
-                    {loadingChangePassword && <CircularProgress />}
+                    {loadingChangeEmail && <CircularProgress />}
                   </Box>
                 </Box>
               </Grid>
@@ -410,8 +432,10 @@ const Settings = ({ onCloseSetting }) => {
                 </Box>
               </Grid>
             </Grid>
+          }
           </form>
         </DialogContent>
+
         <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
           <Alert
             className={classes.alert}

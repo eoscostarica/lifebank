@@ -54,6 +54,8 @@
       "confirmPassword": "Confirm Password",
       "confirmPasswordError": "The new password is not confirm properly - Try again",
       "passwordChanged": "Password Changed Successfully - We sent you an email",
+      "emailChanged": "Email Changed Successfully",
+      "emailError": "Error trying to change your email - Try Again",
       "passwordNotChangeable": "Error your account is linked to Facebook or Google",
       "suscribeSection": "Suscribe and get emails:",
       "checkBoxSuscribe": "Suscription",
