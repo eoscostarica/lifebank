@@ -511,6 +511,15 @@
       "info": "First complete your profile to add an offer",
       "chooseIcon": "Choose an icon"
     },
+    "historyDashboard": {
+      "tableTitleSent": "Sent tokens",
+      "tableTitleReceived": "Tokens received",
+      "donor": "Donor",
+      "date": "Date",
+      "time": "Time",
+      "tokens": "Tokens",
+      "business": "Bussines"
+    },
     "offerView": {
       "selectedOffer": "Selected offer",
       "onlinePurchases": "This offer is only for online purchases.",
