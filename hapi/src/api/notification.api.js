@@ -34,7 +34,7 @@ const EDIT_NOTIFICATION_STATE = `
 
 const GET_ONE = `
   query ($where: notification_bool_exp) {
-    notification(where: $where, limit: 1) {
+    notification(where: $where, order_by: {created_at: desc}, limit: 1) {
       id
       account_to
       account_from

@@ -1,0 +1,55 @@
+{
+  "translation": {
+    "newLifebankForDonor": {
+      "subject": "¡Nuevo lifebank cerca tuyo!",
+      "content": "¡Hay un nuevo lifebank cerca tuyo! Échale un vistazo a su perfil <a href='https://lifebank/info/",
+      "content2": "'>aquí</a>. ¡Visítalos pronto y ayúdales a salvar vidas!<br><br>Puedes desinscribirte en cualquier momento de estas notificaciones <a href='http://lifebank/cancel-email-subscription/",
+      "content3": "'>aquí</a>."
+    },
+    "newLifebankForSponsor": {
+      "subject": "¡Nuevo lifebank cerca tuyo!",
+      "content": "¡Hay un nuevo lifebank cerca tuyo! Échale un vistazo a su perfil <a href='https://lifebank/info/",
+      "content2": "Ayúdales <a href='https://lifebank/offers-management'>creando una nueva oferta</a>. Es probable que al tener más ofertas disponibles en tu área atraerá a nuevos donantes a donar sangre en este lifebank."
+    },
+    "mailUnsubscribe": {
+      "content": "Puedes desinscribirte en cualquier momento de estas notificaciones <a href='http://lifebank/cancel-email-subscription/",
+      "content2": "'>aquí</a>."
+    },
+    "lifebankOnboarding": {
+      "subject": "Te damos la bienvenida a Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "¡Gracias por verificar tu correo electrónico! Ahora puedes empezar a usar Lifebank.",
+      "paragraph3": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes.",
+      "paragraph4": "Como lifebank, tu rol es enviar Life Tokens a donantes luego de completar una donación. Estos son los pasos a seguir:",
+      "item": "Un donante se califica y registra en su centro.",
+      "item2": "Una vez que se completa la donación, el donante deberá mostrar el código QR en la aplicación Lifebank.",
+      "item3": "Luego puedes escanear ese código QR usando un teléfono móvil o escribir el código directamente en el espacio disponible. Automáticamente se enviará el token al donante como agradecimiento por su donación.",
+      "paragraph5": "¿Qué son los Life Tokens? Un Life Token es un comprobante electrónico que puede enviar a donantes una vez que completan una donación. Como un lifebank (banco de sangre), su centro tendrá capacidad de crear un máximo de 10.000 Life Tokens. Los donantes pueden redimir estos tokens en algún comercio local participante como intercambio por promociones, descuentos o beneficios. Luego, el comercio devolverá los tokens a los lifebanks, manteniendo así el ciclo activo. Para más información sobre Lifebank y cómo funciona, visite https://lifebank.io/about.",
+      "paragraph6": "¡Gracias por tu apoyo!"
+    },
+    "sponsorOnboarding": {
+      "subject": "Te damos la bienvenida a Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "¡Gracias por verificar tu correo electrónico! Ahora puedes empezar a usar Lifebank.",
+      "paragraph3": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes.",
+      "paragraph4": "Como negocio, tu rol es redimir Life Tokens de donantes que completaron una donación. Estos son los pasos a seguir:",
+      "item": "Como negocio registrado en Lifebank, ahora puedes crear una oferta en la pestaña de Ofertas. Estas ofertas pueden ser un descuento, producto gratis, beneficio, insignia o cupón. Para ver la lista completa <a href='https://lifebank/offers-management'>ve aquí</a>. Intenta explicar de forma específica. Puedes restringir estas ofertas por cantidad o tiempo.",
+      "item2": "Un donante puede pedir redimir su Life Token a cambio de una oferta creada por tí al mostrar su código QR desde la aplicación de Lifebank.",
+      "item3": "Luego, puedes escanear el código QR usando un teléfono móvil o al escribir el código directamente en el campo disponible. Esto automáticamente redimirá el token del donante.",
+      "paragraph5": "¿Qué son los Life Tokens? Un Life Token es un comprobante electrónico que los donantes pueden recibir de un lifebank al completar una donación. Los donantes pueden redimir estos tokens en algún comercio local participante como intercambio por promociones, descuentos o beneficios. Como comercio participante, probablemente necesitarás explicar estas instrucciones a tu personal. Para más información sobre Lifebank y cómo funciona, visite https://lifebank.io/about.",
+      "paragraph6": "¡Gracias por tu apoyo!"
+    },
+    "donorOnboarding": {
+      "subject": "Te damos la bienvenida a Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "¡Gracias por verificar tu correo electrónico! Ahora puedes empezar a usar Lifebank.",
+      "paragraph3": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes.",
+      "paragraph4": "Como donante, ahora puedes recibir y redimir Life Tokens. Estos son los pasos a seguir:",
+      "item": "Debes ir a un lifebank (banco de sangre) participante y calificarte como donante. Confirma con el personal si tienen Lifebank disponible.",
+      "item2": "Una vez que completes la donación, deberás mostrar el código QR en tu aplicación Lifebank. La persona a cargo escaneará o escribirá tu código para enviar automáticamente los tokens a cambio de tu donación.",
+      "item3": "Luego, puedes visitar un negocio local participante para redimir tus Life Tokens por ofertas como descuentos, cupones o beneficios. <a href='https://lifebank.io'>Ve la lista completa</a> en tu aplicación Lifebank. Muéstrales tu código QR para redimir tu  token.",
+      "paragraph5": "¿Qué son los Life Tokens? Un Life Token es un comprobante electrónico que recibes de un lifebank al completar una donación. Puedes redimir estos tokens en algún comercio local participante como intercambio por promociones, descuentos o beneficios. Para más información sobre Lifebank y cómo funciona, visite https://lifebank.io/about.",
+      "paragraph6": "¡Gracias por tu apoyo!"
+    }
+  }
+}
