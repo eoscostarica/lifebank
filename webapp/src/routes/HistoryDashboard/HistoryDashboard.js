@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
+import Typography from '@material-ui/core/Typography'
 
 import { GET_REPORT_QUERY, PROFILE_QUERY } from '../../gql'
 
@@ -67,8 +68,8 @@ const HistoryDashboard = (user) => {
 
   return (
     <>
-
-      <Box >
+      <Box className={classes.root} >
+        <Typography className={classes.title} >{t('historyDashboard.title')}</Typography>
         <Box className={classes.boxSelect}>
           <FormControl variant="filled" className={classes.formControl}>
             <InputLabel id="demo-simple-select-outlined-label">{t('historyDashboard.dashboard')}</InputLabel>
@@ -96,7 +97,6 @@ const HistoryDashboard = (user) => {
           {optionSR === 'sent' && (
             <Box>
               {bodySent && bodySent.length > 0 &&
-
                 <Box className={classes.tableContent} >
                   <MUIDataTable
                     title={t('historyDashboard.tableTitleSent')}

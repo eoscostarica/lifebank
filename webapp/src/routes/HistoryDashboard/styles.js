@@ -1,17 +1,5 @@
 export default (theme) => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '994px',
-    padding: theme.spacing(6, 1, 0, 1),
-    alignItems: 'center',
-    minHeight: 'calc(100vh - 60px)',
-    paddingTop: '60px',
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '5%',
-      paddingRight: '5%'
-    },
-  },
+
   boxSelect: {
     display: 'flex',
     width: '100%',
@@ -27,7 +15,6 @@ export default (theme) => ({
   },
   root: {
     padding: theme.spacing(4),
-    display: 'flex',
     height: 'calc(100vh - 60px)',
     width: "90%",
     [theme.breakpoints.down('md')]: {
@@ -35,7 +22,33 @@ export default (theme) => ({
     }
   },
   tableContent: {
-    paddingTop: "30px",
+    width: '110%',
+    marginLeft: "100",
+    [theme.breakpoints.down('md')]: {
+      width: "100%",
+      marginLeft: "0"
+    }
+  },
+  content: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
     width: "100%"
+  },
+  title: {
+    fontSize: "34px",
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "1.18",
+    letterSpacing: "0.25px",
+    marginLeft: "20px",
+    textAlign: "left",
+    color: "rgba(0, 0, 0, 0.87)",
+    marginBottom: 15,
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'center'
+    }
   },
 })

@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import TransactionReport from '../components/TransactionReport'
 import LoginModal from '../components/LoginModal'
 import Signup from '../components/Signup/Signup'
-import ListIcon from '@material-ui/icons/List'
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -140,7 +140,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
             </Link>
           </Box>
           <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
-            <ListIcon className={classes.iconOption} />
+            <AssignmentIcon className={classes.iconOption} />
             <Link to="/history-dashboard">
               <Typography variant="body1" className={classes.labelOption}>
                 {t('navigationDrawer.historyDashboard')}

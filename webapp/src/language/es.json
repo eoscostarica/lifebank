@@ -525,7 +525,8 @@
       "date": "Fecha",
       "time": "Hora",
       "tokens": "Tokens",
-      "business": "Negocio"
+      "business": "Negocio",
+      "title": "Historial de Transacciones"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",
