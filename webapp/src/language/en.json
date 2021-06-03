@@ -518,6 +518,7 @@
       "chooseIcon": "Choose an icon"
     },
     "historyDashboard": {
+      "dashboard": "History",
       "tableTitleSent": "Sent tokens",
       "tableTitleReceived": "Tokens received",
       "donor": "Donor",
