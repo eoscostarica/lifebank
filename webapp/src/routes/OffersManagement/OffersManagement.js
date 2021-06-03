@@ -30,6 +30,7 @@ import {
 import OfferDetails from './OfferDetails'
 import GenericOfferFormComponent from './GenericOfferFormComponent'
 import styles from './styles'
+import { TextField } from '@material-ui/core'
 
 const useStyles = makeStyles(styles)
 
@@ -301,10 +302,10 @@ const OffersManagement = () => {
                     : t('offersManagement.inactive'),
                   offer.start_date
                     ? m(offer.start_date).tz(timezone).format('DD-MM-YYYY')
-                    : t('offersManagement.noProvidedDate'),
+                    : <Typography className={classes.script}>{t('offersManagement.noProvidedDate')}</Typography>,
                   offer.end_date
                     ? m(offer.end_date).tz(timezone).format('DD-MM-YYYY')
-                    : t('offersManagement.noProvidedDate'),
+                    : <Typography className={classes.script}>{t('offersManagement.noProvidedDate')}</Typography>,
                   Actions(offer.active, offer.id),
                 ])}
                 columns={[

@@ -213,7 +213,9 @@ export default (theme) => ({
     [theme.breakpoints.down('xs')]: {
       padding: 1
     }
-
+  },
+  script: {
+    marginLeft: 27
   }
 
 })
