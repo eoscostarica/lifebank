@@ -13,6 +13,7 @@ import Home from './Home'
 import EmailVerification from './EmailVerification'
 import RegisterLifebank from './RegisterLifebank'
 import OffersApproval from './OffersApproval'
+import CancelEmailSubscription from './CancelEmailSubscription'
 
 export default [
   {
@@ -86,5 +87,10 @@ export default [
     name: 'history-dashboard',
     path: '/history-dashboard',
     component: HistoryDashboard
+  },
+  {
+    name: 'cancel-email-subscription',
+    path: '/cancel-email-subscription/:account',
+    component: CancelEmailSubscription
   }
 ]
