@@ -47,8 +47,7 @@ const GET_ONE = `
   }
 `
 
-
-/*const EDIT_NOTIFICATION_STATE = `
+/* const EDIT_NOTIFICATION_STATE = `
   mutation edit_state($where: user_bool_exp!) {
     edit_notification_state(where: $where, _set: { state: true }) {
       affected_rows
@@ -71,11 +70,11 @@ const GET_MANY = `
   }
 `
 
-const insert = notification => {
+const insert = (notification) => {
   return hasuraUtils.request(INSERT_NOTIFICATION, { notification })
 }
 
-const edit_state = where => {
+const edit_state = (where) => {
   return hasuraUtils.request(EDIT_NOTIFICATION_STATE, { where })
 }
 

@@ -29,7 +29,6 @@ const editNotificationState = async (account, id_state) => {
   await notificationApi.edit_state({ id: { _eq: id_state } })
 }
 
-
 const signup = async (account, profile) => {
   await accountApi.grantConsent(account)
 

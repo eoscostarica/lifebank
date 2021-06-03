@@ -8,8 +8,8 @@ module.exports = async ({ auth: { credentials }, payload: { input } }) => {
     const role =
       credentials['https://hasura.io/jwt/claims']['x-hasura-default-role']
 
-    console.log("ID", input)
-    console.log("CREDENTIALS", credentials.sub)
+    console.log('ID', input)
+    console.log('CREDENTIALS', credentials.sub)
     await donorApi.editNotificationState(credentials.sub, input.id)
     // switch (role) {
     //   case 'donor':
