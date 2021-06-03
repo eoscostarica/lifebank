@@ -220,6 +220,57 @@ const getUserNetworks = async (user) => {
   return rows
 }
 
+const addOffer = (account, password, offer) => {
+  return eosUtil.transact(
+    [
+      {
+        authorization: [
+          {
+            actor: account,
+            permission: 'active'
+          }
+        ],
+        account: CONTRACT_NAME,
+        name: 'addoffer',
+        data: {
+          offer_name: offer.offer_name,
+          sponsor_name: account,
+          category: offer.offer_type,
+          beginning_date: offer.start_date,
+          ending_date: offer.end_date,
+          cost: '10 LIFE',
+          description: offer.description,
+          restriction: 'restriction'
+        }
+      }
+    ],
+    account,
+    password
+  )
+}
+
+const removeOffer = (account, password, { offer_name }) => {
+  return eosUtil.transact(
+    [
+      {
+        authorization: [
+          {
+            actor: account,
+            permission: 'active'
+          }
+        ],
+        account: CONTRACT_NAME,
+        name: 'rmoffer',
+        data: {
+          offer_name
+        }
+      }
+    ],
+    account,
+    password
+  )
+}
+
 module.exports = {
   addDonor,
   addLifebank,
@@ -229,5 +280,7 @@ module.exports = {
   getSponsor,
   getComunity,
   getUserNetworks,
-  upLifebank
+  upLifebank,
+  addOffer,
+  removeOffer
 }

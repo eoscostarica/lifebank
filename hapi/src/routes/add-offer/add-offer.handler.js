@@ -5,7 +5,7 @@ const { accountApi } = require('../../api')
 
 module.exports = async ({ auth: { credentials }, payload: { input } }) => {
   try {
-    const response = await accountApi.redeem(credentials.sub, input)
+    const response = await accountApi.addOffer(credentials.sub, input)
 
     return response
   } catch (error) {
