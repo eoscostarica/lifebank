@@ -50,6 +50,46 @@
       "item3": "You can then visit a participating local business to redeem your Life Token for offers such as discounts, coupons, or benefits. <a href='https://lifebank.io'>See the full list</a> on your Lifebank app. Show them your QR code to redeem your token.",
       "paragraph5": "What are Life Tokens? Life Tokens are a receipt that you receive from a lifebank once you complete a blood donation. You can then redeem these tokens at any participating local business in exchange for promotions, discounts, or bonuses. For more information about Lifebank and how it works, visit https://lifebank.io/about.",
       "paragraph6": "Thanks for your support!"
+    },
+    "lifebankTransactionReport": {
+      "subject": "Lifebank monthly transactions history",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this monthly transactions history report on your Lifebank account.",
+      "paragraph3": "Tokens you sent this month:",
+      "paragraph4": "Tokens returned from businesses:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors. <a href='https://lifebank/edit-profile'>Update your profile.</a>"
+    },
+    "sponsorTransactionReport": {
+      "subject": "Lifebank monthly transactions history",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this monthly transactions history report on your Lifebank account.",
+      "paragraph3": "Tokens you sent this month:",
+      "paragraph4": "Tokens returned from businesses:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors. <a href='https://lifebank/edit-profile'>Update your profile.</a>"
+    },
+    "donorTransactionReport": {
+      "subject": "Lifebank yearly transactions history",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this quarterly transaction history report on your Lifebank account.",
+      "paragraph3": "Tokens you received this year:",
+      "paragraph4": "Tokens redeemed at businesses:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors."
+    },
+    "sponsorAndOfferReportToLifebanks": {
+      "subject": "Lifebank weekly report",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this weekly report of new available businesses and offers on Lifebank near you.",
+      "paragraph3": "New local businesses nearby:",
+      "paragraph4": "New offers available; check them out:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors. <a href='https://lifebank/edit-profile'>Update your profile.</a>"
+    },
+    "sponsorAndOfferReportToDonors": {
+      "subject": "Lifebank monthly report",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this monthly report of new available businesses and offers on Lifebank near you.",
+      "paragraph3": "New local businesses nearby:",
+      "paragraph4": "New offers available; check them out:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors."
     }
   }
 }

@@ -15,14 +15,8 @@ const generateDonorsTransactionReports = async () => {
     )
     mailApi.sendTransactionReport(
       donor.email,
-      'Yearly report',
-      'Report',
-      'You have '.concat(
-        report.notifications.sent.length,
-        ' sent transactions and ',
-        report.notifications.received.length,
-        ' received tokens by blood donation'
-      )
+      donor.language,
+      donor.role
     )
   })
 }
@@ -41,12 +35,8 @@ const generateSponsorsTransactionReports = async () => {
     )
     mailApi.sendTransactionReport(
       sponsor.email,
-      'Monthly report',
-      'Report',
-      'You have '.concat(
-        report.notifications.received.length,
-        ' received transactions'
-      )
+      sponsor.language,
+      sponsor.role
     )
   })
 }
@@ -67,14 +57,8 @@ const generateLifebanksTransactionReports = async () => {
     )
     mailApi.sendTransactionReport(
       lifebank.email,
-      'Monthly report',
-      'Report',
-      'You have '.concat(
-        report.notifications.sent.length,
-        ' sent transactions and ',
-        report.notifications.received.length,
-        ' received transactions'
-      )
+      lifebank.language,
+      lifebank.role
     )
   })
 }
@@ -97,17 +81,11 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
     created_at: { _gte: monthAgo, _lte: today }
   })
 
-  donors.forEach(async (lifebank) => {
+  donors.forEach(async (donor) => {
     mailApi.sendNewSponsorAndOfferReport(
-      lifebank.email,
-      'Monthly new sponsors and offer report',
-      'Report',
-      'We have '.concat(
-        newSponsors ? newSponsors.length : 0,
-        ' new sponsors and ',
-        newOffers ? newOffers.length : 0,
-        ' new offers until last month'
-      )
+      donor.email,
+      donor.language,
+      donor.role
     )
   })
 }
@@ -133,14 +111,8 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
   lifebanks.forEach(async (lifebank) => {
     mailApi.sendNewSponsorAndOfferReport(
       lifebank.email,
-      'Weekly new sponsors and offer report',
-      'Report',
-      'We have '.concat(
-        newSponsors ? newSponsors.length : 0,
-        ' new sponsors and ',
-        newOffers ? newOffers.length : 0,
-        ' new offers until last week'
-      )
+      lifebank.language,
+      lifebank.role
     )
   })
 }
@@ -164,12 +136,5 @@ const sendEmail = async () => {
     }
   }
 }
+sendEmail()
 
-module.exports = {
-  sendEmail,
-  generateDonorsTransactionReports,
-  generateSponsorsTransactionReports,
-  generateLifebanksTransactionReports,
-  generateNewSponsorAndOfferReportToDonors,
-  generateNewSponsorAndOfferReportToLifebanks
-}

@@ -14,5 +14,8 @@ spec:
               args:
                 - /bin/sh
                 - -c
-                - curl -v http://localhost:9090/api/run-monthly
+                - node /app/src/cron-jobs/index.js
+              envFrom:
+                - configMapRef:
+                    name: lifebank-hapi-config
           restartPolicy: OnFailure
