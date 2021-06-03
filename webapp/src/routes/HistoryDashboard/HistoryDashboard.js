@@ -37,7 +37,7 @@ const HistoryDashboard = (user) => {
       getReportQuery()
     } else {
       if (currentUser && currentUser.role === 'lifebank') formatDataToLifebankReport()
-      //else if (currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
+      // else if (currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
       else return
     }
 
