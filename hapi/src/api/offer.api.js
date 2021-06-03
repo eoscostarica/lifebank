@@ -67,9 +67,7 @@ const addOffer = (offer) => {
 
 const removeOffer = async (where) => {
   const { delete_offer } = await hasuraUtils.request(REMOVE_OFFER, { where })
-  return delete_offer.returning.length > 0
-    ? delete_offer.returning[0]
-    : false
+  return delete_offer.returning.length > 0 ? delete_offer.returning[0] : false
 }
 
 module.exports = {

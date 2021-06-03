@@ -838,14 +838,18 @@ const addOffer = async (account, offer) => {
   }
 }
 
-const removeOffer = async ( { offer_id } ) => {
+const removeOffer = async ({ offer_id }) => {
   const removedOffer = await offerApi.removeOffer({
     id: { _eq: offer_id }
   })
   if (!removeOffer) throw new Error('Fail to add new offer')
 
   const password = await vaultApi.getPassword(LIFEBANKCODE_CONTRACT)
-  const transaction = await lifebankcodeUtils.removeOffer(LIFEBANKCODE_CONTRACT, password, removedOffer)
+  const transaction = await lifebankcodeUtils.removeOffer(
+    LIFEBANKCODE_CONTRACT,
+    password,
+    removedOffer
+  )
 
   return {
     transaction_id: transaction.transaction_id
