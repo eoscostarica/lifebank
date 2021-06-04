@@ -157,6 +157,22 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Box>
         </>
       }
+      {user && (user.role === 'donor') &&
+        <>
+          <Divider />
+          <Typography variant="body1" className={classes.infoLabel}>
+            {t('navigationDrawer.tools')}
+          </Typography>
+          <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
+            <AssignmentIcon className={classes.iconOption} />
+            <Link to="/history-dashboard">
+              <Typography variant="body1" className={classes.labelOption}>
+                {t('navigationDrawer.historyDashboard')}
+              </Typography>
+            </Link>
+          </Box>
+        </>
+      }
       <Divider />
       <Typography variant="body1" className={classes.infoLabel}>
         {t('navigationDrawer.information')}
