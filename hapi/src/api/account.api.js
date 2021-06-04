@@ -492,7 +492,7 @@ const getReport = async (where, account) => {
 
   if (!user) throw new Error('No valid account')
 
-  if (user.role === 'sponsor')
+  if (user.role === 'donor')
     return await getReportDonor(where, user.account)
   else if (user.role === 'sponsor')
     return await getReportSponsor(where, user.account)
