@@ -6,7 +6,7 @@ const { accountApi } = require('../../api')
 module.exports = async ({ auth: { credentials }, payload: { input } }) => {
   try {
     const response = await accountApi.redeem(credentials.sub, input)
-
+    console.log(response)
     return response
   } catch (error) {
     return Boom.boomify(error, { statusCode: INTERNAL_SERVER_ERROR })

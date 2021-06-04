@@ -184,7 +184,7 @@ const OfferView = ({
             account={selectOffer.user.account}
           />
           {currentUser && currentUser.role === 'donor' && (
-            <DonationsDashboard isDesktop={isDesktop} currentUser={currentUser} isOffer />
+            <DonationsDashboard isDesktop={isDesktop} currentUser={currentUser} isOffer selectOffer={selectOffer} />
           )}
           <Button
             disabled

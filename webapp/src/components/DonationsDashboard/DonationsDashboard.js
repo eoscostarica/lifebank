@@ -31,7 +31,7 @@ import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos'
 import Drawer from '@material-ui/core/Drawer'
 
-import { PROFILE_QUERY, DONATE_MUTATION, TOKEN_SUBSCRIPTION } from '../../gql'
+import { PROFILE_QUERY, DONATE_MUTATION, TOKEN_SUBSCRIPTION, REDEEM_OFFER_MUTATION } from '../../gql'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -75,7 +75,7 @@ EmptyHeartSVG.propTypes = {
   balance: PropTypes.number,
 }
 
-const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
+const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) => {
   const { t } = useTranslation('translations')
   const [maxWidth] = useState('md')
   const [maxWidthQr] = useState('xs')
@@ -103,6 +103,11 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     donate,
     { loading, error, data: { donate: donateResult } = {} }
   ] = useMutation(DONATE_MUTATION)
+
+  const [
+    redeemOffer,
+    { loadingRedeemOffer, error: errorRedeemOffer , data: { redeem: redeemOfferResult } = {} }
+  ] = useMutation(REDEEM_OFFER_MUTATION)
 
   const { data: tokenUser = {} } = useSubscription(
     TOKEN_SUBSCRIPTION, { variables: { account } }
@@ -135,6 +140,25 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     }
 
   }, [errroLoadProfile])
+
+  useEffect(() => {
+    console.log( errorRedeemOffer, loadingRedeemOffer)
+    if (redeemOfferResult) {
+      if(redeemOfferResult.response)
+      setOpenSnackbar({
+        show: true,
+        message: t('donations.donationsProfileError'),
+        severity: 'success'
+      })
+    }
+    if (errorRedeemOffer) {
+      setOpenSnackbar({
+        show: true,
+        message: t('donations.donationsProfileError'),
+        severity: 'error'
+      })
+    }
+  }, [redeemOfferResult, errorRedeemOffer])
 
   useEffect(() => {
     if (!donateResult)
@@ -184,9 +208,20 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
 
   const handleOpen = () => setOpen(!open)
 
+  const handleRedeemOffer = () => {
+    redeemOffer({
+      variables: {
+        to: selectOffer.user.account,
+        memo: "Best day ever",
+        quantity: 1,
+        offer: selectOffer
+      }
+    })
+  }
+
   const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
 
-  const hanndlerTransferTokens = (account) => {
+  const handlerTransferTokens = (account) => {
     setAccountTo(account)
   }
 
@@ -390,7 +425,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               }
               <Button className={classes.sendTokenButton} variant="contained" color="secondary"
                 onClick={() => {
-                  hanndlerTransferTokens(accountInput)
+                  handlerTransferTokens(accountInput)
                 }}
                 disabled={
                   !accountInput ||
@@ -613,9 +648,19 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
             </Fab>
           }
           {isOffer &&
-            <Button variant="contained" color="secondary" className={classes.fabButtonOffer} onClick={handleOpen}>
+          <>
+            <Button variant="contained" color="secondary" 
+            className={classes.fabButtonOffer}
+            disabled = {tokens > 0 ? false : true}
+            onClick={handleRedeemOffer}>
               {t('tokenTransfer.redeem')}
             </Button>
+            {loadingRedeemOffer &&
+              <Box>
+                <CircularProgress />
+              </Box>
+            }
+            </>
           }
           <Dialog
             maxWidth={maxWidth}
@@ -652,6 +697,7 @@ DonationsDashboard.propTypes = {
   isDesktop: PropTypes.bool,
   isOffer: PropTypes.bool,
   currentUser: PropTypes.object,
+  selectOffer: PropTypes.object
 }
 
 export default DonationsDashboard

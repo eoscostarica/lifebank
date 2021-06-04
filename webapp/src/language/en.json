@@ -332,7 +332,8 @@
       "memoLifebank": "Thanks for your donation",
       "succesful": "Succesful transaction",
       "donationsError": "Uh-oh! There was an error. Please check if the account is correct and try",
-      "donationsProfileError": "Uh oh! There was an error trying to get your donations"
+      "donationsProfileError": "Uh oh! There was an error trying to get your donations",
+      "redeemOfferError": "Uh oh! There was an error trying to redeem the offer"
     },
     "users": "Users",
     "products": "Products",
