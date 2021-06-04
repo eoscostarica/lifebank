@@ -34,9 +34,12 @@ export default (theme) => ({
   },
   boxList: {
     margin: '5%'
-
   },
-  editBtn: {
+  showMoreBox: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  showMore: {
     borderRadius: '50px',
     backgroundColor: '#ba0d0d',
     width: "30%",

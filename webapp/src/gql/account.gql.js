@@ -194,14 +194,15 @@ export const DONATE_MUTATION = gql`
 `
 
 export const NOTIFICATION_SUBSCRIPTION = gql`
-  subscription ($account: String!) {
-    notification(order_by: { created_at: desc }, limit: 10, where: {account: {_eq: $account }}) {
+  subscription ($account_to: String!, $limit: Int) {
+    notification(order_by: { created_at: desc }, limit: $limit, where: {account_to: {_eq: $account_to }}) {
       id
       title
       description
       type
       payload
-      state
+      created_at
+      account_from
     }
   }
 `

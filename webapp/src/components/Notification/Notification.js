@@ -3,6 +3,8 @@ import { makeStyles, useTheme } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Dialog from '@material-ui/core/Dialog'
+import Box from '@material-ui/core/Box'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import List from '@material-ui/core/List'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -34,23 +36,20 @@ const Notification = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-  const theme = useTheme()
   const location = useLocation()
+  const [limit, setLimit] = useState(10)
   const isHome = location.pathname === '/'
-
+  const theme = useTheme()
   const [currentUser] = useUser()
-  const [account, setAccount] = useState(currentUser.account)
+  const [account, ] = useState(currentUser.account)
   const [notifications, setNotifications] = useState([])
-
   const trigger = useScrollTrigger({
     target: window || undefined,
     disableHysteresis: true
   })
-
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true
   })
-
   const useTransparentBG = isDesktop && !trigger && isHome
 
   const handleClickOpen = () => {
@@ -60,27 +59,22 @@ const Notification = () => {
   const handleClose = () => {
     setOpen(false)
   }
+  const handleMoreNotifications = () => {
+    setLimit(limit + 10)
+  }
 
-
-  const { data: notification = {} } = useSubscription(
-    NOTIFICATION_SUBSCRIPTION, { variables: { account } }
-  )
-
+  const { error: errorNotifications, loading: loadingNotifications, data: notification = {} }
+  = useSubscription( NOTIFICATION_SUBSCRIPTION, { variables: { account_to: account, limit: limit } })
 
   useEffect(() => {
     if (Object.keys(notification).length) {
       const notificationList = notification.notification
-
-
       setNotifications(notificationList)
-
     }
   }, [notification])
 
-
-
   return (
-    <>
+      <>
       <IconButton className={classes.wrapper} onClick={handleClickOpen}>
         <NotificationsIcon
           alt="Notification icon"
@@ -118,11 +112,16 @@ const Notification = () => {
             </>
           )}
         </List>
-        <Button variant="contained" className={classes.editBtn} color="primary">
-          {t('common.loadMore')}
-        </Button>
+        <Box className={classes.showMoreBox}>
+          {!loadingNotifications && 
+            <Button variant="contained" className={classes.showMore} color="primary" onClick={handleMoreNotifications}>
+              {t('common.loadMore')}
+            </Button>
+          }
+          {loadingNotifications && <CircularProgress />}
+        </Box>
       </Dialog>
-    </>
+  </>
   )
 }
 

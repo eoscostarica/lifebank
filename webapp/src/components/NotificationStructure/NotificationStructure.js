@@ -8,38 +8,17 @@ import Divider from '@material-ui/core/Divider'
 import NewNotificationIcon from '@material-ui/icons/Brightness1';
 import OldNotificationIcon from '@material-ui/icons/PanoramaFishEye';
 import { useQuery, useMutation } from '@apollo/react-hooks'
+import Grid from '@material-ui/core/Grid'
 import { GET_ACCOUNT_NAME, EDIT_NOTIFICATION_STATE } from '../../gql'
 
+import styles from './styles'
 
+const useStyles = makeStyles(styles)
 
-
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    paddingTop: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column'
-  },
-
-  labelOption: {
-    color: `${theme.palette.primary.main} !important`,
-    marginLeft: theme.spacing(2),
-    marginBottom: theme.spacing(1),
-    fontSize: 14,
-    textTransform: 'capitalize'
-  },
-  box: {
-    display: 'inline-block'
-  },
-  iconOption: {
-    color: '#ba0d0d',
-    fontSize: 20
-  }
-}))
 const NotificationStructure = ({ title, description, type, payload, state }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [name, setName] = useState()
-
 
   const { refetch: getData } = useQuery(GET_ACCOUNT_NAME, {
     variables: {
@@ -74,32 +53,34 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
   }
 
   useEffect(() => {
-
     changeNotificationState()
     console.log("AQUII...", editNotificationStateResult)
 
   }, [editNotificationStateResult])
   return (
-
     <Box className={classes.wrapper}>
-      <Box >
-        <Typography className={classes.labelOption}>
-          {title}
-        </Typography>
-        <Typography className={classes.labelOption}>
-          {description.replace(description.substring(5, 17), name)}
-        </Typography>
-        {state === false && (
-          <NewNotificationIcon className={classes.iconOption} />
-        )}
-        {state === true && (
-          <OldNotificationIcon className={classes.iconOption} />
-        )}
-      </Box>
+      <Grid container item xs={12}>
+        <Grid item xs={2}>
+          {/* {state === false && ( */}
+            <NewNotificationIcon className={classes.iconOption} />
+          {/* )} */}
+          {state === true && (
+            <OldNotificationIcon className={classes.iconOption} />
+          )}
+        </Grid>
+        <Grid item xs={4}>
+          <Typography className={classes.labelOption}>
+            {title}
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography className={classes.labelOption}>
+            {description.replace(description.substring(5, 17), name)}
+          </Typography>
+        </Grid>
+      </Grid>
       <Divider />
     </Box>
-
-
   )
 }
 
