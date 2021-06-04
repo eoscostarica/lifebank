@@ -251,7 +251,7 @@ const getDonorsCoordinates = async (donorList) => {
           : lastDonorTransaction.account_from
       )
       newDonorList.push({
-        email: donor.email,
+        ...donor,
         location: JSON.parse(otherUserTransaction.location)
       })
     }
@@ -838,5 +838,7 @@ module.exports = {
   getValidSponsors,
   getValidLifebanks,
   getReport,
-  donate
+  donate,
+  isCoordinateInsideBox,
+  getDonorsCoordinates
 }

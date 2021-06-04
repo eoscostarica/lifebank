@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: hello
+  name: weekly
 spec:
   schedule: "*/1 * * * *"
   jobTemplate:
@@ -9,12 +9,56 @@ spec:
       template:
         spec:
           containers:
-            - name: hello
+            - name: weekly
               image: leister/lifebank-hapi:latest
               args:
                 - /bin/sh
                 - -c
-                - node /app/src/cron-jobs/index.js
+                - node /app/src/cron-jobs/weekly.js
+              envFrom:
+                - configMapRef:
+                    name: lifebank-hapi-config
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: monthly
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: monthly
+              image: leister/lifebank-hapi:latest
+              args:
+                - /bin/sh
+                - -c
+                - node /app/src/cron-jobs/monthly.js
+              envFrom:
+                - configMapRef:
+                    name: lifebank-hapi-config
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: yearly
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: yearly
+              image: leister/lifebank-hapi:latest
+              args:
+                - /bin/sh
+                - -c
+                - node /app/src/cron-jobs/yearly.js
               envFrom:
                 - configMapRef:
                     name: lifebank-hapi-config
