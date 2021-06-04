@@ -13,11 +13,7 @@ const generateDonorsTransactionReports = async () => {
       { dateFrom: yearAgo, dateTo: today },
       donor.account
     )
-    mailApi.sendTransactionReport(
-      donor.email,
-      donor.language,
-      donor.role
-    )
+    mailApi.sendTransactionReport(donor.email, donor.language, donor.role)
   })
 }
 

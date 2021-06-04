@@ -13,11 +13,7 @@ const generateSponsorsTransactionReports = async () => {
       { dateFrom: monthAgo, dateFrom: today },
       sponsor.account
     )
-    mailApi.sendTransactionReport(
-      sponsor.email,
-      sponsor.language,
-      sponsor.role
-    )
+    mailApi.sendTransactionReport(sponsor.email, sponsor.language, sponsor.role)
   })
 }
 
@@ -42,8 +38,6 @@ const generateLifebanksTransactionReports = async () => {
     )
   })
 }
-
-
 
 const sendEmail = async () => {
   try {
