@@ -102,6 +102,7 @@ const Notification = () => {
               {notifications.map((element, key) => (
                 <NotificationStructure
                   key={key}
+                  id={element.id}
                   title={element.title}
                   description={element.description}
                   type={element.type}

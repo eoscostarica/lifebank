@@ -203,14 +203,15 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
       payload
       created_at
       account_from
+      state
     }
   }
 `
 
 export const EDIT_NOTIFICATION_STATE = gql`
-  mutation ($id: Int) {
-    edit_notification_state(id:$id) {
-      success
+  mutation notification($id: Int) {
+    update_notification(where: {id: {_eq: $id}}, _set: { state: false }) {
+      affected_rows
     }
   }
 `

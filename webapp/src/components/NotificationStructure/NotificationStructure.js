@@ -15,7 +15,7 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 
-const NotificationStructure = ({ title, description, type, payload, state }) => {
+const NotificationStructure = ({ id, title, description, type, payload, state }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [name, setName] = useState()
@@ -29,7 +29,7 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
 
   const [
     editNotificationState,
-    { error: errorEditResults, loading: editLoading, data: { edit_notification_state: editNotificationStateResult } = {} }
+    { error: errorEditResults, loading: editLoading, data: { update_notification: editNotificationStateResult } = {} }
   ] = useMutation(EDIT_NOTIFICATION_STATE)
 
   useEffect(() => {
@@ -47,24 +47,23 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
   const changeNotificationState = () => {
     editNotificationState({
       variables: {
-        id: 5
+        id: id
       }
     })
   }
 
   useEffect(() => {
     changeNotificationState()
-    console.log("AQUII...", editNotificationStateResult)
+  }, [])
 
-  }, [editNotificationStateResult])
   return (
     <Box className={classes.wrapper}>
       <Grid container item xs={12}>
         <Grid item xs={2}>
-          {/* {state === false && ( */}
-            <NewNotificationIcon className={classes.iconOption} />
-          {/* )} */}
           {state === true && (
+            <NewNotificationIcon className={classes.iconOption} />
+          )}
+          {state === false && (
             <OldNotificationIcon className={classes.iconOption} />
           )}
         </Grid>
@@ -85,6 +84,7 @@ const NotificationStructure = ({ title, description, type, payload, state }) => 
 }
 
 NotificationStructure.propTypes = {
+  id: PropTypes.number,
   title: PropTypes.string,
   description: PropTypes.string,
   type: PropTypes.string,
