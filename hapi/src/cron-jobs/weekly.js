@@ -28,10 +28,13 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
       const sponsorProfile = await accountApi.getProfile(sponsor.account)
       console.log('JSON-PARSE', JSON.parse(sponsorProfile.location))
       console.log('DONOR-LOCATION', JSON.parse(sponsorProfile.location))
-      return sponsorProfile.location && accountApi.isCoordinateInsideBox(
-        JSON.parse(sponsorProfile.location),
-        donor.location
-      ) 
+      return (
+        sponsorProfile.location &&
+        accountApi.isCoordinateInsideBox(
+          JSON.parse(sponsorProfile.location),
+          donor.location
+        )
+      )
     })
 
     console.log('NEARBY-SPONSORS', nerbySponsors)
