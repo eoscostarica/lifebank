@@ -24,7 +24,6 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
   })
 
   donorsWithLocation.forEach(async (donor) => {
-
     const nerbySponsors = newSponsors.filter(async (sponsor) => {
       const sponsorProfile = await accountApi.getProfile(sponsor.account)
       console.log('JSON-PARSE', JSON.parse(sponsorProfile.location))
@@ -98,7 +97,10 @@ const sendEmail = async () => {
 
 // generateNewSponsorAndOfferReportToDonors()
 // generateNewSponsorAndOfferReportToLifebanks()
+<<<<<<< HEAD
 
 module.exports = {
   generateNewSponsorAndOfferReportToDonors
 }
+=======
+>>>>>>> 909364ea83978b25a5c5343c1aac14a0a0d2cb83

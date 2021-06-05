@@ -879,7 +879,9 @@ const sendTransactionReport = async (to, language, role) => {
                         <br><br>
                         ${i18n.t(textTag + '.paragraph5')}
                         <br><br>
-                        ${i18n.t('mailUnsubscribe.content').concat(to, i18n.t('mailUnsubscribe.content2'))}
+                        ${i18n
+                          .t('mailUnsubscribe.content')
+                          .concat(to, i18n.t('mailUnsubscribe.content2'))}
                       </p>
                       </td>
                     </tr>
@@ -901,7 +903,10 @@ const sendTransactionReport = async (to, language, role) => {
 }
 
 const sendNewSponsorAndOfferReport = async (to, language, role) => {
-  const textTag = role === 'sponsor' ? 'sponsorAndOfferReportToDonors' : 'sponsorAndOfferReportToLifebanks'
+  const textTag =
+    role === 'sponsor'
+      ? 'sponsorAndOfferReportToDonors'
+      : 'sponsorAndOfferReportToLifebanks'
 
   i18n.changeLanguage(language)
   const subject = i18n.t(textTag + '.subject')
@@ -1052,7 +1057,9 @@ const sendNewSponsorAndOfferReport = async (to, language, role) => {
                         <br><br>
                         ${i18n.t(textTag + '.paragraph5')}
                         <br><br>
-                        ${i18n.t('mailUnsubscribe.content').concat(to, i18n.t('mailUnsubscribe.content2'))}
+                        ${i18n
+                          .t('mailUnsubscribe.content')
+                          .concat(to, i18n.t('mailUnsubscribe.content2'))}
                       </p>
                       </td>
                     </tr>
