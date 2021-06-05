@@ -28,12 +28,8 @@ export default (theme) => ({
     fontWeight: '500'
   },
   box: {
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     marginLeft: '60%',
-
-  },
-  boxList: {
-    margin: '5%'
   },
   showMoreBox: {
     display: 'flex',
@@ -50,9 +46,7 @@ export default (theme) => ({
     lineHeight: 1.14,
     letterSpacing: '1px',
     color: '#ffffff',
-    padding: '12px',
     marginBottom: 20,
-    marginLeft: '35%',
     position: 'absolute',
     bottom: 0
   }

@@ -19,12 +19,14 @@ import Button from '@material-ui/core/Button'
 import { useSubscription } from '@apollo/react-hooks'
 import { useUser } from '../../context/user.context'
 import NotificationStructure from '../NotificationStructure'
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive'
 
 import {
   NOTIFICATION_SUBSCRIPTION
 } from '../../gql'
 
 import styles from './styles'
+import { element } from 'prop-types'
 
 const useStyles = makeStyles(styles)
 
@@ -41,8 +43,9 @@ const Notification = () => {
   const isHome = location.pathname === '/'
   const theme = useTheme()
   const [currentUser] = useUser()
-  const [account, ] = useState(currentUser.account)
+  const [account] = useState(currentUser.account)
   const [notifications, setNotifications] = useState([])
+  const [notificationStatus, setNotificationStatus] = useState(true)
   const trigger = useScrollTrigger({
     target: window || undefined,
     disableHysteresis: true
@@ -57,10 +60,12 @@ const Notification = () => {
   }
 
   const handleClose = () => {
+    setLimit(10)
     setOpen(false)
   }
   const handleMoreNotifications = () => {
     setLimit(limit + 10)
+    setNotificationStatus(true)
   }
 
   const { error: errorNotifications, loading: loadingNotifications, data: notification = {} }
@@ -73,15 +78,32 @@ const Notification = () => {
     }
   }, [notification])
 
+  useEffect(()=>{
+    if(notification.notification){
+      var i
+      for (i = 0; i < notification.notification.length; i++) {
+        if(notification.notification[i].state) setNotificationStatus(false)
+      }
+    }
+  },[notification])
+
   return (
       <>
       <IconButton className={classes.wrapper} onClick={handleClickOpen}>
+        {notificationStatus &&         
         <NotificationsIcon
           alt="Notification icon"
           className={clsx(classes.notificationIcon, {
             [classes.notificationIconTransparent]: useTransparentBG
           })}
-        />
+        />}
+        {!notificationStatus &&         
+        <NotificationsActiveIcon
+          alt="Notification icon"
+          className={clsx(classes.notificationIcon, {
+            [classes.notificationIconTransparent]: useTransparentBG
+          })}
+        />}
       </IconButton>
       <Dialog className={classes.box}
         fullScreen
@@ -96,7 +118,7 @@ const Notification = () => {
             </Typography>
           </Toolbar>
         </AppBar>
-        <List className={classes.boxList}>
+        <List>
           {notifications.length > 0 && (
             <>
               {notifications.map((element, key) => (

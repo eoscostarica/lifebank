@@ -1,6 +1,7 @@
 export default (theme) => ({
   wrapper: {
     width: '100%',
+    boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.24)',
   },
 
   labelOption: {

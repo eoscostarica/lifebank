@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import { useTranslation } from 'react-i18next'
-import Divider from '@material-ui/core/Divider'
 import NewNotificationIcon from '@material-ui/icons/Brightness1';
 import OldNotificationIcon from '@material-ui/icons/PanoramaFishEye';
 import { useQuery, useMutation } from '@apollo/react-hooks'
@@ -37,11 +36,7 @@ const NotificationStructure = ({ id, title, description, type, payload, state })
       const { data } = await getData({ account: description.substring(5, 17) })
       setName(data.user[0].name)
     }
-
     response()
-
-    console.log("DATA")
-
   }, [description])
 
   const changeNotificationState = () => {
@@ -52,13 +47,8 @@ const NotificationStructure = ({ id, title, description, type, payload, state })
     })
   }
 
-  useEffect(() => {
-    changeNotificationState()
-  }, [])
-
   return (
-    <Box className={classes.wrapper}>
-      <Grid container item xs={12}>
+    <Button className={classes.wrapper} onMouseOver={changeNotificationState}>
         <Grid item xs={2}>
           {state === true && (
             <NewNotificationIcon className={classes.iconOption} />
@@ -77,9 +67,7 @@ const NotificationStructure = ({ id, title, description, type, payload, state })
             {description.replace(description.substring(5, 17), name)}
           </Typography>
         </Grid>
-      </Grid>
-      <Divider />
-    </Box>
+    </Button>
   )
 }
 
