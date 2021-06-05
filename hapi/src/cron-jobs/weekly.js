@@ -2,7 +2,6 @@ const mailApi = require('../utils/mail')
 const { accountApi, userApi, offerApi } = require('../api')
 
 const generateNewSponsorAndOfferReportToDonors = async () => {
-  console.log('GOT IN')
   const today = new Date()
   const monthAgo = new Date()
   monthAgo.setMonth(monthAgo.getMonth() - 1)
@@ -24,17 +23,15 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
   })
 
   donorsWithLocation.forEach(async (donor) => {
-    const nerbySponsors = newSponsors.filter(async (sponsor) => {
-      const sponsorProfile = await accountApi.getProfile(sponsor.account)
-      console.log('JSON-PARSE', JSON.parse(sponsorProfile.location))
-      console.log('DONOR-LOCATION', JSON.parse(sponsorProfile.location))
-      return sponsorProfile.location && accountApi.isCoordinateInsideBox(
+    let nerbySponsors = []
+    for(i = 0; i < newSponsors.length; i++) {
+      const tempSponsor = newSponsors[i]
+      const sponsorProfile = await accountApi.getProfile(tempSponsor.account)
+      sponsorProfile.location && accountApi.isCoordinateInsideBox(
         JSON.parse(sponsorProfile.location),
         donor.location
-      ) 
-    })
-
-    console.log('NEARBY-SPONSORS', nerbySponsors)
+      ) ? nerbySponsors.push(tempSponsor) : null
+    }
 
     mailApi.sendNewSponsorAndOfferReport(
       donor.email,
