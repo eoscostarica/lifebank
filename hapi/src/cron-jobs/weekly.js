@@ -2,6 +2,7 @@ const mailApi = require('../utils/mail')
 const { accountApi, userApi, offerApi } = require('../api')
 
 const generateNewSponsorAndOfferReportToDonors = async () => {
+  console.log('GOT IN')
   const today = new Date()
   const monthAgo = new Date()
   monthAgo.setMonth(monthAgo.getMonth() - 1)
@@ -26,11 +27,15 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
 
     const nerbySponsors = newSponsors.filter(async (sponsor) => {
       const sponsorProfile = await accountApi.getProfile(sponsor.account)
-      return sponsorProfile.location && isCoordinateInsideBox(
+      console.log('JSON-PARSE', JSON.parse(sponsorProfile.location))
+      console.log('DONOR-LOCATION', JSON.parse(sponsorProfile.location))
+      return sponsorProfile.location && accountApi.isCoordinateInsideBox(
         JSON.parse(sponsorProfile.location),
         donor.location
       ) 
     })
+
+    console.log('NEARBY-SPONSORS', nerbySponsors)
 
     mailApi.sendNewSponsorAndOfferReport(
       donor.email,
@@ -38,6 +43,9 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
       donor.role
     )
   })
+  return {
+    success: true
+  }
 }
 
 const generateNewSponsorAndOfferReportToLifebanks = async () => {
@@ -86,7 +94,11 @@ const sendEmail = async () => {
     }
   }
 }
-sendEmail()
+// sendEmail()
 
 // generateNewSponsorAndOfferReportToDonors()
 // generateNewSponsorAndOfferReportToLifebanks()
+
+module.exports = {
+  generateNewSponsorAndOfferReportToDonors
+}

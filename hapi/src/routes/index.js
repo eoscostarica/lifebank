@@ -22,6 +22,7 @@ const getReport = require('./get-report/get-report.route')
 const redeemOffer = require('./redeem-offer/redeem-offer.route')
 const checkEmailVerified = require('./check-email-verified/check-email-verified.route')
 const donate = require('./donate/donate.route')
+const test = require('./test/test.route')
 
 module.exports = [
   changePasswordRoute,
@@ -47,5 +48,6 @@ module.exports = [
   getReport,
   redeemOffer,
   checkEmailVerified,
-  donate
+  donate,
+  test
 ]

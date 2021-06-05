@@ -28,7 +28,7 @@ const GET_MANY = `
 const getMany = async (where = {}) => {
   const { offer } = await hasuraUtils.request(GET_MANY, { where })
 
-  return offer && offer.length > 0 ? user : null
+  return offer && offer.length > 0 ? offer : null
 }
 
 const redeem = async (from, details) => {
