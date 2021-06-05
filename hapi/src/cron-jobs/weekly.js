@@ -23,14 +23,17 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
   })
 
   donorsWithLocation.forEach(async (donor) => {
-    let nerbySponsors = []
-    for(i = 0; i < newSponsors.length; i++) {
+    const nerbySponsors = []
+    for (i = 0; i < newSponsors.length; i++) {
       const tempSponsor = newSponsors[i]
       const sponsorProfile = await accountApi.getProfile(tempSponsor.account)
-      sponsorProfile.location && accountApi.isCoordinateInsideBox(
+      sponsorProfile.location &&
+      accountApi.isCoordinateInsideBox(
         JSON.parse(sponsorProfile.location),
         donor.location
-      ) ? nerbySponsors.push(tempSponsor) : null
+      )
+        ? nerbySponsors.push(tempSponsor)
+        : null
     }
 
     mailApi.sendNewSponsorAndOfferReport(
