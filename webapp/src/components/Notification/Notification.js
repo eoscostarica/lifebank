@@ -82,7 +82,10 @@ const Notification = () => {
     if(notification.notification){
       var i
       for (i = 0; i < notification.notification.length; i++) {
-        if(notification.notification[i].state) setNotificationStatus(false)
+        if(notification.notification[i].state) {
+          setNotificationStatus(false)
+          break
+        }
       }
     }
   },[notification])
