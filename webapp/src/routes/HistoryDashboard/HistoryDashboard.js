@@ -45,14 +45,14 @@ const HistoryDashboard = (user) => {
     if (!getReportResult) {
       getReportQuery()
     } else {
-      if (currentUser && currentUser.role === 'lifebank') formatDataToLifebankReport()
-      // else if (currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
+      if (currentUser && currentUser.role === 'lifebank' || currentUser.role === 'sponsor') formatDataToReport()
+      //else if (currentUser && currentUser.role === 'donor') formatDataToDonotReport()
       else return
     }
 
   }, [getReportResult])
 
-  const formatDataToLifebankReport = () => {
+  const formatDataToReport = () => {
 
     const sent = getReportResult.notifications.sent
     const received = getReportResult.notifications.received
