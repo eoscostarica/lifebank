@@ -37,7 +37,7 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
     }
 
     let stringSponsorHtmlContent = ''
-    nerbySponsors.forEach((sponsor) =>  {
+    nerbySponsors.forEach((sponsor) => {
       stringSponsorHtmlContent = stringSponsorHtmlContent.concat(
         '<br><a href="',
         'https://lifebank.io/info/',
@@ -49,7 +49,7 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
     })
 
     let stringOfferHtmlContent = ''
-    newOffers.forEach((offer) =>  {
+    newOffers.forEach((offer) => {
       stringOfferHtmlContent = stringOfferHtmlContent.concat(
         '<br><a href="https://lifebank.io/">',
         offer.offer_name,
