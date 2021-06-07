@@ -30,6 +30,9 @@ export default (theme) => ({
   box: {
     justifyContent: 'center',
     marginLeft: '60%',
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '30%',
+    },
   },
   showMoreBox: {
     display: 'flex',
@@ -47,7 +50,7 @@ export default (theme) => ({
     letterSpacing: '1px',
     color: '#ffffff',
     marginBottom: 20,
-    position: 'absolute',
+    position: 'relative',
     bottom: 0
   }
 })

@@ -51,40 +51,40 @@ const NotificationStructure = ({ id, title, description, type, payload, state, d
   }
 
   return (
-    <Button className={classes.wrapper} onMouseOver={changeNotificationState}>
-      <Grid container xs={2}>
-        <Grid item xs={12}>
-          {state === true && (
-            <NewNotificationIcon className={classes.iconOption} />
-          )}
-          {state === false && (
-            <OldNotificationIcon className={classes.iconOption} />
-          )}
-        </Grid>
-      </Grid>
-      <Grid container xs={11}>
-        <Grid item xs={12}>
-          <Typography className={classes.labelOption}>
-            {title}
-          </Typography>
-        </Grid>
-        <Grid item xs={10}>
-          <Typography className={classes.labelOption}>
-            {description.replace(description.substring(5, 17), name)}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid container xs={6}>
-        <Grid item xs={12}>
-          <Typography className={classes.labelOption}>
-            {dateAndTime.substring(11, 19)}
-            <br ></br>
-            {dateAndTime.substring(5, 10) + "-" + dateAndTime.substring(0, 4)}
-          </Typography>
-        </Grid>
-      </Grid>
+    <>
 
-    </Button>
+      <Button className={classes.wrapper} onMouseOver={changeNotificationState}>
+        <Grid container xs={3}>
+          <Grid item xs={12}>
+            {state === true && (
+              <NewNotificationIcon className={classes.iconOption} />
+            )}
+
+          </Grid>
+        </Grid>
+        <Grid container xs={11}>
+          <Grid item xs={12}>
+            <Typography className={classes.title}>
+              {title}
+            </Typography>
+          </Grid>
+          <Grid item xs={10}>
+            <Typography className={classes.labelOption}>
+              {description.replace(description.substring(5, 17), name)}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container xs={6}>
+          <Grid item xs={12}>
+            <Typography className={classes.labelOption}>
+              {dateAndTime.substring(11, 19)}
+              <br ></br>
+              {dateAndTime.substring(5, 10) + "-" + dateAndTime.substring(0, 4)}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Button>
+    </>
   )
 }
 

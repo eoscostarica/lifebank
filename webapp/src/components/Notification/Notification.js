@@ -80,6 +80,7 @@ const Notification = () => {
   }, [notification])
 
   useEffect(() => {
+
     if (notification.notification) {
       var i
       for (i = 0; i < notification.notification.length; i++) {
@@ -89,6 +90,7 @@ const Notification = () => {
         }
       }
     }
+
   }, [notification])
 
   return (
