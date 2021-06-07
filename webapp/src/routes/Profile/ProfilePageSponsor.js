@@ -46,11 +46,6 @@ const ProfilePageSponsor = ({ profile }) => {
   const location = useLocation()
   const [openSnackbar, setOpenSnackbar] = useState(false)
 
-
-  const [state, setState] = useState({
-    bottom: false
-  })
-
   const { error: errorUsername, refetch: getData } = useQuery(GET_USERNAME, {
     variables: {
       account: profile.account
@@ -62,18 +57,6 @@ const ProfilePageSponsor = ({ profile }) => {
     if (reason === 'clickaway') return
 
     setOpenSnackbar({ ...openSnackbar, show: false })
-  }
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event) {
-      if (
-        event.type === 'keydown' &&
-        (event.key === 'Tab' || event.key === 'Shift')
-      )
-        return
-
-      setState({ ...state, [anchor]: open })
-    }
   }
 
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -296,7 +279,7 @@ const ProfilePageSponsor = ({ profile }) => {
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.address')}</Typography>
-            <Typography variant="body1">{profile.address}</Typography>
+            <Typography variant="body1">{profile.address.replace(/,/g, ', ')}</Typography>
           </Box>
         </>
       }
@@ -436,8 +419,7 @@ const ProfilePageSponsor = ({ profile }) => {
         </>
       )
       }
-      <>
-        <Divider className={classes.divider} />
+      <Divider className={classes.divider} />
         <Box className={classes.rowBoxLeft}>
           <Box
             display="flex"
@@ -448,10 +430,8 @@ const ProfilePageSponsor = ({ profile }) => {
             className={classes.buttonContainer}
           >
             <QRCode value={profile.account} size={200} />
-
           </Box>
         </Box>
-      </>
       <LinkRouter to={{ pathname: '/edit-profile', state: { isCompleting: true } }}
         className={classes.routerLink}
       >

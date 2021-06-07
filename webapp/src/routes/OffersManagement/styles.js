@@ -192,6 +192,10 @@ export default (theme) => ({
     paddingTop: "30px",
     width: "100%"
   },
+  offerName: {
+    textTransform: 'initial',
+    textAlign: 'left'
+  },
   toggleIcons: {
     width: '100%',
   },
@@ -209,5 +213,9 @@ export default (theme) => ({
     [theme.breakpoints.down('xs')]: {
       padding: 1
     }
+  },
+  script: {
+    marginLeft: 27
   }
+
 })

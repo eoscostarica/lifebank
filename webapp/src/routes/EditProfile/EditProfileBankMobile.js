@@ -218,7 +218,7 @@ const EditProfileBankMobile = ({ profile, onSubmit, setField, loading, userName 
       </Snackbar>
       <Box className={classes.mobile}>
         <Grid container spacing={SPACING}>
-          <Grid item xs={12} direction="column" spacing={SPACING} >
+          <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h2">
               {t('editProfile.editTitleLifebank')}
             </Typography>
@@ -226,7 +226,7 @@ const EditProfileBankMobile = ({ profile, onSubmit, setField, loading, userName 
               {t('editProfile.information')}
             </Typography>
           </Grid>
-          <Grid item xs={12} direction="column">
+          <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.officialName')}
             </Typography>
@@ -545,7 +545,7 @@ const EditProfileBankMobile = ({ profile, onSubmit, setField, loading, userName 
               )}
             </div>
           </Grid>
-          <Grid item xs={12} direction="column">
+          <Grid item xs={12}>
             <Link to="/profile" className={classes.routerLink}>
               <Button
                 variant="outlined"
