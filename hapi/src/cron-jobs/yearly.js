@@ -60,27 +60,4 @@ const generateDonorsTransactionReports = async () => {
   })
 }
 
-const sendEmail = async () => {
-  try {
-    await mailApi.sendConfirmMessage(
-      'leisterac.1997@gmail.com',
-      'YEARLY',
-      'TITLE',
-      'MESSAGE'
-    )
-
-    return {
-      success: true
-    }
-  } catch (error) {
-    console.log(error)
-    return {
-      success: false
-    }
-  }
-}
-
-// generateDonorsTransactionReports()
-module.exports = {
-  generateDonorsTransactionReports
-}
+generateDonorsTransactionReports()
