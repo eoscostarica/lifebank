@@ -176,7 +176,6 @@ const OffersManagement = () => {
 
   const Actions = (active, offer_id) => (
     <div>
-      {console.log(offer_id)}
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
         <MoreVertIcon />
       </Button>
