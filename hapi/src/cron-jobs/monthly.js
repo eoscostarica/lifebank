@@ -9,11 +9,46 @@ const generateSponsorsTransactionReports = async () => {
     role: { _eq: 'sponsor' }
   })
   users.forEach(async (sponsor) => {
-    const report = await sponsorApi.getReport(
+    const { notifications } = await sponsorApi.getReport(
       { dateFrom: monthAgo, dateFrom: today },
       sponsor.account
     )
-    mailApi.sendTransactionReport(sponsor.email, sponsor.language, sponsor.role)
+
+    let stringTransactionSentHtmlContent = ''
+    notifications.sent.forEach((sentTransaction) =>  {
+      stringTransactionSentHtmlContent = stringTransactionSentHtmlContent.concat(
+        '<tr>',
+        '<td>',
+        sentTransaction.send_to,
+        '</td>',
+        '<td>',
+        sentTransaction.tokens,
+        '</td>',
+        '<td>',
+        sentTransaction.created_at_date,
+        '</td>',
+        '</tr>',
+      )
+    })
+
+    let stringTransactionReceivedHtmlContent = ''
+    notifications.received.forEach((receivedTransaction) =>  {
+      stringTransactionReceivedHtmlContent = stringTransactionReceivedHtmlContent.concat(
+        '<tr>',
+        '<td>',
+        receivedTransaction.payerUser,
+        '</td>',
+        '<td>',
+        receivedTransaction.tokens ? receivedTransaction.tokens : 1,
+        '</td>',
+        '<td>',
+        receivedTransaction.created_at_date,
+        '</td>',
+        '</tr>',
+      )
+    })
+
+    mailApi.sendTransactionReport(sponsor.email, sponsor.language, sponsor.role, stringTransactionSentHtmlContent, stringTransactionReceivedHtmlContent)
   })
 }
 
@@ -27,14 +62,51 @@ const generateLifebanksTransactionReports = async () => {
   })
 
   users.forEach(async (lifebank) => {
-    const report = await lifebankApi.getReport(
+    const { notifications } = await lifebankApi.getReport(
       { dateFrom: monthAgo, dateTo: today },
       lifebank.account
     )
+
+    let stringTransactionSentHtmlContent = ''
+    notifications.sent.forEach((sentTransaction) =>  {
+      stringTransactionSentHtmlContent = stringTransactionSentHtmlContent.concat(
+        '<tr>',
+        '<td>',
+        sentTransaction.send_to,
+        '</td>',
+        '<td>',
+        sentTransaction.tokens,
+        '</td>',
+        '<td>',
+        sentTransaction.created_at_date,
+        '</td>',
+        '</tr>',
+      )
+    })
+
+    let stringTransactionReceivedHtmlContent = ''
+    notifications.received.forEach((receivedTransaction) =>  {
+      stringTransactionReceivedHtmlContent = stringTransactionReceivedHtmlContent.concat(
+        '<tr>',
+        '<td>',
+        receivedTransaction.business,
+        '</td>',
+        '<td>',
+        receivedTransaction.tokens,
+        '</td>',
+        '<td>',
+        receivedTransaction.created_at_date,
+        '</td>',
+        '</tr>',
+      )
+    })
+
     mailApi.sendTransactionReport(
       lifebank.email,
       lifebank.language,
-      lifebank.role
+      lifebank.role,
+      stringTransactionSentHtmlContent,
+      stringTransactionReceivedHtmlContent
     )
   })
 }
@@ -58,7 +130,10 @@ const sendEmail = async () => {
     }
   }
 }
-sendEmail()
 
 // generateSponsorsTransactionReports()
 // generateLifebanksTransactionReports()
+module.exports = {
+  generateSponsorsTransactionReports,
+  generateLifebanksTransactionReports
+}

@@ -90,6 +90,12 @@
       "paragraph3": "Nuevos negocios locales cerca:",
       "paragraph4": "Nuevas ofertas disponibles; échales un vistazo:",
       "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes."
+    },
+    "mailTransactionReport": {
+      "to": "para",
+      "from": "de",
+      "tokens": "tokens",
+      "date": "fecha"
     }
   }
 }

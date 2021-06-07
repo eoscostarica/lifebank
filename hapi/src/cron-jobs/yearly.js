@@ -1,5 +1,5 @@
 const mailApi = require('../utils/mail')
-const { lifebankApi, userApi } = require('../api')
+const { donorApi, userApi } = require('../api')
 
 const generateDonorsTransactionReports = async () => {
   const today = new Date()
@@ -9,11 +9,46 @@ const generateDonorsTransactionReports = async () => {
     role: { _eq: 'donor' }
   })
   users.forEach(async (donor) => {
-    const report = await lifebankApi.getReport(
+    const { notifications } = await donorApi.getReport(
       { dateFrom: yearAgo, dateTo: today },
       donor.account
     )
-    mailApi.sendTransactionReport(donor.email, donor.language, donor.role)
+
+    let stringTransactionSentHtmlContent = ''
+    notifications.sent.forEach((sentTransaction) =>  {
+      stringTransactionSentHtmlContent = stringTransactionSentHtmlContent.concat(
+        '<tr>',
+        '<td>',
+        sentTransaction.send_to,
+        '</td>',
+        '<td>',
+        sentTransaction.tokens,
+        '</td>',
+        '<td>',
+        sentTransaction.created_at_date,
+        '</td>',
+        '</tr>',
+      )
+    })
+
+    let stringTransactionReceivedHtmlContent = ''
+    notifications.received.forEach((receivedTransaction) =>  {
+      stringTransactionReceivedHtmlContent = stringTransactionReceivedHtmlContent.concat(
+        '<tr>',
+        '<td>',
+        receivedTransaction.send_from,
+        '</td>',
+        '<td>',
+        receivedTransaction.tokens,
+        '</td>',
+        '<td>',
+        receivedTransaction.created_at_date,
+        '</td>',
+        '</tr>',
+      )
+    })
+
+    mailApi.sendTransactionReport(donor.email, donor.language, donor.role, stringTransactionSentHtmlContent, stringTransactionReceivedHtmlContent)
   })
 }
 
@@ -36,6 +71,8 @@ const sendEmail = async () => {
     }
   }
 }
-sendEmail()
 
 // generateDonorsTransactionReports()
+module.exports = {
+  generateDonorsTransactionReports
+}

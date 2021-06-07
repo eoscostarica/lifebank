@@ -90,6 +90,12 @@
       "paragraph3": "New local businesses nearby:",
       "paragraph4": "New offers available; check them out:",
       "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors."
+    },
+    "mailTransactionReport": {
+      "to": "to",
+      "from": "from",
+      "tokens": "tokens",
+      "date": "date"
     }
   }
 }

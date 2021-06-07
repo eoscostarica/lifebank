@@ -725,7 +725,7 @@ const sendConfirmMessage = async (to, subject, title, message) => {
   })
 }
 
-const sendTransactionReport = async (to, language, role) => {
+const sendTransactionReport = async (to, language, role, sentHtmlContent, receivedHtmlContent) => {
   let textTag = 'donorTransactionReport'
   if (role === 'sponsor') textTag = 'sponsorTransactionReport'
   else textTag = 'lifebankTransactionReport'
@@ -874,8 +874,24 @@ const sendTransactionReport = async (to, language, role) => {
                         ${i18n.t(textTag + '.paragraph2')}
                         <br><br>
                         ${i18n.t(textTag + '.paragraph3')}
+                        <table>
+                          <tr>
+                            <th>${i18n.t('mailTransactionReport.to')}</th>
+                            <th>${i18n.t('mailTransactionReport.tokens')}</th>
+                            <th>${i18n.t('mailTransactionReport.date')}</th>
+                          </tr>
+                          ${sentHtmlContent}
+                        </table>
                         <br><br>
                         ${i18n.t(textTag + '.paragraph4')}
+                        <table>
+                          <tr>
+                          <th>${i18n.t('mailTransactionReport.from')}</th>
+                          <th>${i18n.t('mailTransactionReport.tokens')}</th>
+                          <th>${i18n.t('mailTransactionReport.date')}</th>
+                          </tr>
+                          ${receivedHtmlContent}
+                        </table>
                         <br><br>
                         ${i18n.t(textTag + '.paragraph5')}
                         <br><br>
