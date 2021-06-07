@@ -91,7 +91,7 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
 
   lifebanks.forEach(async (lifebank) => {
     const lifebankProfile = await getProfile(lifebank.account)
-    
+
     const nerbySponsors = []
     for (i = 0; i < newSponsors.length; i++) {
       const tempSponsor = newSponsors[i]
@@ -106,7 +106,7 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
     }
 
     let stringSponsorHtmlContent = ''
-    nerbySponsors.forEach((sponsor) =>  {
+    nerbySponsors.forEach((sponsor) => {
       stringSponsorHtmlContent = stringSponsorHtmlContent.concat(
         '<br><a href="',
         'https://lifebank.io/info/',
@@ -118,7 +118,7 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
     })
 
     let stringOfferHtmlContent = ''
-    newOffers.forEach((offer) =>  {
+    newOffers.forEach((offer) => {
       stringOfferHtmlContent = stringOfferHtmlContent.concat(
         '<br><a href="https://lifebank.io/">',
         offer.offer_name,

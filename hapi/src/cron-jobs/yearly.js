@@ -15,40 +15,48 @@ const generateDonorsTransactionReports = async () => {
     )
 
     let stringTransactionSentHtmlContent = ''
-    notifications.sent.forEach((sentTransaction) =>  {
-      stringTransactionSentHtmlContent = stringTransactionSentHtmlContent.concat(
-        '<tr>',
-        '<td>',
-        sentTransaction.send_to,
-        '</td>',
-        '<td>',
-        sentTransaction.tokens,
-        '</td>',
-        '<td>',
-        sentTransaction.created_at_date,
-        '</td>',
-        '</tr>',
-      )
+    notifications.sent.forEach((sentTransaction) => {
+      stringTransactionSentHtmlContent =
+        stringTransactionSentHtmlContent.concat(
+          '<tr>',
+          '<td>',
+          sentTransaction.send_to,
+          '</td>',
+          '<td>',
+          sentTransaction.tokens,
+          '</td>',
+          '<td>',
+          sentTransaction.created_at_date,
+          '</td>',
+          '</tr>'
+        )
     })
 
     let stringTransactionReceivedHtmlContent = ''
-    notifications.received.forEach((receivedTransaction) =>  {
-      stringTransactionReceivedHtmlContent = stringTransactionReceivedHtmlContent.concat(
-        '<tr>',
-        '<td>',
-        receivedTransaction.send_from,
-        '</td>',
-        '<td>',
-        receivedTransaction.tokens,
-        '</td>',
-        '<td>',
-        receivedTransaction.created_at_date,
-        '</td>',
-        '</tr>',
-      )
+    notifications.received.forEach((receivedTransaction) => {
+      stringTransactionReceivedHtmlContent =
+        stringTransactionReceivedHtmlContent.concat(
+          '<tr>',
+          '<td>',
+          receivedTransaction.send_from,
+          '</td>',
+          '<td>',
+          receivedTransaction.tokens,
+          '</td>',
+          '<td>',
+          receivedTransaction.created_at_date,
+          '</td>',
+          '</tr>'
+        )
     })
 
-    mailApi.sendTransactionReport(donor.email, donor.language, donor.role, stringTransactionSentHtmlContent, stringTransactionReceivedHtmlContent)
+    mailApi.sendTransactionReport(
+      donor.email,
+      donor.language,
+      donor.role,
+      stringTransactionSentHtmlContent,
+      stringTransactionReceivedHtmlContent
+    )
   })
 }
 

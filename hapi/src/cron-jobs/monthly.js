@@ -15,40 +15,48 @@ const generateSponsorsTransactionReports = async () => {
     )
 
     let stringTransactionSentHtmlContent = ''
-    notifications.sent.forEach((sentTransaction) =>  {
-      stringTransactionSentHtmlContent = stringTransactionSentHtmlContent.concat(
-        '<tr>',
-        '<td>',
-        sentTransaction.send_to,
-        '</td>',
-        '<td>',
-        sentTransaction.tokens,
-        '</td>',
-        '<td>',
-        sentTransaction.created_at_date,
-        '</td>',
-        '</tr>',
-      )
+    notifications.sent.forEach((sentTransaction) => {
+      stringTransactionSentHtmlContent =
+        stringTransactionSentHtmlContent.concat(
+          '<tr>',
+          '<td>',
+          sentTransaction.send_to,
+          '</td>',
+          '<td>',
+          sentTransaction.tokens,
+          '</td>',
+          '<td>',
+          sentTransaction.created_at_date,
+          '</td>',
+          '</tr>'
+        )
     })
 
     let stringTransactionReceivedHtmlContent = ''
-    notifications.received.forEach((receivedTransaction) =>  {
-      stringTransactionReceivedHtmlContent = stringTransactionReceivedHtmlContent.concat(
-        '<tr>',
-        '<td>',
-        receivedTransaction.payerUser,
-        '</td>',
-        '<td>',
-        receivedTransaction.tokens ? receivedTransaction.tokens : 1,
-        '</td>',
-        '<td>',
-        receivedTransaction.created_at_date,
-        '</td>',
-        '</tr>',
-      )
+    notifications.received.forEach((receivedTransaction) => {
+      stringTransactionReceivedHtmlContent =
+        stringTransactionReceivedHtmlContent.concat(
+          '<tr>',
+          '<td>',
+          receivedTransaction.payerUser,
+          '</td>',
+          '<td>',
+          receivedTransaction.tokens ? receivedTransaction.tokens : 1,
+          '</td>',
+          '<td>',
+          receivedTransaction.created_at_date,
+          '</td>',
+          '</tr>'
+        )
     })
 
-    mailApi.sendTransactionReport(sponsor.email, sponsor.language, sponsor.role, stringTransactionSentHtmlContent, stringTransactionReceivedHtmlContent)
+    mailApi.sendTransactionReport(
+      sponsor.email,
+      sponsor.language,
+      sponsor.role,
+      stringTransactionSentHtmlContent,
+      stringTransactionReceivedHtmlContent
+    )
   })
 }
 
@@ -68,37 +76,39 @@ const generateLifebanksTransactionReports = async () => {
     )
 
     let stringTransactionSentHtmlContent = ''
-    notifications.sent.forEach((sentTransaction) =>  {
-      stringTransactionSentHtmlContent = stringTransactionSentHtmlContent.concat(
-        '<tr>',
-        '<td>',
-        sentTransaction.send_to,
-        '</td>',
-        '<td>',
-        sentTransaction.tokens,
-        '</td>',
-        '<td>',
-        sentTransaction.created_at_date,
-        '</td>',
-        '</tr>',
-      )
+    notifications.sent.forEach((sentTransaction) => {
+      stringTransactionSentHtmlContent =
+        stringTransactionSentHtmlContent.concat(
+          '<tr>',
+          '<td>',
+          sentTransaction.send_to,
+          '</td>',
+          '<td>',
+          sentTransaction.tokens,
+          '</td>',
+          '<td>',
+          sentTransaction.created_at_date,
+          '</td>',
+          '</tr>'
+        )
     })
 
     let stringTransactionReceivedHtmlContent = ''
-    notifications.received.forEach((receivedTransaction) =>  {
-      stringTransactionReceivedHtmlContent = stringTransactionReceivedHtmlContent.concat(
-        '<tr>',
-        '<td>',
-        receivedTransaction.business,
-        '</td>',
-        '<td>',
-        receivedTransaction.tokens,
-        '</td>',
-        '<td>',
-        receivedTransaction.created_at_date,
-        '</td>',
-        '</tr>',
-      )
+    notifications.received.forEach((receivedTransaction) => {
+      stringTransactionReceivedHtmlContent =
+        stringTransactionReceivedHtmlContent.concat(
+          '<tr>',
+          '<td>',
+          receivedTransaction.business,
+          '</td>',
+          '<td>',
+          receivedTransaction.tokens,
+          '</td>',
+          '<td>',
+          receivedTransaction.created_at_date,
+          '</td>',
+          '</tr>'
+        )
     })
 
     mailApi.sendTransactionReport(

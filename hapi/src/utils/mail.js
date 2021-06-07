@@ -725,7 +725,13 @@ const sendConfirmMessage = async (to, subject, title, message) => {
   })
 }
 
-const sendTransactionReport = async (to, language, role, sentHtmlContent, receivedHtmlContent) => {
+const sendTransactionReport = async (
+  to,
+  language,
+  role,
+  sentHtmlContent,
+  receivedHtmlContent
+) => {
   let textTag = 'donorTransactionReport'
   if (role === 'sponsor') textTag = 'sponsorTransactionReport'
   else textTag = 'lifebankTransactionReport'
