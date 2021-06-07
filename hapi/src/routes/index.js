@@ -1,4 +1,5 @@
 const changePasswordRoute = require('./change-password/change-password.route')
+const changeEmailRoute = require('./change-email/change-email.route')
 const checkUsernameRoute = require('./check-username/check-username.route')
 const createAccountRoute = require('./create-account/create-account.route')
 const createAccountAuthRoute = require('./create-account-auth/create-account-auth.route')
@@ -27,6 +28,7 @@ const removeOffer = require('./remove-offer/remove-offer.route')
 
 module.exports = [
   changePasswordRoute,
+  changeEmailRoute,
   checkUsernameRoute,
   createAccountRoute,
   createAccountAuthRoute,

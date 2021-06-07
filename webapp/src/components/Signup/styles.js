@@ -13,7 +13,7 @@ export default (theme) => ({
   },
   dimensions: {
     width: 500,
-    height: 620,
+    height: 640,
     paddingTop: '48px',
     paddingLeft: '48px',
     paddingRight: '48px',

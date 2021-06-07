@@ -3,19 +3,27 @@ export default (theme) => ({
     marginTop: theme.spacing(4)
   },
   textFieldWrapper: {
+    position: 'relative',
+    zIndex: 2,
+    width: '100%',
     padding: theme.spacing(2, 0),
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    paddingTop: "10px",
-    marginBottom: 16
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.24)',
+  },
+  divider: {
+    marginTop: "25px",
+  },
+  dividerSecondVersion: {
+    marginBottom: "20px",
   },
   closeIcon: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 3,
     left: 14,
-    paddingTop: "10px",
-    marginBottom: 16,
+    padding: theme.spacing(2, 0),
     '& svg': {
       fontSize: 25,
       color: "rgba(0, 0, 0, 0.6)"
@@ -31,7 +39,6 @@ export default (theme) => ({
     letterSpacing: "0.25px",
     textAlign: "center",
     color: "rgba(0, 0, 0, 0.87)",
-    marginBottom: 15
   },
   text: {
     fontFamily: "Roboto",
@@ -43,9 +50,24 @@ export default (theme) => ({
     letterSpacing: "0.25px",
     textAlign: "left",
     color: "rgba(0, 0, 0, 0.6)",
+    marginBottom: '20px'
   },
   box: {
-    marginTop: '20px',
+    marginBottom: '25px',
+    width: '100%'
+  },
+  boxSecondVersion:{
+    width: '100%',
+    marginBottom: '20px'
+  },
+  boxThirdVersion: {
+    width: '100%',
+    marginTop: '20px'
+  },
+  checkBox: {
+    display: 'flex',
+    marginBottom: '20px',
+    justifyContent: 'center',
     width: '100%'
   },
   loginBtn: {
@@ -76,11 +98,7 @@ export default (theme) => ({
     width: '100%',
     marginTop: '6%'
   },
-  marginTopBox: {
-    marginTop: '16%'
-  },
   button: {
-    marginTop: '10px',
     paddingLeft: '30px',
     paddingRight: '30px',
     borderRadius: '50px',
@@ -96,8 +114,9 @@ export default (theme) => ({
     color: '#ffffff',
   },
   dimensions: {
+    paddingTop: '32px',
     width: 500,
-    height: 625,
+    height: 640,
     [theme.breakpoints.down('sm')]: {
       width: "100%",
       height: "100%"

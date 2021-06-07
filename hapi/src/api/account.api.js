@@ -327,7 +327,7 @@ const getDonorData = async (account) => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
-  const { email, name } = await userApi.getOne({
+  const { email, name, email_subscription } = await userApi.getOne({
     account: { _eq: account }
   })
 
@@ -336,6 +336,7 @@ const getDonorData = async (account) => {
     name,
     communities,
     balance,
+    email_subscription,
     consent: !!consent
   }
 }
@@ -351,7 +352,7 @@ const getLifebankData = async (account) => {
   const info = await locationApi.infoQuery(account)
 
   if (Object.entries(profile).length === 0) {
-    const { email } = await userApi.getOne({
+    const { email, email_subscription } = await userApi.getOne({
       account: { _eq: account }
     })
     const data = await preRegLifebank.getOne({
@@ -364,6 +365,7 @@ const getLifebankData = async (account) => {
       geolocation: JSON.parse(data.preregister_lifebank[0].coordinates),
       about: data.preregister_lifebank[0].description,
       email,
+      email_subscription,
       photos: data.preregister_lifebank[0].photos || '[]',
       logo_url: data.preregister_lifebank[0].logo_url || '',
       immunity_test: data.preregister_lifebank[0].immunity_test,
@@ -489,13 +491,10 @@ const getSponsorData = async (account) => {
     account: { _eq: account }
   })
 
-  const profileAndEmail = {
-    ...profile,
-    email: user.email
-  }
-
   return {
-    ...profileAndEmail,
+    ...profile,
+    email: user.email,
+    email_subscription: user.email_subscription,
     communities,
     balance,
     name,
@@ -601,7 +600,8 @@ const getReport = async (where, account) => {
 
   if (!user) throw new Error('No valid account')
 
-  if (user.role === 'sponsor')
+  if (user.role === 'donor') return await getReportDonor(where, user.account)
+  else if (user.role === 'sponsor')
     return await getReportSponsor(where, user.account)
   else if (user.role === 'lifebank')
     return await getReportLifebank(where, user.account)
@@ -612,6 +612,29 @@ const getReport = async (where, account) => {
         received: []
       }
     }
+}
+
+const getReportDonor = async ({ dateFrom, dateTo }, account) => {
+  const where = { account_to: { _eq: account } }
+  if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  const notifications = await notificationApi.getMany(where)
+
+  const received = notifications
+    ? notifications.map((notification) => {
+        return {
+          payerUser: notification.account_from,
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          offer: notification.payload.offer
+        }
+      })
+    : []
+
+  return {
+    notifications: {
+      received: received
+    }
+  }
 }
 
 const getReportSponsor = async ({ dateFrom, dateTo }, account) => {
