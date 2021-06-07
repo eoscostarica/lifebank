@@ -419,12 +419,7 @@ const ProfilePageSponsor = ({ profile }) => {
         </>
       )
       }
-<<<<<<< HEAD
       <Divider className={classes.divider} />
-=======
-      <>
-        <Divider className={classes.divider} />
->>>>>>> 20ed64f14872139e9b00d8790e0592c1f8f1911e
         <Box className={classes.rowBoxLeft}>
           <Box
             display="flex"
