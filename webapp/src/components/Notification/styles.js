@@ -37,7 +37,7 @@ export default (theme) => ({
   },
   showMore: {
     borderRadius: '50px',
-    backgroundColor: '#ba0d0d',
+    backgroundColor: '#504c4c',
     width: "30%",
     fontSize: '14px',
     fontWeight: 500,

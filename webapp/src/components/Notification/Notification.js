@@ -63,13 +63,14 @@ const Notification = () => {
     setLimit(10)
     setOpen(false)
   }
+
   const handleMoreNotifications = () => {
     setLimit(limit + 10)
     setNotificationStatus(true)
   }
 
   const { error: errorNotifications, loading: loadingNotifications, data: notification = {} }
-  = useSubscription( NOTIFICATION_SUBSCRIPTION, { variables: { account_to: account, limit: limit } })
+    = useSubscription(NOTIFICATION_SUBSCRIPTION, { variables: { account_to: account, limit: limit } })
 
   useEffect(() => {
     if (Object.keys(notification).length) {
@@ -78,35 +79,35 @@ const Notification = () => {
     }
   }, [notification])
 
-  useEffect(()=>{
-    if(notification.notification){
+  useEffect(() => {
+    if (notification.notification) {
       var i
       for (i = 0; i < notification.notification.length; i++) {
-        if(notification.notification[i].state) {
+        if (notification.notification[i].state) {
           setNotificationStatus(false)
           break
         }
       }
     }
-  },[notification])
+  }, [notification])
 
   return (
-      <>
+    <>
       <IconButton className={classes.wrapper} onClick={handleClickOpen}>
-        {notificationStatus &&         
-        <NotificationsIcon
-          alt="Notification icon"
-          className={clsx(classes.notificationIcon, {
-            [classes.notificationIconTransparent]: useTransparentBG
-          })}
-        />}
-        {!notificationStatus &&         
-        <NotificationsActiveIcon
-          alt="Notification icon"
-          className={clsx(classes.notificationIcon, {
-            [classes.notificationIconTransparent]: useTransparentBG
-          })}
-        />}
+        {notificationStatus &&
+          <NotificationsIcon
+            alt="Notification icon"
+            className={clsx(classes.notificationIcon, {
+              [classes.notificationIconTransparent]: useTransparentBG
+            })}
+          />}
+        {!notificationStatus &&
+          <NotificationsActiveIcon
+            alt="Notification icon"
+            className={clsx(classes.notificationIcon, {
+              [classes.notificationIconTransparent]: useTransparentBG
+            })}
+          />}
       </IconButton>
       <Dialog className={classes.box}
         fullScreen
@@ -133,13 +134,14 @@ const Notification = () => {
                   type={element.type}
                   payload={element.payload}
                   state={element.state}
+                  dateAndTime={element.created_at}
                 />
               ))}
             </>
           )}
         </List>
         <Box className={classes.showMoreBox}>
-          {!loadingNotifications && 
+          {!loadingNotifications &&
             <Button variant="contained" className={classes.showMore} color="primary" onClick={handleMoreNotifications}>
               {t('common.loadMore')}
             </Button>
@@ -147,7 +149,7 @@ const Notification = () => {
           {loadingNotifications && <CircularProgress />}
         </Box>
       </Dialog>
-  </>
+    </>
   )
 }
 

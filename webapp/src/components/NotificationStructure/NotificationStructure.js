@@ -14,10 +14,12 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 
-const NotificationStructure = ({ id, title, description, type, payload, state }) => {
+const NotificationStructure = ({ id, title, description, type, payload, state, dateAndTime }) => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [name, setName] = useState()
+  const [time, setTime] = useState()
+
 
   const { refetch: getData } = useQuery(GET_ACCOUNT_NAME, {
     variables: {
@@ -35,6 +37,7 @@ const NotificationStructure = ({ id, title, description, type, payload, state })
     const response = async () => {
       const { data } = await getData({ account: description.substring(5, 17) })
       setName(data.user[0].name)
+
     }
     response()
   }, [description])
@@ -49,7 +52,8 @@ const NotificationStructure = ({ id, title, description, type, payload, state })
 
   return (
     <Button className={classes.wrapper} onMouseOver={changeNotificationState}>
-        <Grid item xs={2}>
+      <Grid container xs={2}>
+        <Grid item xs={12}>
           {state === true && (
             <NewNotificationIcon className={classes.iconOption} />
           )}
@@ -57,16 +61,29 @@ const NotificationStructure = ({ id, title, description, type, payload, state })
             <OldNotificationIcon className={classes.iconOption} />
           )}
         </Grid>
-        <Grid item xs={4}>
+      </Grid>
+      <Grid container xs={11}>
+        <Grid item xs={12}>
           <Typography className={classes.labelOption}>
             {title}
           </Typography>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={10}>
           <Typography className={classes.labelOption}>
             {description.replace(description.substring(5, 17), name)}
           </Typography>
         </Grid>
+      </Grid>
+      <Grid container xs={6}>
+        <Grid item xs={12}>
+          <Typography className={classes.labelOption}>
+            {dateAndTime.substring(11, 19)}
+            <br ></br>
+            {dateAndTime.substring(5, 10) + "-" + dateAndTime.substring(0, 4)}
+          </Typography>
+        </Grid>
+      </Grid>
+
     </Button>
   )
 }
@@ -78,6 +95,7 @@ NotificationStructure.propTypes = {
   type: PropTypes.string,
   payload: PropTypes.object,
   state: PropTypes.bool,
+  dateAndTime: PropTypes.string
 
 }
 export default NotificationStructure
