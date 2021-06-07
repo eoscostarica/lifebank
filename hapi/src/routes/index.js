@@ -49,5 +49,5 @@ module.exports = [
   getReport,
   redeemOffer,
   checkEmailVerified,
-  donate,
+  donate
 ]
