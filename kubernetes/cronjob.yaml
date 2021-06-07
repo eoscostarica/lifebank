@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
             - name: weekly
-              image: leister/lifebank-hapi:latest
+              image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HAPI}:latest
               args:
                 - /bin/sh
                 - -c
@@ -32,7 +32,7 @@ spec:
         spec:
           containers:
             - name: monthly
-              image: leister/lifebank-hapi:latest
+              image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HAPI}:latest
               args:
                 - /bin/sh
                 - -c
@@ -54,7 +54,7 @@ spec:
         spec:
           containers:
             - name: yearly
-              image: leister/lifebank-hapi:latest
+              image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HAPI}:latest
               args:
                 - /bin/sh
                 - -c
