@@ -511,7 +511,7 @@
       "activate": "Activate",
       "active": "Active",
       "inactive": "Inactive",
-      "noProvidedDate": "No provided date",
+      "noProvidedDate": "-",
       "youHaveNoAddedOffers": "You have no offers available",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it",
