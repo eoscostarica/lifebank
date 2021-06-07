@@ -266,7 +266,7 @@ const InfoPage = () => {
                   {t('signup.address')}
                 </Typography>
                 <Typography className={classes.text} variant="body1">
-                  {profile.address}
+                  {profile.address.replace(/,/g, ', ')}
                 </Typography>
               </Box>
               <Divider className={classes.divider} />
@@ -309,49 +309,6 @@ const InfoPage = () => {
                   >
                     {profile.requirement.replaceAll('\n', ', ')}
                   </Typography>
-                </Box>
-              )}
-              {profile.role === 'lifebank' && (
-                <Box className={classes.midLabel}>
-                  <Divider className={classes.divider} />
-                  <Typography
-                    className={classes.boldText}
-                    variant="subtitle1"
-                  >
-                    {t('common.bloodUrgency')}
-                  </Typography>
-                  <Box className={classes.bloodDemand}>
-                    <Box className={classes.markLabel}>
-                      <Typography
-                        variant="body1"
-                        className={`${classes.midLabel} ${classes.text}`}
-                      >
-                        {t('editProfile.low')}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        className={`${classes.midLabel} ${classes.text}`}
-                      >
-                        {t('editProfile.medium')}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        className={`${classes.midLabel} ${classes.text}`}
-                      >
-                        {t('editProfile.high')}
-                      </Typography>
-                    </Box>
-                    <Box className={classes.slider}>
-                      <Slider
-                        valueLabelDisplay="off"
-                        color="secondary"
-                        defaultValue={profile.urgencyLevel}
-                        step={null}
-                        min={1}
-                        max={3}
-                      />
-                    </Box>
-                  </Box>
                 </Box>
               )}
               {profile.role === 'sponsor' && JSON.parse(profile.social_media_links).length > 0 && (
@@ -423,8 +380,6 @@ const InfoPage = () => {
             alignItems="flex-start"
             spacing={0}
             className={classes.mainGridDesktop}
-            md={12}
-            xl={10}
           >
             {profile.role === 'sponsor' && (
               <Grid item md={12}>

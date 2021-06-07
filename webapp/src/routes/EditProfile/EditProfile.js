@@ -2,7 +2,7 @@ import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { Alert, AlertTitle } from '@material-ui/lab'
 import Snackbar from '@material-ui/core/Snackbar'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import IconButton from '@material-ui/core/IconButton'
 import Box from '@material-ui/core/Box'
@@ -33,13 +33,10 @@ const EditProfileSponsorMobile = lazy(() => import('./EditProfileSponsorMobile')
 const EditProfilePage = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
-  const location = useLocation()
   const history = useHistory()
   const [, { logout }] = useUser()
   const [currentUser] = useUser()
   const [openSnackbar, setOpenSnackbar] = useState(false)
-  const [isCompleting, setIsCompleting] = useState()
-  const [userName, setuserName] = useState()
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: false
@@ -48,7 +45,7 @@ const EditProfilePage = () => {
     loadProfile,
     { error: errorProfile, loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
-
+ 
   const [
     revokeConsent,
     {
@@ -181,7 +178,7 @@ const EditProfilePage = () => {
             <Suspense fallback={<CircularProgress />}>
               <EditProfileBank
                 profile={profile}
-                userName={userName}
+                userName={profile.username}
                 onSubmit={handleUpdateUser}
                 loading={editLoading}
               />
@@ -197,7 +194,7 @@ const EditProfilePage = () => {
             <Suspense fallback={<CircularProgress />}>
               <EditProfileBankMobile
                 profile={profile}
-                userName={userName}
+                userName={profile.username}
                 onSubmit={handleUpdateUser}
                 loading={editLoading}
               />

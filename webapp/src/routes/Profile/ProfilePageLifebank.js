@@ -242,7 +242,7 @@ const ProfilePageLifebank = ({ profile }) => {
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
             <Typography className={classes.rowTitle} variant="subtitle1">{t('signup.address')}</Typography>
-            <Typography variant="body1">{profile.address}</Typography>
+            <Typography variant="body1">{profile.address.replace(/,/g, ', ')}</Typography>
           </Box>
         </>
       }
