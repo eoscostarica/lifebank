@@ -22,10 +22,19 @@ import Divider from '@material-ui/core/Divider'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import DialogContent from '@material-ui/core/DialogContent'
 import InputLabel from '@material-ui/core/InputLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import LanguageSelector from '../LanguageSelector'
 
-import { PROFILE_QUERY, CHANGE_PASSWORD, GET_ACCOUNT_SIGNUP_METHOD, GET_EMAIL } from '../../gql'
+import { PROFILE_QUERY, 
+          CHANGE_PASSWORD, 
+          GET_ACCOUNT_SIGNUP_METHOD,
+          CHANGE_EMAIL, 
+          UPDATE_EMAIL_SUBSCRIPTION_MUTATION 
+        }
+from '../../gql'
+
 import { useUser } from '../../context/user.context'
 import styles from './styles'
 
@@ -54,6 +63,16 @@ const Settings = ({ onCloseSetting }) => {
   ] = useMutation(CHANGE_PASSWORD)
 
   const [
+    changeEmail,
+    { loading: loadingChangeEmail, error: errorChangeEmail, data: { change_email: responseChangeEmail } = {} }
+  ] = useMutation(CHANGE_EMAIL)
+
+  const [
+    updateEmailSubscription,
+    { error: errorUpdateEmailSubscription, loading: updateEmailSubscriptionLoading, data: { update_user: updateEmailSubscriptionResult } = {} }
+  ] = useMutation(UPDATE_EMAIL_SUBSCRIPTION_MUTATION)
+
+  const [
     getAccountSignupMethod,
     { data: { signup_method: getAccountSignupMethodResult } = {} }
   ] = useMutation(GET_ACCOUNT_SIGNUP_METHOD)
@@ -79,6 +98,13 @@ const Settings = ({ onCloseSetting }) => {
     setUser({ ...user, [field]: value })
   }
 
+  const handleSetFieldEmail = (field, value) => {
+    const regularExpresion = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    if (regularExpresion.test(value)) setValidEmailFormat(true)
+    else setValidEmailFormat(false)
+    setUser({ ...user, [field]: value })
+  }
+
   const handleSubmitChangePassword = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
         changePassword({
@@ -100,6 +126,31 @@ const Settings = ({ onCloseSetting }) => {
     })
   }
 
+  const handleSubmitChangeEmail = async () => {
+    if(user, profile){
+      changeEmail({
+        variables: {
+          account: profile.account,
+          email: user.email,
+        }
+      })
+      user.email = null
+    }
+  }
+  
+  const handleChangeCheckBox = (event) => {
+    updateEmailSubscription({
+      variables: {
+        account: profile.account,
+        state: event.target.checked
+      }
+    })
+  }
+
+  useEffect(() => {
+      loadProfile()
+  }, [updateEmailSubscriptionResult])
+  
   useEffect(() => {
     if (errorProfile)
       setOpenSnackbar({
@@ -108,6 +159,22 @@ const Settings = ({ onCloseSetting }) => {
         severity: 'error'
       })
   }, [errorProfile, t])
+
+  useEffect(() => {
+    if (errorChangeEmail)
+      setOpenSnackbar({
+        show: true,
+        message: t('setting.emailError'),
+        severity: 'error'
+      })
+      if(responseChangeEmail)
+      setOpenSnackbar({
+        show: true,
+        message: t('setting.emailChanged'),
+        severity: 'success'
+      })
+      loadProfile()
+  }, [changeEmail,errorChangeEmail,responseChangeEmail])
 
   useEffect(() => {
     if (responseChangePassword) {
@@ -168,6 +235,16 @@ const Settings = ({ onCloseSetting }) => {
       e.preventDefault()
     }
   }
+
+  function executeEmailChange(e) {
+    if (e.key === 'Enter' && validEmailFormat) {
+      e.preventDefault()
+    }
+    else if (e.key === 'Enter' && (!loading)) {
+      e.preventDefault()
+    }
+  }
+
   return (
     <>
       <Dialog
@@ -181,38 +258,108 @@ const Settings = ({ onCloseSetting }) => {
         BackdropProps={{
           timeout: 500
         }}
-      >
+      >  
+        <Box className={classes.closeIcon}>
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={handleOpen}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        </Box>
+        <Box className={classes.textFieldWrapper}>
+          <Typography variant="h3" className={classes.title}>
+            {t('setting.setting')}
+          </Typography>
+        </Box>
         <DialogContent className={classes.dimensions} >
-          <Box className={classes.closeIcon}>
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={handleOpen}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          </Box>
-          <Box className={classes.textFieldWrapper}>
-            <Typography variant="h3" className={classes.title}>
-              {t('setting.setting')}
-            </Typography>
-            <Divider />
-          </Box>
           <form autoComplete="off">
-            <Grid container >
-              <Grid item xs={12}>
-                <Box className={classes.box}>
+            <Grid container>
+              <Grid container spacing = {2}>
+                <Grid item xs={6}>
+                  <Box className={classes.boxSecondVersion}>
+                    <Typography variant="h3" className={classes.text}>
+                      {t('setting.language')}
+                    </Typography>
+                  </Box>
+                  <Box className={classes.boxSecondVersion}>
+                    <LanguageSelector alt="settings" />
+                  </Box>
+                </Grid>
+                <Divider orientation="vertical" flexItem/>
+                <Grid item xs={5}>
+                  <Box className={classes.boxSecondVersion}>
+                    <Typography variant="h3" className={classes.text}>
+                      {t('setting.suscribeSection')}
+                    </Typography>
+                  </Box>
+                  <Box className={classes.checkBox}>
+                    <FormControlLabel
+                      disabled= {loading}
+                      checked = {profile ? profile.email_subscription : true}
+                      control={
+                      <Checkbox 
+                        color="primary"
+                        onChange={handleChangeCheckBox}
+                      />
+                      }
+                      label={t('setting.checkBoxSuscribe')}
+                      labelPlacement="start"
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid container item xs={12}>
+                <Box className={classes.boxThirdVersion}>
+                  <Divider className={classes.dividerSecondVersion}/>  
                   <Typography variant="h3" className={classes.text}>
-                    {t('setting.language')}
+                    {t('setting.changeEmail')}
                   </Typography>
-                </Box>
-                <Box className={classes.box}>
-                  <LanguageSelector alt="settings" />
+                  <Grid item xs={12}>
+                    <TextField
+                      id="currentEmail"
+                      variant="filled"
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{
+                        endAdornment: (
+                          <>
+                            <InputLabel id="select-label">
+                              {profile ? profile.email:''}
+                            </InputLabel>
+                          </>
+                        )
+                      }}
+                      onChange={(event) =>
+                        handleSetFieldEmail('email', event.target.value)
+                      }
+                      onKeyPress={(event) =>
+                        executeEmailChange(event)
+                      }
+                      className={classes.box}
+                    >
+                    </TextField>
+                  </Grid>
+                  <Box className={classes.box}>
+                    <Button
+                      disabled={(!validEmailFormat  || !user.email) || loadingChangeEmail || loading}
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleSubmitChangeEmail}
+                      className={classes.button}
+                    >
+                      {t('setting.changeEmail')}
+                    </Button>
+                  </Box>
+                  <Box className={classes.loadingBox}>
+                    {loadingChangeEmail && <CircularProgress />}
+                  </Box>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
+              <Grid container item xs={12}>
                 <Box className={classes.box}>
+                  <Divider className={classes.dividerSecondVersion}/>
                   <Typography variant="h3" className={classes.text}>
                     {t('setting.changePassword')}
                   </Typography>
@@ -284,7 +431,7 @@ const Settings = ({ onCloseSetting }) => {
                       className={classes.box}
                     />
                   </Grid>
-                  <Box className={classes.box}>
+                  <Box>
                     <Button
                       disabled={(!user.newPassword || !user.currentPassword) || loadingChangePassword}
                       variant="contained"
@@ -297,12 +444,14 @@ const Settings = ({ onCloseSetting }) => {
                   </Box>
                   <Box className={classes.loadingBox}>
                     {loadingChangePassword && <CircularProgress />}
+                    {loading && <CircularProgress />}
                   </Box>
                 </Box>
               </Grid>
             </Grid>
           </form>
         </DialogContent>
+
         <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleCloseSnackBar}>
           <Alert
             className={classes.alert}
