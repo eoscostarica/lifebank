@@ -326,7 +326,7 @@ const getDonorData = async (account) => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
-  const { email, name } = await userApi.getOne({
+  const { email, name, email_subscription } = await userApi.getOne({
     account: { _eq: account }
   })
 
@@ -335,6 +335,7 @@ const getDonorData = async (account) => {
     name,
     communities,
     balance,
+    email_subscription,
     consent: !!consent
   }
 }
@@ -350,7 +351,7 @@ const getLifebankData = async (account) => {
   const info = await locationApi.infoQuery(account)
 
   if (Object.entries(profile).length === 0) {
-    const { email } = await userApi.getOne({
+    const { email, email_subscription } = await userApi.getOne({
       account: { _eq: account }
     })
     const data = await preRegLifebank.getOne({
@@ -363,6 +364,7 @@ const getLifebankData = async (account) => {
       geolocation: JSON.parse(data.preregister_lifebank[0].coordinates),
       about: data.preregister_lifebank[0].description,
       email,
+      email_subscription,
       photos: data.preregister_lifebank[0].photos || '[]',
       logo_url: data.preregister_lifebank[0].logo_url || '',
       immunity_test: data.preregister_lifebank[0].immunity_test,
@@ -488,13 +490,10 @@ const getSponsorData = async (account) => {
     account: { _eq: account }
   })
 
-  const profileAndEmail = {
-    ...profile,
-    email: user.email
-  }
-
   return {
-    ...profileAndEmail,
+    ...profile,
+    email: user.email,
+    email_subscription: user.email_subscription,
     communities,
     balance,
     name,

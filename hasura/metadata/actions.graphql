@@ -1,4 +1,12 @@
 type Mutation {
+  change_email (
+    account: String!
+    email: String!
+  ): change_email_output
+}
+
+
+type Mutation {
   change_password (
     email: String!
     emailContent: jsonb!
@@ -344,5 +352,9 @@ type check_email_verified_output {
 
 type donate_output {
   transaction_id : String!
+}
+
+type change_email_output {
+  success : Boolean!
 }
 
