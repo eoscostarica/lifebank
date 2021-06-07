@@ -918,7 +918,13 @@ const sendTransactionReport = async (to, language, role, sentHtmlContent, receiv
   })
 }
 
-const sendNewSponsorAndOfferReport = async (to, language, role, sponsorHtmlContent, offerHtmlContent) => {
+const sendNewSponsorAndOfferReport = async (
+  to,
+  language,
+  role,
+  sponsorHtmlContent,
+  offerHtmlContent
+) => {
   const textTag =
     role === 'sponsor'
       ? 'sponsorAndOfferReportToDonors'
