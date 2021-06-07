@@ -71,7 +71,7 @@ const getReport = async ({ dateFrom, dateTo }, account) => {
           tokens:
             parseInt(notification.payload.newBalance[0].split(' ')[0]) -
             parseInt(notification.payload.currentBalance[0].split(' ')[0]),
-          business: notification.account_from
+          send_from: notification.account_from
         }
       })
     : []

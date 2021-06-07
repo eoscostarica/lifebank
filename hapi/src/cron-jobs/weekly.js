@@ -1,5 +1,6 @@
 const mailApi = require('../utils/mail')
 const { accountApi, userApi, offerApi } = require('../api')
+const { getProfile } = require('../api/account.api')
 
 const generateNewSponsorAndOfferReportToDonors = async () => {
   const today = new Date()
@@ -23,20 +24,46 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
   })
 
   donorsWithLocation.forEach(async (donor) => {
-    let nerbySponsors = []
-    for(i = 0; i < newSponsors.length; i++) {
+    const nerbySponsors = []
+    for (i = 0; i < newSponsors.length; i++) {
       const tempSponsor = newSponsors[i]
       const sponsorProfile = await accountApi.getProfile(tempSponsor.account)
-      sponsorProfile.location && accountApi.isCoordinateInsideBox(
+      sponsorProfile.location &&
+      accountApi.isCoordinateInsideBox(
         JSON.parse(sponsorProfile.location),
         donor.location
-      ) ? nerbySponsors.push(tempSponsor) : null
+      )
+        ? nerbySponsors.push(tempSponsor)
+        : null
     }
+
+    let stringSponsorHtmlContent = ''
+    nerbySponsors.forEach((sponsor) => {
+      stringSponsorHtmlContent = stringSponsorHtmlContent.concat(
+        '<br><a href="',
+        'https://lifebank.io/info/',
+        sponsor.account,
+        '">',
+        sponsor.name,
+        '</a>'
+      )
+    })
+
+    let stringOfferHtmlContent = ''
+    newOffers.forEach((offer) => {
+      stringOfferHtmlContent = stringOfferHtmlContent.concat(
+        '<br><a href="https://lifebank.io/">',
+        offer.offer_name,
+        '</a>'
+      )
+    })
 
     mailApi.sendNewSponsorAndOfferReport(
       donor.email,
       donor.language,
-      donor.role
+      donor.role,
+      stringSponsorHtmlContent,
+      stringOfferHtmlContent
     )
   })
   return {
@@ -63,10 +90,48 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
   })
 
   lifebanks.forEach(async (lifebank) => {
+    const lifebankProfile = await getProfile(lifebank.account)
+
+    const nerbySponsors = []
+    for (i = 0; i < newSponsors.length; i++) {
+      const tempSponsor = newSponsors[i]
+      const sponsorProfile = await accountApi.getProfile(tempSponsor.account)
+      sponsorProfile.location &&
+      accountApi.isCoordinateInsideBox(
+        JSON.parse(sponsorProfile.location),
+        JSON.parse(lifebankProfile.location)
+      )
+        ? nerbySponsors.push(tempSponsor)
+        : null
+    }
+
+    let stringSponsorHtmlContent = ''
+    nerbySponsors.forEach((sponsor) => {
+      stringSponsorHtmlContent = stringSponsorHtmlContent.concat(
+        '<br><a href="',
+        'https://lifebank.io/info/',
+        sponsor.account,
+        '">',
+        sponsor.name,
+        '</a>'
+      )
+    })
+
+    let stringOfferHtmlContent = ''
+    newOffers.forEach((offer) => {
+      stringOfferHtmlContent = stringOfferHtmlContent.concat(
+        '<br><a href="https://lifebank.io/">',
+        offer.offer_name,
+        '</a>'
+      )
+    })
+
     mailApi.sendNewSponsorAndOfferReport(
       lifebank.email,
       lifebank.language,
-      lifebank.role
+      lifebank.role,
+      stringSponsorHtmlContent,
+      stringOfferHtmlContent
     )
   })
 }
@@ -96,5 +161,6 @@ const sendEmail = async () => {
 // generateNewSponsorAndOfferReportToLifebanks()
 
 module.exports = {
-  generateNewSponsorAndOfferReportToDonors
+  generateNewSponsorAndOfferReportToDonors,
+  generateNewSponsorAndOfferReportToLifebanks
 }
