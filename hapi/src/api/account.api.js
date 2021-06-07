@@ -1,3 +1,5 @@
+const i18n = require('i18next')
+
 const { eosConfig } = require('../config')
 const {
   eosUtils,
@@ -150,11 +152,111 @@ const createLifebank = async ({
     console.log(error)
   }
 
+  await notifyNewLifebank(account)
+
   return {
     account,
     token,
     transaction_id: transaction.transaction_id
   }
+}
+
+const notifyNewLifebank = async (lifebankAccount) => {
+  const lifebank = await getProfile(lifebankAccount)
+  const donors = await userApi.getMany({
+    role: { _eq: 'donor' }
+  })
+  const donorsWithLocation = await getDonorsCoordinates(donors || [])
+  const sponsors = await userApi.getMany({
+    role: { _eq: 'sponsor' }
+  })
+
+  if (donorsWithLocation && donorsWithLocation.length > 0) {
+    donorsWithLocation.forEach((donor) => {
+      if (isCoordinateInsideBox(lifebank.geolocation, donor.location)) {
+        mailApi.sendNewLifebankRegistered(
+          donor.email,
+          i18n.t('newLifebankForDonor.subject'),
+          i18n
+            .t('newLifebankForDonor.content')
+            .concat(
+              lifebankAccount,
+              i18n.t('newLifebankForDonor.content2'),
+              lifebankAccount,
+              i18n.t('newLifebankForDonor.content3'),
+              '<br><br>',
+              i18n.t('mailUnsubscribe.content'),
+              lifebankAccount,
+              i18n.t('mailUnsubscribe.content2')
+            )
+        )
+      }
+    })
+  }
+
+  if (sponsors && sponsors.length > 0) {
+    sponsors.forEach(async (sponsor) => {
+      const sponsorProfile = await getProfile(sponsor.account)
+
+      if (
+        sponsorProfile.location &&
+        isCoordinateInsideBox(
+          lifebank.geolocation,
+          JSON.parse(sponsorProfile.location)
+        )
+      )
+        mailApi.sendNewLifebankRegistered(
+          sponsorProfile.email,
+          i18n.t('newLifebankForSponsor.subject'),
+          i18n
+            .t('newLifebankForSponsor.content')
+            .concat(
+              lifebankAccount,
+              i18n.t('newLifebankForSponsor.content2'),
+              '<br><br>',
+              i18n.t('mailUnsubscribe.content'),
+              lifebankAccount,
+              i18n.t('mailUnsubscribe.content2')
+            )
+        )
+    })
+  }
+}
+
+const isCoordinateInsideBox = (mainPoint, checkerPoint) => {
+  const KM20 = 0.18
+
+  return (
+    mainPoint.latitude - KM20 <= checkerPoint.latitude &&
+    checkerPoint.latitude <= mainPoint.latitude + KM20 &&
+    mainPoint.longitude - KM20 <= checkerPoint.longitude &&
+    checkerPoint.longitude <= mainPoint.longitude + KM20
+  )
+}
+
+const getDonorsCoordinates = async (donorList) => {
+  const newDonorList = []
+  for (index = 0; index < donorList.length; index++) {
+    const donor = donorList[index]
+    const lastDonorTransaction = await notificationApi.getOne({
+      _or: [
+        { account_to: { _eq: donor.account } },
+        { account_from: { _eq: donor.account } }
+      ]
+    })
+    if (lastDonorTransaction) {
+      const otherUserTransaction = await getProfile(
+        donor.account === lastDonorTransaction.account_from
+          ? lastDonorTransaction.account_to
+          : lastDonorTransaction.account_from
+      )
+      newDonorList.push({
+        email: donor.email,
+        location: JSON.parse(otherUserTransaction.location)
+      })
+    }
+  }
+  return newDonorList
 }
 
 const getProfile = async (account) => {
@@ -224,7 +326,7 @@ const getDonorData = async (account) => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
-  const { email, name } = await userApi.getOne({
+  const { email, name, email_subscription } = await userApi.getOne({
     account: { _eq: account }
   })
 
@@ -233,6 +335,7 @@ const getDonorData = async (account) => {
     name,
     communities,
     balance,
+    email_subscription,
     consent: !!consent
   }
 }
@@ -248,7 +351,7 @@ const getLifebankData = async (account) => {
   const info = await locationApi.infoQuery(account)
 
   if (Object.entries(profile).length === 0) {
-    const { email } = await userApi.getOne({
+    const { email, email_subscription } = await userApi.getOne({
       account: { _eq: account }
     })
     const data = await preRegLifebank.getOne({
@@ -261,6 +364,7 @@ const getLifebankData = async (account) => {
       geolocation: JSON.parse(data.preregister_lifebank[0].coordinates),
       about: data.preregister_lifebank[0].description,
       email,
+      email_subscription,
       photos: data.preregister_lifebank[0].photos || '[]',
       logo_url: data.preregister_lifebank[0].logo_url || '',
       immunity_test: data.preregister_lifebank[0].immunity_test,
@@ -386,13 +490,10 @@ const getSponsorData = async (account) => {
     account: { _eq: account }
   })
 
-  const profileAndEmail = {
-    ...profile,
-    email: user.email
-  }
-
   return {
-    ...profileAndEmail,
+    ...profile,
+    email: user.email,
+    email_subscription: user.email_subscription,
     communities,
     balance,
     name,
@@ -452,32 +553,38 @@ const verifyEmail = async ({ code }) => {
   const resUser = await userApi.verifyEmail({
     verification_code: { _eq: code }
   })
+
+  if (resUser) {
+    await sendOnboarding(code)
+    return { is_verified: true }
+  }
+
   const resLifebank = await preRegLifebank.verifyEmail({
     verification_code: { _eq: code }
   })
-  let result = false
 
-  if (
-    resUser.update_user.affected_rows !== 0 ||
-    resLifebank.update_preregister_lifebank.affected_rows !== 0
-  ) {
-    if (resLifebank.update_preregister_lifebank.affected_rows !== 0) {
-      resLifebank.update_preregister_lifebank.returning[0] = formatLifebankData(
-        resLifebank.update_preregister_lifebank.returning[0]
-      )
-      try {
-        mailApi.sendRegistrationRequest(
-          MAIL_APPROVE_LIFEBANNK,
-          resLifebank.update_preregister_lifebank.returning[0]
-        )
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    result = true
+  const lifebankProfile = formatLifebankData(resLifebank)
+
+  try {
+    mailApi.sendRegistrationRequest(MAIL_APPROVE_LIFEBANNK, lifebankProfile)
+  } catch (error) {
+    console.log(error)
   }
+
   return {
-    is_verified: result
+    is_verified: true
+  }
+}
+
+const sendOnboarding = async (userVerificationCode) => {
+  const user = await userApi.getOne({
+    verification_code: { _eq: userVerificationCode }
+  })
+
+  try {
+    await mailApi.sendLifebankOnboarding(user.email, user.language, user.role)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -492,7 +599,8 @@ const getReport = async (where, account) => {
 
   if (!user) throw new Error('No valid account')
 
-  if (user.role === 'sponsor')
+  if (user.role === 'donor') return await getReportDonor(where, user.account)
+  else if (user.role === 'sponsor')
     return await getReportSponsor(where, user.account)
   else if (user.role === 'lifebank')
     return await getReportLifebank(where, user.account)
@@ -503,6 +611,29 @@ const getReport = async (where, account) => {
         received: []
       }
     }
+}
+
+const getReportDonor = async ({ dateFrom, dateTo }, account) => {
+  const where = { account_to: { _eq: account } }
+  if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  const notifications = await notificationApi.getMany(where)
+
+  const received = notifications
+    ? notifications.map((notification) => {
+        return {
+          payerUser: notification.account_from,
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          offer: notification.payload.offer
+        }
+      })
+    : []
+
+  return {
+    notifications: {
+      received: received
+    }
+  }
 }
 
 const getReportSponsor = async ({ dateFrom, dateTo }, account) => {

@@ -45,16 +45,22 @@
     },
     "setting": {
       "setting": "Settings",
-      "language": "Preferred Language:",
+      "language": "Language:",
       "password": "Password",
-      "changePassword": "Change Password",
-      "currentPassword": "Current Password",
+      "changePassword": "Change password",
+      "currentPassword": "Current password",
       "errorPassword": "The current password does not match your email",
-      "newPassword": "New Password",
-      "confirmPassword": "Confirm Password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
       "confirmPasswordError": "The new password is not confirm properly - Try again",
       "passwordChanged": "Password Changed Successfully - We sent you an email",
-      "passwordNotChangeable": "Error your account is linked to Facebook or Google"
+      "emailChanged": "Email changed successfully",
+      "emailError": "Error trying to change your email - Try Again",
+      "passwordNotChangeable": "Error your account is linked to Facebook or Google",
+      "suscribeSection": "Suscribe for emails:",
+      "checkBoxSuscribe": "Suscription",
+      "changeEmail": "Change email",
+      "email": "Email"
     },
     "signup": {
       "register": "Let's Start!",
@@ -434,6 +440,12 @@
       "titleVerificationCode": "Email Verification",
       "messageVerificationCode": "Thank you for wanting to be part of the lifebank community, click on the button to verify and validate your account",
       "verifyButton": "Verify"
+    },
+    "emailSubscription": {
+      "cancelMessage": "Confirm you wish to stop receiving emails from Lifebank.",
+      "successfulCancel": "You will no longer receive emails from Lifebank. If you wish to change this, go to Settings.",
+      "cancel": "Stop receiving emails",
+      "error": "Failed to cancel email subscription"
     },
     "emailDonorCongratulation": {
       "subject": "Thank you for your donation!",

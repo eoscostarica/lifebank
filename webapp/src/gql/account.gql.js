@@ -38,6 +38,14 @@ export const SIGNUP_MUTATION = gql`
   }
 `
 
+export const UPDATE_EMAIL_SUBSCRIPTION_MUTATION = gql`
+  mutation($account: String!, $state: Boolean) {
+    update_user(where: {account: {_eq: $account}}, _set: {email_subscription: $state}) {
+      affected_rows
+    }
+  }
+`
+
 export const CHECK_USERNAME_MUTATION = gql`
   mutation($role: String!, $username: String!) {
     check_username(role: $role, username: $username) {
@@ -172,6 +180,14 @@ export const CREDENTIALS_RECOVERY = gql`
 export const CHANGE_PASSWORD = gql`
   mutation($email: String!, $emailContent: jsonb!, $currentPassword: String!, $newPassword: String!) {
     change_password(email: $email, emailContent: $emailContent, currentPassword: $currentPassword, newPassword: $newPassword) {
+      success
+    }
+  }
+`
+
+export const CHANGE_EMAIL = gql`
+  mutation($account: String!, $email: String!) {
+    change_email(account: $account, email: $email) {
       success
     }
   }
