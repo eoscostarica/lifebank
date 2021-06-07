@@ -185,6 +185,14 @@ export const CHANGE_PASSWORD = gql`
   }
 `
 
+export const CHANGE_EMAIL = gql`
+  mutation($account: String!, $email: String!) {
+    change_email(account: $account, email: $email) {
+      success
+    }
+  }
+`
+
 export const DONATE_MUTATION = gql`
   mutation donate($to: String!, $memo: String!, $quantity: Int, $emailContent: jsonb!) {
     donate(to: $to, memo: $memo, quantity: $quantity, emailContent: $emailContent) {
