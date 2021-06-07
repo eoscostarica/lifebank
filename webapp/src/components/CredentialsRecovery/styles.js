@@ -97,7 +97,7 @@ export default (theme) => ({
   },
   dimensions: {
     width: 500,
-    height: 625,
+    height: 640,
     [theme.breakpoints.down('sm')]: {
       width: "100%",
       height: "100%"
