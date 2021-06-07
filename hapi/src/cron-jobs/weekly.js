@@ -36,10 +36,33 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
         : null
     }
 
+    let stringSponsorHtmlContent = ''
+    nerbySponsors.forEach((sponsor) =>  {
+      stringSponsorHtmlContent = stringSponsorHtmlContent.concat(
+        '<br><a href="',
+        'https://lifebank.io/info/',
+        sponsor.account,
+        '">',
+        sponsor.name,
+        '</a>'
+      )
+    })
+
+    let stringOfferHtmlContent = ''
+    newOffers.forEach((offer) =>  {
+      stringOfferHtmlContent = stringOfferHtmlContent.concat(
+        '<br><a href="https://lifebank.io/">',
+        offer.offer_name,
+        '</a>'
+      )
+    })
+
     mailApi.sendNewSponsorAndOfferReport(
       donor.email,
       donor.language,
-      donor.role
+      donor.role,
+      stringSponsorHtmlContent,
+      stringOfferHtmlContent
     )
   })
   return {

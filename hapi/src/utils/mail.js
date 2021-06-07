@@ -902,7 +902,7 @@ const sendTransactionReport = async (to, language, role) => {
   })
 }
 
-const sendNewSponsorAndOfferReport = async (to, language, role) => {
+const sendNewSponsorAndOfferReport = async (to, language, role, sponsorHtmlContent, offerHtmlContent) => {
   const textTag =
     role === 'sponsor'
       ? 'sponsorAndOfferReportToDonors'
@@ -1052,8 +1052,10 @@ const sendNewSponsorAndOfferReport = async (to, language, role) => {
                         ${i18n.t(textTag + '.paragraph2')}
                         <br><br>
                         ${i18n.t(textTag + '.paragraph3')}
+                        ${sponsorHtmlContent}
                         <br><br>
                         ${i18n.t(textTag + '.paragraph4')}
+                        ${offerHtmlContent}
                         <br><br>
                         ${i18n.t(textTag + '.paragraph5')}
                         <br><br>
