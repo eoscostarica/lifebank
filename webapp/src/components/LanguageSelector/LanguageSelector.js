@@ -31,7 +31,6 @@ const LanguageSelector = ({ alt }) => {
   const location = useLocation()
   const isHome = location.pathname === '/'
   const [currentUser, { login }] = useUser()
-
   const [ changeLanguageMutation ] = useMutation(CHANGE_LANGUAGE)
 
   const trigger = useScrollTrigger({
