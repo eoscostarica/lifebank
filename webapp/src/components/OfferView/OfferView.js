@@ -15,7 +15,6 @@ import Button from '@material-ui/core/Button'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import MobileStepper from '@material-ui/core/MobileStepper'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
 import ImportantIcon from '@material-ui/icons/LabelImportant'
 import CloseIcon from '@material-ui/icons/Close'
 import { useTranslation } from 'react-i18next'
@@ -163,20 +162,6 @@ const OfferView = ({
           )}
         </Box>
         <Box className={classes.componentActionsButton}>
-          {!isDesktop && (
-            <IconButton disabled>
-              <StarBorderIcon className={classes.iconBottomAppBar} />
-            </IconButton>
-          )}
-          {isDesktop && (
-            <Button
-              disabled
-              className={classes.buttonIconDesktop}
-              startIcon={<StarBorderIcon />}
-            >
-              {t('contentToolbar.favorite')}
-            </Button>
-          )}
           <MapModalOneLocation
             isDesktop={isDesktop}
             isSponor
