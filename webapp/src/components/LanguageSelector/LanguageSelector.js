@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { Language as LanguageIcon } from '@material-ui/icons'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +16,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import styles from './styles'
+import { useUser } from '../../context/user.context'
+import {
+  CHANGE_LANGUAGE
+} from '../../gql'
 
 const useStyles = makeStyles(styles)
 
@@ -25,6 +30,8 @@ const LanguageSelector = ({ alt }) => {
   const theme = useTheme()
   const location = useLocation()
   const isHome = location.pathname === '/'
+  const [currentUser, { login }] = useUser()
+  const [ changeLanguageMutation ] = useMutation(CHANGE_LANGUAGE)
 
   const trigger = useScrollTrigger({
     target: window || undefined,
@@ -57,6 +64,16 @@ const LanguageSelector = ({ alt }) => {
     }
   ]
 
+  const changeLanguage = (item) => {
+    changeLanguageMutation({
+      variables: {
+        account: currentUser.account,
+        language: item.value
+      }
+    })
+    handleClose(item.value)
+  }
+
   return (
     <>
       {alt && (
@@ -77,7 +94,7 @@ const LanguageSelector = ({ alt }) => {
                 languages.map((item) => (
                   <MenuItem
                     key={`language-menu-${item.label}`}
-                    onClick={() => handleClose(item.value)}
+                    onClick={() => changeLanguage(item)}
                   >
                     {`${item.label} - ${(item.value || '').toLocaleUpperCase()}`}
                   </MenuItem>
