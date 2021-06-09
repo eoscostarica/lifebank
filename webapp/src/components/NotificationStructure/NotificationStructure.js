@@ -49,7 +49,7 @@ const NotificationStructure = ({ id, title, description, type, payload, state, d
       }
     })
   }
-
+  
   return (
     <>
 

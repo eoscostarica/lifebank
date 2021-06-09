@@ -54,7 +54,7 @@ const Notification = () => {
     defaultMatches: true
   })
   const useTransparentBG = isDesktop && !trigger && isHome
-
+  
   const handleClickOpen = () => {
     setOpen(true)
   }
