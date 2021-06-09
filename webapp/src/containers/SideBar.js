@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   labelOption: {
     color: `${theme.palette.primary.main} !important`,
-    marginLeft: theme.spacing(2),
+    marginLeft: theme.spacing(3),
     marginBottom: theme.spacing(1),
     fontSize: 14,
     textTransform: 'capitalize'
@@ -124,7 +124,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Box>
         </>
       )}
-      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') &&
         <>
           <Divider />
           <Typography variant="body1" className={classes.infoLabel}>
@@ -177,8 +177,8 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
         </Link>
       </Box>
 
-      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
-        <TransactionReport saveReport={downloadReport} onReportSaved={onReportClick}/>
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') &&
+        <TransactionReport saveReport={downloadReport} onReportSaved={onReportClick} />
       }
     </Box>
   )
