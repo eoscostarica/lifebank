@@ -53,23 +53,17 @@ const HistoryDashboard = (user) => {
   }, [getReportResult])
 
   const formatDataToReport = () => {
-
     const sent = getReportResult.notifications.sent
     const received = getReportResult.notifications.received
-
     setBodyReceive(received)
     setBodySent(sent)
-
   }
 
   const formatDataToDonorReport = () => {
-
     const sent = getReportResult.notifications.sent
     const received = getReportResult.notifications.received
-
     setBodyReceive(received)
     setBodySent(sent)
-
   }
 
   const handleChange = (event) => {
