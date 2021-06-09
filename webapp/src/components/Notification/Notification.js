@@ -54,7 +54,7 @@ const Notification = () => {
     defaultMatches: true
   })
   const useTransparentBG = isDesktop && !trigger && isHome
-  
+
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -87,6 +87,8 @@ const Notification = () => {
         if (notification.notification[i].state) {
           setNotificationStatus(false)
           break
+        } else {
+          setNotificationStatus(true)
         }
       }
     }
@@ -133,8 +135,6 @@ const Notification = () => {
                   id={element.id}
                   title={element.title}
                   description={element.description}
-                  type={element.type}
-                  payload={element.payload}
                   state={element.state}
                   dateAndTime={element.created_at}
                 />

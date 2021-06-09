@@ -41,7 +41,7 @@ export default (theme) => ({
   showMore: {
     borderRadius: '50px',
     backgroundColor: '#504c4c',
-    width: "30%",
+    width: "15%",
     fontSize: '14px',
     fontWeight: 500,
     fontStretch: 'normal',
@@ -50,7 +50,10 @@ export default (theme) => ({
     letterSpacing: '1px',
     color: '#ffffff',
     marginBottom: 20,
-    position: 'relative',
-    bottom: 0
+    position: 'fixed',
+    bottom: 0,
+    [theme.breakpoints.down('md')]: {
+      width: "30%",
+    },
   }
 })

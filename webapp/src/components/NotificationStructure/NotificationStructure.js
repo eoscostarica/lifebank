@@ -14,12 +14,9 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 
-const NotificationStructure = ({ id, title, description, type, payload, state, dateAndTime }) => {
-  const { t } = useTranslation('translations')
+const NotificationStructure = ({ id, title, description, state, dateAndTime }) => {
   const classes = useStyles()
   const [name, setName] = useState()
-  const [time, setTime] = useState()
-
 
   const { refetch: getData } = useQuery(GET_ACCOUNT_NAME, {
     variables: {
@@ -37,7 +34,6 @@ const NotificationStructure = ({ id, title, description, type, payload, state, d
     const response = async () => {
       const { data } = await getData({ account: description.substring(5, 17) })
       setName(data.user[0].name)
-
     }
     response()
   }, [description])
@@ -49,7 +45,7 @@ const NotificationStructure = ({ id, title, description, type, payload, state, d
       }
     })
   }
-  
+
   return (
     <>
 
@@ -59,7 +55,6 @@ const NotificationStructure = ({ id, title, description, type, payload, state, d
             {state === true && (
               <NewNotificationIcon className={classes.iconOption} />
             )}
-
           </Grid>
         </Grid>
         <Grid container xs={11}>
@@ -92,8 +87,6 @@ NotificationStructure.propTypes = {
   id: PropTypes.number,
   title: PropTypes.string,
   description: PropTypes.string,
-  type: PropTypes.string,
-  payload: PropTypes.object,
   state: PropTypes.bool,
   dateAndTime: PropTypes.string
 
