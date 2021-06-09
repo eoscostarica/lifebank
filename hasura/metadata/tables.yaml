@@ -83,7 +83,6 @@
       - description
       - id
       - payload
-      - state
       - title
       - type
       - updated_at
@@ -99,7 +98,6 @@
       - description
       - id
       - payload
-      - state
       - title
       - type
       - updated_at
@@ -115,32 +113,12 @@
       - description
       - id
       - payload
-      - state
       - title
       - type
       - updated_at
       filter:
         account_to:
           _eq: X-Hasura-User-Id
-  update_permissions:
-  - role: donor
-    permission:
-      columns:
-      - state
-      filter: {}
-      check: null
-  - role: lifebank
-    permission:
-      columns:
-      - state
-      filter: {}
-      check: null
-  - role: sponsor
-    permission:
-      columns:
-      - state
-      filter: {}
-      check: null
 - table:
     schema: public
     name: offer
