@@ -588,9 +588,19 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
             </Fab>
           }
           {isOffer &&
-            <Button className={classes.fabButtonOffer} onClick={toggleDrawer(anchor, true)} >
-              {t('tokenTransfer.redeem')}
-            </Button>
+            <>
+              <Button variant="contained" color="secondary" 
+              className={classes.fabButtonOffer}
+              // disabled = {tokens > 0 ? false : true}
+              onClick={handleRedeemOffer}>
+                {t('tokenTransfer.redeem')}
+              </Button>
+              {loadingRedeemOffer &&
+                <Box>
+                  <CircularProgress />
+                </Box>
+              }
+            </>
           }
           <Drawer
             anchor={anchor}
@@ -648,18 +658,18 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
             </Fab>
           }
           {isOffer &&
-          <>
-            <Button variant="contained" color="secondary" 
-            className={classes.fabButtonOffer}
-            disabled = {tokens > 0 ? false : true}
-            onClick={handleRedeemOffer}>
-              {t('tokenTransfer.redeem')}
-            </Button>
-            {loadingRedeemOffer &&
-              <Box>
-                <CircularProgress />
-              </Box>
-            }
+            <>
+              <Button variant="contained" color="secondary" 
+              className={classes.fabButtonOffer}
+              // disabled = {tokens > 0 ? false : true}
+              onClick={handleRedeemOffer}>
+                {t('tokenTransfer.redeem')}
+              </Button>
+              {loadingRedeemOffer &&
+                <Box>
+                  <CircularProgress />
+                </Box>
+              }
             </>
           }
           <Dialog
