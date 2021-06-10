@@ -50,6 +50,52 @@
       "item3": "Luego, puedes visitar un negocio local participante para redimir tus Life Tokens por ofertas como descuentos, cupones o beneficios. <a href='https://lifebank.io'>Ve la lista completa</a> en tu aplicación Lifebank. Muéstrales tu código QR para redimir tu  token.",
       "paragraph5": "¿Qué son los Life Tokens? Un Life Token es un comprobante electrónico que recibes de un lifebank al completar una donación. Puedes redimir estos tokens en algún comercio local participante como intercambio por promociones, descuentos o beneficios. Para más información sobre Lifebank y cómo funciona, visite https://lifebank.io/about.",
       "paragraph6": "¡Gracias por tu apoyo!"
+    },
+    "lifebankTransactionReport": {
+      "subject": "Historial de transacciones de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este historial de transacciones del mes por su cuenta de Lifebank.",
+      "paragraph3": "Tokens que enviaste este mes:",
+      "paragraph4": "Tokens recibidos de negocios participantes:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes. <a href='https://lifebank/edit-profile'>Actualiza tu perfil.</a>"
+    },
+    "sponsorTransactionReport": {
+      "subject": "Historial de transacciones de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este historial de transacciones del mes por su cuenta de Lifebank.",
+      "paragraph3": "Tokens que enviaste este mes:",
+      "paragraph4": "Tokens recibidos de negocios participantes:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes. <a href='https://lifebank/edit-profile'>Actualiza tu perfil.</a>"
+    },
+    "donorTransactionReport": {
+      "subject": "Historial de transacciones de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este historial de transacciones del trimestre por su cuenta de Lifebank.",
+      "paragraph3": "Tokens que recibiste este trimestre:",
+      "paragraph4": "Tokens redimidos en negocios participantes:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes."
+    },
+    "sponsorAndOfferReportToLifebanks": {
+      "subject": "Reporte semanal de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este reporte semanal de nuevos negocios y ofertas disponibles en Lifebank cerca tuyo.",
+      "paragraph3": "Nuevos negocios locales cerca:",
+      "paragraph4": "Nuevas ofertas disponibles; échales un vistazo:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes. <a href='https://lifebank/edit-profile'>Actualiza tu perfil.</a>"
+    },
+    "sponsorAndOfferReportToDonors": {
+      "subject": "Reporte mensual de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este reporte mensual de nuevos negocios y ofertas disponibles en Lifebank cerca suyo.",
+      "paragraph3": "Nuevos negocios locales cerca:",
+      "paragraph4": "Nuevas ofertas disponibles; échales un vistazo:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes."
+    },
+    "mailTransactionReport": {
+      "to": "para",
+      "from": "de",
+      "tokens": "tokens",
+      "date": "fecha"
     }
   }
 }
