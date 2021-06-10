@@ -1,37 +1,30 @@
-const accountApi = require('./account.api')
-const userApi = require('./user.api')
+const { hasuraUtils } = require('../utils')
 
-const redeem = async (from, details) => {
-  const user = await userApi.getOne({
-    account: { _eq: from }
-  })
-
-  if (user.role !== 'donor') {
-    throw new Error('Only donors can redeem an offer')
-  }
-
-  const userTo = await userApi.getOne({
-    account: { _eq: details.to }
-  })
-
-  if (userTo.role !== 'sponsor') {
-    throw new Error('Only sponsor can receive tokens by an offer redemption')
-  }
-
-  const notificationData = {
-    account_from: from,
-    account_to: details.to,
-    title: 'Redeem offer',
-    description: `From ${from} ${details.memo}`,
-    type: 'new_tokens',
-    payload: {
-      offer: details.offer
+const CHANGE_STATE = `
+  mutation ($where: offer_bool_exp!, $state: String!) {
+    update_offer(where: $where, _set: {state: $state}) {
+      affected_rows
     }
   }
+`
 
-  return await accountApi.transfer(from, details, notificationData)
+const desactivate = async (where) => {
+  const { update_offer } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'inactive'
+  })
+  return update_offer.affected_rows > 0
+}
+
+const activate = async (where) => {
+  const { update_offer } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'active'
+  })
+  return update_offer.affected_rows > 0
 }
 
 module.exports = {
-  redeem
+  desactivate,
+  activate
 }

@@ -41,6 +41,14 @@ const VERIFY_EXISTENCE = `
   }
 `
 
+const CHANGE_STATE = `
+  mutation ($where: location_bool_exp!, $state: String!) {
+    update_location(where: $where, _set: {state: $state}) {
+      affected_rows
+    }
+  }
+`
+
 const insert = (location) => hasuraUtils.request(INSERT, { location })
 
 const verifyExistence = (account) =>
@@ -51,9 +59,27 @@ const update = (account, location) =>
 
 const infoQuery = (account) => hasuraUtils.request(GET_INFO, { account })
 
+const desactivate = async (where) => {
+  const { update_location } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'inactive'
+  })
+  return update_location.affected_rows > 0
+}
+
+const activate = async (where) => {
+  const { update_location } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'active'
+  })
+  return update_location.affected_rows > 0
+}
+
 module.exports = {
   insert,
   verifyExistence,
   update,
-  infoQuery
+  infoQuery,
+  desactivate,
+  activate
 }

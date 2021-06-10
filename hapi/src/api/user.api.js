@@ -1,4 +1,3 @@
-const { user } = require('../config/mail.config')
 const { hasuraUtils } = require('../utils')
 
 const GET_ONE = `
@@ -49,6 +48,19 @@ const INSERT = `
       email
       name,
       verification_code
+    }
+  }
+`
+
+const CHANGE_STATE = `
+  mutation ($where: user_bool_exp!, $state: String!) {
+    update_user(where: $where, _set: {state: $state}) {
+      returning {
+        id
+        account
+        name
+        role
+      }
     }
   }
 `
@@ -138,6 +150,24 @@ const verifyEmail = async (where) => {
   return update_user.affected_rows > 0
 }
 
+const desactivate = async (where) => {
+  const { update_user: { returning } } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'inactive'
+  })
+  
+  return returning[0] ? returning[0] : null
+}
+
+const activate = async (where) => {
+  const { update_user: { returning } } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'active'
+  })
+  
+  return returning[0] ? returning[0] : null
+}
+
 module.exports = {
   getOne,
   getMany,
@@ -146,5 +176,7 @@ module.exports = {
   setToken,
   setName,
   verifyEmail,
-  setSecret
+  setSecret,
+  desactivate,
+  activate
 }

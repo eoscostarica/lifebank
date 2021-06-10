@@ -16,6 +16,7 @@ const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
+const offerApi = require('./offer.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
@@ -848,6 +849,44 @@ const transfer = async (from, details, notification) => {
   return transaction
 }
 
+const closeAccount = async (account) => {
+  const user = await userApi.desactivate(
+    { 
+      account: { _eq: account },
+      state: { _eq: 'active' }
+    }
+  )
+
+  if(user && user.role === 'sponsor') {
+    await offerApi.desactivate(
+      { sponsor_id: { _eq: user.id } }
+    )
+  }
+
+  await locationApi.desactivate(
+    { account: { _eq: account } }
+  )
+}
+
+const openAccount = async (account) => {
+  const user = await userApi.activate(
+    { 
+      account: { _eq: account },
+      state: { _eq: 'inactive' }
+    }
+  )
+
+  if(user && user.role === 'sponsor') {
+    await offerApi.activate(
+      { sponsor_id: { _eq: user.id } }
+    )
+  }
+
+  await locationApi.activate(
+    { account: { _eq: account } }
+  )
+}
+
 module.exports = {
   create,
   createLifebank,
@@ -861,5 +900,7 @@ module.exports = {
   getValidSponsors,
   getValidLifebanks,
   getReport,
-  donate
+  donate,
+  closeAccount,
+  openAccount
 }
