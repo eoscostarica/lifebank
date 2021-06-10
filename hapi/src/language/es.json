@@ -50,6 +50,101 @@
       "item3": "Luego, puedes visitar un negocio local participante para redimir tus Life Tokens por ofertas como descuentos, cupones o beneficios. <a href='https://lifebank.io'>Ve la lista completa</a> en tu aplicación Lifebank. Muéstrales tu código QR para redimir tu  token.",
       "paragraph5": "¿Qué son los Life Tokens? Un Life Token es un comprobante electrónico que recibes de un lifebank al completar una donación. Puedes redimir estos tokens en algún comercio local participante como intercambio por promociones, descuentos o beneficios. Para más información sobre Lifebank y cómo funciona, visite https://lifebank.io/about.",
       "paragraph6": "¡Gracias por tu apoyo!"
+    },
+    "lifebankTransactionReport": {
+      "subject": "Historial de transacciones de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este historial de transacciones del mes por su cuenta de Lifebank.",
+      "paragraph3": "Tokens que enviaste este mes:",
+      "paragraph4": "Tokens recibidos de negocios participantes:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes. <a href='https://lifebank/edit-profile'>Actualiza tu perfil.</a>"
+    },
+    "sponsorTransactionReport": {
+      "subject": "Historial de transacciones de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este historial de transacciones del mes por su cuenta de Lifebank.",
+      "paragraph3": "Tokens que enviaste este mes:",
+      "paragraph4": "Tokens recibidos de negocios participantes:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes. <a href='https://lifebank/edit-profile'>Actualiza tu perfil.</a>"
+    },
+    "donorTransactionReport": {
+      "subject": "Historial de transacciones de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este historial de transacciones del trimestre por su cuenta de Lifebank.",
+      "paragraph3": "Tokens que recibiste este trimestre:",
+      "paragraph4": "Tokens redimidos en negocios participantes:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes."
+    },
+    "sponsorAndOfferReportToLifebanks": {
+      "subject": "Reporte semanal de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este reporte semanal de nuevos negocios y ofertas disponibles en Lifebank cerca tuyo.",
+      "paragraph3": "Nuevos negocios locales cerca:",
+      "paragraph4": "Nuevas ofertas disponibles; échales un vistazo:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes. <a href='https://lifebank/edit-profile'>Actualiza tu perfil.</a>"
+    },
+    "sponsorAndOfferReportToDonors": {
+      "subject": "Reporte mensual de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Estás recibiendo este reporte mensual de nuevos negocios y ofertas disponibles en Lifebank cerca suyo.",
+      "paragraph3": "Nuevos negocios locales cerca:",
+      "paragraph4": "Nuevas ofertas disponibles; échales un vistazo:",
+      "paragraph5": "Lifebank es una plataforma de código abierto que usa la tecnología blockchain para incentivar las donaciones de sangre al crear un círculo virtuoso de valor entre bancos de sangre, negocios locales y donantes."
+    },
+    "mailTransactionReport": {
+      "to": "para",
+      "from": "de",
+      "tokens": "tokens",
+      "date": "fecha"
+    },
+    "closeAccountMonthRemaining": {
+      "subject": "Tu cuenta Lifebank cerrará en 30 días",
+      "paragraph": "Hola,",
+      "paragraph2": "Como lo solicitaste, tu cuenta de Lifebank se cerrará en 30 días. Una vez cerrada, toda tu información será eliminada de Lifebank, y no podrás acceder a ella nuevamente. Para regresar a Lifebank, tendrás que empezar con una nueva cuenta.",
+      "paragraph3": "Aun tienes tiempo de reabrir tu cuenta y mantener tu información. Ve a <a href='https://lifebank.io'>este enlace</a> para continuar usando Lifebank antes de [CLOSING DATE].",
+      "paragraph4": "Si decides no hacer nada, tu cuenta se cerrará automáticamente. Para respetar tu privacidad, eliminaremos tus datos de nuestros servidores.",
+      "paragraph5": "Si tienes alguna retroalimentación, por favor comunícate con nuestro equipo por Telegram: https://t.me/eoscr. Recuerda que Lifebank es un proyecto de código abierto y fue creado para ser autogestionado, pero intentaremos contestar lo antes posible."
+    },
+    "closeAccountWeekRemaining": {
+      "subject": "ATENCIÓN: Tu cuenta de Lifebank cerrará en 1 semana",
+      "paragraph": "Hola,",
+      "paragraph2": "Te advertimos que tu cuenta de Lifebank cerrará en 1 semana. Una vez cerrada, toda tu información será eliminada de Lifebank, y no podrás acceder a ella nuevamente. Para regresar a Lifebank, tendrás que empezar con una nueva cuenta.",
+      "paragraph3": "Aun tienes tiempo de reabrir tu cuenta y mantener tu información. Ve a <a href='https://lifebank.io'>este enlace</a> para continuar usando Lifebank antes de [CLOSING DATE].",
+      "paragraph4": "Si decides no hacer nada, tu cuenta se cerrará automáticamente. Para respetar tu privacidad, eliminaremos tus datos de nuestros servidores.",
+      "paragraph5": "Si tienes alguna retroalimentación, por favor comunícate con nuestro equipo por Telegram: https://t.me/eoscr. Recuerda que Lifebank es un proyecto de código abierto y fue creado para ser autogestionado, pero intentaremos contestar lo antes posible."
+    },
+    "closeAccountDayRemaining": {
+      "subject": "ÚLTIMA ADVERTENCIA: Tu cuenta de Lifebank cerrará mañana",
+      "paragraph": "Hola,",
+      "paragraph2": "Esta es la última advertencia de que tu cuenta de Lifebank se cerrará MAÑANA.",
+      "paragraph3": "Una vez cerrada, toda tu información será eliminada de Lifebank, y no podrás acceder a ella nuevamente. Para regresar a Lifebank, tendrás que empezar con una nueva cuenta.",
+      "paragraph4": "Aun tienes tiempo de reabrir tu cuenta y mantener tu información. Ve a <a href='https://lifebank.io'>este enlace</a> para continuar usando Lifebank antes de [CLOSING DATE].",
+      "paragraph5": "Si decides no hacer nada, tu cuenta se cerrará automáticamente. Para respetar tu privacidad, eliminaremos tus datos de nuestros servidores.",
+      "paragraph6": "Si tienes alguna retroalimentación, por favor comunícate con nuestro equipo por Telegram: https://t.me/eoscr. Recuerda que Lifebank es un proyecto de código abierto y fue creado para ser autogestionado, pero intentaremos contestar lo antes posible."
+    },
+    "closeAccount": {
+      "subject": "",
+      "paragraph": "",
+      "paragraph2": "",
+      "paragraph3": "",
+      "paragraph4": "",
+      "paragraph5": ""
+    },
+    "reopenAccount": {
+      "subject": "",
+      "paragraph": "",
+      "paragraph2": "",
+      "paragraph3": "",
+      "paragraph4": "",
+      "paragraph5": ""
+    },
+    "requestCloseAccount": {
+      "subject": "",
+      "paragraph": "",
+      "paragraph2": "",
+      "paragraph3": "",
+      "paragraph4": "",
+      "paragraph5": ""
     }
   }
 }

@@ -50,6 +50,101 @@
       "item3": "You can then visit a participating local business to redeem your Life Token for offers such as discounts, coupons, or benefits. <a href='https://lifebank.io'>See the full list</a> on your Lifebank app. Show them your QR code to redeem your token.",
       "paragraph5": "What are Life Tokens? Life Tokens are a receipt that you receive from a lifebank once you complete a blood donation. You can then redeem these tokens at any participating local business in exchange for promotions, discounts, or bonuses. For more information about Lifebank and how it works, visit https://lifebank.io/about.",
       "paragraph6": "Thanks for your support!"
+    },
+    "lifebankTransactionReport": {
+      "subject": "Lifebank monthly transactions history",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this monthly transactions history report on your Lifebank account.",
+      "paragraph3": "Tokens you sent this month:",
+      "paragraph4": "Tokens returned from businesses:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors. <a href='https://lifebank/edit-profile'>Update your profile.</a>"
+    },
+    "sponsorTransactionReport": {
+      "subject": "Lifebank monthly transactions history",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this monthly transactions history report on your Lifebank account.",
+      "paragraph3": "Tokens you sent this month:",
+      "paragraph4": "Tokens returned from businesses:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors. <a href='https://lifebank/edit-profile'>Update your profile.</a>"
+    },
+    "donorTransactionReport": {
+      "subject": "Lifebank yearly transactions history",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this quarterly transaction history report on your Lifebank account.",
+      "paragraph3": "Tokens you received this year:",
+      "paragraph4": "Tokens redeemed at businesses:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors."
+    },
+    "sponsorAndOfferReportToLifebanks": {
+      "subject": "Lifebank weekly report",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this weekly report of new available businesses and offers on Lifebank near you.",
+      "paragraph3": "New local businesses nearby:",
+      "paragraph4": "New offers available; check them out:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors. <a href='https://lifebank/edit-profile'>Update your profile.</a>"
+    },
+    "sponsorAndOfferReportToDonors": {
+      "subject": "Lifebank monthly report",
+      "paragraph": "Hi,",
+      "paragraph2": "You’re receiving this monthly report of new available businesses and offers on Lifebank near you.",
+      "paragraph3": "New local businesses nearby:",
+      "paragraph4": "New offers available; check them out:",
+      "paragraph5": "Lifebank is an open-source platform that uses blockchain technology to incentivize blood donations by creating a virtuous circle of value exchange between blood banks, local businesses, and donors."
+    },
+    "mailTransactionReport": {
+      "to": "to",
+      "from": "from",
+      "tokens": "tokens",
+      "date": "date"
+    },
+    "closeAccountMonthRemaining": {
+      "subject": "Your Lifebank account closes in 30 days",
+      "paragraph": "Hello,",
+      "paragraph2": "Since you requested it, your Lifebank account will close in 30 days. Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
+      "paragraph3": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before [CLOSING DATE].",
+      "paragraph4": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information on our servers.",
+      "paragraph5": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
+    },
+    "closeAccountWeekRemaining": {
+      "subject": "WARNING: Your Lifebank account closes in 1 week",
+      "paragraph": "Hello,",
+      "paragraph2": "We would like to warn you that your Lifebank account will close in 1 week. Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
+      "paragraph3": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before [CLOSING DATE]. ",
+      "paragraph4": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information on our servers.",
+      "paragraph5": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
+    },
+    "closeAccountDayRemaining": {
+      "subject": "FINAL WARNING: Your Lifebank account closes tomorrow",
+      "paragraph": "Hello,",
+      "paragraph2": "This is a final warning regarding your Lifebank account that will close TOMORROW.",
+      "paragraph3": "Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
+      "paragraph4": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before [CLOSING DATE]. ",
+      "paragraph5": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information on our servers.",
+      "paragraph6": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
+    },
+    "closeAccount": {
+      "subject": "",
+      "paragraph": "",
+      "paragraph2": "",
+      "paragraph3": "",
+      "paragraph4": "",
+      "paragraph5": ""
+    },
+    "reopenAccount": {
+      "subject": "",
+      "paragraph": "",
+      "paragraph2": "",
+      "paragraph3": "",
+      "paragraph4": "",
+      "paragraph5": ""
+    },
+    "requestCloseAccount": {
+      "subject": "",
+      "paragraph": "",
+      "paragraph2": "",
+      "paragraph3": "",
+      "paragraph4": "",
+      "paragraph5": ""
     }
   }
 }

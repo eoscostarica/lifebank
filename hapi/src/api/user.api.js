@@ -34,6 +34,9 @@ const GET_MANY = `
       signup_method
       verification_code
       email_verified
+      email_subscription
+      language
+      updated_at
     }
   }
 `
@@ -118,9 +121,7 @@ const getOne = async (where = {}) => {
 const getMany = async (where = {}) => {
   const { user } = await hasuraUtils.request(GET_MANY, { where })
 
-  if (user && user.length > 0) return user
-
-  return null
+  return user && user.length > 0 ? user : null
 }
 
 const insert = (user) => {

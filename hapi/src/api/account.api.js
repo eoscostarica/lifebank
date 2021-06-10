@@ -252,7 +252,7 @@ const getDonorsCoordinates = async (donorList) => {
           : lastDonorTransaction.account_from
       )
       newDonorList.push({
-        email: donor.email,
+        ...donor,
         location: JSON.parse(otherUserTransaction.location)
       })
     }
@@ -902,5 +902,7 @@ module.exports = {
   getReport,
   donate,
   closeAccount,
-  openAccount
+  openAccount,
+  isCoordinateInsideBox,
+  getDonorsCoordinates
 }
