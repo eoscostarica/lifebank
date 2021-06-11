@@ -102,7 +102,7 @@
       "paragraph": "Hello,",
       "paragraph2": "Since you requested it, your Lifebank account will close in 30 days. Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
       "paragraph3": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before ",
-      "paragraph4": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information on the platform.",
+      "paragraph4": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
       "paragraph5": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
     },
     "closeAccountWeekRemaining": {
@@ -110,7 +110,7 @@
       "paragraph": "Hello,",
       "paragraph2": "We would like to warn you that your Lifebank account will close in 1 week. Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
       "paragraph3": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before ",
-      "paragraph4": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information on the platform.",
+      "paragraph4": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
       "paragraph5": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
     },
     "closeAccountDayRemaining": {
@@ -119,14 +119,14 @@
       "paragraph2": "This is a final warning regarding your Lifebank account that will close TOMORROW.",
       "paragraph3": "Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
       "paragraph4": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before ",
-      "paragraph5": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information on the platform.",
+      "paragraph5": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
       "paragraph6": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
     },
     "closeAccount": {
       "subject": "Lifebank account closed",
       "paragraph": "Hi,",
       "paragraph2": "It’s sad to see you leave, but we respect your decision. ",
-      "paragraph3": "You’ve closed your Lifebank account successfully. If you wish to return to Lifebank, you must start with a new account. To respect your privacy, we deleted your information from the platform forever.",
+      "paragraph3": "You’ve closed your Lifebank account successfully. If you wish to return to Lifebank, you must start with a new account. To respect your privacy, we deleted your information from Lifebank forever.",
       "paragraph4": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
     },
     "reopenAccount": {
@@ -138,7 +138,7 @@
       "subject": "We will close your Lifebank account",
       "paragraph": "Hi,",
       "paragraph2": "It’s sad to see you leave, but we respect your decision.",
-      "paragraph3": "Since you requested it, we’ll close your Lifebank account. We will keep your information for 90 days. After that, if you wish to return to Lifebank, you must start with a new account. To respect your privacy, we will delete your data from the platorm.",
+      "paragraph3": "Since you requested it, we’ll close your Lifebank account. We will keep your information for 90 days. After that, if you wish to return to Lifebank, you must start with a new account. To respect your privacy, we will delete your data from Lifebank.",
       "paragraph4": "You’ll get reminders close to the closing date. If you don’t wish to receive any notifications, you can <a href='http://lifebank/cancel-email-subscription/",
       "paragraph5": "'>unsubscribe from emails</a> anytime."
     }

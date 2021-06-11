@@ -1,10 +1,6 @@
 const mailApi = require('../utils/mail')
 const {
-  sponsorApi,
-  lifebankApi,
-  userApi,
-  offerApi,
-  accountApi
+  userApi
 } = require('../api')
 
 const getDaysBetweenDates = (date) => {
@@ -17,6 +13,7 @@ const getDaysBetweenDates = (date) => {
 }
 
 const closeAccountReminder = async () => {
+  const DAY_TO_DELETE = 0
   const ONE_DAY = 1
   const ONE_WEEK = 7
   const ONE_MONTH = 30
@@ -32,13 +29,13 @@ const closeAccountReminder = async () => {
 
     const differenceDays = getDaysBetweenDates(startCloseAccountDate)
 
-    mailApi.closeAccountDayRemaining(
-      user.email,
-      user.language,
-      finalCloseAccountDate.toISOString().split('T')[0]
-    )
-
     switch(differenceDays) {
+      case DAY_TO_DELETE:
+        mailApi.closeAccount(
+          user.email,
+          user.language
+        )
+        break
       case ONE_DAY:
         mailApi.closeAccountDayRemaining(
           user.email,
