@@ -312,6 +312,12 @@ const isPasswordChangable = async ({ email }) => {
 }
 
 const getDonorData = async (account) => {
+  const { email, name, email_subscription, state } = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  if (state === 'inactive') throw new Error('Inactive account')
+
   const networks = await lifebankcodeUtils.getUserNetworks(account)
   const communities = []
 
@@ -327,9 +333,6 @@ const getDonorData = async (account) => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
-  const { email, name, email_subscription } = await userApi.getOne({
-    account: { _eq: account }
-  })
 
   return {
     email,
@@ -342,6 +345,12 @@ const getDonorData = async (account) => {
 }
 
 const getLifebankData = async (account) => {
+  const { email, email_subscription, state } = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  if (state === 'inactive') throw new Error('Inactive account')
+
   const { tx } = (await lifebankcodeUtils.getLifebank(account)) || {}
   const { lifebank_name: name, ...profile } = await getTransactionData(tx)
   const consent = await consent2lifeUtils.getConsent(
@@ -352,9 +361,6 @@ const getLifebankData = async (account) => {
   const info = await locationApi.infoQuery(account)
 
   if (Object.entries(profile).length === 0) {
-    const { email, email_subscription } = await userApi.getOne({
-      account: { _eq: account }
-    })
     const data = await preRegLifebank.getOne({
       email: { _eq: email }
     })
@@ -469,6 +475,12 @@ const getValidLifebanks = async () => {
 }
 
 const getSponsorData = async (account) => {
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  if (user.state === 'inactive') throw new Error('Inactive account')
+
   const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
   const { sponsor_name: name, ...profile } = await getTransactionData(tx)
   const networks = await lifebankcodeUtils.getUserNetworks(account)
@@ -486,10 +498,6 @@ const getSponsorData = async (account) => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
-
-  const user = await userApi.getOne({
-    account: { _eq: account }
-  })
 
   return {
     ...profile,
@@ -874,7 +882,7 @@ const closeAccount = async (account) => {
   )
 }
 
-const openAccount = async (account) => {
+const reopenAccount = async (account) => {
   const user = await userApi.activate(
     { 
       account: { _eq: account },
@@ -898,6 +906,28 @@ const openAccount = async (account) => {
   )
 }
 
+const finalCloseAccount = async (account) => {
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  await locationApi.permanentDelete({
+    account: { _eq: account }
+  })
+
+  if (user && user.role === 'sponsor') {
+    await offerApi.permanentDelete({
+      sponsor_id: { _eq: user.id }
+    })
+  }
+
+  await userApi.permanentDelete({
+    account: { _eq: account }
+  })
+
+  // BLOCKCHAIN CONNECTION
+}
+
 module.exports = {
   create,
   createLifebank,
@@ -913,7 +943,8 @@ module.exports = {
   getReport,
   donate,
   closeAccount,
-  openAccount,
+  reopenAccount,
   isCoordinateInsideBox,
-  getDonorsCoordinates
+  getDonorsCoordinates,
+  finalCloseAccount
 }

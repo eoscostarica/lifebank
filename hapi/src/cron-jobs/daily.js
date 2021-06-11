@@ -1,10 +1,11 @@
 const mailApi = require('../utils/mail')
 const {
-  userApi
+  userApi,
+  accountApi
 } = require('../api')
 
 const getDaysBetweenDates = (date) => {
-  const currentDate = new Date('2021-06-15')
+  const currentDate = new Date()
   const secondInMiliseconds = 1000
   const minuteInSeconds = 60
   const hoursInMinutes = 60
@@ -31,28 +32,32 @@ const closeAccountReminder = async () => {
 
     switch(differenceDays) {
       case DAY_TO_DELETE:
+        accountApi.finalCloseAccount(user.account)
         mailApi.closeAccount(
           user.email,
           user.language
         )
         break
-      case ONE_DAY:
+      case ONE_DAY && user.email_subscription:
         mailApi.closeAccountDayRemaining(
           user.email,
+          user.account,
           user.language,
           finalCloseAccountDate.toISOString().split('T')[0]
         )
         break
-      case ONE_WEEK:
+      case ONE_WEEK && user.email_subscription:
         mailApi.closeAccountWeekRemaining(
           user.email,
+          user.account,
           user.language,
           finalCloseAccountDate.toISOString().split('T')[0]
         )
         break
-      case ONE_MONTH:
+      case ONE_MONTH && user.email_subscription:
         mailApi.closeAccountMonthRemaining(
           user.email,
+          user.account,
           user.language,
           finalCloseAccountDate.toISOString().split('T')[0]
         )
@@ -62,6 +67,4 @@ const closeAccountReminder = async () => {
   })
 }
 
-module.exports = {
-  closeAccountReminder
-}
+closeAccountReminder()

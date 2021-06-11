@@ -16,6 +16,7 @@ const GET_ONE = `
       email_verified
       email_subscription
       language
+      state
     }
   }
 `
@@ -37,6 +38,7 @@ const GET_MANY = `
       email_subscription
       language
       updated_at
+      state
     }
   }
 `
@@ -112,6 +114,14 @@ const SET_SECRET = `
   }
 `
 
+const DELETE = `
+  mutation ($where: user_bool_exp!) {
+    delete_user(where: $where) {
+      affected_rows
+    }
+  }
+`
+
 const getOne = async (where = {}) => {
   const { user } = await hasuraUtils.request(GET_ONE, { where })
 
@@ -171,6 +181,11 @@ const activate = async (where) => {
   return returning[0] ? returning[0] : null
 }
 
+const permanentDelete = async (where) => {
+  const { delete_user } = await hasuraUtils.request(DELETE, { where })
+  return delete_user.affected_rows > 0
+}
+
 module.exports = {
   getOne,
   getMany,
@@ -181,5 +196,6 @@ module.exports = {
   verifyEmail,
   setSecret,
   desactivate,
-  activate
+  activate,
+  permanentDelete
 }

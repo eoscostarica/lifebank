@@ -16,7 +16,7 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 
-const CancelEmailSubscription = () => {
+const ReopenAccount = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const { account } = useParams()
@@ -97,4 +97,4 @@ const CancelEmailSubscription = () => {
   )
 }
 
-export default CancelEmailSubscription
+export default ReopenAccount

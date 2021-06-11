@@ -24,7 +24,7 @@ const redeemOffer = require('./redeem-offer/redeem-offer.route')
 const checkEmailVerified = require('./check-email-verified/check-email-verified.route')
 const donate = require('./donate/donate.route')
 const closeAccount = require('./close-account/close-account.route')
-const test = require('./test/test.route')
+const reopenAccount = require('./reopen-account/reopen-account.route')
 
 module.exports = [
   changePasswordRoute,
@@ -53,5 +53,5 @@ module.exports = [
   checkEmailVerified,
   donate,
   closeAccount,
-  test
+  reopenAccount
 ]

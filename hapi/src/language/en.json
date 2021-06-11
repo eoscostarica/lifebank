@@ -101,26 +101,29 @@
       "subject": "Your Lifebank account closes in 30 days",
       "paragraph": "Hello,",
       "paragraph2": "Since you requested it, your Lifebank account will close in 30 days. Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
-      "paragraph3": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before ",
-      "paragraph4": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
-      "paragraph5": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
+      "paragraph3": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io/reopen-account/",
+      "paragraph4": "'>this link</a> to continue using Lifebank before ",
+      "paragraph5": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
+      "paragraph6": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
     },
     "closeAccountWeekRemaining": {
       "subject": "WARNING: Your Lifebank account closes in 1 week",
       "paragraph": "Hello,",
       "paragraph2": "We would like to warn you that your Lifebank account will close in 1 week. Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
-      "paragraph3": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before ",
-      "paragraph4": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
-      "paragraph5": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
+      "paragraph3": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io/reopen-account/",
+      "paragraph4": "'>this link</a> to continue using Lifebank before ",
+      "paragraph5": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
+      "paragraph6": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
     },
     "closeAccountDayRemaining": {
       "subject": "FINAL WARNING: Your Lifebank account closes tomorrow",
       "paragraph": "Hello,",
       "paragraph2": "This is a final warning regarding your Lifebank account that will close TOMORROW.",
       "paragraph3": "Once it closes, all your data will be deleted from Lifebank, and you will not be able to reaccess it. To return to Lifebank after this, you must start with a new account.",
-      "paragraph4": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io'>this link</a> to continue using Lifebank before ",
-      "paragraph5": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
-      "paragraph6": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
+      "paragraph4": "You still have time to reopen your account and keep your information. Go to <a href='https://lifebank.io/reopen-account/",
+      "paragraph5":"'>this link</a> to continue using Lifebank before ",
+      "paragraph6": "By not doing anything, your account will automatically close. To respect your privacy, we will delete your information from Lifebank.",
+      "paragraph7": "If you have any feedback, please communicate with our team on Telegram: https://t.me/eoscr. Remember that Lifebank is an open-source project and was created to be self-managed, but we’ll try to respond as soon as possible."
     },
     "closeAccount": {
       "subject": "Lifebank account closed",

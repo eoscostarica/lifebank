@@ -31,6 +31,14 @@ const CHANGE_STATE = `
   }
 `
 
+const DELETE = `
+  mutation ($where: offer_bool_exp!) {
+    delete_offer(where: $where) {
+      affected_rows
+    }
+  }
+`
+
 const getMany = async (where = {}) => {
   const { offer } = await hasuraUtils.request(GET_MANY, { where })
 
@@ -53,8 +61,14 @@ const activate = async (where) => {
   return update_offer.affected_rows > 0
 }
 
+const permanentDelete = async (where) => {
+  const { delete_offer } = await hasuraUtils.request(DELETE, { where })
+  return delete_offer.affected_rows > 0
+}
+
 module.exports = {
   desactivate,
   activate,
-  getMany,
+  permanentDelete,
+  getMany
 }

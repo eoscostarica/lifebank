@@ -1934,7 +1934,7 @@ const reopenAccount = async (to, language) => {
   })
 }
 
-const closeAccountDayRemaining = async (to, language, closeDate) => {
+const closeAccountDayRemaining = async (to, account, language, closeDate) => {
   i18n.changeLanguage(language)
   const subject = i18n.t('closeAccountDayRemaining.subject')
 
@@ -2080,11 +2080,16 @@ const closeAccountDayRemaining = async (to, language, closeDate) => {
                         <br><br>
                         ${i18n.t('closeAccountDayRemaining.paragraph3')}
                         <br><br>
-                        ${i18n.t('closeAccountDayRemaining.paragraph4').concat(closeDate, '.')}
-                        <br><br>
-                        ${i18n.t('closeAccountDayRemaining.paragraph5')}
+                        ${i18n.t('closeAccountDayRemaining.paragraph4').concat(
+                          account,
+                          i18n.t('closeAccountDayRemaining.paragraph5'),
+                          closeDate,
+                          '.'
+                        )}
                         <br><br>
                         ${i18n.t('closeAccountDayRemaining.paragraph6')}
+                        <br><br>
+                        ${i18n.t('closeAccountDayRemaining.paragraph7')}
                       </p>
                       </td>
                     </tr>
@@ -2105,7 +2110,7 @@ const closeAccountDayRemaining = async (to, language, closeDate) => {
   })
 }
 
-const closeAccountWeekRemaining = async (to, language, closeDate) => {
+const closeAccountWeekRemaining = async (to, account, language, closeDate) => {
   i18n.changeLanguage(language)
   const subject = i18n.t('closeAccountWeekRemaining.subject')
 
@@ -2249,11 +2254,16 @@ const closeAccountWeekRemaining = async (to, language, closeDate) => {
                         <br><br>
                         ${i18n.t('closeAccountWeekRemaining.paragraph2')}
                         <br><br>
-                        ${i18n.t('closeAccountWeekRemaining.paragraph3').concat(closeDate, '.')}
-                        <br><br>
-                        ${i18n.t('closeAccountWeekRemaining.paragraph4')}
+                        ${i18n.t('closeAccountWeekRemaining.paragraph3').concat(
+                          account,
+                          i18n.t('closeAccountWeekRemaining.paragraph4'),
+                          closeDate,
+                          '.'
+                        )}
                         <br><br>
                         ${i18n.t('closeAccountWeekRemaining.paragraph5')}
+                        <br><br>
+                        ${i18n.t('closeAccountWeekRemaining.paragraph6')}
                       </p>
                       </td>
                     </tr>
@@ -2274,7 +2284,7 @@ const closeAccountWeekRemaining = async (to, language, closeDate) => {
   })
 }
 
-const closeAccountMonthRemaining = async (to, language, closeDate) => {
+const closeAccountMonthRemaining = async (to, account, language, closeDate) => {
   i18n.changeLanguage(language)
   const subject = i18n.t('closeAccountMonthRemaining.subject')
 
@@ -2418,11 +2428,16 @@ const closeAccountMonthRemaining = async (to, language, closeDate) => {
                         <br><br>
                         ${i18n.t('closeAccountMonthRemaining.paragraph2')}
                         <br><br>
-                        ${i18n.t('closeAccountMonthRemaining.paragraph3').concat(closeDate, '.')}
-                        <br><br>
-                        ${i18n.t('closeAccountMonthRemaining.paragraph4')}
+                        ${i18n.t('closeAccountMonthRemaining.paragraph3').concat(
+                          account,
+                          i18n.t('closeAccountMonthRemaining.paragraph4'),
+                          closeDate,
+                          '.'
+                        )}
                         <br><br>
                         ${i18n.t('closeAccountMonthRemaining.paragraph5')}
+                        <br><br>
+                        ${i18n.t('closeAccountMonthRemaining.paragraph6')}
                       </p>
                       </td>
                     </tr>

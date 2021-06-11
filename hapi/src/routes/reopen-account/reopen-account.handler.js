@@ -1,11 +1,11 @@
 const Boom = require('@hapi/boom')
 const { BAD_REQUEST } = require('http-status-codes')
 
-const { closeAccountReminder } = require('../../cron-jobs/daily')
+const { accountApi } = require('../../api')
 
-module.exports = async () => {
+module.exports = async ({ payload: { input } }) => {
   try {
-    await closeAccountReminder()
+    await accountApi.reopenAccount(input.account)
 
     return {
       success: true

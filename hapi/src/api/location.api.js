@@ -49,6 +49,14 @@ const CHANGE_STATE = `
   }
 `
 
+const DELETE = `
+  mutation ($where: location_bool_exp!) {
+    delete_location(where: $where) {
+      affected_rows
+    }
+  }
+`
+
 const insert = (location) => hasuraUtils.request(INSERT, { location })
 
 const verifyExistence = (account) =>
@@ -75,11 +83,17 @@ const activate = async (where) => {
   return update_location.affected_rows > 0
 }
 
+const permanentDelete = async (where) => {
+  const { delete_location } = await hasuraUtils.request(DELETE, { where })
+  return delete_location.affected_rows > 0
+}
+
 module.exports = {
   insert,
   verifyExistence,
   update,
   infoQuery,
   desactivate,
-  activate
+  activate,
+  permanentDelete
 }
