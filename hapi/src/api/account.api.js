@@ -866,6 +866,12 @@ const closeAccount = async (account) => {
   await locationApi.desactivate(
     { account: { _eq: account } }
   )
+
+  mailApi.requestCloseAccount(
+    user.email,
+    account,
+    user.language
+  )
 }
 
 const openAccount = async (account) => {
@@ -884,6 +890,11 @@ const openAccount = async (account) => {
 
   await locationApi.activate(
     { account: { _eq: account } }
+  )
+
+  mailApi.reopenAccount(
+    user.email,
+    user.language
   )
 }
 

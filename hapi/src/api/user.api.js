@@ -60,9 +60,11 @@ const CHANGE_STATE = `
     update_user(where: $where, _set: {state: $state}) {
       returning {
         id
+        email
         account
         name
         role
+        language
       }
     }
   }

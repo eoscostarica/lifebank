@@ -27,23 +27,42 @@ const closeAccountReminder = async () => {
   })
 
   inactiveUsers.forEach(user => {
-    const closeAccountDate = new Date(user.updated_at)
-    const differenceDays = getDaysBetweenDates(closeAccountDate)
+    const startCloseAccountDate = new Date(user.updated_at)
+    const finalCloseAccountDate = startCloseAccountDate
+    finalCloseAccountDate.setMonth(startCloseAccountDate.getMonth() + 3)
+
+    const differenceDays = getDaysBetweenDates(startCloseAccountDate)
+
+    mailApi.closeAccountDayRemaining(
+      user.email,
+      user.language,
+      finalCloseAccountDate.toISOString().split('T')[0]
+    )
 
     switch(differenceDays) {
       case ONE_DAY:
-        
+        mailApi.closeAccountDayRemaining(
+          user.email,
+          user.language,
+          finalCloseAccountDate.toISOString().split('T')[0]
+        )
         break
       case ONE_WEEK:
-        
+        mailApi.closeAccountWeekRemaining(
+          user.email,
+          user.language,
+          finalCloseAccountDate.toISOString().split('T')[0]
+        )
         break
       case ONE_MONTH:
-        
+        mailApi.closeAccountMonthRemaining(
+          user.email,
+          user.language,
+          finalCloseAccountDate.toISOString().split('T')[0]
+        )
         break
       default: break
     }
-
-    console.log('TIME-AGO', differenceDays)
   })
 }
 
