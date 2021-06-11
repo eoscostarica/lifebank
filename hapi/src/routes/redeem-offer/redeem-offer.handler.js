@@ -6,7 +6,6 @@ const { accountApi } = require('../../api')
 module.exports = async ({ auth: { credentials }, payload: { input } }) => {
   try {
     const response = await accountApi.redeem(credentials.sub, input)
-
     return {
       transaction_id: response.transaction_id
     }

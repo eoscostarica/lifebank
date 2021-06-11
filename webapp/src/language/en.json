@@ -339,7 +339,8 @@
       "succesful": "Succesful transaction",
       "donationsError": "Uh-oh! There was an error. Please check if the account is correct and try",
       "donationsProfileError": "Uh oh! There was an error trying to get your donations",
-      "redeemOfferError": "Uh oh! There was an error trying to redeem the offer"
+      "redeemOfferError": "Uh oh! There was an error trying to redeem the offer",
+      "redeemOfferSuccess": "Transaction Succeded"
     },
     "users": "Users",
     "products": "Products",

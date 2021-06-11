@@ -106,7 +106,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
 
   const [
     redeemOffer,
-    { loadingRedeemOffer, error: errorRedeemOffer , data: { redeem: redeemOfferResult } = {} }
+    { loadingRedeemOffer, error: errorRedeemOffer , data: { redeem_offer: redeemOfferResult } = {} }
   ] = useMutation(REDEEM_OFFER_MUTATION)
 
   const { data: tokenUser = {} } = useSubscription(
@@ -142,19 +142,18 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
   }, [errroLoadProfile])
 
   useEffect(() => {
-    console.log( errorRedeemOffer, loadingRedeemOffer)
     if (redeemOfferResult) {
-      if(redeemOfferResult.response)
-      setOpenSnackbar({
-        show: true,
-        message: t('donations.donationsProfileError'),
-        severity: 'success'
-      })
+      if(redeemOfferResult.transaction_id)
+        setOpenSnackbar({
+          show: true,
+          message: t('donations.redeemOfferSuccess'),
+          severity: 'success'
+        })
     }
     if (errorRedeemOffer) {
       setOpenSnackbar({
         show: true,
-        message: t('donations.donationsProfileError'),
+        message: t('donations.redeemOfferError'),
         severity: 'error'
       })
     }
@@ -590,16 +589,11 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
           {isOffer &&
             <>
               <Button variant="contained" color="secondary" 
-              className={classes.fabButtonOffer}
-              // disabled = {tokens > 0 ? false : true}
-              onClick={handleRedeemOffer}>
+                className={classes.fabButtonOffer}
+                disabled = {tokens ? false : true}
+                onClick={handleRedeemOffer}>
                 {t('tokenTransfer.redeem')}
               </Button>
-              {loadingRedeemOffer &&
-                <Box>
-                  <CircularProgress />
-                </Box>
-              }
             </>
           }
           <Drawer
@@ -660,17 +654,12 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
           {isOffer &&
             <>
               <Button variant="contained" color="secondary" 
-              className={classes.fabButtonOffer}
-              // disabled = {tokens > 0 ? false : true}
-              onClick={handleRedeemOffer}>
+                className={classes.fabButtonOffer}
+                disabled = {tokens ? false : true}
+                onClick={handleRedeemOffer}>
                 {t('tokenTransfer.redeem')}
               </Button>
-              {loadingRedeemOffer &&
-                <Box>
-                  <CircularProgress />
-                </Box>
-              }
-            </>
+          </>
           }
           <Dialog
             maxWidth={maxWidth}
