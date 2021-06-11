@@ -17,7 +17,6 @@ const getDaysBetweenDates = (date) => {
 }
 
 const closeAccountReminder = async () => {
-  console.log('CLOSE ACCOUNT REMINDER')
   const ONE_DAY = 1
   const ONE_WEEK = 7
   const ONE_MONTH = 30
