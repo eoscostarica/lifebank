@@ -1,0 +1,65 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: weekly
+spec:
+  schedule: "	0 0 * * 0"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: weekly
+              image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HAPI}:latest
+              args:
+                - /bin/sh
+                - -c
+                - node /app/src/cron-jobs/weekly.js
+              envFrom:
+                - configMapRef:
+                    name: lifebank-hapi-config
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: monthly
+spec:
+  schedule: "	0 0 1 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: monthly
+              image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HAPI}:latest
+              args:
+                - /bin/sh
+                - -c
+                - node /app/src/cron-jobs/monthly.js
+              envFrom:
+                - configMapRef:
+                    name: lifebank-hapi-config
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: yearly
+spec:
+  schedule: "0 0 1 1 *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: yearly
+              image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HAPI}:latest
+              args:
+                - /bin/sh
+                - -c
+                - node /app/src/cron-jobs/yearly.js
+              envFrom:
+                - configMapRef:
+                    name: lifebank-hapi-config
+          restartPolicy: OnFailure

@@ -86,6 +86,14 @@ export const CHECK_EMAIL_VERIFIED = gql`
   }
 `
 
+export const CHANGE_LANGUAGE = gql`
+  mutation($account: String!, $language: String!) {
+    update_user(where: {account: {_eq: $account}}, _set: {language: $language}) {
+      affected_rows
+    }
+  }
+`
+
 export const GET_INFO = gql`
   query info($account: String!) {
     location(where: {account: {_eq: $account}}) {

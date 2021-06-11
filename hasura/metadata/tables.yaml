@@ -394,6 +394,7 @@
     permission:
       columns:
       - email_subscription
+      - language
       filter: {}
       check: null
   - role: guest
@@ -408,6 +409,7 @@
       - email
       - email_subscription
       - email_verified
+      - language
       - name
       - secret
       - updated_at
@@ -418,6 +420,7 @@
     permission:
       columns:
       - email_subscription
+      - language
       filter: {}
       check: null
 - table:

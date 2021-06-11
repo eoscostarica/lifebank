@@ -9,6 +9,7 @@ const locationApi = require('./location.api')
 const preregisterApi = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+const notificationApi = require('./notification.api')
 
 const {
   constants: {
@@ -122,8 +123,55 @@ const signup = async (account, profile) => {
   })
 }
 
+const getReport = async ({ dateFrom, dateTo }, account) => {
+  const where = {}
+  if (dateFrom && dateTo) where.created_at = { _gte: dateFrom, _lte: dateTo }
+  const notificationsSent = await notificationApi.getMany({
+    account_from: { _eq: account },
+    ...where
+  })
+  const notificationsReceived = await notificationApi.getMany({
+    account_to: { _eq: account },
+    ...where
+  })
+
+  const sent = notificationsSent
+    ? notificationsSent.map((notification) => {
+        return {
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          tokens:
+            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+          send_to: notification.account_to
+        }
+      })
+    : []
+
+  const received = notificationsReceived
+    ? notificationsReceived.map((notification) => {
+        return {
+          created_at_date: notification.created_at.split('T')[0],
+          created_at_time: notification.created_at.split('T')[1].split('.')[0],
+          tokens:
+            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+          business: notification.account_from
+        }
+      })
+    : []
+
+  return {
+    notifications: {
+      sent: sent,
+      received: received
+    }
+  }
+}
+
 module.exports = {
   preRegister,
   editProfile,
-  signup
+  signup,
+  getReport
 }

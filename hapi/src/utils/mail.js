@@ -725,7 +725,20 @@ const sendConfirmMessage = async (to, subject, title, message) => {
   })
 }
 
-const sendTransactionReport = async (to, subject, title, content) => {
+const sendTransactionReport = async (
+  to,
+  language,
+  role,
+  sentHtmlContent,
+  receivedHtmlContent
+) => {
+  let textTag = 'donorTransactionReport'
+  if (role === 'sponsor') textTag = 'sponsorTransactionReport'
+  else textTag = 'lifebankTransactionReport'
+
+  i18n.changeLanguage(language)
+  const subject = i18n.t(textTag + '.subject')
+
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -747,7 +760,6 @@ const sendTransactionReport = async (to, subject, title, content) => {
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>${title}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -859,15 +871,40 @@ const sendTransactionReport = async (to, subject, title, content) => {
                 <td align="center" bgcolor="#f6f6f6">
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
-                      <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${title}</h1>
-                      </td>
                     </tr>
                     <tr>
-                  </tr>
-                    <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                      <p style="margin: 0;">${content}</p>
+                      <p style="margin: 0;">
+                        ${i18n.t(textTag + '.paragraph')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph2')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph3')}
+                        <table>
+                          <tr>
+                            <th>${i18n.t('mailTransactionReport.to')}</th>
+                            <th>${i18n.t('mailTransactionReport.tokens')}</th>
+                            <th>${i18n.t('mailTransactionReport.date')}</th>
+                          </tr>
+                          ${sentHtmlContent}
+                        </table>
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph4')}
+                        <table>
+                          <tr>
+                          <th>${i18n.t('mailTransactionReport.from')}</th>
+                          <th>${i18n.t('mailTransactionReport.tokens')}</th>
+                          <th>${i18n.t('mailTransactionReport.date')}</th>
+                          </tr>
+                          ${receivedHtmlContent}
+                        </table>
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph5')}
+                        <br><br>
+                        ${i18n
+                          .t('mailUnsubscribe.content')
+                          .concat(to, i18n.t('mailUnsubscribe.content2'))}
+                      </p>
                       </td>
                     </tr>
                     <tr>
@@ -887,7 +924,21 @@ const sendTransactionReport = async (to, subject, title, content) => {
   })
 }
 
-const sendNewSponsorAndOfferReport = async (to, subject, title, content) => {
+const sendNewSponsorAndOfferReport = async (
+  to,
+  language,
+  role,
+  sponsorHtmlContent,
+  offerHtmlContent
+) => {
+  const textTag =
+    role === 'sponsor'
+      ? 'sponsorAndOfferReportToDonors'
+      : 'sponsorAndOfferReportToLifebanks'
+
+  i18n.changeLanguage(language)
+  const subject = i18n.t(textTag + '.subject')
+
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -909,7 +960,6 @@ const sendNewSponsorAndOfferReport = async (to, subject, title, content) => {
           <head>
             <meta charset="utf-8">
             <meta http-equiv="x-ua-compatible" content="ie=edge">
-            <title>${title}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <style type="text/css">
             /**
@@ -1021,15 +1071,26 @@ const sendNewSponsorAndOfferReport = async (to, subject, title, content) => {
                 <td align="center" bgcolor="#f6f6f6">
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600 px;">
                     <tr>
-                      <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #f6f6f6;">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: bold; line-height: 48px; color: #BA0D0D;"> ${title}</h1>
-                      </td>
                     </tr>
                     <tr>
-                  </tr>
-                    <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                      <p style="margin: 0;">${content}</p>
+                      <p style="margin: 0;">
+                        ${i18n.t(textTag + '.paragraph')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph2')}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph3')}
+                        ${sponsorHtmlContent}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph4')}
+                        ${offerHtmlContent}
+                        <br><br>
+                        ${i18n.t(textTag + '.paragraph5')}
+                        <br><br>
+                        ${i18n
+                          .t('mailUnsubscribe.content')
+                          .concat(to, i18n.t('mailUnsubscribe.content2'))}
+                      </p>
                       </td>
                     </tr>
                     <tr>
@@ -1367,7 +1428,7 @@ const sendLifebankOnboarding = async (to, language, role) => {
   else textTag = 'lifebankOnboarding'
 
   i18n.changeLanguage(language)
-  const subject = i18n.t('lifebankOnboarding.subject')
+  const subject = i18n.t(textTag + '.subject')
 
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
