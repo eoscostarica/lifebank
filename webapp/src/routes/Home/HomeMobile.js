@@ -6,9 +6,7 @@ import { useUser } from '../../context/user.context'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Paper from '@material-ui/core/Paper'
-import IconButton from '@material-ui/core/IconButton'
 import Toolbar from '@material-ui/core/Toolbar'
-import StarIcon from '@material-ui/icons/Star'
 import { useTranslation } from 'react-i18next'
 
 import ShowOffersMobile from '../../components/ShowElements/ShowOffersMobile'
@@ -132,9 +130,6 @@ const HomeMobile = (props) => {
           />
           <MapModal isDesktop={false} />
           <FilterHome isDesktop={false} applyFilters={props.applyFilters} />
-          <IconButton disabled>
-            <StarIcon className={classes.iconBottomAppBar} />
-          </IconButton>
           {currentUser && (
             <DonationsDashboard isDesktop={false} currentUser={currentUser} />
           )}

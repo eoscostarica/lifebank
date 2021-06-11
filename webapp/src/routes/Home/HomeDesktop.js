@@ -7,10 +7,8 @@ import { useUser } from '../../context/user.context'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
 import SearchIcon from '@material-ui/icons/Search'
-import StarIcon from '@material-ui/icons/Star'
 import { useTranslation } from 'react-i18next'
 import IconButton from '@material-ui/core/IconButton'
 import MicIcon from '@material-ui/icons/Mic'
@@ -76,15 +74,6 @@ const HomeDesktop = (props) => {
           </Box>
           <Box className={classes.boxIcons}>
             <FilterHome isDesktop applyFilters={props.applyFilters} />
-          </Box>
-          <Box className={classes.boxIcons}>
-            <Button
-              disabled
-              className={classes.buttonIconDesktop}
-              startIcon={<StarIcon />}
-            >
-              {t('contentToolbar.favorites')}
-            </Button>
           </Box>
         </Grid>
         <Grid item md={5} lg={6} className={classes.boxControls}>
