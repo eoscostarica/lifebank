@@ -1,5 +1,6 @@
-import React, { useState, forwardRef } from 'react'
+import React, { useState, forwardRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useMutation } from '@apollo/react-hooks'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { useUser } from '../../context/user.context'
 import IconButton from '@material-ui/core/IconButton'
@@ -15,14 +16,16 @@ import Button from '@material-ui/core/Button'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import MobileStepper from '@material-ui/core/MobileStepper'
-import StarBorderIcon from '@material-ui/icons/StarBorder'
 import ImportantIcon from '@material-ui/icons/LabelImportant'
 import CloseIcon from '@material-ui/icons/Close'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
 
 import MapModalOneLocation from '../MapModalOneLocation/MapModalOneLocation'
-import DonationsDashboard from '../DonationsDashboard/DonationsDashboard'
 import styles from './styles'
+import { REDEEM_OFFER_MUTATION } from '../../gql'
 
 const useStyles = makeStyles(styles)
 
@@ -60,6 +63,27 @@ const OfferView = ({
   const startDate = new Date(selectOffer.start_date)
   const endDate = new Date(selectOffer.end_date)
   const { t } = useTranslation('translations')
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+
+  const [
+    redeemOffer,
+    { loading: loadingRedeemOffer, error: errorRedeemOffer , data: { redeem_offer: redeemOfferResult } = {} }
+  ] = useMutation(REDEEM_OFFER_MUTATION)
+
+  const handleRedeemOffer = () => {
+    redeemOffer({
+      variables: {
+        to: selectOffer.user.account,
+        memo: "Best day ever",
+        quantity: 1,
+        offer: selectOffer
+      }
+    })
+  }
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -68,6 +92,24 @@ const OfferView = ({
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
+
+  useEffect(() => {
+    if (redeemOfferResult) {
+      if(redeemOfferResult.transaction_id)
+        setOpenSnackbar({
+          show: true,
+          message: t('donations.redeemOfferSuccess'),
+          severity: 'success'
+        })
+    }
+    if (errorRedeemOffer) {
+      setOpenSnackbar({
+        show: true,
+        message: t('donations.redeemOfferError'),
+        severity: 'error'
+      })
+    }
+  }, [redeemOfferResult, errorRedeemOffer])
 
   const truncateString = (str) => {
     const num = 150
@@ -163,36 +205,27 @@ const OfferView = ({
           )}
         </Box>
         <Box className={classes.componentActionsButton}>
-          {!isDesktop && (
-            <IconButton disabled>
-              <StarBorderIcon className={classes.iconBottomAppBar} />
-            </IconButton>
-          )}
-          {isDesktop && (
+            <MapModalOneLocation
+              isDesktop={isDesktop}
+              isSponor
+              geolocation={selectOffer.user.location.info.geolocation}
+              account={selectOffer.user.account}
+            />
             <Button
               disabled
               className={classes.buttonIconDesktop}
-              startIcon={<StarBorderIcon />}
+              startIcon={<ImportantIcon />}
             >
-              {t('contentToolbar.favorite')}
+              {t(`categories.${selectOffer.offer_type}`)}
             </Button>
-          )}
-          <MapModalOneLocation
-            isDesktop={isDesktop}
-            isSponor
-            geolocation={selectOffer.user.location.info.geolocation}
-            account={selectOffer.user.account}
-          />
           {currentUser && currentUser.role === 'donor' && (
-            <DonationsDashboard isDesktop={isDesktop} currentUser={currentUser} isOffer selectOffer={selectOffer} />
+              <Button variant="contained" color="secondary" 
+                className={classes.fabButtonOffer}
+                disabled = {loadingRedeemOffer}
+                onClick={handleRedeemOffer}>
+                {t('tokenTransfer.redeem')}
+              </Button>
           )}
-          <Button
-            disabled
-            className={classes.buttonIconDesktop}
-            startIcon={<ImportantIcon />}
-          >
-            {t(`categories.${selectOffer.offer_type}`)}
-          </Button>
         </Box>
       </Box>
     )
@@ -222,6 +255,16 @@ const OfferView = ({
             </Toolbar>
           </AppBar>
           <OfferContent />
+          {loadingRedeemOffer &&
+            <Box className={classes.loadingBox}>
+              <CircularProgress />
+            </Box>
+          }
+          <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>
+            <Alert severity={openSnackbar.severity}>
+              {openSnackbar.message}
+            </Alert>
+          </Snackbar>
         </Dialog>
       )}
       {isDesktop && (
@@ -243,6 +286,16 @@ const OfferView = ({
             </IconButton>
           </Box>
           <OfferContent />
+          {loadingRedeemOffer &&
+            <Box className={classes.loadingBox}>
+              <CircularProgress />
+            </Box>
+          }
+          <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>
+            <Alert severity={openSnackbar.severity}>
+              {openSnackbar.message}
+            </Alert>
+          </Snackbar>
         </Dialog>
       )}
     </>
