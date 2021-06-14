@@ -8,23 +8,7 @@ module.exports = async ({ auth: { credentials }, payload: { input } }) => {
     const role =
       credentials['https://hasura.io/jwt/claims']['x-hasura-default-role']
 
-    console.log('ID', input)
-    console.log('CREDENTIALS', credentials.sub)
     await donorApi.editNotificationState(credentials.sub, input.id)
-    // switch (role) {
-    //   case 'donor':
-    //     await donorApi.editNotificationState(credentials.sub, input.id)
-    //     break
-    //   /* case 'sponsor':
-    //      await sponsorApi.editProfile(credentials.sub, input.profile)
-    //      break
-    //    case 'lifebank':
-    //      await lifebankApi.editProfile(credentials.sub, input.profile)
-    //      break
-    //    default:
-    //      throw new Error('Invalid role')
-    //      break*/
-    // }
 
     return {
       success: true

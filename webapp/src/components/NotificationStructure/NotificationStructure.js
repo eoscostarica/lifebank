@@ -48,7 +48,6 @@ const NotificationStructure = ({ id, title, description, state, dateAndTime }) =
 
   return (
     <>
-
       <Button className={classes.wrapper} onMouseOver={changeNotificationState}>
         <Grid container xs={3}>
           <Grid item xs={12}>
