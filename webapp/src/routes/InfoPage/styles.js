@@ -37,8 +37,8 @@ export default (theme) => ({
     width: '100%',
     backgroundColor: '#FFFFFF',
     paddingTop: '50px',
-    paddingLeft: '20%',
-    paddingRight: '20%',
+    paddingLeft: '15%',
+    paddingRight: '15%',
     height: 'auto'
   },
   imageSectionDesktop: {

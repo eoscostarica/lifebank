@@ -11,7 +11,7 @@
       "filters": "Filter search",
       "favorites": "Favorites",
       "favorite": "Favorite",
-      "inputPlaceholder": "Search Offers, Lifebanks or Sponsors"
+      "inputPlaceholder": "Search Offers, Lifebanks, or Sponsors"
     },
     "rolesTitle": {
       "singular": {
@@ -112,7 +112,7 @@
       "subtitle": "Login to access your bookmarks and personal preferences.",
       "loggedIn": "Keep me logged in",
       "login": "Login",
-      "accountDoesntExist": "This account doesn't exist. Please, sign up.",
+      "accountDoesntExist": "This account doesn't exist. Please, sign up first.",
       "somethingHappenedWithAuth": "Oops! Something happened with the authentication. Please, check again.",
       "demoCredentials": "Demo credentials",
       "invalidAccountOrPassword": "Invalid account or password",
@@ -278,7 +278,7 @@
       "namePlaceholder": "Add your name",
       "urlWebsitePlaceHolder": "URL website",
       "bloodDemandLevel": "Blood Demand Level",
-      "dragOrtap": "Drag or tap to the demand level that represent your Lifebank actual necesities. You can set the token rewards depending on this levels.",
+      "dragOrtap": "Drag or tap to the demand level that represents the necessities of your Lifebank. You can set the token rewards depending on this level.",
       "lowLevelReward": "Low Level Reward",
       "mediumLevelReward": "Medium Level Reward",
       "highLevelReward": "High Level Reward",
@@ -317,7 +317,7 @@
     "donations": {
       "donations": "Donations",
       "yourDonations": "Your Donations",
-      "findAsponsor": "Find a Sponsor and Redeem your LifebankTokens!",
+      "findAsponsor": "Find a Sponsor and Redeem your Life Tokens!",
       "youHavenotDonated": "You have not donated yet.",
       "donate": "Donate",
       "yourDonationsAndRewards": "Your Donations and Rewards",
@@ -353,7 +353,7 @@
       "workTogether": "Let's work together and keep the life flowing",
       "isAplace": "is a place where you can donate blood",
       "sponsorDescription": " are businesses that will reward people that have donated through a Lifebank",
-      "donorsDescription": " will donate blood and be rewarded with life tokens which they can redeem at their convenience with sponsors of their community.",
+      "donorsDescription": " will donate blood and be rewarded with life tokens that can be redeemed for offers at local participating businesses.",
       "skip": "Skip"
     },
     "tokenTransfer": {
@@ -399,6 +399,7 @@
       "currentLanguage": "en-US",
       "near": "Near",
       "offers": "Offers",
+      "loadMore": "Load More",
       "registeredEmail": "Registered Email Address"
     },
     "claimReward": {
@@ -463,7 +464,7 @@
     },
     "approveAccount": {
       "accountapprove": "This account has been approved",
-      "somethingHappened": "Something happened when trying approve this account"
+      "somethingHappened": "Something happened when trying to approve this account"
     },
     "offersManagement": {
       "offersManagement": "Offers Management",
@@ -487,7 +488,7 @@
       "quantity": "Quantity",
       "quantityPlaceholder": "Service quantity available",
       "selectStartOfferDate": "Select a start date",
-      "selectEndOfferDate": "Select a end date",
+      "selectEndOfferDate": "Select an end date",
       "selectOfferType": "Select offer type",
       "costInTokens": "Cost in tokens",
       "costInTokensPlaceholder": "Type the cost in tokens here",
@@ -513,7 +514,7 @@
       "activate": "Activate",
       "active": "Active",
       "inactive": "Inactive",
-      "noProvidedDate": "No provided date",
+      "noProvidedDate": "-",
       "youHaveNoAddedOffers": "You have no offers available",
       "deleteOfferConfirmation": "The offer is going to be deleted, do you want to proceed?",
       "yesDeleteIt": "Yes, delete it",
