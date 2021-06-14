@@ -1,7 +1,6 @@
 import NotFound from './NotFound'
 import InternalError from './InternalError'
 import Profile from './Profile'
-
 import HistoryDashboard from './HistoryDashboard'
 import EditProfilePage from './EditProfile'
 import About from './About'
