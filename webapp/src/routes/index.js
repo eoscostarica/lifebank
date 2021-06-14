@@ -86,10 +86,5 @@ export default [
     name: 'history-dashboard',
     path: '/history-dashboard',
     component: HistoryDashboard
-  },
-  {
-    name: 'cancel-email-subscription',
-    path: '/cancel-email-subscription/:account',
-    component: CancelEmailSubscription
   }
 ]
