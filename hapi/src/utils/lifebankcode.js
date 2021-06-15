@@ -238,7 +238,7 @@ const addOffer = (account, password, offer) => {
           category: offer.offer_type,
           beginning_date: offer.start_date,
           ending_date: offer.end_date,
-          cost: '10 LIFE',
+          cost: `${offer.cost_in_tokens} LIFE`,
           description: offer.description,
           restriction: 'restriction'
         }

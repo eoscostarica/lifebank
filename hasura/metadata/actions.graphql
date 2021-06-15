@@ -67,6 +67,25 @@ type Mutation {
 
 
 type Mutation {
+  create_offer (
+    limited: Boolean!
+    online_only: Boolean!
+    quantity: Int
+    offer_type: String!
+    description: String!
+    start_date: String
+    end_date: String
+    images: String!
+    sponsor_id: Int!
+    active: Boolean!
+    offer_name: String!
+    cost_in_tokens: Int!
+    icon: String!
+  ): create_offer_output
+}
+
+
+type Mutation {
   create_pre_register_lifebank (
     email: String!
     emailContent: jsonb!
@@ -356,5 +375,11 @@ type donate_output {
 
 type change_email_output {
   success : Boolean!
+}
+
+type create_offer_output {
+  account : String!
+  transaction_id : String!
+  token : String!
 }
 
