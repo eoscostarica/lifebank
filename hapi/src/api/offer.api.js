@@ -1,5 +1,4 @@
 const { hasuraUtils } = require('../utils')
-const userApi = require('./user.api')
 
 const CREATE_OFFER = `
 mutation(

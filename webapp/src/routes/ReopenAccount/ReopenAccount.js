@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import CustomRouterLink from '../../components/CustomRouterLink'
-import { UPDATE_EMAIL_SUBSCRIPTION_MUTATION } from '../../gql'
+import { REOPEN_ACCOUNT_MUTATION } from '../../gql'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -20,61 +20,64 @@ const ReopenAccount = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const { account } = useParams()
-  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState()
 
-  const handleOpenSnackbar = () => {
-    setOpenSnackbar(!openSnackbar)
-  }
+  useEffect(() => {
+    if (reopenAccountError) {
+      setOpenSnackbar({
+        show: true,
+        message: t('signup.noConsentNoEdit'),
+        severity: 'error'
+      })
+    }
+    if (reopenAccountResult) {
+      setOpenSnackbar({
+        show: true,
+        message: t('signup.noConsentNoEdit'),
+        severity: 'success'
+      })
+    }
+  }, [reopenAccountResult, reopenAccountError])
 
   const [
-    updateEmailSubscription,
+    reopenAccount,
     {
-      error: errorUpdateEmailSubscription,
-      loading: updateEmailSubscriptionLoading,
-      data: { update_user: updateEmailSubscriptionResult } = {}
+      error: reopenAccountError,
+      loading: reopenAccountLoading,
+      data: { success: reopenAccountResult } = {}
     }
-  ] = useMutation(UPDATE_EMAIL_SUBSCRIPTION_MUTATION)
+  ] = useMutation(REOPEN_ACCOUNT_MUTATION)
+  console.log(account)
 
-  const onUpdateEmailSubscriptionClick = () => {
-    updateEmailSubscription({
+  const handleSnackbarClose = () => {
+    setOpenSnackbar({ ...openSnackbar, show: false })
+  }
+
+  const reopen_account = () => {
+    reopenAccount({
       variables: {
-        account,
-        state: false
+        account : account
       }
     })
   }
-
-  useEffect(() => {
-    if(updateEmailSubscriptionResult && updateEmailSubscriptionResult.affected_rows === 0) handleOpenSnackbar()
-  }, [updateEmailSubscriptionResult])
 
   return (
     <Box className={classes.root}>
       <Grid container spacing={4}>
         <Grid item xs={12} className={classes.content}>
           <Box className={classes.centerText}>
-            {updateEmailSubscriptionLoading && <CircularProgress />}
-            {!updateEmailSubscriptionLoading && !updateEmailSubscriptionResult && (
+            {reopenAccountLoading && <CircularProgress />}
               <Typography className={classes.title}>
-                {t('emailSubscription.cancelMessage')}
+                {'Deseas Volver a Lifebank'}
               </Typography>
-            )}
-            {!updateEmailSubscriptionLoading && updateEmailSubscriptionResult && (
-              <Typography className={classes.title}>
-                {t('emailSubscription.successfulCancel')}
-              </Typography>
-            )}
-            {!updateEmailSubscriptionLoading && !updateEmailSubscriptionResult && (
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={onUpdateEmailSubscriptionClick}
+                onClick={reopen_account}
                 className={classes.btnHome}
               >
-                {t('emailSubscription.cancel')}
+                {t('Bienvenido de Nuevo')}
               </Button>
-            )}
-            {!updateEmailSubscriptionLoading && updateEmailSubscriptionResult && (
               <Button
                 variant="contained"
                 color="secondary"
@@ -84,11 +87,10 @@ const ReopenAccount = () => {
               >
                 {t('emailVerification.takeHome')}
               </Button>
-            )}
           </Box>
         </Grid>
       </Grid>
-      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={handleOpenSnackbar}>
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={handleSnackbarClose}>
         <Alert severity="error">
           {t('emailSubscription.error')}
         </Alert>

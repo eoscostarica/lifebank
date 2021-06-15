@@ -20,7 +20,6 @@ const offerApi = require('./offer.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
-const offerApi = require('./offer.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
@@ -925,8 +924,11 @@ const finalCloseAccount = async (account) => {
   await userApi.permanentDelete({
     account: { _eq: account }
   })
-
-  // BLOCKCHAIN CONNECTION
+  const password = await vaultApi.getPassword(account)
+  await lifebankcodeUtils.unsubscribe(
+    account,
+    password
+  )
 }
 
 const addOffer = async (account, offer) => {
