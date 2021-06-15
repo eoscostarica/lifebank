@@ -67,7 +67,7 @@ const OfferView = ({
 
   const [
     redeemOffer,
-    { loading: loadingRedeemOffer, error: errorRedeemOffer , data: { redeem_offer: redeemOfferResult } = {} }
+    { loading: loadingRedeemOffer, error: errorRedeemOffer, data: { redeem_offer: redeemOfferResult } = {} }
   ] = useMutation(REDEEM_OFFER_MUTATION)
 
   const handleRedeemOffer = () => {
@@ -95,7 +95,7 @@ const OfferView = ({
 
   useEffect(() => {
     if (redeemOfferResult) {
-      if(redeemOfferResult.transaction_id)
+      if (redeemOfferResult.transaction_id)
         setOpenSnackbar({
           show: true,
           message: t('donations.redeemOfferSuccess'),
@@ -205,26 +205,26 @@ const OfferView = ({
           )}
         </Box>
         <Box className={classes.componentActionsButton}>
-            <MapModalOneLocation
-              isDesktop={isDesktop}
-              isSponor
-              geolocation={selectOffer.user.location.info.geolocation}
-              account={selectOffer.user.account}
-            />
-            <Button
-              disabled
-              className={classes.buttonIconDesktop}
-              startIcon={<ImportantIcon />}
-            >
-              {t(`categories.${selectOffer.offer_type}`)}
-            </Button>
+          <MapModalOneLocation
+            isDesktop={isDesktop}
+            isSponor
+            geolocation={selectOffer.user.location.info.geolocation}
+            account={selectOffer.user.account}
+          />
+          <Button
+            disabled
+            className={classes.buttonIconDesktop}
+            startIcon={<ImportantIcon />}
+          >
+            {t(`categories.${selectOffer.offer_type}`)}
+          </Button>
           {currentUser && currentUser.role === 'donor' && (
-              <Button variant="contained" color="secondary" 
-                className={classes.fabButtonOffer}
-                disabled = {loadingRedeemOffer}
-                onClick={handleRedeemOffer}>
-                {t('tokenTransfer.redeem')}
-              </Button>
+            <Button variant="contained" color="secondary"
+              className={classes.fabButtonOffer}
+              disabled={loadingRedeemOffer}
+              onClick={handleRedeemOffer}>
+              {t('tokenTransfer.redeem')}
+            </Button>
           )}
         </Box>
       </Box>
