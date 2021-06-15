@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import { useTranslation } from 'react-i18next'
 import NewNotificationIcon from '@material-ui/icons/Brightness1';
-import OldNotificationIcon from '@material-ui/icons/PanoramaFishEye';
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import Grid from '@material-ui/core/Grid'
 import { GET_ACCOUNT_NAME, EDIT_NOTIFICATION_STATE } from '../../gql'
@@ -17,6 +15,7 @@ const useStyles = makeStyles(styles)
 const NotificationStructure = ({ id, title, description, state, dateAndTime }) => {
   const classes = useStyles()
   const [name, setName] = useState()
+  const [time, setTime] = useState()
 
   const { refetch: getData } = useQuery(GET_ACCOUNT_NAME, {
     variables: {
@@ -37,6 +36,11 @@ const NotificationStructure = ({ id, title, description, state, dateAndTime }) =
     }
     response()
   }, [description])
+
+  useEffect(() => {
+    const hour = parseInt(dateAndTime.substring(11, 13)) - 6
+    setTime(hour.toString() + dateAndTime.substring(13, 19))
+  }, [dateAndTime])
 
   const changeNotificationState = () => {
     editNotificationState({
@@ -71,7 +75,7 @@ const NotificationStructure = ({ id, title, description, state, dateAndTime }) =
         <Grid container xs={6}>
           <Grid item xs={12}>
             <Typography className={classes.labelOption}>
-              {dateAndTime.substring(11, 19)}
+              {time}
               <br ></br>
               {dateAndTime.substring(5, 10) + "-" + dateAndTime.substring(0, 4)}
             </Typography>
