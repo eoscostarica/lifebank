@@ -15,7 +15,6 @@ const INSERT_NOTIFICATION = `
     }
   }
 `
-
 const GET_ONE = `
   query ($where: notification_bool_exp) {
     notification(where: $where, order_by: {created_at: desc}, limit: 1) {
@@ -46,7 +45,7 @@ const GET_MANY = `
   }
 `
 
-const insert = notification => {
+const insert = (notification) => {
   return hasuraUtils.request(INSERT_NOTIFICATION, { notification })
 }
 

@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 import TransactionReport from '../components/TransactionReport'
 import LoginModal from '../components/LoginModal'
 import Signup from '../components/Signup/Signup'
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   labelOption: {
     color: `${theme.palette.primary.main} !important`,
-    marginLeft: theme.spacing(2),
+    marginLeft: theme.spacing(3),
     marginBottom: theme.spacing(1),
     fontSize: 14,
     textTransform: 'capitalize'
@@ -124,7 +125,7 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
           </Box>
         </>
       )}
-      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') &&
         <>
           <Divider />
           <Typography variant="body1" className={classes.infoLabel}>
@@ -139,10 +140,34 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
             </Link>
           </Box>
           <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
+            <AssignmentIcon className={classes.iconOption} />
+            <Link to="/history-dashboard">
+              <Typography variant="body1" className={classes.labelOption}>
+                {t('navigationDrawer.historyDashboard')}
+              </Typography>
+            </Link>
+          </Box>
+          <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
             <CloudDownloadIcon className={classes.iconOption} />
             <Link to={window.location.pathname} onClick={onReportClick}>
               <Typography variant="body1" className={classes.labelOption}>
                 {t('navigationDrawer.downloadReport')}
+              </Typography>
+            </Link>
+          </Box>
+        </>
+      }
+      {user && (user.role === 'donor') &&
+        <>
+          <Divider />
+          <Typography variant="body1" className={classes.infoLabel}>
+            {t('navigationDrawer.tools')}
+          </Typography>
+          <Box className={classes.optionLink} onClick={triggerSideBarPosition}>
+            <AssignmentIcon className={classes.iconOption} />
+            <Link to="/history-dashboard">
+              <Typography variant="body1" className={classes.labelOption}>
+                {t('navigationDrawer.historyDashboard')}
               </Typography>
             </Link>
           </Box>
@@ -177,8 +202,8 @@ const SideBar = ({ user, onLogout, triggerSideBarPosition }) => {
         </Link>
       </Box>
 
-      {user && (user.role === 'lifebank' || user.role === 'sponsor') && 
-        <TransactionReport saveReport={downloadReport} onReportSaved={onReportClick}/>
+      {user && (user.role === 'lifebank' || user.role === 'sponsor') &&
+        <TransactionReport saveReport={downloadReport} onReportSaved={onReportClick} />
       }
     </Box>
   )

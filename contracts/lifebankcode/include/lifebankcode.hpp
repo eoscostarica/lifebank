@@ -12,6 +12,7 @@
  *    GitHub:         https://github.com/eoscostarica
  *
  */
+ 
 #pragma once
 
 #include <eosio/eosio.hpp>

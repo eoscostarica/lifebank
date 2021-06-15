@@ -61,7 +61,8 @@
       "aboutLifebank": "Acerca de Lifebank",
       "useTerms": "Términos de uso",
       "help": "Ayuda",
-      "offersApproval": "Aprobar ofertas"
+      "offersApproval": "Aprobar ofertas",
+      "historyDashboard": "Ver Historial"
     },
     "signup": {
       "register": "Registro",
@@ -524,6 +525,17 @@
       "offerStateInactive": "Ofertas Inactivas",
       "info": "Primero completa tu perfil para agregar una oferta",
       "chooseIcon": "Elige un ícono"
+    },
+    "historyDashboard": {
+      "dashboard": "Historial",
+      "tableTitleSent": "Tokens enviados",
+      "tableTitleReceived": "Tokens recibidos",
+      "donor": "Donador",
+      "date": "Fecha",
+      "time": "Hora",
+      "tokens": "Tokens",
+      "business": "Negocio",
+      "title": "Historial de transacciones"
     },
     "offerView": {
       "selectedOffer": "Oferta seleccionada",
