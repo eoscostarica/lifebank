@@ -1,4 +1,56 @@
 const { hasuraUtils } = require('../utils')
+const userApi = require('./user.api')
+
+const CREATE_OFFER = `
+mutation(
+  $limited: Boolean!
+  $online_only: Boolean!
+  $quantity: Int
+  $offer_type: String!
+  $description: String!
+  $start_date: String
+  $end_date: String
+  $images: String!
+  $sponsor_id: Int!
+  $active: Boolean!
+  $offer_name: String!
+  $cost_in_tokens: Int!
+  $icon: String!
+) {
+  insert_offer_one(
+    object: {
+      limited: $limited
+      online_only: $online_only
+      quantity: $quantity
+      offer_type: $offer_type
+      description: $description
+      start_date: $start_date
+      end_date: $end_date
+      images: $images
+      sponsor_id: $sponsor_id
+      active: $active
+      offer_name: $offer_name
+      cost_in_tokens: $cost_in_tokens
+      icon: $icon
+    }
+  ) {
+    id
+    description
+    images
+    limited
+    offer_type
+    online_only
+    quantity
+    sponsor_id
+    start_date
+    end_date
+    offer_name
+    cost_in_tokens
+    active
+    icon
+  }
+}
+`
 
 const GET_MANY = `
   query ($where: offer_bool_exp) {
@@ -18,10 +70,14 @@ const GET_MANY = `
       quantity
       sponsor_id
       start_date
-      updated_at
+      end_date
+      offer_name
+      cost_in_tokens
+      active
+      icon
     }
   }
-`
+  `
 
 const CHANGE_STATE = `
   mutation ($where: offer_bool_exp!, $state: String!) {
@@ -66,9 +122,14 @@ const permanentDelete = async (where) => {
   return delete_offer.affected_rows > 0
 }
 
+const addOffer = (offer) => {
+  return hasuraUtils.request(CREATE_OFFER, offer)
+}
+
 module.exports = {
   desactivate,
   activate,
   permanentDelete,
-  getMany
+  getMany,
+  addOffer
 }

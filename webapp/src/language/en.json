@@ -41,7 +41,8 @@
       "aboutLifebank": "About Lifebank",
       "useTerms": "Terms of Use",
       "help": "Help",
-      "offersApproval": "Offers approval"
+      "offersApproval": "Offers approval",
+      "historyDashboard": "History Dashboard"
     },
     "setting": {
       "setting": "Settings",
@@ -338,7 +339,9 @@
       "memoLifebank": "Thanks for your donation",
       "succesful": "Succesful transaction",
       "donationsError": "Uh-oh! There was an error. Please check if the account is correct and try",
-      "donationsProfileError": "Uh oh! There was an error trying to get your donations"
+      "donationsProfileError": "Uh oh! There was an error trying to get your donations.",
+      "redeemOfferError": "Uh oh! There was an error trying to redeem the offer - Check if you have enough tokens",
+      "redeemOfferSuccess": "Transaction Succeded"
     },
     "users": "Users",
     "products": "Products",
@@ -522,6 +525,17 @@
       "offerStateInactive": "Inactive Offers",
       "info": "First complete your profile to add an offer",
       "chooseIcon": "Choose an icon"
+    },
+    "historyDashboard": {
+      "dashboard": "History",
+      "tableTitleSent": "Sent tokens",
+      "tableTitleReceived": "Tokens received",
+      "donor": "Donor",
+      "date": "Date",
+      "time": "Time",
+      "tokens": "Tokens",
+      "business": "Bussines",
+      "title": "History of transactions"
     },
     "offerView": {
       "selectedOffer": "Selected offer",

@@ -46,6 +46,13 @@ actions:
     handler: http://hapi:9090/api/create-account-lifebank
   permissions:
   - role: guest
+- name: create_offer
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/add-offer
+    forward_client_headers: true
+  permissions:
+  - role: sponsor
 - name: create_pre_register_lifebank
   definition:
     kind: synchronous
@@ -224,4 +231,5 @@ custom_types:
   - name: check_email_verified_output
   - name: donate_output
   - name: change_email_output
+  - name: create_offer_output
   scalars: []

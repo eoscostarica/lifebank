@@ -20,6 +20,7 @@ const offerApi = require('./offer.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+const offerApi = require('./offer.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
@@ -928,6 +929,67 @@ const finalCloseAccount = async (account) => {
   // BLOCKCHAIN CONNECTION
 }
 
+const addOffer = async (account, offer) => {
+  const addOfferState = await offerApi.addOffer(offer)
+  if (!addOfferState) throw new Error('Fail to add new offer')
+
+  const password = await vaultApi.getPassword(account)
+  const transaction = await lifebankcodeUtils.addOffer(account, password, offer)
+
+  return {
+    transaction_id: transaction.transaction_id
+  }
+}
+
+const removeOffer = async ({ offer_id }) => {
+  const removedOffer = await offerApi.permanentDeletes({
+    id: { _eq: offer_id }
+  })
+  if (!removeOffer) throw new Error('Fail to add new offer')
+
+  const password = await vaultApi.getPassword(LIFEBANKCODE_CONTRACT)
+  const transaction = await lifebankcodeUtils.removeOffer(
+    LIFEBANKCODE_CONTRACT,
+    password,
+    removedOffer
+  )
+
+  return {
+    transaction_id: transaction.transaction_id
+  }
+}
+
+const redeem = async (from, details) => {
+  const user = await userApi.getOne({
+    account: { _eq: from }
+  })
+
+  if (user.role !== 'donor') {
+    throw new Error('Only donors can redeem an offer')
+  }
+
+  const userTo = await userApi.getOne({
+    account: { _eq: details.to }
+  })
+
+  if (userTo.role !== 'sponsor') {
+    throw new Error('Only sponsor can receive tokens by an offer redemption')
+  }
+
+  const notificationData = {
+    account_from: from,
+    account_to: details.to,
+    title: 'Redeem offer',
+    description: `From ${from} ${details.memo}`,
+    type: 'new_tokens',
+    payload: {
+      offer: details.offer
+    }
+  }
+
+  return await transfer(from, details, notificationData)
+}
+
 module.exports = {
   create,
   createLifebank,
@@ -944,6 +1006,9 @@ module.exports = {
   donate,
   closeAccount,
   reopenAccount,
+  redeem,
+  addOffer,
+  removeOffer,
   isCoordinateInsideBox,
   getDonorsCoordinates,
   finalCloseAccount
