@@ -78,9 +78,7 @@ export default (theme) => ({
   },
   componentContent: {
     overflow: 'auto',
-    padding: 20,
-    marginTop: 10,
-    marginBttom: 10
+    padding: 10
   },
   componentontentText: {
     fontFamily: 'Roboto',
@@ -105,12 +103,7 @@ export default (theme) => ({
     color: '#121212'
   },
   componentActionsButton: {
-    width: '100%',
-    [theme.breakpoints.down('md')]: {
-      position: 'absolute',
-      bottom: 0,
-      padding: 10
-    }
+    width: '100%'
   },
   cardActionButton: {
     position: 'absolute',
@@ -156,5 +149,24 @@ export default (theme) => ({
       fontSize: 25,
       color: '#121212'
     }
+  },
+  fabButtonOffer: {
+    borderRadius: "48px",
+    backgroundColor: "#ba0d0d",
+    fontFamily: "Roboto",
+    fontsize: "14px",
+    fontweight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "normal",
+    letterSpacing: "0.5",
+    textAlign: "center",
+    color: "#ffffff",
+    margin: 20
+  },
+  loadingBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: 20
   }
 })

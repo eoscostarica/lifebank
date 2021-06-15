@@ -75,7 +75,7 @@ EmptyHeartSVG.propTypes = {
   balance: PropTypes.number,
 }
 
-const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
+const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) => {
   const { t } = useTranslation('translations')
   const [maxWidth] = useState('md')
   const [maxWidthQr] = useState('xs')
@@ -99,14 +99,13 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
     { error: errroLoadProfile, data: { profile: { profile } = {} } = {}, client }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
+  const { data: tokenUser = {} } = useSubscription(
+    TOKEN_SUBSCRIPTION, { variables: { account } }
+  )
   const [
     donate,
     { loading, error, data: { donate: donateResult } = {} }
   ] = useMutation(DONATE_MUTATION)
-
-  const { data: tokenUser = {} } = useSubscription(
-    TOKEN_SUBSCRIPTION, { variables: { account } }
-  )
 
   const handleSnackbarClose = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
@@ -186,7 +185,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
 
   const handleOpenModalQr = () => setOpenModalQR(!openModalQR)
 
-  const hanndlerTransferTokens = (account) => {
+  const handlerTransferTokens = (account) => {
     setAccountTo(account)
   }
 
@@ -390,7 +389,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               }
               <Button className={classes.sendTokenButton} variant="contained" color="secondary"
                 onClick={() => {
-                  hanndlerTransferTokens(accountInput)
+                  handlerTransferTokens(accountInput)
                 }}
                 disabled={
                   !accountInput ||
@@ -552,11 +551,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               }
             </Fab>
           }
-          {isOffer &&
-            <Button className={classes.fabButtonOffer} onClick={toggleDrawer(anchor, true)} >
-              {t('tokenTransfer.redeem')}
-            </Button>
-          }
           <Drawer
             anchor={anchor}
             open={state[anchor]}
@@ -612,11 +606,6 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer }) => {
               {t('donations.claimReward')}
             </Fab>
           }
-          {isOffer &&
-            <Button variant="contained" color="secondary" className={classes.fabButtonOffer} onClick={handleOpen}>
-              {t('tokenTransfer.redeem')}
-            </Button>
-          }
           <Dialog
             maxWidth={maxWidth}
             open={open}
@@ -652,6 +641,7 @@ DonationsDashboard.propTypes = {
   isDesktop: PropTypes.bool,
   isOffer: PropTypes.bool,
   currentUser: PropTypes.object,
+  selectOffer: PropTypes.object
 }
 
 export default DonationsDashboard

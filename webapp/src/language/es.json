@@ -345,7 +345,9 @@
       "memoLifebank": "Gracias por tu donación",
       "succesful": "Transacción exitosa",
       "donationsError": "¡Oh! Hubo un error. Comprueba si la cuenta es correcta e inténtalo de nuevo.",
-      "donationsProfileError": "¡Oh! Se produjo un error al intentar obtener tus donaciones."
+      "donationsProfileError": "¡Oh! Se produjo un error al intentar obtener tus donaciones.",
+      "redeemOfferError": "¡Oh! Se produjo un error al intentar redimir la oferta - Verifica si tienes los tokens necesarios",
+      "redeemOfferSuccess": "Transacción exitosa"
     },
     "users": "Usuarios",
     "products": "Productos",
