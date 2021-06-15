@@ -46,6 +46,22 @@ export const UPDATE_EMAIL_SUBSCRIPTION_MUTATION = gql`
   }
 `
 
+export const REOPEN_ACCOUNT_MUTATION = gql`
+  mutation($account: String!) {
+    reopen_account(account: $account) {
+      success
+    }
+  }
+`
+
+export const CLOSE_ACCOUNT_MUTATION = gql`
+  mutation($account: String!) {
+    close_account(account: $account) {
+      success
+    }
+  }
+`
+
 export const CHECK_USERNAME_MUTATION = gql`
   mutation($role: String!, $username: String!) {
     check_username(role: $role, username: $username) {
@@ -69,6 +85,7 @@ export const GET_REPORT_QUERY = gql`
     }
   }
 `
+
 export const SEND_EMAIL_MUTATION = gql`
   mutation($account: String!, $emailContent: jsonb!) {
     send_email(account: $account, emailContent: $emailContent) {

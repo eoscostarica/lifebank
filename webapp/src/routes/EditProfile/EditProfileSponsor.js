@@ -186,7 +186,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
   return (
     <form autoComplete="off" className={classes.form}>
       <Grid container spacing={SPACING}>
-        <Grid container item xs={12} spacing={SPACING} direction="column">
+        <Grid container item xs={12} spacing={SPACING} direction="row">
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h2">
               {t('editProfile.editTitleSponsor')}
@@ -276,7 +276,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction="column">
+        <Grid container item xs={12} direction="row">
           <Typography className={classes.boldText} variant="h4">
             {t('editProfile.contactInformation')}
           </Typography>
@@ -520,7 +520,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
             </Box>
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction="column" spacing={SPACING}>
+        <Grid container item xs={12} direction="row" spacing={SPACING}>
           <Grid container item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.imagery')}

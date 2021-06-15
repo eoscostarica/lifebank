@@ -924,8 +924,11 @@ const finalCloseAccount = async (account) => {
   await userApi.permanentDelete({
     account: { _eq: account }
   })
-
-  // BLOCKCHAIN CONNECTION
+  const password = await vaultApi.getPassword(account)
+  await lifebankcodeUtils.unsubscribe(
+    account,
+    password
+  )
 }
 
 module.exports = {

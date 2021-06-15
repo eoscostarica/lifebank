@@ -220,6 +220,29 @@ const getUserNetworks = async (user) => {
   return rows
 }
 
+const unsubscribe = async (account, password) => {
+  return await eosUtil.transact(
+    [
+      {
+        authorization: [
+          {
+            actor: account,
+            permission: 'active'
+          }
+        ],
+        account: CONTRACT_NAME,
+        name: 'unsubscribe',
+        data: {
+          user: account,
+          community_asset: COMMUNITY_ASSET
+        }
+      }
+    ],
+    account,
+    password
+  )
+}
+
 module.exports = {
   addDonor,
   addLifebank,
@@ -229,5 +252,6 @@ module.exports = {
   getSponsor,
   getComunity,
   getUserNetworks,
-  upLifebank
+  upLifebank,
+  unsubscribe
 }

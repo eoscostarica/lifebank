@@ -32,6 +32,13 @@ type Mutation {
 
 
 type Mutation {
+  close_account (
+    account: String!
+  ): close_account_output
+}
+
+
+type Mutation {
   create_account (
     role: String!
     email: String!
@@ -160,6 +167,13 @@ type Mutation {
     quantity: Int
     offer: jsonb!
   ): redeem_offer_output
+}
+
+
+type Mutation {
+  reopen_account (
+    account: String!
+  ): reopen_account_output
 }
 
 
@@ -355,6 +369,14 @@ type donate_output {
 }
 
 type change_email_output {
+  success : Boolean!
+}
+
+type close_account_output {
+  success : Boolean!
+}
+
+type reopen_account_output {
   success : Boolean!
 }
 
