@@ -25,6 +25,10 @@ const editProfile = async (account, { email, name, ...profile }) => {
   await historyApi.insert(adddonorTransaction)
 }
 
+const editNotificationState = async (account, id_state) => {
+  await notificationApi.edit_state({ id: { _eq: id_state } })
+}
+
 const signup = async (account, profile) => {
   await accountApi.grantConsent(account)
 
@@ -52,28 +56,28 @@ const getReport = async ({ dateFrom, dateTo }, account) => {
 
   const sent = notificationsSent
     ? notificationsSent.map((notification) => {
-        return {
-          created_at_date: notification.created_at.split('T')[0],
-          created_at_time: notification.created_at.split('T')[1].split('.')[0],
-          tokens:
-            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
-            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
-          send_to: notification.account_to
-        }
-      })
+      return {
+        created_at_date: notification.created_at.split('T')[0],
+        created_at_time: notification.created_at.split('T')[1].split('.')[0],
+        tokens:
+          parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+          parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+        send_to: notification.account_to
+      }
+    })
     : []
 
   const received = notificationsReceived
     ? notificationsReceived.map((notification) => {
-        return {
-          created_at_date: notification.created_at.split('T')[0],
-          created_at_time: notification.created_at.split('T')[1].split('.')[0],
-          tokens:
-            parseInt(notification.payload.newBalance[0].split(' ')[0]) -
-            parseInt(notification.payload.currentBalance[0].split(' ')[0]),
-          send_from: notification.account_from
-        }
-      })
+      return {
+        created_at_date: notification.created_at.split('T')[0],
+        created_at_time: notification.created_at.split('T')[1].split('.')[0],
+        tokens:
+          parseInt(notification.payload.newBalance[0].split(' ')[0]) -
+          parseInt(notification.payload.currentBalance[0].split(' ')[0]),
+        send_from: notification.account_from
+      }
+    })
     : []
 
   return {
@@ -87,5 +91,6 @@ const getReport = async ({ dateFrom, dateTo }, account) => {
 module.exports = {
   editProfile,
   signup,
+  editNotificationState,
   getReport
 }

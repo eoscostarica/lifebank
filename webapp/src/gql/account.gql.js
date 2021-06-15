@@ -210,13 +210,24 @@ export const DONATE_MUTATION = gql`
 `
 
 export const NOTIFICATION_SUBSCRIPTION = gql`
-  subscription {
-    notification(order_by: { created_at: desc }, limit: 1) {
+  subscription ($account_to: String!, $limit: Int) {
+    notification(order_by: { created_at: desc }, limit: $limit, where: {account_to: {_eq: $account_to }}) {
       id
       title
       description
       type
       payload
+      created_at
+      account_from
+      state
+    }
+  }
+`
+
+export const EDIT_NOTIFICATION_STATE = gql`
+  mutation notification($id: Int) {
+    update_notification(where: {id: {_eq: $id}}, _set: { state: false }) {
+      affected_rows
     }
   }
 `
@@ -311,3 +322,4 @@ export const GET_ID = gql`
     }
   }
 `
+
