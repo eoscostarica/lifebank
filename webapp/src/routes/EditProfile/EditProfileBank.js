@@ -205,7 +205,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
         </Alert>
       </Snackbar>
       <Grid container spacing={SPACING}>
-        <Grid container item xs={12} spacing={SPACING} direction="column">
+        <Grid container item xs={12} spacing={SPACING} direction="row">
           <Grid item xs={12}>
             <Typography className={classes.boldText} variant="h2">
               {t('editProfile.editTitleLifebank')}
@@ -478,7 +478,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
             </Box>
           </Grid>
         </Grid>
-        <Grid container item xs={12} direction="column" spacing={SPACING}>
+        <Grid container item xs={12} direction="row" spacing={SPACING}>
           <Grid container item xs={12}>
             <Typography className={classes.boldText} variant="h4">
               {t('editProfile.imagery')}

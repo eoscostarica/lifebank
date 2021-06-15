@@ -19,6 +19,7 @@ const locationApi = require('./location.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
+const offerApi = require('./offer.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
@@ -251,7 +252,7 @@ const getDonorsCoordinates = async (donorList) => {
           : lastDonorTransaction.account_from
       )
       newDonorList.push({
-        email: donor.email,
+        ...donor,
         location: JSON.parse(otherUserTransaction.location)
       })
     }
@@ -848,6 +849,67 @@ const transfer = async (from, details, notification) => {
   return transaction
 }
 
+const addOffer = async (account, offer) => {
+  const addOfferState = await offerApi.addOffer(offer)
+  if (!addOfferState) throw new Error('Fail to add new offer')
+
+  const password = await vaultApi.getPassword(account)
+  const transaction = await lifebankcodeUtils.addOffer(account, password, offer)
+
+  return {
+    transaction_id: transaction.transaction_id
+  }
+}
+
+const removeOffer = async ({ offer_id }) => {
+  const removedOffer = await offerApi.removeOffer({
+    id: { _eq: offer_id }
+  })
+  if (!removeOffer) throw new Error('Fail to add new offer')
+
+  const password = await vaultApi.getPassword(LIFEBANKCODE_CONTRACT)
+  const transaction = await lifebankcodeUtils.removeOffer(
+    LIFEBANKCODE_CONTRACT,
+    password,
+    removedOffer
+  )
+
+  return {
+    transaction_id: transaction.transaction_id
+  }
+}
+
+const redeem = async (from, details) => {
+  const user = await userApi.getOne({
+    account: { _eq: from }
+  })
+
+  if (user.role !== 'donor') {
+    throw new Error('Only donors can redeem an offer')
+  }
+
+  const userTo = await userApi.getOne({
+    account: { _eq: details.to }
+  })
+
+  if (userTo.role !== 'sponsor') {
+    throw new Error('Only sponsor can receive tokens by an offer redemption')
+  }
+
+  const notificationData = {
+    account_from: from,
+    account_to: details.to,
+    title: 'Redeem offer',
+    description: `From ${from} ${details.memo}`,
+    type: 'new_tokens',
+    payload: {
+      offer: details.offer
+    }
+  }
+
+  return await transfer(from, details, notificationData)
+}
+
 module.exports = {
   create,
   createLifebank,
@@ -861,5 +923,10 @@ module.exports = {
   getValidSponsors,
   getValidLifebanks,
   getReport,
-  donate
+  donate,
+  redeem,
+  addOffer,
+  removeOffer,
+  isCoordinateInsideBox,
+  getDonorsCoordinates
 }

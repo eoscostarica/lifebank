@@ -83,6 +83,7 @@
       - description
       - id
       - payload
+      - state
       - title
       - type
       - updated_at
@@ -98,6 +99,7 @@
       - description
       - id
       - payload
+      - state
       - title
       - type
       - updated_at
@@ -113,12 +115,32 @@
       - description
       - id
       - payload
+      - state
       - title
       - type
       - updated_at
       filter:
         account_to:
           _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: donor
+    permission:
+      columns:
+      - state
+      filter: {}
+      check: {}
+  - role: lifebank
+    permission:
+      columns:
+      - state
+      filter: {}
+      check: {}
+  - role: sponsor
+    permission:
+      columns:
+      - state
+      filter: {}
+      check: {}
 - table:
     schema: public
     name: offer
@@ -372,6 +394,7 @@
     permission:
       columns:
       - email_subscription
+      - language
       filter: {}
       check: null
   - role: guest
@@ -386,6 +409,7 @@
       - email
       - email_subscription
       - email_verified
+      - language
       - name
       - secret
       - updated_at
@@ -396,6 +420,7 @@
     permission:
       columns:
       - email_subscription
+      - language
       filter: {}
       check: null
 - table:

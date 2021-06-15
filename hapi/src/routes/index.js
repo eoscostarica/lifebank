@@ -5,6 +5,7 @@ const createAccountRoute = require('./create-account/create-account.route')
 const createAccountAuthRoute = require('./create-account-auth/create-account-auth.route')
 const credentialsRecoveryRoute = require('./credentials-recovery/credentials-recovery.route')
 const editProfileRoute = require('./edit-profile/edit-profile.route')
+const editNotificationStateRoute = require('./edit-notification-state/edit-notification-sate.route')
 const getcontractRoute = require('./get-contract/get-contract.route')
 const getValidSponsorsRoute = require('./get-valid-sponsors/get-valid-sponsors.route')
 const grantConsentRoute = require('./grant-consent/grant-consent.route')
@@ -23,6 +24,8 @@ const getReport = require('./get-report/get-report.route')
 const redeemOffer = require('./redeem-offer/redeem-offer.route')
 const checkEmailVerified = require('./check-email-verified/check-email-verified.route')
 const donate = require('./donate/donate.route')
+const addOffer = require('./add-offer/add-offer.route')
+const removeOffer = require('./remove-offer/remove-offer.route')
 
 module.exports = [
   changePasswordRoute,
@@ -32,6 +35,7 @@ module.exports = [
   createAccountAuthRoute,
   credentialsRecoveryRoute,
   editProfileRoute,
+  editNotificationStateRoute,
   getcontractRoute,
   getValidSponsorsRoute,
   grantConsentRoute,
@@ -49,5 +53,7 @@ module.exports = [
   getReport,
   redeemOffer,
   checkEmailVerified,
-  donate
+  donate,
+  addOffer,
+  removeOffer
 ]
