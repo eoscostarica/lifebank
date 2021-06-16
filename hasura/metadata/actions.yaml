@@ -32,9 +32,9 @@ actions:
   definition:
     kind: synchronous
     handler: http://hapi:9090/api/close-account
+    forward_client_headers: true
   permissions:
   - role: donor
-  - role: guest
   - role: lifebank
   - role: sponsor
 - name: create_account

@@ -61,7 +61,11 @@
       "suscribeSection": "Suscribe for emails:",
       "checkBoxSuscribe": "Suscription",
       "changeEmail": "Change email",
-      "email": "Email"
+      "email": "Email",
+      "closeAccount": "Close account",
+      "closeAccountButton": "Stop saving Lifes",
+      "errorCloseAccount": "Something wrong happened when trying to close your account, please try again",
+      "succesfulCloseAccount": "Your account has been closed successfully"
     },
     "signup": {
       "register": "Let's Start!",

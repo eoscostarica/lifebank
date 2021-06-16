@@ -55,8 +55,8 @@ export const REOPEN_ACCOUNT_MUTATION = gql`
 `
 
 export const CLOSE_ACCOUNT_MUTATION = gql`
-  mutation($account: String!) {
-    close_account(account: $account) {
+  mutation {
+    close_account {
       success
     }
   }

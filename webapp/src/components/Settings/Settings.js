@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useLazyQuery } from '@apollo/react-hooks'
 import { makeStyles, useTheme } from '@material-ui/styles'
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -27,13 +28,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import LanguageSelector from '../LanguageSelector'
 
-import { PROFILE_QUERY, 
-          CHANGE_PASSWORD, 
-          GET_ACCOUNT_SIGNUP_METHOD,
-          CHANGE_EMAIL, 
-          UPDATE_EMAIL_SUBSCRIPTION_MUTATION 
-        }
-from '../../gql'
+import {
+  PROFILE_QUERY, 
+  CHANGE_PASSWORD, 
+  GET_ACCOUNT_SIGNUP_METHOD,
+  CHANGE_EMAIL, 
+  UPDATE_EMAIL_SUBSCRIPTION_MUTATION,
+  CLOSE_ACCOUNT_MUTATION
+} from '../../gql'
 
 import { useUser } from '../../context/user.context'
 import styles from './styles'
@@ -51,7 +53,8 @@ const Settings = ({ onCloseSetting }) => {
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [validEmailFormat, setValidEmailFormat] = useState(false)
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const [currentUser] = useUser()
+  const [currentUser, { logout }] = useUser()
+  const history = useHistory()
   const [
     loadProfile,
     { error: errorProfile, loading, data: { profile: { profile } = {} } = {} }
@@ -71,6 +74,11 @@ const Settings = ({ onCloseSetting }) => {
     updateEmailSubscription,
     { error: errorUpdateEmailSubscription, loading: updateEmailSubscriptionLoading, data: { update_user: updateEmailSubscriptionResult } = {} }
   ] = useMutation(UPDATE_EMAIL_SUBSCRIPTION_MUTATION)
+
+  const [
+    closeAccount,
+    { loading: loadingCloseAccount, error: errorCloseAccount, data: { close_account: resultCloseAccount } = {} }
+  ] = useMutation(CLOSE_ACCOUNT_MUTATION)
 
   const [
     getAccountSignupMethod,
@@ -147,6 +155,10 @@ const Settings = ({ onCloseSetting }) => {
     })
   }
 
+  const onCloseAccontClick = async () => {
+    await closeAccount()
+  }
+
   useEffect(() => {
       loadProfile()
   }, [updateEmailSubscriptionResult])
@@ -168,11 +180,11 @@ const Settings = ({ onCloseSetting }) => {
         severity: 'error'
       })
       if(responseChangeEmail)
-      setOpenSnackbar({
-        show: true,
-        message: t('setting.emailChanged'),
-        severity: 'success'
-      })
+        setOpenSnackbar({
+          show: true,
+          message: t('setting.emailChanged'),
+          severity: 'success'
+        })
       loadProfile()
   }, [changeEmail,errorChangeEmail,responseChangeEmail])
 
@@ -226,6 +238,23 @@ const Settings = ({ onCloseSetting }) => {
       })
     }
   }, [profile])
+
+  useEffect(() => {
+    if(resultCloseAccount) {
+      logout()
+      history.push('/')
+    }
+  }, [resultCloseAccount])
+
+  useEffect(() => {
+    if(errorCloseAccount) {
+      setOpenSnackbar({
+        show: true,
+        message: t('setting.errorCloseAccount'),
+        severity: 'error'
+      })
+    }
+  }, [errorCloseAccount])
 
   function executeCredentialsRecovery(e) {
     if (e.key === 'Enter' && (user.newPassword && user.currentPassword)) {
@@ -448,6 +477,31 @@ const Settings = ({ onCloseSetting }) => {
                   </Box>
                 </Box>
               </Grid>
+
+              <Grid container item xs={12}>
+                <Box className={classes.box}>
+                  <Divider className={classes.dividerSecondVersion}/>
+                  <Typography variant="h3" className={classes.text}>
+                    {t('setting.closeAccount')}
+                  </Typography>
+                  <Box>
+                    <Button
+                      disabled={loadingCloseAccount}
+                      variant="contained"
+                      color="secondary"
+                      onClick={onCloseAccontClick}
+                      className={classes.button}
+                    >
+                      {t('setting.closeAccountButton')}
+                    </Button>
+                  </Box>
+                  <Box className={classes.loadingBox}>
+                    {loadingCloseAccount && <CircularProgress />}
+                    {loading && <CircularProgress />}
+                  </Box>
+                </Box>
+              </Grid>
+
             </Grid>
           </form>
         </DialogContent>
