@@ -577,6 +577,12 @@
       "tokens": "Tokens",
       "offer": "Offer",
       "reportDownloadName": "Report"
+    },
+    "reopenAndClose": {
+      "welcomeBackTitle": "Ready to save lives?",
+      "welcomeBack": "Welcome Back",
+      "error": "Uh-Oh! Seems life something went wrong - Please Try Again",
+      "success": "Succesful Transaction"
     }
   }
 }

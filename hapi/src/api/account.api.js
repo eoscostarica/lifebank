@@ -864,7 +864,6 @@ const closeAccount = async (account) => {
       state: { _eq: 'active' }
     }
   )
-
   if(user && user.role === 'sponsor') {
     await offerApi.desactivate(
       { sponsor_id: { _eq: user.id } }
@@ -895,11 +894,9 @@ const reopenAccount = async (account) => {
       { sponsor_id: { _eq: user.id } }
     )
   }
-
   await locationApi.activate(
     { account: { _eq: account } }
   )
-
   mailApi.reopenAccount(
     user.email,
     user.language

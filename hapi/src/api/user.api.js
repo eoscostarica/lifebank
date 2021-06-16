@@ -168,7 +168,6 @@ const desactivate = async (where) => {
     where,
     state: 'inactive'
   })
-  
   return returning[0] ? returning[0] : null
 }
 
@@ -177,7 +176,6 @@ const activate = async (where) => {
     where,
     state: 'active'
   })
-  
   return returning[0] ? returning[0] : null
 }
 

@@ -4,7 +4,6 @@ const { BAD_REQUEST } = require('http-status-codes')
 const { accountApi } = require('../../api')
 
 module.exports = async ({ auth: { credentials } }) => {
-  console.log('CLOSE-ACCOUNT')
   try {
     await accountApi.closeAccount(credentials.sub)
 

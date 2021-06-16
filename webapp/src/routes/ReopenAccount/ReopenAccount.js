@@ -20,34 +20,16 @@ const ReopenAccount = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const { account } = useParams()
-  const [openSnackbar, setOpenSnackbar] = useState()
-
-  useEffect(() => {
-    if (reopenAccountError) {
-      setOpenSnackbar({
-        show: true,
-        message: t('signup.noConsentNoEdit'),
-        severity: 'error'
-      })
-    }
-    if (reopenAccountResult) {
-      setOpenSnackbar({
-        show: true,
-        message: t('signup.noConsentNoEdit'),
-        severity: 'success'
-      })
-    }
-  }, [reopenAccountResult, reopenAccountError])
-
+  const history = useHistory()
+  const [openSnackbar, setOpenSnackbar] = useState({...openSnackbar ,show: false})
   const [
     reopenAccount,
     {
       error: reopenAccountError,
       loading: reopenAccountLoading,
-      data: { success: reopenAccountResult } = {}
+      data: { reopen_account: reopenAccountResult } = {}
     }
   ] = useMutation(REOPEN_ACCOUNT_MUTATION)
-  console.log(account)
 
   const handleSnackbarClose = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
@@ -61,6 +43,24 @@ const ReopenAccount = () => {
     })
   }
 
+  useEffect(() => {
+    if (reopenAccountError) {
+      setOpenSnackbar({
+        show: true,
+        message: t('reopenAndClose.error'),
+        severity: 'error'
+      })
+    }
+    if (reopenAccountResult) {
+      history.push('/')
+      setOpenSnackbar({
+        show: true,
+        message: t('reopenAndClose.success'),
+        severity: 'success'
+      })
+    }
+  }, [reopenAccountResult, reopenAccountError])
+
   return (
     <Box className={classes.root}>
       <Grid container spacing={4}>
@@ -68,7 +68,7 @@ const ReopenAccount = () => {
           <Box className={classes.centerText}>
             {reopenAccountLoading && <CircularProgress />}
               <Typography className={classes.title}>
-                {'Deseas Volver a Lifebank'}
+                {t('reopenAndClose.welcomeBackTitle')}
               </Typography>
               <Button
                 variant="contained"
@@ -76,7 +76,7 @@ const ReopenAccount = () => {
                 onClick={reopen_account}
                 className={classes.btnHome}
               >
-                {t('Bienvenido de Nuevo')}
+                {t('reopenAndClose.welcomeBack')}
               </Button>
               <Button
                 variant="contained"
@@ -90,9 +90,9 @@ const ReopenAccount = () => {
           </Box>
         </Grid>
       </Grid>
-      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={handleSnackbarClose}>
-        <Alert severity="error">
-          {t('emailSubscription.error')}
+      <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>
+        <Alert severity={openSnackbar.severity}>
+          {openSnackbar.message}
         </Alert>
       </Snackbar>
     </Box>

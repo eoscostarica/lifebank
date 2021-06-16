@@ -47,8 +47,6 @@ export default (theme) => ({
     color: '#ffffff',
     padding: '12px',
     marginBottom: 10,
-    [theme.breakpoints.down('md')]: {
-      width: "100%",
-    }
+    width: "100%"
   }
 })
