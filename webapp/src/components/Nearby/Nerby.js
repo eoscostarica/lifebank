@@ -50,6 +50,10 @@ const Nearby = ({ location, searchDistance, account }) => {
     getNerbyLocations()
   }, [searchDistance])
 
+  const refreshPage = () => {
+    window.location.reload(1)
+  }
+
   const ItemCard = (props) => (
     <Card className={classes.cardRoot}>
       <Box className={classes.cardHeader}>
@@ -78,10 +82,11 @@ const Nearby = ({ location, searchDistance, account }) => {
         style={{ textDecoration: 'none' }}
         to={`/info/${props.item.user.username.replaceAll(' ', '-')}`}
       >
-        <Button color="primary" className={classes.cardActionButton}>
-          {t('cardsSection.moreInfo')}
+        <Button color="primary" className={classes.cardActionButton} onClick={setTimeout(refreshPage, 500000)} >
+          {t('cardsSection.visitPage')}
         </Button>
       </LinkRouter>
+
     </Card>
   )
 
