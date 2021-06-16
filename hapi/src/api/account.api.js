@@ -858,52 +858,33 @@ const transfer = async (from, details, notification) => {
 }
 
 const closeAccount = async (account) => {
-  const user = await userApi.desactivate(
-    { 
-      account: { _eq: account },
-      state: { _eq: 'active' }
-    }
-  )
+  const user = await userApi.desactivate({
+    account: { _eq: account },
+    state: { _eq: 'active' }
+  })
 
-  if(user && user.role === 'sponsor') {
-    await offerApi.desactivate(
-      { sponsor_id: { _eq: user.id } }
-    )
+  if (user && user.role === 'sponsor') {
+    await offerApi.desactivate({ sponsor_id: { _eq: user.id } })
   }
 
-  await locationApi.desactivate(
-    { account: { _eq: account } }
-  )
+  await locationApi.desactivate({ account: { _eq: account } })
 
-  mailApi.requestCloseAccount(
-    user.email,
-    account,
-    user.language
-  )
+  mailApi.requestCloseAccount(user.email, account, user.language)
 }
 
 const reopenAccount = async (account) => {
-  const user = await userApi.activate(
-    { 
-      account: { _eq: account },
-      state: { _eq: 'inactive' }
-    }
-  )
+  const user = await userApi.activate({
+    account: { _eq: account },
+    state: { _eq: 'inactive' }
+  })
 
-  if(user && user.role === 'sponsor') {
-    await offerApi.activate(
-      { sponsor_id: { _eq: user.id } }
-    )
+  if (user && user.role === 'sponsor') {
+    await offerApi.activate({ sponsor_id: { _eq: user.id } })
   }
 
-  await locationApi.activate(
-    { account: { _eq: account } }
-  )
+  await locationApi.activate({ account: { _eq: account } })
 
-  mailApi.reopenAccount(
-    user.email,
-    user.language
-  )
+  mailApi.reopenAccount(user.email, user.language)
 }
 
 const finalCloseAccount = async (account) => {
@@ -925,10 +906,7 @@ const finalCloseAccount = async (account) => {
     account: { _eq: account }
   })
   const password = await vaultApi.getPassword(account)
-  await lifebankcodeUtils.unsubscribe(
-    account,
-    password
-  )
+  await lifebankcodeUtils.unsubscribe(account, password)
 }
 
 const addOffer = async (account, offer) => {
