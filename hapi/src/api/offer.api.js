@@ -76,7 +76,7 @@ const GET_MANY = `
       icon
     }
   }
-  `
+`
 
 const CHANGE_STATE = `
   mutation ($where: offer_bool_exp!, $state: String!) {

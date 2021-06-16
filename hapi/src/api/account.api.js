@@ -944,7 +944,7 @@ const addOffer = async (account, offer) => {
 }
 
 const removeOffer = async ({ offer_id }) => {
-  const removedOffer = await offerApi.permanentDeletes({
+  const removedOffer = await offerApi.permanentDelete({
     id: { _eq: offer_id }
   })
   if (!removeOffer) throw new Error('Fail to add new offer')
