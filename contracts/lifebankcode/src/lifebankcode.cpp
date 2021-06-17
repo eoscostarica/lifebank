@@ -285,6 +285,12 @@ ACTION lifebankcode::unsubscribe(name user, eosio::asset community_asset)
   {
     _sponsors.erase(itr_sponsors);
   }
+  lifebank_table _lifebank(get_self(), get_self().value);
+  auto itr_lifebank = _lifebank.find(user.value);
+  if (itr_lifebank != _lifebank.end())
+  {
+    _lifebank.erase(itr_lifebank);
+  }
 }
 
 ACTION lifebankcode::addoffer(
