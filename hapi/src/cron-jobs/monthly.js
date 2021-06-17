@@ -7,7 +7,6 @@ const {
   accountApi
 } = require('../api')
 
-
 const generateSponsorsTransactionReports = async () => {
   const today = new Date()
   const monthAgo = new Date()
@@ -129,8 +128,6 @@ const generateLifebanksTransactionReports = async () => {
     )
   })
 }
-
-
 
 const generateNewSponsorAndOfferReportToDonors = async () => {
   const today = new Date()

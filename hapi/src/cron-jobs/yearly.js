@@ -5,7 +5,7 @@ const generateDonorsTransactionReports = async () => {
   const today = new Date()
   const yearAgo = new Date()
   yearAgo.setMonth(yearAgo.getMonth() - 12)
-  
+
   const users = await userApi.getMany({
     role: { _eq: 'donor' }
   })

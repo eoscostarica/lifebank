@@ -1,10 +1,5 @@
 const mailApi = require('../utils/mail')
-const {
-  userApi,
-  offerApi,
-  accountApi
-} = require('../api')
-
+const { userApi, offerApi, accountApi } = require('../api')
 
 const generateNewSponsorAndOfferReportToLifebanks = async () => {
   const today = new Date()
