@@ -130,8 +130,6 @@ const generateLifebanksTransactionReports = async () => {
   })
 }
 
-
-
 const generateNewSponsorAndOfferReportToDonors = async () => {
   const today = new Date()
   const monthAgo = new Date()
