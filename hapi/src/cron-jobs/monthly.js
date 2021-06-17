@@ -16,7 +16,7 @@ const generateSponsorsTransactionReports = async () => {
   const users = await userApi.getMany({
     role: { _eq: 'sponsor' }
   })
-  
+
   users.forEach(async (sponsor) => {
     const { notifications } = await sponsorApi.getReport(
       { dateFrom: monthAgo, dateFrom: today },

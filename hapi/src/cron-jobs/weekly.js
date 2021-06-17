@@ -71,5 +71,4 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
   })
 }
 
-
 generateNewSponsorAndOfferReportToLifebanks()
