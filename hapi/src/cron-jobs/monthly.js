@@ -7,13 +7,16 @@ const {
   accountApi
 } = require('../api')
 
+
 const generateSponsorsTransactionReports = async () => {
   const today = new Date()
   const monthAgo = new Date()
   monthAgo.setMonth(monthAgo.getMonth() - 1)
+
   const users = await userApi.getMany({
     role: { _eq: 'sponsor' }
   })
+  
   users.forEach(async (sponsor) => {
     const { notifications } = await sponsorApi.getReport(
       { dateFrom: monthAgo, dateFrom: today },
@@ -127,14 +130,19 @@ const generateLifebanksTransactionReports = async () => {
   })
 }
 
-const generateNewSponsorAndOfferReportToLifebanks = async () => {
+
+
+const generateNewSponsorAndOfferReportToDonors = async () => {
   const today = new Date()
   const monthAgo = new Date()
-  monthAgo.setDate(monthAgo.getDate() - 7)
+  monthAgo.setMonth(monthAgo.getMonth() - 1)
 
-  const lifebanks = await userApi.getMany({
-    role: { _eq: 'lifebank' }
+  const donors = await userApi.getMany({
+    role: { _eq: 'donor' },
+    email_subscription: { _eq: true }
   })
+
+  const donorsWithLocation = await accountApi.getDonorsCoordinates(donors || [])
 
   const newSponsors = await userApi.getMany({
     role: { _eq: 'sponsor' },
@@ -145,9 +153,7 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
     created_at: { _gte: monthAgo, _lte: today }
   })
 
-  lifebanks.forEach(async (lifebank) => {
-    const lifebankProfile = await accountApi.getProfile(lifebank.account)
-
+  donorsWithLocation.forEach(async (donor) => {
     const nerbySponsors = []
     for (i = 0; i < newSponsors.length; i++) {
       const tempSponsor = newSponsors[i]
@@ -155,7 +161,7 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
       sponsorProfile.location &&
       accountApi.isCoordinateInsideBox(
         JSON.parse(sponsorProfile.location),
-        JSON.parse(lifebankProfile.location)
+        donor.location
       )
         ? nerbySponsors.push(tempSponsor)
         : null
@@ -183,15 +189,18 @@ const generateNewSponsorAndOfferReportToLifebanks = async () => {
     })
 
     mailApi.sendNewSponsorAndOfferReport(
-      lifebank.email,
-      lifebank.language,
-      lifebank.role,
+      donor.email,
+      donor.language,
+      donor.role,
       stringSponsorHtmlContent,
       stringOfferHtmlContent
     )
   })
+  return {
+    success: true
+  }
 }
 
 generateSponsorsTransactionReports()
 generateLifebanksTransactionReports()
-generateNewSponsorAndOfferReportToLifebanks()
+generateNewSponsorAndOfferReportToDonors()

@@ -1,29 +1,32 @@
 const mailApi = require('../utils/mail')
-const { accountApi, userApi, offerApi } = require('../api')
-const { getProfile } = require('../api/account.api')
+const {
+  userApi,
+  offerApi,
+  accountApi
+} = require('../api')
 
-const generateNewSponsorAndOfferReportToDonors = async () => {
+
+const generateNewSponsorAndOfferReportToLifebanks = async () => {
   const today = new Date()
-  const monthAgo = new Date()
-  monthAgo.setMonth(monthAgo.getMonth() - 1)
+  const weekAgo = new Date()
+  weekAgo.setDate(weekAgo.getDate() - 7)
 
-  const donors = await userApi.getMany({
-    role: { _eq: 'donor' },
-    email_subscription: { _eq: true }
+  const lifebanks = await userApi.getMany({
+    role: { _eq: 'lifebank' }
   })
-
-  const donorsWithLocation = await accountApi.getDonorsCoordinates(donors || [])
 
   const newSponsors = await userApi.getMany({
     role: { _eq: 'sponsor' },
-    created_at: { _gte: monthAgo, _lte: today }
+    created_at: { _gte: weekAgo, _lte: today }
   })
 
   const newOffers = await offerApi.getMany({
-    created_at: { _gte: monthAgo, _lte: today }
+    created_at: { _gte: weekAgo, _lte: today }
   })
 
-  donorsWithLocation.forEach(async (donor) => {
+  lifebanks.forEach(async (lifebank) => {
+    const lifebankProfile = await accountApi.getProfile(lifebank.account)
+
     const nerbySponsors = []
     for (i = 0; i < newSponsors.length; i++) {
       const tempSponsor = newSponsors[i]
@@ -31,7 +34,7 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
       sponsorProfile.location &&
       accountApi.isCoordinateInsideBox(
         JSON.parse(sponsorProfile.location),
-        donor.location
+        JSON.parse(lifebankProfile.location)
       )
         ? nerbySponsors.push(tempSponsor)
         : null
@@ -59,16 +62,14 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
     })
 
     mailApi.sendNewSponsorAndOfferReport(
-      donor.email,
-      donor.language,
-      donor.role,
+      lifebank.email,
+      lifebank.language,
+      lifebank.role,
       stringSponsorHtmlContent,
       stringOfferHtmlContent
     )
   })
-  return {
-    success: true
-  }
 }
 
-generateNewSponsorAndOfferReportToDonors()
+
+generateNewSponsorAndOfferReportToLifebanks()
