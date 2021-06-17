@@ -7,7 +7,6 @@ const {
   accountApi
 } = require('../api')
 
-
 const generateSponsorsTransactionReports = async () => {
   const today = new Date()
   const monthAgo = new Date()
