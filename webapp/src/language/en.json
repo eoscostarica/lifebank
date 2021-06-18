@@ -579,8 +579,9 @@
       "reportDownloadName": "Report"
     },
     "reopenAndClose": {
-      "welcomeBackTitle": "Ready to save lives?",
-      "welcomeBack": "Welcome Back",
+      "welcomeBackTitle": "Hello again!",
+      "welcomeBack": "Return to Lifebank",
+      "takeHome": "Not Continue",
       "error": "Uh-Oh! Seems life something went wrong - Please Try Again",
       "success": "Succesful Transaction"
     }

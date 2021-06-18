@@ -579,8 +579,9 @@
       "reportDownloadName": "Reporte"
     },
     "reopenAndClose": {
-      "welcomeBackTitle": "Listo para salvar vidas?",
-      "welcomeBack": "Bienvenido de nuevo",
+      "welcomeBackTitle": "¡Hola de vuelta!",
+      "welcomeBack": "Regresar a Lifebank",
+      "takeHome": "No Continuar",
       "error": "Uh-Oh! Parece que algo salió mal - Intenta de Nuevo",
       "succes": "Transacción Exitosa"
     }

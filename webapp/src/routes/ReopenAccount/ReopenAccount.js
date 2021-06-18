@@ -84,7 +84,7 @@ const ReopenAccount = () => {
                 to="/"
                 className={classes.btnHome}
               >
-                {t('emailVerification.takeHome')}
+                {t('reopenAndClose.takeHome')}
               </Button>
           </Box>
           {reopenAccountLoading && <CircularProgress />}
