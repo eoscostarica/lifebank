@@ -66,7 +66,6 @@ const ReopenAccount = () => {
       <Grid container spacing={4}>
         <Grid item xs={12} className={classes.content}>
           <Box className={classes.centerText}>
-            {reopenAccountLoading && <CircularProgress />}
               <Typography className={classes.title}>
                 {t('reopenAndClose.welcomeBackTitle')}
               </Typography>
@@ -88,6 +87,7 @@ const ReopenAccount = () => {
                 {t('emailVerification.takeHome')}
               </Button>
           </Box>
+          {reopenAccountLoading && <CircularProgress />}
         </Grid>
       </Grid>
       <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>

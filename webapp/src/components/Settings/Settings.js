@@ -241,6 +241,7 @@ const Settings = ({ onCloseSetting }) => {
 
   useEffect(() => {
     if(resultCloseAccount) {
+      setOpen(false)
       logout()
       history.push('/')
     }
@@ -470,10 +471,6 @@ const Settings = ({ onCloseSetting }) => {
                     >
                       {t('setting.changePassword')}
                     </Button>
-                  </Box>
-                  <Box className={classes.loadingBox}>
-                    {loadingChangePassword && <CircularProgress />}
-                    {loading && <CircularProgress />}
                   </Box>
                 </Box>
               </Grid>

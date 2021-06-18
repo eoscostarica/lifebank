@@ -47,7 +47,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
-  const [changePassword, setChangePassword] = useState()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentUser, { login }] = useUser()
@@ -71,7 +70,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     sendEmail,
     {
       error: errorSendEmail,
-      loading: SendEmailLoading,
+      loading: sendEmailLoading,
       data: { send_email: sendEmailResult } = {}
     }
   ] = useMutation(SEND_EMAIL_MUTATION)
@@ -105,14 +104,14 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     setopenVerify(true)
   }
 
-  const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
+  const checkEmail = useQuery(VALIDATE_EMAIL, {
     variables: {
       email: user.email
     },
     skip: true
   })
 
-  const { refetch: getHash } = useQuery(GET_SECRET_BY_ACCOUNT, {
+  const getHash = useQuery(GET_SECRET_BY_ACCOUNT, {
     variables: {
       account: user.email
     },
@@ -189,6 +188,23 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       setOpen(false)
     }
   }, [loginResult])
+
+  useEffect(() => {
+    if (errorCheckEmailVerified) {
+      setOpenSnackbar({
+        show: true,
+        message: errorCheckEmailVerified.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
+    }
+    if (errorSendEmail) {
+      setOpenSnackbar({
+        show: true,
+        message: errorSendEmail.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
+    }
+  }, [errorSendEmail, errorCheckEmailVerified])
 
   useEffect(() => {
     if (checkEmailVerifiedResult && checkEmailVerifiedResult.exist && !checkEmailVerifiedResult.verified) {
@@ -325,7 +341,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                 </Button>
               </Box>
               <Box className={classes.centerBox}>
-                {loading && <CircularProgress />}
+                {(loading || checkEmailVerifiedLoading || sendEmailLoading) && <CircularProgress />}
               </Box>
               <Box className={classes.centerBox}>
                 <LoginWithFacebook onSubmit={handleLoginWithAuth} />

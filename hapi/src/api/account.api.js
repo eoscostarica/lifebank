@@ -858,18 +858,6 @@ const transfer = async (from, details, notification) => {
 }
 
 const closeAccount = async (account) => {
-<<<<<<< HEAD
-  const user = await userApi.desactivate(
-    { 
-      account: { _eq: account },
-      state: { _eq: 'active' }
-    }
-  )
-  if(user && user.role === 'sponsor') {
-    await offerApi.desactivate(
-      { sponsor_id: { _eq: user.id } }
-    )
-=======
   const user = await userApi.desactivate({
     account: { _eq: account },
     state: { _eq: 'active' }
@@ -877,7 +865,6 @@ const closeAccount = async (account) => {
 
   if (user && user.role === 'sponsor') {
     await offerApi.desactivate({ sponsor_id: { _eq: user.id } })
->>>>>>> 46d604d3a45d9b5d339f6e9501d8ef4ee4b342ab
   }
 
   await locationApi.desactivate({ account: { _eq: account } })
