@@ -336,7 +336,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
               {t('editProfile.addressDescription')}
             </Typography>
           </Grid>
-          <Grid container item xs={6}>
+          <Grid container item xs={12}>
             <Grid item xs={12}>
               <TextField
                 id="address"
@@ -428,16 +428,24 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
               />
             </Grid>
           </Grid>
-          <Grid container item xs={6}>
-            <>
-              <MapEditLocation
-                onGeolocationChange={handleOnGeolocationChange}
-                markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
-                markerLocation={user.geolocation}
-                className={classes.mapField}
-                mb={1}
-              />
-            </>
+        </Grid>
+        <Grid container item xs={12} spacing={SPACING}>
+          <Grid item xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('editProfile.mapInformation')}
+            </Typography>
+            <Typography className={classes.text} variant="body1">
+              {t('editProfile.mapDescription')}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <MapEditLocation
+              onGeolocationChange={handleOnGeolocationChange}
+              markerType={user.geolocation ? SPONSOR : PENDING_SPONSOR}
+              markerLocation={user.geolocation}
+              className={classes.mapField}
+              mb={1}
+            />
           </Grid>
         </Grid>
         <Grid container item xs={12} spacing={SPACING}>
