@@ -63,7 +63,7 @@
       "changeEmail": "Change email",
       "email": "Email",
       "closeAccount": "Close account",
-      "closeAccountButton": "Stop saving Lifes",
+      "closeAccountButton": "Close Lifebank Account",
       "errorCloseAccount": "Something wrong happened when trying to close your account, please try again",
       "succesfulCloseAccount": "Your account has been closed successfully"
     },

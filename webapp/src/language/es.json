@@ -50,7 +50,7 @@
       "changeEmail": "Cambiar dirección de correo electrónico",
       "email": "Correo",
       "closeAccount": "Cerrar cuenta",
-      "closeAccountButton": "Dejar de salvar Vidas",
+      "closeAccountButton": "Cerrar Cuenta Lifebank",
       "errorCloseAccount": "Sucedió un error para cerrar tu cuenta, porfavor intenta de nuevo",
       "succesfulCloseAccount": "Tu cuenta se ha cerrado con éxito"
     },
