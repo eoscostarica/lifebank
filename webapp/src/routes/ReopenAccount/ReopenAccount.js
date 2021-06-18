@@ -79,15 +79,17 @@ const ReopenAccount = () => {
               </Button>
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 component={CustomRouterLink}
                 to="/"
-                className={classes.btnHome}
+                className={classes.btnReturn}
               >
                 {t('reopenAndClose.takeHome')}
               </Button>
           </Box>
-          {reopenAccountLoading && <CircularProgress />}
+          <Box>
+            {reopenAccountLoading && <CircularProgress />}
+          </Box>
         </Grid>
       </Grid>
       <Snackbar open={openSnackbar.show} autoHideDuration={4000} onClose={handleSnackbarClose}>

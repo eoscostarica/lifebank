@@ -156,6 +156,7 @@ const Settings = ({ onCloseSetting }) => {
   }
 
   const onCloseAccontClick = async () => {
+    setOpen(false)
     await closeAccount()
   }
 

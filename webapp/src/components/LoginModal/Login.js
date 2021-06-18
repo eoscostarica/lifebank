@@ -3,7 +3,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
@@ -43,6 +43,7 @@ const useStyles = makeStyles(styles)
 
 const LoginModal = ({ isNavBar, isSideBar }) => {
   const { t } = useTranslation('translations')
+  const history = useHistory()
   const [user, setUser] = useState({})
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const classes = useStyles()
@@ -168,17 +169,23 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   }
 
   useEffect(() => {
-    if (error) {
-      setOpenSnackbar({
-        show: true,
-        message: error.message.replace('GraphQL error: ', ''),
-        severity: 'error'
-      })
-      checkEmailVerified({
-        variables: {
-          account: user.account
-        }
-      })
+    if(error){
+      if(error.graphQLErrors[0].message === 'Inactive account'){
+        handleOpen()
+        history.replace('/reopen-account/' + user.account)
+      }
+      else if(error.graphQLErrors[0].message === 'Invalid account or secret'){
+        setOpenSnackbar({
+          show: true,
+          message: error.message.replace('GraphQL error: ', ''),
+          severity: 'error'
+        })
+        checkEmailVerified({
+          variables: {
+            account: user.account
+          }
+        })
+     }
     }
   }, [error])
 

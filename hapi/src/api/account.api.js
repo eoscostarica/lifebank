@@ -720,11 +720,15 @@ const login = async ({ account, password }) => {
       { username: { _eq: account } },
       { account: { _eq: account } }
     ],
-    email_verified: { _eq: true },
-    state: { _eq: 'active' }
+    email_verified: { _eq: true }
   })
 
-  if (!user) {
+  if(user){
+    if (user.active === "inactive") {
+      throw new Error('Inactive account')
+    } 
+  }
+  else if (!user) {
     throw new Error('Invalid account or secret')
   }
 
