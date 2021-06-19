@@ -723,7 +723,7 @@ const login = async ({ account, password }) => {
     email_verified: { _eq: true }
   })
 
-  if (user && user.active === "inactive") throw new Error('Inactive account')
+  if (user && user.active === 'inactive') throw new Error('Inactive account')
   else if (!user) throw new Error('Invalid account or secret')
 
   const comparison = await bcrypt.compare(password, user.secret)
@@ -880,13 +880,8 @@ const reopenAccount = async (account) => {
   if (user && user.role === 'sponsor') {
     await offerApi.activate({ sponsor_id: { _eq: user.id } })
   }
-  await locationApi.activate(
-    { account: { _eq: account } }
-  )
-  mailApi.reopenAccount(
-    user.email,
-    user.language
-  )
+  await locationApi.activate({ account: { _eq: account } })
+  mailApi.reopenAccount(user.email, user.language)
 }
 
 const finalCloseAccount = async (account) => {
