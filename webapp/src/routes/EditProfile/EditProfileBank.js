@@ -179,7 +179,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
 
   const handleSnackbarClose = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
-  };
+  }
 
   const buttonCloseHandler = (
     <>

@@ -28,6 +28,15 @@ actions:
     handler: http://hapi:9090/api/check-username
   permissions:
   - role: guest
+- name: close_account
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/close-account
+    forward_client_headers: true
+  permissions:
+  - role: donor
+  - role: lifebank
+  - role: sponsor
 - name: create_account
   definition:
     kind: synchronous
@@ -147,6 +156,15 @@ actions:
     forward_client_headers: true
   permissions:
   - role: donor
+- name: reopen_account
+  definition:
+    kind: synchronous
+    handler: http://hapi:9090/api/reopen-account
+  permissions:
+  - role: donor
+  - role: guest
+  - role: lifebank
+  - role: sponsor
 - name: revoke_consent
   definition:
     kind: synchronous
@@ -232,4 +250,6 @@ custom_types:
   - name: donate_output
   - name: change_email_output
   - name: create_offer_output
+  - name: close_account_output
+  - name: reopen_account_output
   scalars: []

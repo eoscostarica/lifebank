@@ -96,6 +96,54 @@
       "from": "de",
       "tokens": "tokens",
       "date": "fecha"
+    },
+    "closeAccountMonthRemaining": {
+      "subject": "Tu cuenta Lifebank cerrará en 30 días",
+      "paragraph": "Hola,",
+      "paragraph2": "Como lo solicitaste, tu cuenta de Lifebank se cerrará en 30 días. Una vez cerrada, toda tu información será eliminada de Lifebank, y no podrás acceder a ella nuevamente. Para regresar a Lifebank, tendrás que empezar con una nueva cuenta.",
+      "paragraph3": "Aun tienes tiempo de reabrir tu cuenta y mantener tu información. Ve a <a href='https://lifebank.io/reopen-account/",
+      "paragraph4": "'>este enlace</a> para continuar usando Lifebank antes de ",
+      "paragraph5": "Si decides no hacer nada, tu cuenta se cerrará automáticamente. Para respetar tu privacidad, eliminaremos tus datos de Lifebank.",
+      "paragraph6": "Si tienes alguna retroalimentación, por favor comunícate con nuestro equipo por Telegram: https://t.me/eoscr. Recuerda que Lifebank es un proyecto de código abierto y fue creado para ser autogestionado, pero intentaremos contestar lo antes posible."
+    },
+    "closeAccountWeekRemaining": {
+      "subject": "ATENCIÓN: Tu cuenta de Lifebank cerrará en 1 semana",
+      "paragraph": "Hola,",
+      "paragraph2": "Te advertimos que tu cuenta de Lifebank cerrará en 1 semana. Una vez cerrada, toda tu información será eliminada de Lifebank, y no podrás acceder a ella nuevamente. Para regresar a Lifebank, tendrás que empezar con una nueva cuenta.",
+      "paragraph3": "Aun tienes tiempo de reabrir tu cuenta y mantener tu información. Ve a <a href='https://lifebank.io/reopen-account/",
+      "paragraph4": "'>este enlace</a> para continuar usando Lifebank antes de ",
+      "paragraph5": "Si decides no hacer nada, tu cuenta se cerrará automáticamente. Para respetar tu privacidad, eliminaremos tus datos de Lifebank.",
+      "paragraph6": "Si tienes alguna retroalimentación, por favor comunícate con nuestro equipo por Telegram: https://t.me/eoscr. Recuerda que Lifebank es un proyecto de código abierto y fue creado para ser autogestionado, pero intentaremos contestar lo antes posible."
+    },
+    "closeAccountDayRemaining": {
+      "subject": "ÚLTIMA ADVERTENCIA: Tu cuenta de Lifebank cerrará mañana",
+      "paragraph": "Hola,",
+      "paragraph2": "Esta es la última advertencia de que tu cuenta de Lifebank se cerrará MAÑANA.",
+      "paragraph3": "Una vez cerrada, toda tu información será eliminada de Lifebank, y no podrás acceder a ella nuevamente. Para regresar a Lifebank, tendrás que empezar con una nueva cuenta.",
+      "paragraph4": "Aun tienes tiempo de reabrir tu cuenta y mantener tu información. Ve a <a href='https://lifebank.io/reopen-account/",
+      "paragraph5": "'>este enlace</a> para continuar usando Lifebank antes de ",
+      "paragraph6": "Si decides no hacer nada, tu cuenta se cerrará automáticamente. Para respetar tu privacidad, eliminaremos tus datos de Lifebank.",
+      "paragraph7": "Si tienes alguna retroalimentación, por favor comunícate con nuestro equipo por Telegram: https://t.me/eoscr. Recuerda que Lifebank es un proyecto de código abierto y fue creado para ser autogestionado, pero intentaremos contestar lo antes posible."
+    },
+    "closeAccount": {
+      "subject": "Tu cuenta de Lifebank fue cerrada",
+      "paragraph": "Hola,",
+      "paragraph2": "Es triste verte partir, pero respetamos tu decisión.",
+      "paragraph3": "Tu cuenta de Lifebank se cerró exitosamente. Para regresar a Lifebank, tendrás que empezar con una nueva cuenta.Para respetar tu privacidad, se eliminaron tus datos de Lifebank para siempre.",
+      "paragraph4": "Si tienes alguna retroalimentación, por favor comunícate con nuestro equipo por Telegram: https://t.me/eoscr. Recuerda que Lifebank es un proyecto de código abierto y fue creado para ser autogestionado, pero intentaremos contestar lo antes posible."
+    },
+    "reopenAccount": {
+      "subject": "¡Te damos la bienvenida de nuevo a Lifebank!",
+      "paragraph": "¡Nos alegra saber que estás de regreso! Guardamos tu información para que puedas iniciar sesión de nuevo en tu cuenta de Lifebank.",
+      "paragraph2": "Si tienes alguna retroalimentación, por favor comunícate con nuestro equipo por Telegram: https://t.me/eoscr. Recuerda que Lifebank es un proyecto de código abierto y fue creado para ser autogestionado, pero intentaremos contestar lo antes posible."
+    },
+    "requestCloseAccount": {
+      "subject": "Cerraremos tu cuenta de Lifebank",
+      "paragraph": "Hola,",
+      "paragraph2": "Es triste verte partir, pero respetamos tu decisión.",
+      "paragraph3": "Has solicitado cerrar tu cuenta de Lifebank. Mantendremos tu información guardada por 90 días. Después de eso, si deseas regresar a Lifebank, tendrás que empezar con una nueva cuenta. Para respetar tu privacidad, eliminaremos tus datos de Lifebank.",
+      "paragraph4": "Recibirás recordatorios cercanos a la fecha de cierre. Si deseas no recibir estas notificaciones, puedes <a href='http://lifebank/cancel-email-subscription/",
+      "paragraph5": "'>darte de alta de correos</a> en cualquier momento."
     }
   }
 }

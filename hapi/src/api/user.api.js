@@ -1,4 +1,3 @@
-const { user } = require('../config/mail.config')
 const { hasuraUtils } = require('../utils')
 
 const GET_ONE = `
@@ -17,6 +16,7 @@ const GET_ONE = `
       email_verified
       email_subscription
       language
+      state
     }
   }
 `
@@ -37,6 +37,8 @@ const GET_MANY = `
       email_verified
       email_subscription
       language
+      updated_at
+      state
     }
   }
 `
@@ -51,6 +53,21 @@ const INSERT = `
       email
       name,
       verification_code
+    }
+  }
+`
+
+const CHANGE_STATE = `
+  mutation ($where: user_bool_exp!, $state: String!) {
+    update_user(where: $where, _set: {state: $state}) {
+      returning {
+        id
+        email
+        account
+        name
+        role
+        language
+      }
     }
   }
 `
@@ -97,6 +114,14 @@ const SET_SECRET = `
   }
 `
 
+const DELETE = `
+  mutation ($where: user_bool_exp!) {
+    delete_user(where: $where) {
+      affected_rows
+    }
+  }
+`
+
 const getOne = async (where = {}) => {
   const { user } = await hasuraUtils.request(GET_ONE, { where })
 
@@ -138,6 +163,27 @@ const verifyEmail = async (where) => {
   return update_user.affected_rows > 0
 }
 
+const desactivate = async (where) => {
+  const { update_user: { returning } } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'inactive'
+  })
+  return returning[0] ? returning[0] : null
+}
+
+const activate = async (where) => {
+  const { update_user: { returning } } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'active'
+  })
+  return returning[0] ? returning[0] : null
+}
+
+const permanentDelete = async (where) => {
+  const { delete_user } = await hasuraUtils.request(DELETE, { where })
+  return delete_user.affected_rows > 0
+}
+
 module.exports = {
   getOne,
   getMany,
@@ -146,5 +192,8 @@ module.exports = {
   setToken,
   setName,
   verifyEmail,
-  setSecret
+  setSecret,
+  desactivate,
+  activate,
+  permanentDelete
 }

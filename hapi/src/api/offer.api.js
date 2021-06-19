@@ -1,5 +1,4 @@
 const { hasuraUtils } = require('../utils')
-const userApi = require('./user.api')
 
 const CREATE_OFFER = `
 mutation(
@@ -77,7 +76,23 @@ const GET_MANY = `
       icon
     }
   }
-  `
+`
+
+const CHANGE_STATE = `
+  mutation ($where: offer_bool_exp!, $state: String!) {
+    update_offer(where: $where, _set: {state: $state}) {
+      affected_rows
+    }
+  }
+`
+
+const DELETE = `
+  mutation ($where: offer_bool_exp!) {
+    delete_offer(where: $where) {
+      affected_rows
+    }
+  }
+`
 
 const getMany = async (where = {}) => {
   const { offer } = await hasuraUtils.request(GET_MANY, { where })
@@ -85,46 +100,35 @@ const getMany = async (where = {}) => {
   return offer && offer.length > 0 ? offer : null
 }
 
-const redeem = async (from, details) => {
-  const user = await userApi.getOne({
-    account: { _eq: from }
+const desactivate = async (where) => {
+  const { update_offer } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'inactive'
   })
-
-  if (user.role !== 'donor') {
-    throw new Error('Only donors can redeem an offer')
-  }
-
-  const userTo = await userApi.getOne({
-    account: { _eq: details.to }
-  })
-
-  if (userTo.role !== 'sponsor') {
-    throw new Error('Only sponsor can receive tokens by an offer redemption')
-  }
+  return update_offer.affected_rows > 0
 }
 
-const REMOVE_OFFER = `
-  mutation ($where: offer_bool_exp!) {
-    delete_offer(where: $where) {
-      returning {
-        offer_name
-      }
-    }
-  }
-`
+const activate = async (where) => {
+  const { update_offer } = await hasuraUtils.request(CHANGE_STATE, {
+    where,
+    state: 'active'
+  })
+  return update_offer.affected_rows > 0
+}
+
+const permanentDelete = async (where) => {
+  const { delete_offer } = await hasuraUtils.request(DELETE, { where })
+  return delete_offer.affected_rows > 0
+}
 
 const addOffer = (offer) => {
   return hasuraUtils.request(CREATE_OFFER, offer)
 }
 
-const removeOffer = async (where) => {
-  const { delete_offer } = await hasuraUtils.request(REMOVE_OFFER, { where })
-  return delete_offer.returning.length > 0 ? delete_offer.returning[0] : false
-}
-
 module.exports = {
-  addOffer,
-  removeOffer,
+  desactivate,
+  activate,
+  permanentDelete,
   getMany,
-  redeem
+  addOffer
 }

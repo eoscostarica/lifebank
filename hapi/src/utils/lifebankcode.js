@@ -249,6 +249,29 @@ const addOffer = (account, password, offer) => {
   )
 }
 
+const unsubscribe = async (account, password) => {
+  return await eosUtil.transact(
+    [
+      {
+        authorization: [
+          {
+            actor: account,
+            permission: 'active'
+          }
+        ],
+        account: CONTRACT_NAME,
+        name: 'unsubscribe',
+        data: {
+          user: account,
+          community_asset: COMMUNITY_ASSET
+        }
+      }
+    ],
+    account,
+    password
+  )
+}
+
 const removeOffer = (account, password, { offer_name }) => {
   return eosUtil.transact(
     [
@@ -282,5 +305,6 @@ module.exports = {
   getUserNetworks,
   upLifebank,
   addOffer,
-  removeOffer
+  removeOffer,
+  unsubscribe
 }

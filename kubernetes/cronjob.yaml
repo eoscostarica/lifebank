@@ -1,6 +1,28 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
+  name: daily
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: daily
+              image: ${DOCKER_REGISTRY}/${IMAGE_NAME_HAPI}:latest
+              args:
+                - /bin/sh
+                - -c
+                - node /app/src/cron-jobs/daily.js
+              envFrom:
+                - configMapRef:
+                    name: lifebank-hapi-config
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
   name: weekly
 spec:
   schedule: "0 0 * * 0"

@@ -48,7 +48,11 @@
       "suscribeSection": "Suscribirse a correos:",
       "checkBoxSuscribe": "Suscripción",
       "changeEmail": "Cambiar dirección de correo electrónico",
-      "email": "Correo"
+      "email": "Correo",
+      "closeAccount": "Cerrar cuenta",
+      "closeAccountButton": "Cerrar Cuenta Lifebank",
+      "errorCloseAccount": "Sucedió un error para cerrar tu cuenta, porfavor intenta de nuevo",
+      "succesfulCloseAccount": "Tu cuenta se ha cerrado con éxito"
     },
     "navigationDrawer": {
       "homepage": "Página de inicio",
@@ -575,6 +579,13 @@
       "tokens": "Tokens",
       "offer": "Oferta",
       "reportDownloadName": "Reporte"
+    },
+    "reopenAndClose": {
+      "welcomeBackTitle": "¡Hola de vuelta!",
+      "welcomeBack": "Regresar a Lifebank",
+      "takeHome": "No Continuar",
+      "error": "Uh-Oh! Parece que algo salió mal - Intenta de Nuevo",
+      "succes": "Transacción Exitosa"
     }
   }
 }

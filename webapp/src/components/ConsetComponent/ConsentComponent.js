@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@material-ui/core/Typography'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
+import { useHistory } from 'react-router-dom'
 
 import { useUser } from '../../context/user.context'
 import { SIGNUP_MUTATION, PROFILE_QUERY, GET_ACCOUNT_NAME, EDIT_PROFILE_MUTATION } from '../../gql'
@@ -22,12 +23,13 @@ import styles from './styles'
 const useStyles = makeStyles(styles)
 
 const ConsetComponent = () => {
-  const [currentUser] = useUser()
+  const [currentUser, { logout }] = useUser()
   const { t } = useTranslation('translations')
   const classes = useStyles()
   const [openConsent, setOpenConsent] = useState(false)
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const theme = useTheme()
+  const history = useHistory()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [maxWidthConset] = useState('sm')
   const [
@@ -95,7 +97,11 @@ const ConsetComponent = () => {
   }, [signupResult])
 
   useEffect(() => {
-    if (errorSignup || errorProfile) {
+    if (errorProfile) {
+      logout()
+      history.replace('/reopen-account/' + currentUser.account)
+    }
+    if (errorSignup) {
       setOpenSnackbar({
         show: true,
         message: t('signup.consentError'),

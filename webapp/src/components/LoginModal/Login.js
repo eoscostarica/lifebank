@@ -3,7 +3,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Box from '@material-ui/core/Box'
@@ -43,11 +43,11 @@ const useStyles = makeStyles(styles)
 
 const LoginModal = ({ isNavBar, isSideBar }) => {
   const { t } = useTranslation('translations')
+  const history = useHistory()
   const [user, setUser] = useState({})
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
-  const [changePassword, setChangePassword] = useState()
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [currentUser, { login }] = useUser()
@@ -71,7 +71,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     sendEmail,
     {
       error: errorSendEmail,
-      loading: SendEmailLoading,
+      loading: sendEmailLoading,
       data: { send_email: sendEmailResult } = {}
     }
   ] = useMutation(SEND_EMAIL_MUTATION)
@@ -105,14 +105,14 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     setopenVerify(true)
   }
 
-  const { refetch: checkEmail } = useQuery(VALIDATE_EMAIL, {
+  const checkEmail = useQuery(VALIDATE_EMAIL, {
     variables: {
       email: user.email
     },
     skip: true
   })
 
-  const { refetch: getHash } = useQuery(GET_SECRET_BY_ACCOUNT, {
+  const getHash = useQuery(GET_SECRET_BY_ACCOUNT, {
     variables: {
       account: user.email
     },
@@ -169,17 +169,23 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   }
 
   useEffect(() => {
-    if (error) {
-      setOpenSnackbar({
-        show: true,
-        message: error.message.replace('GraphQL error: ', ''),
-        severity: 'error'
-      })
-      checkEmailVerified({
-        variables: {
-          account: user.account
-        }
-      })
+    if(error){
+      if(error.graphQLErrors[0].message === 'Inactive account'){
+        handleOpen()
+        history.replace('/reopen-account/' + user.account)
+      }
+      else if(error.graphQLErrors[0].message === 'Invalid account or secret'){
+        setOpenSnackbar({
+          show: true,
+          message: error.message.replace('GraphQL error: ', ''),
+          severity: 'error'
+        })
+        checkEmailVerified({
+          variables: {
+            account: user.account
+          }
+        })
+     }
     }
   }, [error])
 
@@ -189,6 +195,23 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       setOpen(false)
     }
   }, [loginResult])
+
+  useEffect(() => {
+    if (errorCheckEmailVerified) {
+      setOpenSnackbar({
+        show: true,
+        message: errorCheckEmailVerified.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
+    }
+    if (errorSendEmail) {
+      setOpenSnackbar({
+        show: true,
+        message: errorSendEmail.message.replace('GraphQL error: ', ''),
+        severity: 'error'
+      })
+    }
+  }, [errorSendEmail, errorCheckEmailVerified])
 
   useEffect(() => {
     if (checkEmailVerifiedResult && checkEmailVerifiedResult.exist && !checkEmailVerifiedResult.verified) {
@@ -325,7 +348,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
                 </Button>
               </Box>
               <Box className={classes.centerBox}>
-                {loading && <CircularProgress />}
+                {(loading || checkEmailVerifiedLoading || sendEmailLoading) && <CircularProgress />}
               </Box>
               <Box className={classes.centerBox}>
                 <LoginWithFacebook onSubmit={handleLoginWithAuth} />

@@ -61,7 +61,11 @@
       "suscribeSection": "Suscribe for emails:",
       "checkBoxSuscribe": "Suscription",
       "changeEmail": "Change email",
-      "email": "Email"
+      "email": "Email",
+      "closeAccount": "Close account",
+      "closeAccountButton": "Close Lifebank Account",
+      "errorCloseAccount": "Something wrong happened when trying to close your account, please try again",
+      "succesfulCloseAccount": "Your account has been closed successfully"
     },
     "signup": {
       "register": "Let's Start!",
@@ -575,6 +579,13 @@
       "tokens": "Tokens",
       "offer": "Offer",
       "reportDownloadName": "Report"
+    },
+    "reopenAndClose": {
+      "welcomeBackTitle": "Hello again!",
+      "welcomeBack": "Return to Lifebank",
+      "takeHome": "Not Continue",
+      "error": "Uh-Oh! Seems life something went wrong - Please Try Again",
+      "success": "Succesful Transaction"
     }
   }
 }

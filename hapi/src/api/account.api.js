@@ -16,10 +16,10 @@ const notificationApi = require('./notification.api')
 const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
+const offerApi = require('./offer.api')
 const preRegLifebank = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
-const offerApi = require('./offer.api')
 const LIFEBANKCODE_CONTRACT = eosConfig.lifebankCodeContractName
 const MAIL_APPROVE_LIFEBANNK = eosConfig.mailApproveLifebank
 
@@ -312,6 +312,12 @@ const isPasswordChangable = async ({ email }) => {
 }
 
 const getDonorData = async (account) => {
+  const { email, name, email_subscription, state } = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  if (state === 'inactive') throw new Error('Inactive account')
+
   const networks = await lifebankcodeUtils.getUserNetworks(account)
   const communities = []
 
@@ -327,9 +333,6 @@ const getDonorData = async (account) => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
-  const { email, name, email_subscription } = await userApi.getOne({
-    account: { _eq: account }
-  })
 
   return {
     email,
@@ -342,6 +345,12 @@ const getDonorData = async (account) => {
 }
 
 const getLifebankData = async (account) => {
+  const { email, email_subscription, state } = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  if (state === 'inactive') throw new Error('Inactive account')
+
   const { tx } = (await lifebankcodeUtils.getLifebank(account)) || {}
   const { lifebank_name: name, ...profile } = await getTransactionData(tx)
   const consent = await consent2lifeUtils.getConsent(
@@ -352,9 +361,6 @@ const getLifebankData = async (account) => {
   const info = await locationApi.infoQuery(account)
 
   if (Object.entries(profile).length === 0) {
-    const { email, email_subscription } = await userApi.getOne({
-      account: { _eq: account }
-    })
     const data = await preRegLifebank.getOne({
       email: { _eq: email }
     })
@@ -469,6 +475,12 @@ const getValidLifebanks = async () => {
 }
 
 const getSponsorData = async (account) => {
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  if (user.state === 'inactive') throw new Error('Inactive account')
+
   const { tx } = (await lifebankcodeUtils.getSponsor(account)) || {}
   const { sponsor_name: name, ...profile } = await getTransactionData(tx)
   const networks = await lifebankcodeUtils.getUserNetworks(account)
@@ -486,10 +498,6 @@ const getSponsorData = async (account) => {
     account
   )
   const balance = await lifebankcoinUtils.getbalance(account)
-
-  const user = await userApi.getOne({
-    account: { _eq: account }
-  })
 
   return {
     ...profile,
@@ -715,9 +723,8 @@ const login = async ({ account, password }) => {
     email_verified: { _eq: true }
   })
 
-  if (!user) {
-    throw new Error('Invalid account or secret')
-  }
+  if (user && user.active === 'inactive') throw new Error('Inactive account')
+  else if (!user) throw new Error('Invalid account or secret')
 
   const comparison = await bcrypt.compare(password, user.secret)
 
@@ -849,6 +856,56 @@ const transfer = async (from, details, notification) => {
   return transaction
 }
 
+const closeAccount = async (account) => {
+  const user = await userApi.desactivate({
+    account: { _eq: account },
+    state: { _eq: 'active' }
+  })
+
+  if (user && user.role === 'sponsor') {
+    await offerApi.desactivate({ sponsor_id: { _eq: user.id } })
+  }
+
+  await locationApi.desactivate({ account: { _eq: account } })
+
+  mailApi.requestCloseAccount(user.email, account, user.language)
+}
+
+const reopenAccount = async (account) => {
+  const user = await userApi.activate({
+    account: { _eq: account },
+    state: { _eq: 'inactive' }
+  })
+
+  if (user && user.role === 'sponsor') {
+    await offerApi.activate({ sponsor_id: { _eq: user.id } })
+  }
+  await locationApi.activate({ account: { _eq: account } })
+  mailApi.reopenAccount(user.email, user.language)
+}
+
+const finalCloseAccount = async (account) => {
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
+
+  await locationApi.permanentDelete({
+    account: { _eq: account }
+  })
+
+  if (user && user.role === 'sponsor') {
+    await offerApi.permanentDelete({
+      sponsor_id: { _eq: user.id }
+    })
+  }
+
+  await userApi.permanentDelete({
+    account: { _eq: account }
+  })
+  const password = await vaultApi.getPassword(account)
+  await lifebankcodeUtils.unsubscribe(account, password)
+}
+
 const addOffer = async (account, offer) => {
   const addOfferState = await offerApi.addOffer(offer)
   if (!addOfferState) throw new Error('Fail to add new offer')
@@ -862,7 +919,7 @@ const addOffer = async (account, offer) => {
 }
 
 const removeOffer = async ({ offer_id }) => {
-  const removedOffer = await offerApi.removeOffer({
+  const removedOffer = await offerApi.permanentDelete({
     id: { _eq: offer_id }
   })
   if (!removeOffer) throw new Error('Fail to add new offer')
@@ -924,9 +981,12 @@ module.exports = {
   getValidLifebanks,
   getReport,
   donate,
+  closeAccount,
+  reopenAccount,
   redeem,
   addOffer,
   removeOffer,
   isCoordinateInsideBox,
-  getDonorsCoordinates
+  getDonorsCoordinates,
+  finalCloseAccount
 }

@@ -24,6 +24,8 @@ const getReport = require('./get-report/get-report.route')
 const redeemOffer = require('./redeem-offer/redeem-offer.route')
 const checkEmailVerified = require('./check-email-verified/check-email-verified.route')
 const donate = require('./donate/donate.route')
+const closeAccount = require('./close-account/close-account.route')
+const reopenAccount = require('./reopen-account/reopen-account.route')
 const addOffer = require('./add-offer/add-offer.route')
 const removeOffer = require('./remove-offer/remove-offer.route')
 
@@ -54,6 +56,8 @@ module.exports = [
   redeemOffer,
   checkEmailVerified,
   donate,
+  closeAccount,
+  reopenAccount,
   addOffer,
   removeOffer
 ]
