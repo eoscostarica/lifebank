@@ -92,7 +92,7 @@ const ShowSponsors = ({ sponsors, loading }) => {
         }}
       >
         <Button color="primary" className={classes.cardActionButton}>
-          {t('cardsSection.moreInfo')}
+          {t('cardsSection.visitPage')}
         </Button>
       </LinkRouter>
     </Card>

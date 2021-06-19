@@ -181,7 +181,7 @@ const InfoPage = () => {
   return (
     <>
       {profile && (
-        <Box className={classes.contentBodyDesktop}>
+        <Box className={classes.contentBodyDesktop} >
           <Box className={classes.imageSectionDesktop}>
             {JSON.parse(profile.photos).length > 0 && (
               <Carousel
@@ -393,7 +393,6 @@ const InfoPage = () => {
                 />
               </Grid>
             )}
-
           </Grid>
         </Box>
       )}
