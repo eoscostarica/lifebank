@@ -37,7 +37,7 @@ jobs:
           REACT_APP_EOS_API_PORT: 443
           REACT_APP_EOS_API_PROTOCOL: https
           REACT_APP_EOS_CHAIN_ID: ${{ secrets.REACT_APP_EOS_CHAIN_ID }}
-          REACT_APP_HASURA_URL: https://graphql.lifebank.io:8080/v1/graphql
+          REACT_APP_HASURA_URL: https://graphql.lifebank.io/v1/graphql
           REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
           REACT_CAPTCHA_KEY: ${{ secrets.CAPTCHA_SECRET }}
           REACT_APP_LOGO: https://raw.githubusercontent.com/eoscostarica/design-assets/master/logos/eosCR/fullColor-vertiall-transparent-white.png

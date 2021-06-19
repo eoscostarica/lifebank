@@ -308,6 +308,8 @@
       "contactInformation": "Contact Information",
       "addressInformation": "Address Information",
       "addressDescription": "Describe your address and use the map to select the right location so the donors can get to you easily.",
+      "mapInformation": "Choose your location",
+      "mapDescription": "Please select the right location so the donors can get to you easily.",
       "imagery": "Images",
       "imageryDescription": "Include images that are appealing to donors! Paste a link to an image you want to include in your profile. You can upload images using imgur.com for free. Your logo or avatar must be square-shaped and no larger than 500 px or bigger than 250 KB. The banner image should be horizontal, no larger than 1200 px wide or bigger than 1 MB",
       "city": "City",

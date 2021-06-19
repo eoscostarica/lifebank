@@ -337,7 +337,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
               {t('editProfile.addressDescription')}
             </Typography>
           </Grid>
-          <Grid container item xs={6} spacing={SPACING}>
+          <Grid container item xs={12} spacing={SPACING}>
             <Grid item xs={12}>
               <TextField
                 className={classes.textField}
@@ -429,16 +429,24 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
               />
             </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <Box width="100%">
-              <MapEditLocation
-                onGeolocationChange={handleOnGeolocationChange}
-                markerLocation={user.geolocation}
-                markerType={LIFE_BANK}
-                className={classes.mapField}
-                mb={1}
-              />
-            </Box>
+        </Grid>
+        <Grid container item xs={12} spacing={SPACING}>
+          <Grid item xs={12}>
+            <Typography className={classes.boldText} variant="h4">
+              {t('editProfile.mapInformation')}
+            </Typography>
+            <Typography className={classes.text} variant="body1">
+              {t('editProfile.mapDescription')}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <MapEditLocation
+              onGeolocationChange={handleOnGeolocationChange}
+              markerLocation={user.geolocation}
+              markerType={LIFE_BANK}
+              className={classes.mapField}
+              mb={1}
+            />
           </Grid>
         </Grid>
         <Grid container item xs={12} spacing={SPACING}>
