@@ -723,7 +723,7 @@ const login = async ({ account, password }) => {
     email_verified: { _eq: true }
   })
 
-  if (user && user.active === 'inactive') throw new Error('Inactive account')
+  if (user && user.state === 'inactive') throw new Error('Inactive account')
   else if (!user) throw new Error('Invalid account or secret')
 
   const comparison = await bcrypt.compare(password, user.secret)
