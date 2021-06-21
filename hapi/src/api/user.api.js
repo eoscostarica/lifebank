@@ -123,8 +123,8 @@ const DELETE = `
 `
 
 const getOne = async (where = {}) => {
-  if(!where.state) where.state = { _eq: 'active' }
-  
+  if (!where.state) where.state = { _eq: 'active' }
+
   const { user } = await hasuraUtils.request(GET_ONE, { where })
 
   if (user && user.length > 0) return user[0]
@@ -133,7 +133,7 @@ const getOne = async (where = {}) => {
 }
 
 const getMany = async (where = {}) => {
-  if(!where.state) where.state = { _eq: 'active' }
+  if (!where.state) where.state = { _eq: 'active' }
 
   const { user } = await hasuraUtils.request(GET_MANY, { where })
 
@@ -168,7 +168,9 @@ const verifyEmail = async (where) => {
 }
 
 const desactivate = async (where) => {
-  const { update_user: { returning } } = await hasuraUtils.request(CHANGE_STATE, {
+  const {
+    update_user: { returning }
+  } = await hasuraUtils.request(CHANGE_STATE, {
     where,
     state: 'inactive'
   })
@@ -176,7 +178,9 @@ const desactivate = async (where) => {
 }
 
 const activate = async (where) => {
-  const { update_user: { returning } } = await hasuraUtils.request(CHANGE_STATE, {
+  const {
+    update_user: { returning }
+  } = await hasuraUtils.request(CHANGE_STATE, {
     where,
     state: 'active'
   })
