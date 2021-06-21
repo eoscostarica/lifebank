@@ -123,6 +123,8 @@ const DELETE = `
 `
 
 const getOne = async (where = {}) => {
+  if(!where.state) where.state = { _eq: 'active' }
+  
   const { user } = await hasuraUtils.request(GET_ONE, { where })
 
   if (user && user.length > 0) return user[0]
@@ -131,9 +133,11 @@ const getOne = async (where = {}) => {
 }
 
 const getMany = async (where = {}) => {
+  if(!where.state) where.state = { _eq: 'active' }
+
   const { user } = await hasuraUtils.request(GET_MANY, { where })
 
-  return user && user.length > 0 ? user : null
+  return user
 }
 
 const insert = (user) => {
