@@ -103,7 +103,7 @@ const OffersApproval = () => {
     const benefitOff = []
     const badgeOff = []
 
-    offers.map((offer) => {
+    offers.forEach((offer) => {
       switch (offer.offer_type) {
         case 'discount':
           discountOff.push(offer)
