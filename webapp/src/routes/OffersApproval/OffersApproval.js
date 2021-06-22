@@ -120,6 +120,8 @@ const OffersApproval = () => {
         case 'badge':
           badgeOff.push(offer)
           break
+        default:
+          break
       }
     })
 
