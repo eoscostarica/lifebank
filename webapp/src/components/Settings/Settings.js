@@ -72,7 +72,7 @@ const Settings = ({ onCloseSetting }) => {
 
   const [
     updateEmailSubscription,
-    { error: errorUpdateEmailSubscription, loading: updateEmailSubscriptionLoading, data: { update_user: updateEmailSubscriptionResult } = {} }
+    { data: { update_user: updateEmailSubscriptionResult } = {} }
   ] = useMutation(UPDATE_EMAIL_SUBSCRIPTION_MUTATION)
 
   const [

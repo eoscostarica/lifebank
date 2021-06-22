@@ -522,7 +522,6 @@ const EditProfileBankMobile = ({ profile, onSubmit, setField, loading, userName 
               InputLabelProps={{
                 shrink: true
               }}
-              className={classes.textField}
             />
           </Grid>
           <Grid item xs={12} >

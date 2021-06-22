@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from '@material-ui/core/Button'
@@ -29,7 +29,6 @@ const CancelEmailSubscription = () => {
   const [
     updateEmailSubscription,
     {
-      error: errorUpdateEmailSubscription,
       loading: updateEmailSubscriptionLoading,
       data: { update_user: updateEmailSubscriptionResult } = {}
     }
@@ -45,7 +44,7 @@ const CancelEmailSubscription = () => {
   }
 
   useEffect(() => {
-    if(updateEmailSubscriptionResult && updateEmailSubscriptionResult.affected_rows === 0) handleOpenSnackbar()
+    if (updateEmailSubscriptionResult && updateEmailSubscriptionResult.affected_rows === 0) handleOpenSnackbar()
   }, [updateEmailSubscriptionResult])
 
   return (
