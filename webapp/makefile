@@ -23,17 +23,17 @@ build-docker: ./Dockerfile
 		-t $(DOCKER_REGISTRY)/$(IMAGE_NAME_WEBAPP):$(VERSION) --target run-stage \
 		-t $(DOCKER_REGISTRY)/$(IMAGE_NAME_WEBAPP):$(LATEST_TAG) --target run-stage \
 		--build-arg port="$(PORT)" \
-		--build-arg react_app_title="$(REACT_APP_TITLE)" \
-		--build-arg react_app_logo="$(REACT_APP_LOGO)" \
-		--build-arg react_app_version="$(REACT_APP_VERSION)" \
-	  --build-arg react_app_eos_api_host="$(REACT_APP_EOS_API_HOST)" \
-		--build-arg react_app_eos_api_port="$(REACT_APP_EOS_API_PORT)" \
-		--build-arg react_app_eos_api_protocol="$(REACT_APP_EOS_API_PROTOCOL)" \
-		--build-arg react_app_eos_chain_id="$(REACT_APP_EOS_CHAN_ID)" \
-		--build-arg react_app_hasura_url="$(REACT_APP_HASURA_URL)" \
-		--build-arg react_app_mapbox_access_token="$(REACT_APP_MAPBOX_ACCESS_TOKEN)" \
-		--build-arg react_captcha_key="$(REACT_APP_CAPTCHA-KEY)" \
-		--build-arg react_app_block_explorer_url="$(REACT_APP_BLOCK_EXPLORER_URL)" \
+		--build-arg REACT_APP_TITLE="$(REACT_APP_TITLE)" \
+		--build-arg REACT_APP_LOGO="$(REACT_APP_LOGO)" \
+		--build-arg REACT_APP_VERSION="$(REACT_APP_VERSION)" \
+	  --build-arg REACT_APP_EOS_API_HOST="$(REACT_APP_EOS_API_HOST)" \
+		--build-arg REACT_APP_EOS_API_PORT="$(REACT_APP_EOS_API_PORT)" \
+		--build-arg REACT_APP_EOS_API_PROTOCOL="$(REACT_APP_EOS_API_PROTOCOL)" \
+		--build-arg REACT_APP_EOS_CHAN_ID="$(REACT_APP_EOS_CHAN_ID)" \
+		--build-arg REACT_APP_HASURA_URL="$(REACT_APP_HASURA_URL)" \
+		--build-arg REACT_APP_MAPBOX_ACCESS_TOKEN="$(REACT_APP_MAPBOX_ACCESS_TOKEN)" \
+		--build-arg REACT_APP_CAPTCHA_KEY="$(REACT_APP_CAPTCHA_KEY)" \
+		--build-arg REACT_APP_BLOCK_EXPLORER_URL="$(REACT_APP_BLOCK_EXPLORER_URL)" \
 		.
 
 pull-image: ##@devops Pull the latest image from registry for caching
@@ -48,23 +48,17 @@ build-docker-cached: ./Dockerfile
 		-t $(DOCKER_REGISTRY)/$(IMAGE_NAME_WEBAPP):$(VERSION) \
 		-t $(DOCKER_REGISTRY)/$(IMAGE_NAME_WEBAPP):$(LATEST_TAG) \
 		--build-arg port="$(PORT)" \
-		--build-arg react_app_title="$(REACT_APP_TITLE)" \
-		--build-arg react_app_logo="$(REACT_APP_LOGO)" \
-		--build-arg react_app_version="$(REACT_APP_VERSION)" \
-		--build-arg react_app_footer_links="$(REACT_APP_FOOTER_LINKS)" \
-		--build-arg react_app_ual_app_name="$(REACT_APP_UAL_APP_NAME)" \
-		--build-arg react_app_ual_api_protocol="$(REACT_APP_UAL_API_PROTOCOL)" \
-		--build-arg react_app_ual_api_host="$(REACT_APP_UAL_API_HOST)" \
-		--build-arg react_app_ual_api_port="$(REACT_APP_UAL_API_PORT)" \
-		--build-arg react_app_ual_chain_id="$(REACT_APP_UAL_CHAIN_ID)" \
-		--build-arg react_app_hasura_url="$(REACT_APP_HASURA_URL)" \
-		--build-arg react_app_ipfs_url="$(REACT_APP_IPFS_URL)" \
-		--build-arg react_app_paypal_client_id="$(REACT_APP_PAYPAL_CLIENT_ID)" \
-		--build-arg react_app_map_base_url="$(REACT_APP_MAP_BASE_URL)" \
-		--build-arg react_app_map_api_key="$(REACT_APP_MAP_API_KEY)" \
-		--build-arg react_app_block_explorer="$(REACT_APP_BLOCK_EXPLORER)" \
-		--build-arg react_app_block_explorer_url="$(REACT_APP_BLOCK_EXPLORER_URL)" \
-		--build-arg react_app_oauth_client_id="$(REACT_APP_OAUTH_GOOGLE_CLIENT_ID)" \
+		--build-arg REACT_APP_TITLE="$(REACT_APP_TITLE)" \
+		--build-arg REACT_APP_LOGO="$(REACT_APP_LOGO)" \
+		--build-arg REACT_APP_VERSION="$(REACT_APP_VERSION)" \
+	  --build-arg REACT_APP_EOS_API_HOST="$(REACT_APP_EOS_API_HOST)" \
+		--build-arg REACT_APP_EOS_API_PORT="$(REACT_APP_EOS_API_PORT)" \
+		--build-arg REACT_APP_EOS_API_PROTOCOL="$(REACT_APP_EOS_API_PROTOCOL)" \
+		--build-arg REACT_APP_EOS_CHAN_ID="$(REACT_APP_EOS_CHAN_ID)" \
+		--build-arg REACT_APP_HASURA_URL="$(REACT_APP_HASURA_URL)" \
+		--build-arg REACT_APP_MAPBOX_ACCESS_TOKEN="$(REACT_APP_MAPBOX_ACCESS_TOKEN)" \
+		--build-arg REACT_APP_CAPTCHA_KEY="$(REACT_APP_CAPTCHA_KEY)" \
+		--build-arg REACT_APP_BLOCK_EXPLORER_URL="$(REACT_APP_BLOCK_EXPLORER_URL)" \
 		.
 
 push-image: ##@devops Push the freshly built image and tag with release or latest tag
