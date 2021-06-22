@@ -30,7 +30,6 @@ import {
 import OfferDetails from './OfferDetails'
 import GenericOfferFormComponent from './GenericOfferFormComponent'
 import styles from './styles'
-import { TextField } from '@material-ui/core'
 
 const useStyles = makeStyles(styles)
 

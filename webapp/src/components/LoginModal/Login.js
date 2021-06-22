@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import PropTypes from 'prop-types'
 import { makeStyles, useTheme } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
@@ -25,8 +25,6 @@ import DialogContent from '@material-ui/core/DialogContent'
 
 import {
   LOGIN_MUTATION,
-  VALIDATE_EMAIL,
-  GET_SECRET_BY_ACCOUNT,
   SEND_EMAIL_MUTATION,
   CHECK_EMAIL_VERIFIED
 } from '../../gql'
@@ -105,20 +103,6 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
     setopenVerify(true)
   }
 
-  const checkEmail = useQuery(VALIDATE_EMAIL, {
-    variables: {
-      email: user.email
-    },
-    skip: true
-  })
-
-  const getHash = useQuery(GET_SECRET_BY_ACCOUNT, {
-    variables: {
-      account: user.email
-    },
-    skip: true
-  })
-
   const handleOpen = () => {
     setOpen(!open)
     setActiveStep(0)
@@ -169,12 +153,12 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   }
 
   useEffect(() => {
-    if(error){
-      if(error.graphQLErrors[0].message === 'Inactive account'){
+    if (error) {
+      if (error.graphQLErrors[0].message === 'Inactive account') {
         handleOpen()
         history.replace('/reopen-account/' + user.account)
       }
-      else if(error.graphQLErrors[0].message === 'Invalid account or secret'){
+      else if (error.graphQLErrors[0].message === 'Invalid account or secret') {
         setOpenSnackbar({
           show: true,
           message: error.message.replace('GraphQL error: ', ''),
@@ -185,7 +169,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
             account: user.account
           }
         })
-     }
+      }
     }
   }, [error])
 
