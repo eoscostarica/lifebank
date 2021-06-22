@@ -109,7 +109,6 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
 
   const handleCreateAccount = () => {
     const { email, name, passwordPlainText } = user
-
     createAccount({
       variables: {
         role,

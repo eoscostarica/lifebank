@@ -21,7 +21,7 @@ const ReopenAccount = () => {
   const classes = useStyles()
   const { account } = useParams()
   const history = useHistory()
-  const [openSnackbar, setOpenSnackbar] = useState({...openSnackbar ,show: false})
+  const [openSnackbar, setOpenSnackbar] = useState({ show: false })
   const [
     reopenAccount,
     {
@@ -38,7 +38,7 @@ const ReopenAccount = () => {
   const reopen_account = () => {
     reopenAccount({
       variables: {
-        account : account
+        account: account
       }
     })
   }
@@ -66,26 +66,26 @@ const ReopenAccount = () => {
       <Grid container spacing={4}>
         <Grid item xs={12} className={classes.content}>
           <Box className={classes.centerText}>
-              <Typography className={classes.title}>
-                {t('reopenAndClose.welcomeBackTitle')}
-              </Typography>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={reopen_account}
-                className={classes.btnHome}
-              >
-                {t('reopenAndClose.welcomeBack')}
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                component={CustomRouterLink}
-                to="/"
-                className={classes.btnReturn}
-              >
-                {t('reopenAndClose.takeHome')}
-              </Button>
+            <Typography className={classes.title}>
+              {t('reopenAndClose.welcomeBackTitle')}
+            </Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={reopen_account}
+              className={classes.btnHome}
+            >
+              {t('reopenAndClose.welcomeBack')}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              component={CustomRouterLink}
+              to="/"
+              className={classes.btnReturn}
+            >
+              {t('reopenAndClose.takeHome')}
+            </Button>
           </Box>
           <Box>
             {reopenAccountLoading && <CircularProgress />}

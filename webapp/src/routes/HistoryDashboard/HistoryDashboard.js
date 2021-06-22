@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { useLazyQuery } from '@apollo/react-hooks'
 import MUIDataTable from 'mui-datatables'
@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import Typography from '@material-ui/core/Typography'
 
-import { GET_REPORT_QUERY, PROFILE_QUERY } from '../../gql'
+import { GET_REPORT_QUERY } from '../../gql'
 
 import { useUser } from '../../context/user.context'
 import styles from './styles'
@@ -31,13 +31,8 @@ const HistoryDashboard = (user) => {
   ]
 
   const [
-    loadProfile,
-    { error: errroLoadProfile, data: { profile: { profile } = {} } = {}, client }
-  ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
-
-  const [
     getReportQuery,
-    { errorReport, data: { get_report: getReportResult } = {} }
+    { data: { get_report: getReportResult } = {} }
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   useEffect(() => {
