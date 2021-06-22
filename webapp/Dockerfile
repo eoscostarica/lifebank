@@ -16,22 +16,22 @@ RUN yarn install --production=false
 COPY ./ $WORK_DIR
 
 # setup build environment
-ARG react_app_eos_api_host
-ENV react_app_eos_api_host $REACT_APP_EOS_API_HOST
-ARG react_app_eos_api_port
-ENV react_app_eos_api_port $REACT_APP_EOS_API_PORT
-ARG react_app_eos_api_protocol
-ENV react_app_eos_api_protocol $REACT_APP_EOS_API_PROTOCOL
-ARG react_app_eos_chain_id
-ENV react_app_eos_chain_id $REACT_APP_EOS_CHAIN_ID
-ARG react_app_hasura_url
-ENV react_app_hasura_url $REACT_APP_HASURA_URL
-ARG react_app_mapbox_access_token
-ENV react_app_mapbox_access_token $REACT_APP_MAPBOX_ACCESS_TOKEN
-ARG react_captcha_key
-ENV react_captcha_key $REACT_CAPTCHA_KEY
-ARG react_app_block_explorer_url
-ENV react_app_block_explorer_url $REACT_APP_BLOCK_EXPLORER_URL
+ARG REACT_APP_EOS_API_HOST
+ENV REACT_APP_EOS_API_HOST $react_app_eos_api_host
+ARG REACT_APP_EOS_API_PORT
+ENV REACT_APP_EOS_API_PORT $react_app_eos_api_port
+ARG REACT_APP_EOS_API_PROTOCOL
+ENV REACT_APP_EOS_API_PROTOCOL $react_app_eos_api_protocol
+ARG REACT_APP_EOS_CHAIN_ID
+ENV REACT_APP_EOS_CHAIN_ID $react_app_eos_chain_id
+ARG REACT_APP_HASURA_URL
+ENV REACT_APP_HASURA_URL $react_app_hasura_url
+ARG REACT_APP_MAPBOX_ACCESS_TOKEN
+ENV REACT_APP_MAPBOX_ACCESS_TOKEN $react_app_mapbox_access_token
+ARG REACT_CAPTCHA_KEY
+ENV REACT_CAPTCHA_KEY $react_captcha_key
+ARG REACT_APP_BLOCK_EXPLORER_URL
+ENV REACT_APP_BLOCK_EXPLORER_URL $react_app_block_explorer_url
 
 RUN yarn build
 

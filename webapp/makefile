@@ -26,7 +26,7 @@ build-docker: ./Dockerfile
 		--build-arg react_app_title="$(REACT_APP_TITLE)" \
 		--build-arg react_app_logo="$(REACT_APP_LOGO)" \
 		--build-arg react_app_version="$(REACT_APP_VERSION)" \
-	  --build-arg react_app_eos_api_host="$(REACT_APP_EOS_API_HOST)" \
+		--build-arg react_app_eos_api_host="$(REACT_APP_EOS_API_HOST)" \
 		--build-arg react_app_eos_api_port="$(REACT_APP_EOS_API_PORT)" \
 		--build-arg react_app_eos_api_protocol="$(REACT_APP_EOS_API_PROTOCOL)" \
 		--build-arg react_app_eos_chain_id="$(REACT_APP_EOS_CHAN_ID)" \
@@ -51,7 +51,7 @@ build-docker-cached: ./Dockerfile
 		--build-arg react_app_title="$(REACT_APP_TITLE)" \
 		--build-arg react_app_logo="$(REACT_APP_LOGO)" \
 		--build-arg react_app_version="$(REACT_APP_VERSION)" \
-	  --build-arg react_app_eos_api_host="$(REACT_APP_EOS_API_HOST)" \
+		--build-arg react_app_eos_api_host="$(REACT_APP_EOS_API_HOST)" \
 		--build-arg react_app_eos_api_port="$(REACT_APP_EOS_API_PORT)" \
 		--build-arg react_app_eos_api_protocol="$(REACT_APP_EOS_API_PROTOCOL)" \
 		--build-arg react_app_eos_chain_id="$(REACT_APP_EOS_CHAN_ID)" \
