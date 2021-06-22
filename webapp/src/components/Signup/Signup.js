@@ -109,7 +109,6 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
 
   const handleCreateAccount = () => {
     const { email, name, passwordPlainText } = user
-    console.log('HANDLE-CREATE-ACCOUNT')
     createAccount({
       variables: {
         role,
