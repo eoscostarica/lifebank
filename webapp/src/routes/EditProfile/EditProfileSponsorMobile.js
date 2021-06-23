@@ -86,12 +86,11 @@ const EditProfileSponsorMobile = ({ profile, onSubmit, loading }) => {
         setValues({ ...values, [field]: value })
       }
     },
-    [user]
+    [user, values]
   )
 
   const handleOnGeolocationChange = useCallback(
-    (geolocation) => setUser((prev) => ({ ...prev, geolocation: geolocation })),
-    [user.geolocation]
+    (geolocation) => setUser((prev) => ({ ...prev, geolocation: geolocation }))
   )
 
   const handleOnAddSchedule = useMemo(
@@ -182,7 +181,7 @@ const EditProfileSponsorMobile = ({ profile, onSubmit, loading }) => {
         phoneValue2
       ]
     })
-  }, [phoneValue1, phoneValue2])
+  }, [user, phoneValue1, phoneValue2])
 
   return (
     <form autoComplete="off" className={classes.form}>

@@ -89,11 +89,6 @@ const InfoPageMobile = () => {
     skip: true
   })
 
-  useEffect(() => {
-    getInfo()
-
-  }, [location])
-
   const getOffers = async () => {
     if (profile) {
       if (profile.role === 'sponsor') {
@@ -172,9 +167,12 @@ const InfoPageMobile = () => {
       }
 
       if (!location.state) getProfile()
-
     }
   }
+
+  useEffect(() => {
+    getInfo()
+  }, [getInfo, location])
 
   useEffect(() => {
     if (!loadingDataOffer) {

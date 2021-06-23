@@ -87,7 +87,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
         setValues({ ...values, [field]: value })
       }
     },
-    [user]
+    [user, values]
   )
 
   const handleOnGeolocationChange = useCallback(
@@ -181,7 +181,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
         phoneValue2
       ]
     })
-  }, [phoneValue1, phoneValue2])
+  }, [user, phoneValue1, phoneValue2])
 
   return (
     <form autoComplete="off" className={classes.form}>
@@ -305,7 +305,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
               <PhoneNumber
                 className={classes.textField}
                 defaultCountry='cr'
-                value= {phoneValue1}
+                value={phoneValue1}
                 fullWidth
                 label={t('signup.phoneNumber')}
                 id="phoneNumber1"
@@ -318,7 +318,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
                 className={classes.textField}
                 defaultCountry='cr'
                 fullWidth
-                value= {phoneValue2}
+                value={phoneValue2}
                 label={t('signup.phoneNumber')}
                 id="phoneNumber2"
                 variant="filled"

@@ -149,7 +149,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
       else document.getElementById("username").focus()
     }
 
-  }, [isUnique, firstRun])
+  }, [onSubmit, profile, user, isValid, username, isUnique, firstRun])
 
   useEffect(() => {
     setUser({
@@ -159,7 +159,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
         phoneValue2
       ]
     })
-  }, [phoneValue1, phoneValue2])
+  }, [user, phoneValue1, phoneValue2])
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {

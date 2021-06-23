@@ -82,7 +82,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
         }
       })
     }
-  }, [user])
+  }, [getAccountSignupMethod, user])
 
   useEffect(() => {
     if (error) {

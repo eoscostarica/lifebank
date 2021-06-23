@@ -94,10 +94,12 @@ const ProfilePage = () => {
 
     loadProfile()
   }, [
+    handleOpenAlert,
+    t,
+    loadProfile,
     grantConsentResult,
     revokeConsentResult,
     lastConsentChange,
-    loadProfile,
     classes
   ])
 
@@ -171,7 +173,7 @@ const ProfilePage = () => {
       )}
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <Suspense fallback={<CircularProgress />}>
-          <ProfilePageLifebank profile={profile}/>
+          <ProfilePageLifebank profile={profile} />
         </Suspense>
       )}
       {!currentUser &&
