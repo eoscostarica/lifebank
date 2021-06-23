@@ -73,7 +73,7 @@ const ProfilePageSponsor = ({ profile }) => {
     }
 
     if (!userName) getUsername()
-  }, [userName])
+  }, [userName, profile.account])
 
   useEffect(() => {
     if (errorUsername) {

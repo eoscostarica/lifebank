@@ -540,7 +540,6 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
                   InputLabelProps={{
                     shrink: true
                   }}
-                  className={classes.textField}
                 />
               </Box>
             </Grid>
