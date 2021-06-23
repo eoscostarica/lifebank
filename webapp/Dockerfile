@@ -16,21 +16,21 @@ RUN yarn install --production=false
 COPY ./ $WORK_DIR
 
 # setup build environment
-ARG REACT_APP_EOS_API_HOST
+ARG react_app_eos_api_host
 ENV REACT_APP_EOS_API_HOST $react_app_eos_api_host
-ARG REACT_APP_EOS_API_PORT
+ARG react_app_eos_api_port
 ENV REACT_APP_EOS_API_PORT $react_app_eos_api_port
-ARG REACT_APP_EOS_API_PROTOCOL
+ARG react_app_eos_api_protocol
 ENV REACT_APP_EOS_API_PROTOCOL $react_app_eos_api_protocol
-ARG REACT_APP_EOS_CHAIN_ID
+ARG react_app_eos_chain_id
 ENV REACT_APP_EOS_CHAIN_ID $react_app_eos_chain_id
-ARG REACT_APP_HASURA_URL
+ARG react_app_hasura_url
 ENV REACT_APP_HASURA_URL $react_app_hasura_url
-ARG REACT_APP_MAPBOX_ACCESS_TOKEN
+ARG react_app_mapbox_access_token
 ENV REACT_APP_MAPBOX_ACCESS_TOKEN $react_app_mapbox_access_token
-ARG REACT_CAPTCHA_KEY
+ARG react_captcha_key
 ENV REACT_CAPTCHA_KEY $react_captcha_key
-ARG REACT_APP_BLOCK_EXPLORER_URL
+ARG react_app_block_explorer_url
 ENV REACT_APP_BLOCK_EXPLORER_URL $react_app_block_explorer_url
 
 RUN yarn build
