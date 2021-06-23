@@ -26,13 +26,13 @@ build-docker: ./Dockerfile
 		--build-arg react_app_title="$(REACT_APP_TITLE)" \
 		--build-arg react_app_logo="$(REACT_APP_LOGO)" \
 		--build-arg react_app_version="$(REACT_APP_VERSION)" \
-	  --build-arg react_app_eos_api_host="$(REACT_APP_EOS_API_HOST)" \
+		--build-arg react_app_eos_api_host="$(REACT_APP_EOS_API_HOST)" \
 		--build-arg react_app_eos_api_port="$(REACT_APP_EOS_API_PORT)" \
 		--build-arg react_app_eos_api_protocol="$(REACT_APP_EOS_API_PROTOCOL)" \
 		--build-arg react_app_eos_chain_id="$(REACT_APP_EOS_CHAN_ID)" \
 		--build-arg react_app_hasura_url="$(REACT_APP_HASURA_URL)" \
 		--build-arg react_app_mapbox_access_token="$(REACT_APP_MAPBOX_ACCESS_TOKEN)" \
-		--build-arg react_captcha_key="$(REACT_APP_CAPTCHA-KEY)" \
+		--build-arg react_captcha_key="$(REACT_APP_CAPTCHA_KEY)" \
 		--build-arg react_app_block_explorer_url="$(REACT_APP_BLOCK_EXPLORER_URL)" \
 		.
 
@@ -51,20 +51,14 @@ build-docker-cached: ./Dockerfile
 		--build-arg react_app_title="$(REACT_APP_TITLE)" \
 		--build-arg react_app_logo="$(REACT_APP_LOGO)" \
 		--build-arg react_app_version="$(REACT_APP_VERSION)" \
-		--build-arg react_app_footer_links="$(REACT_APP_FOOTER_LINKS)" \
-		--build-arg react_app_ual_app_name="$(REACT_APP_UAL_APP_NAME)" \
-		--build-arg react_app_ual_api_protocol="$(REACT_APP_UAL_API_PROTOCOL)" \
-		--build-arg react_app_ual_api_host="$(REACT_APP_UAL_API_HOST)" \
-		--build-arg react_app_ual_api_port="$(REACT_APP_UAL_API_PORT)" \
-		--build-arg react_app_ual_chain_id="$(REACT_APP_UAL_CHAIN_ID)" \
+		--build-arg react_app_eos_api_host="$(REACT_APP_EOS_API_HOST)" \
+		--build-arg react_app_eos_api_port="$(REACT_APP_EOS_API_PORT)" \
+		--build-arg react_app_eos_api_protocol="$(REACT_APP_EOS_API_PROTOCOL)" \
+		--build-arg react_app_eos_chain_id="$(REACT_APP_EOS_CHAN_ID)" \
 		--build-arg react_app_hasura_url="$(REACT_APP_HASURA_URL)" \
-		--build-arg react_app_ipfs_url="$(REACT_APP_IPFS_URL)" \
-		--build-arg react_app_paypal_client_id="$(REACT_APP_PAYPAL_CLIENT_ID)" \
-		--build-arg react_app_map_base_url="$(REACT_APP_MAP_BASE_URL)" \
-		--build-arg react_app_map_api_key="$(REACT_APP_MAP_API_KEY)" \
-		--build-arg react_app_block_explorer="$(REACT_APP_BLOCK_EXPLORER)" \
+		--build-arg react_app_mapbox_access_token="$(REACT_APP_MAPBOX_ACCESS_TOKEN)" \
+		--build-arg react_captcha_key="$(REACT_APP_CAPTCHA_KEY)" \
 		--build-arg react_app_block_explorer_url="$(REACT_APP_BLOCK_EXPLORER_URL)" \
-		--build-arg react_app_oauth_client_id="$(REACT_APP_OAUTH_GOOGLE_CLIENT_ID)" \
 		.
 
 push-image: ##@devops Push the freshly built image and tag with release or latest tag
