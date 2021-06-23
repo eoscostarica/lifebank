@@ -135,7 +135,7 @@ const Settings = ({ onCloseSetting }) => {
   }
 
   const handleSubmitChangeEmail = async () => {
-    if (user, profile) {
+    if (user && profile) {
       changeEmail({
         variables: {
           account: profile.account,
