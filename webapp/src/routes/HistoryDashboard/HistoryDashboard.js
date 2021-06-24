@@ -8,8 +8,9 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import Typography from '@material-ui/core/Typography'
+import { useHistory } from 'react-router-dom'
 
-import { GET_REPORT_QUERY, PROFILE_QUERY } from '../../gql'
+import { GET_REPORT_QUERY } from '../../gql'
 
 import { useUser } from '../../context/user.context'
 import styles from './styles'
@@ -23,25 +24,23 @@ const HistoryDashboard = (user) => {
   const [bodyReceive, setBodyReceive] = useState()
   const [bodySent, setBodySent] = useState()
   const [currentUser] = useUser()
+  const history = useHistory()
   const [optionSR, setOption] = useState('sent')
-
   const options = [
     { value: 'sent', label: t('historyDashboard.tableTitleSent') },
     { value: 'received', label: t('historyDashboard.tableTitleReceived') }
   ]
 
-  const [
-    loadProfile,
-    { error: errroLoadProfile, data: { profile: { profile } = {} } = {}, client }
-  ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
+  const manageError = () => {
+    history.replace('/')
+  }
 
   const [
     getReportQuery,
-    { errorReport, data: { get_report: getReportResult } = {} }
+    { error: errorReport, data: { get_report: getReportResult } = {} }
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   useEffect(() => {
-
     if (!getReportResult) {
       getReportQuery()
     } else {
@@ -51,6 +50,10 @@ const HistoryDashboard = (user) => {
     }
 
   }, [getReportResult])
+
+  useEffect( () => {
+    if(errorReport) manageError()
+  },[errorReport])
 
   const formatDataToReport = () => {
     const sent = getReportResult.notifications.sent
@@ -67,8 +70,8 @@ const HistoryDashboard = (user) => {
   }
 
   const handleChange = (event) => {
-    setOption(event.target.value);
-  };
+    setOption(event.target.value)
+  }
 
   return (
     <>

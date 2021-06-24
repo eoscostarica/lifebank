@@ -95,7 +95,8 @@ const EditProfilePage = () => {
   }
   useEffect(() => {
     if (!currentUser) {
-      return
+      history.replace('/')
+      return 
     }
 
     loadProfile()
