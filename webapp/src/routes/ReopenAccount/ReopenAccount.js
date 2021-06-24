@@ -59,7 +59,7 @@ const ReopenAccount = () => {
         severity: 'success'
       })
     }
-  }, [reopenAccountResult, reopenAccountError])
+  }, [t, history, reopenAccountResult, reopenAccountError])
 
   return (
     <Box className={classes.root}>

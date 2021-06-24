@@ -66,16 +66,27 @@ const ConsetComponent = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
+  const updateProfile = async () => {
+    const { data: { user } } = await accountName({ account: currentUser.account })
+    if (user.length > 0) {
+      const name = user[0].name
+      editProfile({
+        variables: {
+          profile: { name }
+        }
+      })
+    }
+  }
+
   useEffect(() => {
     if (currentUser) {
       loadProfile()
     }
-
   }, [currentUser])
 
   useEffect(() => {
     if (currentUser && profile && !profile.consent) handleOpenConsent()
-  }, [profile])
+  }, [profile, currentUser])
 
   useEffect(() => {
     if (signupResult) {
@@ -94,7 +105,7 @@ const ConsetComponent = () => {
         })
       }
     }
-  }, [signupResult])
+  }, [t, signupResult, profile])
 
   useEffect(() => {
     if (errorProfile) {
@@ -108,19 +119,7 @@ const ConsetComponent = () => {
         severity: 'error'
       })
     }
-  }, [errorSignup, errorProfile])
-
-  const updateProfile = async () => {
-    const { data: { user } } = await accountName({ account: currentUser.account })
-    if (user.length > 0) {
-      const name = user[0].name
-      editProfile({
-        variables: {
-          profile: { name }
-        }
-      })
-    }
-  }
+  }, [t, logout, history, currentUser, errorSignup, errorProfile])
 
   return (
     <>

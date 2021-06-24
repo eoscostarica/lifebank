@@ -55,34 +55,12 @@ const ProfilePageSponsor = ({ profile }) => {
 
   const handleClose = (_event, reason) => {
     if (reason === 'clickaway') return
-
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
   const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1)
 
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1)
-
-  useEffect(() => {
-    const getUsername = async () => {
-      const { data } = await getData({
-        account: profile.account
-      })
-
-      if (data) setuserName(data.user[0].username.replaceAll(' ', '-'))
-    }
-
-    if (!userName) getUsername()
-  }, [userName, profile.account])
-
-  useEffect(() => {
-    if (errorUsername) {
-      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
-        logout()
-        history.push('/')
-      } else history.push('/internal-error')
-    }
-  }, [errorUsername])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -123,6 +101,27 @@ const ProfilePageSponsor = ({ profile }) => {
     if (Object.keys(pendingFieldsObject).length > 0)
       setPendingFields(pendingFieldsObject)
   }
+
+  useEffect(() => {
+    const getUsername = async () => {
+      const { data } = await getData({
+        account: profile.account
+      })
+
+      if (data) setuserName(data.user[0].username.replaceAll(' ', '-'))
+    }
+
+    if (!userName) getUsername()
+  }, [userName, profile.account])
+
+  useEffect(() => {
+    if (errorUsername) {
+      if (errorUsername.message === 'GraphQL error: Could not verify JWT: JWTExpired') {
+        logout()
+        history.push('/')
+      } else history.push('/internal-error')
+    }
+  }, [logout, errorUsername, history])
 
   useEffect(() => {
     if (profile) {
