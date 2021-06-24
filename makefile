@@ -10,6 +10,8 @@ run:
 	make -j 3 run-hapi run-hasura run-webapp
 
 run-env:
+	@fuser -k 3000/tcp
+	@fuser -k 9695/tcp
 	@[ -f .env ] && source .env || echo "$(YELLOW)WARNING:$(RESET) .env file not found"
 
 run-postgres:

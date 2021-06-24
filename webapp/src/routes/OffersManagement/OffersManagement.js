@@ -19,6 +19,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import * as m from 'moment-timezone'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router-dom'
 
 import {
   GET_SPONSOR_OFFERS_QUERY,
@@ -30,13 +31,13 @@ import {
 import OfferDetails from './OfferDetails'
 import GenericOfferFormComponent from './GenericOfferFormComponent'
 import styles from './styles'
-import { TextField } from '@material-ui/core'
 
 const useStyles = makeStyles(styles)
 
 const OffersManagement = () => {
   const { t } = useTranslation('translations')
   const classes = useStyles()
+  const history = useHistory()
   const [offers, setOffers] = useState(undefined)
   const [profileIDLoaded, setProfileIDLoaded] = useState(false)
   const [offersLoaded, setOffersLoaded] = useState(false)
@@ -113,7 +114,7 @@ const OffersManagement = () => {
   }
   const [
     loadProfileID,
-    { data: { profile: { profile } = {} } = {} }
+    {error: profileError ,data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_ID_QUERY, { fetchPolicy: 'network-only' })
 
   const [
@@ -216,6 +217,10 @@ const OffersManagement = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
+  const errorManager = () => {
+    history.replace('/')
+  }
+
   const getGenericOfferComponent = (editing, data) => {
     return (
       <GenericOfferFormComponent
@@ -248,6 +253,10 @@ const OffersManagement = () => {
   useEffect(() => {
     loadProfileID()
   }, [loadProfileID])
+
+  useEffect(() => {
+    if(profileError) errorManager()
+  }, [profileError])
 
   useEffect(() => {
     if (profile) setProfileIDLoaded(true)

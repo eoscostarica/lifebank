@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
+import { useHistory } from 'react-router-dom'
 
 import ShowOffersAproval from '../../components/ShowElements/ShowOffersAproval'
 import {
@@ -27,7 +28,11 @@ const OffersApproval = () => {
   const [loadingOffers, setLoadingOffers] = useState(true)
   const [offers, setOffers] = useState([])
   const [currentUser] = useUser()
-  const [account] = useState(currentUser.account)
+  const history = useHistory()
+  const [account] = useState(
+     currentUser ? currentUser.account :
+     () => {history.replace('/')}
+    )
   const [discountOffers, setDiscountOffers] = useState([])
   const [freeOffers, setFreetOffers] = useState([])
   const [badgeOffers, setBadgeOffers] = useState([])
@@ -92,8 +97,9 @@ const OffersApproval = () => {
   }, [allOffers])
 
   useEffect(() => {
-    getInfo()
-    getOffers()
+    if(account){
+      getOffers()
+    }
   }, [])
 
   useEffect(() => {
