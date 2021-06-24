@@ -53,7 +53,7 @@ const SignupWithFacebook = ({ handlerSubmit }) => {
   return (
     <FacebookProvider appId={oAuthConfig.facebook_appID}>
       <Login scope="email" onCompleted={facebookResponse} onError={handleError}>
-        {({ handleClick, error, data }) => (
+        {({ handleClick }) => (
           <Button
             onClick={handleClick}
             className={classes.btnFacebook}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { useLazyQuery } from '@apollo/react-hooks'
 import MUIDataTable from 'mui-datatables'
@@ -44,7 +44,7 @@ const HistoryDashboard = (user) => {
     if (!getReportResult) {
       getReportQuery()
     } else {
-      if (currentUser && currentUser.role === 'lifebank' || currentUser.role === 'sponsor') formatDataToReport()
+      if (currentUser && (currentUser.role === 'lifebank' || currentUser.role === 'sponsor')) formatDataToReport()
       else if (currentUser && currentUser.role === 'donor') formatDataToDonorReport()
       else return
     }

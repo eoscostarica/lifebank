@@ -29,10 +29,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import LanguageSelector from '../LanguageSelector'
 
 import {
-  PROFILE_QUERY, 
-  CHANGE_PASSWORD, 
+  PROFILE_QUERY,
+  CHANGE_PASSWORD,
   GET_ACCOUNT_SIGNUP_METHOD,
-  CHANGE_EMAIL, 
+  CHANGE_EMAIL,
   UPDATE_EMAIL_SUBSCRIPTION_MUTATION,
   CLOSE_ACCOUNT_MUTATION
 } from '../../gql'
@@ -72,7 +72,7 @@ const Settings = ({ onCloseSetting }) => {
 
   const [
     updateEmailSubscription,
-    { error: errorUpdateEmailSubscription, loading: updateEmailSubscriptionLoading, data: { update_user: updateEmailSubscriptionResult } = {} }
+    { data: { update_user: updateEmailSubscriptionResult } = {} }
   ] = useMutation(UPDATE_EMAIL_SUBSCRIPTION_MUTATION)
 
   const [
@@ -115,18 +115,18 @@ const Settings = ({ onCloseSetting }) => {
 
   const handleSubmitChangePassword = async () => {
     if (getAccountSignupMethodResult && getAccountSignupMethodResult.password_changable) {
-        changePassword({
-          variables: {
-            email: profile.email,
-            newPassword: user.newPassword,
-            currentPassword: user.currentPassword,
-            emailContent: {
-              subject: t('emailMessage.subjectChangePassword'),
-              title: t('emailMessage.titleChangePassword'),
-              message: t('emailMessage.messageChangePassword')
-            }
+      changePassword({
+        variables: {
+          email: profile.email,
+          newPassword: user.newPassword,
+          currentPassword: user.currentPassword,
+          emailContent: {
+            subject: t('emailMessage.subjectChangePassword'),
+            title: t('emailMessage.titleChangePassword'),
+            message: t('emailMessage.messageChangePassword')
           }
-        })
+        }
+      })
     } else setOpenSnackbar({
       show: true,
       message: t('setting.passwordNotChangeable'),
@@ -135,7 +135,7 @@ const Settings = ({ onCloseSetting }) => {
   }
 
   const handleSubmitChangeEmail = async () => {
-    if(user, profile){
+    if (user && profile) {
       changeEmail({
         variables: {
           account: profile.account,
@@ -145,7 +145,7 @@ const Settings = ({ onCloseSetting }) => {
       user.email = null
     }
   }
-  
+
   const handleChangeCheckBox = (event) => {
     updateEmailSubscription({
       variables: {
@@ -161,9 +161,9 @@ const Settings = ({ onCloseSetting }) => {
   }
 
   useEffect(() => {
-      loadProfile()
+    loadProfile()
   }, [updateEmailSubscriptionResult])
-  
+
   useEffect(() => {
     if (errorProfile)
       setOpenSnackbar({
@@ -180,14 +180,14 @@ const Settings = ({ onCloseSetting }) => {
         message: t('setting.emailError'),
         severity: 'error'
       })
-      if(responseChangeEmail)
-        setOpenSnackbar({
-          show: true,
-          message: t('setting.emailChanged'),
-          severity: 'success'
-        })
-      loadProfile()
-  }, [changeEmail,errorChangeEmail,responseChangeEmail])
+    if (responseChangeEmail)
+      setOpenSnackbar({
+        show: true,
+        message: t('setting.emailChanged'),
+        severity: 'success'
+      })
+    loadProfile()
+  }, [changeEmail, errorChangeEmail, responseChangeEmail])
 
   useEffect(() => {
     if (responseChangePassword) {
@@ -241,7 +241,7 @@ const Settings = ({ onCloseSetting }) => {
   }, [profile])
 
   useEffect(() => {
-    if(resultCloseAccount) {
+    if (resultCloseAccount) {
       setOpen(false)
       logout()
       history.push('/')
@@ -249,7 +249,7 @@ const Settings = ({ onCloseSetting }) => {
   }, [resultCloseAccount])
 
   useEffect(() => {
-    if(errorCloseAccount) {
+    if (errorCloseAccount) {
       setOpenSnackbar({
         show: true,
         message: t('setting.errorCloseAccount'),
@@ -289,7 +289,7 @@ const Settings = ({ onCloseSetting }) => {
         BackdropProps={{
           timeout: 500
         }}
-      >  
+      >
         <Box className={classes.closeIcon}>
           <IconButton
             aria-label="close"
@@ -308,7 +308,7 @@ const Settings = ({ onCloseSetting }) => {
         <DialogContent className={classes.dimensions} >
           <form autoComplete="off">
             <Grid container>
-              <Grid container spacing = {2}>
+              <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Box className={classes.boxSecondVersion}>
                     <Typography variant="h3" className={classes.text}>
@@ -319,7 +319,7 @@ const Settings = ({ onCloseSetting }) => {
                     <LanguageSelector alt="settings" />
                   </Box>
                 </Grid>
-                <Divider orientation="vertical" flexItem/>
+                <Divider orientation="vertical" flexItem />
                 <Grid item xs={5}>
                   <Box className={classes.boxSecondVersion}>
                     <Typography variant="h3" className={classes.text}>
@@ -328,13 +328,13 @@ const Settings = ({ onCloseSetting }) => {
                   </Box>
                   <Box className={classes.checkBox}>
                     <FormControlLabel
-                      disabled= {loading}
-                      checked = {profile ? profile.email_subscription : true}
+                      disabled={loading}
+                      checked={profile ? profile.email_subscription : true}
                       control={
-                      <Checkbox 
-                        color="primary"
-                        onChange={handleChangeCheckBox}
-                      />
+                        <Checkbox
+                          color="primary"
+                          onChange={handleChangeCheckBox}
+                        />
                       }
                       label={t('setting.checkBoxSuscribe')}
                       labelPlacement="start"
@@ -344,7 +344,7 @@ const Settings = ({ onCloseSetting }) => {
               </Grid>
               <Grid container item xs={12}>
                 <Box className={classes.boxThirdVersion}>
-                  <Divider className={classes.dividerSecondVersion}/>  
+                  <Divider className={classes.dividerSecondVersion} />
                   <Typography variant="h3" className={classes.text}>
                     {t('setting.changeEmail')}
                   </Typography>
@@ -357,7 +357,7 @@ const Settings = ({ onCloseSetting }) => {
                         endAdornment: (
                           <>
                             <InputLabel id="select-label">
-                              {profile ? profile.email:''}
+                              {profile ? profile.email : ''}
                             </InputLabel>
                           </>
                         )
@@ -374,7 +374,7 @@ const Settings = ({ onCloseSetting }) => {
                   </Grid>
                   <Box className={classes.box}>
                     <Button
-                      disabled={(!validEmailFormat  || !user.email) || loadingChangeEmail || loading}
+                      disabled={(!validEmailFormat || !user.email) || loadingChangeEmail || loading}
                       variant="contained"
                       color="secondary"
                       onClick={handleSubmitChangeEmail}
@@ -390,7 +390,7 @@ const Settings = ({ onCloseSetting }) => {
               </Grid>
               <Grid container item xs={12}>
                 <Box className={classes.box}>
-                  <Divider className={classes.dividerSecondVersion}/>
+                  <Divider className={classes.dividerSecondVersion} />
                   <Typography variant="h3" className={classes.text}>
                     {t('setting.changePassword')}
                   </Typography>
@@ -478,7 +478,7 @@ const Settings = ({ onCloseSetting }) => {
 
               <Grid container item xs={12}>
                 <Box className={classes.box}>
-                  <Divider className={classes.dividerSecondVersion}/>
+                  <Divider className={classes.dividerSecondVersion} />
                   <Typography variant="h3" className={classes.text}>
                     {t('setting.closeAccount')}
                   </Typography>

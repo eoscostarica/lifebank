@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import Divider from '@material-ui/core/Divider'
-import Slider from '@material-ui/core/Slider'
 import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'

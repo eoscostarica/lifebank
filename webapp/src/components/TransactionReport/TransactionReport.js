@@ -16,7 +16,7 @@ const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved }) => {
 
   const [
     loadProfile,
-    { error: errroLoadProfile, data: { profile: { profile } = {} } = {}, client }
+    { data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
 
   const headSent = [
@@ -30,7 +30,7 @@ const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved }) => {
 
   const [
     getReportQuery,
-    { errorReport, data: { get_report: getReportResult } = {} }
+    { data: { get_report: getReportResult } = {} }
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   useEffect(() => {
