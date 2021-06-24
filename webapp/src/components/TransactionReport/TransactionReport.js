@@ -35,7 +35,7 @@ const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved }) => {
 
   useEffect(() => {
     if (!profile) loadProfile()
-  }, [profile])
+  }, [loadProfile, profile])
 
   useEffect(() => {
     if (!getReportResult) {
@@ -50,7 +50,7 @@ const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved }) => {
       else if (currentUser && currentUser.role === 'sponsor') formatDataToSponsorReport()
       else return
     }
-  }, [getReportResult])
+  }, [getReportQuery, currentUser, dateFrom, dateTo, getReportResult])
 
   const formatDataToLifebankReport = () => {
     const received = getReportResult.notifications.received.map((notification) => {
@@ -104,13 +104,8 @@ const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved }) => {
       ]
     ]
     )
-
     setBodyReceive(received)
   }
-
-  useEffect(() => {
-    if (saveReport) downloadReport()
-  }, [saveReport])
 
   const downloadReport = () => {
     const doc = new jsPDF()
@@ -159,6 +154,10 @@ const TransactionReport = ({ dateFrom, dateTo, saveReport, onReportSaved }) => {
     doc.save(t('report.reportDownloadName'))
     onReportSaved()
   }
+
+  useEffect(() => {
+    if (saveReport) downloadReport()
+  }, [saveReport])
 
   return (
     <>

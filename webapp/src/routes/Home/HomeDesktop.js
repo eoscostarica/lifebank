@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 import IconButton from '@material-ui/core/IconButton'
 import MicIcon from '@material-ui/icons/Mic'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-
 import ShowOffersDesktop from '../../components/ShowElements/ShowOffersDesktop'
 import ShowLifebanksDesktop from '../../components/ShowElements/ShowLifebanksDesktop'
 import ShowSponsorsDesktop from '../../components/ShowElements/ShowSponsorsDesktop'
@@ -45,7 +44,7 @@ const HomeDesktop = (props) => {
 
   useEffect(() => {
     props.handleChangeSearch(transcript)
-  }, [transcript])
+  }, [props, transcript])
 
   return (
     <>

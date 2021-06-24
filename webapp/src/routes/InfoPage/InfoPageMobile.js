@@ -197,7 +197,7 @@ const InfoPageMobile = () => {
         getOffers()
       }
     }
-  }, [location])
+  }, [profile, location])
 
   useEffect(() => {
     if (errorUsername && errorInfoProfile) {
@@ -219,7 +219,7 @@ const InfoPageMobile = () => {
         history.push(`/info/${location.state.profile.account}`)
       } else history.push('/internal-error')
     }
-  }, [errorUsername, errorInfoProfile, allOffersError])
+  }, [logout, history, location, profile, errorUsername, errorInfoProfile, allOffersError])
 
   const ScheduleItem = (schedule) => {
     return (

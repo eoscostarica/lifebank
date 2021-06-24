@@ -171,7 +171,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
         })
       }
     }
-  }, [error])
+  }, [checkEmailVerified, user, history, error])
 
   useEffect(() => {
     if (loginResult) {

@@ -139,7 +139,7 @@ const ProfilePageLifebank = ({ profile }) => {
         severity: 'success'
       })
     }
-  }, [])
+  }, [t, location, history])
 
   return (
     <>

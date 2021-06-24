@@ -108,7 +108,7 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
         severity: 'success'
       })
     }
-  }, [response])
+  }, [t, response])
 
   function executeCredentialsRecovery(e) {
     if (e.key === 'Enter' && (validEmailFormat && !loading)) {

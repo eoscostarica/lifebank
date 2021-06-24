@@ -138,7 +138,7 @@ const ProfilePageSponsor = ({ profile }) => {
         severity: 'success'
       })
     }
-  }, [])
+  }, [t, history, location])
 
   return (
     <>
