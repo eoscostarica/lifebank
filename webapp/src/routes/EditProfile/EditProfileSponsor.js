@@ -181,7 +181,7 @@ const EditProfileSponsor = ({ profile, onSubmit, loading }) => {
         phoneValue2
       ]
     })
-  }, [user, phoneValue1, phoneValue2])
+  }, [phoneValue1, phoneValue2])
 
   return (
     <form autoComplete="off" className={classes.form}>

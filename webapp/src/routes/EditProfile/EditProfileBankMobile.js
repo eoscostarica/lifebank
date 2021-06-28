@@ -161,7 +161,7 @@ const EditProfileBankMobile = ({ profile, onSubmit, setField, loading, userName 
       else document.getElementById("username").focus()
     }
 
-  }, [profile.account, user, username, isValid, isUnique, firstRun])
+  }, [profile?.account, user, username, isValid, isUnique, firstRun])
 
   useEffect(() => {
     setUser({
@@ -171,7 +171,7 @@ const EditProfileBankMobile = ({ profile, onSubmit, setField, loading, userName 
         phoneValue2
       ]
     })
-  }, [user, phoneValue1, phoneValue2])
+  }, [phoneValue1, phoneValue2])
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disablePhotoUrlInput)) {

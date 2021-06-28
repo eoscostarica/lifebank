@@ -190,7 +190,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
   }
 
   useEffect(() => {
-    if (accountTo) {
+    if (profile && accountTo) {
       let tempMemo
       if (role === "donor") tempMemo = t("donations.memoDonor")
       else tempMemo = t("donations.memoLifebank")
@@ -236,7 +236,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
         }
       })
     }
-  }, [t, donate, profile, role, accountTo])
+  }, [t, donate, role, accountTo])
 
 
   const DashboardContent = () => {
