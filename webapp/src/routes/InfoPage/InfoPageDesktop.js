@@ -132,7 +132,7 @@ const InfoPage = () => {
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [allOffers, loadingDataOffer])
+  }, [allOffers])
 
   useEffect(() => {
 
