@@ -10,6 +10,7 @@ const preregisterApi = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
 const notificationApi = require('./notification.api')
+const {tweet} = require('../twitterBot/statusesUpdate')
 
 const {
   constants: {
@@ -121,6 +122,7 @@ const signup = async (account, profile) => {
     type: LOCATION_TYPES.LIFE_BANK,
     info: profile
   })
+  tweet('New Lifebank! ' + profile.name + ', help save lives!' , profile.logo_url ? profile.logo_url : "https://image.freepik.com/free-vector/hospital-building-isolated-modern-medical-clinic-center-clipart_101884-663.jpg")
 }
 
 const getReport = async ({ dateFrom, dateTo }, account) => {

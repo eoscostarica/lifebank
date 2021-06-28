@@ -13,30 +13,37 @@ const tweet = (message, file) => {
     `./${localname}`
   );
   var mediaUrl = file
+  var responseReturn = {}
+  var metadataData = {}
   request.get(mediaUrl, function (error, response, body) {
+    responseReturn = Object.assign(response)
+    if (error) console.error(error)
     fs.writeFile(PATH, body, function(error) {
       // step ONE
-      T.postMediaChunked({ file_path: PATH }, function (err, data, response) {
+      if (error) console.error(error)
+      T.postMediaChunked({ file_path: PATH }, function (error, data, response) {
+        if (error) console.error(error)
+        responseReturn = Object.assign(response)
         const mediaIdStr = data.media_id_string;
         const meta_params = { media_id: mediaIdStr };
         //  step TWO
-        T.post('media/metadata/create', meta_params, function (err, data, response) {
-          if (!err) {
+        T.post('media/metadata/create', meta_params, function (error, data, response) {
+          metadataData = data
+          responseReturn = Object.assign(response)
+          if (!error) {
             const params = { status: message, media_ids: [mediaIdStr] };
             // step THREE
-            T.post('statuses/update', params, function (err, tweet, response) {
-              console.log(tweet);
-              fs.unlinkSync(PATH); // Deletes media from /tmp folder
-              const base = 'https://twitter.com/';
-              const handle = 'edgarparra2';
-              const tweet_id = tweet.id_str;
-
-              return `${base}${handle}/status/${tweet_id}`
-          }) // end '/statuses/update'
-          } // end if(!err)
-        }) // end '/media/metadata/create'
-      }) // end T.postMedisChunked
-    }) //end fs.writeFile
-  }) // end request.get
+            T.post('statuses/update', params, function (error, response) {
+              responseReturn = Object.assign(response)
+              if (error) console.error(error)
+              fs.unlinkSync(PATH);
+              return responseReturn
+            })
+          }
+          else console.error(error)
+        }) 
+      })
+    }) 
+  }) 
 }
 module.exports = { tweet }
