@@ -26,7 +26,6 @@ import {
 } from '../../gql'
 
 import styles from './styles'
-import { element } from 'prop-types'
 
 const useStyles = makeStyles(styles)
 
@@ -69,7 +68,7 @@ const Notification = () => {
     setNotificationStatus(true)
   }
 
-  const { error: errorNotifications, loading: loadingNotifications, data: notification = {} }
+  const { loading: loadingNotifications, data: notification = {} }
     = useSubscription(NOTIFICATION_SUBSCRIPTION, { variables: { account_to: account, limit: limit } })
 
   useEffect(() => {

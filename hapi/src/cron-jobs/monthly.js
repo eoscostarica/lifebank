@@ -139,7 +139,7 @@ const generateNewSponsorAndOfferReportToDonors = async () => {
     email_subscription: { _eq: true }
   })
 
-  const donorsWithLocation = await accountApi.getDonorsCoordinates(donors || [])
+  const donorsWithLocation = await accountApi.getDonorsCoordinates(donors)
 
   const newSponsors = await userApi.getMany({
     role: { _eq: 'sponsor' },
