@@ -15,7 +15,7 @@ const ProfilePageGuest = () => {
   return (
     <>
       <Box className={classes.rowBox}>
-        <Typography variant="subtitle1">{t('common.name')}</Typography>
+        <Typography variant="subtitle1">{t('profile.profile')}</Typography>
         <Typography variant="body1">{t('profile.guest')}</Typography>
       </Box>
       <Divider className={classes.divider} />

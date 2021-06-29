@@ -41,7 +41,7 @@ import styles from './styles'
 
 const useStyles = makeStyles(styles)
 
-const LoginModal = ({ isNavBar, isSideBar }) => {
+const LoginModal = ({ isNavBar, isSideBar, isOutside }) => {
   const { t } = useTranslation('translations')
   const history = useHistory()
   const [user, setUser] = useState({})
@@ -49,7 +49,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
   const theme = useTheme()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(isOutside ? true : false)
   const [currentUser, { login }] = useUser()
 
 
@@ -120,8 +120,10 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
   })
 
   const handleOpen = () => {
-    setOpen(!open)
-    setActiveStep(0)
+    if(!isOutside){
+      setOpen(!open)
+      setActiveStep(0)
+    }
   }
 
   const handleOpenCredentialsRecovery = () => {
@@ -147,6 +149,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
         password: user.secret
       }
     })
+    if(isOutside) window.location.reload(); 
   }
 
   const handleLoginWithAuth = async (status, email, secret) => {
@@ -273,16 +276,18 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
       >
         {activeStep === 0 && (
           <DialogContent className={classes.dimensions} >
-            <Box className={classes.closeIcon}>
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={handleOpen}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            </Box>
+            {!isOutside &&
+              <Box className={classes.closeIcon}>
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={handleOpen}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              </Box>
+            }
             <Box>
               <Typography className={classes.title}>
                 {t('login.letsStarted')}
@@ -405,11 +410,13 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 LoginModal.propTypes = {
   isNavBar: PropTypes.bool,
   isSideBar: PropTypes.bool,
+  isOutside: PropTypes.bool
 }
 
 LoginModal.defaultProps = {
   isNavBar: false,
-  isSideBar: false
+  isSideBar: false,
+  isOutside: false
 }
 
 export default memo(LoginModal)

@@ -30,6 +30,7 @@ import {
 
 import OfferDetails from './OfferDetails'
 import GenericOfferFormComponent from './GenericOfferFormComponent'
+import LoginModal from '../../components/LoginModal'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -217,10 +218,6 @@ const OffersManagement = () => {
     setOpenSnackbar({ ...openSnackbar, show: false })
   }
 
-  const errorManager = () => {
-    history.replace('/')
-  }
-
   const getGenericOfferComponent = (editing, data) => {
     return (
       <GenericOfferFormComponent
@@ -255,8 +252,10 @@ const OffersManagement = () => {
   }, [loadProfileID])
 
   useEffect(() => {
-    if(profileError) errorManager()
-  }, [profileError])
+    if(profile && !(profile.role === 'sponsor')){
+      history.replace('/')
+    }
+  },[profile])
 
   useEffect(() => {
     if (profile) setProfileIDLoaded(true)
@@ -409,6 +408,7 @@ const OffersManagement = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      {profileError && (<LoginModal isOutside />)}
       <Snackbar
         open={openSnackbar.show}
         autoHideDuration={2000}

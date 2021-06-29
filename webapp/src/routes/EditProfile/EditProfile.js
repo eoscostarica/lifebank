@@ -20,6 +20,7 @@ import {
   SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
+import LoginModal from '../../components/LoginModal'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -95,7 +96,6 @@ const EditProfilePage = () => {
   }
   useEffect(() => {
     if (!currentUser) {
-      history.replace('/')
       return 
     }
 
@@ -153,6 +153,7 @@ const EditProfilePage = () => {
 
   return (
     <>
+      {!profile && (<LoginModal isOutside />)}
       {isDesktop && (
         <Box className={classes.wrapper}>
           {loading && <CircularProgress />}

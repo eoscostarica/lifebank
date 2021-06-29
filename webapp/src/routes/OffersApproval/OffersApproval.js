@@ -12,12 +12,14 @@ import Select from '@material-ui/core/Select'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
 import { useHistory } from 'react-router-dom'
 
-import ShowOffersAproval from '../../components/ShowElements/ShowOffersAproval'
 import {
   GET_ALL_OFFERS_QUERY,
   GET_INFO
 } from '../../gql'
+
 import { useUser } from '../../context/user.context'
+import LoginModal from '../../components/LoginModal'
+import ShowOffersAproval from '../../components/ShowElements/ShowOffersAproval'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -30,8 +32,7 @@ const OffersApproval = () => {
   const [currentUser] = useUser()
   const history = useHistory()
   const [account] = useState(
-     currentUser ? currentUser.account :
-     () => {history.replace('/')}
+     currentUser ? currentUser.account : false
     )
   const [discountOffers, setDiscountOffers] = useState([])
   const [freeOffers, setFreetOffers] = useState([])
@@ -40,7 +41,6 @@ const OffersApproval = () => {
   const [benefitsOffers, setBenefitsOffers] = useState([])
   const [categories, setCategories] = useState([])
   const [category, setCategory] = useState('')
-
 
   const CategoryX = [
     { value: 'all', label: t('categories.all') },
@@ -52,9 +52,11 @@ const OffersApproval = () => {
   ]
 
   const getOffers = async () => {
-    setLoadingOffers(true)
-    await getAllOffers()
-    await getInfo()
+    if(account && currentUser.role === 'lifebank'){
+      setLoadingOffers(true)
+      await getAllOffers()
+      await getInfo()
+    }
   }
 
   const handleChange = (event) => {
@@ -103,6 +105,12 @@ const OffersApproval = () => {
   }, [])
 
   useEffect(() => {
+    if(currentUser && !(currentUser.role === 'lifebank')){
+      history.replace('/')
+    }
+  },[allOffers,info])
+
+  useEffect(() => {
     const discountOff = []
     const freeProductOff = []
     const couponOff = []
@@ -139,6 +147,7 @@ const OffersApproval = () => {
 
   return (
     <>
+      {!currentUser && (<LoginModal isOutside />)}
       <Grid
         container
         direction="row"

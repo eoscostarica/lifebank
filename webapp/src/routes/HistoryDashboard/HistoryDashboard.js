@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import { useTranslation } from 'react-i18next'
 import { useLazyQuery } from '@apollo/react-hooks'
 import MUIDataTable from 'mui-datatables'
@@ -8,11 +8,11 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import Typography from '@material-ui/core/Typography'
-import { useHistory } from 'react-router-dom'
 
 import { GET_REPORT_QUERY } from '../../gql'
 
 import { useUser } from '../../context/user.context'
+import LoginModal from '../../components/LoginModal'
 import styles from './styles'
 import { Box } from '@material-ui/core'
 
@@ -24,16 +24,11 @@ const HistoryDashboard = (user) => {
   const [bodyReceive, setBodyReceive] = useState()
   const [bodySent, setBodySent] = useState()
   const [currentUser] = useUser()
-  const history = useHistory()
   const [optionSR, setOption] = useState('sent')
   const options = [
     { value: 'sent', label: t('historyDashboard.tableTitleSent') },
     { value: 'received', label: t('historyDashboard.tableTitleReceived') }
   ]
-
-  const manageError = () => {
-    history.replace('/')
-  }
 
   const [
     getReportQuery,
@@ -50,10 +45,6 @@ const HistoryDashboard = (user) => {
     }
 
   }, [getReportResult])
-
-  useEffect( () => {
-    if(errorReport) manageError()
-  },[errorReport])
 
   const formatDataToReport = () => {
     const sent = getReportResult.notifications.sent
@@ -75,6 +66,7 @@ const HistoryDashboard = (user) => {
 
   return (
     <>
+      {errorReport && (<LoginModal isOutside />)}
       <Box className={classes.root} >
         <Typography className={classes.title} >{t('historyDashboard.title')}</Typography>
         <Box className={classes.boxSelect}>

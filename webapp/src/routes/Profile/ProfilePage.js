@@ -14,6 +14,7 @@ import {
   REVOKE_CONSENT_MUTATION
 } from '../../gql'
 import { useUser } from '../../context/user.context'
+import LoginModal from '../../components/LoginModal'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -65,7 +66,6 @@ const ProfilePage = () => {
   useEffect(() => {
     if (!currentUser) {
       client && client.resetStore()
-      history.replace('/')
 
       return
     }
@@ -149,6 +149,7 @@ const ProfilePage = () => {
 
   return (
     <Box className={classes.contentBody}>
+      {!profile && (<LoginModal isOutside />)} 
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
         <Alert onClose={handleOpenAlert} severity={severity}>
           {messegaAlert}
