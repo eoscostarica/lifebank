@@ -2,7 +2,7 @@ actions:
 - name: change_email
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/change-email
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/change-email'
   permissions:
   - role: donor
   - role: lifebank
@@ -10,7 +10,7 @@ actions:
 - name: change_password
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/change-password
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/change-password'
   permissions:
   - role: donor
   - role: guest
@@ -19,19 +19,19 @@ actions:
 - name: check_email_verified
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/check-email-verified
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/check-email-verified'
   permissions:
   - role: guest
 - name: check_username
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/check-username
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/check-username'
   permissions:
   - role: guest
 - name: close_account
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/close-account
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/close-account'
     forward_client_headers: true
   permissions:
   - role: donor
@@ -40,51 +40,51 @@ actions:
 - name: create_account
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/accounts
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/accounts'
   permissions:
   - role: guest
 - name: create_account_auth
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/accounts-auth
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/accounts-auth'
   permissions:
   - role: guest
 - name: create_account_lifebank
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/create-account-lifebank
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/create-account-lifebank'
   permissions:
   - role: guest
 - name: create_offer
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/add-offer
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/add-offer'
     forward_client_headers: true
   permissions:
   - role: sponsor
 - name: create_pre_register_lifebank
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/pre-register
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/pre-register'
   permissions:
   - role: guest
 - name: credentials_recovery
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/credentials-recovery
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/credentials-recovery'
   permissions:
   - role: guest
 - name: donate
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/donate
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/donate'
     forward_client_headers: true
   permissions:
   - role: lifebank
 - name: edit_profile
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/edit-profile
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/edit-profile'
     forward_client_headers: true
   permissions:
   - role: donor
@@ -93,7 +93,7 @@ actions:
 - name: get_contract
   definition:
     kind: ""
-    handler: http://hapi:9090/api/get-contract
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/get-contract'
   permissions:
   - role: donor
   - role: guest
@@ -102,7 +102,7 @@ actions:
 - name: get_report
   definition:
     kind: ""
-    handler: http://hapi:9090/api/get-report
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/get-report'
     forward_client_headers: true
   permissions:
   - role: lifebank
@@ -110,7 +110,7 @@ actions:
 - name: get_valid_lifebanks
   definition:
     kind: ""
-    handler: http://hapi:9090/api/get-valid-lifebanks
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/get-valid-lifebanks'
   permissions:
   - role: donor
   - role: guest
@@ -119,7 +119,7 @@ actions:
 - name: get_valid_sponsors
   definition:
     kind: ""
-    handler: http://hapi:9090/api/get-valid-sponsors
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/get-valid-sponsors'
   permissions:
   - role: donor
   - role: guest
@@ -128,7 +128,7 @@ actions:
 - name: grant_consent
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/grant-consent
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/grant-consent'
     forward_client_headers: true
   permissions:
   - role: donor
@@ -137,13 +137,13 @@ actions:
 - name: login
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/login
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/login'
   permissions:
   - role: guest
 - name: profile
   definition:
     kind: ""
-    handler: http://hapi:9090/api/profile
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/profile'
     forward_client_headers: true
   permissions:
   - role: donor
@@ -152,14 +152,14 @@ actions:
 - name: redeem_offer
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/redeem-offer
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/redeem-offer'
     forward_client_headers: true
   permissions:
   - role: donor
 - name: reopen_account
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/reopen-account
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/reopen-account'
   permissions:
   - role: donor
   - role: guest
@@ -168,7 +168,7 @@ actions:
 - name: revoke_consent
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/revoke-consent
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/revoke-consent'
     forward_client_headers: true
   permissions:
   - role: donor
@@ -177,13 +177,13 @@ actions:
 - name: send_email
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/send-email
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/send-email'
   permissions:
   - role: guest
 - name: signup
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/signup
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/signup'
     forward_client_headers: true
   permissions:
   - role: donor
@@ -192,7 +192,7 @@ actions:
 - name: signup_method
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/signup-method
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/signup-method'
     forward_client_headers: true
   permissions:
   - role: donor
@@ -202,7 +202,7 @@ actions:
 - name: transfer
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/transfer
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/transfer'
     forward_client_headers: true
   permissions:
   - role: donor
@@ -211,7 +211,7 @@ actions:
 - name: verify_email
   definition:
     kind: synchronous
-    handler: http://hapi:9090/api/verify-email
+    handler: '{{HASURA_GRAPHQL_ACTION_BASE_URL}}/api/verify-email'
   permissions:
   - role: donor
   - role: guest

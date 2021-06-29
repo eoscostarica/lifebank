@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import { useTranslation } from 'react-i18next'
 import NewNotificationIcon from '@material-ui/icons/Brightness1';
-import OldNotificationIcon from '@material-ui/icons/PanoramaFishEye';
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import Grid from '@material-ui/core/Grid'
 import { GET_ACCOUNT_NAME, EDIT_NOTIFICATION_STATE } from '../../gql'
@@ -25,10 +23,7 @@ const NotificationStructure = ({ id, title, description, state, dateAndTime }) =
     skip: true
   })
 
-  const [
-    editNotificationState,
-    { error: errorEditResults, loading: editLoading, data: { update_notification: editNotificationStateResult } = {} }
-  ] = useMutation(EDIT_NOTIFICATION_STATE)
+  const [editNotificationState, { }] = useMutation(EDIT_NOTIFICATION_STATE)
 
   useEffect(() => {
     const response = async () => {

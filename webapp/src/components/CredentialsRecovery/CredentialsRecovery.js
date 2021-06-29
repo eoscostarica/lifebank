@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { makeStyles, useTheme } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import PropTypes from 'prop-types'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -146,9 +146,9 @@ const CredentialsRecovery = ({ onCloseCredentialsRecovery }) => {
                 }}
                 InputProps={{
                   endAdornment: (
-                  <InputLabel id="select-label">
-                    {t('common.registeredEmail')}
-                  </InputLabel>
+                    <InputLabel id="select-label">
+                      {t('common.registeredEmail')}
+                    </InputLabel>
                   )
                 }}
                 onChange={(event) =>
