@@ -144,6 +144,12 @@
       "paragraph3": "Since you requested it, we’ll close your Lifebank account. We will keep your information for 90 days. After that, if you wish to return to Lifebank, you must start with a new account. To respect your privacy, we will delete your data from Lifebank.",
       "paragraph4": "You’ll get reminders close to the closing date. If you don’t wish to receive any notifications, you can <a href='http://lifebank/cancel-email-subscription/",
       "paragraph5": "'>unsubscribe from emails</a> anytime."
+    },
+    "twitterText": {
+      "sponsorNews": "New Sponsor! ",
+      "sponsorThanks": ", thank you for being part of this initiative!",
+      "lifebankNews": "New Lifebank! ",
+      "lifebankThanks": ", thank you for helping the cause!"
     }
   }
 }

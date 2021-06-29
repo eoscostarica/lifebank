@@ -10,7 +10,8 @@ const preregisterApi = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
 const notificationApi = require('./notification.api')
-const {tweet} = require('../twitterBot/statusesUpdate')
+const { tweet } = require('../twitterBot/statusesUpdate')
+const i18n = require('i18next')
 
 const {
   constants: {
@@ -122,7 +123,12 @@ const signup = async (account, profile) => {
     type: LOCATION_TYPES.LIFE_BANK,
     info: profile
   })
-  tweet('New Lifebank! ' + profile.name + ', help save lives!' , profile.logo_url ? profile.logo_url : "https://image.freepik.com/free-vector/hospital-building-isolated-modern-medical-clinic-center-clipart_101884-663.jpg")
+  tweet(
+    i18n.t('twitterText.lifebankNews') 
+    + profile.name 
+    + i18n.t('twitterText.lifebankThanks')  
+    , profile.logo_url ? profile.logo_url : "https://image.freepik.com/free-vector/hospital-building-isolated-modern-medical-clinic-center-clipart_101884-663.jpg"
+    )
 }
 
 const getReport = async ({ dateFrom, dateTo }, account) => {

@@ -144,6 +144,12 @@
       "paragraph3": "Has solicitado cerrar tu cuenta de Lifebank. Mantendremos tu información guardada por 90 días. Después de eso, si deseas regresar a Lifebank, tendrás que empezar con una nueva cuenta. Para respetar tu privacidad, eliminaremos tus datos de Lifebank.",
       "paragraph4": "Recibirás recordatorios cercanos a la fecha de cierre. Si deseas no recibir estas notificaciones, puedes <a href='http://lifebank/cancel-email-subscription/",
       "paragraph5": "'>darte de alta de correos</a> en cualquier momento."
+    },
+    "twitterText": {
+      "sponsorNews": "Nuevo patrocinador! ",
+      "sponsorThanks": ", gracias por ser parte de esta iniciativa",
+      "lifebankNews": "Nuevo Banco de Sangre! ",
+      "lifebankThanks": ", gracias por su ayuda!"
     }
   }
 }
