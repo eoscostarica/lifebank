@@ -35,6 +35,7 @@ import { useUser } from '../../context/user.context'
 import MapShowOneLocation from '../../components/MapShowOneLocation'
 import { GET_LOCATION_PROFILE, GET_ID, GET_OFFER_BY_SPONSOR_QUERY } from '../../gql'
 import ShowOffersMobile from '../../components/ShowElements/ShowOffersMobile'
+import Nearby from '../../components/Nearby/Nerby'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -575,6 +576,22 @@ const InfoPageMobile = () => {
                   </Box>
                 </Box>
               )}
+              <Divider className={classes.divider} />
+              <Box className={classes.midLabel}>
+                <Typography
+                  className={classes.boldText}
+                  variant="subtitle1"
+                >{`${t('common.near')}  ${profile.name}`}</Typography>
+                <Box className={classes.contentCards}>
+                  {profile &&
+                    <Nearby
+                      location={JSON.parse(profile.location)}
+                      searchDistance={1000}
+                      account={profile.account}
+                    />
+                  }
+                </Box>
+              </Box>
             </Box>
           </Box>
         </Box>
