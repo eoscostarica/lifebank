@@ -90,6 +90,10 @@ jobs:
           HAPI_MAIL_APPROVE_LIFEBANK: admin@lifebank.io
           HAPI_MAIL_HOST: 190.10.10.187
           HAPI_MAIL_PORT: 25
+          CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
+          CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
 
       - name: Setup and deploy kubernetes environment
         uses: steebchen/kubectl@v1.1.0

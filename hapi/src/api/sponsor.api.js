@@ -69,6 +69,9 @@ const signup = async (account, profile) => {
 
   await historyApi.insert(addSponsorTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
   if (profile.geolocation)
     await locationApi.insert({
       account,
@@ -85,7 +88,7 @@ const signup = async (account, profile) => {
     })
   tweet(
     i18n.t('twitterText.sponsorNews') 
-    + profile.name 
+    + user.name 
     + i18n.t('twitterText.sponsorThanks')  
     , profile.logo_url ? profile.logo_url : "https://newyorkyimby.com/wp-content/uploads/2020/04/1641-Undecliff-Avenue-Rendering01-777x441.jpg"
   )
