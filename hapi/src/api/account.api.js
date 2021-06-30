@@ -718,7 +718,7 @@ const login = async ({ account, password }) => {
     _or: [
       { email: { _eq: account } },
       { username: { _eq: account } },
-      { account: { _eq: account } },
+      { account: { _eq: account } }
     ],
     email_verified: { _eq: true },
     state: {}
