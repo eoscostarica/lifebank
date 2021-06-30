@@ -171,7 +171,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
         })
       }
     }
-  }, [checkEmailVerified, user, history, error])
+  }, [checkEmailVerified, user?.account, history, error])
 
   useEffect(() => {
     if (loginResult) {
@@ -213,7 +213,7 @@ const LoginModal = ({ isNavBar, isSideBar }) => {
 
   }, [currentUser])
 
-  function executeLogin(e) {
+  const executeLogin = (e) => {
     if (e.key === 'Enter' && (user.account && user.secret && !loading)) {
       e.preventDefault()
       handleLogin()
