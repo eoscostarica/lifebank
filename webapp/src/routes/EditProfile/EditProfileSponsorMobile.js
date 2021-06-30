@@ -86,12 +86,11 @@ const EditProfileSponsorMobile = ({ profile, onSubmit, loading }) => {
         setValues({ ...values, [field]: value })
       }
     },
-    [user]
+    [user, values]
   )
 
   const handleOnGeolocationChange = useCallback(
-    (geolocation) => setUser((prev) => ({ ...prev, geolocation: geolocation })),
-    [user.geolocation]
+    (geolocation) => setUser((prev) => ({ ...prev, geolocation: geolocation }))
   )
 
   const handleOnAddSchedule = useMemo(

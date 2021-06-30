@@ -66,7 +66,6 @@ const ProfilePage = () => {
     if (!currentUser) {
       client && client.resetStore()
       history.replace('/')
-
       return
     }
 
@@ -94,10 +93,12 @@ const ProfilePage = () => {
 
     loadProfile()
   }, [
+    handleOpenAlert,
+    t,
+    loadProfile,
     grantConsentResult,
     revokeConsentResult,
     lastConsentChange,
-    loadProfile,
     classes
   ])
 
@@ -107,7 +108,7 @@ const ProfilePage = () => {
       setMessegaAlert(t('signup.noConsentNoEdit'))
       handleOpenAlert()
     }
-  }, [profile])
+  }, [t, setSeverity, setMessegaAlert, profile])
 
   useEffect(() => {
     if (errorProfile) {
@@ -117,7 +118,7 @@ const ProfilePage = () => {
       } else history.push('/internal-error')
     }
 
-  }, [errorProfile])
+  }, [logout, history, errorProfile])
 
   useEffect(() => {
     if (errorRevokeConsent) {
@@ -131,7 +132,7 @@ const ProfilePage = () => {
       }
     }
 
-  }, [errorRevokeConsent])
+  }, [t, logout, history, errorRevokeConsent])
 
   useEffect(() => {
     if (errorGrantConsent) {
@@ -144,8 +145,7 @@ const ProfilePage = () => {
         handleOpenAlert()
       }
     }
-
-  }, [errorGrantConsent])
+  }, [t, logout, history, errorGrantConsent])
 
   return (
     <Box className={classes.contentBody}>
@@ -171,7 +171,7 @@ const ProfilePage = () => {
       )}
       {!loading && currentUser && profile?.role === 'lifebank' && (
         <Suspense fallback={<CircularProgress />}>
-          <ProfilePageLifebank profile={profile}/>
+          <ProfilePageLifebank profile={profile} />
         </Suspense>
       )}
       {!currentUser &&

@@ -121,7 +121,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
       message: t('donations.donationsError'),
       severity: 'error'
     })
-  }, [error])
+  }, [t, error])
 
   useEffect(() => {
     if (errroLoadProfile) {
@@ -133,7 +133,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
       })
     }
 
-  }, [errroLoadProfile])
+  }, [t, errroLoadProfile])
 
   useEffect(() => {
     if (!donateResult)
@@ -144,7 +144,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
       message: t('donations.succesful'),
       severity: 'success'
     })
-  }, [donateResult])
+  }, [t, donateResult])
 
   useEffect(() => {
     if (!currentUser) {
@@ -165,7 +165,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
     } else {
       setTokens(role === "donor" && profile?.balance.length ? profile.balance.join(',').split(' ')[0] : 0)
     }
-  }, [profile, tokenUser])
+  }, [role, profile, tokenUser])
 
   const anchor = 'bottom'
 
@@ -190,7 +190,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
   }
 
   useEffect(() => {
-    if (accountTo) {
+    if (profile && accountTo) {
       let tempMemo
       if (role === "donor") tempMemo = t("donations.memoDonor")
       else tempMemo = t("donations.memoLifebank")
@@ -236,7 +236,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
         }
       })
     }
-  }, [accountTo])
+  }, [t, donate, role, accountTo])
 
 
   const DashboardContent = () => {
@@ -245,9 +245,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
     const handleChangeAccountInput = (event) => {
       setAccountInput(event.target.value)
     }
+    
     useEffect(() => {
       if (scanValue) setAccountInput(scanValue)
-
     }, [scanValue])
 
     return (

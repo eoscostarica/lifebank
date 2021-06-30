@@ -71,7 +71,7 @@ const SimpleRegisterForm = ({
       else setError(false)
     }, 100)
     return () => clearTimeout(timer)
-  }, [confirmPassword])
+  }, [password, confirmPassword])
 
   return (
     <form autoComplete="off" className={classes.form}>

@@ -161,7 +161,7 @@ const EditProfileBankMobile = ({ profile, onSubmit, setField, loading, userName 
       else document.getElementById("username").focus()
     }
 
-  }, [isUnique, firstRun])
+  }, [profile?.account, user, username, isValid, isUnique, firstRun])
 
   useEffect(() => {
     setUser({

@@ -35,18 +35,6 @@ const HistoryDashboard = (user) => {
     { data: { get_report: getReportResult } = {} }
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
-  useEffect(() => {
-
-    if (!getReportResult) {
-      getReportQuery()
-    } else {
-      if (currentUser && (currentUser.role === 'lifebank' || currentUser.role === 'sponsor')) formatDataToReport()
-      else if (currentUser && currentUser.role === 'donor') formatDataToDonorReport()
-      else return
-    }
-
-  }, [getReportResult])
-
   const formatDataToReport = () => {
     const sent = getReportResult.notifications.sent
     const received = getReportResult.notifications.received
@@ -63,7 +51,17 @@ const HistoryDashboard = (user) => {
 
   const handleChange = (event) => {
     setOption(event.target.value);
-  };
+  }
+
+  useEffect(() => {
+    if (!getReportResult) {
+      getReportQuery()
+    } else {
+      if (currentUser && (currentUser.role === 'lifebank' || currentUser.role === 'sponsor')) formatDataToReport()
+      else if (currentUser && currentUser.role === 'donor') formatDataToDonorReport()
+      else return
+    }
+  }, [getReportQuery, currentUser, getReportResult])
 
   return (
     <>

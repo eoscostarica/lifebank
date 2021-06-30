@@ -79,7 +79,7 @@ const ProfilePageDonor = ({ profile, onConsentChange, loading }) => {
         severity: 'success'
       })
     }
-  }, [])
+  }, [t, history, location.state])
 
   return (
     <>

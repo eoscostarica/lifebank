@@ -162,7 +162,7 @@ const Settings = ({ onCloseSetting }) => {
 
   useEffect(() => {
     loadProfile()
-  }, [updateEmailSubscriptionResult])
+  }, [loadProfile, updateEmailSubscriptionResult])
 
   useEffect(() => {
     if (errorProfile)
@@ -187,7 +187,7 @@ const Settings = ({ onCloseSetting }) => {
         severity: 'success'
       })
     loadProfile()
-  }, [changeEmail, errorChangeEmail, responseChangeEmail])
+  }, [t, loadProfile, changeEmail, errorChangeEmail, responseChangeEmail])
 
   useEffect(() => {
     if (responseChangePassword) {
@@ -204,7 +204,7 @@ const Settings = ({ onCloseSetting }) => {
           severity: 'error'
         })
     }
-  }, [responseChangePassword])
+  }, [t, responseChangePassword])
 
   useEffect(() => {
     if (errorChangePassword) {
@@ -238,7 +238,7 @@ const Settings = ({ onCloseSetting }) => {
         }
       })
     }
-  }, [profile])
+  }, [getAccountSignupMethod, profile])
 
   useEffect(() => {
     if (resultCloseAccount) {
@@ -246,7 +246,7 @@ const Settings = ({ onCloseSetting }) => {
       logout()
       history.push('/')
     }
-  }, [resultCloseAccount])
+  }, [logout, history, resultCloseAccount])
 
   useEffect(() => {
     if (errorCloseAccount) {
@@ -256,7 +256,7 @@ const Settings = ({ onCloseSetting }) => {
         severity: 'error'
       })
     }
-  }, [errorCloseAccount])
+  }, [t, errorCloseAccount])
 
   function executeCredentialsRecovery(e) {
     if (e.key === 'Enter' && (user.newPassword && user.currentPassword)) {

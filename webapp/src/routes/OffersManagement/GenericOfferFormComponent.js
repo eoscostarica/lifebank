@@ -271,7 +271,7 @@ const GenericOfferFormComponent = ({
         })
       )
     }
-  }, [updateOfferResult])
+  }, [t, updateOfferResult])
 
   useEffect(() => {
     if (createOfferResult) {
@@ -282,7 +282,7 @@ const GenericOfferFormComponent = ({
       })
       setOffers((offs) => [...offs, createOfferResult])
     }
-  }, [createOfferResult])
+  }, [t, createOfferResult])
 
   function executeAddImage(e) {
     if (e.key === 'Enter' && (!disableUrlInput)) {

@@ -45,7 +45,7 @@ const CancelEmailSubscription = () => {
 
   useEffect(() => {
     if (updateEmailSubscriptionResult && updateEmailSubscriptionResult.affected_rows === 0) handleOpenSnackbar()
-  }, [updateEmailSubscriptionResult])
+  }, [handleOpenSnackbar, updateEmailSubscriptionResult])
 
   return (
     <Box className={classes.root}>

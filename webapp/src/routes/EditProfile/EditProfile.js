@@ -125,7 +125,7 @@ const EditProfilePage = () => {
         severity: 'error'
       })
     }
-  }, [editProfileResult])
+  }, [t, history, editProfileResult])
 
 
   useEffect(() => {
@@ -135,8 +135,7 @@ const EditProfilePage = () => {
         history.push('/')
       } else history.push('/internal-error')
     }
-
-  }, [errorProfile])
+  }, [logout, history, errorProfile])
 
   useEffect(() => {
     if (errorRevokeConsent || errorGrantConsent || errorEditResults) {
@@ -147,7 +146,7 @@ const EditProfilePage = () => {
       })
     }
 
-  }, [errorRevokeConsent, errorGrantConsent, errorEditResults])
+  }, [t, errorRevokeConsent, errorGrantConsent, errorEditResults])
 
 
   return (

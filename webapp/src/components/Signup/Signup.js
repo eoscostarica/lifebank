@@ -230,7 +230,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       setEmailValid(false)
       setcheckEmailLoaded(false)
     }
-  }, [user?.email, checkEmail])
+  }, [user, checkEmail])
 
   useEffect(() => {
     if (preRegisterLifebankResult) {
@@ -242,7 +242,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       })
 
     }
-  }, [preRegisterLifebankResult])
+  }, [t, preRegisterLifebankResult])
 
   useEffect(() => {
     if (createAccountResult) {
@@ -254,7 +254,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       })
     }
 
-  }, [createAccountResult])
+  }, [t, createAccountResult])
 
   useEffect(() => {
     if (createAccountResultAuth) {
@@ -267,7 +267,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       login(createAccountResultAuth.token)
     }
 
-  }, [createAccountResultAuth])
+  }, [t, login, createAccountResultAuth])
 
 
   useEffect(() => {
@@ -277,7 +277,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       severity: 'error'
     })
 
-  }, [errorcreateAccount])
+  }, [t, errorcreateAccount])
 
   useEffect(() => {
     if (errorcreateAccountAuth) setOpenSnackbar({
@@ -285,8 +285,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       message: t('errors.authError'),
       severity: 'error'
     })
-
-  }, [errorcreateAccountAuth])
+  }, [t, errorcreateAccountAuth])
 
   useEffect(() => {
     if (errorpreRegisterLifebank) setOpenSnackbar({
@@ -295,7 +294,7 @@ const Signup = ({ isHome, isModal, isSideBar, onCloseSignUp }) => {
       severity: 'error'
     })
 
-  }, [errorpreRegisterLifebank])
+  }, [t, errorpreRegisterLifebank])
 
   useEffect(() => {
     if (open) {

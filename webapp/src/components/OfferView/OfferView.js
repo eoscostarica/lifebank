@@ -109,7 +109,7 @@ const OfferView = ({
         severity: 'error'
       })
     }
-  }, [redeemOfferResult, errorRedeemOffer])
+  }, [t, redeemOfferResult, errorRedeemOffer])
 
   const truncateString = (str) => {
     const num = 150

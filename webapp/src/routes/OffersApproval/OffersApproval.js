@@ -81,7 +81,7 @@ const OffersApproval = () => {
       }
     } catch (error) { }
 
-  }, [info])
+  }, [info, loadingInfo])
 
   useEffect(() => {
     if (!loadingDataOffer) {
@@ -89,7 +89,7 @@ const OffersApproval = () => {
       setOffers(dataOffers)
       setLoadingOffers(false)
     }
-  }, [allOffers])
+  }, [allOffers, loadingDataOffer])
 
   useEffect(() => {
     getInfo()

@@ -149,7 +149,7 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
       else document.getElementById("username").focus()
     }
 
-  }, [isUnique, firstRun])
+  }, [profile?.account, user, isValid, username, isUnique, firstRun])
 
   useEffect(() => {
     setUser({
@@ -540,7 +540,6 @@ const EditProfileBank = ({ profile, onSubmit, setField, loading, userName }) => 
                   InputLabelProps={{
                     shrink: true
                   }}
-                  className={classes.textField}
                 />
               </Box>
             </Grid>

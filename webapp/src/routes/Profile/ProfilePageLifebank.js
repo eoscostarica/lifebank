@@ -81,7 +81,7 @@ const ProfilePageLifebank = ({ profile }) => {
       } else history.push('/internal-error')
     }
 
-  }, [errorUsername])
+  }, [logout, history, errorUsername])
 
   const checkAvailableFields = () => {
     let pendingFieldsObject = {}
@@ -139,7 +139,7 @@ const ProfilePageLifebank = ({ profile }) => {
         severity: 'success'
       })
     }
-  }, [])
+  }, [t, location, history])
 
   return (
     <>
@@ -276,7 +276,7 @@ const ProfilePageLifebank = ({ profile }) => {
           </Box>
         </>
       }
-      { profile.community_asset &&
+      {profile.community_asset &&
         <>
           <Divider className={classes.divider} />
           <Box className={classes.rowBox}>
@@ -321,7 +321,7 @@ const ProfilePageLifebank = ({ profile }) => {
           </Box>
         </>
       }
-      { profile.location && profile.location !== 'null' && (
+      {profile.location && profile.location !== 'null' && (
         <>
           <Divider className={classes.divider} />
           <Box className={classes.rowBoxLeft}>
