@@ -718,9 +718,10 @@ const login = async ({ account, password }) => {
     _or: [
       { email: { _eq: account } },
       { username: { _eq: account } },
-      { account: { _eq: account } }
+      { account: { _eq: account } },
     ],
-    email_verified: { _eq: true }
+    email_verified: { _eq: true },
+    state: {}
   })
 
   if (user && user.state === 'inactive') throw new Error('Inactive account')
