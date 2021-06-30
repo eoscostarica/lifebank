@@ -146,10 +146,14 @@
       "paragraph5": "'>darte de alta de correos</a> en cualquier momento."
     },
     "twitterText": {
-      "sponsorNews": "Nuevo patrocinador! ",
-      "sponsorThanks": ", gracias por ser parte de esta iniciativa",
-      "lifebankNews": "Nuevo Banco de Sangre! ",
-      "lifebankThanks": ", gracias por su ayuda!"
+      "sponsorNews": ":mega: ¡ALERTA LIFEBANK! ",
+      "sponsorThanks": "es un nuevo patrocinador. ",
+      "sponsorText": " ¡Redima sus life tokens y salve vidas! ",
+      "lifebankNews": ":mega: ¡ALERTA LIFEBANK! ",
+      "lifebankThanks": "es un nuevo lifebank. ",
+      "lifebankText": "¡Done sangre y salve vidas! ",
+      "visitSite": "Visit ",
+      "hashtags": "#BloodDonation #SaveLives #donate"
     }
   }
 }

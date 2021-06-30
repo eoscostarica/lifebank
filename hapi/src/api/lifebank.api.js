@@ -125,8 +125,10 @@ const signup = async (account, profile) => {
   })
   tweet(
     i18n.t('twitterText.lifebankNews') 
-    + profile.name 
-    + i18n.t('twitterText.lifebankThanks')  
+    + user.name 
+    + i18n.t('twitterText.lifebankThanks') 
+    + i18n.t('twitterText.lifebankText')
+    + i18n.t('twitterText.hashtags')
     , profile.logo_url ? profile.logo_url : "https://image.freepik.com/free-vector/hospital-building-isolated-modern-medical-clinic-center-clipart_101884-663.jpg"
     )
 }

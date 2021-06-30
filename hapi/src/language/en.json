@@ -146,10 +146,14 @@
       "paragraph5": "'>unsubscribe from emails</a> anytime."
     },
     "twitterText": {
-      "sponsorNews": "New Sponsor! ",
-      "sponsorThanks": ", thank you for being part of this initiative!",
-      "lifebankNews": "New Lifebank! ",
-      "lifebankThanks": ", thank you for helping the cause!"
+      "sponsorNews": ":mega: LIFEBANK UPDATE! ",
+      "sponsorThanks": "is a new sponsor. ",
+      "sponsorText": "Redeem your life tokens here and save lives! ",
+      "lifebankNews": ":mega: LIFEBANK UPDATE! ",
+      "lifebankThanks": "is a new lifebank. ",
+      "lifebankText": "Donate blood and save lives! ",
+      "visitSite": "Visit ",
+      "hashtags": "#BloodDonation #SaveLives #donate"
     }
   }
 }

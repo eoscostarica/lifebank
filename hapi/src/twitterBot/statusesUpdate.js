@@ -16,26 +16,26 @@ const tweet = (message, file) => {
   var responseReturn = {}
   var metadataData = {}
 
-  request.get(mediaUrl, function (error, response, body) {
+  request.get(mediaUrl, (error, response, body) => {
     responseReturn = Object.assign(response)
     if (error) console.error(error)
 
-    fs.writeFile(PATH, body, function(error) {
+    fs.writeFile(PATH, body, (error) => {
       if (error) console.error(error)
 
-      T.postMediaChunked({ file_path: PATH }, function (error, data, response) {
+      T.postMediaChunked({ file_path: PATH }, (error, data, response) => {
         if (error) console.error(error)
         responseReturn = Object.assign(response)
         const mediaIdStr = data.media_id_string;
         const meta_params = { media_id: mediaIdStr }
 
-        T.post('media/metadata/create', meta_params, function (error, data, response) {
+        T.post('media/metadata/create', meta_params, (error, data, response) => {
           metadataData = data
           responseReturn = Object.assign(response)
           if (!error) {
             const params = { status: message, media_ids: [mediaIdStr] }
 
-            T.post('statuses/update', params, function (error, response) {
+            T.post('statuses/update', params, (error, response) => {
               responseReturn = Object.assign(response)
               if (error) console.error(error)
 
@@ -43,7 +43,7 @@ const tweet = (message, file) => {
               return responseReturn
             })
           }
-        )
+        })
       })
     })
   })
