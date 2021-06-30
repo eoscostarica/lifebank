@@ -50,14 +50,14 @@ const NotificationStructure = ({ id, title, description, state, dateAndTime }) =
   return (
     <>
       <Button className={classes.wrapper} onMouseOver={changeNotificationState}>
-        <Grid container xs={3}>
+        <Grid container>
           <Grid item xs={12}>
             {state === true && (
               <NewNotificationIcon className={classes.iconOption} />
             )}
           </Grid>
         </Grid>
-        <Grid container xs={11}>
+        <Grid container>
           <Grid item xs={12}>
             <Typography className={classes.title}>
               {title}
@@ -69,7 +69,7 @@ const NotificationStructure = ({ id, title, description, state, dateAndTime }) =
             </Typography>
           </Grid>
         </Grid>
-        <Grid container xs={6}>
+        <Grid container>
           <Grid item xs={12}>
             <Typography className={classes.labelOption}>
               {time}

@@ -20,6 +20,7 @@ import {
   SET_USERNAME
 } from '../../gql'
 import { useUser } from '../../context/user.context'
+import LoginModal from '../../components/LoginModal'
 import styles from './styles'
 
 const useStyles = makeStyles(styles)
@@ -45,7 +46,7 @@ const EditProfilePage = () => {
     loadProfile,
     { error: errorProfile, loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
- 
+  console.log(currentUser)
   const [
     revokeConsent,
     {
@@ -95,7 +96,7 @@ const EditProfilePage = () => {
   }
   useEffect(() => {
     if (!currentUser) {
-      return
+      return 
     }
 
     loadProfile()
@@ -152,6 +153,7 @@ const EditProfilePage = () => {
 
   return (
     <>
+      {!currentUser && (<LoginModal isOutside />)}
       {isDesktop && (
         <Box className={classes.wrapper}>
           {loading && <CircularProgress />}

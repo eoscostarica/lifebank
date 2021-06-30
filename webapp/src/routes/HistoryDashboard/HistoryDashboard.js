@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography'
 import { GET_REPORT_QUERY } from '../../gql'
 
 import { useUser } from '../../context/user.context'
+import LoginModal from '../../components/LoginModal'
 import styles from './styles'
 import { Box } from '@material-ui/core'
 
@@ -24,7 +25,6 @@ const HistoryDashboard = (user) => {
   const [bodySent, setBodySent] = useState()
   const [currentUser] = useUser()
   const [optionSR, setOption] = useState('sent')
-
   const options = [
     { value: 'sent', label: t('historyDashboard.tableTitleSent') },
     { value: 'received', label: t('historyDashboard.tableTitleReceived') }
@@ -32,11 +32,10 @@ const HistoryDashboard = (user) => {
 
   const [
     getReportQuery,
-    { data: { get_report: getReportResult } = {} }
+    { error: errorReport, data: { get_report: getReportResult } = {} }
   ] = useLazyQuery(GET_REPORT_QUERY, { fetchPolicy: 'network-only' })
 
   useEffect(() => {
-
     if (!getReportResult) {
       getReportQuery()
     } else {
@@ -62,11 +61,12 @@ const HistoryDashboard = (user) => {
   }
 
   const handleChange = (event) => {
-    setOption(event.target.value);
-  };
+    setOption(event.target.value)
+  }
 
   return (
     <>
+      {!currentUser && (<LoginModal isOutside />)}
       <Box className={classes.root} >
         <Typography className={classes.title} >{t('historyDashboard.title')}</Typography>
         <Box className={classes.boxSelect}>
