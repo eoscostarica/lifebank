@@ -133,7 +133,6 @@ const LoginModal = ({ isNavBar, isSideBar, isOutside }) => {
         password: user.secret
       }
     })
-    if(isOutside) window.location.reload(); 
   }
 
   const handleLoginWithAuth = async (status, email, secret) => {
@@ -180,6 +179,7 @@ const LoginModal = ({ isNavBar, isSideBar, isOutside }) => {
     if (loginResult) {
       login(loginResult.token)
       setOpen(false)
+      if(isOutside) window.location.reload(); 
     }
   }, [loginResult])
 

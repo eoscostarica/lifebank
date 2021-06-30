@@ -149,7 +149,7 @@ const ProfilePage = () => {
 
   return (
     <Box className={classes.contentBody}>
-      {!profile && (<LoginModal isOutside />)} 
+      {!currentUser && (<LoginModal isOutside />)} 
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleOpenAlert}>
         <Alert onClose={handleOpenAlert} severity={severity}>
           {messegaAlert}

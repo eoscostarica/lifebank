@@ -46,7 +46,7 @@ const EditProfilePage = () => {
     loadProfile,
     { error: errorProfile, loading, data: { profile: { profile } = {} } = {} }
   ] = useLazyQuery(PROFILE_QUERY, { fetchPolicy: 'network-only' })
- 
+  console.log(currentUser)
   const [
     revokeConsent,
     {
@@ -153,7 +153,7 @@ const EditProfilePage = () => {
 
   return (
     <>
-      {!profile && (<LoginModal isOutside />)}
+      {!currentUser && (<LoginModal isOutside />)}
       {isDesktop && (
         <Box className={classes.wrapper}>
           {loading && <CircularProgress />}

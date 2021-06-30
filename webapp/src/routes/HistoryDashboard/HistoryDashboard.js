@@ -66,7 +66,7 @@ const HistoryDashboard = (user) => {
 
   return (
     <>
-      {errorReport && (<LoginModal isOutside />)}
+      {!currentUser && (<LoginModal isOutside />)}
       <Box className={classes.root} >
         <Typography className={classes.title} >{t('historyDashboard.title')}</Typography>
         <Box className={classes.boxSelect}>
