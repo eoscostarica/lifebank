@@ -6,6 +6,8 @@ const userApi = require('./user.api')
 const vaultApi = require('./vault.api')
 const locationApi = require('./location.api')
 const notificationApi = require('./notification.api')
+const { tweet } = require('../twitterBot/statusesUpdate')
+const i18n = require('i18next')
 
 const {
   constants: {
@@ -67,6 +69,9 @@ const signup = async (account, profile) => {
 
   await historyApi.insert(addSponsorTransaction)
   await userApi.setEmail({ account: { _eq: account } }, profile.email)
+  const user = await userApi.getOne({
+    account: { _eq: account }
+  })
   if (profile.geolocation)
     await locationApi.insert({
       account,
@@ -81,6 +86,16 @@ const signup = async (account, profile) => {
       type: LOCATION_TYPES.SPONSOR,
       info: profile
     })
+  tweet(
+    i18n.t('twitterText.sponsorNews') +
+      user.name +
+      i18n.t('twitterText.sponsorThanks') +
+      i18n.t('twitterText.sponsorText') +
+      i18n.t('twitterText.hashtags'),
+    profile.logo_url
+      ? profile.logo_url
+      : 'https://newyorkyimby.com/wp-content/uploads/2020/04/1641-Undecliff-Avenue-Rendering01-777x441.jpg'
+  )
 }
 
 const getReport = async ({ dateFrom, dateTo }, account) => {

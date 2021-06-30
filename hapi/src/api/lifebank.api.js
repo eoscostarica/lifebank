@@ -10,6 +10,8 @@ const preregisterApi = require('./pre-register.api')
 const verificationCodeApi = require('./verification-code.api')
 const mailApi = require('../utils/mail')
 const notificationApi = require('./notification.api')
+const { tweet } = require('../twitterBot/statusesUpdate')
+const i18n = require('i18next')
 
 const {
   constants: {
@@ -121,6 +123,16 @@ const signup = async (account, profile) => {
     type: LOCATION_TYPES.LIFE_BANK,
     info: profile
   })
+  tweet(
+    i18n.t('twitterText.lifebankNews') +
+      user.name +
+      i18n.t('twitterText.lifebankThanks') +
+      i18n.t('twitterText.lifebankText') +
+      i18n.t('twitterText.hashtags'),
+    profile.logo_url
+      ? profile.logo_url
+      : 'https://image.freepik.com/free-vector/hospital-building-isolated-modern-medical-clinic-center-clipart_101884-663.jpg'
+  )
 }
 
 const getReport = async ({ dateFrom, dateTo }, account) => {

@@ -22,6 +22,8 @@
     "@hapi/inert": "^6.0.1",
     "@hapi/joi": "^17.1.0",
     "bcryptjs": "^2.4.3",
+    "browserfs": "^1.4.3",
+    "browserify-fs": "^1.0.0",
     "eosjs": "^20.0.3",
     "eosjs-api": "^7.0.4",
     "graphql-request": "^1.8.2",
@@ -30,7 +32,9 @@
     "http-status-codes": "^1.4.0",
     "i18next": "^19.3.2",
     "njwt": "^1.0.0",
-    "nodemailer": "^6.4.6"
+    "nodemailer": "^6.4.6",
+    "request": "^2.88.2",
+    "twit": "^2.2.11"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

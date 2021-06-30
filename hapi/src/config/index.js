@@ -5,5 +5,6 @@ module.exports = {
   serverConfig: require('./server.config'),
   jwtConfig: require('./jwt.config'),
   mailConfig: require('./mail.config.js'),
-  constants: require('./constants')
+  constants: require('./constants'),
+  twitterConfig: require('./twitter.config')
 }
