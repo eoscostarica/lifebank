@@ -87,12 +87,14 @@ const signup = async (account, profile) => {
       info: profile
     })
   tweet(
-    i18n.t('twitterText.sponsorNews') 
-    + user.name 
-    + i18n.t('twitterText.sponsorThanks') 
-    + i18n.t('twitterText.sponsorText')
-    + i18n.t('twitterText.hashtags')
-    , profile.logo_url ? profile.logo_url : "https://newyorkyimby.com/wp-content/uploads/2020/04/1641-Undecliff-Avenue-Rendering01-777x441.jpg"
+    i18n.t('twitterText.sponsorNews') +
+      user.name +
+      i18n.t('twitterText.sponsorThanks') +
+      i18n.t('twitterText.sponsorText') +
+      i18n.t('twitterText.hashtags'),
+    profile.logo_url
+      ? profile.logo_url
+      : 'https://newyorkyimby.com/wp-content/uploads/2020/04/1641-Undecliff-Avenue-Rendering01-777x441.jpg'
   )
 }
 

@@ -6,15 +6,12 @@ const request = require('request').defaults({ encoding: null })
 const Twit = require('twit')
 
 const tweet = (message, file) => {
-  var T = new Twit( twitterConfig )
-  var localname = `tempFile${Date.now()}`;
-  var PATH = path.join(
-    os.tmpdir(),
-    `./${localname}`
-  );
-  var mediaUrl = file
-  var responseReturn = {}
-  var metadataData = {}
+  const T = new Twit(twitterConfig)
+  const localname = `tempFile${Date.now()}`
+  const PATH = path.join(os.tmpdir(), `./${localname}`)
+  const mediaUrl = file
+  let responseReturn = {}
+  let metadataData = {}
 
   request.get(mediaUrl, (error, response, body) => {
     responseReturn = Object.assign(response)
@@ -26,24 +23,28 @@ const tweet = (message, file) => {
       T.postMediaChunked({ file_path: PATH }, (error, data, response) => {
         if (error) console.error(error)
         responseReturn = Object.assign(response)
-        const mediaIdStr = data.media_id_string;
+        const mediaIdStr = data.media_id_string
         const meta_params = { media_id: mediaIdStr }
 
-        T.post('media/metadata/create', meta_params, (error, data, response) => {
-          metadataData = data
-          responseReturn = Object.assign(response)
-          if (!error) {
-            const params = { status: message, media_ids: [mediaIdStr] }
+        T.post(
+          'media/metadata/create',
+          meta_params,
+          (error, data, response) => {
+            metadataData = data
+            responseReturn = Object.assign(response)
+            if (!error) {
+              const params = { status: message, media_ids: [mediaIdStr] }
 
-            T.post('statuses/update', params, (error, response) => {
-              responseReturn = Object.assign(response)
-              if (error) console.error(error)
+              T.post('statuses/update', params, (error, response) => {
+                responseReturn = Object.assign(response)
+                if (error) console.error(error)
 
-              fs.unlinkSync(PATH);
-              return responseReturn
-            })
+                fs.unlinkSync(PATH)
+                return responseReturn
+              })
+            }
           }
-        })
+        )
       })
     })
   })
