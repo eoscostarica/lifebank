@@ -43,10 +43,9 @@ const tweet = (message, file) => {
               return responseReturn
             })
           }
-          else console.error(error)
-        }) 
+        )
       })
-    }) 
-  }) 
+    })
+  })
 }
 module.exports = { tweet }
