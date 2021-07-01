@@ -1110,7 +1110,7 @@ const sendNewSponsorAndOfferReport = async (
   })
 }
 
-const sendCongratulationsOnDonation = async (to, subject, content) => {
+const sendCongratulationsOnDonation = async (to, subject, content, badge, content2) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -1246,7 +1246,13 @@ const sendCongratulationsOnDonation = async (to, subject, content) => {
                     </tr>
                     <tr>
                       <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; text-align: justify;">
-                      <p style="margin: 0;">${content}</p>
+                        <p style="margin: 0;">
+                          ${content}
+                          <br><br>
+                          <img src="${badge}" alt="Logo" border="0" width="70%" style="display: block; width: 10% ">
+                          <br><br>
+                          ${content2}
+                        </p>
                       </td>
                     </tr>
                     <tr>
