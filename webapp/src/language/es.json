@@ -468,7 +468,8 @@
       "thanksYou": "¡Queremos agradecerte por participar en Lifebank! Tus donaciones nos ayudan a salvar muchas vidas.",
       "growingCommunity": "Lifebank necesita crecer la comunidad de donantes para continuar operando. Ayúdanos a comunicar nuestra misión compartiendo esta insignia con tus amistades. Mientras más personas estén donando a través de Lifebank, más vidas podremos salvar.",
       "downloadBadge": "¡Descárgala o toma un screenshot y compártelo en tus redes sociales!",
-      "thanksAgain": "Gracias de nuevo por ser parte de este proyecto. ¡Eres un verdadero héroe!"
+      "thanksAgain": "Gracias de nuevo por ser parte de este proyecto. ¡Eres un verdadero héroe!",
+      "badgeUrl": "https://raw.githubusercontent.com/eoscostarica/lifebank/f5186bb4b342f2cd0c9720e1fc000fd9a4741969/webapp/src/assets/yadone.png"
     },
     "approveAccount": {
       "accountapprove": "Esta cuenta ha sido aprobada",

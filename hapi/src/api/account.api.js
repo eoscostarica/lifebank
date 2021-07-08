@@ -772,7 +772,9 @@ const donate = async (from, { to, memo, quantity, emailContent }) => {
       mailApi.sendCongratulationsOnDonation(
         userTo.email,
         emailContent.subject,
-        emailContent.message
+        emailContent.content,
+        emailContent.badge,
+        emailContent.content2
       )
     } catch (error) {
       console.log(error)

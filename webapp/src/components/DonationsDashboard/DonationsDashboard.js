@@ -203,7 +203,7 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
         quantity: tokensQuantity,
         emailContent: {
           'subject': t('emailDonorCongratulation.subject'),
-          'message': t('emailDonorCongratulation.hi').concat(
+          'content': t('emailDonorCongratulation.hi').concat(
             ' ',
             accountTo,
             ', ',
@@ -221,10 +221,9 @@ const DonationsDashboard = ({ isDesktop, currentUser, isOffer, selectOffer }) =>
             t('emailDonorCongratulation.thanksYou'),
             '<br><br>',
             t('emailDonorCongratulation.growingCommunity'),
-            '<br><br>',
-            '[BADGE]',
-            '<br><br>',
-            t('emailDonorCongratulation.downloadBadge'),
+          ),
+          "badge": t('emailDonorCongratulation.badgeUrl'),
+          "content2": t('emailDonorCongratulation.downloadBadge').concat(
             '<br><br>',
             t('emailDonorCongratulation.thanksAgain')
           )
