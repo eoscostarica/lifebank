@@ -1249,7 +1249,9 @@ const sendCongratulationsOnDonation = async (to, subject, content, badge, conten
                         <p style="margin: 0;">
                           ${content}
                           <br><br>
-                          <img src="${badge}" alt="Logo" border="0" width="70%" style="display: block; width: 10% ">
+                          <center>
+                            <img src="${badge}" alt="Logo" border="0" style="display: block; width: 20% ">
+                          </center>
                           <br><br>
                           ${content2}
                         </p>

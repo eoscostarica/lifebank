@@ -767,8 +767,6 @@ const donate = async (from, { to, memo, quantity, emailContent }) => {
 
   const transferResult = await transfer(from, { to, memo, quantity })
 
-  console.log('TRANSFER', transferResult)
-
   if (transferResult) {
     try {
       mailApi.sendCongratulationsOnDonation(
