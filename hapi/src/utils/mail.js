@@ -1110,7 +1110,13 @@ const sendNewSponsorAndOfferReport = async (
   })
 }
 
-const sendCongratulationsOnDonation = async (to, subject, content, badge, content2) => {
+const sendCongratulationsOnDonation = async (
+  to,
+  subject,
+  content,
+  badge,
+  content2
+) => {
   const transporter = nodemailer.createTransport({
     host: mailConfig.host,
     secure: false,
@@ -1758,7 +1764,11 @@ const requestCloseAccount = async (to, account, language) => {
                         <br><br>
                         ${i18n
                           .t('requestCloseAccount.paragraph4')
-                          .concat(account, ' ', i18n.t('requestCloseAccount.paragraph5'))}
+                          .concat(
+                            account,
+                            ' ',
+                            i18n.t('requestCloseAccount.paragraph5')
+                          )}
                       </p>
                       </td>
                     </tr>
@@ -2088,12 +2098,14 @@ const closeAccountDayRemaining = async (to, account, language, closeDate) => {
                         <br><br>
                         ${i18n.t('closeAccountDayRemaining.paragraph3')}
                         <br><br>
-                        ${i18n.t('closeAccountDayRemaining.paragraph4').concat(
-                          account,
-                          i18n.t('closeAccountDayRemaining.paragraph5'),
-                          closeDate,
-                          '.'
-                        )}
+                        ${i18n
+                          .t('closeAccountDayRemaining.paragraph4')
+                          .concat(
+                            account,
+                            i18n.t('closeAccountDayRemaining.paragraph5'),
+                            closeDate,
+                            '.'
+                          )}
                         <br><br>
                         ${i18n.t('closeAccountDayRemaining.paragraph6')}
                         <br><br>
@@ -2262,12 +2274,14 @@ const closeAccountWeekRemaining = async (to, account, language, closeDate) => {
                         <br><br>
                         ${i18n.t('closeAccountWeekRemaining.paragraph2')}
                         <br><br>
-                        ${i18n.t('closeAccountWeekRemaining.paragraph3').concat(
-                          account,
-                          i18n.t('closeAccountWeekRemaining.paragraph4'),
-                          closeDate,
-                          '.'
-                        )}
+                        ${i18n
+                          .t('closeAccountWeekRemaining.paragraph3')
+                          .concat(
+                            account,
+                            i18n.t('closeAccountWeekRemaining.paragraph4'),
+                            closeDate,
+                            '.'
+                          )}
                         <br><br>
                         ${i18n.t('closeAccountWeekRemaining.paragraph5')}
                         <br><br>
@@ -2436,12 +2450,14 @@ const closeAccountMonthRemaining = async (to, account, language, closeDate) => {
                         <br><br>
                         ${i18n.t('closeAccountMonthRemaining.paragraph2')}
                         <br><br>
-                        ${i18n.t('closeAccountMonthRemaining.paragraph3').concat(
-                          account,
-                          i18n.t('closeAccountMonthRemaining.paragraph4'),
-                          closeDate,
-                          '.'
-                        )}
+                        ${i18n
+                          .t('closeAccountMonthRemaining.paragraph3')
+                          .concat(
+                            account,
+                            i18n.t('closeAccountMonthRemaining.paragraph4'),
+                            closeDate,
+                            '.'
+                          )}
                         <br><br>
                         ${i18n.t('closeAccountMonthRemaining.paragraph5')}
                         <br><br>

@@ -774,7 +774,7 @@ const donate = async (from, { to, memo, quantity, emailContent }) => {
         emailContent.subject,
         emailContent.content,
         emailContent.badge,
-        emailContent.content2,
+        emailContent.content2
       )
     } catch (error) {
       console.log(error)
