@@ -218,7 +218,7 @@ consent_lacchain() {
   TEMP_DIR=./stdout/consent
 
   cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-  cleos -u https://writer.eosio.cr push action -j -d -s consent2life consent '{"user": "lifebankcoin", "contract": "lifebankcode", "hash":""}' -p lifebankcoin@active >$TEMP_DIR/tx2.json
+  cleos -u https://writer.edenia.cloud push action -j -d -s consent2life consent '{"user": "lifebankcoin", "contract": "lifebankcode", "hash":""}' -p lifebankcoin@active >$TEMP_DIR/tx2.json
   jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
   jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
   cleos -u $EOS_API_URL push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
@@ -230,7 +230,7 @@ create_community_lacchain() {
     TEMP_DIR=./stdout/comm
 
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr push action -j -d -s lifebankcode createcmm \
+    cleos -u https://writer.edenia.cloud push action -j -d -s lifebankcode createcmm \
     '{
         "community_name":"LifeBank Costa Rica",
         "community_asset":"0 LIFE",
@@ -249,7 +249,7 @@ grant_lifebankcode_permission_in_lifebankcoin() {
     TEMP_DIR=./stdout/permission
 
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr set account permission lifebankcoin active permission_lifebankcoin.json owner -j -d -s -p lifebankcoin >$TEMP_DIR/tx2.json
+    cleos -u https://writer.edenia.cloud set account permission lifebankcoin active permission_lifebankcoin.json owner -j -d -s -p lifebankcoin >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
     cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcoin@active
@@ -261,7 +261,7 @@ grant_lifebankcode_permission_in_lifebankcode() {
     TEMP_DIR=./stdout/permission
 
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr set account permission lifebankcode active permission_lifebankcode.json owner -j -d -s -p lifebankcode >$TEMP_DIR/tx2.json
+    cleos -u https://writer.edenia.cloud set account permission lifebankcode active permission_lifebankcode.json owner -j -d -s -p lifebankcode >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
     cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
@@ -273,7 +273,7 @@ grant_consent2life_permission() {
     TEMP_DIR=./stdout/permission
 
     cleos -u $HAPI_EOS_API_ENDPOINT push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr set account permission consent2life active permission_consent2life.json owner -j -d -s -p consent2life >$TEMP_DIR/tx2.json
+    cleos -u https://writer.edenia.cloud set account permission consent2life active permission_consent2life.json owner -j -d -s -p consent2life >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
     cleos -u $HAPI_EOS_API_ENDPOINT -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p consent2life@active
@@ -285,7 +285,7 @@ change_active_permission() {
     TEMP_DIR=./stdout/permission_active
 
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://lacchain.eosio.cr set account permission lifebankcoin active EOS53M2oyoGpt7oVRNywoASZ1gLXDHJfbNoL6LDXew2CbCtus2Zht -j -d -s -p lifebankcoin@owner >$TEMP_DIR/tx2.json
+    cleos -u https://lacchain.edenia.cloud set account permission lifebankcoin active EOS53M2oyoGpt7oVRNywoASZ1gLXDHJfbNoL6LDXew2CbCtus2Zht -j -d -s -p lifebankcoin@owner >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
     cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction -j -d -s $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcoin@owner >$TEMP_DIR/tx5.json
@@ -310,7 +310,7 @@ consent_lacchain() {
     TEMP_DIR=./stdout/consent2life
 
     cleos -u $EOS_API_URL push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr push action -j -d -s consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcode", "hash":""}' -p sponsprueba1@active >$TEMP_DIR/tx2.json
+    cleos -u https://writer.edenia.cloud push action -j -d -s consent2life consent '{"user": "sponsprueba1", "contract": "lifebankcode", "hash":""}' -p sponsprueba1@active >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
     cleos -u $EOS_API_URL -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p consent2life@active
@@ -321,11 +321,11 @@ register_sponsor_lacchain() {
     mkdir -p ./stdout/register
     TEMP_DIR=./stdout/register
 
-    cleos -u https://lacchain.eosio.cr push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr push action -j -d -s lifebankcode addsponsor '{}' -p lifebankcode@active >$TEMP_DIR/tx2.json
+    cleos -u https://lacchain.edenia.cloud push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
+    cleos -u https://writer.edenia.cloud push action -j -d -s lifebankcode addsponsor '{}' -p lifebankcode@active >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-    cleos -u https://lacchain.eosio.cr -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
+    cleos -u https://lacchain.edenia.cloud -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p lifebankcode@active
 }
 
 add_donor_lacchain() {
@@ -334,7 +334,7 @@ add_donor_lacchain() {
     TEMP_DIR=./stdout/register
 
     cleos -u $HAPI_EOS_API_ENDPOINT push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://writer.eosio.cr push action -j -d -s lifebankcode adddonor '{
+    cleos -u https://writer.edenia.cloud push action -j -d -s lifebankcode adddonor '{
         "account":"donfwt1tyyw5",
         "community_asset":"1 LIFE"
     }' -p donfwt1tyyw5@active >$TEMP_DIR/tx2.json
@@ -348,8 +348,8 @@ test_func() {
     mkdir -p ./stdout/register
     TEMP_DIR=./stdout/register
 
-    cleos -u https://lacchain.eosio.cr -r "Accept-Encoding: identity" push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
-    cleos -u https://lacchain.eosio.cr -r "Accept-Encoding: identity" push action -j -d -s lifebankcode addsponsor '{
+    cleos -u https://lacchain.edenia.cloud -r "Accept-Encoding: identity" push action -j -d -s writer run '{}' -p costarica@writer >$TEMP_DIR/tx1.json
+    cleos -u https://lacchain.edenia.cloud -r "Accept-Encoding: identity" push action -j -d -s lifebankcode addsponsor '{
         "account":"spo333yaqsoj",
         "sponsor_name":"Ferreteria McGyver",
         "benefit_description":"10% off toilet seats",
@@ -369,7 +369,7 @@ test_func() {
     }' -p spo333yaqsoj@active >$TEMP_DIR/tx2.json
     jq -s '[.[].actions[]]' $TEMP_DIR/tx1.json $TEMP_DIR/tx2.json >$TEMP_DIR/tx3.json
     jq '.actions = input' $TEMP_DIR/tx1.json $TEMP_DIR/tx3.json >$TEMP_DIR/tx4.json
-    cleos -u https://lacchain.eosio.cr -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p spo333yaqsoj@active
+    cleos -u https://lacchain.edenia.cloud -r "Accept-Encoding: identity" push transaction $TEMP_DIR/tx4.json -p costarica@writer -p spo333yaqsoj@active
 }
 
 set_code() {

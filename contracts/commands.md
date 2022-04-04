@@ -40,7 +40,7 @@ cleos wallet unlock -n consent2life --password YYY
 ```
 
 ```
-cleos -u https://jungle.eosio.cr set contract consent2life ./ consent2life.wasm consent2life.abi -p consent2life@active
+cleos -u https://jungle.edenia.cloud set contract consent2life ./ consent2life.wasm consent2life.abi -p consent2life@active
 ```
 
 #### lifebankcode
@@ -64,13 +64,13 @@ cleos wallet unlock -n lifebankcode --password YYY
 ```
 
 ```
-cleos -u https://jungle.eosio.cr set contract lifebankcode ./ lifebankcode.wasm lifebankcode.abi -p lifebankcode@active
+cleos -u https://jungle.edenia.cloud set contract lifebankcode ./ lifebankcode.wasm lifebankcode.abi -p lifebankcode@active
 ```
 
 Use secundary index sha256
 
 ```
-cleos -u https://jungle.eosio.cr get table consent2life consent2life userconsents --index 2 --key-type sha256 -L c27474851c08b81e0c02e2383f52d62f58860be5ad60cb6d6606393e8f9b6607 -U c27474851c08b81e0c02e2383f52d62f58860be5ad60cb6d6606393e8f9b6607
+cleos -u https://jungle.edenia.cloud get table consent2life consent2life userconsents --index 2 --key-type sha256 -L c27474851c08b81e0c02e2383f52d62f58860be5ad60cb6d6606393e8f9b6607 -U c27474851c08b81e0c02e2383f52d62f58860be5ad60cb6d6606393e8f9b6607
 ```
 
 Adding eosio.code to permissions
@@ -79,5 +79,5 @@ The eosio.code authority is a pseudo authority implemented to enhance security, 
 
 ```
 cleos wallet unlock -n lifebankcode --password XXX
-cleos -u https://jungle.eosio.cr set account permission lifebankcode active --add-code
+cleos -u https://jungle.edenia.cloud set account permission lifebankcode active --add-code
 ```
